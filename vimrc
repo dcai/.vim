@@ -1,4 +1,5 @@
 """""""""""""""""""""""""""""""""""""""
+
 "               __           _        "
 "          ____/ /________ _(_)       "
 "         / __  / ___/ __ `/ /        "
@@ -36,7 +37,6 @@ Plugin 'godlygeek/tabular'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vimwiki/vimwiki'
 "Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
 Plugin 'rking/ag.vim'
 Plugin 'tyru/open-browser.vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
@@ -398,7 +398,7 @@ map <leader>k :bd!<cr>
 map <leader>q :q<cr>
 map <leader>w :w!<cr>
 map <leader>fw :w !sudo tee > /dev/null %<cr>
-map <leader>u :set fileencoding=utf8<cr>
+"map <leader>u :set fileencoding=utf8<cr>
 map <leader>i <ESC>:r! cat<CR>
 
 map Q gqip
@@ -415,23 +415,17 @@ map QQ gggqG
 """ BufExplorer
 """""""""""""""""""""""""""""""""""""""
 " see buffer list
-map <c-l> :BufExplorer<cr>
+
+let g:bufExplorerDisableDefaultKeyMapping=0
+let g:bufExplorerDefaultHelp=1
 "map <c-j> <ESC>:bn<CR>
 "map <c-k> <ESC>:bp<CR>
+map <c-l> :BufExplorer<cr>
 
-"""""""""""""""""""""""""""""""""""""""
-""" Tagbar
-"""""""""""""""""""""""""""""""""""""""
-map <leader>b :TagbarToggle<cr>
 """""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
 map <leader>t :NERDTreeToggle<cr>
-
-"""""""""""""""""""""""""""""""""""""""
-""" Tagbar
-"""""""""""""""""""""""""""""""""""""""
-let g:tagbar_autofocus = 1
 
 """""""""""""""""""""""""""""""""""""""
 """ ctrl-p
@@ -554,3 +548,10 @@ map <silent> <c-f> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4
 
 map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
 map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
+
+"""""""""""""""""""""""""""""""""""""""
+""" MRU
+"""""""""""""""""""""""""""""""""""""""
+map <Leader>mru :MRU<cr>
+let MRU_Auto_Close = 1
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*|COMMIT_EDITMSG'
