@@ -1,12 +1,16 @@
-autocmd BufRead,BufNewFile *.md set filetype=markdown
-autocmd BufRead,BufNewFile *.scala set filetype=scala
-autocmd BufNewFile,BufRead *.less setf less
-autocmd BufRead,BufNewFile *.json set filetype=javascript
-autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
-autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
-autocmd BufRead,BufNewFile php-fpm.conf set filetype=dosini
-autocmd BufRead,BufNewFile www.conf set filetype=dosini
-autocmd BufRead,BufNewFile *.go :set filetype:go
+""""""""""""""""""""""""""""""
+" Spelling
+"""""""""""""""""""""""""""""""
+" Git commits.
+autocmd FileType gitcommit setlocal spell
+" Subversion commits.
+autocmd FileType svn       setlocal spell
+" Mercurial commits.
+autocmd FileType asciidoc  setlocal spell
+autocmd FileType markdown  setlocal spell
+autocmd FileType vimwiki   setlocal spell
+autocmd FileType text      setlocal spell
+autocmd FileType help      setlocal nospell
 
 """"""""""""""""""""""""""""""
 " vimwiki
@@ -34,6 +38,7 @@ autocmd BufRead,BufNewFile */nginx/* set ft=nginx
 " supervisor
 """""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
+autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
 
 """"""""""""""""""""""""""""""
 " PYTHON
@@ -47,6 +52,8 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 """"""""""""""""""""""""""""""
 " PHP
 """"""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile php-fpm.conf set filetype=dosini
+autocmd BufRead,BufNewFile www.conf set filetype=dosini
 " highlights interpolated variables in sql strings and does sql-syntax highlighting. yay
 autocmd FileType php let php_sql_query=1
 " does exactly that. highlights html inside of php strings
@@ -73,17 +80,19 @@ autocmd BufEnter *.h :%s/[ \t\r]\+$//e
 
 autocmd BufEnter *.m :%s/\s\+$//e
 autocmd BufEnter *.m :%s/[ \t\r]\+$//e
+""""""""""""""""""""""""""""""
+" markdown
+"""""""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
-""" I want spellchecker
-" Git commits.
-autocmd FileType gitcommit setlocal spell
-" Subversion commits.
-autocmd FileType svn       setlocal spell
-" Mercurial commits.
-autocmd FileType asciidoc  setlocal spell
-autocmd FileType markdown  setlocal spell
-autocmd FileType vimwiki   setlocal spell
-autocmd FileType text      setlocal spell
-
+""""""""""""""""""""""""""""""
+" Misc
+"""""""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile *.scala set filetype=scala
+autocmd BufNewFile,BufRead *.less setf less
+autocmd BufRead,BufNewFile *.json set filetype=javascript
+autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
+autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
 "autocmd vimenter     * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
+
