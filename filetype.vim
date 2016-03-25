@@ -11,6 +11,10 @@ autocmd FileType markdown  setlocal spell
 autocmd FileType vimwiki   setlocal spell
 autocmd FileType text      setlocal spell
 autocmd FileType help      setlocal nospell
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 """"""""""""""""""""""""""""""
 " vimwiki
