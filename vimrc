@@ -83,4 +83,4 @@ Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
 
-execute 'source' 'vimrc.local'
+execute 'source' '~/.vim/vimrc.local'
