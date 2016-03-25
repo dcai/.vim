@@ -191,6 +191,7 @@ set undofile " Create FILE.un~ files for persistent undo
 "map <silent> * :call VisualSearch('f')<CR>
 "map <silent> # :call VisualSearch('b')<CR>
 
+
 """""""""""""""""""""""""""""""""""""""
 """ Abbreviations 
 """""""""""""""""""""""""""""""""""""""
@@ -230,8 +231,8 @@ else
     "colorscheme desert
     "colorscheme elflord
     "colorscheme solarized
-    colorscheme base16-default
-    "colorscheme peaksea
+    "colorscheme base16-default
+    colorscheme peaksea
 endif
 
 """""""""""""""""""""""""""""""""""""""
@@ -322,7 +323,7 @@ nmap <Up> gk
 
 map <leader>e :e! $HOME/.vim/vimrc.local<cr>
 map <leader>s :source $HOME/.vim/vimrc<cr>
-map <leader>k :bd!<cr>
+map <leader>d :bd!<cr>
 map <leader>q :q<cr>
 map <leader>w :w!<cr>
 map <leader>fw :w !sudo tee > /dev/null %<cr>
@@ -509,3 +510,12 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
     \ ]
+
+"""""""""""""""""""""""""""""""""""""""
+""" Hightlight interesting words
+"""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+
+nnoremap <silent> n :call WordNavigation('forward')<cr>
+nnoremap <silent> N :call WordNavigation('backward')<cr>
