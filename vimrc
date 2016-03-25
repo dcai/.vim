@@ -36,7 +36,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 "Plugin 'bling/vim-airline'
 Plugin 'godlygeek/tabular'
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'vimwiki/vimwiki'
+"Plugin 'vimwiki/vimwiki'
 "Plugin 'scrooloose/syntastic'
 Plugin 'rking/ag.vim'
 Plugin 'tyru/open-browser.vim'
@@ -110,7 +110,7 @@ else
 endif
 
 filetype plugin indent on
-set history=10
+set history=100
 set autoread
 set spelllang=en
 set mouse=a
@@ -119,9 +119,10 @@ set visualbell
 set showcmd
 " Avoid hit ENTER to continue
 set shortmess=a
-"set t_vb
+"set ve[rsion]
 set ve=all
-set backspace=indent,eol,start  " more powerful backspacing
+"more powerful backspacing
+set backspace=indent,eol,start
 set nofoldenable 
 "set cryptmethod=blowfish
 "set omnifunc=syntaxcomplete#Complete
@@ -184,7 +185,6 @@ if !ISGUI
     "inoremap <ESC> <ESC>:set iminsert=0<CR>
 endif
 "set enc=utf-8
-set langmenu=zh_CN.utf8
 if has ('multi_byte') && v:version > 601
   if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
     set ambiwidth=double
@@ -208,7 +208,6 @@ function! TrimWhiteSpace()
 endfunction
 
 nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
-
 """""""""""""""""""""""""""""""""""""""
 """ Indent setting
 """""""""""""""""""""""""""""""""""""""
@@ -474,6 +473,12 @@ let g:airline_symbols.linenr = '␊'
 " make YCM compatible with UltiSnips
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"""""""""""""""""""""""""""""""""""""""
+""" SuperTab
+"""""""""""""""""""""""""""""""""""""""
+let g:SuperTabClosePreviewOnPopupClose = 1
 
 """""""""""""""""""""""""""""""""""""""
 """ UltiSnips
