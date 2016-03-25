@@ -21,3 +21,4 @@ nnoremap <buffer> <cr> <c-]>
 nnoremap <buffer> <bs> <c-T>
 nnoremap <buffer> q :q<CR>
 setlocal nonumber
+nnoremap <leader>rh :h local-additions<cr>
