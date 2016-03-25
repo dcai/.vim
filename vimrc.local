@@ -8,7 +8,6 @@
 "       Dongsheng Cai <d@tux.im>      "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-
 set nocompatible
 
 filetype plugin indent on
@@ -159,6 +158,14 @@ function! SoftWrap()
     normal gggqG
     let &tw = s:old_tw
 endfunction
+
+" Persistent undo
+let undodir = expand('~/.undo-vim')
+if !isdirectory(undodir)
+  call mkdir(undodir)
+endif
+set undodir=~/.undo-vim
+set undofile " Create FILE.un~ files for persistent undo
 
 """""""""""""""""""""""""""""""""""""""
 """ Visual Search
@@ -313,7 +320,7 @@ nmap <silent> <Leader>/ :nohlsearch<CR>
 nmap <Down> gj
 nmap <Up> gk
 
-map <leader>e :e! $HOME/.vim/vimrc<cr>
+map <leader>e :e! $HOME/.vim/vimrc.local<cr>
 map <leader>s :source $HOME/.vim/vimrc<cr>
 map <leader>k :bd!<cr>
 map <leader>q :q<cr>

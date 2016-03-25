@@ -99,4 +99,3 @@ autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
 "autocmd vimenter     * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
-
