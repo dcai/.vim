@@ -32,6 +32,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 "Plugin 'bling/vim-airline'
 Plugin 'godlygeek/tabular'
 Plugin 'Lokaltog/vim-easymotion'
@@ -41,6 +42,8 @@ Plugin 'rking/ag.vim'
 Plugin 'tyru/open-browser.vim'
 Plugin 'maxbrunsfeld/vim-yankstack'
 Plugin 'thinca/vim-visualstar'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'junegunn/goyo.vim'
 
 " Snippets and auto complete
 " ==========================
@@ -48,8 +51,6 @@ Plugin 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-"Plugin "MarcWeber/vim-addon-mw-utils"
-"Plugin "tomtom/tlib_vim"
 
 " HTML
 " ====
@@ -60,6 +61,7 @@ Plugin 'Raimondi/delimitMate'
 " Javascript
 " ==========
 Plugin 'pangloss/vim-javascript'
+Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'leafgarland/typescript-vim'
@@ -70,8 +72,6 @@ Plugin 'dcai/vim-react-es6-snippets'
 " ==========
 Plugin 'jwalton512/vim-blade'
 Plugin 'evidens/vim-twig'
-"Plugin 'StanAngeloff/php.vim'
-"Plugin 'shawncplus/phpcomplete.vim'
 
 " Other syntax
 " ============
@@ -79,12 +79,10 @@ Plugin 'rodjek/vim-puppet'
 Plugin 'hdima/python-syntax'
 Plugin 'nginx.vim'
 Plugin 'plasticboy/vim-markdown'
-"Plugin 'jceb/vim-orgmode'
-"Plugin 'dag/vim-fish'
-"Plugin 'derekwyatt/vim-scala'
 
 " Color
 " =====
+Plugin 'vim-scripts/peaksea'
 Plugin 'Solarized'
 Plugin 'chriskempson/base16-vim'
 
@@ -179,7 +177,7 @@ set nowritebackup
 set fileformat=unix
 set fileencodings=utf-8,gbk,big5,latin1
 if !ISGUI
-    "set term=xterm-256color
+    set term=xterm-256color
     set termencoding=utf-8
     """ input method
     "set imactivatekey=C-space
@@ -279,11 +277,13 @@ set guioptions=ar
 set guioptions-=m
 "remove toolbar
 set guioptions-=T
+"set background=light
+set background=dark
 if ISGUI
-    "set background=light
-    "set background=dark
+    set t_Co=256
     "colorscheme solarized
-    colorscheme base16-ocean
+    "colorscheme base16-ocean
+    colorscheme peaksea
     if or(has("gui_qt"), has('gui_gtk2'))
         "set guifont=Inconsolata\ 14
         "set guifont=DejaVu\ Sans\ Mono\ 12
@@ -298,13 +298,11 @@ if ISGUI
     endif
 else
     "colorscheme slate
-    colorscheme desert
+    "colorscheme desert
     "colorscheme elflord
-    "colorscheme zenburn
-    "set background=light
-    "set background=dark
     "colorscheme solarized
     "colorscheme base16-default
+    colorscheme peaksea
 endif
 
 """""""""""""""""""""""""""""""""""""""
@@ -313,24 +311,25 @@ endif
 set laststatus=2
 "set statusline=%<%F\ [%Y]\ [%{&ff}]\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",\ BOM\":\",\ NOBOM\")}]\ %-14.(%l,%c%V%)\ %P
 
-hi statusline guibg=black ctermbg=black ctermfg=green guifg=green
+let g:defaultFgColor="black"
+hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
 
 function! InsertStatuslineColor(mode)
   if a:mode == 'i'
-    hi statusline guifg=magenta ctermfg=magenta
+    "hi statusline guifg=magenta ctermfg=magenta
+    hi statusline guibg=red guifg=white ctermbg=red ctermfg=white
   elseif a:mode == 'r'
     hi statusline guifg=Blue ctermfg=Blue
   else
-    hi statusline ctermfg=green guifg=green
+    hi statusline ctermfg=black guifg=black
   endif
 endfunction
 
 au InsertEnter * call InsertStatuslineColor(v:insertmode)
 au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guifg=green ctermfg=green
+au InsertLeave * hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
 
 " default the statusline to green when entering Vim
-hi statusline guibg=green
 set statusline=%F        "tail of the filename
 set statusline+=%m       "modified flag
 set statusline+=%=       "left/right separator
@@ -425,7 +424,7 @@ map <c-l> :BufExplorer<cr>
 """""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
-map <leader>t :NERDTreeToggle<cr>
+map <c-a> :NERDTreeToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""
 """ ctrl-p
@@ -450,7 +449,6 @@ let g:airline_theme='base16'
 "let g:airline_theme='solarized'
 let g:Powerline_symbols = 'fancy'
 """ Number of colors
-set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 
 if !exists('g:airline_symbols')
@@ -555,3 +553,24 @@ map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_durati
 map <Leader>mru :MRU<cr>
 let MRU_Auto_Close = 1
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*|COMMIT_EDITMSG'
+"""""""""""""""""""""""""""""""""""""""
+""" Rainbow parentheses
+"""""""""""""""""""""""""""""""""""""""
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
