@@ -285,6 +285,9 @@ let g:mapleader = ","
 let maplocalleader = ","
 let g:maplocalleader = ","
 
+" unmap
+"unmap q:
+
 " Press <Home> or <End> to the 1st and last
 " char of the line
 map  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
@@ -357,16 +360,41 @@ map <c-l> :BufExplorer<cr>
 map <c-a> :NERDTreeToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""
-""" ctrl-p
+""" ctrl-p/ctrlp
 """""""""""""""""""""""""""""""""""""""
+map <Leader>mru :CtrlPMRU<cr>
+let g:ctrlp_mruf_exclude = '/tmp/.*\|/var/tmp/.*|COMMIT_EDITMSG'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
     \ 'file': '\v\.(exe|so|dll|jar|pdf|doc|pyc|class|jpg|png|gif)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
+"let g:ctrlp_use_caching = 1
+"let g:cachedir=$HOME . "/.ctrlp_cache"
+"if !isdirectory(expand(cachedir))
+  "call mkdir(expand(cachedir))
+"endif
+"let g:ctrlp_cache_dir = cachedir
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+    " Use Ag over Grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+"t - in a new tab.
+"h - in a new horizontal split.
+"v - in a new vertical split.
+"r - in the current window.
+let g:ctrlp_open_new_file = 'r'
 
 """""""""""""""""""""""""""""""""""""""
 """ vim-airline
@@ -482,13 +510,6 @@ map <silent> <c-f> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4
 
 map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
 map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-""" MRU
-"""""""""""""""""""""""""""""""""""""""
-map <Leader>mru :MRU<cr>
-let MRU_Auto_Close = 1
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*|COMMIT_EDITMSG'
 """""""""""""""""""""""""""""""""""""""
 """ Rainbow parentheses
 """""""""""""""""""""""""""""""""""""""
@@ -519,3 +540,10 @@ nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
 
 nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
+
+"""""""""""""""""""""""""""""""""""""""
+""" Vundle
+"""""""""""""""""""""""""""""""""""""""
+
+nnoremap <leader>pi :PluginInstall<cr>
+nnoremap <leader>pc :PluginClean<cr>
