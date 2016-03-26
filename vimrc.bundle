@@ -10,7 +10,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'terryma/vim-smooth-scroll'
-Plugin 'yegappan/mru'
 Plugin 'matchit.zip'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-surround'
