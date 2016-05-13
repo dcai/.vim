@@ -368,7 +368,7 @@ nmap <silent> <Leader>/ :nohlsearch<CR>
 nmap <Down> gj
 nmap <Up> gk
 
-map <leader>e :e! $HOME/.vim/vimrc.local<cr>
+map <leader>e :e! $HOME/.vim/local.vim<cr>
 map <leader>a :source $HOME/.vim/vimrc<cr>
 map <leader>d :bd!<cr>
 map <leader>q :q<cr>
