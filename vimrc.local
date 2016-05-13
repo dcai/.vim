@@ -404,7 +404,7 @@ map <c-l> :BufExplorer<cr>
 map <c-a> :NERDTreeToggle<cr>
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeIgnore = ['\.vim$', '\~$']
-let g:NERDTreeBookmarksFile = "~/.NERDTreeBookmarks"
+let g:NERDTreeBookmarksFile = $HOME . '/.NERDTreeBookmarks'
 let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeMinimalUI=0
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -483,6 +483,19 @@ let g:airline_symbols.linenr = '␊'
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
 
 """""""""""""""""""""""""""""""""""""""
 """ SuperTab
