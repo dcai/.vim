@@ -4,6 +4,8 @@
 """""""""""""""""""""""""""""""""""""""
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
+if (exists('*Plugin'))
+
 call vundle#begin()
 " Utils
 " =======
@@ -81,3 +83,5 @@ Plugin 'Solarized'
 Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
+
+endif
