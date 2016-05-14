@@ -14,7 +14,7 @@ filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""
 "             Core setting
-"             =============
+"
 """""""""""""""""""""""""""""""""""""""
 
 " set shell=/bin/bash\ --norc\ --noprofile
@@ -42,14 +42,13 @@ set noerrorbells
 set visualbell
 set showcmd
 " Avoid hit ENTER to continue normal
-set shortmess=a
+set shortmess+=ac
 "set ve[rsion]
 set ve=all
 "more powerful backspacing
 set backspace=indent,eol,start
 set nofoldenable
 "set cryptmethod=blowfish
-"set omnifunc=syntaxcomplete#Complete
 
 " source $VIMRUNTIME/mswin.vim
 " make :Man command avaliable
@@ -58,8 +57,8 @@ set nofoldenable
 " so we use sed to strip them.
 let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 
-let g:OS=substitute(system('uname'), "\n", "", "")
-let g:ISGUI=has('gui_running')
+let g:OSUNAME=substitute(system('uname'), "\n", "", "")
+let g:GUI_RUNNING=has('gui_running')
 
 """""""""""""""""""""""""""""""""""""""
 """ wrap
@@ -104,7 +103,7 @@ set nowritebackup
 """""""""""""""""""""""""""""""""""""""
 set fileformat=unix
 set fileencodings=utf-8,gbk,big5,latin1
-if !ISGUI
+if !GUI_RUNNING
   "set term=xterm-256color
   set termencoding=utf-8
   """ input method
@@ -213,7 +212,7 @@ set guioptions-=m
 set guioptions-=T
 "set background=light
 set background=dark
-if ISGUI
+if GUI_RUNNING
   set t_Co=256
   "colorscheme solarized
   "colorscheme base16-ocean
@@ -346,12 +345,12 @@ imap <End>  <C-o><End>
 cmap w!! %!sudo tee > /dev/null %
 
 " copy/paste from system clipboard
-if OS == 'Linux'
+if OSUNAME == 'Linux'
   nmap <leader>c "+y
   "nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
   nmap <leader>p :r !xsel -p<CR>
   vmap <leader>c "+y
-elseif OS == 'Darwin'
+elseif OSUNAME == 'Darwin'
   set clipboard=unnamed
   nmap <leader>p :r !pbpaste<CR>
 endif
@@ -386,7 +385,6 @@ inoremap jj <ESC>
 """""""""""""""""""""""""""""""""""""""
 "
 "          Plugin settings
-"          ===============
 "
 """""""""""""""""""""""""""""""""""""""
 
@@ -453,7 +451,7 @@ let g:ctrlp_open_new_file = 'r'
 """ vim-airline
 """""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
-if !ISGUI
+if !GUI_RUNNING
   " disable airline in cli
   "" let g:airline_powerline_fonts = 0
 endif
