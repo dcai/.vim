@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 "               Vundle
-"               ======
+"
 """""""""""""""""""""""""""""""""""""""
 filetype off
 
@@ -11,35 +11,33 @@ call vundle#rc(expand(BUNDLEDIR))
 if isdirectory(expand(BUNDLEDIR))
 call vundle#begin()
 " Utils
-" =======
+" =====
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'jlanzarotta/bufexplorer'
-Plugin 'terryma/vim-smooth-scroll'
-Plugin 'matchit.zip'
 Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-" a funcy start screen for vim
+" Funcy start screen for vim
 Plugin 'mhinz/vim-startify'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'godlygeek/tabular'
-Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'vimwiki/vimwiki'
-"Plugin 'scrooloose/syntastic'
 Plugin 'rking/ag.vim'
 Plugin 'tyru/open-browser.vim'
+"Plugin 'vimwiki/vimwiki'
 "Plugin 'maxbrunsfeld/vim-yankstack'
-Plugin 'thinca/vim-visualstar'
 "Plugin 'kien/rainbow_parentheses.vim'
-"Plugin 'junegunn/goyo.vim'
+
+" manipulate text
+" ===============
+Plugin 'terryma/vim-smooth-scroll'
+Plugin 'matchit.zip'
+Plugin 'tpope/vim-surround'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'godlygeek/tabular'
 Plugin 'vasconcelloslf/vim-interestingwords'
+Plugin 'thinca/vim-visualstar'
 Plugin 'reedes/vim-lexical'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'keith/tmux.vim'
-Plugin 'tpope/vim-fugitive'
 
 " Snippets and auto complete
 " ==========================
@@ -47,6 +45,12 @@ Plugin 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+" dev support
+" ===========
+Plugin 'tpope/vim-fugitive'
+Plugin 'editorconfig/editorconfig-vim'
+"Plugin 'scrooloose/syntastic'
 
 " HTML
 " ====
@@ -78,6 +82,7 @@ Plugin 'nginx.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'lambdatoast/elm.vim'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'keith/tmux.vim'
 
 " Color
 " =====
