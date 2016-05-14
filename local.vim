@@ -20,26 +20,28 @@ filetype plugin indent on
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
-                \.bbl,.blg,.brf,.cb,.ind,.idx,
-                \.ilg,.inx,.out,.toc,.class,.pyc
+      \.bbl,.blg,.brf,.cb,.ind,.idx,
+      \.ilg,.inx,.out,.toc,.class,.pyc
 
 set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags
 
 if exists("syntax_on")
-    syntax reset
+  syntax reset
 else
-    syntax on
+  syntax on
 endif
 
 filetype plugin indent on
 set history=100
 set autoread
 set spelllang=en
+" vim spellfile must end with .{encoding}.add
+"set spellfile=~/Dropbox/etc/user.dict.utf-8.add
 set mouse=a
 set noerrorbells
 set visualbell
 set showcmd
-" Avoid hit ENTER to continue
+" Avoid hit ENTER to continue normal
 set shortmess=a
 "set ve[rsion]
 set ve=all
@@ -103,11 +105,11 @@ set nowritebackup
 set fileformat=unix
 set fileencodings=utf-8,gbk,big5,latin1
 if !ISGUI
-    "set term=xterm-256color
-    set termencoding=utf-8
-    """ input method
-    "set imactivatekey=C-space
-    "inoremap <ESC> <ESC>:set iminsert=0<CR>
+  "set term=xterm-256color
+  set termencoding=utf-8
+  """ input method
+  "set imactivatekey=C-space
+  "inoremap <ESC> <ESC>:set iminsert=0<CR>
 endif
 "set enc=utf-8
 if has ('multi_byte') && v:version > 601
@@ -118,18 +120,18 @@ endif
 
 " Common code for encodings, used by *.nfo files
 function! SetFileEncodings(encodings)
-    let b:myfileencodingsbak=&fileencodings
-    let &fileencodings=a:encodings
+  let b:myfileencodingsbak=&fileencodings
+  let &fileencodings=a:encodings
 endfunction
 
 function! RestoreFileEncodings()
-    let &fileencodings=b:myfileencodingsbak
-    unlet b:myfileencodingsbak
+  let &fileencodings=b:myfileencodingsbak
+  unlet b:myfileencodingsbak
 endfunction
 
 " Removes trailing spaces
 function! TrimWhiteSpace()
-    %s/\s\+$//e
+  %s/\s\+$//e
 endfunction
 
 nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
@@ -146,19 +148,19 @@ set smarttab
 """ Vim tip #64
 """""""""""""""""""""""""""""""""""""""
 function! CHANGE_CURR_DIR()
-    let _dir = expand("%:p:h")
-    exec "cd " . _dir  . ""
-    unlet _dir
+  let _dir = expand("%:p:h")
+  exec "cd " . _dir  . ""
+  unlet _dir
 endfunction
 "autocmd BufEnter * call CHANGE_CURR_DIR()
 " http://vim.wikia.com/wiki/VimTip64
 autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
 
 function! SoftWrap()
-    let s:old_tw = &textwidth
-    set tw=999999
-    normal gggqG
-    let &tw = s:old_tw
+  let s:old_tw = &textwidth
+  set tw=999999
+  normal gggqG
+  let &tw = s:old_tw
 endfunction
 
 " Persistent undo
@@ -174,18 +176,18 @@ set undofile " Create FILE.un~ files for persistent undo
 """""""""""""""""""""""""""""""""""""""
 " From an idea by Michael Naumann
 "function! VisualSearch(direction) range
-  "let l:saved_reg = @"
-  ":echo 'test'
-  "execute "normal! vgvy"
-  "let l:pattern = escape(@", '\\/.*$^~[]')
-  "let l:pattern = substitute(l:pattern, "\n$", "", "")
-  "if a:direction == 'b'
-    "execute "normal ?" . l:pattern . "^M"
-  "else
-    "execute "normal /" . l:pattern . "^M"
-  "endif
-  "let @/ = l:pattern
-  "let @" = l:saved_reg
+"let l:saved_reg = @"
+":echo 'test'
+"execute "normal! vgvy"
+"let l:pattern = escape(@", '\\/.*$^~[]')
+"let l:pattern = substitute(l:pattern, "\n$", "", "")
+"if a:direction == 'b'
+"execute "normal ?" . l:pattern . "^M"
+"else
+"execute "normal /" . l:pattern . "^M"
+"endif
+"let @/ = l:pattern
+"let @" = l:saved_reg
 "endfunction
 
 "" Basically you press * or # to search
@@ -212,70 +214,70 @@ set guioptions-=T
 "set background=light
 set background=dark
 if ISGUI
-    set t_Co=256
-    "colorscheme solarized
-    "colorscheme base16-ocean
-    "colorscheme base16-bright
-    "colorscheme base16-pop
-    "colorscheme base16-google
-    "colorscheme base16-eighties
-    colorscheme base16-chalk
-    "colorscheme peaksea
-    "colorscheme blue
-    "colorscheme darkblue
-    "colorscheme desert
-    "colorscheme elflord
-    "colorscheme evening
-    "colorscheme koehler
-    "colorscheme morning
-    "colorscheme murphy
-    "colorscheme pablo
-    "colorscheme peachpuff
-    "colorscheme ron
-    "colorscheme slate
-    "colorscheme torte
-    if or(has("gui_qt"), has('gui_gtk2'))
-        "set guifont=Inconsolata\ 14
-        "set guifont=DejaVu\ Sans\ Mono\ 12
-        "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
-        set guifont=FantasqueSansMono\ 14
-    else
-        "set guifont=Monaco:h14
-        "set guifont=Hack:h14
-        " Powerline fonts
-        "set guifont=Anonymous\ Pro\ for\ Powerline:h16
-        "set guifont=Cousine\ for\ Powerline:h16
-        "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
-        "set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline:h16
-        "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
-        "set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h16
-        "set guifont=Fira\ Mono\ for\ Powerline:h16
-        "set guifont=Fira\ Mono\ Medium\ for\ Powerline:h16
-        "set guifont=Inconsolata\ for\ Powerline:h14
-        "set guifont=Inconsolata-dz\ for\ Powerline:h14
-        "set guifont=Inconsolata-g\ for\ Powerline:h14
-        "set guifont=Liberation\ Mono\ for\ Powerline:h16
-        "set guifont=Meslo\ LG\ L\ DZ\ for\ Powerline:h14
-        "set guifont=Meslo\ LG\ L\ for\ Powerline:h14
-        "set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h14
-        "set guifont=Meslo\ LG\ M\ for\ Powerline:h14
-        "set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline:h14
-        "set guifont=Meslo\ LG\ S\ for\ Powerline:h14
-        "set guifont=monofur\ for\ Powerline:h18
-        "set guifont=Roboto\ Mono\ for\ Powerline:h16
-        "set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
-        "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h14
-        "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h15
-        set guifont=Source\ Code\ Pro\ for\ Powerline:h16
-        "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-    endif
+  set t_Co=256
+  "colorscheme solarized
+  "colorscheme base16-ocean
+  "colorscheme base16-bright
+  "colorscheme base16-pop
+  "colorscheme base16-google
+  "colorscheme base16-eighties
+  colorscheme base16-chalk
+  "colorscheme peaksea
+  "colorscheme blue
+  "colorscheme darkblue
+  "colorscheme desert
+  "colorscheme elflord
+  "colorscheme evening
+  "colorscheme koehler
+  "colorscheme morning
+  "colorscheme murphy
+  "colorscheme pablo
+  "colorscheme peachpuff
+  "colorscheme ron
+  "colorscheme slate
+  "colorscheme torte
+  if or(has("gui_qt"), has('gui_gtk2'))
+    "set guifont=Inconsolata\ 14
+    "set guifont=DejaVu\ Sans\ Mono\ 12
+    "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
+    set guifont=FantasqueSansMono\ 14
+  else
+    "set guifont=Monaco:h14
+    "set guifont=Hack:h14
+    " Powerline fonts
+    "set guifont=Anonymous\ Pro\ for\ Powerline:h16
+    "set guifont=Cousine\ for\ Powerline:h16
+    "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
+    "set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline:h16
+    "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+    "set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h16
+    "set guifont=Fira\ Mono\ for\ Powerline:h16
+    "set guifont=Fira\ Mono\ Medium\ for\ Powerline:h16
+    "set guifont=Inconsolata\ for\ Powerline:h14
+    "set guifont=Inconsolata-dz\ for\ Powerline:h14
+    "set guifont=Inconsolata-g\ for\ Powerline:h14
+    "set guifont=Liberation\ Mono\ for\ Powerline:h16
+    "set guifont=Meslo\ LG\ L\ DZ\ for\ Powerline:h14
+    "set guifont=Meslo\ LG\ L\ for\ Powerline:h14
+    "set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h14
+    "set guifont=Meslo\ LG\ M\ for\ Powerline:h14
+    "set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline:h14
+    "set guifont=Meslo\ LG\ S\ for\ Powerline:h14
+    "set guifont=monofur\ for\ Powerline:h18
+    "set guifont=Roboto\ Mono\ for\ Powerline:h16
+    "set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
+    "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
+    set guifont=Roboto\ Mono\ Light\ for\ Powerline:h15
+    "set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+    "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
+  endif
 else
-    "colorscheme slate
-    "colorscheme desert
-    "colorscheme elflord
-    "colorscheme solarized
-    "colorscheme base16-default
-    "colorscheme peaksea
+  "colorscheme slate
+  "colorscheme desert
+  "colorscheme elflord
+  "colorscheme solarized
+  "colorscheme base16-default
+  "colorscheme peaksea
 endif
 
 """""""""""""""""""""""""""""""""""""""
@@ -345,13 +347,13 @@ cmap w!! %!sudo tee > /dev/null %
 
 " copy/paste from system clipboard
 if OS == 'Linux'
-    nmap <leader>c "+y
-    "nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
-    nmap <leader>p :r !xsel -p<CR>
-    vmap <leader>c "+y
+  nmap <leader>c "+y
+  "nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
+  nmap <leader>p :r !xsel -p<CR>
+  vmap <leader>c "+y
 elseif OS == 'Darwin'
-    set clipboard=unnamed
-    nmap <leader>p :r !pbpaste<CR>
+  set clipboard=unnamed
+  nmap <leader>p :r !pbpaste<CR>
 endif
 
 vmap j gj
@@ -420,26 +422,26 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
-    \ 'file': '\v\.(exe|so|dll|jar|pdf|doc|pyc|class|jpg|png|gif)$',
-    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-    \ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
+      \ 'file': '\v\.(exe|so|dll|jar|pdf|doc|pyc|class|jpg|png|gif)$',
+      \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+      \ }
 "let g:ctrlp_use_caching = 1
 "let g:cachedir=$HOME . "/.ctrlp_cache"
 "if !isdirectory(expand(cachedir))
-  "call mkdir(expand(cachedir))
+"call mkdir(expand(cachedir))
 "endif
 "let g:ctrlp_cache_dir = cachedir
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
-    " Use Ag over Grep
-    set grepprg=ag\ --nogroup\ --nocolor
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 "t - in a new tab.
 "h - in a new horizontal split.
@@ -452,16 +454,16 @@ let g:ctrlp_open_new_file = 'r'
 """""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
 if !ISGUI
-    "let g:airline_powerline_fonts = 0
+  " disable airline in cli
+  "" let g:airline_powerline_fonts = 0
 endif
 let g:airline_theme='term'
-"let g:airline_theme='solarized'
 let g:Powerline_symbols = 'fancy'
 """ Number of colors
 set fillchars+=stl:\ ,stlnc:\
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 "let g:airline_left_sep = '»'
 "let g:airline_left_sep = '▶'
@@ -485,18 +487,18 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_semantic_triggers =  {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-  \             're!\[.*\]\s'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'erlang' : [':'],
-  \ }
+      \   'c' : ['->', '.'],
+      \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+      \             're!\[.*\]\s'],
+      \   'ocaml' : ['.', '#'],
+      \   'cpp,objcpp' : ['->', '.', '::'],
+      \   'perl' : ['->'],
+      \   'php' : ['->', '::'],
+      \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+      \   'ruby' : ['.', '::'],
+      \   'lua' : ['.', ':'],
+      \   'erlang' : [':'],
+      \ }
 
 """""""""""""""""""""""""""""""""""""""
 """ SuperTab
@@ -545,19 +547,19 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_CJK_length = 1
 let g:mainwiki = {
-            \ 'auto_export':      0,
-            \ 'custom_wiki2html': '~/Dropbox/src/php/phpvimwiki/main.php',
-            \ 'path':             '~/Dropbox/mysite/contents/wiki/',
-            \ 'path_html':        '~/Dropbox/mysite/output/wiki/',
-            \ 'template_path':    '~/Dropbox/mysite/contents/wiki/templates',
-            \ 'template_default': 'default',
-            \ 'template_ext':     '.tpl',
-            \ 'syntax':           'markdown',
-            \ 'ext':              '.md',
-            \ 'css_name':         'wikistyle.css',
-            \ 'list_margin':      0,
-            \ 'diary_rel_path':   'diary/',
-            \ }
+      \ 'auto_export':      0,
+      \ 'custom_wiki2html': '~/Dropbox/src/php/phpvimwiki/main.php',
+      \ 'path':             '~/Dropbox/mysite/contents/wiki/',
+      \ 'path_html':        '~/Dropbox/mysite/output/wiki/',
+      \ 'template_path':    '~/Dropbox/mysite/contents/wiki/templates',
+      \ 'template_default': 'default',
+      \ 'template_ext':     '.tpl',
+      \ 'syntax':           'markdown',
+      \ 'ext':              '.md',
+      \ 'css_name':         'wikistyle.css',
+      \ 'list_margin':      0,
+      \ 'diary_rel_path':   'diary/',
+      \ }
 let g:vimwiki_list = [mainwiki]
 ":map <leader>ww <Nop>
 ":map <leader>wt <Nop>
@@ -578,23 +580,23 @@ map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_durati
 """ Rainbow parentheses
 """""""""""""""""""""""""""""""""""""""
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['black',       'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \ ]
 
 """""""""""""""""""""""""""""""""""""""
 """ Hightlight interesting words
