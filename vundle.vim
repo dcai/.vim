@@ -6,9 +6,9 @@ filetype off
 
 let g:BUNDLEDIR='$HOME/.local/share/vimbundle'
 let &runtimepath.=','.expand(BUNDLEDIR . '/Vundle.vim')
-call vundle#rc(expand(BUNDLEDIR))
 
 if isdirectory(expand(BUNDLEDIR))
+call vundle#rc(expand(BUNDLEDIR))
 call vundle#begin()
 " Utils
 " =====
