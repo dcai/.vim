@@ -65,7 +65,7 @@ Plugin 'gavocanov/vim-js-indent'
 Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'marijnh/tern_for_vim'
-"Plugin 'leafgarland/typescript-vim'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'moll/vim-node'
 Plugin 'dcai/vim-react-es6-snippets'
 
