@@ -23,7 +23,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
-set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags
+set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags,/Users/dcai/src/news-quickstart/www/wp/tags 
 
 if exists("syntax_on")
   syntax reset
