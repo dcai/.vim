@@ -3,5 +3,5 @@ set makeprg=php\ -l\ %
 set errorformat=%m\ in\ %f\ on\ line\ %l
 set autoindent
 set expandtab
-set shiftwidth=8
-set tabstop=8
+set shiftwidth=4
+set tabstop=4

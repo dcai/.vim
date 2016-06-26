@@ -23,7 +23,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
-set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags,/Users/dcai/src/news-quickstart/www/wp/tags 
+set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags,
+      \/Users/dcai/src/news-quickstart/www/wp/tags
 
 if exists("syntax_on")
   syntax reset
@@ -235,11 +236,12 @@ if GUI_RUNNING
   "colorscheme ron
   "colorscheme slate
   "colorscheme torte
-  if or(has("gui_qt"), has('gui_gtk2'))
+  if or(or(has("gui_qt"), has('gui_gtk2')), has('gui_gtk3'))
     "set guifont=Inconsolata\ 14
     "set guifont=DejaVu\ Sans\ Mono\ 12
     "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
     set guifont=FantasqueSansMono\ 14
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 14
   else
     "set guifont=Monaco:h14
     "set guifont=Hack:h14
@@ -266,9 +268,9 @@ if GUI_RUNNING
     "set guifont=Roboto\ Mono\ for\ Powerline:h16
     "set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
     "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
-    set guifont=Roboto\ Mono\ Light\ for\ Powerline:h15
-    "set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+    "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
     "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h16
   endif
 else
   "colorscheme slate
