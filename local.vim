@@ -139,6 +139,7 @@ nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 """ Indent setting
 """""""""""""""""""""""""""""""""""""""
 set expandtab
+set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set smarttab
@@ -270,11 +271,11 @@ if GUI_RUNNING
     "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
     "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
     "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h17
   endif
 else
   "colorscheme slate
-  "colorscheme desert
+  colorscheme desert
   "colorscheme elflord
   "colorscheme solarized
   "colorscheme base16-default
