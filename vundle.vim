@@ -92,6 +92,6 @@ Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
 else
-  call mkdir(expand(BUNDLEDIR))
+  call mkdir(expand(BUNDLEDIR), "p")
   call system('cd ' . expand(BUNDLEDIR) . '; git clone https://github.com/VundleVim/Vundle.vim.git')
 endif
