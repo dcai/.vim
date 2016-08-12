@@ -9,7 +9,6 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 set nocompatible
-
 filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""
@@ -271,7 +270,7 @@ if GUI_RUNNING
     "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
     "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
     "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h17
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h13
   endif
 else
   "colorscheme slate
@@ -405,7 +404,7 @@ map <c-l> :BufExplorer<cr>
 """""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
-map <c-a> :NERDTreeToggle<cr>
+nmap <c-a> :NERDTreeToggle<cr>
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeIgnore = ['\.vim$', '\~$']
 let g:NERDTreeBookmarksFile = $HOME . '/.NERDTreeBookmarks'
@@ -416,11 +415,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 """""""""""""""""""""""""""""""""""""""
 """ ctrl-p/ctrlp
 """""""""""""""""""""""""""""""""""""""
-map <Leader>mru :CtrlPMRU<cr>
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_mruf_exclude = '/tmp/.*\|/var/tmp/.*|COMMIT_EDITMSG'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
