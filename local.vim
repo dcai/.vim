@@ -9,7 +9,6 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 set nocompatible
-filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""
 "             Core setting
@@ -31,12 +30,9 @@ else
   syntax on
 endif
 
-filetype plugin indent on
 set history=100
 set autoread
 set spelllang=en
-" vim spellfile must end with .{encoding}.add
-"set spellfile=~/Dropbox/etc/user.dict.utf-8.add
 set mouse=a
 set noerrorbells
 set visualbell
@@ -66,7 +62,7 @@ let g:GUI_RUNNING=has('gui_running')
 " http://blog.ezyang.com/2010/03/vim-textwidth/
 set wrap
 set linebreak
-"set textwidth=80
+set textwidth=72
 set formatoptions=cqt
 set wrapmargin=0
 " note trailing space at end of next line
@@ -133,7 +129,6 @@ function! TrimWhiteSpace()
   %s/\s\+$//e
 endfunction
 
-nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 """""""""""""""""""""""""""""""""""""""
 """ Indent setting
 """""""""""""""""""""""""""""""""""""""
@@ -327,13 +322,19 @@ set statusline+=\ %P     "percent through file
 """""""""""""""""""""""""""""""""""""""
 """ key mappings
 """""""""""""""""""""""""""""""""""""""
+set timeout
+set ttimeoutlen=2000
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 
-" unmap
-"unmap q:
+nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
+
+" not go into Ex mode
+" or use unmap
+map q: <nop>
+nnoremap Q <nop>
 
 " Press <Home> or <End> to the 1st and last
 " char of the line
@@ -364,22 +365,21 @@ vmap <Up> gk
 
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
-" not go into Ex mode
-nmap Q <nop>
 " kill hlsearch until next time
 nmap <silent> <Leader>/ :nohlsearch<CR>
 nmap <Down> gj
 nmap <Up> gk
 
-map <leader>e :e! $HOME/.vim/local.vim<cr>
-map <leader>a :source $HOME/.vim/vimrc<cr>
-map <leader>d :bd!<cr>
-map <leader>q :q<cr>
-map <leader>w :w!<cr>
+map <leader>fed :e! $HOME/.vim/local.vim<cr>
+map <leader>feR :source $HOME/.vim/vimrc<cr>
+map <leader>bb :BufExplorerHorizontalSplit<cr>
+map <leader>bk :bd!<cr>
+map <leader>qq :q<cr>
+map <leader>ff :CtrlPMixed<cr>
 map <leader>fs :w!<cr>
 map <leader>fw :w !sudo tee > /dev/null %<cr>
 "map <leader>u :set fileencoding=utf8<cr>
-map <leader>i <ESC>:r! cat<CR>
+map <leader>paste <ESC>:r! cat<CR>
 
 map Q gqip
 map QQ gggqG
@@ -536,10 +536,10 @@ let g:syntastic_typescript_checkers = ['tslint']
 """""""""""""""""""""""""""""""""""""""
 """ Tabular
 """""""""""""""""""""""""""""""""""""""
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>t= :Tabularize /=<CR>
+vmap <Leader>t= :Tabularize /=<CR>
+nmap <Leader>t: :Tabularize /:\zs<CR>
+vmap <Leader>t: :Tabularize /:\zs<CR>
 
 """""""""""""""""""""""""""""""""""""""
 """ vimwiki
@@ -612,14 +612,16 @@ nnoremap <silent> N :call WordNavigation('backward')<cr>
 """ Vundle
 """""""""""""""""""""""""""""""""""""""
 
-nnoremap <leader>pi :PluginInstall<cr>
-nnoremap <leader>pc :PluginClean<cr>
+nnoremap <leader>vpi :PluginInstall<cr>
+nnoremap <leader>vpc :PluginClean<cr>
 """""""""""""""""""""""""""""""""""""""
 """ vim-lexical
 """""""""""""""""""""""""""""""""""""""
 let g:lexical#spell = 1
 let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur.txt',]
 let g:lexical#dictionary = ['/usr/share/dict/words',]
+" vim spellfile must end with .{encoding}.add
+"set spellfile=~/Dropbox/etc/user.dict.utf-8.add
 let g:lexical#spellfile = ['~/.vim/spell/en.utf-8.add',]
 let g:lexical#spelllang = ['en_us','en_au',]
 let g:lexical#thesaurus_key = '<leader>tt'
