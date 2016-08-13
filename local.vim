@@ -322,8 +322,8 @@ set statusline+=\ %P     "percent through file
 """""""""""""""""""""""""""""""""""""""
 """ key mappings
 """""""""""""""""""""""""""""""""""""""
-set timeout
-set ttimeoutlen=2000
+"set timeout
+"set ttimeoutlen=2000
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
@@ -370,16 +370,17 @@ nmap <silent> <Leader>/ :nohlsearch<CR>
 nmap <Down> gj
 nmap <Up> gk
 
-map <leader>fed :e! $HOME/.vim/local.vim<cr>
-map <leader>feR :source $HOME/.vim/vimrc<cr>
-map <leader>bb :BufExplorerHorizontalSplit<cr>
-map <leader>bk :bd!<cr>
-map <leader>qq :q<cr>
-map <leader>ff :CtrlPMixed<cr>
-map <leader>fs :w!<cr>
+nmap <leader>fed :e! $HOME/.vim/local.vim<cr>
+nmap <leader>feR :source $HOME/.vim/vimrc<cr>
+nmap <leader>bb :BufExplorerHorizontalSplit<cr>
+nmap <leader>bk :bd!<cr>
+nmap <leader>kk :close<cr>
+nmap <leader>zz :quit<cr>
+nmap <leader>ff :CtrlPMixed<cr>
+nmap <leader>fs :w!<cr>
 map <leader>fw :w !sudo tee > /dev/null %<cr>
-"map <leader>u :set fileencoding=utf8<cr>
-map <leader>paste <ESC>:r! cat<CR>
+"nmap <leader>u :set fileencoding=utf8<cr>
+nmap <leader>paste <ESC>:r! cat<CR>
 
 map Q gqip
 map QQ gggqG
@@ -398,8 +399,8 @@ inoremap jj <ESC>
 
 let g:bufExplorerDisableDefaultKeyMapping=0
 let g:bufExplorerDefaultHelp=1
-"map <c-j> <ESC>:bn<CR>
-"map <c-k> <ESC>:bp<CR>
+map <c-j> <ESC>:bn<CR>
+map <c-k> <ESC>:bp<CR>
 map <c-l> :BufExplorer<cr>
 
 """""""""""""""""""""""""""""""""""""""
