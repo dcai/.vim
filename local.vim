@@ -327,10 +327,10 @@ set statusline+=\ %P     "percent through file
 """""""""""""""""""""""""""""""""""""""
 """ key mappings
 """""""""""""""""""""""""""""""""""""""
-let mapleader = ","
-let g:mapleader = ","
-let maplocalleader = ","
-let g:maplocalleader = ","
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
 
 " unmap
 "unmap q:
@@ -376,6 +376,7 @@ map <leader>a :source $HOME/.vim/vimrc<cr>
 map <leader>d :bd!<cr>
 map <leader>q :q<cr>
 map <leader>w :w!<cr>
+map <leader>fs :w!<cr>
 map <leader>fw :w !sudo tee > /dev/null %<cr>
 "map <leader>u :set fileencoding=utf8<cr>
 map <leader>i <ESC>:r! cat<CR>
