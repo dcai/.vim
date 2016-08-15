@@ -24,6 +24,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rking/ag.vim'
 Plugin 'tyru/open-browser.vim'
+" highlight trailing whitespaces
+Plugin 'bronson/vim-trailing-whitespace'
 "Plugin 'vimwiki/vimwiki'
 "Plugin 'maxbrunsfeld/vim-yankstack'
 "Plugin 'kien/rainbow_parentheses.vim'
@@ -73,6 +75,7 @@ Plugin 'dcai/vim-react-es6-snippets'
 " ==========
 Plugin 'jwalton512/vim-blade'
 Plugin 'evidens/vim-twig'
+Plugin '2072/PHP-Indenting-for-VIm'
 
 " Other syntax
 " ============
