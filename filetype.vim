@@ -31,8 +31,7 @@ autocmd BufReadPost *.nfo call RestoreFileEncodings()
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufRead,BufNewfile nginx.conf set ft=nginx
 autocmd BufRead,BufNewFile /private/etc/nginx/* set ft=nginx
-autocmd BufEnter /etc/nginx/* :%s/\s\+$//e
-autocmd BufEnter /etc/nginx/* :%s/[ \t\r]\+$//e
+autocmd BufEnter /etc/nginx/* call TrimWhiteSpace()
 autocmd BufRead,BufNewFile */nginx/* set ft=nginx
 """"""""""""""""""""""""""""""
 " supervisor
@@ -45,9 +44,8 @@ autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
 """"""""""""""""""""""""""""""
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufRead *.py set nocindent
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-"autocmd BufEnter *.py :%s/\s\+$//e
-"autocmd BufEnter *.py :%s/[ \t\r]\+$//e
+"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+autocmd BufEnter *.py call TrimWhiteSpace()
 
 """"""""""""""""""""""""""""""
 " PHP
@@ -60,9 +58,9 @@ autocmd FileType php let php_sql_query=1
 "autocmd FileType php let php_htmlInStrings=1
 " discourages use oh short tags. c'mon its deprecated remember
 autocmd FileType php let php_noShortTags=1
-autocmd BufEnter *.php :%s/\s\+$//e
-autocmd BufEnter *.php :%s/[ \t\r]\+$//e
-au BufRead /tmp/mutt-* set tw=72
+autocmd BufEnter *.php call TrimWhiteSpace()
+
+
 autocmd BufRead,BufNewFile *.phps set filetype=php
 " Drupal files
 autocmd BufRead,BufNewFile *.install set filetype=php
@@ -70,10 +68,8 @@ autocmd BufRead,BufNewFile *.module set filetype=php
 """"""""""""""""""""""""""""""
 " Javascript
 """"""""""""""""""""""""""""""
-autocmd BufEnter *.js :%s/\s\+$//e
-autocmd BufEnter *.js :%s/[ \t\r]\+$//e
-autocmd BufEnter *.jsx :%s/\s\+$//e
-autocmd BufEnter *.jsx :%s/[ \t\r]\+$//e
+autocmd BufEnter *.js call TrimWhiteSpace()
+autocmd BufEnter *.jsx call TrimWhiteSpace()
 """"""""""""""""""""""""""""""
 " Typescript
 """"""""""""""""""""""""""""""
@@ -82,11 +78,9 @@ autocmd BufRead,BufNewFile *.ts set filetype=typescript
 """"""""""""""""""""""""""""""
 " OBJC
 """""""""""""""""""""""""""""""
-autocmd BufEnter *.h :%s/\s\+$//e
-autocmd BufEnter *.h :%s/[ \t\r]\+$//e
+autocmd BufEnter *.h call TrimWhiteSpace()
+autocmd BufEnter *.m call TrimWhiteSpace()
 
-autocmd BufEnter *.m :%s/\s\+$//e
-autocmd BufEnter *.m :%s/[ \t\r]\+$//e
 """"""""""""""""""""""""""""""
 " markdown
 """""""""""""""""""""""""""""""
@@ -95,6 +89,7 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 """"""""""""""""""""""""""""""
 " Misc
 """""""""""""""""""""""""""""""
+au BufRead /tmp/mutt-* set tw=72
 autocmd BufRead,BufNewFile *.scala set filetype=scala
 autocmd BufNewFile,BufRead *.less setf less
 autocmd BufRead,BufNewFile *.json set filetype=javascript

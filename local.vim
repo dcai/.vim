@@ -15,6 +15,11 @@ set nocompatible
 "
 """""""""""""""""""""""""""""""""""""""
 
+" this enables filetype specific plugin and indent files
+" must enable this
+" run :filetype see status
+filetype plugin indent on
+
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
@@ -62,7 +67,7 @@ let g:GUI_RUNNING=has('gui_running')
 " http://blog.ezyang.com/2010/03/vim-textwidth/
 set wrap
 set linebreak
-set textwidth=72
+"set textwidth=72
 set formatoptions=cqt
 set wrapmargin=0
 " note trailing space at end of next line
@@ -127,6 +132,7 @@ endfunction
 " Removes trailing spaces
 function! TrimWhiteSpace()
   %s/\s\+$//e
+  %s/[ \t\r]\+$//e
 endfunction
 
 """""""""""""""""""""""""""""""""""""""
@@ -137,6 +143,7 @@ set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set smarttab
+set smartindent
 
 """""""""""""""""""""""""""""""""""""""
 """ Keep in curr dir
@@ -378,7 +385,7 @@ nmap <leader>kk :close<cr>
 nmap <leader>zz :quit<cr>
 nmap <leader>ff :CtrlPMixed<cr>
 nmap <leader>fs :w!<cr>
-map <leader>fw :w !sudo tee > /dev/null %<cr>
+"map <leader>fw :w !sudo tee > /dev/null %<cr>
 "nmap <leader>u :set fileencoding=utf8<cr>
 nmap <leader>paste <ESC>:r! cat<CR>
 
