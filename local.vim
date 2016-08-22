@@ -26,8 +26,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
-set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags,
-      \/Users/dcai/src/news-quickstart/www/wp/tags
+" http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
+set tags=tags;
 
 if exists("syntax_on")
   syntax reset
