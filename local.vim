@@ -558,6 +558,12 @@ nmap <Leader>t= :Tabularize /=<CR>
 vmap <Leader>t= :Tabularize /=<CR>
 nmap <Leader>t: :Tabularize /:\zs<CR>
 vmap <Leader>t: :Tabularize /:\zs<CR>
+"""""""""""""""""""""""""""""""""""""""
+"""  vim-phpfmt
+"""""""""""""""""""""""""""""""""""""""
+" A standard type: PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
+let g:phpfmt_standard = 'PSR2'
+let g:phpfmt_autosave = 1
 
 """""""""""""""""""""""""""""""""""""""
 """ vimwiki
