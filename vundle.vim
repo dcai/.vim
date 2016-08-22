@@ -40,6 +40,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'vasconcelloslf/vim-interestingwords'
 Plugin 'thinca/vim-visualstar'
 Plugin 'reedes/vim-lexical'
+Plugin 'gorkunov/smartgf.vim'
 
 " Snippets and auto complete
 " ==========================
@@ -52,7 +53,7 @@ Plugin 'honza/vim-snippets'
 " ===========
 Plugin 'tpope/vim-fugitive'
 Plugin 'editorconfig/editorconfig-vim'
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 
 " HTML
 " ====
@@ -75,6 +76,7 @@ Plugin 'dcai/vim-react-es6-snippets'
 " ==========
 Plugin 'jwalton512/vim-blade'
 Plugin 'evidens/vim-twig'
+Plugin 'beanworks/vim-phpfmt'
 Plugin '2072/PHP-Indenting-for-VIm'
 
 " Other syntax
