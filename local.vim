@@ -383,7 +383,7 @@ nmap <leader>feR :source $HOME/.vim/vimrc<cr>
 nmap <leader>bb :BufExplorerHorizontalSplit<cr>
 nmap <leader>bk :bd!<cr>
 nmap <leader>kk :close<cr>
-nmap <leader>zz :quit<cr>
+nmap <leader>qq :quit<cr>
 nmap <leader>ff :CtrlPMixed<cr>
 nmap <leader>fs :w!<cr>
 "map <leader>fw :w !sudo tee > /dev/null %<cr>
