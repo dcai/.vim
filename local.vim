@@ -42,6 +42,7 @@ set mouse=a
 set noerrorbells
 set visualbell
 set showcmd
+set hidden
 " Avoid hit ENTER to continue normal
 set shortmess+=ac
 "set ve[rsion]
