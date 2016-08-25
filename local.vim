@@ -496,6 +496,20 @@ let g:airline_symbols.linenr = '␊'
 """ YouCompleteMe
 """""""""""""""""""""""""""""""""""""""
 " make YCM compatible with UltiSnips
+let g:ycm_filetype_blacklist = {
+  \ 'json': 1,
+  \ 'tagbar' : 1,
+  \ 'qf' : 1,
+  \ 'notes' : 1,
+  \ 'markdown' : 1,
+  \ 'unite' : 1,
+  \ 'text' : 1,
+  \ 'vimwiki' : 1,
+  \ 'pandoc' : 1,
+  \ 'infolog' : 1,
+  \ 'mail' : 1
+  \}
+
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_autoclose_preview_window_after_insertion = 1

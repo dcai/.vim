@@ -92,7 +92,7 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 au BufRead /tmp/mutt-* set tw=72
 autocmd BufRead,BufNewFile *.scala set filetype=scala
 autocmd BufNewFile,BufRead *.less setf less
-autocmd BufRead,BufNewFile *.json set filetype=javascript
+"autocmd BufRead,BufNewFile *.json set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=javascript
 autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
