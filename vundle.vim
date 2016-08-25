@@ -63,7 +63,9 @@ Plugin 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
+Plugin 'aaronj1335/underscore-templates.vim'
 Plugin 'gavocanov/vim-js-indent'
+Plugin 'jimmyhchan/dustjs.vim'
 "Plugin 'pangloss/vim-javascript'
 Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
