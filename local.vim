@@ -430,21 +430,23 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 """ ctrl-p/ctrlp
 """""""""""""""""""""""""""""""""""""""
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
+"let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '/tmp/.*\|/var/tmp/.*|COMMIT_EDITMSG'
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
       \ 'file': '\v\.(exe|so|dll|jar|pdf|doc|pyc|class|jpg|png|gif)$',
       \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
       \ }
-"let g:ctrlp_use_caching = 1
-"let g:cachedir=$HOME . "/.ctrlp_cache"
-"if !isdirectory(expand(cachedir))
-"call mkdir(expand(cachedir))
-"endif
-"let g:ctrlp_cache_dir = cachedir
+let g:ctrlp_use_caching = 1
+let g:cachedir=$HOME . "/.ctrlp_cache"
+if !isdirectory(expand(cachedir))
+  call mkdir(expand(cachedir))
+endif
+let g:ctrlp_cache_dir = cachedir
+
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
