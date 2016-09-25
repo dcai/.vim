@@ -17,13 +17,13 @@ Plugin 'jlanzarotta/bufexplorer'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+"Plugin 'Xuyuanp/nerdtree-git-plugin'
 " Funcy start screen for vim
-Plugin 'mhinz/vim-startify'
+"Plugin 'mhinz/vim-startify' " start screen
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'rking/ag.vim'
-Plugin 'tyru/open-browser.vim'
+"Plugin 'rking/ag.vim'
+"Plugin 'tyru/open-browser.vim'
 " highlight trailing whitespaces
 Plugin 'bronson/vim-trailing-whitespace'
 "Plugin 'vimwiki/vimwiki'
@@ -35,12 +35,11 @@ Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'terryma/vim-smooth-scroll'
 Plugin 'matchit.zip'
 Plugin 'tpope/vim-surround'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'godlygeek/tabular'
+"Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'godlygeek/tabular'
 Plugin 'vasconcelloslf/vim-interestingwords'
 Plugin 'thinca/vim-visualstar'
 Plugin 'reedes/vim-lexical'
-Plugin 'gorkunov/smartgf.vim'
 
 " Snippets and auto complete
 " ==========================
@@ -51,19 +50,19 @@ Plugin 'honza/vim-snippets'
 
 " dev support
 " ===========
-Plugin 'tpope/vim-fugitive'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'scrooloose/syntastic'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'editorconfig/editorconfig-vim'
+"Plugin 'scrooloose/syntastic'
 
 " HTML
 " ====
-Plugin 'mattn/emmet-vim'
+"Plugin 'mattn/emmet-vim'
 " close tags
 Plugin 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
-Plugin 'aaronj1335/underscore-templates.vim'
+"Plugin 'aaronj1335/underscore-templates.vim'
 Plugin 'gavocanov/vim-js-indent'
 Plugin 'jimmyhchan/dustjs.vim'
 "Plugin 'pangloss/vim-javascript'
@@ -76,14 +75,14 @@ Plugin 'dcai/vim-react-es6-snippets'
 
 " PHP 5.6
 " ==========
-Plugin 'jwalton512/vim-blade'
+"Plugin 'jwalton512/vim-blade'
 Plugin 'evidens/vim-twig'
 Plugin 'beanworks/vim-phpfmt'
 Plugin '2072/PHP-Indenting-for-VIm'
 
 " Other syntax
 " ============
-Plugin 'rodjek/vim-puppet'
+"Plugin 'rodjek/vim-puppet'
 Plugin 'hdima/python-syntax'
 Plugin 'nginx.vim'
 Plugin 'plasticboy/vim-markdown'
@@ -94,8 +93,8 @@ Plugin 'keith/tmux.vim'
 " Color
 " =====
 Plugin 'vim-scripts/peaksea'
-Plugin 'Solarized'
-Plugin 'chriskempson/base16-vim'
+"Plugin 'Solarized'
+"Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
 else
