@@ -551,8 +551,11 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
+"let g:syntastic_javascript_checkers = ['eslint']
 
-autocmd FileType javascript let b:syntastic_checkers = findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
+autocmd FileType javascript let
+            \b:syntastic_checkers =
+            \findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_id_checkers = 0
 let g:syntastic_always_populate_loc_list = 1
@@ -563,7 +566,6 @@ let g:syntastic_php_checkers = ['php']
 let g:syntastic_html_checkers = []
 let g:syntastic_python_checkers = []
 let g:syntastic_java_checkers = []
-let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_typescript_checkers = ['tslint']
 
 let g:syntastic_error_symbol = "✗"
@@ -571,6 +573,20 @@ let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_style_error_symbol = '☡'
 let g:syntastic_style_warning_symbol = '¡'
 let g:syntastic_enable_balloons = 1
+
+"""""""""""""""""""""""""""""""""""""""
+""" pangloss/vim-javascript
+"""""""""""""""""""""""""""""""""""""""
+let g:javascript_conceal_function       = "ƒ"
+let g:javascript_conceal_null           = "ø"
+let g:javascript_conceal_this           = "@"
+let g:javascript_conceal_return         = "⇚"
+let g:javascript_conceal_undefined      = "¿"
+let g:javascript_conceal_NaN            = "ℕ"
+let g:javascript_conceal_prototype      = "¶"
+let g:javascript_conceal_static         = "•"
+let g:javascript_conceal_super          = "Ω"
+let g:javascript_conceal_arrow_function = "⇒"
 
 """""""""""""""""""""""""""""""""""""""
 """ Tabular
@@ -584,7 +600,7 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 """""""""""""""""""""""""""""""""""""""
 " A standard type: PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
 let g:phpfmt_standard = 'PSR2'
-let g:phpfmt_autosave = 1
+let g:phpfmt_autosave = 0
 
 """""""""""""""""""""""""""""""""""""""
 """ vimwiki

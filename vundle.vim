@@ -36,7 +36,7 @@ Plugin 'terryma/vim-smooth-scroll'
 Plugin 'matchit.zip'
 Plugin 'tpope/vim-surround'
 "Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'
 Plugin 'vasconcelloslf/vim-interestingwords'
 Plugin 'thinca/vim-visualstar'
 Plugin 'reedes/vim-lexical'
@@ -52,7 +52,7 @@ Plugin 'honza/vim-snippets'
 " ===========
 "Plugin 'tpope/vim-fugitive'
 "Plugin 'editorconfig/editorconfig-vim'
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 
 " HTML
 " ====
@@ -63,14 +63,13 @@ Plugin 'Raimondi/delimitMate'
 " Javascript
 " ==========
 "Plugin 'aaronj1335/underscore-templates.vim'
-Plugin 'gavocanov/vim-js-indent'
+"Plugin 'othree/yajs.vim'
+"Plugin 'moll/vim-node'
 Plugin 'jimmyhchan/dustjs.vim'
-"Plugin 'pangloss/vim-javascript'
-Plugin 'othree/yajs.vim'
+Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'leafgarland/typescript-vim'
-Plugin 'moll/vim-node'
 Plugin 'dcai/vim-react-es6-snippets'
 
 " PHP 5.6
