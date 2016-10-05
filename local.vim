@@ -44,7 +44,7 @@ set visualbell
 set showcmd
 set hidden
 " Avoid hit ENTER to continue normal
-set shortmess+=ac
+set shortmess+=a
 "set ve[rsion]
 set ve=all
 "more powerful backspacing
