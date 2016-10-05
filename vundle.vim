@@ -92,11 +92,12 @@ Plugin 'keith/tmux.vim'
 " Color
 " =====
 Plugin 'vim-scripts/peaksea'
-"Plugin 'Solarized'
-"Plugin 'chriskempson/base16-vim'
+Plugin 'Solarized'
+Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
 else
+  " VIMBUNDLE directory doesn't exist
   call mkdir(expand(BUNDLEDIR), "p")
   call system('cd ' . expand(BUNDLEDIR) . '; git clone https://github.com/VundleVim/Vundle.vim.git')
 endif

@@ -237,11 +237,11 @@ set guioptions=ar
 set guioptions-=m
 "remove toolbar
 set guioptions-=T
-"set background=light
 set background=dark
 if GUI_RUNNING
   set t_Co=256
-  "colorscheme solarized
+  let base16colorspace=256  " Access colors present in 256 colorspace
+  colorscheme solarized
   "colorscheme base16-ocean
   "colorscheme base16-bright
   "colorscheme base16-pop
@@ -266,7 +266,7 @@ if GUI_RUNNING
     "set guifont=Inconsolata\ 14
     "set guifont=DejaVu\ Sans\ Mono\ 12
     "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
-    set guifont=FantasqueSansMono\ 14
+    "set guifont=FantasqueSansMono\ 14
     set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 14
   else
     "set guifont=Monaco:h14
