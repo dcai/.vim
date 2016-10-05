@@ -384,6 +384,7 @@ nmap <Up> gk
 
 nmap <leader>fed :e! $HOME/.vim/local.vim<cr>
 nmap <leader>feR :source $HOME/.vim/vimrc<cr>
+nmap <leader>cwd :NERDTreeCWD<cr>
 nmap <leader>bb :BufExplorerHorizontalSplit<cr>
 nmap <leader>bk :bd!<cr>
 nmap <leader>kk :close<cr>
