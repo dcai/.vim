@@ -596,6 +596,7 @@ nmap <Leader>t= :Tabularize /=<CR>
 vmap <Leader>t= :Tabularize /=<CR>
 nmap <Leader>t: :Tabularize /:\zs<CR>
 vmap <Leader>t: :Tabularize /:\zs<CR>
+
 """""""""""""""""""""""""""""""""""""""
 """  vim-phpfmt
 """""""""""""""""""""""""""""""""""""""
@@ -631,7 +632,7 @@ map <Leader>wwi <Plug>VimwikiDiaryIndex
 """""""""""""""""""""""""""""""""""""""
 """ vim-smooth-scroll
 """""""""""""""""""""""""""""""""""""""
-let g:smooth_scroll_duration=25
+let g:smooth_scroll_duration=10
 map <silent> <c-u> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 2)<CR>
 map <silent> <c-d> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 2)<CR>
 map <silent> <c-b> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
@@ -639,6 +640,7 @@ map <silent> <c-f> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4
 
 map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
 map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
+
 """""""""""""""""""""""""""""""""""""""
 """ Rainbow parentheses
 """""""""""""""""""""""""""""""""""""""
@@ -666,16 +668,15 @@ let g:rbpt_colorpairs = [
 """""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
 nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
-
 nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
 
 """""""""""""""""""""""""""""""""""""""
 """ Vundle
 """""""""""""""""""""""""""""""""""""""
-
 nnoremap <leader>vpi :PluginInstall<cr>
 nnoremap <leader>vpc :PluginClean<cr>
+
 """""""""""""""""""""""""""""""""""""""
 """ vim-lexical
 """""""""""""""""""""""""""""""""""""""
