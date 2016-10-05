@@ -501,6 +501,7 @@ let g:airline_symbols.linenr = '␊'
 " make YCM compatible with UltiSnips
 let g:ycm_filetype_blacklist = {
   \ 'json': 1,
+  \ 'tags': 1,
   \ 'tagbar' : 1,
   \ 'qf' : 1,
   \ 'notes' : 1,
