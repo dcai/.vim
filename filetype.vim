@@ -91,9 +91,12 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 """""""""""""""""""""""""""""""
 au BufRead /tmp/mutt-* set tw=72
 autocmd BufRead,BufNewFile *.scala set filetype=scala
+autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
+autocmd BufRead,BufNewFile */git/* set filetype=gitconfig
 autocmd BufNewFile,BufRead *.less setf less
 "autocmd BufRead,BufNewFile *.json set filetype=javascript
-autocmd BufRead,BufNewFile .eslintrc set filetype=javascript
+autocmd BufRead,BufNewFile .eslintrc set filetype=json
+autocmd BufRead,BufNewFile .jscsrc set filetype=json
 autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
