@@ -554,10 +554,9 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 "let g:syntastic_javascript_checkers = ['eslint']
-
-autocmd FileType javascript let
-            \b:syntastic_checkers =
-            \findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
+autocmd FileType javascript
+            \ let b:syntastic_checkers =
+            \ findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_id_checkers = 0
 let g:syntastic_always_populate_loc_list = 1
