@@ -40,6 +40,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'vasconcelloslf/vim-interestingwords'
 Plugin 'thinca/vim-visualstar'
 Plugin 'reedes/vim-lexical'
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-function'
+"Plugin 'thinca/vim-textobj-function-javascript'
 
 " Snippets and auto complete
 " ==========================
@@ -66,9 +69,8 @@ Plugin 'Raimondi/delimitMate'
 "Plugin 'othree/yajs.vim'
 "Plugin 'moll/vim-node'
 Plugin 'jimmyhchan/dustjs.vim'
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'marijnh/tern_for_vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'dcai/vim-react-es6-snippets'
 
