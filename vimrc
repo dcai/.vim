@@ -9,5 +9,6 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 
-execute 'source' "$HOME/.vim/vundle.vim"
+"execute 'source' "$HOME/.vim/vundle.vim"
+execute 'source' "$HOME/.vim/plug.vim"
 execute 'source' "$HOME/.vim/local.vim"
