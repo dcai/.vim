@@ -500,6 +500,7 @@ let g:airline_symbols.linenr = '␊'
 """""""""""""""""""""""""""""""""""""""
 " make YCM compatible with UltiSnips
 let g:ycm_filetype_blacklist = {
+  \ 'sql': 1,
   \ 'json': 1,
   \ 'tags': 1,
   \ 'tagbar' : 1,
@@ -535,6 +536,7 @@ let g:ycm_semantic_triggers =  {
 """ SuperTab
 """""""""""""""""""""""""""""""""""""""
 let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
 """""""""""""""""""""""""""""""""""""""
 """ UltiSnips
