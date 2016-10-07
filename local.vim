@@ -88,10 +88,10 @@ let g:GUI_RUNNING=has('gui_running')
 """ wrap
 """""""""""""""""""""""""""""""""""""""
 " http://blog.ezyang.com/2010/03/vim-textwidth/
-"set wrap
-set nowrap
+set wrap
+"set nowrap
 set linebreak
-"set textwidth=72
+set textwidth=72
 set formatoptions=cqt
 set wrapmargin=0
 " note trailing space at end of next line
