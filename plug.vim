@@ -56,7 +56,9 @@ Plug 'godlygeek/tabular'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-function'
+Plug 'kana/vim-textobj-user'
+  \ | Plug 'kana/vim-textobj-function'
+  \ | Plug 'bps/vim-textobj-python', { 'for': 'python' }
   \ | Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
@@ -64,48 +66,37 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " ==========================
 Plug 'ervandew/supertab'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " dev support
 " ===========
 "Plug 'tpope/vim-fugitive'
-"Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/syntastic'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'scrooloose/syntastic', { 'for': ['php', 'python', 'javascript'] }
+"Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
+"Plug 'maralla/validator.vim', { 'for': ['php', 'python', 'javascript'] }
 
 " HTML
 " ====
-"Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 " close tags
 Plug 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
-"Plug 'aaronj1335/underscore-templates.vim'
-"Plug 'othree/yajs.vim'
+"Plug 'othree/yajs.vim', { 'for': 'javascript' }
 "Plug 'moll/vim-node'
 Plug 'jimmyhchan/dustjs.vim'
-"Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'leafgarland/typescript-vim'
 Plug 'dcai/vim-react-es6-snippets'
 
 " PHP 5.6
 " ==========
-"Plug 'jwalton512/vim-blade'
-Plug 'evidens/vim-twig'
-Plug 'beanworks/vim-phpfmt'
-Plug '2072/PHP-Indenting-for-VIm'
+Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
+Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 
 " Other syntax
 " ============
-"Plug 'rodjek/vim-puppet'
-Plug 'hdima/python-syntax'
-Plug 'nginx.vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'lambdatoast/elm.vim'
-Plug 'derekwyatt/vim-scala'
-Plug 'keith/tmux.vim'
+Plug 'sheerun/vim-polyglot'
 
 " Color
 " =====
