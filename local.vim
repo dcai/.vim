@@ -602,7 +602,21 @@ nmap <Leader>t= :Tabularize /=<CR>
 vmap <Leader>t= :Tabularize /=<CR>
 nmap <Leader>t: :Tabularize /:\zs<CR>
 vmap <Leader>t: :Tabularize /:\zs<CR>
-
+"""""""""""""""""""""""""""""""""""""""
+""" Emmet
+"""""""""""""""""""""""""""""""""""""""
+let g:user_emmet_settings = {
+      \ 'php' : {
+      \     'extends' : 'html',
+      \     'filters' : 'c',
+      \ },
+      \ 'xml' : {
+      \     'extends' : 'html',
+      \ },
+      \ 'haml' : {
+      \     'extends' : 'html',
+      \ },
+      \}
 """""""""""""""""""""""""""""""""""""""
 """  vim-phpfmt
 """""""""""""""""""""""""""""""""""""""
