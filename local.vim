@@ -550,6 +550,14 @@ let g:UltiSnipsSnippetsDir=$HOME . '/Dropbox/etc/vim/ultisnips/'
 nnoremap <leader>ue :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""
+""" Ale
+"""""""""""""""""""""""""""""""""""""""
+let g:ale_sign_column_always = 1
+let g:ale_linters = {
+  \ 'javascript': ['eslint'],
+\}
+
+"""""""""""""""""""""""""""""""""""""""
 """ Syntastic
 """""""""""""""""""""""""""""""""""""""
 "set statusline+=%#warningmsg#
