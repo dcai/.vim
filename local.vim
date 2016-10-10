@@ -60,29 +60,7 @@ set nofoldenable
 let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 
 let g:OSUNAME=substitute(system('uname'), "\n", "", "")
-let g:GUI_RUNNING=has('gui_running')
 
-"""""""""""""""""""""""""""""""""""""""
-""" status line
-"""""""""""""""""""""""""""""""""""""""
-" default the statusline to green when entering Vim
-"set statusline=%F        "tail of the filename
-"set statusline+=%m       "modified flag
-"set statusline+=%=       "left/right separator
-"set statusline+=%y       "filetype
-"set statusline+=[
-"set statusline+=%{strlen(&fenc)?&fenc:'none'}, "file encoding
-"set statusline+=%{&ff}  "file format
-"set statusline+=,%{&bomb?'bom':'nobom'} " BOM
-"set statusline+=]
-"set statusline+=%h       "help file flag
-"set statusline+=%r       "read only flag
-"set statusline+=[
-"set statusline+=%l      "cursor line/total lines
-"set statusline+=\/%L      " total lines
-"set statusline+=,%c     "cursor column
-"set statusline+=]
-"set statusline+=\ %P     "percent through file
 
 """""""""""""""""""""""""""""""""""""""
 """ wrap
@@ -128,13 +106,6 @@ set nowritebackup
 """""""""""""""""""""""""""""""""""""""
 set fileformat=unix
 set fileencodings=utf-8,gbk,big5,latin1
-if !GUI_RUNNING
-  "set term=xterm-256color
-  set termencoding=utf-8
-  """ input method
-  "set imactivatekey=C-space
-  "inoremap <ESC> <ESC>:set iminsert=0<CR>
-endif
 "set enc=utf-8
 if has ('multi_byte') && v:version > 601
   if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
@@ -221,12 +192,6 @@ set undofile " Create FILE.un~ files for persistent undo
 "map <silent> * :call VisualSearch('f')<CR>
 "map <silent> # :call VisualSearch('b')<CR>
 
-
-"""""""""""""""""""""""""""""""""""""""
-""" Abbreviations
-"""""""""""""""""""""""""""""""""""""""
-:ab #b /**<CR><Space>*
-:ab #e <Space>*/
 """""""""""""""""""""""""""""""""""""""
 """ UI Setting
 """""""""""""""""""""""""""""""""""""""
@@ -238,98 +203,6 @@ set guioptions-=m
 "remove toolbar
 set guioptions-=T
 set background=dark
-if GUI_RUNNING
-  set t_Co=256
-  let base16colorspace=256  " Access colors present in 256 colorspace
-  colorscheme solarized
-  "colorscheme base16-ocean
-  "colorscheme base16-bright
-  "colorscheme base16-pop
-  "colorscheme base16-google
-  "colorscheme base16-eighties
-  "colorscheme base16-chalk
-  "colorscheme peaksea
-  "colorscheme blue
-  "colorscheme darkblue
-  "colorscheme desert
-  "colorscheme elflord
-  "colorscheme evening
-  "colorscheme koehler
-  "colorscheme morning
-  "colorscheme murphy
-  "colorscheme pablo
-  "colorscheme peachpuff
-  "colorscheme ron
-  "colorscheme slate
-  "colorscheme torte
-  if or(or(has("gui_qt"), has('gui_gtk2')), has('gui_gtk3'))
-    "set guifont=Inconsolata\ 14
-    "set guifont=DejaVu\ Sans\ Mono\ 12
-    "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
-    "set guifont=FantasqueSansMono\ 14
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 14
-  else
-    "set guifont=Monaco:h14
-    "set guifont=Hack:h14
-    " Powerline fonts
-    "set guifont=Anonymous\ Pro\ for\ Powerline:h16
-    "set guifont=Cousine\ for\ Powerline:h16
-    "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
-    "set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline:h16
-    "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
-    "set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h16
-    "set guifont=Fira\ Mono\ for\ Powerline:h16
-    "set guifont=Fira\ Mono\ Medium\ for\ Powerline:h16
-    "set guifont=Inconsolata\ for\ Powerline:h14
-    "set guifont=Inconsolata-dz\ for\ Powerline:h14
-    "set guifont=Inconsolata-g\ for\ Powerline:h14
-    "set guifont=Liberation\ Mono\ for\ Powerline:h16
-    "set guifont=Meslo\ LG\ L\ DZ\ for\ Powerline:h14
-    "set guifont=Meslo\ LG\ L\ for\ Powerline:h14
-    "set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h14
-    "set guifont=Meslo\ LG\ M\ for\ Powerline:h14
-    "set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline:h14
-    "set guifont=Meslo\ LG\ S\ for\ Powerline:h14
-    "set guifont=monofur\ for\ Powerline:h18
-    "set guifont=Roboto\ Mono\ for\ Powerline:h16
-    "set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
-    "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
-    "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
-    "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h18
-  endif
-else
-  "colorscheme slate
-  "colorscheme desert
-  "colorscheme elflord
-  "colorscheme solarized
-  "colorscheme base16-default
-  "colorscheme peaksea
-endif
-
-"""""""""""""""""""""""""""""""""""""""
-""" Enable status bar
-"""""""""""""""""""""""""""""""""""""""
-set laststatus=2
-"set statusline=%<%F\ [%Y]\ [%{&ff}]\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",\ BOM\":\",\ NOBOM\")}]\ %-14.(%l,%c%V%)\ %P
-
-let g:defaultFgColor="black"
-hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
-
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    "hi statusline guifg=magenta ctermfg=magenta
-    hi statusline guibg=red guifg=white ctermbg=red ctermfg=white
-  elseif a:mode == 'r'
-    hi statusline guifg=Blue ctermfg=Blue
-  else
-    hi statusline ctermfg=black guifg=black
-  endif
-endfunction
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
 
 """""""""""""""""""""""""""""""""""""""
 """ key mappings
@@ -469,10 +342,6 @@ let g:ctrlp_open_new_file = 'r'
 """ vim-airline
 """""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
-if !GUI_RUNNING
-  " disable airline in cli
-  "" let g:airline_powerline_fonts = 0
-endif
 let g:airline_theme='term'
 let g:Powerline_symbols = 'fancy'
 """ Number of colors
