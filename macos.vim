@@ -1,7 +1,7 @@
 set clipboard=unnamed
 nmap <leader>p :r !pbpaste<CR>
 
-if GUI_RUNNING
+if has("gui_macvim")
   " Powerline fonts
   set guifont=Hack:h16
   "set guifont=Source\ Code\ Pro\ for\ Powerline:h18
