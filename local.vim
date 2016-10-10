@@ -59,7 +59,6 @@ set nofoldenable
 " so we use sed to strip them.
 let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 
-let g:OSUNAME=substitute(system('uname'), "\n", "", "")
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -231,18 +230,6 @@ imap <End>  <C-o><End>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! %!sudo tee > /dev/null %
-
-" copy/paste from system clipboard
-if OSUNAME == 'Linux'
-  nmap <leader>c "+y
-  "nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
-  nmap <leader>p :r !xsel -p<CR>
-  vmap <leader>c "+y
-elseif OSUNAME == 'Darwin'
-  set clipboard=unnamed
-  nmap <leader>p :r !pbpaste<CR>
-endif
-
 vmap j gj
 vmap k gk
 vmap <Down> gj
