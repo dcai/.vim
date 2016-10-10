@@ -9,24 +9,27 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 
-let g:GUI_RUNNING=has('gui_running')
 let g:OSUNAME=substitute(system('uname'), "\n", "", "")
 
-execute 'source' "$HOME/.vim/plug.vim"
-execute 'source' "$HOME/.vim/local.vim"
+function! IncludeScript(scriptname)
+  execute 'source' "$HOME/.vim/" . a:scriptname
+endfunction
 
-if GUI_RUNNING
+call IncludeScript('plug.vim')
+call IncludeScript('local.vim')
+
+if has('gui_running')
   " Run in GUI
-  execute 'source' "$HOME/.vim/gui.vim"
+  call IncludeScript('gui.vim')
 else
   " Run in term
-  execute 'source' "$HOME/.vim/term.vim"
+  call IncludeScript('term.vim')
 endif
 
 if OSUNAME == 'Linux'
-  execute 'source' "$HOME/.vim/linux.vim"
+  call IncludeScript('linux.vim')
 elseif OSUNAME == 'Darwin'
-  execute 'source' "$HOME/.vim/macos.vim"
+  call IncludeScript('macos.vim')
 endif
 
-execute 'source' "$HOME/.vim/statusline.vim"
+call IncludeScript('statusline.vim')
