@@ -79,8 +79,6 @@ set showbreak=↪
 set ignorecase
 set hlsearch
 set incsearch
-
-set grepprg=ag\ --vimgrep\ $*
 set grepformat=%f:%l:%c:%m
 
 """""""""""""""""""""""""""""""""""""""
@@ -271,7 +269,10 @@ let g:NERDTreeIgnore = ['\.vim$', '\~$']
 let g:NERDTreeBookmarksFile = $HOME . '/.NERDTreeBookmarks'
 let g:NERDTreeShowBookmarks = 1
 let g:NERDTreeMinimalUI=0
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter *
+  \ if (winnr("$") == 1 &&
+  \ exists("b:NERDTreeType") &&
+  \ b:NERDTreeType == "primary") | q | endif
 
 """""""""""""""""""""""""""""""""""""""
 """ ctrl-p/ctrlp
@@ -297,7 +298,8 @@ let g:ctrlp_cache_dir = cachedir
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --vimgrep\ --nogroup\ --nocolor
+  "set grepprg=ag\ --vimgrep\ $*
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
