@@ -9,23 +9,24 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 
-"execute 'source' "$HOME/.vim/vundle.vim"
 let g:GUI_RUNNING=has('gui_running')
 let g:OSUNAME=substitute(system('uname'), "\n", "", "")
 
 execute 'source' "$HOME/.vim/plug.vim"
 execute 'source' "$HOME/.vim/local.vim"
 
+if GUI_RUNNING
+  " Run in GUI
+  execute 'source' "$HOME/.vim/gui.vim"
+else
+  " Run in term
+  execute 'source' "$HOME/.vim/term.vim"
+endif
+
 if OSUNAME == 'Linux'
   execute 'source' "$HOME/.vim/linux.vim"
 elseif OSUNAME == 'Darwin'
-  nmap <leader>p :r !pbpaste<CR>
-endif
-
-if !GUI_RUNNING
-  execute 'source' "$HOME/.vim/term.vim"
-else
-  execute 'source' "$HOME/.vim/gui.vim"
+  execute 'source' "$HOME/.vim/macos.vim"
 endif
 
 execute 'source' "$HOME/.vim/statusline.vim"

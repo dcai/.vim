@@ -59,8 +59,6 @@ set nofoldenable
 " so we use sed to strip them.
 let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 
-
-
 """""""""""""""""""""""""""""""""""""""
 """ wrap
 """""""""""""""""""""""""""""""""""""""
@@ -190,18 +188,6 @@ set undofile " Create FILE.un~ files for persistent undo
 "" for the current selection !! Really useful
 "map <silent> * :call VisualSearch('f')<CR>
 "map <silent> # :call VisualSearch('b')<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-""" UI Setting
-"""""""""""""""""""""""""""""""""""""""
-set nonumber
-"Disable toolbar, go = guioptions
-set guioptions=ar
-"remove menu
-set guioptions-=m
-"remove toolbar
-set guioptions-=T
-set background=dark
 
 """""""""""""""""""""""""""""""""""""""
 """ key mappings
