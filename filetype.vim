@@ -97,6 +97,7 @@ autocmd BufNewFile,BufRead *.less setf less
 "autocmd BufRead,BufNewFile *.json set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile .jscsrc set filetype=json
+autocmd BufRead,BufNewFile .jshintrc set filetype=json
 autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
