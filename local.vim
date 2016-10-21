@@ -8,6 +8,8 @@
 "       Dongsheng Cai <d@tux.im>      "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
+" http://www.figlet.org/fontdb_example.cgi?font=slant.flf
+"
 set nocompatible
 
 """""""""""""""""""""""""""""""""""""""
