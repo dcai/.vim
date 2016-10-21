@@ -52,7 +52,7 @@ set ve=all
 "more powerful backspacing
 set backspace=indent,eol,start
 set nofoldenable
-"set cryptmethod=blowfish
+set cryptmethod=blowfish2
 
 " source $VIMRUNTIME/mswin.vim
 " make :Man command avaliable
