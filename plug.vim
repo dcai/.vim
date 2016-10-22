@@ -4,15 +4,16 @@
 """""""""""""""""""""""""""""""""""""""
 
 let g:BUNDLEDIR='$HOME/.local/share/vimplug'
-let g:VIMCONFDIR='$HOME/.vim/autoload'
+let g:VIMAUTOLOADDIR='$HOME/.vim/autoload'
+let g:VIMPLUGPATH=VIMAUTOLOADDIR . "/plug.vim"
 
 " Install vim-plug if we don't already have it
-if empty(glob("~/.vim/autoload/plug.vim"))
+if empty(glob(expand(VIMPLUGPATH)))
     " Ensure all needed directories exist  (Thanks @kapadiamush)
     execute 'mkdir -p ' . expand(BUNDLEDIR)
-    execute 'mkdir -p ' . expand(VIMCONFDIR)
+    execute 'mkdir -p ' . expand(VIMAUTOLOADDIR)
     " Download the actual plugin manager
-    execute '!curl -fLo ' . VIMCONFDIR . '/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    execute '!curl -fLo ' . VIMPLUGPATH . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 function! BuildYCM(info)
