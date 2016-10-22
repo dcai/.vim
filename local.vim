@@ -484,7 +484,7 @@ autocmd FileType javascript
             \ findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_id_checkers = 0
-let g:syntastic_loc_list_height=3
+let g:syntastic_loc_list_height=5
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 "let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
