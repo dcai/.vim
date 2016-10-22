@@ -605,8 +605,8 @@ let g:rbpt_colorpairs = [
 """""""""""""""""""""""""""""""""""""""
 """ Hightlight interesting words
 """""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
-nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> <leader>m :call InterestingWords('n')<cr>
+nnoremap <silent> <leader>M :call UncolorAllWords()<cr>
 nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
 
