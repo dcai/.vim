@@ -330,10 +330,13 @@ command! -nargs=* AgGitRoot
 """ ctrl-p/ctrlp
 """""""""""""""""""""""""""""""""""""""
 let g:ctrlp_map = '<c-p>'
+let g:ctrlp_root_markers = ['pom.xml',
+            \ 'Makefile',
+            \ 'package.json']
 "let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_mruf_exclude = '/tmp/.*\|/var/tmp/.*|COMMIT_EDITMSG'
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|CVS|node_modules|vendor)$',
