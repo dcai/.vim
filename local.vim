@@ -369,6 +369,18 @@ endif
 let g:ctrlp_open_new_file = 'r'
 
 """""""""""""""""""""""""""""""""""""""
+""" lightline
+"""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"":""}',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+"""""""""""""""""""""""""""""""""""""""
 """ vim-airline
 """""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
