@@ -611,10 +611,10 @@ nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
 
 """""""""""""""""""""""""""""""""""""""
-""" Vundle
+""" vim-plug
 """""""""""""""""""""""""""""""""""""""
-nnoremap <leader>vpi :PluginInstall<cr>
-nnoremap <leader>vpc :PluginClean<cr>
+nnoremap <leader>vpi :PlugInstall<cr>
+nnoremap <leader>vpc :PlugClean<cr>
 
 """""""""""""""""""""""""""""""""""""""
 """ vim-lexical
