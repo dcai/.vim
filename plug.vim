@@ -29,23 +29,24 @@ endfunction
 call plug#begin(expand(BUNDLEDIR))
 
 " Utils
-" =====
-Plug 'jlanzarotta/bufexplorer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
+"
+"Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-"Plug 'rking/ag.vim'
-"Plug 'tyru/open-browser.vim'
+      \ | Plug 'vim-airline/vim-airline-themes'
+
+Plug 'tyru/open-browser.vim'
 " highlight trailing whitespaces
 Plug 'bronson/vim-trailing-whitespace'
 "Plug 'vimwiki/vimwiki'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
+Plug 'airblade/vim-gitgutter'
 
 " manipulate text
 " ===============
@@ -62,7 +63,7 @@ Plug 'kana/vim-textobj-user'
   \ | Plug 'bps/vim-textobj-python', { 'for': 'python' }
   \ | Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-
+Plug 'junegunn/fzf.vim'
 " Snippets and auto complete
 " ==========================
 Plug 'ervandew/supertab'
@@ -71,7 +72,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " dev support
 " ===========
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/syntastic', { 'for': ['php', 'python', 'javascript'] }
 "Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
@@ -104,5 +105,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vim-scripts/peaksea'
 Plug 'Solarized'
 Plug 'chriskempson/base16-vim'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
