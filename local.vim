@@ -231,11 +231,9 @@ nmap <Up> gk
 nmap <leader>fed :e! $HOME/.vim/local.vim<cr>
 nmap <leader>feR :source $HOME/.vim/vimrc<cr>
 nmap <leader>cwd :NERDTreeCWD<cr>
-nmap <leader>bb :BufExplorerHorizontalSplit<cr>
 nmap <leader>bk :bd!<cr>
 nmap <leader>kk :close<cr>
 nmap <leader>qq :quit<cr>
-nmap <leader>ff :CtrlPMixed<cr>
 nmap <leader>fs :w!<cr>
 "map <leader>fw :w !sudo tee > /dev/null %<cr>
 "nmap <leader>u :set fileencoding=utf8<cr>
@@ -260,7 +258,7 @@ let g:bufExplorerDisableDefaultKeyMapping=0
 let g:bufExplorerDefaultHelp=1
 map <c-j> <ESC>:bn<CR>
 map <c-k> <ESC>:bp<CR>
-map <c-l> :BufExplorer<cr>
+nmap <leader>bb :BufExplorerHorizontalSplit<cr>
 
 """""""""""""""""""""""""""""""""""""""
 """ NERDTree
