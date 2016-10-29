@@ -485,7 +485,8 @@ let g:syntastic_check_on_open = 1
 """""""""""""""""""""
 autocmd FileType javascript
             \ let b:syntastic_checkers =
-            \ findfile('.jscsrc', '.;') != '' ? ['jscs', 'jshint'] : ['jshint']
+            \ findfile('.jscsrc', '.;') != ''
+            \ ? ['jscs', 'jshint'] : ['eslint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_id_checkers = 0
 let g:syntastic_loc_list_height=5
