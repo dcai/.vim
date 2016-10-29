@@ -11,9 +11,9 @@ catch /^Vim\%((\a\+)\)\=:E185/
   " deal with it
 endtry
 let g:jellybeans_use_term_background_color = 0
-let g:jellybeans_overrides = {
-      \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-      \}
+"let g:jellybeans_overrides = {
+      "\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+      "\}
 "colorscheme slate
 "colorscheme desert
 "colorscheme elflord
