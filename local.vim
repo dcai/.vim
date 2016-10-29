@@ -389,6 +389,10 @@ let g:Powerline_symbols = 'fancy'
 """ Number of colors
 set fillchars+=stl:\ ,stlnc:\
 
+" let g:airline_section_b => (hunks, branch)
+"let g:airline_section_b = '%{getcwd()}'
+let g:airline_section_b = "%{fnamemodify(getcwd(), ':t')}"
+
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
