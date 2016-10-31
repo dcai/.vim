@@ -469,8 +469,12 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 """""""""""""""""""""""""""""""""""""""
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
-  \ 'javascript': ['eslint'],
+  \ 'javascript': ['jshint', 'jscs', 'eslint'],
 \}
+
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+let g:ale_set_loclist = 1
 
 """""""""""""""""""""""""""""""""""""""
 """ Syntastic
