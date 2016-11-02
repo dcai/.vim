@@ -469,10 +469,19 @@ nnoremap <leader>ue :UltiSnipsEdit<cr>
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
+
+function! FindConfig(prefix, what, where)
+    let cfg = findfile(a:what, escape(a:where, ' ') . ';')
+    return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
+endfunction
+
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
   \ 'javascript': ['jshint', 'jscs', 'eslint'],
 \}
+
+autocmd FileType javascript let g:ale_jshint_config_loc =
+      \ FindConfig('-c', '.jshintrc', expand('<afile>:p:h', 1))
 
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
