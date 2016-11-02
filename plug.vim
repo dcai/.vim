@@ -90,6 +90,7 @@ Plug 'Raimondi/delimitMate'
 "Plug 'moll/vim-node'
 Plug 'jimmyhchan/dustjs.vim'
 Plug 'dcai/vim-react-es6-snippets'
+Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
 
 " PHP 5.6
 " ==========
