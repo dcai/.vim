@@ -392,6 +392,8 @@ set fillchars+=stl:\ ,stlnc:\
 " let g:airline_section_b => (hunks, branch)
 "let g:airline_section_b = '%{getcwd()}'
 let g:airline_section_b = "%{fnamemodify(getcwd(), ':t')}"
+let g:airline_section_error = ""
+let g:airline_section_warning = ""
 
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
