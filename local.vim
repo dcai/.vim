@@ -28,6 +28,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
+set wildignore+=node_modules
 " http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
 set tags=tags;
 
