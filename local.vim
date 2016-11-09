@@ -232,7 +232,8 @@ nmap <Up> gk
 nmap <leader>fed :e! $HOME/.vim/local.vim<cr>
 nmap <leader>feR :source $HOME/.vim/vimrc<cr>
 nmap <leader>cwd :NERDTreeCWD<cr>
-nmap <leader>bk :bd!<cr>
+" BD is vim-bufkill plugin command
+nmap <leader>bk :BD<cr>
 nmap <leader>kk :close<cr>
 nmap <leader>qq :quit<cr>
 nmap <leader>fs :w!<cr>
