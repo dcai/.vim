@@ -55,6 +55,10 @@ set backspace=indent,eol,start
 set nofoldenable
 set cryptmethod=blowfish2
 
+" show linenumber
+" set number
+set relativenumber
+
 " source $VIMRUNTIME/mswin.vim
 " make :Man command avaliable
 " Default MANPAGER vimmanpager doesn't play well
