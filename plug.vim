@@ -47,6 +47,8 @@ Plug 'bronson/vim-trailing-whitespace'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'qpkorr/vim-bufkill'
 
 " manipulate text
 " ===============
