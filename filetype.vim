@@ -40,6 +40,11 @@ autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
 autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
 
 """"""""""""""""""""""""""""""
+" weechat
+"""""""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
+
+""""""""""""""""""""""""""""""
 " PYTHON
 """"""""""""""""""""""""""""""
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
