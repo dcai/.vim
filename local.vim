@@ -649,6 +649,11 @@ nnoremap <leader>vpi :PlugInstall<cr>
 nnoremap <leader>vpc :PlugClean<cr>
 
 """""""""""""""""""""""""""""""""""""""
+""" editorconfig-vim
+"""""""""""""""""""""""""""""""""""""""
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+"""""""""""""""""""""""""""""""""""""""
 """ vim-lexical
 """""""""""""""""""""""""""""""""""""""
 let g:lexical#spell = 1
