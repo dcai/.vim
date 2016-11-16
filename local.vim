@@ -666,3 +666,11 @@ let g:lexical#spelllang = ['en_us','en_au',]
 let g:lexical#thesaurus_key = '<leader>tt'
 let g:lexical#spell_key = '<leader>ss'
 let g:lexical#dictionary_key = '<leader>dd'
+
+"""""""""""""""""""""""""""""""""""""""
+""" ludovicchabant/vim-gutentags
+"""""""""""""""""""""""""""""""""""""""
+let g:gutentags_ctags_executable_javascript = 'jsctags'
+let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
+      \ '_darcs', '_FOSSIL_', '.fslckout', '.jscsrc']
+
