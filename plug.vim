@@ -76,7 +76,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " ===========
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/syntastic', { 'for': ['php', 'python', 'javascript'] }
+Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 "Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
 "Plug 'maralla/validator.vim', { 'for': ['php', 'python', 'javascript'] }
 
