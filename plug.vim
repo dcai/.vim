@@ -113,5 +113,6 @@ Plug 'vim-scripts/peaksea'
 Plug 'Solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
+Plug 'junegunn/seoul256.vim'
 
 call plug#end()
