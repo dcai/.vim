@@ -378,7 +378,7 @@ let g:ctrlp_open_new_file = 'r'
 """ lightline
 """""""""""""""""""""""""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'seoul256',
       \ 'component': {
       \   'readonly': '%{&readonly?"":""}',
       \ },
