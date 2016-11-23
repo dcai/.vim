@@ -36,9 +36,9 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
 "
-"Plug 'itchyny/lightline.vim'
-Plug 'vim-airline/vim-airline'
-      \ | Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+"Plug 'vim-airline/vim-airline'
+      "\ | Plug 'vim-airline/vim-airline-themes'
 
 Plug 'tyru/open-browser.vim'
 " highlight trailing whitespaces
