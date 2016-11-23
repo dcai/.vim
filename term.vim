@@ -6,7 +6,8 @@ set termencoding=utf-8
 "set imactivatekey=C-space
 "inoremap <ESC> <ESC>:set iminsert=0<CR>
 try
-  colorscheme jellybeans
+  "colorscheme jellybeans
+  colorscheme seoul256
 catch /^Vim\%((\a\+)\)\=:E185/
   " deal with it
 endtry

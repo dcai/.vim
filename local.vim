@@ -390,7 +390,8 @@ let g:lightline = {
 """ vim-airline
 """""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
-let g:airline_theme='term'
+"let g:airline_theme='jellybeans'
+let g:airline_theme='papercolor'
 let g:Powerline_symbols = 'fancy'
 """ Number of colors
 set fillchars+=stl:\ ,stlnc:\
