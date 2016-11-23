@@ -114,5 +114,6 @@ Plug 'Solarized'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'sheerun/vim-wombat-scheme'
 
 call plug#end()
