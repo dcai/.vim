@@ -57,7 +57,8 @@ set cryptmethod=blowfish2
 
 " show linenumber
 " set number
-set relativenumber
+" set relativenumber
+set nonumber
 
 " source $VIMRUNTIME/mswin.vim
 " make :Man command avaliable
