@@ -487,6 +487,11 @@ let g:ale_sign_column_always = 1
 let g:ale_linters = {
   \ 'javascript': ['jshint', 'jscs', 'eslint'],
 \}
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
 
 autocmd FileType javascript let g:ale_jshint_config_loc =
       \ FindConfig('-c', '.jshintrc', expand('<afile>:p:h', 1))
