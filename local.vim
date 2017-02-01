@@ -74,7 +74,7 @@ let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 set wrap
 "set nowrap
 set linebreak
-set textwidth=72
+"set textwidth=72
 set formatoptions=cqt
 set wrapmargin=0
 " note trailing space at end of next line
