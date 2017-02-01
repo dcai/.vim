@@ -17,28 +17,29 @@ if empty(glob(expand(VIMPLUGPATH)))
 endif
 
 function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --tern-completer
-  endif
+    " info is a dictionary with 3 fields
+    " - name:   name of the plugin
+    " - status: 'installed', 'updated', or 'unchanged'
+    " - force:  set on PlugInstall! or PlugUpdate!
+    if a:info.status == 'installed' || a:info.force
+        !./install.py --clang-completer --tern-completer
+    endif
 endfunction
 
 call plug#begin(expand(BUNDLEDIR))
 
 " Utils
+Plug 'Chiel92/vim-autoformat'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
+            \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
 "
 Plug 'itchyny/lightline.vim'
 "Plug 'vim-airline/vim-airline'
-      "\ | Plug 'vim-airline/vim-airline-themes'
+"\ | Plug 'vim-airline/vim-airline-themes'
 
 Plug 'tyru/open-browser.vim'
 " highlight trailing whitespaces
@@ -47,7 +48,7 @@ Plug 'bronson/vim-trailing-whitespace'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'qpkorr/vim-bufkill'
 
 " manipulate text
@@ -55,15 +56,15 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'matchit.zip'
 Plug 'tpope/vim-surround'
-"Plug 'Lokaltog/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'kana/vim-textobj-user'
-  \ | Plug 'kana/vim-textobj-function'
-  \ | Plug 'bps/vim-textobj-python', { 'for': 'python' }
-  \ | Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
+            \ | Plug 'kana/vim-textobj-function'
+            \ | Plug 'bps/vim-textobj-python', { 'for': 'python' }
+            \ | Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 " Snippets and auto complete
@@ -76,8 +77,8 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " ===========
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
-"Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
+"Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
 "Plug 'maralla/validator.vim', { 'for': ['php', 'python', 'javascript'] }
 
 " HTML
