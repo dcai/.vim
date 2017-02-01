@@ -51,6 +51,7 @@ autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,
 autocmd BufRead *.py set nocindent
 "autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufEnter *.py call TrimWhiteSpace()
+autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 
 """"""""""""""""""""""""""""""
 " PHP
