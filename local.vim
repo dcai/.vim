@@ -484,9 +484,6 @@ function! FindConfig(prefix, what, where)
 endfunction
 
 let g:ale_sign_column_always = 1
-let g:ale_linters = {
-  \ 'javascript': ['jshint', 'jscs', 'eslint'],
-\}
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 " You can disable this option too
@@ -500,6 +497,16 @@ let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
 let g:ale_set_loclist = 1
 
+" Ale linters settings
+let g:ale_linters = {
+  \ 'javascript': ['jshint', 'jscs', 'eslint'],
+  \ 'sh': ['shellcheck'],
+  \ 'php': ['phpcs'],
+\}
+
+let g:ale_php_phpcs_standard = $HOME . '/src/src/moodle/local/codechecker'
+"let g:ale_php_phpcs_standard = 'PSR2'
+let g:ale_javascript_eslint_executable = ''
 """""""""""""""""""""""""""""""""""""""
 """ Syntastic
 """""""""""""""""""""""""""""""""""""""
