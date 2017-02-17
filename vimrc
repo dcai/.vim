@@ -9,6 +9,8 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 
+" set shell=/bin/bash\ --norc\ --noprofile
+set shell=/bin/sh
 let g:OSUNAME=substitute(system('uname'), "\n", "", "")
 
 function! IncludeScript(scriptname)

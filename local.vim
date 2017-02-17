@@ -22,8 +22,6 @@ set nocompatible
 " run :filetype see status
 filetype plugin indent on
 
-" set shell=/bin/bash\ --norc\ --noprofile
-set shell=/bin/sh
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
