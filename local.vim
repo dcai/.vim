@@ -497,7 +497,7 @@ let g:ale_set_loclist = 1
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'javascript': ['jshint', 'jscs', 'eslint'],
+  \ 'javascript': ['eslint'],
   \ 'sh': ['shellcheck'],
   \ 'php': ['phpcs'],
 \}
