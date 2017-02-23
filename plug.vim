@@ -41,7 +41,7 @@ Plug 'itchyny/lightline.vim'
 "Plug 'vim-airline/vim-airline'
 "\ | Plug 'vim-airline/vim-airline-themes'
 
-Plug 'tyru/open-browser.vim'
+"Plug 'tyru/open-browser.vim'
 " highlight trailing whitespaces
 Plug 'bronson/vim-trailing-whitespace'
 "Plug 'vimwiki/vimwiki'
@@ -94,6 +94,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'jimmyhchan/dustjs.vim'
 Plug 'dcai/vim-react-es6-snippets'
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
+Plug 'flowtype/vim-flow'
 
 " PHP 5.6
 " ==========
