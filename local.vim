@@ -659,6 +659,7 @@ nnoremap <silent> N :call WordNavigation('backward')<cr>
 """""""""""""""""""""""""""""""""""""""
 nnoremap <leader>vpi :PlugInstall<cr>
 nnoremap <leader>vpc :PlugClean<cr>
+nnoremap <leader>vpu :PlugUpdate<cr>
 
 """""""""""""""""""""""""""""""""""""""
 """ editorconfig-vim
