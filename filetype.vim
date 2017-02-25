@@ -11,6 +11,10 @@ autocmd FileType markdown  setlocal spell
 autocmd FileType vimwiki   setlocal spell
 autocmd FileType text      setlocal spell
 autocmd FileType help      setlocal nospell
+""""""""""""""""""""""""""""""
+" z
+"""""""""""""""""""""""""""""""
+autocmd BufRead ~/.z set filetype=text
 
 """"""""""""""""""""""""""""""
 " vimwiki
