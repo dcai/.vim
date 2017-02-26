@@ -1,3 +1,15 @@
+"""""""""""""""""""""""""""""""""""""""
+""" lightline
+"""""""""""""""""""""""""""""""""""""""
+" let g:lightline = {
+      " \ 'colorscheme': 'seoul256',
+      " \ 'component': {
+      " \   'readonly': '%{&readonly?"":""}',
+      " \ },
+      " \ 'separator': { 'left': '', 'right': '' },
+      " \ 'subseparator': { 'left': '', 'right': '' }
+      " \ }
+
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
