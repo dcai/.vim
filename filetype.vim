@@ -69,8 +69,7 @@ autocmd FileType php let php_sql_query=1
 " discourages use oh short tags. c'mon its deprecated remember
 autocmd FileType php let php_noShortTags=1
 autocmd BufEnter *.php call TrimWhiteSpace()
-
-
+autocmd FileType php let b:delimitMate_matchpairs = "(:),[:],{:}"
 autocmd BufRead,BufNewFile *.phps set filetype=php
 " Drupal files
 autocmd BufRead,BufNewFile *.install set filetype=php
