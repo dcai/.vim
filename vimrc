@@ -17,6 +17,12 @@ function! IncludeScript(scriptname)
   execute 'source' "$HOME/.vim/" . a:scriptname
 endfunction
 
+function! IncludeDir(dirname)
+  for f in split(glob(a:dirname), '\n')
+    exe 'source' f
+  endfor
+endfunction
+
 call IncludeScript('plug.vim')
 call IncludeScript('local.vim')
 
@@ -35,3 +41,5 @@ elseif OSUNAME == 'Darwin'
 endif
 
 call IncludeScript('statusline.vim')
+
+call IncludeDir("$HOME/.vim/pluginconf.d/*.vim")
