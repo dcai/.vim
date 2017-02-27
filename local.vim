@@ -52,6 +52,8 @@ set ve=all
 set backspace=indent,eol,start
 set nofoldenable
 set cryptmethod=blowfish2
+" always show status line
+set laststatus=2
 
 " show linenumber
 " set number

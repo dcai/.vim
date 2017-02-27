@@ -40,6 +40,5 @@ elseif OSUNAME == 'Darwin'
   call IncludeScript('macos.vim')
 endif
 
-call IncludeScript('statusline.vim')
-
+" call IncludeScript('statusline.vim')
 call IncludeDir("$HOME/.vim/pluginconf.d/*.vim")
