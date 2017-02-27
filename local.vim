@@ -36,6 +36,7 @@ else
   syntax on
 endif
 
+set updatetime=250
 set history=100
 set autoread
 set spelllang=en
@@ -355,3 +356,7 @@ let g:flow#autoclose = 1
 """""""""""""""""""""""""""""""""""""""
 nmap ]c <Plug>GitGutterNextHunk
 nmap [c <Plug>GitGutterPrevHunk
+"""""""""""""""""""""""""""""""""""""""
+""" vim-javascript
+"""""""""""""""""""""""""""""""""""""""
+let g:javascript_plugin_flow = 1
