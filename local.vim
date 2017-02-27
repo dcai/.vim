@@ -345,7 +345,8 @@ let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
 """""""""""""""""""""""""""""""""""""""
 """ flowtype
 """""""""""""""""""""""""""""""""""""""
-let g:flow#enable = 1
+let g:flow#enable = 0
+let g:flow#autoclose = 1
 
 """""""""""""""""""""""""""""""""""""""
 """ gitgutter
