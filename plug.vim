@@ -86,6 +86,7 @@ Plug 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
+Plug 'pangloss/vim-javascript'
 Plug 'jimmyhchan/dustjs.vim'
 Plug 'dcai/vim-react-es6-snippets'
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
@@ -99,7 +100,7 @@ Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 
 " Other syntax
 " ============
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 
 " Color
