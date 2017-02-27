@@ -10,8 +10,9 @@
       " \ 'subseparator': { 'left': '', 'right': '' }
       " \ }
 
+" separator': { 'left': '▓▒░', 'right': '░▒▓' },
+" 'colorscheme': 'wombat',
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'gitgutter', 'filename' ] ],
@@ -27,7 +28,6 @@ let g:lightline = {
       \   'syntastic': 'SyntasticStatuslineFlag',
       \   'filename': 'LightLineFilename'
       \ },
-      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
       \ 'subseparator': { 'left': '>', 'right': '' }
       \ }
 
