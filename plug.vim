@@ -102,6 +102,7 @@ Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 " ============
 " Plug 'sheerun/vim-polyglot'
 Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'evidens/vim-twig'
 
 " Color
 " =====

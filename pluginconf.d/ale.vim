@@ -28,6 +28,7 @@ let g:ale_linters = {
   \ 'javascript': ['eslint'],
   \ 'sh': ['shellcheck'],
   \ 'php': ['phpcs'],
+  \ 'python': ['pylint'],
 \}
 
 let g:ale_php_phpcs_standard = $HOME . '/src/src/moodle/local/codechecker'
