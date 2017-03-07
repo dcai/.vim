@@ -1,5 +1,9 @@
-set clipboard=unnamed
-nmap <leader>p :r !pbpaste<CR>
+if $TMUX == ''
+  set clipboard=unnamed
+  nmap <leader>p :r !pbpaste<CR>
+else
+  " TODO: find out how to access clipboard in tmux
+endif
 
 if has("gui_macvim")
   " Powerline fonts
