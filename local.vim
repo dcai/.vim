@@ -362,3 +362,8 @@ nmap [c <Plug>GitGutterPrevHunk
 """ vim-javascript
 """""""""""""""""""""""""""""""""""""""
 let g:javascript_plugin_flow = 1
+
+"""""""""""""""""""""""""""""""""""""""
+""" tpope/markdown
+"""""""""""""""""""""""""""""""""""""""
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
