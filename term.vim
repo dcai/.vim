@@ -10,7 +10,7 @@ let &t_AF="\e[38;5;%dm"
 "set imactivatekey=C-space
 "inoremap <ESC> <ESC>:set iminsert=0<CR>
 try
-  colorscheme desert
+  colorscheme desert2
   " colorscheme slate
   " colorscheme elflord
   " colorscheme peaksea
