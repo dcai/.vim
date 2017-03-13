@@ -87,7 +87,7 @@ Plug 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
-Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'jimmyhchan/dustjs.vim'
 Plug 'dcai/vim-react-es6-snippets'
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
