@@ -251,6 +251,8 @@ map Q gqip
 map QQ gggqG
 inoremap jj <ESC>
 
+nmap <leader>tp :tabp<CR>
+vmap <leader>tn :tabn<CR>
 """""""""""""""""""""""""""""""""""""""
 "
 "          Plugin settings
