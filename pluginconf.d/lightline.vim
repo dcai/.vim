@@ -28,7 +28,8 @@ let g:lightline = {
       \   'syntastic': 'SyntasticStatuslineFlag',
       \   'filename': 'LightLineFilename'
       \ },
-      \ 'subseparator': { 'left': '>', 'right': '' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '•', 'right': '|' }
       \ }
 
 function! LightLineModified()
