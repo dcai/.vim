@@ -34,6 +34,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
 Plug 'airblade/vim-gitgutter'
 Plug 'qpkorr/vim-bufkill'
+Plug 'sotte/presenting.vim'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
