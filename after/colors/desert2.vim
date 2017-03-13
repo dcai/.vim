@@ -1,3 +1,6 @@
+" Slightly improved desert.vim
+" by Dongsheng Cai <d@tux.im>
+
 " Vim color file
 " Maintainer:	Hans Fugal <hans@fugal.net>
 " Last Change:	$Date: 2004/06/13 19:30:30 $
@@ -19,8 +22,12 @@ if version > 580
 	syntax reset
     endif
 endif
-let g:colors_name="desert"
 
+let g:colors_name="desert2"
+
+""""""""""""""""""""""""""""
+" GUI definitions
+""""""""""""""""""""""""""""
 hi Normal	guifg=White guibg=grey20
 
 " highlight groups
@@ -67,7 +74,9 @@ hi Ignore	guifg=grey40
 "hi Error
 hi Todo		guifg=orangered guibg=yellow2
 
-" color terminal definitions
+""""""""""""""""""""""""""""
+" TERM definitions
+""""""""""""""""""""""""""""
 hi SpecialKey	ctermfg=darkgreen
 hi NonText	cterm=bold ctermfg=darkblue
 hi Directory	ctermfg=darkcyan
@@ -92,7 +101,7 @@ hi DiffAdd	ctermbg=4
 hi DiffChange	ctermbg=5
 hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
 hi DiffText	cterm=bold ctermbg=1
-hi Comment	ctermfg=darkcyan
+hi Comment	ctermfg=darkgrey
 hi Constant	ctermfg=brown
 hi Special	ctermfg=5
 hi Identifier	ctermfg=6
@@ -103,6 +112,7 @@ hi Underlined	cterm=underline ctermfg=5
 hi Ignore	cterm=bold ctermfg=7
 hi Ignore	ctermfg=darkgrey
 hi Error	cterm=bold ctermfg=7 ctermbg=1
-
+hi clear        SpellBad
+hi SpellBad     cterm=underline
 
 "vim: sw=4
