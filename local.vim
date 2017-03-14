@@ -367,3 +367,11 @@ let g:javascript_plugin_flow = 1
 """ tpope/markdown
 """""""""""""""""""""""""""""""""""""""
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
+
+"""""""""""""""""""""""""""""""""""""""
+""" junegunn/vim-easy-align
+"""""""""""""""""""""""""""""""""""""""
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
