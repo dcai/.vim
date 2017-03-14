@@ -34,9 +34,9 @@ else
   call IncludeScript('term.vim')
 endif
 
-if OSUNAME == 'Linux'
+if g:OSUNAME == 'Linux'
   call IncludeScript('linux.vim')
-elseif OSUNAME == 'Darwin'
+elseif g:OSUNAME == 'Darwin'
   call IncludeScript('macos.vim')
 endif
 
