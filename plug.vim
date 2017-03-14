@@ -49,7 +49,7 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
-" Plug 'vasconcelloslf/vim-interestingwords'
+Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'kana/vim-textobj-user'
@@ -107,6 +107,10 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'evidens/vim-twig'
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
+" Python
+" ======
+Plug 'vim-scripts/indentpython.vim'
+
 " Color
 " =====
 Plug 'chrisbra/Colorizer'
@@ -119,6 +123,7 @@ Plug 'Lokaltog/vim-distinguished'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/seoul256.vim'
-Plug 'sheerun/vim-wombat-scheme'
+Plug 'sheerun/vim-wombat-scheme'  "wombat
+Plug 'jnurmine/Zenburn' "zenburn
 
 call plug#end()
