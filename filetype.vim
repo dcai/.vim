@@ -11,17 +11,14 @@ autocmd FileType markdown  setlocal spell
 autocmd FileType vimwiki   setlocal spell
 autocmd FileType text      setlocal spell
 autocmd FileType help      setlocal nospell
-""""""""""""""""""""""""""""""
-" z
-"""""""""""""""""""""""""""""""
-autocmd BufRead ~/.z set filetype=text
 
 """"""""""""""""""""""""""""""
 " vimwiki
 """""""""""""""""""""""""""""""
-au! BufRead,BufNewFile */wiki/* set filetype=vimwiki
-au! BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
-au! BufRead,BufNewFile */mysite/* set nospell
+autocmd BufRead,BufNewFile */wiki/* set filetype=vimwiki
+autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
+autocmd BufRead,BufNewFile */mysite/* set nospell
+" autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
 
 """"""""""""""""""""""""""""""
 " NFO
@@ -35,7 +32,6 @@ autocmd BufReadPost *.nfo call RestoreFileEncodings()
 autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufRead,BufNewfile nginx.conf set ft=nginx
 autocmd BufRead,BufNewFile /private/etc/nginx/* set ft=nginx
-autocmd BufEnter /etc/nginx/* call TrimWhiteSpace()
 autocmd BufRead,BufNewFile */nginx/* set ft=nginx
 """"""""""""""""""""""""""""""
 " supervisor
@@ -53,7 +49,6 @@ autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
 """"""""""""""""""""""""""""""
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd BufRead *.py set nocindent
-"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufEnter *.py call TrimWhiteSpace()
 autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 
@@ -98,20 +93,18 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 """"""""""""""""""""""""""""""
 " Misc
 """""""""""""""""""""""""""""""
-au BufRead /tmp/mutt-* set tw=72
+autocmd BufRead /tmp/mutt-* set tw=72
 autocmd BufRead,BufNewFile *.scala set filetype=scala
 autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
 autocmd BufRead,BufNewFile */git/* set filetype=gitconfig
-autocmd BufNewFile,BufRead *.less setf less
-"autocmd BufRead,BufNewFile *.json set filetype=javascript
+autocmd BufRead,BufNewFile *.less setf less
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile .jscsrc set filetype=json
 autocmd BufRead,BufNewFile .jshintrc set filetype=json
 autocmd BufRead,BufNewFile .tern-config set filetype=json
-autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
+autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
-"autocmd vimenter     * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
 
 augroup lexical
   autocmd!
@@ -130,4 +123,4 @@ function! HelpFileMode()
   nnoremap <buffer> q :q<CR>
   setlocal nonumber
 endfunction
-au filetype help call HelpFileMode()
+autocmd filetype help call HelpFileMode()
