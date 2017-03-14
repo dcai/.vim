@@ -84,8 +84,11 @@ function! LightLineFilename()
         \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
+
 function! LightLineFilepath()
+  let l:line = expand('%:p')
+  let l:line = substitute(l:line, '/Users/dcai', '~', '')
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ ('' != expand('%') ? expand('%') : '[No Name]') .
+        \ ('' != expand('%:p') ? l:line : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
