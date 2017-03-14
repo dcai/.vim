@@ -109,11 +109,13 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 
 " Color
 " =====
+Plug 'chrisbra/Colorizer'
 Plug 'itchyny/lightline.vim'
 "Plug 'vim-airline/vim-airline'
 "\ | Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/peaksea'
 Plug 'Solarized'
+Plug 'Lokaltog/vim-distinguished'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/seoul256.vim'
