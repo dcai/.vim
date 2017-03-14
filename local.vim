@@ -145,17 +145,21 @@ set smarttab
 set smartindent
 
 """""""""""""""""""""""""""""""""""""""
-""" Keep in curr dir
-""" Vim tip #64
-"""""""""""""""""""""""""""""""""""""""
-function! CHANGE_CURR_DIR()
-  let _dir = expand("%:p:h")
-  exec "cd " . _dir  . ""
-  unlet _dir
-endfunction
-"autocmd BufEnter * call CHANGE_CURR_DIR()
+" Keep in current dir
+" http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
+" or
+" Vim tip #64
 " http://vim.wikia.com/wiki/VimTip64
-autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+"""""""""""""""""""""""""""""""""""""""
+set autochdir
+" function! CHANGE_CURR_DIR()
+  " let _dir = expand("%:p:h")
+  " exec "cd " . _dir  . ""
+  " unlet _dir
+" endfunction
+" autocmd BufEnter * call CHANGE_CURR_DIR()
+" autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+" autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
 
 function! SoftWrap()
   let s:old_tw = &textwidth
