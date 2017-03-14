@@ -213,6 +213,10 @@ nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 map q: <nop>
 nnoremap Q <nop>
 
+" format entire buffer
+" credit: http://vim.wikia.com/wiki/Fix_indentation
+map <F7> mzgg=G`z
+
 " Press <Home> or <End> to the 1st and last
 " char of the line
 map  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
