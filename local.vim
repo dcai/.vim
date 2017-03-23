@@ -211,6 +211,14 @@ let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 
+" Format Jump
+nnoremap <silent> g; g;zz
+nnoremap <silent> g, g,zz
+
+" Split fast
+nnoremap <leader>\ :vs<CR>
+nnoremap <leader>- :sp<CR>
+
 nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 
 " not go into Ex mode
