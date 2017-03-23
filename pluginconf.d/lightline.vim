@@ -2,35 +2,42 @@
 """ lightline
 """""""""""""""""""""""""""""""""""""""
 " let g:lightline = {
-      " \ 'colorscheme': 'seoul256',
-      " \ 'component': {
-      " \   'readonly': '%{&readonly?"":""}',
-      " \ },
-      " \ 'separator': { 'left': '', 'right': '' },
-      " \ 'subseparator': { 'left': '', 'right': '' }
-      " \ }
+" \ 'colorscheme': 'seoul256',
+" \ 'component': {
+" \   'readonly': '%{&readonly?"":""}',
+" \ },
+" \ 'separator': { 'left': '', 'right': '' },
+" \ 'subseparator': { 'left': '', 'right': '' }
+" \ }
 
 " separator': { 'left': '▓▒░', 'right': '░▒▓' },
 " 'colorscheme': 'wombat',
 let g:lightline = {
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'gitgutter', 'filename' ] ],
-      \   'right': [ [ 'percent', 'lineinfo' ],
-      \              [ 'syntastic' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \   'left': [
+      \             [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'gitgutter' ],
+      \             [ 'filename' ]
+      \   ],
+      \   'right': [
+      \              [ 'percent', 'lineinfo' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ]
+      \   ]
       \ },
       \ 'component_function': {
       \   'fugitive': 'LightLineFugitive',
       \   'gitgutter': 'LightLineGitGutter',
       \   'readonly': 'LightLineReadonly',
       \   'modified': 'LightLineModified',
-      \   'syntastic': 'SyntasticStatuslineFlag',
+      \   'mode': 'LightlineMode',
       \   'filename': 'LightLineFilepath'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '•', 'right': '|' }
+      \ 'subseparator': { 'left': '|', 'right': '•' }
       \ }
+function! LightlineMode()
+  return winwidth(0) > 80 ? strpart(lightline#mode(), 0, 1) : ''
+endfunction
 
 function! LightLineModified()
   if &filetype == "help"
@@ -55,7 +62,10 @@ function! LightLineReadonly()
 endfunction
 
 function! LightLineFugitive()
-  return exists('*fugitive#head') ? fugitive#head() : ''
+  let l:limit = 10
+  let l:content = exists('*fugitive#head') ? fugitive#head() : ''
+  return strlen(l:content) < l:limit ? l:content : strpart(l:content,
+        \ strlen(l:content) - l:limit)
 endfunction
 
 function! LightLineGitGutter()
@@ -88,6 +98,7 @@ endfunction
 function! LightLineFilepath()
   let l:line = expand('%:p')
   let l:line = substitute(l:line, '/Users/dcai', '~', '')
+  let l:line = substitute(l:line, 'salt-developer/code/api/author', 'author', '')
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
         \ ('' != expand('%:p') ? l:line : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
