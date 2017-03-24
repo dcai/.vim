@@ -91,16 +91,23 @@ set incsearch
 set grepformat=%f:%l:%c:%m
 
 """""""""""""""""""""""""""""""""""""""
-""" backup
+""" backup & undo
 """""""""""""""""""""""""""""""""""""""
-let g:backupdir="~/.vim_backups"
-if !isdirectory(expand(backupdir))
-  call mkdir(expand(backupdir))
-endif
-set backupdir=backupdir
-
+" let g:backupdir="~/.vim-backup"
+" if !isdirectory(expand(backupdir))
+  " call mkdir(expand(backupdir))
+" endif
+" set backupdir=backupdir
 set nobackup
-"set directory=~/.vim_backups/,.
+
+" Persistent undo
+let undodir = expand('~/.vim-undo')
+if !isdirectory(undodir)
+  call mkdir(undodir)
+endif
+set undodir=~/.undo-vim
+set undofile " Create FILE.un~ files for persistent undo
+
 set noswapfile
 set switchbuf=usetab
 set nowritebackup
@@ -167,14 +174,6 @@ function! SoftWrap()
   normal gggqG
   let &tw = s:old_tw
 endfunction
-
-" Persistent undo
-let undodir = expand('~/.undo-vim')
-if !isdirectory(undodir)
-  call mkdir(undodir)
-endif
-set undodir=~/.undo-vim
-set undofile " Create FILE.un~ files for persistent undo
 
 """""""""""""""""""""""""""""""""""""""
 """ Visual Search
