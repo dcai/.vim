@@ -32,7 +32,7 @@ let g:lightline = {
       \   'mode': 'LightlineMode',
       \   'filename': 'LightLineFilepath'
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
+      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
       \ 'subseparator': { 'left': '|', 'right': '•' }
       \ }
 function! LightlineMode()
