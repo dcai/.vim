@@ -210,24 +210,40 @@ let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
-
-" Format Jump
-nnoremap <silent> g; g;zz
-nnoremap <silent> g, g,zz
-
-" Split fast
-nnoremap <leader>\ :vs<CR>
-nnoremap <leader>- :sp<CR>
-
-nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
-
 " not go into Ex mode
 " or use unmap
 map q: <nop>
 nnoremap Q <nop>
 
+" Use Q for formatting the current paragraph (or visual selection)
+" vnoremap Q gq
+" nnoremap Q gqap
+
+" Format Jump
+nnoremap <silent> g; g;zz nnoremap <silent> g, g,zz
+
+" Keep search matches in the middle of the window.
+" zz centers the screen on the cursor, zv unfolds any fold if the cursor
+" suddenly appears inside a fold.
+" https://github.com/Valloric/dotfiles/blob/master/vim/vimrc.vim#L511
+nnoremap * *zzzv
+nnoremap # #zzzv
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" press jj in insert mode twice to return normal mode
+inoremap jj <ESC>
+
 " format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
+" Explain:
+" mz: mark current location to `z`
+" gg: go to file top
+" =: format
+" G: to the end of file
+" `z: jump back to mark `z`
+"
+" gg=G would reformat the whole file but lose current location
 map <F7> mzgg=G`z
 
 " Press <Home> or <End> to the 1st and last
@@ -239,37 +255,41 @@ imap <Home> <C-o><Home>
 imap <End>  <C-o><End>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! %!sudo tee > /dev/null %
+cnoremap w!! w !sudo tee % >/dev/null
+nmap j gj
+nmap k gk
+nmap <Down> gj
+nmap <Up> gk
+
 vmap j gj
 vmap k gk
 vmap <Down> gj
 vmap <Up> gk
-
+" Press Ctrl-O switches to normal mode for one command
+" http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
-" kill hlsearch until next time
-nmap <silent> <Leader>/ :nohlsearch<CR>
-nmap <Down> gj
-nmap <Up> gk
-
-nmap <leader>fed :e! $HOME/.vim/local.vim<cr>
-nmap <leader>feR :source $HOME/.vim/vimrc<cr>
-nmap <leader>cwd :NERDTreeCWD<cr>
-" BD is vim-bufkill plugin command
-nmap <leader>bd :BD<cr>
-nmap <leader>kk :close<cr>
-nmap <leader>qq :quit<cr>
-nmap <leader>fs :w!<cr>
-"map <leader>fw :w !sudo tee > /dev/null %<cr>
-"nmap <leader>u :set fileencoding=utf8<cr>
-nmap <leader>paste <ESC>:r! cat<CR>
-
-map Q gqip
-map QQ gggqG
-inoremap jj <ESC>
 
 nmap <leader>tp :tabp<CR>
 vmap <leader>tn :tabn<CR>
+
+"""""""""""""""""""""""""
+" Spacemacs like mappings
+"""""""""""""""""""""""""
+nnoremap <leader>wv :vs<cr>
+nnoremap <leader>ws :sp<cr>
+" Close window
+nnoremap <leader>wd :close<cr>
+nnoremap <leader>ft :NERDTreeCWD<cr>
+nnoremap <leader>fs :w!<cr>
+nnoremap <leader>fed :e! $HOME/.vim/local.vim<cr>
+nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
+" BD is vim-bufkill plugin command
+nnoremap <leader>bd :BD<cr>
+nnoremap <leader>qq :qall<cr>
+" kill hlsearch until next time
+nnoremap <Leader>sc :nohlsearch<CR>
+
 """""""""""""""""""""""""""""""""""""""
 "
 "          Plugin settings
