@@ -110,6 +110,7 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 " Python
 " ======
 Plug 'vim-scripts/indentpython.vim'
+Plug 'python_match.vim'
 
 " Color
 " =====
