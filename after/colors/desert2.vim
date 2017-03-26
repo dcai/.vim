@@ -65,6 +65,8 @@ hi Ignore       ctermfg=darkgrey
 hi Error        cterm=bold ctermfg=7 ctermbg=1
 hi clear        SpellBad
 hi SpellBad     cterm=underline
+hi CursorLine   cterm=NONE ctermbg=darkblue ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=green ctermfg=white
 
 
 """"""""""""""""""""""""""""
@@ -74,6 +76,8 @@ hi Normal	guifg=White guibg=grey20
 
 "   highlight groups
 hi Cursor	guibg=khaki guifg=slategrey
+hi CursorLine   guibg=darkred guifg=white
+hi CursorColumn guibg=darkred guifg=white
 "hi CursorIM
 "hi Directory
 "hi DiffAdd
@@ -115,5 +119,4 @@ hi Special	guifg=navajowhite
 hi Ignore	guifg=grey40
 "hi Error
 hi Todo		guifg=orangered guibg=yellow2
-
 "vim: sw=4
