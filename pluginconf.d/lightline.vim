@@ -11,8 +11,30 @@
 " \ }
 
 " separator': { 'left': '▓▒░', 'right': '░▒▓' },
-" 'colorscheme': 'wombat',
+
+"" Available color scheme
+" 16color
+" Dracula
+" PaperColor
+" PaperColor_dark
+" PaperColor_light
+" Tomorrow
+" Tomorrow_Night
+" Tomorrow_Night_Blue
+" Tomorrow_Night_Bright
+" Tomorrow_Night_Eighties
+" darcula
+" default
+" jellybeans
+" landscape
+" molokai
+" one
+" powerline
+" seoul256
+" solarized
+" wombat
 let g:lightline = {
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [
       \             [ 'mode', 'paste' ],
