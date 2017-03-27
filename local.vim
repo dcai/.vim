@@ -44,6 +44,7 @@ set mouse=a
 set noerrorbells
 set visualbell
 set showcmd
+" set cursorline
 set hidden
 " Avoid hit ENTER to continue normal
 set shortmess+=a
@@ -56,10 +57,10 @@ set cryptmethod=blowfish2
 " always show status line
 set laststatus=2
 
-" show linenumber
 " set number
 " set relativenumber
 set nonumber
+set showmatch
 
 " source $VIMRUNTIME/ftplugin/man.vim
 " make :Man command avaliable
