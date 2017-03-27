@@ -118,6 +118,8 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
 """""""""""""""""""""""""""""""""""""""
 """ junegunn/vim-easy-align
 """""""""""""""""""""""""""""""""""""""
+" gaip*|
+" ^^ Align table cells by `|`
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
