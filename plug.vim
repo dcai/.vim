@@ -28,21 +28,9 @@ endfunction
 
 call plug#begin(expand(BUNDLEDIR))
 
-" Utils
-Plug 'Chiel92/vim-autoformat'
-Plug 'scrooloose/nerdcommenter'
-Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
-Plug 'airblade/vim-gitgutter'
-Plug 'qpkorr/vim-bufkill'
-Plug 'sotte/presenting.vim'
-"Plug 'maxbrunsfeld/vim-yankstack'
-"Plug 'kien/rainbow_parentheses.vim'
-"Plug 'ludovicchabant/vim-gutentags'
-" Funcy start screen for vim
-"Plug 'mhinz/vim-startify' " start screen
-
 " manipulate text
 " ===============
+Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
 Plug 'terryma/vim-smooth-scroll'
 Plug 'matchit.zip'
 Plug 'tpope/vim-surround'
@@ -52,10 +40,12 @@ Plug 'junegunn/vim-easy-align'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
-Plug 'kana/vim-textobj-user'
-      \ | Plug 'kana/vim-textobj-function'
-      \ | Plug 'bps/vim-textobj-python', { 'for': 'python' }
-      \ | Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
+
+" Text objects
+" ============
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-function'
+Plug 'bps/vim-textobj-python', { 'for': 'python' }
+Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
 
 " Files
 " ===============
@@ -68,15 +58,24 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " Snippets and auto complete
 " ==========================
 Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" status line
+" ===========
+Plug 'itchyny/lightline.vim'
+"Plug 'vim-airline/vim-airline'
+"\ | Plug 'vim-airline/vim-airline-themes'
+
 
 " dev support
 " ===========
+Plug 'Chiel92/vim-autoformat'
+Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
-Plug 'flowtype/vim-flow' " static js analyser
 "Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 "Plug 'maralla/validator.vim', { 'for': ['php', 'python', 'javascript'] }
 
@@ -92,6 +91,7 @@ Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'jimmyhchan/dustjs.vim'
 Plug 'dcai/vim-react-es6-snippets'
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
+Plug 'flowtype/vim-flow' " static js analyser
 "Plug 'othree/yajs.vim', { 'for': 'javascript' }
 "Plug 'moll/vim-node'
 
@@ -99,25 +99,36 @@ Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
 " ==========
 Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
 Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-
-" Other syntax
-" ============
-" Plug 'sheerun/vim-polyglot'
-Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'evidens/vim-twig'
-Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+
+" Racket
+" ======
+Plug 'wlangstroth/vim-racket'
+Plug 'ds26gte/scmindent'
 
 " Python
 " ======
 Plug 'vim-scripts/indentpython.vim'
 Plug 'python_match.vim'
 
+" Other syntax
+" ============
+Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+
+" Misc.
+Plug 'qpkorr/vim-bufkill'
+Plug 'sotte/presenting.vim'
+"Plug 'maxbrunsfeld/vim-yankstack'
+"Plug 'kien/rainbow_parentheses.vim'
+"Plug 'ludovicchabant/vim-gutentags'
+" Funcy start screen for vim
+"Plug 'mhinz/vim-startify' " start screen
+
 " Color
 " =====
-Plug 'chrisbra/Colorizer'
-Plug 'itchyny/lightline.vim'
-"Plug 'vim-airline/vim-airline'
-"\ | Plug 'vim-airline/vim-airline-themes'
+Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
+" Color schemes
 Plug 'vim-scripts/peaksea'
 Plug 'Solarized'
 Plug 'Lokaltog/vim-distinguished'
