@@ -21,6 +21,11 @@ autocmd BufRead,BufNewFile */mysite/* set nospell
 " autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
 
 """"""""""""""""""""""""""""""
+" dokuwiki
+"""""""""""""""""""""""""""""""
+autocmd BufNewFile,BufRead *.dokuwiki setf dokuwiki
+
+""""""""""""""""""""""""""""""
 " NFO
 """""""""""""""""""""""""""""""
 
