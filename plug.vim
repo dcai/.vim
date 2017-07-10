@@ -32,7 +32,7 @@ call plug#begin(expand(BUNDLEDIR))
 " ===============
 Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
 Plug 'terryma/vim-smooth-scroll'
-Plug 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
@@ -109,16 +109,19 @@ Plug 'ds26gte/scmindent'
 " Python
 " ======
 Plug 'vim-scripts/indentpython.vim'
-Plug 'python_match.vim'
+Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'vim-scripts/nginx.vim'
+Plug 'rodjek/vim-puppet'
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
 Plug 'sotte/presenting.vim'
+Plug 'djoshea/vim-autoread'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
@@ -130,7 +133,7 @@ Plug 'sotte/presenting.vim'
 Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
 " Color schemes
 Plug 'vim-scripts/peaksea'
-Plug 'Solarized'
+Plug 'vim-scripts/Solarized'
 Plug 'Lokaltog/vim-distinguished'
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
