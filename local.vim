@@ -104,7 +104,7 @@ set nobackup
 " Persistent undo
 let undodir = expand('~/.vim-undo')
 if !isdirectory(undodir)
-  call mkdir(undodir)
+  call mkdir(undodir, "p")
 endif
 set undodir=undodir
 set undofile " Create FILE.un~ files for persistent undo
@@ -271,6 +271,8 @@ imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
 nmap <leader>tp :tabp<CR>
+" copy current file path to clipboard
+nmap <leader>cp :let @+ = expand("%:p")<CR>
 vmap <leader>tn :tabn<CR>
 
 """""""""""""""""""""""""
