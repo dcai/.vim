@@ -4,6 +4,8 @@
 """ Credit:
 """ https://github.com/zenbro/dotfiles/blob/master/.nvimrc
 """""""""""""""""""""""""""""""""""""""
+let g:fzf_layout = { 'down': '~40%' }
+
 map <c-l> :Buffers<cr>
 nmap <leader>ff :GitFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
@@ -35,7 +37,7 @@ endfunction
 " Ag search in current dir
 function! SearchWithAgInDirectory(...)
   call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1},
-        \ g:fzf#vim#default_layout))
+        \ g:fzf_layout))
 endfunction
 
 " Create vim command to search in dir
@@ -55,4 +57,17 @@ endfunction
 " Create Ag search in git root
 command! -nargs=* AgGitRoot
       \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(),
-      \ g:fzf#vim#default_layout))
+      \ g:fzf_layout))
+
+
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
