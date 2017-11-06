@@ -25,13 +25,13 @@ let g:ale_set_loclist = 1
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'javascript': ['eslint'],
+  \ 'javascript': ['flow', 'eslint'],
   \ 'sh': ['shellcheck'],
-  \ 'php': ['phpcs'],
+  \ 'php': ['phpmd', 'phpcs'],
   \ 'python': ['pylint'],
 \}
 
-let g:ale_php_phpcs_standard = $HOME . '/src/src/moodle/local/codechecker'
-"let g:ale_php_phpcs_standard = 'PSR2'
+" let g:ale_php_phpcs_standard = $HOME . '/src/src/moodle/local/codechecker'
+let g:ale_php_phpcs_standard = 'PSR2'
 let g:ale_javascript_eslint_executable = ''
 
