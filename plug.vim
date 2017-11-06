@@ -117,6 +117,7 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'vim-scripts/nginx.vim'
 Plug 'rodjek/vim-puppet'
+Plug 'niftylettuce/vim-jinja'
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
