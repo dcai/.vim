@@ -282,12 +282,9 @@ nnoremap <leader>wv :vs<cr>
 nnoremap <leader>ws :sp<cr>
 " Close window
 nnoremap <leader>wd :close<cr>
-nnoremap <leader>ft :NERDTreeCWD<cr>
 nnoremap <leader>fs :w!<cr>
 nnoremap <leader>fed :e! $HOME/.vim/local.vim<cr>
 nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
-" BD is vim-bufkill plugin command
-nnoremap <leader>bd :BD<cr>
 nnoremap <leader>qq :qall<cr>
 " kill hlsearch until next time
 nnoremap <Leader>sc :nohlsearch<CR>
