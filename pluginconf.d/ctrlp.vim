@@ -25,17 +25,20 @@ if !isdirectory(expand(cachedir))
 endif
 let g:ctrlp_cache_dir = cachedir
 
-" Use Ag over Grep
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-" set grepprg=ag\ --vimgrep\ --nogroup\ --nocolor
-" set grepprg=ag\ --vimgrep\ $*
 
+" Use rg/ag in CtrlP for listing files. Lightning fast and respects .gitignore
 if executable('rg')
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
+else
+  if executable('ag')
+    " Use Ag over Grep
+    " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+    " set grepprg=ag\ --vimgrep\ --nogroup\ --nocolor
+    " set grepprg=ag\ --vimgrep\ $*
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_use_caching = 0
+  endif
 endif
 "t - in a new tab.
 "h - in a new horizontal split.
