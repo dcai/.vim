@@ -40,5 +40,8 @@ elseif g:OSUNAME == 'Darwin'
   call IncludeScript('macos.vim')
 endif
 
-" call IncludeScript('statusline.vim')
+if !exists('g:lightline')
+  call IncludeScript('statusline.vim')
+endif
+
 call IncludeDir("$HOME/.vim/pluginconf.d/*.vim")
