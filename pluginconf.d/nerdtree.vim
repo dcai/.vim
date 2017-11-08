@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
+nnoremap <leader>ft :NERDTreeCWD<cr>
 nmap <c-a> :NERDTreeToggle<cr>
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeIgnore = ['\.vim$', '\~$']
