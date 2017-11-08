@@ -62,24 +62,18 @@ set laststatus=2
 set nonumber
 set showmatch
 
-" source $VIMRUNTIME/ftplugin/man.vim
-" make :Man command avaliable
-" Default MANPAGER vimmanpager doesn't play well
-" with the :Man command and we don't want to see raw colour codes
-" so we use sed to strip them.
-let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
-
 """""""""""""""""""""""""""""""""""""""
 """ wrap
 """""""""""""""""""""""""""""""""""""""
-" http://blog.ezyang.com/2010/03/vim-textwidth/
 set wrap
-"set nowrap
-set linebreak
-"set textwidth=72
+" set nowrap
+set colorcolumn=100
+" http://blog.ezyang.com/2010/03/vim-textwidth/
+" Maximum width of text that is being inserted
+" set textwidth=100
 set formatoptions=cqt
 set wrapmargin=0
-" note trailing space at end of next line
+set linebreak
 "set showbreak=>\ \ \
 set showbreak=↪
 
