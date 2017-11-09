@@ -36,6 +36,13 @@ else
   syntax on
 endif
 
+function! s:mkdir_p(dirname)
+  if !isdirectory(a:dirname)
+    call mkdir(a:dirname, "p")
+  endif
+  return a:dirname
+endfunction
+
 set updatetime=250
 set history=100
 set autoread
@@ -88,20 +95,12 @@ set grepformat=%f:%l:%c:%m
 """""""""""""""""""""""""""""""""""""""
 """ backup & undo
 """""""""""""""""""""""""""""""""""""""
-" let g:backupdir="~/.vim-backup"
-" if !isdirectory(expand(backupdir))
-  " call mkdir(expand(backupdir))
-" endif
-" set backupdir=backupdir
+" set backupdir=s:mkdir_p(expand("~/.vim-backup"))
 set nobackup
 
 " Persistent undo
-let undodir = expand('~/.vim-undo')
-if !isdirectory(undodir)
-  call mkdir(undodir, "p")
-endif
-set undodir=undodir
 set undofile " Create FILE.un~ files for persistent undo
+set undodir=s:mkdir_p(expand('~/.vim-undo'))
 
 set noswapfile
 set switchbuf=usetab
@@ -173,8 +172,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""
 """ Visual Search
 """""""""""""""""""""""""""""""""""""""
-" This has been replaced by
-" `thinca/VisualSelection` plugin
+" This has been replaced by `thinca/VisualSelection` plugin
 " function! VisualSearch(direction) range
   " " From an idea by Michael Naumann
   " let l:saved_reg = @"
