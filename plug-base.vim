@@ -16,16 +16,6 @@ if empty(glob(expand(VIMPLUGPATH)))
   execute '!curl -fLo ' . VIMPLUGPATH . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --tern-completer
-  endif
-endfunction
-
 call plug#begin(expand(BUNDLEDIR))
 
 " manipulate text
@@ -55,12 +45,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" Snippets and auto complete
-" ==========================
-Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
 " status line
 " ===========
 Plug 'itchyny/lightline.vim'
@@ -75,9 +59,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
-"Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
-"Plug 'maralla/validator.vim', { 'for': ['php', 'python', 'javascript'] }
 
 " HTML
 " ====

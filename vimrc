@@ -12,6 +12,8 @@
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 let g:OSUNAME=substitute(system('uname'), "\n", "", "")
+" Bash on Ubuntu on Windows
+let g:WSL=matchstr(substitute(system('uname -r'), "\n", "", ""), 'Microsoft$')
 
 function! IncludeScript(scriptname)
   execute 'source' "$HOME/.vim/" . a:scriptname
@@ -23,7 +25,11 @@ function! IncludeDir(dirname)
   endfor
 endfunction
 
-call IncludeScript('plug.vim')
+if g:WSL == 'Microsoft'
+    call IncludeScript('plug-wsl.vim')
+else
+    call IncludeScript('plug-dev.vim')
+endif
 call IncludeScript('local.vim')
 
 if has('gui_running')
