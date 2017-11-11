@@ -262,10 +262,9 @@ vmap <Up> gk
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
-nmap <leader>tp :tabp<CR>
-" copy current file path to clipboard
-nmap <leader>cp :let @+ = expand("%:p")<CR>
-vmap <leader>tn :tabn<CR>
+" toggle most recently used file
+" ctrl-6 doesn't work for some terms
+map <c-o> :e #<cr>
 
 """""""""""""""""""""""""
 " Spacemacs like mappings
@@ -280,3 +279,7 @@ nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
 " kill hlsearch until next time
 nnoremap <Leader>sc :nohlsearch<CR>
+nmap <leader>tp :tabp<CR>
+" copy current file path to clipboard
+nmap <leader>cp :let @+ = expand("%:p")<CR>
+vmap <leader>tn :tabn<CR>
