@@ -44,7 +44,9 @@ function! s:mkdir_p(dirname)
 endfunction
 
 set updatetime=250
-set history=100
+if &history < 1000
+  set history=1000
+endif
 set autoread
 set spelllang=en
 set mouse=a
