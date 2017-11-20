@@ -44,6 +44,7 @@ function! s:mkdir_p(dirname)
 endfunction
 
 set updatetime=250
+set viminfo='500
 if &history < 1000
   set history=1000
 endif
