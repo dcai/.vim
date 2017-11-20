@@ -20,3 +20,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
 " ==========================
 Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
 "Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+
+" Syntax
+Plug 'mustache/vim-mustache-handlebars'
