@@ -30,13 +30,15 @@ map <c-l> :Buffers<cr>
 nmap <leader>bb :Buffers<cr>
 nmap <leader>ff :GitFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>\ :execute 'Ag ' . input('Ag/')<CR>
 " Search in current dir
-nnoremap <silent> <leader>. :AgIn .<CR>
-nnoremap <silent> <leader>gl :Commits<CR>
-nnoremap <silent> <leader>ga :BCommits<CR>
-nnoremap <silent> <leader>ft :Filetypes<CR>
-nnoremap <silent> KK :call SearchWordWithAg()<CR>
+nnoremap <silent> <leader>. :AgInDir .<CR>
+nnoremap <silent> <leader>/ :call SearchWordWithAgInGit()<CR>
+nnoremap <silent> <leader>sc :Commits<CR>
+" commits for current bufffer
+nnoremap <silent> <leader>sbc :BCommits<CR>
+nnoremap <silent> <leader>sft :Filetypes<CR>
+vnoremap <silent> <leader>ss :call SearchVisualSelectionWithAg()<CR>
 
 " insert mode
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
@@ -55,30 +57,27 @@ function! SearchVisualSelectionWithAg() range
   execute 'Ag' selection
 endfunction
 
-" Ag search in current dir
-function! SearchWithAgInDirectory(...)
-  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1},
-        \ g:fzf_layout))
-endfunction
-
-" Create vim command to search in dir
-command! -nargs=+ -complete=dir AgIn
-      \ call SearchWithAgInDirectory(<f-args>)
-
 " Ag search in git root
 function! s:with_git_root()
   let root = systemlist('git rev-parse --show-toplevel')[0]
   return v:shell_error ? {} : {'dir': root}
 endfunction
 
-function! SearchWordWithAg()
+" Ag search in current dir
+function! SearchWithAgInDirectory(...)
+  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf_layout))
+endfunction
+
+" Create vim command `AgInDir` to search in dir
+command! -nargs=+ -complete=dir AgInDir call SearchWithAgInDirectory(<f-args>)
+
+function! SearchWordWithAgInGit()
   execute 'AgGitRoot ' expand('<cword>')
 endfunction
 
-" Create Ag search in git root
+" Create Ag search command `AgGitRoot` in git root
 command! -nargs=* AgGitRoot
-      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(),
-      \ g:fzf_layout))
+      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), g:fzf_layout))
 
 
 " --column: Show column number
@@ -91,4 +90,10 @@ command! -nargs=* AgGitRoot
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore
+            \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
+            \ 1,
+            \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'),
+            \ <bang>0)
