@@ -52,7 +52,7 @@ let g:lightline = {
       \   'readonly': 'LightLineReadonly',
       \   'modified': 'LightLineModified',
       \   'mode': 'LightlineMode',
-      \   'filename': 'LightLineFilepath'
+      \   'filename': 'LightLineFilename'
       \ },
       \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
       \ 'subseparator': { 'left': '|', 'right': '•' }
