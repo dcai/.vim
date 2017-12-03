@@ -1,14 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 """ status line
 """""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""
-" BEGIN
-"""""""""""""""""""""""""""""""""""""""
-""""" set statusline=%<%F\ [%Y]\ [%{&ff}]\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",\ BOM\":\",\ NOBOM\")}]\ %-14.(%l,%c%V%)\ %P
-
-""""" default the statusline to green when entering Vim
-hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
 set statusline=%F        "tail of the filename
 set statusline+=%m       "modified flag
 set statusline+=%=       "left/right separator
@@ -26,21 +18,32 @@ set statusline+=\/%L      " total lines
 set statusline+=,%c     "cursor column
 set statusline+=]
 set statusline+=\ %P     "percent through file
-"""""""""""""""""""""""""""""""""""""""
-" END
-"""""""""""""""""""""""""""""""""""""""
 
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
+" Default the statusline to green when entering Vim
+highlight statusline gui=none cterm=none guibg=Green guifg=DarkGrey ctermbg=Green ctermfg=DarkGrey
+highlight CursorLine ctermbg=Green ctermfg=DarkGrey
+au InsertEnter  * call InsertStatuslineColor(v:insertmode)
 au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=green guifg=black ctermbg=green ctermfg=black
+au InsertLeave  * call InsertLeaveActions()
+
+function! InsertLeaveActions()
+  highlight statusline guibg=Green guifg=DarkGrey ctermbg=Green ctermfg=DarkGrey
+  set nocursorline
+endfunction
 
 function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    "hi statusline guifg=magenta ctermfg=magenta
-    hi statusline guibg=red guifg=white ctermbg=red ctermfg=white
-  elseif a:mode == 'r'
-    hi statusline guifg=Blue ctermfg=Blue
-  else
-    hi statusline ctermfg=black guifg=black
-  endif
+  set cursorline
+  highlight statusline guibg=red guifg=white ctermbg=red ctermfg=white
 endfunction
+
+" function! InsertStatuslineColor(mode)
+  " if a:mode == 'i'
+    " " normal insert
+    " hi statusline guibg=red guifg=white ctermbg=red ctermfg=white
+  " elseif a:mode == 'r'
+    " "" replace mode
+    " hi statusline guibg=Green guifg=black ctermbg=Green ctermfg=black
+  " else
+    " hi statusline guibg=Green guifg=black ctermbg=Green ctermfg=black
+  " endif
+" endfunction

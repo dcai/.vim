@@ -47,7 +47,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " status line
 " ===========
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 "Plug 'vim-airline/vim-airline'
 "\ | Plug 'vim-airline/vim-airline-themes'
 
