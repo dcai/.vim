@@ -96,6 +96,7 @@ Plug 'vim-scripts/python_match.vim'
 " ============
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'jceb/vim-orgmode'
 Plug 'vim-scripts/nginx.vim'
 Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
