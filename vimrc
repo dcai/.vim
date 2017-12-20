@@ -25,11 +25,7 @@ function! IncludeDir(dirname)
   endfor
 endfunction
 
-if g:WSL == 'Microsoft'
-    call IncludeScript('plug-wsl.vim')
-else
-    call IncludeScript('plug-dev.vim')
-endif
+call IncludeScript('plug/main.vim')
 call IncludeScript('local.vim')
 
 if has('gui_running')
