@@ -37,7 +37,7 @@ Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
 
-" Files
+" Finder
 " ===============
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
@@ -84,8 +84,8 @@ Plug 'evidens/vim-twig'
 
 " Racket
 " ======
-Plug 'wlangstroth/vim-racket'
-Plug 'ds26gte/scmindent'
+" Plug 'wlangstroth/vim-racket'
+" Plug 'ds26gte/scmindent'
 
 " Python
 " ======
@@ -100,6 +100,8 @@ Plug 'jceb/vim-orgmode'
 Plug 'vim-scripts/nginx.vim'
 Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
+Plug 'ElmCast/elm-vim'
+Plug 'mustache/vim-mustache-handlebars'
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
@@ -114,6 +116,7 @@ Plug 'djoshea/vim-autoread'
 " Color
 " =====
 Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
+
 " Color schemes
 Plug 'vim-scripts/peaksea'
 Plug 'vim-scripts/Solarized'
@@ -123,5 +126,21 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'sheerun/vim-wombat-scheme'  "wombat
 Plug 'jnurmine/Zenburn' "zenburn
+
+" Snippets and auto complete
+" ==========================
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" Linting
+" ==========================
+Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
+"Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+
+if g:WSL == 'Microsoft'
+    call IncludeScript('plug/wsl.vim')
+else
+    call IncludeScript('plug/unix.vim')
+endif
 
 call plug#end()
