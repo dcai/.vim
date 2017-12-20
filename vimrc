@@ -46,4 +46,4 @@ if !exists('g:lightline')
   call IncludeScript('statusline.vim')
 endif
 
-call IncludeDir("$HOME/.vim/pluginconf.d/*.vim")
+call IncludeDir("$HOME/.vim/conf.d/*.vim")
