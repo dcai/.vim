@@ -30,8 +30,13 @@ let g:ale_linters = {
   \ 'php': ['phpmd', 'phpcs'],
   \ 'python': ['pylint'],
 \}
+let g:ale_fixers = {
+  \   'generic': ['remove_trailing_lines', 'trim_whitespace'],
+  \   'php': ['phpcbf'],
+\}
 
 " let g:ale_php_phpcs_standard = $HOME . '/src/src/moodle/local/codechecker'
 let g:ale_php_phpcs_standard = 'PSR2'
+let g:ale_php_phpcbf_standard = 'PSR2'
 let g:ale_javascript_eslint_executable = ''
 
