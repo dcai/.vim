@@ -21,6 +21,8 @@ set nocompatible
 " must enable this
 " run :filetype see status
 filetype plugin indent on
+" https://stackoverflow.com/a/26898986/69938
+let g:netrw_home=$XDG_CACHE_HOME.'/vim'
 
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
