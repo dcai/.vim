@@ -13,9 +13,9 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 """""""""""""""""""""""""""""""""""""""
 """ UltiSnips
 """""""""""""""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger = "<c-space>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir=$HOME . '/Dropbox/etc/vim/ultisnips/'
