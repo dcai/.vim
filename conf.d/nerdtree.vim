@@ -2,7 +2,7 @@
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
 nnoremap <leader>ft :NERDTreeCWD<cr>
-nmap <c-a> :NERDTreeToggle<cr>
+nmap <c-n> :NERDTreeToggle<cr>
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeIgnore = ['\.vim$', '\~$']
 let g:NERDTreeBookmarksFile = $HOME . '/.NERDTreeBookmarks'

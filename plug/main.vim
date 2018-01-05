@@ -60,6 +60,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer --tern-completer --go-completer
+  endif
+endfunction
+
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
+
 " HTML
 " ====
 Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
@@ -70,7 +82,6 @@ Plug 'Raimondi/delimitMate'
 " ==========
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'jimmyhchan/dustjs.vim'
-Plug 'dcai/vim-react-es6-snippets'
 Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
 Plug 'flowtype/vim-flow' " static js analyser
 "Plug 'othree/yajs.vim', { 'for': 'javascript' }
@@ -96,7 +107,7 @@ Plug 'vim-scripts/python_match.vim'
 " ============
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
-Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
 Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
@@ -130,7 +141,7 @@ Plug 'jnurmine/Zenburn' "zenburn
 " Snippets and auto complete
 " ==========================
 Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'dcai/vim-react-es6-snippets'
 
 " Linting
 " ==========================
