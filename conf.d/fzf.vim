@@ -38,6 +38,7 @@ nnoremap <silent> <leader>sc :Commits<CR>
 " commits for current bufffer
 nnoremap <silent> <leader>sbc :BCommits<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
+nnoremap <silent> <leader>sp :Snippets<CR>
 vnoremap <silent> <leader>ss :call SearchVisualSelectionWithAg()<CR>
 
 " insert mode
