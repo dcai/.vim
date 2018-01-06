@@ -48,8 +48,8 @@ elseif g:OSUNAME == 'Windows'
   call IncludeScript('os/windows.vim')
 endif
 
-if !exists('g:lightline')
-  call IncludeScript('statusline.vim')
-endif
-
 call IncludeDir("$HOME/" . g:VIMCONFROOT . "/conf.d/*.vim")
+
+" if !exists('g:lightline')
+  call IncludeScript('statusline.vim')
+" endif
