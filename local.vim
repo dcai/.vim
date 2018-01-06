@@ -17,6 +17,20 @@ set nocompatible
 "
 """""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""
+""" Encoding and Decoding
+""" This is be at the beginning of the
+""" file.
+"""""""""""""""""""""""""""""""""""""""
+set fileformats=unix,dos
+set fileencodings=utf-8,gbk,big5,latin1
+set encoding=utf-8
+if has ('multi_byte') && v:version > 601
+  if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
+    set ambiwidth=double
+  endif
+endif
+
 " this enables filetype specific plugin and indent files
 " must enable this
 " run :filetype see status
@@ -79,7 +93,7 @@ set showmatch
 """""""""""""""""""""""""""""""""""""""
 set wrap
 " set nowrap
-set colorcolumn=100
+set colorcolumn=120
 " http://blog.ezyang.com/2010/03/vim-textwidth/
 " Maximum width of text that is being inserted
 " set textwidth=100
@@ -110,18 +124,6 @@ set undodir=s:mkdir_p(expand('~/.vim-undo'))
 set noswapfile
 set switchbuf=usetab
 set nowritebackup
-
-"""""""""""""""""""""""""""""""""""""""
-""" Encoding and Decoding
-"""""""""""""""""""""""""""""""""""""""
-set fileformat=unix
-set fileencodings=utf-8,gbk,big5,latin1
-"set enc=utf-8
-if has ('multi_byte') && v:version > 601
-  if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
-    set ambiwidth=double
-  endif
-endif
 
 " Common code for encodings, used by *.nfo files
 function! SetFileEncodings(encodings)
