@@ -11,9 +11,9 @@ set guioptions-=T
 
 set t_Co=256
 let base16colorspace=256  " Access colors present in 256 colorspace
-"colorscheme desert
+colorscheme desert
 "colorscheme solarized
-colorscheme base16-ocean
+" colorscheme base16-ocean
 "colorscheme base16-bright
 "colorscheme base16-pop
 "colorscheme base16-google

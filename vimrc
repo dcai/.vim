@@ -11,14 +11,17 @@
 
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
-let g:OSUNAME=substitute(system('uname'), "\n", "", "")
-let g:VIMCONFROOT = ".vim"
+
 if has("win64") || has("win32") || has("win16")
   let g:OSUNAME = "Windows"
   let g:VIMCONFROOT = "vimfiles"
+  let g:WSL = 0
+else
+  let g:OSUNAME=substitute(system('uname'), "\n", "", "")
+  let g:VIMCONFROOT=".vim"
+  " Bash on Ubuntu on Windows
+  let g:WSL=matchstr(substitute(system('uname -r'), "\n", "", ""), 'Microsoft$')
 endif
-" Bash on Ubuntu on Windows
-let g:WSL=matchstr(substitute(system('uname -r'), "\n", "", ""), 'Microsoft$')
 
 function! IncludeScript(scriptname)
   execute 'source' "$HOME/" . g:VIMCONFROOT . "/" . a:scriptname

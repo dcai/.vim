@@ -4,7 +4,7 @@
 """""""""""""""""""""""""""""""""""""""
 
 let g:BUNDLEDIR='$HOME/.local/share/vimplug'
-let g:VIMAUTOLOADDIR='$HOME/.vim/autoload'
+let g:VIMAUTOLOADDIR='$HOME/' . VIMCONFROOT . '/autoload'
 let g:VIMPLUGPATH=VIMAUTOLOADDIR . "/plug.vim"
 
 " Install vim-plug if we don't already have it
@@ -33,14 +33,13 @@ Plug 'reedes/vim-lexical'
 
 " Text objects
 " ============
-Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-function'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
-Plug 'thinca/vim-textobj-function-javascript', { 'for': 'javascript' }
+Plug 'thinca/vim-textobj-function-javascript'
 
 " Finder
 " ===============
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -51,13 +50,11 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 "Plug 'vim-airline/vim-airline'
 "\ | Plug 'vim-airline/vim-airline-themes'
 
-
 " dev support
 " ===========
 Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
-Plug 'editorconfig/editorconfig-vim'
 
 " HTML
 " ====
@@ -69,8 +66,6 @@ Plug 'Raimondi/delimitMate'
 " ==========
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'jimmyhchan/dustjs.vim'
-Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
-Plug 'flowtype/vim-flow' " static js analyser
 "Plug 'othree/yajs.vim', { 'for': 'javascript' }
 "Plug 'moll/vim-node'
 
@@ -103,8 +98,8 @@ Plug 'mustache/vim-mustache-handlebars'
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
-Plug 'sotte/presenting.vim'
 Plug 'djoshea/vim-autoread'
+Plug 'cespare/vim-toml'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
@@ -116,14 +111,14 @@ Plug 'djoshea/vim-autoread'
 Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
 
 " Color schemes
-Plug 'vim-scripts/peaksea'
-Plug 'vim-scripts/Solarized'
-Plug 'Lokaltog/vim-distinguished'
-Plug 'chriskempson/base16-vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'sheerun/vim-wombat-scheme'  "wombat
-Plug 'jnurmine/Zenburn' "zenburn
+" Plug 'vim-scripts/peaksea'
+" Plug 'vim-scripts/Solarized'
+" Plug 'Lokaltog/vim-distinguished'
+" Plug 'chriskempson/base16-vim'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'sheerun/vim-wombat-scheme'  "wombat
+" Plug 'jnurmine/Zenburn' "zenburn
 
 " Snippets and auto complete
 " ==========================
