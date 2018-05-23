@@ -105,6 +105,12 @@ Plug 'cespare/vim-toml'
 "Plug 'ludovicchabant/vim-gutentags'
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql Prettier
 
 " Color
 " =====
