@@ -28,6 +28,7 @@ let g:ale_linters = {
   \ 'javascript': ['flow', 'eslint'],
   \ 'sh': ['shellcheck'],
   \ 'php': ['phpmd', 'phpcs'],
+  \ 'yaml': ['yamllint'],
   \ 'python': ['pylint'],
 \}
 let g:ale_fixers = {
