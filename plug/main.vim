@@ -132,7 +132,7 @@ Plug 'ervandew/supertab'
 
 " Linting
 " ==========================
-Plug 'w0rp/ale', { 'for': ['php', 'python', 'javascript'] }
+Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript'] }
 "Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 
 if g:OSUNAME == 'Windows'
