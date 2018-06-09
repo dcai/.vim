@@ -19,24 +19,20 @@ set statusline+=,%c     "cursor column
 set statusline+=]
 set statusline+=\ %P     "percent through file
 
-if !exists("g:mystatuslineset")
-  " Default the statusline to green when entering Vim
-  highlight statusline gui=none cterm=none guibg=Green guifg=DarkGrey ctermbg=Green ctermfg=DarkGrey
-  let g:mystatuslineset=1
-endif
+highlight statusline cterm=NONE ctermbg=Green ctermfg=DarkGrey
 " highlight CursorLine ctermbg=Green ctermfg=DarkGrey
 au InsertEnter  * call InsertStatuslineColor(v:insertmode)
 au InsertChange * call InsertStatuslineColor(v:insertmode)
 au InsertLeave  * call InsertLeaveActions()
 
 function! InsertLeaveActions()
-  highlight statusline guibg=Green guifg=DarkGrey ctermbg=Green ctermfg=DarkGrey
+  highlight statusline cterm=NONE ctermbg=Green ctermfg=DarkGrey
   " set nocursorline
 endfunction
 
 function! InsertStatuslineColor(mode)
   " set cursorline
-  highlight statusline guibg=red guifg=white ctermbg=red ctermfg=white
+  highlight statusline cterm=NONE ctermbg=red ctermfg=white
 endfunction
 
 " function! InsertStatuslineColor(mode)
