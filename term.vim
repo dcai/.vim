@@ -1,6 +1,8 @@
 " disable airline in cli
 "" let g:airline_powerline_fonts = 0
-set term=xterm-256color
+if !has('nvim')
+  set term=xterm-256color
+endif
 set termencoding=utf-8
 set t_Co=256
 let &t_AB="\e[48;5;%dm"
