@@ -105,6 +105,7 @@ autocmd BufRead,BufNewFile */git/* set filetype=gitconfig
 autocmd BufRead,BufNewFile *.less setf less
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile .jscsrc set filetype=json
+autocmd BufRead,BufNewFile .babelrc set filetype=json
 autocmd BufRead,BufNewFile .jshintrc set filetype=json
 autocmd BufRead,BufNewFile .tern-config set filetype=json
 autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
