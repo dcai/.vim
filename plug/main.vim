@@ -30,6 +30,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
+Plug 'terryma/vim-multiple-cursors'
 
 " Text objects
 " ============
@@ -60,7 +61,7 @@ Plug 'tpope/vim-fugitive'
 " ====
 Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 " close tags
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
