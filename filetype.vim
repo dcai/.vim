@@ -23,31 +23,28 @@ autocmd BufRead,BufNewFile */mysite/* set nospell
 """"""""""""""""""""""""""""""
 " dokuwiki
 """""""""""""""""""""""""""""""
-autocmd BufNewFile,BufRead *.dokuwiki setf dokuwiki
+autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
 
 """"""""""""""""""""""""""""""
 " NFO
 """""""""""""""""""""""""""""""
-
 autocmd BufReadPre  *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
 autocmd BufReadPost *.nfo call RestoreFileEncodings()
+
 """"""""""""""""""""""""""""""
 " NGINX
 """""""""""""""""""""""""""""""
-autocmd BufRead,BufNewFile /etc/nginx/* set ft=nginx
 autocmd BufRead,BufNewfile nginx.conf set ft=nginx
-autocmd BufRead,BufNewFile /private/etc/nginx/* set ft=nginx
 autocmd BufRead,BufNewFile */nginx/* set ft=nginx
+
 """"""""""""""""""""""""""""""
-" supervisor
+" dosini
 """""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
 autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
-
-""""""""""""""""""""""""""""""
-" weechat
-"""""""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
+autocmd BufRead,BufNewFile php-fpm.conf set filetype=dosini
+autocmd BufRead,BufNewFile www.conf set filetype=dosini
 
 """"""""""""""""""""""""""""""
 " PYTHON
@@ -60,8 +57,6 @@ autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 """"""""""""""""""""""""""""""
 " PHP
 """"""""""""""""""""""""""""""
-autocmd BufRead,BufNewFile php-fpm.conf set filetype=dosini
-autocmd BufRead,BufNewFile www.conf set filetype=dosini
 " highlights interpolated variables in sql strings and does sql-syntax highlighting. yay
 autocmd FileType php let php_sql_query=1
 " does exactly that. highlights html inside of php strings
@@ -74,21 +69,22 @@ autocmd BufRead,BufNewFile *.phps set filetype=php
 " Drupal files
 autocmd BufRead,BufNewFile *.install set filetype=php
 autocmd BufRead,BufNewFile *.module set filetype=php
+
 """"""""""""""""""""""""""""""
 " Javascript
 """"""""""""""""""""""""""""""
 autocmd BufEnter *.js call TrimWhiteSpace()
 autocmd BufEnter *.jsx call TrimWhiteSpace()
+autocmd BufRead,BufNewFile .eslintrc set filetype=json
+autocmd BufRead,BufNewFile .jscsrc set filetype=json
+autocmd BufRead,BufNewFile .babelrc set filetype=json
+autocmd BufRead,BufNewFile .jshintrc set filetype=json
+autocmd BufRead,BufNewFile .tern-config set filetype=json
+
 """"""""""""""""""""""""""""""
 " Typescript
 """"""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.ts set filetype=typescript
-
-""""""""""""""""""""""""""""""
-" OBJC
-"""""""""""""""""""""""""""""""
-autocmd BufEnter *.h call TrimWhiteSpace()
-autocmd BufEnter *.m call TrimWhiteSpace()
 
 """"""""""""""""""""""""""""""
 " markdown
@@ -103,11 +99,6 @@ autocmd BufRead,BufNewFile *.scala set filetype=scala
 autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
 autocmd BufRead,BufNewFile */git/* set filetype=gitconfig
 autocmd BufRead,BufNewFile *.less setf less
-autocmd BufRead,BufNewFile .eslintrc set filetype=json
-autocmd BufRead,BufNewFile .jscsrc set filetype=json
-autocmd BufRead,BufNewFile .babelrc set filetype=json
-autocmd BufRead,BufNewFile .jshintrc set filetype=json
-autocmd BufRead,BufNewFile .tern-config set filetype=json
 autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
