@@ -282,7 +282,7 @@ nnoremap <leader>ws :sp<cr>
 " Close window
 nnoremap <leader>wd :close<cr>
 nnoremap <leader>fs :w!<cr>
-nnoremap <leader>fed :e! $HOME/.vim/local.vim<cr>
+nnoremap <leader>fed :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
 " kill hlsearch until next time
