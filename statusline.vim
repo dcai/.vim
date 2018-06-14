@@ -2,6 +2,7 @@
 """ status line
 """""""""""""""""""""""""""""""""""""""
 set statusline=%F        "tail of the filename
+set statusline+=\ %{fugitive#statusline()}
 set statusline+=%m       "modified flag
 set statusline+=%=       "left/right separator
 set statusline+=%y       "filetype
