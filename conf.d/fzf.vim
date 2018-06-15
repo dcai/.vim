@@ -45,6 +45,8 @@ vnoremap <silent> <leader>ss :call SearchVisualSelectionWithAg()<CR>
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
+" command! -bang -nargs=* AgNoFilename call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+" nnoremap <silent> <leader>. :AgNoFilename<CR>
 
 function! SearchVisualSelectionWithAg() range
   let old_reg = getreg('"')
@@ -66,7 +68,7 @@ endfunction
 
 " Ag search in current dir
 function! SearchWithAgInDirectory(...)
-  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf_layout))
+  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1, 'options': '--delimiter : --nth 4..'}, g:fzf_layout))
 endfunction
 
 " Create vim command `AgInDir` to search in dir
