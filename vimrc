@@ -8,6 +8,7 @@
 "       Dongsheng Cai <d@tux.im>      "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
+set nocompatible
 
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
