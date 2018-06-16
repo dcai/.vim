@@ -52,13 +52,6 @@ else
   syntax on
 endif
 
-function! s:mkdir_p(dirname)
-  if !isdirectory(a:dirname)
-    call mkdir(a:dirname, "p")
-  endif
-  return a:dirname
-endfunction
-
 set updatetime=250
 set viminfo='500
 if &history < 1000
@@ -114,12 +107,20 @@ set grepformat=%f:%l:%c:%m
 """""""""""""""""""""""""""""""""""""""
 """ backup & undo
 """""""""""""""""""""""""""""""""""""""
+function! s:mkdir_p(dirname)
+  if !isdirectory(a:dirname)
+    call mkdir(a:dirname, "p")
+  endif
+  return a:dirname
+endfunction
+
 " set backupdir=s:mkdir_p(expand("~/.vim-backup"))
 set nobackup
 
 " Persistent undo
 set undofile " Create FILE.un~ files for persistent undo
-set undodir=s:mkdir_p(expand('~/.vim-undo'))
+let s:undodir=s:mkdir_p(expand('~/.vim-undo'))
+set undodir=s:undodir
 
 set noswapfile
 set switchbuf=usetab
