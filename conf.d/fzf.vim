@@ -1,10 +1,8 @@
 """""""""""""""""""""""""""""""""""""""
 """ FZF
-"""
-""" Credit:
-""" https://github.com/zenbro/dotfiles/blob/master/.nvimrc
 """""""""""""""""""""""""""""""""""""""
 let g:fzf_layout = { 'down': '~40%' }
+let s:fzf_base_options = extend({'options': '--delimiter : --nth 4..'}, g:fzf_layout)
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -30,24 +28,18 @@ map <c-l> :Buffers<cr>
 nmap <leader>bb :Buffers<cr>
 nmap <leader>ff :GitFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
-nnoremap <silent> <leader>\ :execute 'Ag ' . input('Ag/')<CR>
-" Search in current dir
-nnoremap <silent> <leader>. :AgInDir .<CR>
-nnoremap <silent> <leader>/ :call SearchWordWithAgInGit()<CR>
 nnoremap <silent> <leader>sc :Commits<CR>
 " commits for current bufffer
 nnoremap <silent> <leader>sbc :BCommits<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
 nnoremap <silent> <leader>sp :Snippets<CR>
-vnoremap <silent> <leader>ss :call SearchVisualSelectionWithAg()<CR>
 
 " insert mode
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
-" command! -bang -nargs=* AgNoFilename call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-" nnoremap <silent> <leader>. :AgNoFilename<CR>
-
+""" Credit:
+""" https://github.com/zenbro/dotfiles/blob/master/.nvimrc
 function! SearchVisualSelectionWithAg() range
   let old_reg = getreg('"')
   let old_regtype = getregtype('"')
@@ -59,28 +51,30 @@ function! SearchVisualSelectionWithAg() range
   let &clipboard = old_clipboard
   execute 'Ag' selection
 endfunction
+vnoremap <silent> <leader>agsv
+      \ :call SearchVisualSelectionWithAg()<CR>
 
-" Ag search in git root
+" Ag search in current dir
+function! SearchWithAgInDirectory(...)
+  call fzf#vim#ag(
+        \ join(a:000[1:], ' '),
+        \ extend({'dir': a:1}, s:fzf_base_options))
+endfunction
+" Create vim command `AgInDir` to search in dir
+command! -nargs=+ -complete=dir AgInDir
+      \ call SearchWithAgInDirectory(<f-args>)
+" Search in current dir
+nnoremap <silent> <leader>/ :AgInDir .<CR>
+
+
 function! s:with_git_root()
   let root = systemlist('git rev-parse --show-toplevel')[0]
   return v:shell_error ? {} : {'dir': root}
 endfunction
-
-" Ag search in current dir
-function! SearchWithAgInDirectory(...)
-  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1, 'options': '--delimiter : --nth 4..'}, g:fzf_layout))
-endfunction
-
-" Create vim command `AgInDir` to search in dir
-command! -nargs=+ -complete=dir AgInDir call SearchWithAgInDirectory(<f-args>)
-
-function! SearchWordWithAgInGit()
-  execute 'AgGitRoot ' expand('<cword>')
-endfunction
-
 " Create Ag search command `AgGitRoot` in git root
 command! -nargs=* AgGitRoot
-      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), g:fzf_layout))
+      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+nnoremap <silent> <leader>. :AgGitRoot<CR>
 
 
 " --column: Show column number
@@ -100,3 +94,7 @@ command! -bang -nargs=* Rg
             \ 1,
             \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'),
             \ <bang>0)
+
+function! SearchWordWithAgInGit()
+  execute 'AgGitRoot ' expand('<cword>')
+endfunction
