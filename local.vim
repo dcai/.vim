@@ -9,8 +9,6 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 " http://www.figlet.org/fontdb_example.cgi?font=slant.flf
-"
-set nocompatible
 
 """""""""""""""""""""""""""""""""""""""
 "             Core setting
@@ -19,8 +17,6 @@ set nocompatible
 
 """""""""""""""""""""""""""""""""""""""
 """ Encoding and Decoding
-""" This is be at the beginning of the
-""" file.
 """""""""""""""""""""""""""""""""""""""
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
