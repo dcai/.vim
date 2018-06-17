@@ -4,11 +4,11 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --tern-completer --go-completer
+    !./install.py --clang-completer --js-completer --go-completer
   endif
 endfunction
 
-if or(has("python"), has('python'))
+if or(has("python"), has('python3'))
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'dcai/vim-react-es6-snippets'
 endif
