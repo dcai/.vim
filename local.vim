@@ -110,12 +110,13 @@ function! s:mkdir_p(dirname)
   return a:dirname
 endfunction
 
-" set backupdir=s:mkdir_p(expand("~/.vim-backup"))
+" let s:backupdir=s:mkdir_p(expand("~/.vim/backup"))
+" set backupdir=s:backupdir
 set nobackup
 
 " Persistent undo
 set undofile " Create FILE.un~ files for persistent undo
-let s:undodir=s:mkdir_p(expand('~/.vim-undo'))
+let s:undodir=s:mkdir_p(expand('~/.vim/undo'))
 set undodir=s:undodir
 
 set noswapfile
