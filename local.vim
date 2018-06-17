@@ -10,14 +10,12 @@
 """""""""""""""""""""""""""""""""""""""
 " http://www.figlet.org/fontdb_example.cgi?font=slant.flf
 
-"""""""""""""""""""""""""""""""""""""""
-"             Core setting
-"
-"""""""""""""""""""""""""""""""""""""""
+" Fold stuff {{{
+set foldmethod=marker
+set nofoldenable
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""
-""" Encoding and Decoding
-"""""""""""""""""""""""""""""""""""""""
+" Encoding and Decoding {{{ 1
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
 set encoding=utf-8
@@ -27,12 +25,17 @@ if has ('multi_byte') && v:version > 601
   endif
 endif
 
-" this enables filetype specific plugin and indent files
-" must enable this
-" run :filetype see status
-filetype plugin indent on
-" https://stackoverflow.com/a/26898986/69938
-let g:netrw_home=$XDG_CACHE_HOME.'/vim'
+" Common code for encodings, used by *.nfo files
+function! SetFileEncodings(encodings)
+  let b:myfileencodingsbak=&fileencodings
+  let &fileencodings=a:encodings
+endfunction
+
+function! RestoreFileEncodings()
+  let &fileencodings=b:myfileencodingsbak
+  unlet b:myfileencodingsbak
+endfunction
+" }}}
 
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
@@ -41,13 +44,6 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
 set wildignore+=node_modules
 " http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
 set tags=tags;
-
-if exists("syntax_on")
-  syntax reset
-else
-  syntax on
-endif
-
 set updatetime=250
 set viminfo='500
 if &history < 1000
@@ -67,42 +63,25 @@ set shortmess+=a
 set ve=all
 "more powerful backspacing
 set backspace=indent,eol,start
-set nofoldenable
-" set cryptmethod=blowfish
 " always show status line
 set laststatus=2
-
 " set number
 " set relativenumber
 set nonumber
 set showmatch
+set switchbuf=usetab
 
-"""""""""""""""""""""""""""""""""""""""
-""" wrap
-"""""""""""""""""""""""""""""""""""""""
-set wrap
-" set nowrap
-set colorcolumn=120
-" http://blog.ezyang.com/2010/03/vim-textwidth/
-" Maximum width of text that is being inserted
-" set textwidth=100
-set formatoptions=cqt
-set wrapmargin=0
-set linebreak
-"set showbreak=>\ \ \
-set showbreak=↪
 
-"""""""""""""""""""""""""""""""""""""""
-""" Search Setting
-"""""""""""""""""""""""""""""""""""""""
+" Search Setting {{{
 set ignorecase
 set hlsearch
 set incsearch
 set grepformat=%f:%l:%c:%m
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""
-""" backup & undo
-"""""""""""""""""""""""""""""""""""""""
+" backup, undo & caches {{{1
+set noswapfile
+set nowritebackup
 function! s:mkdir_p(dirname)
   if !isdirectory(a:dirname)
     call mkdir(a:dirname, "p")
@@ -110,28 +89,43 @@ function! s:mkdir_p(dirname)
   return a:dirname
 endfunction
 
+" https://stackoverflow.com/a/26898986/69938
+let g:netrw_home=$XDG_CACHE_HOME.'/vim'
+
+" backup {{{2
 " let s:backupdir=s:mkdir_p(expand("~/.vim/backup"))
 " set backupdir=s:backupdir
 set nobackup
+" }}}
 
-" Persistent undo
+" Persistent undo {{{2
 set undofile " Create FILE.un~ files for persistent undo
 let s:undodir=s:mkdir_p(expand('~/.vim/undo'))
 set undodir=s:undodir
+" }}}
+" }}}
 
-set noswapfile
-set switchbuf=usetab
-set nowritebackup
+" default indent & wrapping settings {{{
+set expandtab
+set tabstop=8
+set softtabstop=4
+set shiftwidth=4
+set smarttab
+set smartindent
+set wrap
+set colorcolumn=80
+" http://blog.ezyang.com/2010/03/vim-textwidth/
+" Maximum width of text that is being inserted
+" set textwidth=100
+set formatoptions=cqt
+set wrapmargin=0
+set linebreak
 
-" Common code for encodings, used by *.nfo files
-function! SetFileEncodings(encodings)
-  let b:myfileencodingsbak=&fileencodings
-  let &fileencodings=a:encodings
-endfunction
-
-function! RestoreFileEncodings()
-  let &fileencodings=b:myfileencodingsbak
-  unlet b:myfileencodingsbak
+function! SoftWrap()
+  let s:old_tw = &textwidth
+  set tw=999999
+  normal gggqG
+  let &tw = s:old_tw
 endfunction
 
 " Removes trailing spaces
@@ -139,19 +133,9 @@ function! TrimWhiteSpace()
   %s/\s\+$//e
   %s/[ \t\r]\+$//e
 endfunction
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""
-""" Indent setting
-"""""""""""""""""""""""""""""""""""""""
-set expandtab
-set tabstop=8
-set softtabstop=4
-set shiftwidth=4
-set smarttab
-set smartindent
-
-"""""""""""""""""""""""""""""""""""""""
-" Keep in current dir
+" Keep in current dir {{{
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 " or
 " Vim tip #64
@@ -166,17 +150,9 @@ set autochdir
 " autocmd BufEnter * call CHANGE_CURR_DIR()
 " autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
 " autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+" }}}
 
-function! SoftWrap()
-  let s:old_tw = &textwidth
-  set tw=999999
-  normal gggqG
-  let &tw = s:old_tw
-endfunction
-
-"""""""""""""""""""""""""""""""""""""""
-""" Visual Search
-"""""""""""""""""""""""""""""""""""""""
+" Visual Search {{{
 " This has been replaced by `thinca/VisualSelection` plugin
 " function! VisualSearch(direction) range
   " " From an idea by Michael Naumann
@@ -193,20 +169,22 @@ endfunction
   " let @/ = l:pattern
   " let @" = l:saved_reg
 " endfunction
-
 "" Press * or # to search
 "map <silent> * :call VisualSearch('f')<CR>
 "map <silent> # :call VisualSearch('b')<CR>
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""
-""" key mappings
-"""""""""""""""""""""""""""""""""""""""
+" key mappings {{{1
 "set timeout
 "set ttimeoutlen=2000
+" leader {{{2
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
+" }}}
+
+" no ex mode {{{2
 " not go into Ex mode
 " or use unmap
 map q: <nop>
@@ -214,6 +192,7 @@ nnoremap Q <nop>
 nmap Q  <silent>
 nmap q: <silent>
 nmap K  <silent>
+" }}}
 
 " Use Q for formatting the current paragraph (or visual selection)
 " vnoremap Q gq
@@ -275,9 +254,7 @@ imap <Up> <C-o>gk
 " ctrl-6 doesn't work for some terms
 map <c-o> :e #<cr>
 
-"""""""""""""""""""""""""
-" Spacemacs like mappings
-"""""""""""""""""""""""""
+" Spacemacs like mappings {{{2
 nnoremap <leader>wv :vs<cr>
 nnoremap <leader>ws :sp<cr>
 " Close window
@@ -292,3 +269,5 @@ nmap <leader>tp :tabp<CR>
 " copy current file path to clipboard
 nmap <leader>cp :let @+ = expand("%:p")<CR>
 vmap <leader>tn :tabn<CR>
+" }}}
+" }}}

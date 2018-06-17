@@ -9,6 +9,15 @@
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 set nocompatible
+" this enables filetype specific plugin and indent files
+" run :filetype see status
+filetype plugin indent on
+
+if exists("syntax_on")
+  syntax reset
+else
+  syntax on
+endif
 
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
