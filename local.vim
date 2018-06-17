@@ -224,35 +224,35 @@ inoremap jj <Esc>
 " `z: jump back to mark `z`
 "
 " gg=G would reformat the whole file but lose current location
-map <F7> mzgg=G`z
+noremap <F7> mzgg=G`z
 
 " Press <Home> or <End> to the 1st and last
 " char of the line
-map  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
-map  <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$' : 'g_')
-vmap <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$h' : 'g_')
-imap <Home> <C-o><Home>
-imap <End>  <C-o><End>
+noremap  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
+noremap  <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$' : 'g_')
+vnoremap <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$h' : 'g_')
+inoremap <Home> <C-o><Home>
+inoremap <End>  <C-o><End>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap w!! w !sudo tee % >/dev/null
-nmap j gj
-nmap k gk
-nmap <Down> gj
-nmap <Up> gk
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
 
-vmap j gj
-vmap k gk
-vmap <Down> gj
-vmap <Up> gk
+vnoremap j gj
+vnoremap k gk
+vnoremap <Down> gj
+vnoremap <Up> gk
 " Press Ctrl-O switches to normal mode for one command
 " http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
-imap <Down> <C-o>gj
-imap <Up> <C-o>gk
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
 
 " toggle most recently used file
 " ctrl-6 doesn't work for some terms
-map <c-o> :e #<cr>
+noremap <c-o> :e #<cr>
 
 " Spacemacs like mappings {{{2
 nnoremap <leader>wv :vs<cr>
@@ -263,11 +263,11 @@ nnoremap <leader>fs :w!<cr>
 nnoremap <leader>fed :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
+nnoremap <leader>cp :let @+ = expand("%:p")<CR>
 " kill hlsearch until next time
 nnoremap <Leader>sc :nohlsearch<CR>
-nmap <leader>tp :tabp<CR>
 " copy current file path to clipboard
-nmap <leader>cp :let @+ = expand("%:p")<CR>
-vmap <leader>tn :tabn<CR>
+nnoremap <leader>tp :tabp<CR>
+vnoremap <leader>tn :tabn<CR>
 " }}}
 " }}}
