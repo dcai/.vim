@@ -53,7 +53,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " dev support
 " ===========
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 
@@ -66,14 +66,14 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 " Javascript
 " ==========
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
-Plug 'jimmyhchan/dustjs.vim'
-"Plug 'othree/yajs.vim', { 'for': 'javascript' }
-"Plug 'moll/vim-node'
+" Plug 'jimmyhchan/dustjs.vim'
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'moll/vim-node'
 
 " PHP 5.6
 " ==========
-Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
-Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+" Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
+" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'evidens/vim-twig'
 
 " Racket
@@ -92,7 +92,7 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
-Plug 'rodjek/vim-puppet'
+" Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
 Plug 'ElmCast/elm-vim'
 Plug 'mustache/vim-mustache-handlebars'
@@ -108,8 +108,8 @@ Plug 'cespare/vim-toml'
 "Plug 'mhinz/vim-startify' " start screen
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', {
-  \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+      \ 'do': 'npm install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 " Color
@@ -132,8 +132,11 @@ Plug 'ervandew/supertab'
 
 " Linting
 " ==========================
-Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript'] }
-"Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+if v:version > 800
+  Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript'] }
+else
+  Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+endif
 
 if g:OSUNAME == 'Windows'
   call IncludeScript('plug/windows.vim')

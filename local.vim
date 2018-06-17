@@ -210,6 +210,9 @@ let g:maplocalleader = "\<Space>"
 " or use unmap
 map q: <nop>
 nnoremap Q <nop>
+nmap Q  <silent>
+nmap q: <silent>
+nmap K  <silent>
 
 " Use Q for formatting the current paragraph (or visual selection)
 " vnoremap Q gq
