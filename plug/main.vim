@@ -69,6 +69,7 @@ Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 " Plug 'jimmyhchan/dustjs.vim'
 " Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'moll/vim-node'
+Plug 'aaronj1335/underscore-templates.vim'
 
 " PHP 5.6
 " ==========
@@ -110,7 +111,7 @@ Plug 'cespare/vim-toml'
 Plug 'prettier/vim-prettier', {
       \ 'do': 'npm install',
       \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql Prettier
 
 " Color
 " =====
