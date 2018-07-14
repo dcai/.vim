@@ -1,3 +1,9 @@
+" https://github.com/vim/vim/issues/3117
+" kill youcompleteme warning
+if has('python3')
+  silent! python3 1
+endif
+
 if $TMUX == ''
   set clipboard=unnamed
   nmap <leader>p :r !pbpaste<CR>
