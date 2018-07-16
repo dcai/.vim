@@ -113,7 +113,7 @@ set shiftwidth=4
 set smarttab
 set smartindent
 set wrap
-set colorcolumn=80
+" set colorcolumn=80
 " http://blog.ezyang.com/2010/03/vim-textwidth/
 " Maximum width of text that is being inserted
 " set textwidth=100
