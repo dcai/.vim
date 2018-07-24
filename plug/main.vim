@@ -117,6 +117,7 @@ autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql Prettier
 " Color
 " =====
 Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
+Plug 'noahfrederick/vim-noctu'
 
 " Color schemes
 " Plug 'vim-scripts/peaksea'
