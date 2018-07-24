@@ -13,6 +13,7 @@ let &t_AF="\e[38;5;%dm"
 "inoremap <ESC> <ESC>:set iminsert=0<CR>
 try
   colorscheme desert2
+  " colorscheme noctu
   " colorscheme wombat
   " colorscheme distinguished
   " colorscheme slate
