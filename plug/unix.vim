@@ -16,5 +16,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
-Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install' }
+Plug 'ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm install -g tern' }
+nnoremap <silent> <f2> :TernRename<CR>
+
 " Plug 'flowtype/vim-flow' " static js analyser
