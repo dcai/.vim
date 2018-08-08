@@ -71,6 +71,10 @@ Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'aaronj1335/underscore-templates.vim'
 
+" Typescript
+" ==========
+Plug 'leafgarland/typescript-vim'
+
 " PHP 5.6
 " ==========
 " Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
@@ -109,10 +113,8 @@ Plug 'hashivim/vim-terraform'
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
 " post install (yarn install | npm install) then load plugin only for editing supported files
-Plug 'prettier/vim-prettier', {
-      \ 'do': 'npm install',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql Prettier
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.tsx,*.yaml,*.yml Prettier
 
 " Color
 " =====
@@ -136,7 +138,7 @@ Plug 'ervandew/supertab'
 " Linting
 " ==========================
 if v:version > 800
-  Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript'] }
+  Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript', 'typescript'] }
 else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif

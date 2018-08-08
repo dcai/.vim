@@ -25,6 +25,7 @@ let g:ale_set_loclist = 1
 
 " Ale linters settings
 let g:ale_linters = {
+  \ 'typescript': ['tslint'],
   \ 'javascript': ['flow', 'eslint'],
   \ 'sh': ['shellcheck'],
   \ 'php': ['phpmd', 'phpcs'],
