@@ -93,6 +93,7 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
+Plug 'dzeban/vim-log-syntax'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
