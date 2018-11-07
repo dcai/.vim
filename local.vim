@@ -143,14 +143,15 @@ endfunction
 " http://vim.wikia.com/wiki/VimTip64
 """""""""""""""""""""""""""""""""""""""
 set autochdir
-" function! CHANGE_CURR_DIR()
-  " let _dir = expand("%:p:h")
-  " exec "cd " . _dir  . ""
-  " unlet _dir
-" endfunction
-" autocmd BufEnter * call CHANGE_CURR_DIR()
-" autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-" autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+
+" switch to current dir
+function! CHANGE_CURR_DIR()
+  let _dir = expand("%:p:h")
+  exec "cd " . _dir  . ""
+  unlet _dir
+endfunction
+autocmd BufEnter * call CHANGE_CURR_DIR()
+autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
 " }}}
 
 " Visual Search {{{
