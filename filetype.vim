@@ -11,10 +11,6 @@ autocmd FileType markdown  setlocal spell
 autocmd FileType vimwiki   setlocal spell
 autocmd FileType text      setlocal spell
 autocmd FileType help      setlocal nospell
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 """"""""""""""""""""""""""""""
 " vimwiki
@@ -72,6 +68,13 @@ autocmd BufRead,BufNewFile *.phps set filetype=php
 autocmd BufRead,BufNewFile *.install set filetype=php
 autocmd BufRead,BufNewFile *.module set filetype=php
 """"""""""""""""""""""""""""""
+" Javascript
+""""""""""""""""""""""""""""""
+autocmd BufEnter *.js :%s/\s\+$//e
+autocmd BufEnter *.js :%s/[ \t\r]\+$//e
+autocmd BufEnter *.jsx :%s/\s\+$//e
+autocmd BufEnter *.jsx :%s/[ \t\r]\+$//e
+""""""""""""""""""""""""""""""
 " Typescript
 """"""""""""""""""""""""""""""
 autocmd BufRead,BufNewFile *.ts set filetype=typescript
@@ -95,7 +98,16 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.scala set filetype=scala
 autocmd BufNewFile,BufRead *.less setf less
 autocmd BufRead,BufNewFile *.json set filetype=javascript
+autocmd BufRead,BufNewFile .eslintrc set filetype=javascript
 autocmd BufNewFile,BufRead *conkyrc set filetype=conkyrc
 autocmd BufRead,BufNewFile *.go :set filetype:go
 autocmd stdinreadpre * let s:std_in=1
 "autocmd vimenter     * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
+
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType text call lexical#init()
+  "autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
