@@ -25,6 +25,14 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'vim-scripts/matchit.zip'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zz/ <Plug>(incsearch-fuzzyspell-/)
+map zz? <Plug>(incsearch-fuzzyspell-?)
+" map zg/ <Plug>(incsearch-fuzzy-stay)
+" map zg/ <Plug>(incsearch-fuzzyspell-stay)
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 Plug 'vasconcelloslf/vim-interestingwords'
