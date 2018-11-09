@@ -19,7 +19,8 @@ set nofoldenable
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
 set encoding=utf-8
-if has ('multi_byte') && v:version > 601
+
+if has('multi_byte')
   if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
     set ambiwidth=double
   endif
