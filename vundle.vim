@@ -3,9 +3,12 @@
 "               ======
 """""""""""""""""""""""""""""""""""""""
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-if (exists('*Plugin'))
 
+let g:BUNDLEDIR='$HOME/.local/share/vimbundle'
+let &runtimepath.=','.expand(BUNDLEDIR . '/Vundle.vim')
+call vundle#rc(expand(BUNDLEDIR))
+
+if isdirectory(expand(BUNDLEDIR))
 call vundle#begin()
 " Utils
 " =======
@@ -83,5 +86,7 @@ Plugin 'Solarized'
 Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
-
+else
+  call mkdir(expand(BUNDLEDIR))
+  call system('cd ' . expand(BUNDLEDIR) . '; git clone https://github.com/VundleVim/Vundle.vim.git')
 endif
