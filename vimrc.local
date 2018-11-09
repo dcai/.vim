@@ -21,14 +21,14 @@ filetype plugin indent on
 set shell=/bin/sh
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
                 \.bbl,.blg,.brf,.cb,.ind,.idx,
-                \.ilg,.inx,.out,.toc
+                \.ilg,.inx,.out,.toc,.class,.pyc
 
 set tags=./tags,./../tags,./../../tags,./../../../tags,./*/tags
 
 if exists("syntax_on")
     syntax reset
 else
-    syntax on 
+    syntax on
 endif
 
 filetype plugin indent on
@@ -45,7 +45,7 @@ set shortmess=a
 set ve=all
 "more powerful backspacing
 set backspace=indent,eol,start
-set nofoldenable 
+set nofoldenable
 "set cryptmethod=blowfish
 "set omnifunc=syntaxcomplete#Complete
 
@@ -67,7 +67,7 @@ set wrap
 set linebreak
 "set textwidth=80
 set formatoptions=cqt
-set wrapmargin=0 
+set wrapmargin=0
 " note trailing space at end of next line
 "set showbreak=>\ \ \
 set showbreak=↪
@@ -78,6 +78,9 @@ set showbreak=↪
 set ignorecase
 set hlsearch
 set incsearch
+
+set grepprg=ag\ --vimgrep\ $*
+set grepformat=%f:%l:%c:%m
 
 """""""""""""""""""""""""""""""""""""""
 """ backup
@@ -100,7 +103,7 @@ set nowritebackup
 set fileformat=unix
 set fileencodings=utf-8,gbk,big5,latin1
 if !ISGUI
-    set term=xterm-256color
+    "set term=xterm-256color
     set termencoding=utf-8
     """ input method
     "set imactivatekey=C-space
@@ -135,7 +138,7 @@ nmap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 """""""""""""""""""""""""""""""""""""""
 set expandtab
 set softtabstop=4
-set shiftwidth=4 	 	 	
+set shiftwidth=4
 set smarttab
 
 """""""""""""""""""""""""""""""""""""""
@@ -147,10 +150,9 @@ function! CHANGE_CURR_DIR()
     exec "cd " . _dir  . ""
     unlet _dir
 endfunction
-"autocmd BufEnter * call CHANGE_CURR_DIR() 
+"autocmd BufEnter * call CHANGE_CURR_DIR()
 " http://vim.wikia.com/wiki/VimTip64
 autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 function! SoftWrap()
     let s:old_tw = &textwidth
@@ -186,14 +188,14 @@ set undofile " Create FILE.un~ files for persistent undo
   "let @" = l:saved_reg
 "endfunction
 
-"" Basically you press * or # to search 
+"" Basically you press * or # to search
 "" for the current selection !! Really useful
 "map <silent> * :call VisualSearch('f')<CR>
 "map <silent> # :call VisualSearch('b')<CR>
 
 
 """""""""""""""""""""""""""""""""""""""
-""" Abbreviations 
+""" Abbreviations
 """""""""""""""""""""""""""""""""""""""
 :ab #b /**<CR><Space>*
 :ab #e <Space>*/
@@ -213,18 +215,59 @@ if ISGUI
     set t_Co=256
     "colorscheme solarized
     "colorscheme base16-ocean
-    colorscheme peaksea
+    "colorscheme base16-bright
+    "colorscheme base16-pop
+    "colorscheme base16-google
+    "colorscheme base16-eighties
+    colorscheme base16-chalk
+    "colorscheme peaksea
+    "colorscheme blue
+    "colorscheme darkblue
+    "colorscheme desert
+    "colorscheme elflord
+    "colorscheme evening
+    "colorscheme koehler
+    "colorscheme morning
+    "colorscheme murphy
+    "colorscheme pablo
+    "colorscheme peachpuff
+    "colorscheme ron
+    "colorscheme slate
+    "colorscheme torte
     if or(has("gui_qt"), has('gui_gtk2'))
         "set guifont=Inconsolata\ 14
         "set guifont=DejaVu\ Sans\ Mono\ 12
         "set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
         set guifont=FantasqueSansMono\ 14
     else
-        "set guifont=monofur\ for\ Powerline:h20 
-        set guifont=Monaco:h14
-        "set guifont=Liberation\ Mono\ for\ Powerline:h16 
-        "set guifont=Source\ Code\ Pro\ for\ Powerline:h18 
-        "set guifont=Anonymous\ Pro\ for\ Powerline:h18 
+        "set guifont=Monaco:h14
+        "set guifont=Hack:h14
+        " Powerline fonts
+        "set guifont=Anonymous\ Pro\ for\ Powerline:h16
+        "set guifont=Cousine\ for\ Powerline:h16
+        "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
+        "set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline:h16
+        "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+        "set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h16
+        "set guifont=Fira\ Mono\ for\ Powerline:h16
+        "set guifont=Fira\ Mono\ Medium\ for\ Powerline:h16
+        "set guifont=Inconsolata\ for\ Powerline:h14
+        "set guifont=Inconsolata-dz\ for\ Powerline:h14
+        "set guifont=Inconsolata-g\ for\ Powerline:h14
+        "set guifont=Liberation\ Mono\ for\ Powerline:h16
+        "set guifont=Meslo\ LG\ L\ DZ\ for\ Powerline:h14
+        "set guifont=Meslo\ LG\ L\ for\ Powerline:h14
+        "set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline:h14
+        "set guifont=Meslo\ LG\ M\ for\ Powerline:h14
+        "set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline:h14
+        "set guifont=Meslo\ LG\ S\ for\ Powerline:h14
+        "set guifont=monofur\ for\ Powerline:h18
+        "set guifont=Roboto\ Mono\ for\ Powerline:h16
+        "set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
+        "set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h14
+        "set guifont=Roboto\ Mono\ Light\ for\ Powerline:h15
+        set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+        "set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
     endif
 else
     "colorscheme slate
@@ -271,7 +314,7 @@ set statusline+=,%{&bomb?'bom':'nobom'} " BOM
 set statusline+=]
 set statusline+=%h       "help file flag
 set statusline+=%r       "read only flag
-set statusline+=\ 
+set statusline+=\
 set statusline+=%l      "cursor line/total lines
 set statusline+=\/%L      " total lines
 set statusline+=,%c     "cursor column
@@ -316,7 +359,7 @@ vmap <Down> gj
 vmap <Up> gk
 
 imap <Down> <C-o>gj
-imap <Up> <C-o>gk 
+imap <Up> <C-o>gk
 " not go into Ex mode
 nmap Q <nop>
 " kill hlsearch until next time
@@ -325,7 +368,7 @@ nmap <Down> gj
 nmap <Up> gk
 
 map <leader>e :e! $HOME/.vim/vimrc.local<cr>
-map <leader>s :source $HOME/.vim/vimrc<cr>
+map <leader>a :source $HOME/.vim/vimrc<cr>
 map <leader>d :bd!<cr>
 map <leader>q :q<cr>
 map <leader>w :w!<cr>
@@ -335,6 +378,7 @@ map <leader>i <ESC>:r! cat<CR>
 
 map Q gqip
 map QQ gggqG
+inoremap jj <ESC>
 
 """""""""""""""""""""""""""""""""""""""
 "
@@ -358,6 +402,12 @@ map <c-l> :BufExplorer<cr>
 """ NERDTree
 """""""""""""""""""""""""""""""""""""""
 map <c-a> :NERDTreeToggle<cr>
+let g:NERDTreeHighlightCursorline = 1
+let g:NERDTreeIgnore = ['\.vim$', '\~$']
+let g:NERDTreeBookmarksFile = "~/.NERDTreeBookmarks"
+let g:NERDTreeShowBookmarks = 1
+let g:NERDTreeMinimalUI=0
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 """""""""""""""""""""""""""""""""""""""
 """ ctrl-p/ctrlp
@@ -403,7 +453,7 @@ let g:airline_powerline_fonts = 1
 if !ISGUI
     "let g:airline_powerline_fonts = 0
 endif
-let g:airline_theme='base16'
+let g:airline_theme='term'
 "let g:airline_theme='solarized'
 let g:Powerline_symbols = 'fancy'
 """ Number of colors
@@ -479,7 +529,7 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 """""""""""""""""""""""""""""""""""""""
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 let g:vimwiki_use_mouse = 1
-let g:vimwiki_CJK_length = 1 
+let g:vimwiki_CJK_length = 1
 let g:mainwiki = {
             \ 'auto_export':      0,
             \ 'custom_wiki2html': '~/Dropbox/src/php/phpvimwiki/main.php',
@@ -547,3 +597,14 @@ nnoremap <silent> N :call WordNavigation('backward')<cr>
 
 nnoremap <leader>pi :PluginInstall<cr>
 nnoremap <leader>pc :PluginClean<cr>
+"""""""""""""""""""""""""""""""""""""""
+""" vim-lexical
+"""""""""""""""""""""""""""""""""""""""
+let g:lexical#spell = 1
+let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur.txt',]
+let g:lexical#dictionary = ['/usr/share/dict/words',]
+let g:lexical#spellfile = ['~/.vim/spell/en.utf-8.add',]
+let g:lexical#spelllang = ['en_us','en_au',]
+let g:lexical#thesaurus_key = '<leader>tt'
+let g:lexical#spell_key = '<leader>ss'
+let g:lexical#dictionary_key = '<leader>dd'
