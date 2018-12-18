@@ -103,7 +103,8 @@ Plug 'vim-scripts/python_match.vim'
 " ============
 Plug 'dzeban/vim-log-syntax'
 Plug 'dag/vim-fish', { 'for': 'fish' }
-Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
+" Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown/', { 'for': 'markdown' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
 " Plug 'rodjek/vim-puppet'
