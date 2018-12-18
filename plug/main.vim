@@ -124,7 +124,7 @@ Plug 'hashivim/vim-terraform'
 "Plug 'mhinz/vim-startify' " start screen
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.tsx,*.yaml,*.yml Prettier
+autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.tsx,*.yaml,*.yml,*.html,*.htm Prettier
 
 " Color
 " =====
