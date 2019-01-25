@@ -19,8 +19,8 @@ let g:ale_set_quickfix = 0
 autocmd FileType javascript let g:ale_jshint_config_loc =
       \ FindConfig('-c', '.jshintrc', expand('<afile>:p:h', 1))
 
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '-'
 let g:ale_set_loclist = 1
 
 " Ale linters settings
