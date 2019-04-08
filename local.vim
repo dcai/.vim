@@ -147,7 +147,9 @@ set autochdir
 " switch to current dir
 function! CHANGE_CURR_DIR()
   let _dir = expand("%:p:h")
-  exec "cd " . _dir  . ""
+  if isdirectory(_dir)
+    exec "cd " . _dir  . ""
+  endif
   unlet _dir
 endfunction
 autocmd BufEnter * call CHANGE_CURR_DIR()
