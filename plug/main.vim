@@ -151,14 +151,12 @@ function! InstallAle(info)
     " TODO
     !npm install -g prettier eslint tslint typescript
     !composer global require "squizlabs/php_codesniffer=*"
+    !pip install vim-vint pathlib typing
   endif
 endfunction
 
 if v:version > 800
-  Plug 'w0rp/ale', {
-      \ 'for': ['yaml', 'php', 'python', 'javascript', 'typescript'],
-      \ 'do': function('InstallAle')
-  \ }
+  Plug 'w0rp/ale', { 'do': function('InstallAle') }
 else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif

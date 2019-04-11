@@ -26,25 +26,27 @@ let g:ale_set_loclist = 1
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'typescript': ['tslint'],
   \ 'javascript': ['eslint'],
-  \ 'sh': ['shellcheck'],
   \ 'php': ['phpmd', 'phpcs'],
-  \ 'yaml': ['yamllint'],
   \ 'python': ['pylint'],
+  \ 'sh': ['shellcheck'],
+  \ 'typescript': ['tslint'],
+  \ 'vim': ['ale_custom_linting_rules', 'vint'],
+  \ 'yaml': ['yamllint'],
 \}
 let g:ale_fixers = {
-  \ 'generic': ['remove_trailing_lines', 'trim_whitespace'],
-  \ 'php': ['phpcbf'],
-  \ 'javascript': ['prettier'],
-  \ 'yaml': ['prettier'],
-  \ 'html': ['prettier'],
+  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'css': ['prettier'],
+  \ 'html': ['prettier'],
+  \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
+  \ 'php': ['phpcbf'],
   \ 'typescript': ['prettier'],
+  \ 'yaml': ['prettier'],
 \}
 
-" let g:ale_php_phpcs_standard = $HOME . '/src/moodle/local/codechecker'
-let g:ale_php_phpcs_standard = 'PSR2'
-let g:ale_php_phpcbf_standard = 'PSR2'
+let s:php_coding_standard = 'PSR2'
+" let s:php_coding_standard = $HOME . '/src/moodle/local/codechecker'
+let g:ale_php_phpcs_standard = s:php_coding_standard
+let g:ale_php_phpcbf_standard = s:php_coding_standard
 let g:ale_javascript_eslint_executable = ''
