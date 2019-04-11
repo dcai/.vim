@@ -101,30 +101,27 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
-Plug 'dzeban/vim-log-syntax'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 " Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
-Plug 'plasticboy/vim-markdown/', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
 " Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
 Plug 'ElmCast/elm-vim'
 Plug 'mustache/vim-mustache-handlebars'
+Plug 'cespare/vim-toml'
+Plug 'hashivim/vim-terraform'
+Plug 'dzeban/vim-log-syntax'
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
 Plug 'djoshea/vim-autoread'
-Plug 'cespare/vim-toml'
-Plug 'hashivim/vim-terraform'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
 " Funcy start screen for vim
 "Plug 'mhinz/vim-startify' " start screen
-" post install (yarn install | npm install) then load plugin only for editing supported files
-" Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-" autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.tsx,*.yaml,*.yml,*.html,*.htm Prettier
 
 " Color
 " =====
@@ -147,8 +144,21 @@ Plug 'ervandew/supertab'
 
 " Linting
 " ==========================
+"
+
+function! InstallAle(info)
+  if a:info.status == 'installed' || a:info.force
+    " TODO
+    !npm install -g prettier eslint tslint typescript
+    !composer global require "squizlabs/php_codesniffer=*"
+  endif
+endfunction
+
 if v:version > 800
-  Plug 'w0rp/ale', { 'for': ['yaml', 'php', 'python', 'javascript', 'typescript'] }
+  Plug 'w0rp/ale', {
+      \ 'for': ['yaml', 'php', 'python', 'javascript', 'typescript'],
+      \ 'do': function('InstallAle')
+  \ }
 else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif
