@@ -49,7 +49,6 @@ autocmd FileType php let php_sql_query=1
 "autocmd FileType php let php_htmlInStrings=1
 " discourages use oh short tags. c'mon its deprecated remember
 autocmd FileType php let php_noShortTags=1
-autocmd BufWritePre *.php call TrimWhiteSpace()
 autocmd FileType php let b:delimitMate_matchpairs = "(:),[:],{:}"
 autocmd BufRead,BufNewFile *.phps set filetype=php
 " Drupal files
@@ -58,9 +57,6 @@ autocmd BufRead,BufNewFile *.module set filetype=php
 " }}}
 
 " Javascript {{{
-autocmd BufWritePre *.js call TrimWhiteSpace()
-autocmd BufWritePre *.jsx call TrimWhiteSpace()
-autocmd BufWritePre *.json call TrimWhiteSpace()
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile .jscsrc set filetype=json
 autocmd BufRead,BufNewFile .babelrc set filetype=json
