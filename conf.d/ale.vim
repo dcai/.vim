@@ -34,19 +34,24 @@ let g:ale_linters = {
   \ 'vim': ['ale_custom_linting_rules', 'vint'],
   \ 'yaml': ['yamllint'],
 \}
+
+" 'php': ['phpcbf'],
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'css': ['prettier'],
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
-  \ 'php': ['phpcbf'],
   \ 'typescript': ['prettier'],
   \ 'yaml': ['prettier'],
 \}
 
+" Install moodle coding style:
+"   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
+" Above command add moodle coding style to
+"   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
+" let s:php_coding_standard = 'moodle'
 let s:php_coding_standard = 'PSR2'
-" let s:php_coding_standard = $HOME . '/src/moodle/local/codechecker'
 let g:ale_php_phpcs_standard = s:php_coding_standard
 let g:ale_php_phpcbf_standard = s:php_coding_standard
 let g:ale_javascript_eslint_executable = ''
