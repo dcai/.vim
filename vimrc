@@ -13,7 +13,7 @@ set nocompatible
 " run :filetype see status
 filetype plugin indent on
 
-if exists("syntax_on")
+if exists('syntax_on')
   syntax reset
 else
   syntax on
@@ -22,19 +22,19 @@ endif
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 
-if has("win64") || has("win32") || has("win16")
-  let g:OSUNAME = "Windows"
-  let g:VIMCONFROOT = "vimfiles"
+if has('win64') || has('win32') || has('win16')
+  let g:OSUNAME = 'Windows'
+  let g:VIMCONFROOT = 'vimfiles'
   let g:WSL = 0
 else
-  let g:OSUNAME=substitute(system('uname'), "\n", "", "")
-  let g:VIMCONFROOT=".vim"
+  let g:OSUNAME=substitute(system('uname'), "\n", '', '')
+  let g:VIMCONFROOT='.vim'
   " Bash on Ubuntu on Windows
-  let g:WSL=matchstr(substitute(system('uname -r'), "\n", "", ""), 'Microsoft$')
+  let g:WSL=matchstr(substitute(system('uname -r'), "\n", '', ''), 'Microsoft$')
 endif
 
 function! IncludeScript(scriptname)
-  execute 'source' "$HOME/" . g:VIMCONFROOT . "/" . a:scriptname
+  execute 'source $HOME/' . g:VIMCONFROOT . '/' . a:scriptname
 endfunction
 
 function! IncludeDir(dirname)
@@ -53,15 +53,15 @@ else
   call IncludeScript('term.vim')
 endif
 
-if g:OSUNAME == 'Linux'
+if g:OSUNAME ==? 'Linux'
   call IncludeScript('os/linux.vim')
-elseif g:OSUNAME == 'Darwin'
+elseif g:OSUNAME ==? 'Darwin'
   call IncludeScript('os/macos.vim')
-elseif g:OSUNAME == 'Windows'
+elseif g:OSUNAME ==? 'Windows'
   call IncludeScript('os/windows.vim')
 endif
 
-call IncludeDir("$HOME/" . g:VIMCONFROOT . "/conf.d/*.vim")
+call IncludeDir('$HOME/' . g:VIMCONFROOT . '/conf.d/*.vim')
 
 " if !exists('g:lightline')
   call IncludeScript('statusline.vim')

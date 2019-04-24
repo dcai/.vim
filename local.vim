@@ -60,8 +60,7 @@ set showcmd
 set hidden
 " Avoid hit ENTER to continue normal
 set shortmess+=a
-"set ve[rsion]
-set ve=all
+set virtualedit=all
 "more powerful backspacing
 set backspace=indent,eol,start
 " always show status line
@@ -85,7 +84,7 @@ set noswapfile
 set nowritebackup
 function! s:mkdir_p(dirname)
   if !isdirectory(a:dirname)
-    call mkdir(a:dirname, "p")
+    call mkdir(a:dirname, 'p')
   endif
   return a:dirname
 endfunction
@@ -124,9 +123,9 @@ set linebreak
 
 function! SoftWrap()
   let s:old_tw = &textwidth
-  set tw=999999
+  set textwidth=999999
   normal gggqG
-  let &tw = s:old_tw
+  let &textwidth = s:old_tw
 endfunction
 
 " Removes trailing spaces
@@ -146,14 +145,17 @@ set autochdir
 
 " switch to current dir
 function! CHANGE_CURR_DIR()
-  let _dir = expand("%:p:h")
+  let _dir = expand('%:p:h')
   if isdirectory(_dir)
-    exec "cd " . _dir  . ""
+    exec 'cd ' . _dir
   endif
   unlet _dir
 endfunction
-autocmd BufEnter * call CHANGE_CURR_DIR()
-autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+
+augroup changecurrentdir
+  autocmd BufEnter * call CHANGE_CURR_DIR()
+  autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+augroup END
 " }}}
 
 " Visual Search {{{
