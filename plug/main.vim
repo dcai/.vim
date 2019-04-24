@@ -5,7 +5,7 @@
 
 let g:BUNDLEDIR='$HOME/.local/share/vimplug'
 let g:VIMAUTOLOADDIR='$HOME/' . VIMCONFROOT . '/autoload'
-let g:VIMPLUGPATH=VIMAUTOLOADDIR . "/plug.vim"
+let g:VIMPLUGPATH=VIMAUTOLOADDIR . '/plug.vim'
 
 " Install vim-plug if we don't already have it
 if empty(glob(expand(VIMPLUGPATH)))
@@ -113,6 +113,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'cespare/vim-toml'
 Plug 'hashivim/vim-terraform'
 Plug 'dzeban/vim-log-syntax'
+Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 
 " Misc.
 Plug 'qpkorr/vim-bufkill'
@@ -147,7 +148,7 @@ Plug 'ervandew/supertab'
 "
 
 function! InstallAle(info)
-  if a:info.status == 'installed' || a:info.force
+  if a:info.status ==? 'installed' || a:info.force
     " TODO
     !npm install -g prettier eslint tslint typescript
     !composer global require "squizlabs/php_codesniffer=*"
@@ -161,13 +162,13 @@ else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif
 
-if g:OSUNAME == 'Windows'
+if g:OSUNAME ==? 'Windows'
   call IncludeScript('plug/windows.vim')
 else
   call IncludeScript('plug/unix.vim')
 endif
 
-if g:WSL == 'Microsoft'
+if g:WSL ==? 'Microsoft'
   call IncludeScript('plug/wsl.vim')
 endif
 
