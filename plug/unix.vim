@@ -25,7 +25,7 @@ if or(has("python"), has('python3'))
 endif
 
 if has('python3')
-  Plug 'ambv/black', { 'do': function('InstallPython3Black'), 'frozen': 1 }
+  Plug 'ambv/black', { 'do': function('InstallPython3Black'), 'frozen': 1, 'for': ['python'] }
   autocmd BufWritePre *.py execute ':Black'
   let g:black_virtualenv = '~/.local/python-black'
   let g:black_linelength = 88
