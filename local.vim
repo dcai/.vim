@@ -190,6 +190,11 @@ let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 " }}}
 
+noremap <F15> <nop>
+noremap! <F15> <nop>
+noremap <F16> <nop>
+noremap! <F16> <nop>
+
 " no ex mode {{{2
 " not go into Ex mode
 " or use unmap
