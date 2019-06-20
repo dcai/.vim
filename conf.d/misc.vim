@@ -83,7 +83,6 @@ nnoremap <leader>vpu :PlugUpdate<cr>
 """ editorconfig-vim
 """""""""""""""""""""""""""""""""""""""
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-let g:EditorConfig_core_mode = 'python_external'
 
 """""""""""""""""""""""""""""""""""""""
 """ ludovicchabant/vim-gutentags
