@@ -1,6 +1,8 @@
-" Slightly improved desert.vim
+" Improved desert.vim
+"
 " by Dongsheng Cai <d@tux.im>
 
+""""""""""""""""""""""""""""""""""""""""""""
 " Vim color file
 " Maintainer:	Hans Fugal <hans@fugal.net>
 " Last Change:	$Date: 2004/06/13 19:30:30 $
@@ -12,18 +14,24 @@
 " :he group-name
 " :he highlight-groups
 " :he cterm-colors
+""""""""""""""""""""""""""""""""""""""""""""
 
 set background=dark
 if version > 580
   " no guarantees for version 5.8 and below, but this makes it stop
   " complaining
   hi clear
-  if exists("syntax_on")
+  if exists('syntax_on')
     syntax reset
   endif
 endif
 
-let g:colors_name="desert2"
+let g:colors_name='desert2'
+
+hi clear ALEWarning
+" hi ALEWarningLine ctermbg=darkgrey
+hi ALEError ctermbg=darkyellow
+" hi ALEErrorLine ctermbg=darkgrey
 
 """"""""""""""""""""""""""""
 " TERM          definitions
