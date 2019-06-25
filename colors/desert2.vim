@@ -1,5 +1,4 @@
 " Improved desert.vim
-"
 " by Dongsheng Cai <d@tux.im>
 
 """"""""""""""""""""""""""""""""""""""""""""
@@ -29,8 +28,10 @@ endif
 let g:colors_name='desert2'
 
 hi clear ALEWarning
+hi clear ALEError
 " hi ALEWarningLine ctermbg=darkgrey
-hi ALEError ctermbg=darkyellow
+" hi ALEWarning ctermbg=darkcyan
+" hi ALEError ctermbg=darkcyan
 " hi ALEErrorLine ctermbg=darkgrey
 
 """"""""""""""""""""""""""""
@@ -41,8 +42,8 @@ hi SpecialKey   ctermfg=darkgreen
 hi NonText      cterm=bold ctermfg=darkblue
 hi Directory    ctermfg=darkcyan
 hi ErrorMsg     cterm=bold ctermfg=7 ctermbg=1
-hi IncSearch    cterm=NONE ctermfg=yellow ctermbg=darkgrey
-hi Search       cterm=NONE ctermfg=white ctermbg=darkgrey
+hi IncSearch    cterm=NONE ctermfg=white ctermbg=darkgrey
+hi Search       cterm=NONE ctermfg=black ctermbg=white
 hi MoreMsg      ctermfg=darkgreen
 hi ModeMsg      cterm=NONE ctermfg=brown
 hi LineNr       ctermfg=darkyellow
