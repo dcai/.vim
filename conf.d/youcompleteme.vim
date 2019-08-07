@@ -1,7 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 """ YouCompleteMe
 """""""""""""""""""""""""""""""""""""""
-" make YCM compatible with UltiSnips
 let g:ycm_filetype_blacklist = {
   \ 'sql': 1,
   \ 'json': 1,

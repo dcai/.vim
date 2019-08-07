@@ -21,7 +21,7 @@ Plug 'junegunn/fzf.vim'
 
 if or(has("python"), has('python3'))
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
-  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'dcai/vim-react-es6-snippets'
+  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 endif
 
 if has('python3')
