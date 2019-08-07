@@ -2,13 +2,11 @@
 """ UltiSnips
 """""""""""""""""""""""""""""""""""""""
 
-let s:snipsdir= 'ultisnips'
-
-let g:UltiSnipsExpandTrigger = '<c-e>'
+let g:UltiSnipsExpandTrigger = '<c-\>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetsDir=$HOME . '/' . g:vimrc . '/' . s:snipsdir . '/'
+let s:snipsdir=expand("$HOME/Dropbox/src/snippets")
 let g:UltiSnipsSnippetDirectories=[s:snipsdir]
 nnoremap <leader>ue :UltiSnipsEdit<cr>
