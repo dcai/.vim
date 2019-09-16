@@ -24,6 +24,71 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+""" Credit:
+""" https://github.com/zenbro/dotfiles/blob/master/.nvimrc
+function! SearchVisualSelectionWithAg() range
+  let old_reg = getreg('"')
+  let old_regtype = getregtype('"')
+  let old_clipboard = &clipboard
+  set clipboard&
+  normal! ""gvy
+  let selection = getreg('"')
+  call setreg('"', old_reg, old_regtype)
+  let &clipboard = old_clipboard
+  execute 'Ag' selection
+endfunction
+
+" Ag search in current dir
+function! SearchWithAgInDirectory(...)
+  call fzf#vim#ag(
+        \ join(a:000[1:], ' '),
+        \ extend({'dir': a:1}, s:fzf_base_options))
+endfunction
+" Create vim command `AgInDir` to search in dir
+command! -nargs=+ -complete=dir AgInDir
+      \ call SearchWithAgInDirectory(<f-args>)
+
+
+function! s:with_git_root()
+  let root = systemlist('git rev-parse --show-toplevel')[0]
+  return v:shell_error ? {} : {'dir': root}
+endfunction
+
+" Create Ag search command `AgGitRoot` in git root
+command! -nargs=* AgGitRoot
+      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+
+" Create Rg search command `RgGitRoot` in git root, use '?' to bring up the
+" preview pane
+command! -nargs=* RgGitRoot
+            \ call fzf#vim#grep(
+            \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case
+            \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
+            \ 1,
+            \ extend(s:with_git_root(), fzf#vim#with_preview('right:50%:hidden', '?'), s:fzf_base_options))
+
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+" command! -bang -nargs=* Rg
+            " \ call fzf#vim#grep(
+            " \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore
+            " \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
+            " \ 1,
+            " \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'),
+            " \ <bang>0)
+
+function! SearchWordWithAgInGit()
+  execute 'AgGitRoot ' expand('<cword>')
+endfunction
+
 map <c-l> :Buffers<cr>
 nmap <leader>bb :Buffers<cr>
 nmap <leader>ff :GitFiles<cr>
@@ -38,63 +103,8 @@ nnoremap <silent> <leader>sp :Snippets<CR>
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
-""" Credit:
-""" https://github.com/zenbro/dotfiles/blob/master/.nvimrc
-function! SearchVisualSelectionWithAg() range
-  let old_reg = getreg('"')
-  let old_regtype = getregtype('"')
-  let old_clipboard = &clipboard
-  set clipboard&
-  normal! ""gvy
-  let selection = getreg('"')
-  call setreg('"', old_reg, old_regtype)
-  let &clipboard = old_clipboard
-  execute 'Ag' selection
-endfunction
 vnoremap <silent> <leader>agsv
       \ :call SearchVisualSelectionWithAg()<CR>
-
-" Ag search in current dir
-function! SearchWithAgInDirectory(...)
-  call fzf#vim#ag(
-        \ join(a:000[1:], ' '),
-        \ extend({'dir': a:1}, s:fzf_base_options))
-endfunction
-" Create vim command `AgInDir` to search in dir
-command! -nargs=+ -complete=dir AgInDir
-      \ call SearchWithAgInDirectory(<f-args>)
 " Search in current dir
-nnoremap <silent> <leader>/ :AgInDir .<CR>
-
-
-function! s:with_git_root()
-  let root = systemlist('git rev-parse --show-toplevel')[0]
-  return v:shell_error ? {} : {'dir': root}
-endfunction
-" Create Ag search command `AgGitRoot` in git root
-command! -nargs=* AgGitRoot
-      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
-nnoremap <silent> <leader>. :AgGitRoot<CR>
-
-
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-command! -bang -nargs=* Rg
-            \ call fzf#vim#grep(
-            \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore
-            \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
-            \ 1,
-            \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'),
-            \ <bang>0)
-
-function! SearchWordWithAgInGit()
-  execute 'AgGitRoot ' expand('<cword>')
-endfunction
+nnoremap <silent> <leader>/ :Rg .<CR>
+nnoremap <silent> <leader>. :RgGitRoot<CR>
