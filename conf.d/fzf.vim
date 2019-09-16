@@ -58,53 +58,27 @@ endfunction
 command! -nargs=* AgGitRoot
       \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
 
-" Create Rg search command `RgGitRoot` in git root, use '?' to bring up the
-" preview pane
-command! -nargs=* RgGitRoot
-            \ call fzf#vim#grep(
-            \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case
-            \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
-            \ 1,
-            \ extend(s:with_git_root(), fzf#vim#with_preview('right:50%:hidden', '?'), s:fzf_base_options))
-
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-" command! -bang -nargs=* Rg
-            " \ call fzf#vim#grep(
-            " \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore
-            " \ --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>),
-            " \ 1,
-            " \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'),
-            " \ <bang>0)
-
 function! SearchWordWithAgInGit()
   execute 'AgGitRoot ' expand('<cword>')
 endfunction
 
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+vnoremap <silent> <leader>agsv
+      \ :call SearchVisualSelectionWithAg()<CR>
 map <c-l> :Buffers<cr>
 nmap <leader>bb :Buffers<cr>
 nmap <leader>ff :GitFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
 nnoremap <silent> <leader>sc :Commits<CR>
-" commits for current bufffer
-nnoremap <silent> <leader>sbc :BCommits<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
 nnoremap <silent> <leader>sp :Snippets<CR>
-
-" insert mode
-imap <C-x><C-f> <plug>(fzf-complete-file-ag)
-imap <C-x><C-l> <plug>(fzf-complete-line)
-
-vnoremap <silent> <leader>agsv
-      \ :call SearchVisualSelectionWithAg()<CR>
+nnoremap <silent> <leader>. :AgGitRoot<CR>
 " Search in current dir
-nnoremap <silent> <leader>/ :Rg .<CR>
-nnoremap <silent> <leader>. :RgGitRoot<CR>
+nnoremap <silent> <leader>/ :AgInDir .<CR>
+" commits for current bufffer
+nnoremap <silent> <leader>sbc :BCommits<CR>
