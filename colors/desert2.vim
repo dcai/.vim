@@ -42,8 +42,8 @@ hi SpecialKey   ctermfg=darkgreen
 hi NonText      cterm=bold ctermfg=darkblue
 hi Directory    ctermfg=darkcyan
 hi ErrorMsg     cterm=bold ctermfg=7 ctermbg=1
-hi IncSearch    cterm=NONE ctermfg=white ctermbg=darkgrey
-hi Search       cterm=NONE ctermfg=black ctermbg=white
+hi IncSearch    cterm=NONE ctermfg=green ctermbg=darkgreen
+hi Search       cterm=NONE ctermfg=green ctermbg=darkgreen
 hi MoreMsg      ctermfg=darkgreen
 hi ModeMsg      cterm=NONE ctermfg=brown
 hi LineNr       ctermfg=darkyellow
@@ -77,6 +77,7 @@ hi Ignore       cterm=bold ctermfg=darkgrey
 hi Error        cterm=bold ctermfg=7 ctermbg=1
 hi clear        SpellBad
 hi SpellBad     cterm=underline
+hi Cursor	cterm=none ctermbg=red ctermfg=white
 hi CursorLine   cterm=NONE ctermbg=darkblue ctermfg=white
 hi CursorColumn cterm=NONE ctermbg=green ctermfg=white
 
@@ -87,10 +88,6 @@ hi CursorColumn cterm=NONE ctermbg=green ctermfg=white
 hi Normal	guifg=White guibg=grey20
 
 "   highlight groups
-hi Cursor	guibg=khaki guifg=slategrey
-hi CursorLine   guibg=darkred guifg=white
-hi CursorColumn guibg=darkred guifg=white
-"hi CursorIM
 "hi Directory
 "hi DiffAdd
 "hi DiffChange
@@ -100,13 +97,11 @@ hi CursorColumn guibg=darkred guifg=white
 hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
 hi Folded	guibg=grey30 guifg=gold
 hi FoldColumn	guibg=grey30 guifg=tan
-hi IncSearch	guifg=slategrey guibg=khaki
 "hi LineNr
 hi ModeMsg	guifg=goldenrod
 hi MoreMsg	guifg=SeaGreen
 hi NonText	guifg=LightBlue guibg=grey30
 hi Question	guifg=springgreen
-hi Search	guibg=peru guifg=wheat
 hi SpecialKey	guifg=yellowgreen
 hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
 hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
