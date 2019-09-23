@@ -78,6 +78,7 @@ Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 " Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'moll/vim-node'
 Plug 'aaronj1335/underscore-templates.vim'
+Plug 'jparise/vim-graphql'
 
 " Typescript
 " ==========
