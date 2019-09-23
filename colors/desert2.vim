@@ -71,7 +71,7 @@ hi Statement    ctermfg=lightmagenta
 " js: import/export
 hi PreProc      ctermfg=LightCyan
 " const/let and markup attributes
-hi Type         ctermfg=yellow
+hi Type         ctermfg=darkgreen
 hi Underlined   cterm=underline ctermfg=5
 hi Ignore       cterm=bold ctermfg=darkgrey
 hi Error        cterm=bold ctermfg=7 ctermbg=1
