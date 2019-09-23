@@ -64,6 +64,9 @@ autocmd BufRead,BufNewFile .jshintrc set filetype=json
 autocmd BufRead,BufNewFile .tern-config set filetype=json
 " }}}
 
+
+au BufNewFile,BufRead *.prisma setfiletype graphql
+
 """"""""""""""""""""""""""""""
 " Typescript
 """"""""""""""""""""""""""""""
