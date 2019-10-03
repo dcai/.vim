@@ -39,6 +39,7 @@ Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'panozzaj/vim-autocorrect'
 
 " Text objects
 " ============
@@ -119,6 +120,7 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 " Misc.
 Plug 'qpkorr/vim-bufkill'
 Plug 'djoshea/vim-autoread'
+Plug 'tpope/vim-eunuch'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
