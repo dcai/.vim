@@ -31,7 +31,7 @@ let g:ale_linters = {
   \ 'php': ['phpmd', 'phpcs'],
   \ 'python': ['pylint'],
   \ 'sh': ['shellcheck'],
-  \ 'typescript': ['tslint'],
+  \ 'typescript': ['eslint'],
   \ 'vim': ['ale_custom_linting_rules', 'vint'],
   \ 'yaml': ['yamllint'],
 \}
