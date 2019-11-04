@@ -1,8 +1,8 @@
 " status line {{{
 set statusline=%f                               " tail of the filename
-set statusline+=\ %{fugitive#statusline()}
+" set statusline+=\ %{fugitive#statusline()}
 set statusline+=%m                              " modified flag
-set statusline+=[
+set statusline+=\ [
 set statusline+=%l                              " cursor line/total lines
 set statusline+=\/%L                            " total lines
 set statusline+=\|%c                            " cursor column
@@ -16,7 +16,7 @@ set statusline+=\|%{&bomb?'bom':'nobom'}        " BOM
 set statusline+=]
 set statusline+=%h                              " help file flag
 set statusline+=%r                              " read only flag
-set statusline+=\ %P                            " percent through file
+" set statusline+=\ %P                            " percent through file
 " }}}
 
 highlight statusline cterm=NONE ctermbg=Magenta ctermfg=white
