@@ -274,7 +274,25 @@ nnoremap <leader>fs :w!<cr>
 nnoremap <leader>fed :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
-nnoremap <leader>cp :let @+ = expand("%:p")<CR>
+
+
+" Convert slashes to backslashes for Windows.
+if g:OSUNAME ==? 'Windows'
+  nmap <leader>cp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap <leader>cf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  " This will copy the path in 8.3 short format, for DOS and Windows 9x
+  " nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+else
+  " copy to vim default register
+  nnoremap <leader>cf :let @"=expand("%")<CR>
+  nnoremap <leader>cp :let @"=expand("%:p")<CR>
+  " copy to clipboard
+  " nnoremap <leader>cf :let @*=expand("%")<CR>
+  " nnoremap <leader>cp :let @*=expand("%:p")<CR>
+  " nnoremap <leader>cf :let @+=expand("%")<CR>
+  " nnoremap <leader>cp :let @+=expand("%:p")<CR>
+endif
+
 " kill hlsearch until next time
 nnoremap <Leader>sc :nohlsearch<CR>
 " copy current file path to clipboard
