@@ -29,6 +29,7 @@ let g:colors_name='desert2'
 
 hi clear ALEWarning
 hi clear ALEError
+hi clear SpellBad
 " hi ALEWarningLine ctermbg=darkgrey
 " hi ALEWarning ctermbg=darkcyan
 " hi ALEError ctermbg=darkcyan
@@ -37,93 +38,87 @@ hi clear ALEError
 """"""""""""""""""""""""""""
 " TERM          definitions
 """"""""""""""""""""""""""""
-hi Normal	ctermfg=lightblue
-hi SpecialKey   ctermfg=darkgreen
-hi NonText      cterm=bold ctermfg=darkblue
+hi Comment      ctermfg=darkgrey
+hi Constant     ctermfg=brown
+hi Cursor       cterm=none       ctermbg=red      ctermfg=white
+hi CursorColumn cterm=NONE       ctermbg=green    ctermfg=white
+hi CursorLine   cterm=NONE       ctermbg=darkblue ctermfg=white
+hi DiffAdd      ctermbg=4
+hi DiffChange   ctermbg=5
+hi DiffDelete   cterm=bold       ctermfg=4        ctermbg=6
+hi DiffText     cterm=bold       ctermbg=1
 hi Directory    ctermfg=darkcyan
-hi ErrorMsg     cterm=bold ctermfg=7 ctermbg=1
-hi IncSearch    cterm=NONE ctermfg=green ctermbg=darkgreen
-hi Search       cterm=NONE ctermfg=green ctermbg=darkgreen
-hi MoreMsg      ctermfg=darkgreen
-hi ModeMsg      cterm=NONE ctermfg=brown
+hi Error        cterm=bold       ctermfg=7        ctermbg=1
+hi ErrorMsg     cterm=bold       ctermfg=7        ctermbg=1
+hi FoldColumn   ctermfg=darkgrey ctermbg=NONE
+hi Folded       ctermfg=darkgrey ctermbg=NONE
+" js: import/export
+hi Identifier   ctermfg=yellow
+hi Ignore       cterm=bold       ctermfg=darkgrey
+hi IncSearch    cterm=NONE       ctermfg=green    ctermbg=darkgreen
 hi LineNr       ctermfg=darkyellow
+hi ModeMsg      cterm=NONE       ctermfg=brown
+hi MoreMsg      ctermfg=darkgreen
+hi NonText      cterm=bold       ctermfg=darkblue
+hi Normal       ctermfg=lightblue
+" const/let and markup attributes
+hi PreProc      ctermfg=LightCyan
 hi Question     ctermfg=green
+hi Search       cterm=NONE       ctermfg=green    ctermbg=darkgreen
+hi Special      ctermfg=red
+hi SpecialKey   ctermfg=darkgreen
+hi SpellBad     ctermbg=red
+" jsx markup
+hi Statement    ctermfg=lightmagenta
 hi StatusLine   cterm=bold,reverse
 hi StatusLineNC cterm=reverse
-hi VertSplit    cterm=reverse
 hi Title        ctermfg=green
+hi Type         ctermfg=darkgreen
+hi Underlined   cterm=underline  ctermfg=5
+hi VertSplit    cterm=reverse
 hi Visual       cterm=reverse
 hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=darkblue
-hi WildMenu     ctermfg=0 ctermbg=3
-hi Folded       ctermfg=darkgrey ctermbg=NONE
-hi FoldColumn   ctermfg=darkgrey ctermbg=NONE
-hi DiffAdd      ctermbg=4
-hi DiffChange   ctermbg=5
-hi DiffDelete   cterm=bold ctermfg=4 ctermbg=6
-hi DiffText     cterm=bold ctermbg=1
-hi Comment      ctermfg=darkgrey
-hi Constant     ctermfg=brown
-hi Special      ctermfg=red
-" jsx markup
-hi Identifier   ctermfg=yellow
-hi Statement    ctermfg=lightmagenta
-" js: import/export
-hi PreProc      ctermfg=LightCyan
-" const/let and markup attributes
-hi Type         ctermfg=darkgreen
-hi Underlined   cterm=underline ctermfg=5
-hi Ignore       cterm=bold ctermfg=darkgrey
-hi Error        cterm=bold ctermfg=7 ctermbg=1
-hi clear        SpellBad
-hi SpellBad     cterm=underline
-hi Cursor	cterm=none ctermbg=red ctermfg=white
-hi CursorLine   cterm=NONE ctermbg=darkblue ctermfg=white
-hi CursorColumn cterm=NONE ctermbg=green ctermfg=white
-
+hi WildMenu     ctermfg=0        ctermbg=3
 
 """"""""""""""""""""""""""""
 " GUI definitions
 """"""""""""""""""""""""""""
-hi Normal	guifg=White guibg=grey20
-
-"   highlight groups
-"hi Directory
+hi Comment      guifg=SkyBlue
+hi Constant     guifg=#ffa0a0
+hi FoldColumn   guibg=grey30    guifg=tan
+hi Folded       guibg=grey30    guifg=gold
+hi Identifier   guifg=palegreen
+hi Ignore       guifg=grey40
+hi ModeMsg      guifg=goldenrod
+hi MoreMsg      guifg=SeaGreen
+hi NonText      guifg=LightBlue guibg=grey30
+hi Normal       guifg=White     guibg=grey20
+hi PreProc      guifg=indianred
+hi Question     guifg=springgreen
+hi Special      guifg=navajowhite
+hi SpecialKey   guifg=yellowgreen
+hi Statement    guifg=khaki
+hi StatusLine   guibg=#c2bfa5   guifg=black  gui=none
+hi StatusLineNC guibg=#c2bfa5   guifg=grey50 gui=none
+hi Title        guifg=indianred
+hi Todo         guifg=orangered guibg=yellow2
+hi Type         guifg=darkkhaki
+hi VertSplit    guibg=#c2bfa5   guifg=grey50 gui=none
+hi Visual       gui=none        guifg=khaki  guibg=olivedrab
+hi WarningMsg   guifg=salmon
 "hi DiffAdd
 "hi DiffChange
 "hi DiffDelete
 "hi DiffText
+"hi Directory
 "hi ErrorMsg
-hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
-hi Folded	guibg=grey30 guifg=gold
-hi FoldColumn	guibg=grey30 guifg=tan
 "hi LineNr
-hi ModeMsg	guifg=goldenrod
-hi MoreMsg	guifg=SeaGreen
-hi NonText	guifg=LightBlue guibg=grey30
-hi Question	guifg=springgreen
-hi SpecialKey	guifg=yellowgreen
-hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
-hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
-hi Title	guifg=indianred
-hi Visual	gui=none guifg=khaki guibg=olivedrab
-"hi VisualNOS
-hi WarningMsg	guifg=salmon
-"hi WildMenu
 "hi Menu
 "hi Scrollbar
 "hi Tooltip
-
-" syntax highlighting groups
-hi Comment	guifg=SkyBlue
-hi Constant	guifg=#ffa0a0
-hi Identifier	guifg=palegreen
-hi Statement	guifg=khaki
-hi PreProc	guifg=indianred
-hi Type		guifg=darkkhaki
-hi Special	guifg=navajowhite
+"hi VisualNOS
+"hi WildMenu
 "hi Underlined
-hi Ignore	guifg=grey40
 "hi Error
-hi Todo		guifg=orangered guibg=yellow2
 "vim: sw=4
