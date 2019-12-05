@@ -40,6 +40,7 @@ Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'panozzaj/vim-autocorrect'
+Plug 'GutenYe/json5.vim'
 
 " Text objects
 " ============
