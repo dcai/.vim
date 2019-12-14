@@ -43,10 +43,11 @@ hi Constant     ctermfg=brown
 hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 hi CursorColumn cterm=NONE       ctermbg=green    ctermfg=white
 hi CursorLine   cterm=NONE       ctermbg=darkblue ctermfg=white
-hi DiffAdd      ctermbg=4
-hi DiffChange   ctermbg=5
-hi DiffDelete   cterm=bold       ctermfg=4        ctermbg=6
-hi DiffText     cterm=bold       ctermbg=1
+hi clear DiffAdd
+hi clear DiffChange
+hi clear DiffDelete
+hi clear DiffText
+
 hi Directory    ctermfg=darkcyan
 hi Error        cterm=bold       ctermfg=7        ctermbg=1
 hi ErrorMsg     cterm=bold       ctermfg=7        ctermbg=1
@@ -107,10 +108,6 @@ hi Type         guifg=darkkhaki
 hi VertSplit    guibg=#c2bfa5   guifg=grey50 gui=none
 hi Visual       gui=none        guifg=khaki  guibg=olivedrab
 hi WarningMsg   guifg=salmon
-"hi DiffAdd
-"hi DiffChange
-"hi DiffDelete
-"hi DiffText
 "hi Directory
 "hi ErrorMsg
 "hi LineNr
