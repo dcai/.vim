@@ -37,6 +37,7 @@ let g:ale_linters = {
 \}
 
 " 'php': ['phpcbf'],
+"\ 'yaml': ['prettier'],
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'css': ['prettier'],
@@ -44,7 +45,6 @@ let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
   \ 'typescript': ['prettier'],
-  \ 'yaml': ['prettier'],
   \ 'go': ['gofmt'],
 \}
 
