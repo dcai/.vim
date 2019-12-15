@@ -66,6 +66,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
+Plug 'christoomey/vim-conflicted'
 
 " HTML
 " ====
