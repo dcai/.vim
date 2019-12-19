@@ -46,6 +46,7 @@ let g:ale_fixers = {
   \ 'json': ['prettier'],
   \ 'typescript': ['prettier'],
   \ 'go': ['gofmt'],
+  \ 'sh': ['shfmt'],
 \}
 
 " Install moodle coding style:
