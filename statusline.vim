@@ -19,7 +19,8 @@ set statusline+=%r                              " read only flag
 " set statusline+=\ %P                            " percent through file
 " }}}
 
-highlight statusline cterm=NONE ctermbg=Magenta ctermfg=white
+highlight statusline cterm=NONE ctermfg=white ctermbg=darkblue
+highlight statuslineNC cterm=NONE ctermfg=white ctermbg=darkgrey
 
 " highlight CursorLine ctermbg=Green ctermfg=DarkGrey
 au InsertEnter  * call InsertStatuslineColor(v:insertmode)
@@ -27,11 +28,11 @@ au InsertChange * call InsertStatuslineColor(v:insertmode)
 au InsertLeave  * call InsertLeaveActions()
 
 function! InsertLeaveActions()
-  highlight statusline cterm=NONE ctermfg=white ctermbg=Magenta
+  highlight statusline cterm=NONE ctermfg=white ctermbg=darkblue
 endfunction
 
 function! InsertStatuslineColor(mode)
-  highlight statusline cterm=NONE ctermfg=white ctermbg=darkmagenta
+  highlight statusline cterm=NONE ctermbg=darkgrey ctermfg=white
 endfunction
 
 " function! InsertStatuslineColor(mode)
