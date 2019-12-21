@@ -123,6 +123,7 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'qpkorr/vim-bufkill'
 Plug 'djoshea/vim-autoread'
 Plug 'tpope/vim-eunuch'
+Plug 'mbbill/undotree'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
