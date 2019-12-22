@@ -93,15 +93,15 @@ endfunction
 let g:netrw_home=$XDG_CACHE_HOME.'/vim'
 
 " backup {{{2
-" let s:backupdir=s:mkdir_p(expand("~/.vim/backup"))
-" set backupdir=s:backupdir
-set nobackup
+" set nobackup
+let s:backupdir=s:mkdir_p(expand("~/.local/vim/backup"))
+set backupdir=~/.local/vim/backup
 " }}}
 
 " Persistent undo {{{2
 set undofile " Create FILE.un~ files for persistent undo
-let s:undodir=s:mkdir_p(expand('~/.vim/undo'))
-set undodir=s:undodir
+let s:undodir=s:mkdir_p(expand('~/.local/vim/undo'))
+set undodir=~/.local/vim/undo
 " }}}
 " }}}
 
