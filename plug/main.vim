@@ -3,7 +3,7 @@
 "
 """""""""""""""""""""""""""""""""""""""
 
-let g:BUNDLEDIR='$HOME/.local/share/vimplug'
+let g:BUNDLEDIR='$HOME/.local/vim/plug'
 let g:VIMAUTOLOADDIR='$HOME/' . VIMCONFROOT . '/autoload'
 let g:VIMPLUGPATH=VIMAUTOLOADDIR . '/plug.vim'
 
