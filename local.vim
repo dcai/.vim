@@ -262,7 +262,7 @@ inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
 " toggle most recently used file
-" ctrl-6 doesn't work for some terms
+" ctrl-6 <c-6> doesn't work for some terms
 noremap <c-o> :e #<cr>
 
 " Spacemacs like mappings {{{2
