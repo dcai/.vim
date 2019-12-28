@@ -40,7 +40,6 @@ Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'panozzaj/vim-autocorrect'
-Plug 'GutenYe/json5.vim'
 
 " Text objects
 " ============
@@ -51,7 +50,7 @@ Plug 'thinca/vim-textobj-function-javascript'
 
 " Finder
 " ===============
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 
@@ -82,6 +81,7 @@ Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'aaronj1335/underscore-templates.vim'
 Plug 'jparise/vim-graphql'
+Plug 'GutenYe/json5.vim'
 
 " Typescript
 " ==========
