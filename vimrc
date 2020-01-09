@@ -42,7 +42,7 @@ function! IncludeDir(dirname)
     exe 'source' f
   endfor
 endfunction
-call IncludeScript('plug/main.vim')
+call IncludeScript('plug/plug.vim')
 call IncludeScript('local.vim')
 
 if has('gui_running')
