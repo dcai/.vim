@@ -40,6 +40,7 @@ Plug 'thinca/vim-visualstar'
 Plug 'reedes/vim-lexical'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'panozzaj/vim-autocorrect'
+Plug 'ervandew/supertab'
 
 " Text objects
 " ============
@@ -75,9 +76,8 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 
 " Javascript
 " ==========
-Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
-" Plug 'jimmyhchan/dustjs.vim'
-" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'aaronj1335/underscore-templates.vim'
 Plug 'jparise/vim-graphql'
@@ -93,11 +93,6 @@ Plug 'leafgarland/typescript-vim'
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'evidens/vim-twig'
 
-" Racket
-" ======
-" Plug 'wlangstroth/vim-racket'
-" Plug 'ds26gte/scmindent'
-
 " Python
 " ======
 Plug 'vim-scripts/indentpython.vim'
@@ -106,13 +101,12 @@ Plug 'vim-scripts/python_match.vim'
 " Other syntax
 " ============
 Plug 'dag/vim-fish', { 'for': 'fish' }
-" Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'jceb/vim-orgmode', { 'for': 'org' } | Plug 'tpope/vim-speeddating', { 'for': 'org' }
+Plug 'jceb/vim-orgmode', { 'for': 'org' }
+Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
 " Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
-Plug 'ElmCast/elm-vim'
+" Plug 'ElmCast/elm-vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'cespare/vim-toml'
 Plug 'hashivim/vim-terraform'
@@ -128,15 +122,13 @@ Plug 'mbbill/undotree'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
-" Funcy start screen for vim
-"Plug 'mhinz/vim-startify' " start screen
 
 " Color
 " =====
-Plug 'chrisbra/Colorizer' " :ColorHeight in colorscheme file
-Plug 'noahfrederick/vim-noctu'
+Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
 
 " Color schemes
+" Plug 'noahfrederick/vim-noctu'
 " Plug 'vim-scripts/peaksea'
 " Plug 'vim-scripts/Solarized'
 " Plug 'Lokaltog/vim-distinguished'
@@ -146,13 +138,6 @@ Plug 'noahfrederick/vim-noctu'
 " Plug 'sheerun/vim-wombat-scheme'  "wombat
 " Plug 'jnurmine/Zenburn' "zenburn
 
-" Snippets and auto complete
-" ==========================
-Plug 'ervandew/supertab'
-
-" Linting
-" ==========================
-"
 
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force

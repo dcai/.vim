@@ -62,13 +62,6 @@ nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
 
 """""""""""""""""""""""""""""""""""""""
-""" vim-plug
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>vpi :PlugInstall<cr>
-nnoremap <leader>vpc :PlugClean<cr>
-nnoremap <leader>vpu :PlugUpdate<cr>
-
-"""""""""""""""""""""""""""""""""""""""
 """ editorconfig-vim
 """""""""""""""""""""""""""""""""""""""
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -83,25 +76,10 @@ let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
       \ '.jscsrc']
 
 """""""""""""""""""""""""""""""""""""""
-""" flowtype
-"""""""""""""""""""""""""""""""""""""""
-let g:flow#enable = 0
-let g:flow#autoclose = 1
-
-"""""""""""""""""""""""""""""""""""""""
 """ gitgutter
 """""""""""""""""""""""""""""""""""""""
 nmap ]c <Plug>GitGutterNextHunk
 nmap [c <Plug>GitGutterPrevHunk
-"""""""""""""""""""""""""""""""""""""""
-""" vim-javascript
-"""""""""""""""""""""""""""""""""""""""
-let g:javascript_plugin_flow = 1
-
-"""""""""""""""""""""""""""""""""""""""
-""" tpope/markdown
-"""""""""""""""""""""""""""""""""""""""
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
 
 """""""""""""""""""""""""""""""""""""""
 """ junegunn/vim-easy-align
