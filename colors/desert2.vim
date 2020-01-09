@@ -30,6 +30,9 @@ let g:colors_name='desert2'
 hi clear ALEWarning
 hi clear ALEError
 hi clear SpellBad
+hi clear SpellCap
+hi clear SpellRare
+hi clear SpellLocal
 " hi ALEWarningLine ctermbg=darkgrey
 " hi ALEWarning ctermbg=darkcyan
 " hi ALEError ctermbg=darkcyan
@@ -65,10 +68,11 @@ hi Normal       ctermfg=lightblue
 " const/let and markup attributes
 hi PreProc      ctermfg=LightCyan
 hi Question     ctermfg=green
-hi Search       cterm=NONE       ctermfg=green    ctermbg=darkgreen
+hi Search       cterm=NONE       ctermfg=black    ctermbg=green
 hi Special      ctermfg=red
-hi SpecialKey   ctermfg=darkgreen
-hi SpellBad     ctermbg=red
+hi SpjcialKey   ctermfg=darkgreen
+hi SpellBad     ctermfg=red
+hi SpellCap     ctermfg=cyan
 " jsx markup
 hi Statement    ctermfg=lightmagenta
 hi StatusLine   cterm=bold,reverse
