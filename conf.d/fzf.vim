@@ -62,7 +62,8 @@ function! SearchWordWithAgInGit()
   execute 'AgGitRoot ' expand('<cword>')
 endfunction
 
-" Insert mode completion
+" apt install wbritish
+" use wamerican for american spelling
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
@@ -83,3 +84,23 @@ nnoremap <silent> <leader>. :AgGitRoot<CR>
 nnoremap <silent> <leader>/ :AgInDir .<CR>
 " commits for current bufffer
 nnoremap <silent> <leader>sbc :BCommits<CR>
+
+function! s:extend(base, extra)
+  let base = copy(a:base)
+  if has_key(a:extra, 'options')
+    let extra = copy(a:extra)
+    let extra.extra_options = remove(extra, 'options')
+    return extend(base, extra)
+  endif
+  return extend(base, a:extra)
+endfunction
+
+" WIP
+function! CompleteWord(...)
+  return fzf#vim#complete(s:extend({
+    \ 'source': 'gg'},
+    \ get(a:000, 0, fzf#wrap())))
+endfunction
+
+inoremap <expr> <plug>(my-fzf-complete-word) CompleteWord()
+imap <c-x><c-d> <plug>(my-fzf-complete-word)
