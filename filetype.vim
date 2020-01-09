@@ -92,15 +92,13 @@ autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
 " }}}
 
 " Lexmed {{{
-if exists(':LexMed')
-  augroup lexical
-    autocmd!
-    autocmd FileType markdown,mkd call lexical#init()
-    autocmd FileType textile call lexical#init()
-    autocmd FileType text call lexical#init()
-    "autocmd FileType text call lexical#init({ 'spell': 0 })
-  augroup END
-endif
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType text call lexical#init()
+  autocmd FileType org call lexical#init()
+augroup END
 " }}}
 
 function! HelpFileMode()
