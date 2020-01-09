@@ -10,8 +10,8 @@ let g:VIMPLUGPATH=VIMAUTOLOADDIR . '/plug.vim'
 " Install vim-plug if we don't already have it
 if empty(glob(expand(VIMPLUGPATH)))
   " Ensure all needed directories exist  (Thanks @kapadiamush)
-  execute 'mkdir -p ' . expand(BUNDLEDIR)
-  execute 'mkdir -p ' . expand(VIMAUTOLOADDIR)
+  execute '!mkdir -p ' . expand(BUNDLEDIR)
+  execute '!mkdir -p ' . expand(VIMAUTOLOADDIR)
   " Download the actual plugin manager
   execute '!curl -fLo ' . VIMPLUGPATH . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
