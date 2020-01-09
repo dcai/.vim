@@ -18,13 +18,28 @@ endif
 
 call plug#begin(expand(BUNDLEDIR))
 
-" manipulate text
-" ===============
+" Usability
+" =========
 Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
-Plug 'terryma/vim-smooth-scroll'
-Plug 'vim-scripts/matchit.zip'
-Plug 'tpope/vim-surround'
+Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
+Plug 'mbbill/undotree'
+Plug 'panozzaj/vim-autocorrect'
+Plug 'qpkorr/vim-bufkill'
+Plug 'reedes/vim-lexical'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'thinca/vim-visualstar'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'vasconcelloslf/vim-interestingwords'
+Plug 'vim-scripts/matchit.zip'
+"Plug 'maxbrunsfeld/vim-yankstack'
+"Plug 'kien/rainbow_parentheses.vim'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 map z/ <Plug>(incsearch-fuzzy-/)
@@ -33,14 +48,6 @@ map zz/ <Plug>(incsearch-fuzzyspell-/)
 map zz? <Plug>(incsearch-fuzzyspell-?)
 " map zg/ <Plug>(incsearch-fuzzy-stay)
 " map zg/ <Plug>(incsearch-fuzzyspell-stay)
-Plug 'godlygeek/tabular'
-Plug 'junegunn/vim-easy-align'
-Plug 'vasconcelloslf/vim-interestingwords'
-Plug 'thinca/vim-visualstar'
-Plug 'reedes/vim-lexical'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'panozzaj/vim-autocorrect'
-Plug 'ervandew/supertab'
 
 " Text objects
 " ============
@@ -55,15 +62,8 @@ Plug 'thinca/vim-textobj-function-javascript'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" status line
-" ===========
-"Plug 'itchyny/lightline.vim'
-"Plug 'vim-airline/vim-airline'
-"\ | Plug 'vim-airline/vim-airline-themes'
-
 " dev support
 " ===========
-" Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-conflicted'
@@ -71,20 +71,14 @@ Plug 'christoomey/vim-conflicted'
 " HTML
 " ====
 Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
-" close tags
-" Plug 'Raimondi/delimitMate'
 
 " Javascript
 " ==========
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
-Plug 'aaronj1335/underscore-templates.vim'
 Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
-
-" Typescript
-" ==========
 Plug 'leafgarland/typescript-vim'
 
 " PHP 5.6
@@ -104,24 +98,13 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'vim-scripts/nginx.vim'
-" Plug 'rodjek/vim-puppet'
 Plug 'niftylettuce/vim-jinja'
-" Plug 'ElmCast/elm-vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'cespare/vim-toml'
 Plug 'hashivim/vim-terraform'
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-
-" Misc.
-Plug 'qpkorr/vim-bufkill'
-Plug 'djoshea/vim-autoread'
-Plug 'tpope/vim-eunuch'
-Plug 'mbbill/undotree'
-"Plug 'maxbrunsfeld/vim-yankstack'
-"Plug 'kien/rainbow_parentheses.vim'
-"Plug 'ludovicchabant/vim-gutentags'
 
 " Color
 " =====
