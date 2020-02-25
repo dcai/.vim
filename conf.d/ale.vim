@@ -40,14 +40,15 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'css': ['prettier'],
+  \ 'go': ['gofmt'],
+  \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
+  \ 'python': ['black'],
+  \ 'sh': ['shfmt'],
   \ 'typescript': ['prettier'],
   \ 'yaml': ['prettier'],
-  \ 'go': ['gofmt'],
-  \ 'sh': ['shfmt'],
-  \ 'python': ['black'],
 \}
 
 " Install moodle coding style:
