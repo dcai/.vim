@@ -105,6 +105,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'towolf/vim-helm'
 
 " Color
 " =====
