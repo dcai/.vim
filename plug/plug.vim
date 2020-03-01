@@ -62,11 +62,12 @@ Plug 'thinca/vim-textobj-function-javascript'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
       \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" dev support
+" utils
 " ===========
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-conflicted'
+Plug 'diepm/vim-rest-console'
 
 " HTML
 " ====
