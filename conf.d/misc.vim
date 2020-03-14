@@ -9,8 +9,10 @@
 """""""""""""""""""""""""""""""""""""""
 """ vim-rest-console
 """""""""""""""""""""""""""""""""""""""
-let g:vrc_split_request_body = 1
+let g:vrc_split_request_body = 0
 let g:vrc_elasticsearch_support = 1
+let g:vrc_output_buffer_name = 'api.json'
+let g:vrc_show_command=1
 
 """""""""""""""""""""""""""""""""""""""
 """ SuperTab
