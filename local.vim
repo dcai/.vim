@@ -195,6 +195,8 @@ noremap! <F15> <nop>
 noremap <F16> <nop>
 noremap! <F16> <nop>
 
+noremap gf :e <cfile><CR>
+
 " no ex mode {{{2
 " not go into Ex mode
 " or use unmap
