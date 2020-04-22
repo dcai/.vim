@@ -29,7 +29,7 @@ let g:ale_set_loclist = 1
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
   \ 'php': ['phpmd', 'phpcs'],
-  \ 'python': ['pylint'],
+  \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint'],
   \ 'vim': ['ale_custom_linting_rules', 'vint'],
