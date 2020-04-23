@@ -18,6 +18,9 @@ endif
 
 call plug#begin(expand(BUNDLEDIR))
 
+" Stats
+Plug 'wakatime/vim-wakatime'
+
 " Usability
 " =========
 Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
