@@ -19,7 +19,7 @@ endif
 call plug#begin(expand(BUNDLEDIR))
 
 " Stats
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
 " Usability
 " =========
