@@ -45,6 +45,8 @@ let g:ale_fixers = {
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
+  \ 'less': ['prettier'],
+  \ 'php': ['phpcbf'],
   \ 'python': ['black'],
   \ 'sh': ['shfmt'],
   \ 'typescript': ['prettier'],
@@ -56,7 +58,7 @@ let g:ale_fixers = {
 " Above command add moodle coding style to
 "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
 " let s:php_coding_standard = 'moodle'
-let s:php_coding_standard = 'PSR2'
+let s:php_coding_standard = 'PSR12'
 let g:ale_php_phpcs_standard = s:php_coding_standard
 let g:ale_php_phpcbf_standard = s:php_coding_standard
 let g:ale_javascript_eslint_executable = ''
