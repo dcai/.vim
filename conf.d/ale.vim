@@ -46,7 +46,6 @@ let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
   \ 'dokuwiki': ['pandoc'],
-  \ 'org': ['pandoc'],
   \ 'markdown': ['pandoc'],
   \ 'less': ['prettier'],
   \ 'php': ['phpcbf'],
