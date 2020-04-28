@@ -45,6 +45,9 @@ let g:ale_fixers = {
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
   \ 'json': ['prettier'],
+  \ 'dokuwiki': ['pandoc'],
+  \ 'org': ['pandoc'],
+  \ 'markdown': ['pandoc'],
   \ 'less': ['prettier'],
   \ 'php': ['phpcbf'],
   \ 'python': ['black'],
@@ -62,3 +65,5 @@ let s:php_coding_standard = 'PSR12'
 let g:ale_php_phpcs_standard = s:php_coding_standard
 let g:ale_php_phpcbf_standard = s:php_coding_standard
 let g:ale_javascript_eslint_executable = ''
+let g:ale_pandoc_options = '--columns=120'
+let g:ale_pandoc_use_gfm = 1

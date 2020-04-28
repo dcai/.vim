@@ -20,6 +20,7 @@ call plug#begin(expand(BUNDLEDIR))
 
 " Stats
 " Plug 'wakatime/vim-wakatime'
+Plug 'junegunn/vader.vim', { 'for': 'vader' }
 
 " Usability
 " =========
@@ -130,14 +131,15 @@ Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
     " TODO
-    !npm install -g prettier eslint tslint typescript
+    !npm install -g prettier eslint
     !composer global require "squizlabs/php_codesniffer=*"
     !pip install vim-vint pathlib typing
   endif
 endfunction
 
 if v:version > 800
-  Plug 'w0rp/ale', { 'do': function('InstallAle') }
+  Plug 'dcai/ale', { 'do': function('InstallAle') }
+  " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
 else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif
