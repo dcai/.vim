@@ -1,5 +1,3 @@
-" disable airline in cli
-"" let g:airline_powerline_fonts = 0
 if !has('nvim')
   set term=xterm-256color
 endif
@@ -24,9 +22,6 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
   " deal with it
 endtry
-"let g:jellybeans_overrides = {
-      "\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-      "\}
 
 " allows cursor change in tmux mode
 " https://dougblack.io/words/a-good-vimrc.html#colors
@@ -37,4 +32,3 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
-

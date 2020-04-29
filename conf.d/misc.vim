@@ -4,7 +4,17 @@
 "
 """""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""
+""" vim-smooth-scroll
+"""""""""""""""""""""""""""""""""""""""
+let g:smooth_scroll_duration=10
+map <silent> <c-u> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 2)<CR>
+map <silent> <c-d> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 2)<CR>
+map <silent> <c-b> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
+map <silent> <c-f> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
 
+map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
+map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
 
 """""""""""""""""""""""""""""""""""""""
 """ vim-rest-console
@@ -56,12 +66,6 @@ let g:user_emmet_settings = {
       \     'extends' : 'html',
       \ },
       \}
-"""""""""""""""""""""""""""""""""""""""
-"""  vim-phpfmt
-"""""""""""""""""""""""""""""""""""""""
-" A standard type: PEAR, PHPCS, PSR1, PSR2, Squiz and Zend
-let g:phpfmt_standard = 'PSR2'
-let g:phpfmt_autosave = 0
 
 """""""""""""""""""""""""""""""""""""""
 """ Hightlight interesting words
@@ -70,11 +74,6 @@ nnoremap <silent> <leader>m :call InterestingWords('n')<cr>
 nnoremap <silent> <leader>M :call UncolorAllWords()<cr>
 nnoremap <silent> n :call WordNavigation('forward')<cr>
 nnoremap <silent> N :call WordNavigation('backward')<cr>
-
-"""""""""""""""""""""""""""""""""""""""
-""" editorconfig-vim
-"""""""""""""""""""""""""""""""""""""""
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 """""""""""""""""""""""""""""""""""""""
 """ ludovicchabant/vim-gutentags

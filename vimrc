@@ -23,18 +23,18 @@ endif
 set shell=/bin/sh
 
 if has('win64') || has('win32') || has('win16')
-  let g:OSUNAME = 'Windows'
-  let g:VIMCONFROOT = 'vimfiles'
-  let g:WSL = 0
+  let g:osuname = 'Windows'
+  let g:vimrc = 'vimfiles'
+  let g:wsl = 0
 else
-  let g:OSUNAME=substitute(system('uname'), "\n", '', '')
-  let g:VIMCONFROOT='.vim'
+  let g:osuname=substitute(system('uname'), "\n", '', '')
+  let g:vimrc ='.vim'
   " Bash on Ubuntu on Windows
-  let g:WSL=matchstr(substitute(system('uname -r'), "\n", '', ''), 'Microsoft$')
+  let g:wsl=matchstr(substitute(system('uname -r'), "\n", '', ''), 'Microsoft$')
 endif
 
 function! IncludeScript(scriptname)
-  execute 'source $HOME/' . g:VIMCONFROOT . '/' . a:scriptname
+  execute 'source $HOME/' . g:vimrc . '/' . a:scriptname
 endfunction
 
 function! IncludeDir(dirname)
@@ -53,15 +53,15 @@ else
   call IncludeScript('term.vim')
 endif
 
-if g:OSUNAME ==? 'Linux'
+if g:osuname ==? 'Linux'
   call IncludeScript('os/linux.vim')
-elseif g:OSUNAME ==? 'Darwin'
+elseif g:osuname ==? 'Darwin'
   call IncludeScript('os/macos.vim')
-elseif g:OSUNAME ==? 'Windows'
+elseif g:osuname ==? 'Windows'
   call IncludeScript('os/windows.vim')
 endif
 
-call IncludeDir('$HOME/' . g:VIMCONFROOT . '/conf.d/*.vim')
+call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
 
 " if !exists('g:lightline')
   call IncludeScript('statusline.vim')

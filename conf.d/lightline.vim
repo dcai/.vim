@@ -120,7 +120,6 @@ endfunction
 function! LightLineFilepath()
   let l:line = expand('%:p')
   let l:line = substitute(l:line, '/Users/dcai', '~', '')
-  let l:line = substitute(l:line, 'salt-developer/code/api/author', 'author', '')
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
         \ ('' != expand('%:p') ? l:line : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
