@@ -3,20 +3,20 @@
 "
 """""""""""""""""""""""""""""""""""""""
 
-let g:BUNDLEDIR='$HOME/.local/vim/plug'
-let g:VIMAUTOLOADDIR='$HOME/' . VIMCONFROOT . '/autoload'
-let g:VIMPLUGPATH=VIMAUTOLOADDIR . '/plug.vim'
+let s:plugged='$HOME/.local/vim/plug'
+let s:autoload='$HOME/' . g:vimrc . '/autoload'
+let s:vimplug=s:autoload . '/plug.vim'
 
 " Install vim-plug if we don't already have it
-if empty(glob(expand(VIMPLUGPATH)))
+if empty(glob(expand(s:vimplug)))
   " Ensure all needed directories exist  (Thanks @kapadiamush)
-  execute '!mkdir -p ' . expand(BUNDLEDIR)
-  execute '!mkdir -p ' . expand(VIMAUTOLOADDIR)
+  execute '!mkdir -p ' . expand(s:plugged)
+  execute '!mkdir -p ' . expand(s:autoload)
   " Download the actual plugin manager
-  execute '!curl -fLo ' . VIMPLUGPATH . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+  execute '!curl -fLo ' . s:vimplug . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 
-call plug#begin(expand(BUNDLEDIR))
+call plug#begin(expand(s:plugged))
 
 " Stats
 " Plug 'wakatime/vim-wakatime'
@@ -88,8 +88,6 @@ Plug 'leafgarland/typescript-vim'
 
 " PHP 5.6
 " ==========
-" Plug 'beanworks/vim-phpfmt', { 'for': 'php' }
-" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'evidens/vim-twig'
 
 " Python
@@ -144,13 +142,13 @@ else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif
 
-if g:OSUNAME ==? 'Windows'
+if g:osuname ==? 'Windows'
   call IncludeScript('plug/windows.vim')
 else
   call IncludeScript('plug/unix.vim')
 endif
 
-if g:WSL ==? 'Microsoft'
+if g:wsl ==? 'Microsoft'
   call IncludeScript('plug/wsl.vim')
 endif
 

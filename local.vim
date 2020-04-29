@@ -135,27 +135,25 @@ function! TrimWhiteSpace()
 endfunction
 " }}}
 
+set autochdir
 " Keep in current dir {{{
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 " or
 " Vim tip #64
 " http://vim.wikia.com/wiki/VimTip64
 """""""""""""""""""""""""""""""""""""""
-set autochdir
-
 " switch to current dir
-function! CHANGE_CURR_DIR()
-  let _dir = expand('%:p:h')
-  if isdirectory(_dir)
-    exec 'cd ' . _dir
-  endif
-  unlet _dir
-endfunction
-
-augroup changecurrentdir
-  autocmd BufEnter * call CHANGE_CURR_DIR()
-  autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-augroup END
+" function! CHANGE_CURR_DIR()
+"   let _dir = expand('%:p:h')
+"   if isdirectory(_dir)
+"     exec 'cd ' . _dir
+"   endif
+"   unlet _dir
+" endfunction
+" augroup changecurrentdir
+"   autocmd BufEnter * call CHANGE_CURR_DIR()
+"   autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+" augroup END
 " }}}
 
 " Visual Search {{{
@@ -190,12 +188,13 @@ let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 " }}}
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cnoremap w!! w !sudo tee % >/dev/null
+
 noremap <F15> <nop>
 noremap! <F15> <nop>
 noremap <F16> <nop>
 noremap! <F16> <nop>
-
-noremap gf :e <cfile><CR>
 
 " no ex mode {{{2
 " not go into Ex mode
@@ -207,13 +206,6 @@ nmap q: <silent>
 nmap K  <silent>
 " }}}
 
-" Use Q for formatting the current paragraph (or visual selection)
-" vnoremap Q gq
-" nnoremap Q gqap
-
-" Format Jump
-nnoremap <silent> g; g;zz nnoremap <silent> g, g,zz
-
 " Keep search matches in the middle of the window.
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
 " suddenly appears inside a fold.
@@ -223,9 +215,8 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" press jj or jk in insert mode twice to return normal mode
-inoremap jk <ESC>:w<cr>
-inoremap jj <Esc>:w<cr>
+" press jjj in insert mode to save and return normal mode
+inoremap jjj <Esc>:w<cr>
 
 " format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
@@ -239,6 +230,9 @@ inoremap jj <Esc>:w<cr>
 " gg=G would reformat the whole file but lose current location
 noremap <F7> mzgg=G`z
 
+" open new file
+noremap gf :e <cfile><CR>
+
 " Press <Home> or <End> to the 1st and last
 " char of the line
 noremap  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
@@ -247,8 +241,6 @@ vnoremap <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$h' : 'g_')
 inoremap <Home> <C-o><Home>
 inoremap <End>  <C-o><End>
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cnoremap w!! w !sudo tee % >/dev/null
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
@@ -264,8 +256,8 @@ inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
 " toggle most recently used file
-" ctrl-6 <c-6> doesn't work for some terms
-noremap <c-o> :e #<cr>
+" ctrl-6 <c-6> doesn't work for some terminals
+" noremap <c-x> :e #<cr>
 
 " Spacemacs like mappings {{{2
 nnoremap <leader>wv :vs<cr>
@@ -277,28 +269,21 @@ nnoremap <leader>fed :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
 
-
 " Convert slashes to backslashes for Windows.
-if g:OSUNAME ==? 'Windows'
+if g:osuname ==? 'Windows'
   nmap <leader>cp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
   nmap <leader>cf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
   " This will copy the path in 8.3 short format, for DOS and Windows 9x
   " nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
 else
   " copy to vim default register
-  nnoremap <leader>cf :let @"=expand("%")<CR>
   nnoremap <leader>cp :let @"=expand("%:p")<CR>
+  nnoremap <leader>cf :let @"=expand("%")<CR>
   " copy to clipboard
   " nnoremap <leader>cf :let @*=expand("%")<CR>
   " nnoremap <leader>cp :let @*=expand("%:p")<CR>
   " nnoremap <leader>cf :let @+=expand("%")<CR>
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
-
-" kill hlsearch until next time
-nnoremap <Leader>sc :nohlsearch<CR>
-" copy current file path to clipboard
-nnoremap <leader>tp :tabp<CR>
-vnoremap <leader>tn :tabn<CR>
 " }}}
 " }}}
