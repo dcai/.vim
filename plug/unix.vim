@@ -19,7 +19,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
-if or(has("python"), has('python3'))
+if has('python3')
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 endif
