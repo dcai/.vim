@@ -10,7 +10,7 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --ts-completer --go-completer
+    !./install.py --clang-completer --ts-completer
   endif
 endfunction
 
@@ -23,11 +23,3 @@ if has('python3')
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'frozen': 1 }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 endif
-
-" if has('python3')
-  " Plug 'ambv/black', { 'do': function('InstallPython3Black'), 'frozen': 1, 'for': ['python'] }
-  " autocmd BufWritePre *.py execute ':Black'
-  " let g:black_virtualenv = '~/.local/python-black'
-  " let g:black_virtualenv = '/usr/local/Cellar/black/19.10b0_1/libexec'
-  " let g:black_linelength = 88
-" endif
