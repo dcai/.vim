@@ -22,25 +22,35 @@ call plug#begin(expand(s:plugged))
 " Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 
-" Usability
+" lexical
+" =======
+Plug 'reedes/vim-lexical'
+Plug 'panozzaj/vim-autocorrect'
+
+" usability
 " =========
-Plug 'bronson/vim-trailing-whitespace' "highlight trailing whitespaces
+Plug 'drmingdrmer/xptemplate'
+Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
+Plug 'christoomey/vim-conflicted' " git conflict resolver
+Plug 'diepm/vim-rest-console'
 Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
-Plug 'panozzaj/vim-autocorrect'
 Plug 'qpkorr/vim-bufkill'
-Plug 'reedes/vim-lexical'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'thinca/vim-visualstar'
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'vim-scripts/matchit.zip'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
@@ -60,18 +70,6 @@ Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'thinca/vim-textobj-function-javascript'
 
-" Finder
-" ===============
-" Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" utils
-" ===========
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-fugitive'
-Plug 'christoomey/vim-conflicted'
-Plug 'diepm/vim-rest-console'
 
 " HTML
 " ====
@@ -84,7 +82,7 @@ Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 
 " PHP 5.6
 " ==========
@@ -94,6 +92,19 @@ Plug 'evidens/vim-twig'
 " ======
 Plug 'vim-scripts/indentpython.vim'
 Plug 'vim-scripts/python_match.vim'
+
+" color
+" =====
+Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
+" Plug 'noahfrederick/vim-noctu'
+" Plug 'vim-scripts/peaksea'
+" Plug 'vim-scripts/Solarized'
+" Plug 'Lokaltog/vim-distinguished'
+" Plug 'chriskempson/base16-vim'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'sheerun/vim-wombat-scheme'  "wombat
+" Plug 'jnurmine/Zenburn' "zenburn
 
 " Other syntax
 " ============
@@ -110,25 +121,8 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
 
-" Color
-" =====
-Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-
-" Color schemes
-" Plug 'noahfrederick/vim-noctu'
-" Plug 'vim-scripts/peaksea'
-" Plug 'vim-scripts/Solarized'
-" Plug 'Lokaltog/vim-distinguished'
-" Plug 'chriskempson/base16-vim'
-" Plug 'nanotech/jellybeans.vim'
-" Plug 'junegunn/seoul256.vim'
-" Plug 'sheerun/vim-wombat-scheme'  "wombat
-" Plug 'jnurmine/Zenburn' "zenburn
-
-
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
-    " TODO
     !npm install -g prettier eslint
     !composer global require "squizlabs/php_codesniffer=*"
     !pip install vim-vint pathlib typing
