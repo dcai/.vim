@@ -135,25 +135,22 @@ function! TrimWhiteSpace()
 endfunction
 " }}}
 
-set autochdir
 " Keep in current dir {{{
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
-" or
-" Vim tip #64
-" http://vim.wikia.com/wiki/VimTip64
 """""""""""""""""""""""""""""""""""""""
 " switch to current dir
-" function! CHANGE_CURR_DIR()
-"   let _dir = expand('%:p:h')
-"   if isdirectory(_dir)
-"     exec 'cd ' . _dir
-"   endif
-"   unlet _dir
-" endfunction
-" augroup changecurrentdir
-"   autocmd BufEnter * call CHANGE_CURR_DIR()
-"   autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-" augroup END
+function! CHANGE_CURR_DIR()
+  let _dir = expand('%:p:h')
+  if isdirectory(_dir)
+    exec 'cd ' . _dir
+  endif
+  unlet _dir
+endfunction
+
+augroup changecurrentdir
+  autocmd BufEnter * call CHANGE_CURR_DIR()
+  autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+augroup END
 " }}}
 
 " Visual Search {{{
