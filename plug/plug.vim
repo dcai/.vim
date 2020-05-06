@@ -96,13 +96,18 @@ Plug 'vim-scripts/python_match.vim'
 " color
 " =====
 Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-" Plug 'noahfrederick/vim-noctu'
+Plug 'noahfrederick/vim-noctu'
+Plug 'chriskempson/base16-vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'toupeira/vim-desertink'
+Plug 'sjl/badwolf'
+Plug 'whatyouhide/vim-gotham'
+Plug 'romainl/Apprentice'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'Lokaltog/vim-distinguished'
 " Plug 'vim-scripts/peaksea'
 " Plug 'vim-scripts/Solarized'
-" Plug 'Lokaltog/vim-distinguished'
-" Plug 'chriskempson/base16-vim'
-" Plug 'nanotech/jellybeans.vim'
-" Plug 'junegunn/seoul256.vim'
 " Plug 'sheerun/vim-wombat-scheme'  "wombat
 " Plug 'jnurmine/Zenburn' "zenburn
 
