@@ -1,16 +1,12 @@
-if !has('nvim')
-  set term=xterm-256color
-endif
 set termencoding=utf-8
 set t_Co=256
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
 
 """ input method
 "set imactivatekey=C-space
 "inoremap <ESC> <ESC>:set iminsert=0<CR>
 try
-  colorscheme desert2
+  colorscheme badwolf
+  " colorscheme desert2
   " colorscheme noctu
   " colorscheme wombat
   " colorscheme distinguished
