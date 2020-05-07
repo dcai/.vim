@@ -34,7 +34,7 @@ Plug 'christoomey/vim-conflicted' " git conflict resolver
 Plug 'diepm/vim-rest-console'
 Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
@@ -125,11 +125,25 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
 
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+
+function! InstallCoc(info)
+  if a:info.status ==? 'installed' || a:info.force
+    " XXX: CocInstall is not available at this point
+    " :CocInstall coc-tsserver coc-python coc-snippets
+    " :CocInstall https://github.com/andys8/vscode-jest-snippets
+  endif
+endfunction
+
+Plug 'honza/vim-snippets'
+Plug 'neoclide/coc.nvim', { 'branch': 'release',  'do': function('InstallCoc') }
+
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
     !npm install -g prettier eslint
-    !composer global require "squizlabs/php_codesniffer=*"
-    !pip install vim-vint pathlib typing
+    " !pip3 install --user vim-vint pathlib typing
+    " !composer global require 'squizlabs/php_codesniffer=*'
   endif
 endfunction
 
