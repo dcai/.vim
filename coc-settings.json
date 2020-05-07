@@ -1,0 +1,11 @@
+{
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false,
+  "extends": {
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  },
+  "snippets": {
+    "userSnippetsDirectory": "~/Dropbox/src/snippets"
+  }
+}
