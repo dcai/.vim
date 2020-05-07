@@ -124,8 +124,8 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
+Plug 'mhinz/vim-signify'
 
-Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 
 function! InstallCoc(info)
