@@ -45,7 +45,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
 set wildignore+=node_modules
 " http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
 set tags=tags;
-set updatetime=250
+set updatetime=100
 set viminfo='500
 if &history < 1000
   set history=1000
