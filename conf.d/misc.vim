@@ -85,12 +85,6 @@ let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
       \ '.jscsrc']
 
 """""""""""""""""""""""""""""""""""""""
-""" gitgutter
-"""""""""""""""""""""""""""""""""""""""
-nmap ]c <Plug>GitGutterNextHunk
-nmap [c <Plug>GitGutterPrevHunk
-
-"""""""""""""""""""""""""""""""""""""""
 """ junegunn/vim-easy-align
 """""""""""""""""""""""""""""""""""""""
 " gaip*|
