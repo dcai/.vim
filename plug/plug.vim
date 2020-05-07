@@ -29,7 +29,6 @@ Plug 'panozzaj/vim-autocorrect'
 
 " usability
 " =========
-Plug 'drmingdrmer/xptemplate'
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'christoomey/vim-conflicted' " git conflict resolver
 Plug 'diepm/vim-rest-console'
