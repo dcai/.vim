@@ -18,8 +18,6 @@ endif
 
 call plug#begin(expand(s:plugged))
 
-" Stats
-" Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 
 " lexical
@@ -126,7 +124,11 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
 Plug 'mhinz/vim-signify'
 
+" misc
+" ====
 Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-dispatch'
+Plug 'honza/vim-snippets'
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
@@ -136,7 +138,6 @@ function! InstallCoc(info)
   endif
 endfunction
 
-Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', { 'branch': 'release',  'do': function('InstallCoc') }
 
 function! InstallAle(info)
