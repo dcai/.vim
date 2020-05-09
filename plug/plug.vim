@@ -25,14 +25,17 @@ Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'reedes/vim-lexical'
 Plug 'panozzaj/vim-autocorrect'
 
+" git
+" ===
+Plug 'christoomey/vim-conflicted' " git conflict resolver
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+
 " usability
 " =========
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
-Plug 'christoomey/vim-conflicted' " git conflict resolver
-Plug 'diepm/vim-rest-console'
 Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
-" Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
@@ -41,7 +44,6 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vasconcelloslf/vim-interestingwords'
 Plug 'vim-scripts/matchit.zip'
@@ -67,12 +69,11 @@ Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'thinca/vim-textobj-function-javascript'
 
-
 " HTML
 " ====
 Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 
-" Javascript
+" javascript
 " ==========
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -81,8 +82,8 @@ Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 
-" PHP 5.6
-" ==========
+" PHP
+" ===
 Plug 'evidens/vim-twig'
 
 " Python
@@ -126,6 +127,7 @@ Plug 'mhinz/vim-signify'
 
 " misc
 " ====
+Plug 'diepm/vim-rest-console'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
