@@ -30,7 +30,7 @@ else
   let g:osuname=substitute(system('uname'), "\n", '', '')
   let g:vimrc ='.vim'
   " Bash on Ubuntu on Windows
-  let g:wsl=matchstr(substitute(system('uname -r'), "\n", '', ''), 'Microsoft$')
+  let g:wsl=matchstr(substitute(system('uname -r'), "\n", '', ''), 'microsoft')
 endif
 
 function! IncludeScript(scriptname)
