@@ -163,8 +163,4 @@ else
   call IncludeScript('plug/unix.vim')
 endif
 
-if g:wsl ==? 'Microsoft'
-  call IncludeScript('plug/wsl.vim')
-endif
-
 call plug#end()
