@@ -27,10 +27,9 @@ if has('win64') || has('win32') || has('win16')
   let g:vimrc = 'vimfiles'
   let g:wsl = 0
 else
-  let g:osuname=substitute(system('uname'), "\n", '', '')
+  let g:osuname = substitute(system('uname'), "\n", '', '')
   let g:vimrc ='.vim'
-  " Bash on Ubuntu on Windows
-  let g:wsl=matchstr(substitute(system('uname -r'), "\n", '', ''), 'microsoft')
+  let g:wsl = matchstr(substitute(system('uname -r'), "\n", '', ''), 'microsoft')
 endif
 
 function! IncludeScript(scriptname)
@@ -46,10 +45,8 @@ call IncludeScript('plug/plug.vim')
 call IncludeScript('local.vim')
 
 if has('gui_running')
-  " Run in GUI
   call IncludeScript('gui.vim')
 else
-  " Run in term
   call IncludeScript('term.vim')
 endif
 
@@ -60,6 +57,10 @@ elseif g:osuname ==? 'Darwin'
 elseif g:osuname ==? 'Windows'
   call IncludeScript('os/windows.vim')
 endif
+
+" if g:wsl ==? 'Microsoft'
+"   call IncludeScript('os/wsl.vim')
+" endif
 
 call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
 
