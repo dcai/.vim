@@ -1,12 +1,7 @@
 " status line {{{
 set statusline=%f                               " tail of the filename
-" set statusline+=\ %{fugitive#statusline()}
 set statusline+=%m                              " modified flag
-set statusline+=\ [
-set statusline+=%l                              " cursor line/total lines
-set statusline+=\/%L                            " total lines
-set statusline+=\|%c                            " cursor column
-set statusline+=]
+set statusline+=\ %{fugitive#statusline()}
 set statusline+=%=                              " left/right separator
 set statusline+=%y                              " filetype
 set statusline+=[
@@ -14,9 +9,14 @@ set statusline+=%{strlen(&fenc)?&fenc:'none'}\| " file encoding
 set statusline+=%{&ff}                          " file format
 set statusline+=\|%{&bomb?'bom':'nobom'}        " BOM
 set statusline+=]
+set statusline+=[
+set statusline+=%l                              " cursor line/total lines
+set statusline+=\/%L                            " total lines
+" set statusline+=\ %P                            " percent through file
+" set statusline+=\|%c                            " cursor column
+set statusline+=]
 set statusline+=%h                              " help file flag
 set statusline+=%r                              " read only flag
-" set statusline+=\ %P                            " percent through file
 " }}}
 
 highlight statusline cterm=NONE ctermfg=white ctermbg=darkblue
