@@ -1,11 +1,15 @@
 """""""""""""""""""""""""""""""""""""""
 """ FZF
 """""""""""""""""""""""""""""""""""""""
+let s:TYPE = {'dict': type({}), 'funcref': type(function('call')), 'string': type(''), 'list': type([])}
 let g:fzf_layout = { 'down': '~40%' }
-let s:fzf_base_options = extend({'options': '--delimiter : --nth 4..'}, g:fzf_layout)
+let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
+  \ {
+  \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -18,72 +22,12 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-""" Credit:
-""" https://github.com/zenbro/dotfiles/blob/master/.nvimrc
-function! SearchVisualSelectionWithAg() range
-  let old_reg = getreg('"')
-  let old_regtype = getregtype('"')
-  let old_clipboard = &clipboard
-  set clipboard&
-  normal! ""gvy
-  let selection = getreg('"')
-  call setreg('"', old_reg, old_regtype)
-  let &clipboard = old_clipboard
-  execute 'Ag' selection
-endfunction
-
-" Ag search in current dir
-function! SearchWithAgInDirectory(...)
-  call fzf#vim#ag(
-        \ join(a:000[1:], ' '),
-        \ extend({'dir': a:1}, s:fzf_base_options))
-endfunction
-" Create vim command `AgInDir` to search in dir
-command! -nargs=+ -complete=dir AgInDir
-      \ call SearchWithAgInDirectory(<f-args>)
-
-
-function! s:with_git_root()
-  let root = systemlist('git rev-parse --show-toplevel')[0]
-  return v:shell_error ? {} : {'dir': root}
-endfunction
-
-" Create Ag search command `AgGitRoot` in git root
-command! -nargs=* AgGitRoot
-      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
-
-function! SearchWordWithAgInGit()
-  execute 'AgGitRoot ' expand('<cword>')
-endfunction
-
-" apt install wbritish
-" use wamerican for american spelling
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-imap <c-x><c-s> <esc>:Snippets<CR>
-
-vnoremap <silent> <leader>agsv
-      \ :call SearchVisualSelectionWithAg()<CR>
-map <c-l> :Buffers<cr>
-nmap <leader>bb :Buffers<cr>
-nmap <leader>ff :GitFiles<cr>
-nnoremap <silent> <leader>fr :History<CR>
-nnoremap <silent> <leader>sc :Commits<CR>
-nnoremap <silent> <leader>sft :Filetypes<CR>
-nnoremap <silent> <leader>sp :Snippets<CR>
-nnoremap <silent> <leader>. :AgGitRoot<CR>
-" Search in current dir
-nnoremap <silent> <leader>/ :AgInDir .<CR>
-" commits for current bufffer
-nnoremap <silent> <leader>sbc :BCommits<CR>
+let g:fzf_history_dir = '~/.local/fzf-history'
 
 function! s:extend(base, extra)
   let base = copy(a:base)
@@ -95,12 +39,67 @@ function! s:extend(base, extra)
   return extend(base, a:extra)
 endfunction
 
-" WIP
-function! CompleteWord(...)
-  return fzf#vim#complete(s:extend({
-    \ 'source': 'gg'},
-    \ get(a:000, 0, fzf#wrap())))
+function! s:with_git_root()
+  let root = systemlist('git rev-parse --show-toplevel')[0]
+  return v:shell_error ? {} : {'dir': root}
 endfunction
 
-inoremap <expr> <plug>(my-fzf-complete-word) CompleteWord()
-imap <c-x><c-d> <plug>(my-fzf-complete-word)
+" Ag search in current dir
+function! s:ag_in_dir(...)
+  call fzf#vim#ag(
+        \ join(a:000[1:], ' '),
+        \ extend({'dir': a:1}, s:fzf_base_options))
+endfunction
+function! s:ag_search_word_in_git()
+  execute 'AgGitRoot ' expand('<cword>')
+endfunction
+" Create vim command `AgInDir` to search in dir
+command! -nargs=+ -complete=dir AgInDir
+  \ call s:ag_in_dir(<f-args>)
+" Create Ag search command `AgGitRoot` in git root
+command! -nargs=* AgGitRoot
+  \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+
+function! s:rg_raw(command_suffix, ...)
+  if !executable('rg')
+    return s:warn('rg is not found')
+  endif
+  let s:cmd='rg --column --line-number --no-heading --color=always --smart-case -- '.a:command_suffix
+  return call('fzf#vim#grep', extend([s:cmd, 1], a:000))
+endfunction
+
+function! s:rg(query, ...)
+  let query = empty(a:query) ? '' : a:query
+  let args = copy(a:000)
+  let test =copy(a:000)
+  return call('s:rg_raw', insert(args, fzf#shellescape(query), 0))
+endfunction
+
+function! s:rg_in_dir(...)
+  call s:rg(join(a:000[1:], ' '), extend({'dir': a:1}, s:fzf_base_options))
+endfunction
+
+function! RgSearchWordGit()
+  execute 'RgGitRoot ' expand('<cword>')
+endfunction
+
+command! -bang -nargs=* Rg call s:rg(<q-args>, s:fzf_base_options)
+command! -nargs=+ -complete=dir RgInDir call s:rg_in_dir(<f-args>)
+command! -bang -nargs=* RgGitRoot call s:rg(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+
+" apt install wbritish
+" use wamerican for american spelling
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+imap <c-x><c-s> <esc>:Snippets<CR>
+
+nnoremap <c-l> :Buffers<cr>
+nnoremap <leader>bb :Buffers<cr>
+nnoremap <leader>ff :GitFiles<cr>
+nnoremap <silent> <leader>fr :History<CR>
+nnoremap <silent> <leader>sft :Filetypes<CR>
+nnoremap <silent> <leader>. :RgGitRoot<CR>
+nnoremap <silent> <leader>/ :RgInDir .<CR>
+nnoremap <silent> K :call RgSearchWordGit()<CR>
