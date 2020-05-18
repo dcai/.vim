@@ -260,8 +260,8 @@ nnoremap <leader>ws :sp<cr>
 " Close window
 nnoremap <leader>wd :close<cr>
 nnoremap <leader>fs :w!<cr>
-nnoremap <leader>fed :vsplit $HOME/.vim/local.vim<cr>
-nnoremap <leader>feR :source $HOME/.vim/vimrc<cr>
+nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
+nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
 
 " Convert slashes to backslashes for Windows.
