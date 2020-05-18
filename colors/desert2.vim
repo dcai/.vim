@@ -34,9 +34,9 @@ hi clear SpellCap
 hi clear SpellRare
 hi clear SpellLocal
 " hi ALEWarningLine ctermbg=darkgrey
-" hi ALEWarning ctermbg=darkcyan
-" hi ALEError ctermbg=darkcyan
 " hi ALEErrorLine ctermbg=darkgrey
+hi ALEWarning cterm=underline ctermbg=blue ctermfg=white
+hi ALEError cterm=underline ctermbg=darkred ctermfg=yellow
 
 """"""""""""""""""""""""""""
 " TERM          definitions
@@ -85,6 +85,7 @@ hi Visual       cterm=reverse
 hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=darkblue
 hi WildMenu     ctermfg=0        ctermbg=3
+hi SignColumn   ctermbg=black
 
 """"""""""""""""""""""""""""
 " GUI definitions
