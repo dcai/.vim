@@ -1,5 +1,5 @@
 try
-  colorscheme desert2
+  colorscheme oasis
   " colorscheme jellybeans
   " colorscheme badwolf
   " colorscheme noctu
