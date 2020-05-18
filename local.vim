@@ -8,7 +8,7 @@
 "       Dongsheng Cai <d@tux.im>      "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-" http://www.figlet.org/fontdb_example.cgi?font=slant.flf
+" http://www.figlet.org/fonts/slant.flf
 
 " Fold stuff {{{
 set foldmethod=marker
