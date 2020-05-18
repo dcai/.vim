@@ -1,5 +1,10 @@
 try
   colorscheme oasis
+  " colorscheme desertink
+  " colorscheme gotham
+  " colorscheme lucius
+  " colorscheme apprentice
+  " colorscheme gruvbox
   " colorscheme jellybeans
   " colorscheme badwolf
   " colorscheme noctu
