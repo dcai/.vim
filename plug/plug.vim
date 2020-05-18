@@ -91,24 +91,6 @@ Plug 'evidens/vim-twig'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'vim-scripts/python_match.vim'
 
-" color
-" =====
-Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-Plug 'noahfrederick/vim-noctu'
-Plug 'chriskempson/base16-vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'toupeira/vim-desertink'
-Plug 'sjl/badwolf'
-Plug 'whatyouhide/vim-gotham'
-Plug 'romainl/Apprentice'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'Lokaltog/vim-distinguished'
-" Plug 'vim-scripts/peaksea'
-" Plug 'vim-scripts/Solarized'
-" Plug 'sheerun/vim-wombat-scheme'  "wombat
-" Plug 'jnurmine/Zenburn' "zenburn
-
 " Other syntax
 " ============
 Plug 'dag/vim-fish', { 'for': 'fish' }
@@ -127,10 +109,29 @@ Plug 'mhinz/vim-signify'
 
 " misc
 " ====
+Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
 Plug 'diepm/vim-rest-console'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
+
+" color shemes
+" ============
+Plug 'noahfrederick/vim-noctu'
+Plug 'chriskempson/base16-vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'toupeira/vim-desertink'
+Plug 'sjl/badwolf'
+Plug 'whatyouhide/vim-gotham'
+Plug 'romainl/Apprentice'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'Lokaltog/vim-distinguished'
+Plug 'morhetz/gruvbox'
+" Plug 'vim-scripts/peaksea'
+" Plug 'vim-scripts/Solarized'
+" Plug 'sheerun/vim-wombat-scheme'  "wombat
+" Plug 'jnurmine/Zenburn' "zenburn
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
