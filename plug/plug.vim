@@ -115,23 +115,22 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
 
-" color shemes
-" ============
+" color schemes
+" =============
 Plug 'noahfrederick/vim-noctu'
-Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'toupeira/vim-desertink'
-Plug 'sjl/badwolf'
-Plug 'whatyouhide/vim-gotham'
 Plug 'romainl/Apprentice'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'Lokaltog/vim-distinguished'
 Plug 'morhetz/gruvbox'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'sjl/badwolf'
+" Plug 'whatyouhide/vim-gotham'
+" Plug 'toupeira/vim-desertink'
+" Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/peaksea'
-" Plug 'vim-scripts/Solarized'
-" Plug 'sheerun/vim-wombat-scheme'  "wombat
-" Plug 'jnurmine/Zenburn' "zenburn
+" Plug 'sheerun/vim-wombat-scheme'
+" Plug 'jnurmine/Zenburn'
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
