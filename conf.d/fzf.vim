@@ -96,10 +96,11 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 imap <c-x><c-s> <esc>:Snippets<CR>
 
 nnoremap <c-l> :Buffers<cr>
-nnoremap <leader>bb :Buffers<cr>
-nnoremap <leader>ff :GitFiles<cr>
+nnoremap <silent> <leader>bb :Buffers<cr>
+nnoremap <silent> <leader>ff :GitFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
 nnoremap <silent> <leader>. :RgGitRoot<CR>
 nnoremap <silent> <leader>/ :RgInDir .<CR>
+nnoremap <silent> <leader>e :Commands<cr>
 nnoremap <silent> K :call RgSearchWordGit()<CR>
