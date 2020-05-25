@@ -174,8 +174,8 @@ augroup END
 " }}}
 
 " key mappings {{{1
-"set timeout
-"set ttimeoutlen=2000
+" set timeout
+" set ttimeoutlen=2000
 " leader {{{2
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
@@ -213,16 +213,15 @@ nnoremap N Nzzzv
 " press jjj in insert mode to save and return normal mode
 inoremap jjj <Esc>:w<cr>
 
-" format entire buffer
+" Format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
-" Explain:
-" mz: mark current location to `z`
-" gg: go to file top
-" =: format
-" G: to the end of file
-" `z: jump back to mark `z`
-"
-" gg=G would reformat the whole file but lose current location
+" how this works:
+"   mz: mark current location to `z`
+"   gg: go to file top
+"   =: format
+"   G: to the end of file
+"   `z: jump back to mark `z`
+"   gg=G would reformat the whole file but lose current location
 noremap <F7> mzgg=G`z
 
 " open new file
@@ -254,15 +253,11 @@ inoremap <Up> <C-o>gk
 " ctrl-6 <c-6> doesn't work for some terminals
 " noremap <c-x> :e #<cr>
 
-" Spacemacs like mappings {{{2
-nnoremap <leader>wv :vs<cr>
-nnoremap <leader>ws :sp<cr>
-" Close window
-nnoremap <leader>wd :close<cr>
-nnoremap <leader>fs :w!<cr>
 nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
+" This unsets the 'last search pattern' register by hitting return
+nnoremap <silent> <CR> :noh<CR><CR>
 
 " Convert slashes to backslashes for Windows.
 if g:osuname ==? 'Windows'
@@ -280,5 +275,4 @@ else
   " nnoremap <leader>cf :let @+=expand("%")<CR>
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
-" }}}
 " }}}
