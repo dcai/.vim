@@ -2,3 +2,4 @@ bundle
 .netrwhist
 thesaurus/
 *.spl
+autoload/plug.vim.old
