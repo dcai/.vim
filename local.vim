@@ -151,37 +151,36 @@ augroup changecurrentdir
 augroup END
 " }}}
 
-" Visual Search {{{
+" Visual Search
 " This has been replaced by `thinca/VisualSelection` plugin
 " function! VisualSearch(direction) range
-  " " From an idea by Michael Naumann
-  " let l:saved_reg = @"
-  " :echo 'test'
-  " execute "normal! vgvy"
-  " let l:pattern = escape(@", '\\/.*$^~[]')
-  " let l:pattern = substitute(l:pattern, "\n$", "", "")
-  " if a:direction == 'b'
-    " execute "normal ?" . l:pattern . "^M"
-  " else
-    " execute "normal /" . l:pattern . "^M"
-  " endif
-  " let @/ = l:pattern
-  " let @" = l:saved_reg
+"   " From an idea by Michael Naumann
+"   let l:saved_reg = @"
+"   :echo 'test'
+"   execute "normal! vgvy"
+"   let l:pattern = escape(@", '\\/.*$^~[]')
+"   let l:pattern = substitute(l:pattern, "\n$", "", "")
+"   if a:direction == 'b'
+"     execute "normal ?" . l:pattern . "^M"
+"   else
+"     execute "normal /" . l:pattern . "^M"
+"   endif
+"   let @/ = l:pattern
+"   let @" = l:saved_reg
 " endfunction
-"" Press * or # to search
-"map <silent> * :call VisualSearch('f')<CR>
-"map <silent> # :call VisualSearch('b')<CR>
-" }}}
+" " Press * or # to search
+" map <silent> * :call VisualSearch('f')<CR>
+" map <silent> # :call VisualSearch('b')<CR>
 
-" key mappings {{{1
+""""""""""""""""""""""""""""""""""""""""
+"""  key mappings
+""""""""""""""""""""""""""""""""""""""""
 " set timeout
-" set ttimeoutlen=2000
-" leader {{{2
+
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
-" }}}
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap w!! w !sudo tee % >/dev/null
@@ -191,15 +190,12 @@ noremap! <F15> <nop>
 noremap <F16> <nop>
 noremap! <F16> <nop>
 
-" no ex mode {{{2
-" not go into Ex mode
-" or use unmap
+" Avoid ex mode
 map q: <nop>
 nnoremap Q <nop>
 nmap Q  <silent>
 nmap q: <silent>
 nmap K  <silent>
-" }}}
 
 " Keep search matches in the middle of the window.
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
@@ -275,4 +271,3 @@ else
   " nnoremap <leader>cf :let @+=expand("%")<CR>
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
-" }}}
