@@ -1,9 +1,13 @@
-if $TMUX == ''
-  set clipboard=unnamed
-  nmap <leader>p :r !pbpaste<CR>
-else
+if exists('$TMUX')
   " TODO: find out how to access clipboard in tmux
+else
+  set clipboard=unnamed
 endif
+
+nmap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <leader>p <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <leader>y :.w !pbcopy<CR><CR>
+vmap <leader>y :w !pbcopy<CR><CR>
 
 if has("gui_macvim")
   set guifont=Hack:h14
