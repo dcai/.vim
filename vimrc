@@ -58,9 +58,9 @@ elseif g:osuname ==? 'Windows'
   call IncludeScript('os/windows.vim')
 endif
 
-" if g:wsl ==? 'Microsoft'
-"   call IncludeScript('os/wsl.vim')
-" endif
+if g:wsl ==? 'Microsoft'
+  call IncludeScript('os/wsl.vim')
+endif
 
 call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
 
