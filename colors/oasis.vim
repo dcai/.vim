@@ -46,8 +46,8 @@ hi clear DiffText
 
 " hi ALEWarningLine ctermbg=darkgrey
 " hi ALEErrorLine ctermbg=darkgrey
-hi ALEWarning cterm=underline ctermbg=brown   ctermfg=white
-hi ALEError   cterm=underline ctermbg=darkred ctermfg=yellow
+" hi ALEWarning ctermfg=white
+" hi ALEError   ctermfg=yellow
 
 """"""""""""""""""""""""""""
 " TERM          definitions
