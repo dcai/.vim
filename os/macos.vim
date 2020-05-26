@@ -4,10 +4,10 @@ else
   set clipboard=unnamed
 endif
 
-nmap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <leader>p <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-nmap <leader>y :.w !pbcopy<CR><CR>
-vmap <leader>y :w !pbcopy<CR><CR>
+nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+" imap <leader>pp <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <leader>yy :.w !pbcopy<CR><CR>
+vmap <leader>yy :w !pbcopy<CR><CR>
 
 if has("gui_macvim")
   set guifont=Hack:h14
