@@ -95,3 +95,9 @@ hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=darkblue
 hi WildMenu     ctermfg=0        ctermbg=3
 hi SignColumn   ctermbg=black
+
+" " vim-signify
+" hi SignifySignAdd             ctermbg=green
+" hi SignifySignChange          ctermbg=yellow ctermfg=darkgrey
+" hi SignifySignDelete          ctermbg=red
+" hi SignifySignDeleteFirstLine ctermbg=red
