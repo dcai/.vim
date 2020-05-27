@@ -93,7 +93,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-imap <c-x><c-s> <esc>:Snippets<CR>
 
 nnoremap <c-l> :Buffers<cr>
 nnoremap <silent> <leader>bb :Buffers<cr>

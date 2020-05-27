@@ -116,12 +116,15 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>es :CocCommand snippets.editSnippets<CR>
 
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-\> for trigger snippet expand.
+" imap <C-\> <Plug>(coc-snippets-expand)
+
+imap <c-x><c-s> <esc>:CocList snippets<CR>
 
 " Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+" vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
@@ -130,6 +133,6 @@ let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+imap <C-\> <Plug>(coc-snippets-expand-jump)
 
 let g:coc_snippet_next = '<tab>'
