@@ -1,8 +1,13 @@
 """""""""""""""""""""""""""""""""""""""
 """ FZF
 """""""""""""""""""""""""""""""""""""""
-let s:TYPE = {'dict': type({}), 'funcref': type(function('call')), 'string': type(''), 'list': type([])}
-let g:fzf_layout = { 'down': '~40%' }
+let s:TYPE = {
+  \ 'dict': type({}),
+  \ 'funcref': type(function('call')),
+  \ 'string': type(''),
+  \ 'list': type([])
+\ }
+let g:fzf_layout = { 'down': '~30%' }
 let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -64,7 +69,8 @@ function! s:rg_raw(command_suffix, ...)
   if !executable('rg')
     return s:warn('rg is not found')
   endif
-  let s:cmd='rg --column --line-number --no-heading --color=always --smart-case -- '.a:command_suffix
+  let s:cmd='rg --column --line-number --no-heading --color=always --smart-case -- ' .
+    \ a:command_suffix
   return call('fzf#vim#grep', extend([s:cmd, 1], a:000))
 endfunction
 
@@ -90,13 +96,16 @@ function! FzfSpellSink(word)
 endfunction
 function! FzfSpell()
   let suggestions = spellsuggest(expand("<cword>"))
-  return fzf#run(extend({'source': suggestions, 'sink': function("FzfSpellSink")}, s:fzf_base_options))
+  return fzf#run(extend(
+    \ {'source': suggestions, 'sink': function("FzfSpellSink")},
+    \ s:fzf_base_options))
 endfunction
 nnoremap z= :call FzfSpell()<CR>
 
 command! -bang -nargs=* Rg call s:rg(<q-args>, s:fzf_base_options)
 command! -nargs=+ -complete=dir RgInDir call s:rg_in_dir(<f-args>)
-command! -bang -nargs=* RgGitRoot call s:rg(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+command! -bang -nargs=* RgGitRoot call
+  \ s:rg(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
 
 " apt install wbritish
 " use wamerican for american spelling
