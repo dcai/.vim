@@ -5,9 +5,9 @@
 
 let s:vimspelldir='$HOME/Dropbox/src/vimspell'
 let s:mthesaurfile=s:vimspelldir . '/mthesaur.txt'
-let s:spellfile= s:vimspelldir . '/en.utf-8.add'
+let s:spellfile=s:vimspelldir . '/en.utf-8.add'
 
-if empty(glob(expand(s:mthesaurfile)))
+if empty(glob(expand(s:vimspelldir)))
   execute '!mkdir -p ' . expand(s:vimspelldir)
   " execute '!curl -fLo ' . s:mthesaurfile . ' https://www.gutenberg.org/files/3202/files/mthesaur.txt'
 endif
