@@ -96,6 +96,8 @@ function! FzfSpellSink(word)
 endfunction
 function! FzfSpell()
   let suggestions = spellsuggest(expand("<cword>"))
+  " google autosuggest
+  " let suggestions = systemlist('gg ' . expand("<cword>"))
   return fzf#run(extend(
     \ {'source': suggestions, 'sink': function("FzfSpellSink")},
     \ s:fzf_base_options))
