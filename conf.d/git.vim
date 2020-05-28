@@ -18,3 +18,4 @@ function! GitFileMode()
   setlocal nonumber
 endfunction
 autocmd filetype fugitive call GitFileMode()
+autocmd filetype git call GitFileMode()
