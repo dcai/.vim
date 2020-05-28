@@ -95,6 +95,7 @@ hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=darkblue
 hi WildMenu     ctermfg=0        ctermbg=3
 hi SignColumn   ctermbg=black
+hi ColorColumn  cterm=reverse
 
 " " vim-signify
 " hi SignifySignAdd             ctermbg=green
