@@ -192,6 +192,8 @@ noremap! <F16> <nop>
 
 " Avoid ex mode
 map q: <nop>
+map q\ <nop>
+map q? <nop>
 nnoremap Q <nop>
 nmap Q  <silent>
 nmap q: <silent>
