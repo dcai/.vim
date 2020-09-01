@@ -97,9 +97,9 @@ hi WildMenu     ctermfg=0        ctermbg=3
 hi SignColumn   ctermbg=black
 hi ColorColumn  ctermfg=red
 hi VertSplit    ctermfg=lightgreen
-hi LineNr       ctermbg=green ctermfg=grey
+hi LineNr       ctermfg=lightgrey
 
-" " vim-signify
+" vim-signify
 " hi SignifySignAdd             ctermbg=green
 " hi SignifySignChange          ctermbg=yellow ctermfg=darkgrey
 " hi SignifySignDelete          ctermbg=red
