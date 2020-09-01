@@ -8,7 +8,6 @@ trim_trailing_whitespace = true
 
 [*.vim]
 indent_size = 2
-max_line_length = 88
 
 [*.json]
 indent_size = 2
