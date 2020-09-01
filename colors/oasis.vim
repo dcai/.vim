@@ -53,7 +53,7 @@ hi clear DiffText
 " TERM          definitions
 """"""""""""""""""""""""""""
 " js: variable names
-hi Normal       ctermfg=LightYellow
+hi Normal       ctermfg=yellow
 hi Comment      ctermfg=darkgrey
 " js: string literal
 hi Constant     ctermfg=darkyellow
@@ -69,7 +69,6 @@ hi Folded       ctermfg=darkgrey ctermbg=none
 hi Identifier   cterm=bold       ctermfg=brown
 hi Ignore       cterm=bold       ctermfg=darkgrey
 hi IncSearch    cterm=none       ctermfg=green    ctermbg=darkgreen
-hi LineNr       ctermfg=darkyellow
 hi ModeMsg      cterm=none       ctermfg=brown
 hi MoreMsg      ctermfg=darkgreen
 hi NonText      cterm=bold       ctermfg=darkblue
@@ -89,13 +88,16 @@ hi Title        ctermfg=green
 " js: const/let
 hi Type         ctermfg=green
 hi Underlined   cterm=underline  ctermfg=5
-hi VertSplit    cterm=reverse
 hi Visual       cterm=reverse
 hi VisualNOS    cterm=bold,underline
 hi WarningMsg   ctermfg=darkblue
 hi WildMenu     ctermfg=0        ctermbg=3
+
+" Vertical columns
 hi SignColumn   ctermbg=black
-hi ColorColumn  cterm=reverse
+hi ColorColumn  ctermfg=red
+hi VertSplit    ctermfg=lightgreen
+hi LineNr       ctermbg=green ctermfg=grey
 
 " " vim-signify
 " hi SignifySignAdd             ctermbg=green
