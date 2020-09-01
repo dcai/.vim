@@ -65,9 +65,9 @@ set virtualedit=all
 set backspace=indent,eol,start
 " always show status line
 set laststatus=2
-" set number
 " set relativenumber
-set nonumber
+" set nonumber
+set number
 set showmatch
 set switchbuf=usetab
 
