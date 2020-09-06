@@ -26,17 +26,15 @@ let g:ale_sign_warning = '>'
 let g:ale_set_loclist = 1
 
 " Ale linters settings
+" \ 'php': ['phpmd', 'phpcs'],
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
-  \ 'php': ['phpmd', 'phpcs'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint'],
   \ 'vim': ['ale_custom_linting_rules', 'vint'],
-  \ 'yaml': ['yamllint'],
 \}
 
-" 'php': ['phpcbf'],
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'css': ['prettier'],
