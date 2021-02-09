@@ -93,6 +93,7 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
+Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
@@ -144,7 +145,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release',  'do': function('InstallCoc') }
 
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
-    !npm install -g prettier eslint
+    !npm install -g prettier eslint lua-fmt
     " !pip3 install --user vim-vint pathlib typing
     " !composer global require 'squizlabs/php_codesniffer=*'
   endif
