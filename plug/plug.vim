@@ -93,6 +93,7 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
+Plug 'xolox/vim-misc'
 Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
@@ -107,6 +108,7 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
 Plug 'mhinz/vim-signify'
+Plug 'jbmorgado/vim-pine-script', { 'for': 'pine' }
 
 " misc
 " ====
