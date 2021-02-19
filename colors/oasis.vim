@@ -77,7 +77,7 @@ hi PreProc      ctermfg=LightCyan
 hi Question     ctermfg=green
 hi Search       cterm=none       ctermfg=black    ctermbg=green
 hi Special      ctermfg=red
-hi SpjcialKey   ctermfg=darkgreen
+hi SpecialKey   ctermfg=darkgreen
 hi SpellBad     ctermfg=red
 hi SpellCap     ctermfg=cyan
 " jsx markup, if else async await return
