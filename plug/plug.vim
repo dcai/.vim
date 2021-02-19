@@ -93,8 +93,6 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
-Plug 'xolox/vim-lua-ftplugin', { 'for': 'lua' }
-      \ | Plug 'xolox/vim-misc'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
