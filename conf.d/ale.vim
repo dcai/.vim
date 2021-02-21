@@ -26,8 +26,8 @@ let g:ale_sign_warning = '>'
 let g:ale_set_loclist = 1
 
 " Ale linters settings
-" \ 'php': ['phpmd', 'phpcs'],
 let g:ale_linters = {
+  \ 'php': ['phpmd', 'phpcs'],
   \ 'javascript': ['eslint'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
