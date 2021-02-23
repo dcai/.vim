@@ -3,27 +3,15 @@
 "
 """"""""""""""""""""""""""""""""""""""""""""
 
+let g:colors_name='oasis'
 set background=dark
-
-hi clear
 
 if exists("syntax_on")
   syntax reset
 endif
 
-let g:colors_name='oasis'
-
-hi clear ALEWarning
-hi clear ALEError
-hi clear SpellBad
-hi clear SpellCap
-hi clear SpellRare
-hi clear SpellLocal
-hi clear DiffAdd
-hi clear DiffChange
-hi clear DiffDelete
-hi clear DiffText
-
+"""""""""""""""""""""""""""""""""""""
+" color reference: https://jonasjacek.github.io/colors/
 
 """""""""""""""""""""""""""""""""""""
 " Black
@@ -44,63 +32,106 @@ hi clear DiffText
 " White
 """""""""""""""""""""""""""""""""""""
 
-" hi ALEWarningLine ctermbg=darkgrey
-" hi ALEErrorLine ctermbg=darkgrey
-" hi ALEWarning ctermfg=white
-" hi ALEError   ctermfg=yellow
+let s:bgcolor="239"
+let s:fgcolor="yellow"
+let s:valuefg="darkgreen" " js string literal, boolean
+let s:commentfg="grey"
+let s:datatypefg="green"    " const/let/types
+let s:datatypebg="darkgrey" " const/let/types
+let s:identifierfg="lightyellow" " js function class name, import/export, function/method name
+let s:identifierbg=s:bgcolor     " js function class name, import/export, function/method name
+let s:specialfg="darkred"        " js 'this' reference
+let s:operatorfg="darkcyan"
+let s:operatorbg="239"
+let s:statementfg="lightyellow" " jsxmarkup/async/await/return
+let s:statementbg="darkgrey"   " jsxmarkup/async/await/return
+let s:repeatbg="darkgrey"    " for/while
+let s:repeatfg="lightyellow" " for/while
+let s:exceptionbg="darkgrey"    " try/catch
+let s:exceptionfg="red" " try/catch
+let s:conditionalfg="lightgreen" " if/else
+let s:conditionalbg="darkgrey"   " if/else
 
-""""""""""""""""""""""""""""
-" TERM          definitions
-""""""""""""""""""""""""""""
-" js: variable names
-hi Normal       ctermfg=yellow
-hi Comment      ctermfg=darkgrey
-" js: string literal
-hi Constant     ctermfg=darkyellow
-hi Cursor       cterm=none       ctermbg=red      ctermfg=white
-hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
-hi CursorLine   cterm=none       ctermbg=darkblue ctermfg=white
-hi Directory    ctermfg=darkcyan
-hi Error        cterm=bold       ctermfg=7        ctermbg=1
-hi ErrorMsg     cterm=bold       ctermfg=7        ctermbg=1
-hi FoldColumn   ctermfg=darkgrey ctermbg=none
-hi Folded       ctermfg=darkgrey ctermbg=none
-" js: import/export, function/method name
-hi Identifier   cterm=bold       ctermfg=brown
-hi Ignore       cterm=bold       ctermfg=darkgrey
-hi IncSearch    cterm=none       ctermfg=green    ctermbg=darkgreen
-hi ModeMsg      cterm=none       ctermfg=brown
-hi MoreMsg      ctermfg=darkgreen
-hi NonText      cterm=bold       ctermfg=darkblue
-" markup attributes
-hi PreProc      ctermfg=LightCyan
-hi Question     ctermfg=green
-hi Search       cterm=none       ctermfg=black    ctermbg=green
-hi Special      ctermfg=red
-hi SpecialKey   ctermfg=darkgreen
-hi SpellBad     ctermfg=red
-hi SpellCap     ctermfg=cyan
-" jsx markup, if else async await return
-hi Statement    ctermfg=lightgreen
-hi StatusLine   cterm=bold,reverse
-hi StatusLineNC cterm=reverse
-hi Title        ctermfg=green
-" js: const/let
-hi Type         ctermfg=green
-hi Underlined   cterm=underline  ctermfg=5
-hi Visual       cterm=reverse
-hi VisualNOS    cterm=bold,underline
-hi WarningMsg   ctermfg=darkblue
-hi WildMenu     ctermfg=0        ctermbg=3
+hi clear
+hi clear ALEWarning
+hi clear ALEError
+hi clear SpellBad
+hi clear SpellCap
+hi clear SpellRare
+hi clear SpellLocal
+hi clear DiffAdd
+hi clear DiffChange
+hi clear DiffDelete
+hi clear DiffText
 
-" Vertical columns
-hi SignColumn   ctermbg=black
-hi ColorColumn  ctermfg=red
-hi VertSplit    ctermfg=lightgreen
-hi LineNr       ctermfg=lightgrey
+function! s:hi(group, value)
+  let l:ctermbg = has_key(a:value, 'bg') ? join(["ctermbg", a:value.bg], "=") : ""
+  let l:ctermfg = has_key(a:value, 'fg') ? join(["ctermfg", a:value.fg], "=") : ""
+  let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
+  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg], " ")
+  exe l:cmd
+endfunction
 
-" vim-signify
+let s:definition =
+\ {
+    \ 'Normal': {'bg': s:bgcolor, 'fg': s:fgcolor},
+    \ 'Identifier': {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
+    \ 'Constant': {'fg': s:valuefg},
+    \ 'Special': {'fg': s:specialfg},
+    \ 'Comment': {'fg': s:commentfg},
+    \ 'Type': {'fg': s:datatypefg, 'bg': s:datatypebg},
+    \ 'Operator': {'fg': s:operatorfg, 'bg': s:operatorbg},
+    \ 'Statement': {'fg': s:statementfg, 'bg': s:statementbg},
+    \ 'Repeat': {'fg': s:repeatfg, 'bg': s:repeatbg},
+    \ 'Exception': {'fg': s:exceptionfg, 'bg': s:exceptionbg},
+    \ 'Conditional': {'fg': s:conditionalfg, 'bg': s:conditionalbg},
+    \ 'Directory': {'fg': 'darkcyan'},
+    \ 'Error': { 'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
+    \ 'ErrorMsg': {'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
+    \ 'SignColumn': {'bg': 'none'},
+    \ 'FoldColumn': {'fg': 'darkgrey' },
+    \ 'Folded': {'fg': 'darkgrey'},
+    \ 'Ignore': {'fg': 'darkgrey', 'cterm': 'bold'},
+    \ 'IncSearch': {'fg': 'green', 'bg': 'darkgreen', 'cterm': 'bold'},
+    \ 'ModeMsg': {'fg': 'brown'},
+    \ 'MoreMsg': {'fg': 'darkgreen'},
+    \ 'NonText':{ 'fg': 'darkblue', 'cterm': 'bold'},
+    \ 'PreProc': { 'fg': 'LightCyan' },
+    \ 'Question': { 'fg': 'green' },
+    \ 'Search': { 'fg': 'black', 'bg': 'green' },
+    \ 'SpecialKey': { 'fg': 'darkgreen' },
+    \ 'SpellBad': {'fg':'red'},
+    \ 'SpellCap': {'fg':'cyan'},
+    \ 'StatusLine': {'cterm': 'bold,reverse'},
+    \ 'StatusLineNC': { 'cterm': 'reverse'},
+    \ 'Title': { 'fg': 'green'},
+    \ 'Underlined': {'cterm': 'underline'},
+    \ 'Visual': {'cterm': 'reverse'},
+    \ 'VisualNOS': {'cterm': 'bold,underline'},
+    \ 'WarningMsg': {'fg': 'darkblue'},
+    \ 'ColorColumn': {'bg':'red'},
+    \ 'VertSplit': {'fg': 'lightgreen'},
+    \ 'Noise': {'fg': 'red'},
+    \ 'jsFuncArgs': {'fg': 'blue'},
+    \ 'jsObjectKey': {'fg': 'Magenta'},
+    \ 'LineNr': {'fg': 'lightgrey'}
+\ }
+
+for [group, value] in items(s:definition)
+    call s:hi(group, value)
+endfor
+
+"" vim-signify
 " hi SignifySignAdd             ctermbg=green
 " hi SignifySignChange          ctermbg=yellow ctermfg=darkgrey
 " hi SignifySignDelete          ctermbg=red
 " hi SignifySignDeleteFirstLine ctermbg=red
+"" Cursor color is controlled by iterm color scheme
+" hi Cursor       cterm=none       ctermbg=red      ctermfg=white
+" hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
+" hi CursorLine   cterm=none       ctermbg=red
+"" ALE
+" hi ALEWarningLine ctermbg=darkgrey
+" hi ALEErrorLine ctermbg=darkgrey
+" hi ALEWarning ctermfg=white
+" hi ALEError   ctermfg=yellow
