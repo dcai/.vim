@@ -60,9 +60,7 @@ let g:ale_fixers = {
 "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
 " let s:php_coding_standard = 'moodle'
 " let s:php_coding_standard = 'WordPress-Core'
-let s:php_coding_standard = 'PSR12'
-let g:ale_php_phpcs_standard = s:php_coding_standard
-let g:ale_php_phpcbf_standard = s:php_coding_standard
+
 let g:ale_javascript_eslint_executable = ''
 let g:ale_pandoc_options = '--columns=120'
 let g:ale_pandoc_use_gfm = 1

@@ -137,11 +137,23 @@ endfunction
 """""""""""""""""""""""""""""""""""""""
 " switch to current dir
 function! CHANGE_CURR_DIR()
-  let _dir = expand('%:p:h')
-  if isdirectory(_dir)
-    exec 'cd ' . _dir
+  let l:dir = expand('%:p:h')
+  let l:file = expand('%:p')
+
+  if isdirectory(l:dir)
+    exec 'cd ' . l:dir
   endif
-  unlet _dir
+  unlet l:dir
+
+
+  if l:file =~ 'moodle'
+    let l:php_coding_standard = 'moodle'
+  else
+    let l:php_coding_standard = 'PSR12'
+  endif
+  let g:ale_php_phpcs_standard = l:php_coding_standard
+  let g:ale_php_phpcbf_standard = l:php_coding_standard
+  unlet l:file
 endfunction
 
 augroup changecurrentdir
