@@ -145,14 +145,27 @@ function! CHANGE_CURR_DIR()
   endif
   unlet l:dir
 
+  let g:ale_fix_on_save = 1
+  if l:file =~ 'wow'
+    " disable auto fix for woolworths projects
+    let g:ale_fix_on_save = 0
+  endif
 
+  " Install moodle coding style:
+  "   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
+  " Above command add moodle coding style to
+  "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
+  " let s:php_coding_standard = 'moodle'
+  " let s:php_coding_standard = 'WordPress-Core'
   if l:file =~ 'moodle'
+    let g:ale_fix_on_save = 0
     let l:php_coding_standard = 'moodle'
   else
     let l:php_coding_standard = 'PSR12'
   endif
   let g:ale_php_phpcs_standard = l:php_coding_standard
   let g:ale_php_phpcbf_standard = l:php_coding_standard
+
   unlet l:file
 endfunction
 

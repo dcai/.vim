@@ -11,7 +11,6 @@
 
 " let g:ale_completion_enabled = 1
 let g:ale_set_highlights = 1
-let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
@@ -53,13 +52,6 @@ let g:ale_fixers = {
   \ 'typescript': ['prettier'],
   \ 'yaml': ['prettier'],
 \}
-
-" Install moodle coding style:
-"   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
-" Above command add moodle coding style to
-"   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
-" let s:php_coding_standard = 'moodle'
-" let s:php_coding_standard = 'WordPress-Core'
 
 let g:ale_javascript_eslint_executable = ''
 let g:ale_pandoc_options = '--columns=120'
