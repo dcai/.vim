@@ -68,14 +68,6 @@ let g:user_emmet_settings = {
       \}
 
 """""""""""""""""""""""""""""""""""""""
-""" Hightlight interesting words
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>m :call InterestingWords('n')<cr>
-nnoremap <silent> <leader>M :call UncolorAllWords()<cr>
-nnoremap <silent> n :call WordNavigation('forward')<cr>
-nnoremap <silent> N :call WordNavigation('backward')<cr>
-
-"""""""""""""""""""""""""""""""""""""""
 """ ludovicchabant/vim-gutentags
 """""""""""""""""""""""""""""""""""""""
 let g:gutentags_ctags_executable_javascript = 'jsctags'

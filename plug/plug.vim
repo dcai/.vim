@@ -42,10 +42,14 @@ Plug 'mbbill/undotree'
 Plug 'qpkorr/vim-bufkill'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
-Plug 'vasconcelloslf/vim-interestingwords'
+Plug 'lfv89/vim-interestingwords'
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> n :call WordNavigation(1)<cr>
+nnoremap <silent> N :call WordNavigation(0)<cr>
 Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -76,7 +80,6 @@ Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 " javascript
 " ==========
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
@@ -105,7 +108,6 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
-Plug 'mhinz/vim-signify'
 Plug 'jbmorgado/vim-pine-script', { 'for': 'pine' }
 
 " misc
@@ -114,16 +116,17 @@ Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
 Plug 'diepm/vim-rest-console'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
-Plug 'honza/vim-snippets'
+Plug 'mhinz/vim-signify'
+" Plug 'honza/vim-snippets'
 
 " color schemes
 " =============
-Plug 'noahfrederick/vim-noctu'
-Plug 'nanotech/jellybeans.vim'
-Plug 'romainl/Apprentice'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'Lokaltog/vim-distinguished'
-Plug 'morhetz/gruvbox'
+" Plug 'noahfrederick/vim-noctu'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'romainl/Apprentice'
+" Plug 'jonathanfilip/vim-lucius'
+" Plug 'Lokaltog/vim-distinguished'
+" Plug 'morhetz/gruvbox'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'sjl/badwolf'
 " Plug 'whatyouhide/vim-gotham'
