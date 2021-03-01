@@ -1,7 +1,7 @@
 " status line {{{
 set statusline=%f                               " tail of the filename
 set statusline+=%m                              " modified flag
-set statusline+=\ %{fugitive#statusline()}
+" set statusline+=\ %{fugitive#statusline()}
 set statusline+=%=                              " left/right separator
 set statusline+=%y                              " filetype
 set statusline+=[
@@ -19,20 +19,31 @@ set statusline+=%h                              " help file flag
 set statusline+=%r                              " read only flag
 " }}}
 
-highlight statusline cterm=NONE ctermfg=white ctermbg=darkblue
-highlight statuslineNC cterm=NONE ctermfg=white ctermbg=darkgrey
-
-" highlight CursorLine ctermbg=Green ctermfg=DarkGrey
-au InsertEnter  * call InsertStatuslineColor(v:insertmode)
-au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave  * call InsertLeaveActions()
-
-function! InsertLeaveActions()
-  highlight statusline cterm=NONE ctermfg=white ctermbg=darkblue
+function! s:hi(group, value)
+  let l:ctermbg = has_key(a:value, 'bg') ? join(["ctermbg", a:value.bg], "=") : ""
+  let l:ctermfg = has_key(a:value, 'fg') ? join(["ctermfg", a:value.fg], "=") : ""
+  let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
+  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg], " ")
+  exe l:cmd
 endfunction
 
-function! InsertStatuslineColor(mode)
-  highlight statusline cterm=NONE ctermbg=darkgrey ctermfg=white
+let s:active = {'fg': 'white', 'bg': 'darkblue', 'cterm': 'none'}
+let s:inactive = {'fg': 'white', 'bg': 'darkgrey', 'cterm': 'none'}
+let s:insertmode = {'fg': 'white', 'bg': 'darkgreen', 'cterm': 'none'}
+
+call s:hi('statusline', s:active)
+call s:hi('statuslineNC', s:inactive)
+
+au InsertEnter  * call InsertEnter(v:insertmode)
+au InsertChange * call InsertEnte(v:insertmode)
+au InsertLeave  * call InsertLeave()
+
+function! InsertLeave()
+  call s:hi('statusline', s:active)
+endfunction
+
+function! InsertEnter(mode)
+  call s:hi('statusline', s:insertmode)
 endfunction
 
 " function! InsertStatuslineColor(mode)
