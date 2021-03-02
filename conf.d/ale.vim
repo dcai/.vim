@@ -1,14 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
-
-" function! FindConfig(prefix, what, where)
-    " let cfg = findfile(a:what, escape(a:where, ' ') . ';')
-    " return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
-" endfunction
-" autocmd FileType javascript let g:ale_jshint_config_loc =
-      " \ FindConfig('-c', '.jshintrc', expand('<afile>:p:h', 1))
-
 " let g:ale_completion_enabled = 1
 let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 1
@@ -53,6 +45,5 @@ let g:ale_fixers = {
   \ 'yaml': ['prettier'],
 \}
 
-let g:ale_javascript_eslint_executable = ''
 let g:ale_pandoc_options = '--columns=120'
 let g:ale_pandoc_use_gfm = 1
