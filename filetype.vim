@@ -37,6 +37,7 @@ autocmd BufRead,BufNewFile www.conf set filetype=dosini
 
 " PHP {{{
 autocmd BufRead,BufNewFile *.phps set filetype=php
+autocmd BufRead,BufNewFile *.php_cs set filetype=php
 " Drupal files
 autocmd BufRead,BufNewFile *.install set filetype=php
 autocmd BufRead,BufNewFile *.module set filetype=php
