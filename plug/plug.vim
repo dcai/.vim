@@ -40,7 +40,7 @@ Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 Plug 'qpkorr/vim-bufkill'
-" Plug 'terryma/vim-multiple-cursors'
+" Plug 'mg979/vim-visual-multi'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
