@@ -77,31 +77,21 @@ set incsearch
 set grepformat=%f:%l:%c:%m
 " }}}
 
-" backup, undo & caches {{{1
 set noswapfile
 set nowritebackup
 function! s:mkdir_p(dirname)
-  if !isdirectory(a:dirname)
-    call mkdir(a:dirname, 'p')
+  let l:path = expand(a:dirname)
+  if !isdirectory(l:path)
+    call mkdir(l:path, 'p')
   endif
-  return a:dirname
+  return l:path
 endfunction
 
 " https://stackoverflow.com/a/26898986/69938
-let g:netrw_home=$XDG_CACHE_HOME.'/vim'
-
-" backup {{{2
-" set nobackup
-let s:backupdir=s:mkdir_p(expand("~/.local/vim/backup"))
-set backupdir=~/.local/vim/backup
-" }}}
-
-" Persistent undo {{{2
-set undofile " Create FILE.un~ files for persistent undo
-let s:undodir=s:mkdir_p(expand('~/.local/vim/undo'))
-set undodir=~/.local/vim/undo
-" }}}
-" }}}
+let g:netrw_home=s:mkdir_p($XDG_CACHE_HOME.'/vim')
+let &backupdir=s:mkdir_p("~/.local/vim/backup")
+set undofile " enable persistent undo
+let &undodir=s:mkdir_p('~/.local/vim/undo')
 
 " default indent & wrapping settings {{{
 set expandtab
