@@ -169,9 +169,10 @@ function! CHANGE_CURR_DIR()
   unlet l:file
 endfunction
 
-augroup changecurrentdir
-  autocmd BufEnter * call CHANGE_CURR_DIR()
+augroup onEnterBuffer
+  autocmd!
   autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+  autocmd BufEnter * call CHANGE_CURR_DIR()
 augroup END
 " }}}
 
