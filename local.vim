@@ -108,6 +108,10 @@ set formatoptions=cqt
 set wrapmargin=0
 set linebreak
 
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
 function! SoftWrap()
   let s:old_tw = &textwidth
   set textwidth=999999
