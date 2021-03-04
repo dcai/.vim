@@ -37,20 +37,14 @@ let s:fgcolor="yellow"
 let s:valuefg="darkgreen" " js string literal, boolean
 let s:commentfg="grey"
 let s:datatypefg="green"    " const/let/types
-let s:datatypebg="darkgrey" " const/let/types
 let s:identifierfg="lightyellow" " js function class name, import/export, function/method name
 let s:identifierbg=s:bgcolor     " js function class name, import/export, function/method name
 let s:specialfg="darkred"        " js 'this' reference
-let s:operatorfg="darkcyan"
-let s:operatorbg="239"
+let s:operatorfg="blue"          " + - / *, new is operator too
 let s:statementfg="lightyellow" " jsxmarkup/async/await/return
-let s:statementbg="darkgrey"   " jsxmarkup/async/await/return
-let s:repeatbg="darkgrey"    " for/while
 let s:repeatfg="lightyellow" " for/while
-let s:exceptionbg="darkgrey"    " try/catch
-let s:exceptionfg="red" " try/catch
 let s:conditionalfg="lightgreen" " if/else
-let s:conditionalbg="darkgrey"   " if/else
+let s:highlightbg='darkgrey'
 
 hi clear
 hi clear ALEWarning
@@ -79,27 +73,27 @@ let s:definition =
     \ 'Constant': {'fg': s:valuefg},
     \ 'Special': {'fg': s:specialfg},
     \ 'Comment': {'fg': s:commentfg},
-    \ 'Type': {'fg': s:datatypefg, 'bg': s:datatypebg},
-    \ 'Operator': {'fg': s:operatorfg, 'bg': s:operatorbg},
-    \ 'Statement': {'fg': s:statementfg, 'bg': s:statementbg},
-    \ 'Repeat': {'fg': s:repeatfg, 'bg': s:repeatbg},
-    \ 'Exception': {'fg': s:exceptionfg, 'bg': s:exceptionbg},
-    \ 'Conditional': {'fg': s:conditionalfg, 'bg': s:conditionalbg},
+    \ 'Type': {'fg': s:datatypefg},
+    \ 'Operator': {'fg': s:operatorfg, 'bg': s:highlightbg},
+    \ 'Statement': {'fg': s:statementfg},
+    \ 'Repeat': {'fg': s:repeatfg, 'bg': s:highlightbg},
+    \ 'Exception': {'fg': 'lightred', 'bg': s:highlightbg},
+    \ 'Conditional': {'fg': s:conditionalfg, 'bg': s:highlightbg},
     \ 'Directory': {'fg': 'darkcyan'},
-    \ 'Error': { 'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
+    \ 'Error': {'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
     \ 'ErrorMsg': {'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
     \ 'SignColumn': {'bg': 'none'},
-    \ 'FoldColumn': {'fg': 'darkgrey' },
+    \ 'FoldColumn': {'fg': 'darkgrey'},
     \ 'Folded': {'fg': 'darkgrey'},
     \ 'Ignore': {'fg': 'darkgrey', 'cterm': 'bold'},
     \ 'IncSearch': {'fg': 'green', 'bg': 'darkgreen', 'cterm': 'bold'},
     \ 'ModeMsg': {'fg': 'brown'},
     \ 'MoreMsg': {'fg': 'darkgreen'},
-    \ 'NonText':{ 'fg': 'darkblue', 'cterm': 'bold'},
-    \ 'PreProc': { 'fg': 'LightCyan' },
-    \ 'Question': { 'fg': 'green' },
-    \ 'Search': { 'fg': 'black', 'bg': 'green' },
-    \ 'SpecialKey': { 'fg': 'darkgreen' },
+    \ 'NonText':{'fg': 'darkblue', 'cterm': 'bold'},
+    \ 'PreProc': {'fg': 'LightCyan'},
+    \ 'Question': {'fg': 'green'},
+    \ 'Search': {'fg': 'black', 'bg': 'green'},
+    \ 'SpecialKey': {'fg': 'darkgreen'},
     \ 'SpellBad': {'fg':'red'},
     \ 'SpellCap': {'fg':'cyan'},
     \ 'Title': { 'fg': 'green'},
@@ -109,10 +103,10 @@ let s:definition =
     \ 'WarningMsg': {'fg': 'darkyellow'},
     \ 'ColorColumn': {'bg':'red'},
     \ 'VertSplit': {'fg': 'lightgreen'},
-    \ 'Noise': {'fg': 'red'},
+    \ 'Noise': {'fg': 'darkred'},
     \ 'jsFuncArgs': {'fg': 'blue'},
-    \ 'jsObjectKey': {'fg': 'Magenta'},
-    \ 'LineNr': {'fg': 'lightgrey'}
+    \ 'jsObjectKey': {'fg': 'lightgreen', 'bg': s:highlightbg},
+    \ 'LineNr': {'fg': 'lightgrey'},
 \ }
 
 for [group, value] in items(s:definition)
