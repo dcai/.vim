@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
+nnoremap <F9> :ALEFix<CR>
 " let g:ale_completion_enabled = 1
 let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 1
