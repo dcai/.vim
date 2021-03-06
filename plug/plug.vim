@@ -52,8 +52,6 @@ nnoremap <silent> n :call WordNavigation(1)<cr>
 nnoremap <silent> N :call WordNavigation(0)<cr>
 Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-      \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'maxbrunsfeld/vim-yankstack'
 "Plug 'kien/rainbow_parentheses.vim'
 "Plug 'ludovicchabant/vim-gutentags'
