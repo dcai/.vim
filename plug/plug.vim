@@ -23,11 +23,9 @@ Plug 'junegunn/vader.vim', { 'for': 'vader' }
 " lexical
 " =======
 Plug 'reedes/vim-lexical'
-Plug 'panozzaj/vim-autocorrect'
 
 " git
 " ===
-Plug 'christoomey/vim-conflicted' " git conflict resolver
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 
@@ -57,12 +55,21 @@ Plug 'scrooloose/nerdcommenter'
 "Plug 'ludovicchabant/vim-gutentags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zz/ <Plug>(incsearch-fuzzyspell-/)
-map zz? <Plug>(incsearch-fuzzyspell-?)
+nmap z/ <Plug>(incsearch-fuzzy-/)
+nmap z? <Plug>(incsearch-fuzzy-?)
+nmap zz/ <Plug>(incsearch-fuzzyspell-/)
+nmap zz? <Plug>(incsearch-fuzzyspell-?)
 " map zg/ <Plug>(incsearch-fuzzy-stay)
 " map zg/ <Plug>(incsearch-fuzzyspell-stay)
+
+" utils
+" =====
+Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
+let g:colorizer_auto_filetype='vim,css'
+Plug 'diepm/vim-rest-console'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-dispatch'
+Plug 'mhinz/vim-signify'
 
 " Text objects
 " ============
@@ -70,10 +77,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'thinca/vim-textobj-function-javascript'
-
-" HTML
-" ====
-Plug 'mattn/emmet-vim', { 'for': ['html', 'php'] }
 
 " javascript
 " ==========
@@ -83,10 +86,6 @@ Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 
-" PHP
-" ===
-Plug 'evidens/vim-twig'
-
 " Python
 " ======
 Plug 'vim-scripts/indentpython.vim'
@@ -94,6 +93,7 @@ Plug 'vim-scripts/python_match.vim'
 
 " Other syntax
 " ============
+Plug 'evidens/vim-twig'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
@@ -108,18 +108,13 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'towolf/vim-helm'
 Plug 'jbmorgado/vim-pine-script', { 'for': 'pine' }
 
-" misc
-" ====
-Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-Plug 'diepm/vim-rest-console'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-dispatch'
-Plug 'mhinz/vim-signify'
-" Plug 'honza/vim-snippets'
+"""""" 16 color schemes
+"""""" ================
+" Plug 'noahfrederick/vim-noctu' " 16 colors
+" Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
 
-" color schemes
-" =============
-" Plug 'noahfrederick/vim-noctu'
+"""""" color schemes
+"""""" =============
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'romainl/Apprentice'
 " Plug 'jonathanfilip/vim-lucius'
