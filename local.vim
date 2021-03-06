@@ -51,7 +51,6 @@ if &history < 1000
   set history=1000
 endif
 set autoread
-set spelllang=en
 set mouse=a
 set noerrorbells
 set visualbell

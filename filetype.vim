@@ -66,16 +66,6 @@ autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
 " autocmd vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Dropbox/mysite/contents/wiki | endif
 " }}}
 
-" Lexmed {{{
-augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType text call lexical#init()
-  autocmd FileType org call lexical#init()
-augroup END
-" }}}
-
 function! HelpFileMode()
   "wincmd _ " Maximze the help on open
   nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<cr>:noh<cr>2l
