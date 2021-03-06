@@ -13,8 +13,10 @@ function! GitFileMode()
   nnoremap <buffer> n <c-n>
   nnoremap <buffer> p <c-p>
   nnoremap <buffer> q :q<CR>
-
   setlocal nonumber
 endfunction
-autocmd filetype fugitive call GitFileMode()
-autocmd filetype git call GitFileMode()
+augroup fugitiveGroup
+  autocmd!
+  autocmd filetype fugitive call GitFileMode()
+  autocmd filetype git call GitFileMode()
+augroup end
