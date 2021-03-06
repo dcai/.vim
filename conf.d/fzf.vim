@@ -118,7 +118,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 nnoremap <c-l> :Buffers<cr>
 nnoremap <silent> <leader>bb :Buffers<cr>
-nnoremap <silent> <leader>ff :GitFiles<cr>
+nnoremap <silent> <leader>ff :GFiles<cr>
+nnoremap <silent> <c-p> :GFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
 nnoremap <silent> <leader>. :RgGitRoot<CR>
