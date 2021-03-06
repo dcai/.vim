@@ -238,7 +238,8 @@ inoremap jjj <Esc>:w<cr>
 "   G: to the end of file
 "   `z: jump back to mark `z`
 "   gg=G would reformat the whole file but lose current location
-noremap <F7> mzgg=G`z
+noremap = mzgg=G`z
+noremap - :Vexplore<cr>
 
 " open new file
 noremap gf :e <cfile><CR>
