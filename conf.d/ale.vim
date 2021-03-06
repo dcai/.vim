@@ -39,7 +39,7 @@ let g:ale_fixers = {
   \ 'dokuwiki': ['pandoc'],
   \ 'markdown': ['pandoc'],
   \ 'less': ['prettier'],
-  \ 'php': ['phpcbf'],
+  \ 'php': ['php_cs_fixer', 'phpcbf'],
   \ 'python': ['black'],
   \ 'sh': ['shfmt'],
   \ 'typescript': ['prettier'],
