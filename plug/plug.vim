@@ -138,6 +138,7 @@ function! InstallAle(info)
     !npm install -g prettier eslint lua-fmt
     " !pip3 install --user vim-vint pathlib typing
     " !composer global require 'squizlabs/php_codesniffer=*'
+    " !composer global require 'friendsofphp/php-cs-fixer'
   endif
 endfunction
 
