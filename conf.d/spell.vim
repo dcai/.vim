@@ -5,7 +5,7 @@
 
 set spelllang=en
 
-let s:vimspelldir='$HOME/.vim/spell'
+let s:vimspelldir='$HOME/.local/vim/spell'
 let s:mthesaurfile=s:vimspelldir . '/mthesaur.txt'
 let s:spellfile=s:vimspelldir . '/en.utf-8.add'
 
