@@ -171,25 +171,24 @@ augroup END
 " }}}
 
 " Visual Search
-" This has been replaced by `thinca/VisualSelection` plugin
-" function! VisualSearch(direction) range
-"   " From an idea by Michael Naumann
-"   let l:saved_reg = @"
-"   :echo 'test'
-"   execute "normal! vgvy"
-"   let l:pattern = escape(@", '\\/.*$^~[]')
-"   let l:pattern = substitute(l:pattern, "\n$", "", "")
-"   if a:direction == 'b'
-"     execute "normal ?" . l:pattern . "^M"
-"   else
-"     execute "normal /" . l:pattern . "^M"
-"   endif
-"   let @/ = l:pattern
-"   let @" = l:saved_reg
-" endfunction
-" " Press * or # to search
-" map <silent> * :call VisualSearch('f')<CR>
-" map <silent> # :call VisualSearch('b')<CR>
+function! VisualSearch(direction) range
+  " From an idea by Michael Naumann
+  let l:saved_reg = @"
+  :echo 'test'
+  execute "normal! vgvy"
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+  if a:direction == 'b'
+    execute "normal ?" . l:pattern . "^M"
+  else
+    execute "normal /" . l:pattern . "^M"
+  endif
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+" Press * or # to search
+map <silent> * :call VisualSearch('f')<CR>
+map <silent> # :call VisualSearch('b')<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """  key mappings
