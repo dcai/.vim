@@ -26,4 +26,6 @@ augroup lexical
   autocmd FileType textile call lexical#init()
   autocmd FileType text call lexical#init()
   autocmd FileType org call lexical#init()
+  autocmd FileType gitcommit call lexical#init()
+  autocmd FileType vimwiki call lexical#init()
 augroup END

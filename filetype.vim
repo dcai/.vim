@@ -1,15 +1,5 @@
 autocmd stdinreadpre * let s:std_in=1
 
-" Spelling {{{
-autocmd FileType gitcommit setlocal spell
-autocmd FileType svn       setlocal spell
-autocmd FileType asciidoc  setlocal spell
-autocmd FileType markdown  setlocal spell
-autocmd FileType vimwiki   setlocal spell
-autocmd FileType text      setlocal spell
-autocmd FileType help      setlocal nospell
-" }}}
-
 """"""""""""""""""""""""""""""
 " dokuwiki
 """""""""""""""""""""""""""""""
