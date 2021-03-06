@@ -211,10 +211,10 @@ noremap! <F16> <nop>
 map q: <nop>
 map q\ <nop>
 map q? <nop>
-nnoremap Q <nop>
-nmap Q  <silent>
-nmap q: <silent>
-nmap K  <silent>
+nmap q: <nop>
+
+" close everything
+nmap <silent> Q :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
 
 " Keep search matches in the middle of the window.
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
@@ -251,8 +251,8 @@ vnoremap <expr> <End>  (col('.') == match(getline('.'), '\s*$') ? '$h' : 'g_')
 inoremap <Home> <C-o><Home>
 inoremap <End>  <C-o><End>
 
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
 
