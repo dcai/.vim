@@ -173,7 +173,6 @@ augroup END
 function! VisualSearch(direction) range
   " From an idea by Michael Naumann
   let l:saved_reg = @"
-  :echo 'test'
   execute "normal! vgvy"
   let l:pattern = escape(@", '\\/.*$^~[]')
   let l:pattern = substitute(l:pattern, "\n$", "", "")
@@ -185,9 +184,9 @@ function! VisualSearch(direction) range
   let @/ = l:pattern
   let @" = l:saved_reg
 endfunction
-" Press * or # to search
-map <silent> * :call VisualSearch('f')<CR>
-map <silent> # :call VisualSearch('b')<CR>
+" press * or # to search in visual mode
+vnoremap <silent> * :call VisualSearch('f')<CR>
+vnoremap <silent> # :call VisualSearch('b')<CR>
 
 """"""""""""""""""""""""""""""""""""""""
 """  key mappings
@@ -237,11 +236,12 @@ inoremap jjj <Esc>:w<cr>
 "   G: to the end of file
 "   `z: jump back to mark `z`
 "   gg=G would reformat the whole file but lose current location
-noremap = mzgg=G`z
-noremap - :Vexplore<cr>
+nnoremap = mzgg=G`z
+
+nnoremap T :Vexplore<cr>
 
 " open new file
-noremap gf :e <cfile><CR>
+nnoremap gf :e <cfile><CR>
 
 " Press <Home> or <End> to the 1st and last
 " char of the line
