@@ -20,10 +20,6 @@ call plug#begin(expand(s:plugged))
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 
-" lexical
-" =======
-Plug 'reedes/vim-lexical'
-
 " git
 " ===
 Plug 'tpope/vim-fugitive'
@@ -31,6 +27,7 @@ Plug 'junegunn/gv.vim'
 
 " usability
 " =========
+Plug 'reedes/vim-lexical'
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
