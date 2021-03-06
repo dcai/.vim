@@ -101,12 +101,9 @@ Plug 'vim-scripts/nginx.vim'
 Plug 'niftylettuce/vim-jinja'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'cespare/vim-toml'
-Plug 'hashivim/vim-terraform'
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-Plug 'towolf/vim-helm'
-Plug 'jbmorgado/vim-pine-script', { 'for': 'pine' }
 
 """""" 16 color schemes
 """""" ================
