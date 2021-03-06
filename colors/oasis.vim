@@ -11,31 +11,35 @@ if exists("syntax_on")
 endif
 
 """""""""""""""""""""""""""""""""""""
-" color reference: https://jonasjacek.github.io/colors/
+" color reference:
+"   - https://jonasjacek.github.io/colors/
+"   - https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 
+""" :h color-xterm
 """""""""""""""""""""""""""""""""""""
-" Black
-" DarkBlue
-" DarkGreen
-" DarkCyan
-" DarkRed
-" DarkMagenta
-" Brown, DarkYellow
-" LightGray, LightGrey, Gray, Grey
-" DarkGray, DarkGrey
-" Blue, LightBlue
-" Green, LightGreen
-" Cyan, LightCyan
-" Red, LightRed
-" Magenta, LightMagenta
-" Yellow, LightYellow
-" White
+" NR-16   NR-8    COLOR NAME ~
+" 0	      0	      Black
+" 1	      4	      DarkBlue
+" 2	      2	      DarkGreen
+" 3	      6	      DarkCyan
+" 4	      1	      DarkRed
+" 5	      5	      DarkMagenta
+" 6	      3	      Brown, DarkYellow
+" 7	      7	      LightGray, LightGrey, Gray, Grey
+" 8	      0*	    DarkGray, DarkGrey
+" 9	      4*	    Blue, LightBlue
+" 10	    2*	    Green, LightGreen
+" 11	    6*	    Cyan, LightCyan
+" 12	    1*	    Red, LightRed
+" 13	    5*	    Magenta, LightMagenta
+" 14	    3*	    Yellow, LightYellow
+" 15	    7*	    White
 """""""""""""""""""""""""""""""""""""
 
 let s:bgcolor="239"
 let s:fgcolor="yellow"
 let s:valuefg="darkgreen" " js string literal, boolean
-let s:commentfg="grey"
+let s:commentfg="gray"
 let s:datatypefg="green"    " const/let/types
 let s:identifierfg="lightyellow" " js function class name, import/export, function/method name
 let s:identifierbg=s:bgcolor     " js function class name, import/export, function/method name
@@ -44,7 +48,7 @@ let s:operatorfg="blue"          " + - / *, new is operator too
 let s:statementfg="lightyellow" " jsxmarkup/async/await/return
 let s:repeatfg="lightyellow" " for/while
 let s:conditionalfg="lightgreen" " if/else
-let s:highlightbg='darkgrey'
+let s:highlightbg='darkgray'
 
 hi clear
 hi clear ALEWarning
@@ -77,15 +81,15 @@ let s:definition =
     \ 'Operator': {'fg': s:operatorfg, 'bg': s:highlightbg},
     \ 'Statement': {'fg': s:statementfg},
     \ 'Repeat': {'fg': s:repeatfg, 'bg': s:highlightbg},
-    \ 'Exception': {'fg': 'lightred', 'bg': s:highlightbg},
+    \ 'Exception': {'fg': 'red', 'bg': s:highlightbg},
     \ 'Conditional': {'fg': s:conditionalfg, 'bg': s:highlightbg},
     \ 'Directory': {'fg': 'darkcyan'},
-    \ 'Error': {'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
-    \ 'ErrorMsg': {'fg': 'lightgrey', 'bg': 'red', 'cterm': 'bold'},
+    \ 'Error': {'fg': 'lightgray', 'bg': 'red', 'cterm': 'bold'},
+    \ 'ErrorMsg': {'fg': 'lightgray', 'bg': 'red', 'cterm': 'bold'},
     \ 'SignColumn': {'bg': 'none'},
-    \ 'FoldColumn': {'fg': 'darkgrey'},
-    \ 'Folded': {'fg': 'darkgrey'},
-    \ 'Ignore': {'fg': 'darkgrey', 'cterm': 'bold'},
+    \ 'FoldColumn': {'fg': 'darkgray'},
+    \ 'Folded': {'fg': 'darkgray'},
+    \ 'Ignore': {'fg': 'darkgray', 'cterm': 'bold'},
     \ 'IncSearch': {'fg': 'green', 'bg': 'darkgreen', 'cterm': 'bold'},
     \ 'ModeMsg': {'fg': 'brown'},
     \ 'MoreMsg': {'fg': 'darkgreen'},
@@ -100,13 +104,13 @@ let s:definition =
     \ 'Underlined': {'cterm': 'underline'},
     \ 'Visual': {'cterm': 'reverse'},
     \ 'VisualNOS': {'cterm': 'bold,underline'},
-    \ 'WarningMsg': {'fg': 'darkyellow'},
+    \ 'WarningMsg': {'fg': 'brown'},
     \ 'ColorColumn': {'bg':'red'},
     \ 'VertSplit': {'fg': 'lightgreen'},
     \ 'Noise': {'fg': 'darkred'},
     \ 'jsFuncArgs': {'fg': 'blue'},
     \ 'jsObjectKey': {'fg': 'lightgreen', 'bg': s:highlightbg},
-    \ 'LineNr': {'fg': 'lightgrey'},
+    \ 'LineNr': {'fg': 'lightgray'},
 \ }
 
 for [group, value] in items(s:definition)
@@ -115,7 +119,7 @@ endfor
 
 "" vim-signify
 " hi SignifySignAdd             ctermbg=green
-" hi SignifySignChange          ctermbg=yellow ctermfg=darkgrey
+" hi SignifySignChange          ctermbg=yellow ctermfg=darkgray
 " hi SignifySignDelete          ctermbg=red
 " hi SignifySignDeleteFirstLine ctermbg=red
 "" Cursor color is controlled by iterm color scheme
@@ -123,7 +127,7 @@ endfor
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
 "" ALE
-" hi ALEWarningLine ctermbg=darkgrey
-" hi ALEErrorLine ctermbg=darkgrey
+" hi ALEWarningLine ctermbg=darkgray
+" hi ALEErrorLine ctermbg=darkgray
 " hi ALEWarning ctermfg=white
 " hi ALEError   ctermfg=yellow
