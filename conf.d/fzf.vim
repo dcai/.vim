@@ -2,31 +2,31 @@
 """ FZF
 """""""""""""""""""""""""""""""""""""""
 let s:TYPE = {
-  \ 'dict': type({}),
-  \ 'funcref': type(function('call')),
-  \ 'string': type(''),
-  \ 'list': type([])
-\ }
+      \ 'dict': type({}),
+      \ 'funcref': type(function('call')),
+      \ 'string': type(''),
+      \ 'list': type([])
+      \ }
 let g:fzf_layout = { 'down': '~30%' }
 let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-  \ {
-  \ 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+      \ {
+        \ 'fg':      ['fg', 'Normal'],
+        \ 'bg':      ['bg', 'Normal'],
+        \ 'hl':      ['fg', 'Comment'],
+        \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+        \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+        \ 'hl+':     ['fg', 'Statement'],
+        \ 'info':    ['fg', 'PreProc'],
+        \ 'border':  ['fg', 'Ignore'],
+        \ 'prompt':  ['fg', 'Conditional'],
+        \ 'pointer': ['fg', 'Exception'],
+        \ 'marker':  ['fg', 'Keyword'],
+        \ 'spinner': ['fg', 'Label'],
+        \ 'header':  ['fg', 'Comment'] }
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
@@ -55,29 +55,30 @@ function! s:ag_in_dir(...)
         \ join(a:000[1:], ' '),
         \ extend({'dir': a:1}, s:fzf_base_options))
 endfunction
+
 function! s:ag_search_word_in_git()
   execute 'AgGitRoot ' expand('<cword>')
 endfunction
+
 " Create vim command `AgInDir` to search in dir
 command! -nargs=+ -complete=dir AgInDir
-  \ call s:ag_in_dir(<f-args>)
+      \ call s:ag_in_dir(<f-args>)
 " Create Ag search command `AgGitRoot` in git root
 command! -nargs=* AgGitRoot
-  \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+      \ call fzf#vim#ag(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
 
 function! s:rg_raw(command_suffix, ...)
   if !executable('rg')
     return s:warn('rg is not found')
   endif
   let s:cmd='rg --column --line-number --no-heading --color=always --smart-case -- ' .
-    \ a:command_suffix
+        \ a:command_suffix
   return call('fzf#vim#grep', extend([s:cmd, 1], a:000))
 endfunction
 
 function! s:rg(query, ...)
   let query = empty(a:query) ? '' : a:query
   let args = copy(a:000)
-  let test =copy(a:000)
   return call('s:rg_raw', insert(args, fzf#shellescape(query), 0))
 endfunction
 
@@ -94,20 +95,21 @@ endfunction
 function! FzfSpellSink(word)
   exe 'normal! "_ciw'.a:word
 endfunction
+
 function! FzfSpell()
   let suggestions = spellsuggest(expand("<cword>"))
   " google autosuggest
   " let suggestions = systemlist('gg ' . expand("<cword>"))
   return fzf#run(extend(
-    \ {'source': suggestions, 'sink': function("FzfSpellSink")},
-    \ s:fzf_base_options))
+        \ {'source': suggestions, 'sink': function("FzfSpellSink")},
+        \ s:fzf_base_options))
 endfunction
 nnoremap z= :call FzfSpell()<CR>
 
 command! -bang -nargs=* Rg call s:rg(<q-args>, s:fzf_base_options)
 command! -nargs=+ -complete=dir RgInDir call s:rg_in_dir(<f-args>)
 command! -bang -nargs=* RgGitRoot call
-  \ s:rg(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
+      \ s:rg(<q-args>, extend(s:with_git_root(), s:fzf_base_options))
 
 " apt install wbritish
 " use wamerican for american spelling
