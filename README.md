@@ -1,3 +1,3 @@
 ## .vim
 
-`vimrc` since 2008.
+Extended `vimrc` since 2008.
