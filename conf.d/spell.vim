@@ -18,7 +18,7 @@ function! DownloadMthesaurfile()
   execute '!curl -fLo ' . s:mthesaurfile . ' https://www.gutenberg.org/files/3202/files/mthesaur.txt'
 endfunction
 
-let g:lexical#spell = 0
+let g:lexical#spell = 1
 let g:lexical#thesaurus = [s:mthesaurfile]
 let g:lexical#dictionary = ["/usr/share/dict/words",]
 let g:lexical#spellfile = [s:spellfile,]
@@ -39,6 +39,10 @@ augroup lexical
   autocmd FileType org call EnableLexical(1)
   autocmd FileType gitcommit call EnableLexical(1)
   autocmd FileType vimwiki call EnableLexical(1)
+
+  autocmd FileType vim call EnableLexical(0)
+  autocmd FileType javascript call EnableLexical(0)
+  autocmd FileType php call EnableLexical(0)
 augroup END
 
 """""""""""""""""""""""""""""""""""""""
