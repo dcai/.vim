@@ -90,22 +90,6 @@ function! RgSearchWordGit()
   execute 'RgGitRoot ' expand('<cword>')
 endfunction
 
-
-" https://coreyja.com/vim-spelling-suggestions-fzf/
-function! FzfSpellSink(word)
-  exe 'normal! "_ciw'.a:word
-endfunction
-
-function! FzfSpell()
-  let suggestions = spellsuggest(expand("<cword>"))
-  " google autosuggest
-  " let suggestions = systemlist('gg ' . expand("<cword>"))
-  return fzf#run(extend(
-        \ {'source': suggestions, 'sink': function("FzfSpellSink")},
-        \ s:fzf_base_options))
-endfunction
-nnoremap z= :call FzfSpell()<CR>
-
 command! -bang -nargs=* Rg call s:rg(<q-args>, s:fzf_base_options)
 command! -nargs=+ -complete=dir RgInDir call s:rg_in_dir(<f-args>)
 command! -bang -nargs=* RgGitRoot call
