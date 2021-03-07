@@ -16,25 +16,26 @@ endif
 "   - https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 
 """ :h color-xterm
-"""""""""""""""""""""""""""""""""""""
-" NR-16   NR-8    COLOR NAME ~
-" 0	      0	      Black
-" 1	      4	      DarkBlue
-" 2	      2	      DarkGreen
-" 3	      6	      DarkCyan
-" 4	      1	      DarkRed
-" 5	      5	      DarkMagenta
-" 6	      3	      Brown, DarkYellow
-" 7	      7	      LightGray, LightGrey, Gray, Grey
-" 8	      0*	    DarkGray, DarkGrey
-" 9	      4*	    Blue, LightBlue
-" 10	    2*	    Green, LightGreen
-" 11	    6*	    Cyan, LightCyan
-" 12	    1*	    Red, LightRed
-" 13	    5*	    Magenta, LightMagenta
-" 14	    3*	    Yellow, LightYellow
-" 15	    7*	    White
-"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" | NR-16 | NR-8 | COLORNAME                          |
+" | --    | --   | --                                 |
+" | 0     | 0    | Black                              |
+" | 1     | 4    | DarkBlue                           |
+" | 2     | 2    | DarkGreen                          |
+" | 3     | 6    | DarkCyan                           |
+" | 4     | 1    | DarkRed                            |
+" | 5     | 5    | DarkMagenta                        |
+" | 6     | 3    | Brown, DarkYellow                  |
+" | 7     | 7    | LightGray, LightGrey,   Gray, Grey |
+" | 8     | 0*   | DarkGray, DarkGrey                 |
+" | 9     | 4*   | Blue, LightBlue                    |
+" | 10    | 2*   | Green, LightGreen                  |
+" | 11    | 6*   | Cyan, LightCyan                    |
+" | 12    | 1*   | Red, LightRed                      |
+" | 13    | 5*   | Magenta, LightMagenta              |
+" | 14    | 3*   | Yellow, LightYellow                |
+" | 15    | 7*   | White                              |
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let s:bgcolor="239"
 let s:fgcolor="yellow"
@@ -113,6 +114,10 @@ let s:definition =
     \ 'jsFuncArgs': {'fg': 'blue'},
     \ 'jsObjectKey': {'fg': 'lightgreen', 'bg': s:highlightbg},
     \ 'LineNr': {'fg': 'lightgray'},
+    \ 'DiffAdd':  {'bg': 'green', 'fg': 'white'},
+    \ 'DiffChange':  {'bg': 'yellow', 'fg': 'black'},
+    \ 'DiffDelete':  {'bg': 'red', 'fg': 'white'},
+    \ 'DiffText':  {'bg': 'blue', 'fg': 'white'},
 \ }
 
 for [group, value] in items(s:definition)
