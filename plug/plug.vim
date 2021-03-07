@@ -28,6 +28,7 @@ Plug 'junegunn/gv.vim'
 " usability
 " =========
 Plug 'reedes/vim-lexical'
+" Plug 'kamykn/spelunker.vim'
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'djoshea/vim-autoread'
 Plug 'easymotion/vim-easymotion'
