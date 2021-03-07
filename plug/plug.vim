@@ -39,6 +39,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
+" Plug 'bronson/vim-visual-star-search'
 Plug 'lfv89/vim-interestingwords'
 nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
 vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
@@ -47,9 +48,9 @@ nnoremap <silent> n :call WordNavigation(1)<cr>
 nnoremap <silent> N :call WordNavigation(0)<cr>
 Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
-"Plug 'maxbrunsfeld/vim-yankstack'
-"Plug 'kien/rainbow_parentheses.vim'
-"Plug 'ludovicchabant/vim-gutentags'
+" Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'kien/rainbow_parentheses.vim'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 nmap z/ <Plug>(incsearch-fuzzy-/)
