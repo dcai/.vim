@@ -21,6 +21,9 @@ augroup end
 augroup filetypeGroup
   autocmd!
 
+  " if no filetype specified, set ft=markdown (alternative would be text)
+  autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+
   autocmd filetype help call HelpFileMode()
 
   " dokuwiki
