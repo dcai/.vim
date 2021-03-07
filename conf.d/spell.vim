@@ -18,24 +18,50 @@ function! DownloadMthesaurfile()
   execute '!curl -fLo ' . s:mthesaurfile . ' https://www.gutenberg.org/files/3202/files/mthesaur.txt'
 endfunction
 
-let g:lexical#spell = 1
+let g:lexical#spell = 0
 let g:lexical#thesaurus = [s:mthesaurfile]
 let g:lexical#dictionary = ["/usr/share/dict/words",]
 let g:lexical#spellfile = [s:spellfile,]
 let g:lexical#spelllang = ["en_us","en_au",]
 
-command! -nargs=0 EnableSpell call lexical#init()
+function! EnableLexical(v)
+  call lexical#init({'spell': a:v})
+endfunction
+
+command! -nargs=0 EnableSpell call EnableLexical(1)
+command! -nargs=0 DisableSpell call EnableLexical(0)
 
 augroup lexical
   autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType text call lexical#init()
-  autocmd FileType org call lexical#init()
-  autocmd FileType gitcommit call lexical#init()
-  autocmd FileType vimwiki call lexical#init()
+  autocmd FileType markdown,mkd call EnableLexical(1)
+  autocmd FileType textile call EnableLexical(1)
+  autocmd FileType text call EnableLexical(1)
+  autocmd FileType org call EnableLexical(1)
+  autocmd FileType gitcommit call EnableLexical(1)
+  autocmd FileType vimwiki call EnableLexical(1)
 augroup END
 
+"""""""""""""""""""""""""""""""""""""""
+""" fzf spell
+"""""""""""""""""""""""""""""""""""""""
+" https://coreyja.com/vim-spelling-suggestions-fzf/
+function! FzfSpellSink(word)
+  exe 'normal! "_ciw'.a:word
+endfunction
+
+function! FzfSpell()
+  let suggestions = spellsuggest(expand("<cword>"))
+  " google autosuggest
+  " let suggestions = systemlist('gg ' . expand("<cword>"))
+  return fzf#run(extend(
+        \ {'source': suggestions, 'sink': function("FzfSpellSink")},
+        \ s:fzf_base_options))
+endfunction
+nnoremap z= :call FzfSpell()<CR>
+
+"""""""""""""""""""""""""""""""""""""""
+""" spelunker.vim
+"""""""""""""""""""""""""""""""""""""""
 let g:enable_spelunker_vim = 0
 function! SpelaunkerConfig()
   " Enable spelunker.vim. (default: 1)
