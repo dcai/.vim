@@ -73,7 +73,8 @@ Plug 'mhinz/vim-signify'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
-Plug 'thinca/vim-textobj-function-javascript'
+" Plug 'thinca/vim-textobj-function-javascript'
+Plug 'haya14busa/vim-textobj-function-syntax'
 
 " javascript
 " ==========
