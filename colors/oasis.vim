@@ -118,17 +118,16 @@ let s:definition =
     \ 'DiffChange':  {'bg': 'yellow', 'fg': 'black'},
     \ 'DiffDelete':  {'bg': 'red', 'fg': 'white'},
     \ 'DiffText':  {'bg': 'blue', 'fg': 'white'},
+    \ 'SignifySignAdd': {'bg': 'green', 'fg': 'black'},
+    \ 'SignifySignChange': {'bg':'yellow', 'fg': 'darkgray'},
+    \ 'SignifySignDelete': {'bg': 'DarkRed'},
+    \ 'SignifySignDeleteFirstLine': {'bg': 'DarkRed'}
 \ }
 
 for [group, value] in items(s:definition)
     call s:hi(group, value)
 endfor
 
-"" vim-signify
-" hi SignifySignAdd             ctermbg=green
-" hi SignifySignChange          ctermbg=yellow ctermfg=darkgray
-" hi SignifySignDelete          ctermbg=red
-" hi SignifySignDeleteFirstLine ctermbg=red
 "" Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
