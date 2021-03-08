@@ -37,7 +37,7 @@ endif
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:bgcolor="239"
+let s:bgcolor="none"
 let s:fgcolor="yellow"
 let s:valuefg="darkgreen" " js string literal, boolean
 let s:commentfg="gray"
