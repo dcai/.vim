@@ -118,10 +118,14 @@ let s:definition =
     \ 'DiffChange':  {'bg': 'yellow', 'fg': 'black'},
     \ 'DiffDelete':  {'bg': 'red', 'fg': 'white'},
     \ 'DiffText':  {'bg': 'blue', 'fg': 'white'},
-    \ 'SignifySignAdd': {'bg': 'green', 'fg': 'black'},
-    \ 'SignifySignChange': {'bg':'yellow', 'fg': 'darkgray'},
-    \ 'SignifySignDelete': {'bg': 'DarkRed'},
-    \ 'SignifySignDeleteFirstLine': {'bg': 'DarkRed'}
+    \ 'SignifySignAdd': {'fg': 'green'},
+    \ 'SignifySignChange': {'fg': 'yellow'},
+    \ 'SignifySignDelete': {'fg': 'DarkRed'},
+    \ 'SignifySignDeleteFirstLine': {'fg': 'DarkRed'},
+    \ 'ALEWarningLine': {'bg': 'none'},
+    \ 'ALEErrorLine': {'bg': 'none'},
+    \ 'ALEWarning': {'bg': 'DarkRed'},
+    \ 'ALEError': {'bg': 'DarkRed'}
 \ }
 
 for [group, value] in items(s:definition)
@@ -132,8 +136,3 @@ endfor
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
-"" ALE
-" hi ALEWarningLine ctermbg=darkgray
-" hi ALEErrorLine ctermbg=darkgray
-" hi ALEWarning ctermfg=white
-" hi ALEError   ctermfg=yellow
