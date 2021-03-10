@@ -43,6 +43,8 @@ augroup lexical
   autocmd FileType vim call EnableLexical(0)
   autocmd FileType javascript call EnableLexical(0)
   autocmd FileType php call EnableLexical(0)
+  autocmd FileType lua call EnableLexical(0)
+  autocmd FileType fish call EnableLexical(0)
 augroup END
 
 """""""""""""""""""""""""""""""""""""""
