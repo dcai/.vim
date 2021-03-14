@@ -144,6 +144,11 @@ function! CHANGE_CURR_DIR()
     let g:ale_fix_on_save = 0
   endif
 
+  if l:file =~ 'html'
+    " disable auto fix for html
+    let g:ale_fix_on_save = 0
+  endif
+
   " Install moodle coding style:
   "   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
   " Above command add moodle coding style to
