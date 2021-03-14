@@ -8,6 +8,7 @@ let s:TYPE = {
       \ 'list': type([])
       \ }
 let g:fzf_layout = { 'down': '~30%' }
+" export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
 let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -105,10 +106,9 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <c-l> :Buffers<cr>
 nnoremap <silent> <leader>bb :Buffers<cr>
 nnoremap <silent> <leader>ff :GFiles<cr>
-nnoremap <silent> <c-p> :GFiles<cr>
 nnoremap <silent> <leader>fr :History<CR>
 nnoremap <silent> <leader>sft :Filetypes<CR>
 nnoremap <silent> <leader>. :RgGitRoot<CR>
 nnoremap <silent> <leader>/ :RgInDir .<CR>
-nnoremap <silent> <leader>e :Commands<cr>
+nnoremap <silent> <c-p> :Commands<cr>
 nnoremap <silent> K :call RgSearchWordGit()<CR>
