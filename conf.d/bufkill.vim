@@ -1,6 +1,6 @@
 " BD is vim-bufkill plugin command
 if exists(':BD')
-  nnoremap <leader>bd :BD<cr>
+  nnoremap X :BD<cr>
 else
-  nnoremap <leader>bd :bd<cr>
+  nnoremap X :bd<cr>
 endif
