@@ -243,6 +243,9 @@ nnoremap T :Vexplore<cr>
 " open new file
 nnoremap gf :e <cfile><CR>
 
+map <c-j> <ESC>:bn<CR>
+map <c-k> <ESC>:bp<CR>
+
 " Press <Home> or <End> to the 1st and last
 " char of the line
 noremap  <expr> <Home> (col('.') == matchend(getline('.'), '^\s*')+1 ? '0' : '^')
