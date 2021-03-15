@@ -136,10 +136,9 @@ function! CHANGE_CURR_DIR()
   if isdirectory(l:dir)
     exec 'cd ' . l:dir
   endif
-  unlet l:dir
 
   let g:ale_fix_on_save = 1
-  if l:file =~ 'wow'
+  if l:dir =~ 'wow'
     " disable auto fix for woolworths projects
     let g:ale_fix_on_save = 0
   endif
@@ -155,16 +154,17 @@ function! CHANGE_CURR_DIR()
   "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
   " let s:php_coding_standard = 'moodle'
   " let s:php_coding_standard = 'WordPress-Core'
-  if l:file =~ 'moodle'
+  let l:php_coding_standard = 'PSR12'
+  if l:dir =~ 'moodle'
     let g:ale_fix_on_save = 0
     let l:php_coding_standard = 'moodle'
-  else
-    let l:php_coding_standard = 'PSR12'
   endif
   let g:ale_php_phpcs_standard = l:php_coding_standard
   let g:ale_php_phpcbf_standard = l:php_coding_standard
 
+  unlet l:php_coding_standard
   unlet l:file
+  unlet l:dir
 endfunction
 
 augroup onEnterBuffer
