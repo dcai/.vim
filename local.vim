@@ -144,7 +144,7 @@ function! CHANGE_CURR_DIR()
     let g:ale_fix_on_save = 0
   endif
 
-  if l:file =~ 'html'
+  if match(l:file, 'html\|twig\|jinja2\|') > -1
     " disable auto fix for html
     let g:ale_fix_on_save = 0
   endif
