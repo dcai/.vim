@@ -79,7 +79,7 @@ let s:definition =
     \ 'Special': {'fg': s:specialfg},
     \ 'Comment': {'fg': s:commentfg},
     \ 'Type': {'fg': s:datatypefg},
-    \ 'Operator': {'fg': s:operatorfg, 'bg': s:highlightbg},
+    \ 'Operator': {'fg': s:operatorfg},
     \ 'Statement': {'fg': s:statementfg},
     \ 'Repeat': {'fg': s:repeatfg, 'bg': s:highlightbg},
     \ 'Exception': {'fg': 'red', 'bg': s:highlightbg},
@@ -124,8 +124,8 @@ let s:definition =
     \ 'SignifySignDeleteFirstLine': {'fg': 'DarkRed'},
     \ 'ALEWarningLine': {'bg': 'none'},
     \ 'ALEErrorLine': {'bg': 'none'},
-    \ 'ALEWarning': {'bg': 'DarkRed'},
-    \ 'ALEError': {'bg': 'DarkRed'}
+    \ 'ALEWarning': {'fg': 'Red', 'cterm': 'underline'},
+    \ 'ALEError': {'fg': 'Red', 'cterm': 'underline'}
 \ }
 
 for [group, value] in items(s:definition)
