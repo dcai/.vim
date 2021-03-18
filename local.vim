@@ -129,7 +129,7 @@ endfunction
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 """""""""""""""""""""""""""""""""""""""
 " switch to current dir
-function! CHANGE_CURR_DIR()
+function! ChangeCurrentDirectory()
   let l:dir = expand('%:p:h')
   let l:file = expand('%:p')
 
@@ -170,7 +170,7 @@ endfunction
 augroup onEnterBuffer
   autocmd!
   autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-  autocmd BufEnter * call CHANGE_CURR_DIR()
+  autocmd BufEnter * call ChangeCurrentDirectory()
 augroup END
 " }}}
 
