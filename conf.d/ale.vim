@@ -36,6 +36,7 @@ let g:ale_fixers = {
   \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
+  \ 'javascriptreact': ['prettier'],
   \ 'json': ['prettier'],
   \ 'dokuwiki': ['pandoc'],
   \ 'markdown': ['pandoc'],
