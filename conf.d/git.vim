@@ -1,4 +1,4 @@
-command Greview      :Git! diff --staged
+command! Greview      :Git! diff --staged
 nnoremap <c-g>       :Git<CR> " git status
 nnoremap <leader>gr  :Greview<cr>
 nnoremap <leader>gw  :Gwrite<CR><CR>
