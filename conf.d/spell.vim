@@ -25,6 +25,9 @@ let g:lexical#spellfile = [s:spellfile,]
 let g:lexical#spelllang = ["en_us","en_au",]
 
 function! EnableLexical(v)
+  if !exists('g:loaded_lexical')
+    return
+  endif
   call lexical#init({'spell': a:v})
 endfunction
 
