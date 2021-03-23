@@ -133,7 +133,11 @@ function! InstallCoc(info)
   endif
 endfunction
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release',  'do': function('InstallCoc'), 'for': 'javascript' }
+Plug 'neoclide/coc.nvim',
+      \ { 'branch': 'release',
+      \   'do': function('InstallCoc'),
+      \   'for': ['php', 'python', 'javascript']
+      \ }
 
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
