@@ -135,8 +135,7 @@ endfunction
 
 Plug 'neoclide/coc.nvim',
       \ { 'branch': 'release',
-      \   'do': function('InstallCoc'),
-      \   'for': ['php', 'python', 'javascript']
+      \   'do': function('InstallCoc')
       \ }
 
 function! InstallAle(info)
