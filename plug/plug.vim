@@ -133,11 +133,6 @@ function! InstallCoc(info)
   endif
 endfunction
 
-Plug 'neoclide/coc.nvim',
-      \ { 'branch': 'release',
-      \   'do': function('InstallCoc')
-      \ }
-
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
     !npm install -g prettier eslint lua-fmt
@@ -148,6 +143,11 @@ function! InstallAle(info)
 endfunction
 
 if v:version > 800
+  Plug 'neoclide/coc.nvim',
+        \ { 'branch': 'release',
+        \   'do': function('InstallCoc')
+        \ }
+
   Plug 'dcai/ale', { 'do': function('InstallAle') }
   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
 else
