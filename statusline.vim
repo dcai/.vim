@@ -13,13 +13,20 @@ function! LinterStatus() abort
     \)
 endfunction
 
+function! FugitiveStatus() abort
+    if !exists(":Git")
+      return
+    endif
+    return fugitive#statusline()
+endfunction
+
 
 " status line {{{
 set statusline=%f                               " tail of the filename
 set statusline+=%m                              " modified flag
-" set statusline+=\ %{fugitive#statusline()}
-set statusline+=%=                              " left/right separator
+set statusline+=%{FugitiveStatus()}
 set statusline+=[%{LinterStatus()}]
+set statusline+=%=                              " left/right separator
 set statusline+=%y                              " filetype
 set statusline+=[
 set statusline+=%{strlen(&fenc)?&fenc:'none'}\| " file encoding
