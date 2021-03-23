@@ -142,11 +142,14 @@ function! InstallAle(info)
   endif
 endfunction
 
-if v:version > 800
+if has("patch-8.0.1453")
   Plug 'neoclide/coc.nvim',
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
         \ }
+endif
+
+if v:version > 800
 
   Plug 'dcai/ale', { 'do': function('InstallAle') }
   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
