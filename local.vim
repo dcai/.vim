@@ -87,7 +87,9 @@ function! s:mkdir_p(dirname)
 endfunction
 
 " https://stackoverflow.com/a/26898986/69938
-let g:netrw_home=s:mkdir_p($XDG_CACHE_HOME.'/vim')
+if !empty($XDG_CACHE_HOME)
+  let g:netrw_home=s:mkdir_p($XDG_CACHE_HOME.'/vim')
+endif
 let &backupdir=s:mkdir_p("~/.local/vim/backup")
 set undofile " enable persistent undo
 let &undodir=s:mkdir_p('~/.local/vim/undo')
