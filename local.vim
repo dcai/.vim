@@ -19,6 +19,12 @@ set nofoldenable
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
 set encoding=utf-8
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
 if has('multi_byte')
   if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
@@ -37,7 +43,6 @@ function! RestoreFileEncodings()
   unlet b:myfileencodingsbak
 endfunction
 " }}}
-
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
