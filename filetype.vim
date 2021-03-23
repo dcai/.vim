@@ -21,8 +21,8 @@ augroup end
 augroup filetypeGroup
   autocmd!
 
-  " if no filetype specified, set ft=markdown (alternative would be text)
-  autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+  " if no filetype specified, set ft=text
+  autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
   autocmd filetype help call HelpFileMode()
 
