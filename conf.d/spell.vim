@@ -50,21 +50,3 @@ augroup lexical
   autocmd FileType lua call EnableLexical(0)
   autocmd FileType fish call EnableLexical(0)
 augroup END
-
-"""""""""""""""""""""""""""""""""""""""
-""" fzf spell
-"""""""""""""""""""""""""""""""""""""""
-" https://coreyja.com/vim-spelling-suggestions-fzf/
-function! FzfSpellSink(word)
-  exe 'normal! "_ciw'.a:word
-endfunction
-
-function! FzfSpell()
-  let suggestions = spellsuggest(expand("<cword>"))
-  " google autosuggest
-  " let suggestions = systemlist('gg ' . expand("<cword>"))
-  return fzf#run(extend(
-        \ {'source': suggestions, 'sink': function("FzfSpellSink")},
-        \ s:fzf_base_options))
-endfunction
-nnoremap z= :call FzfSpell()<CR>
