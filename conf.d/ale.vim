@@ -13,6 +13,8 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 " let g:ale_open_list = 1
 " let g:ale_keep_list_window_open = 0
+let g:ale_php_cs_fixer_use_global = 1
+let g:ale_php_cs_fixer_options = '--config="$HOME/.php_cs"'
 
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '>'
@@ -20,7 +22,7 @@ let g:ale_set_loclist = 1
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'php': ['phpmd', 'phpcs'],
+  \ 'php': ['phpcs'],
   \ 'javascript': ['eslint'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
