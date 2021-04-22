@@ -49,6 +49,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
 
 set wildignore+=node_modules
 " http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
+set synmaxcol=300
 set tags=tags;
 set updatetime=100
 set viminfo='500
