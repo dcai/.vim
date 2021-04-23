@@ -12,15 +12,9 @@
 "       colourscheme, because elflord's colours will better highlight the break-points
 "       (Statements) in your code.
 "
-" Options:  php_sql_query = 1  for SQL syntax highlighting inside strings
-"           php_htmlInStrings = 1  for HTML syntax highlighting inside strings
-"           php_asp_tags = 1  for highlighting ASP-style short tags
+" Options:
 "           php_parent_error_close = 1  for highlighting parent error ] or )
 "           php_parent_error_open = 1  for skipping an php end tag, if there exists an open ( or [ without a closing one
-"           php_oldStyle = 1  for using old colorstyle
-"           php_noShortTags = 1  don't sync <? ?> as php
-"           php_folding = 1  for folding classes and functions
-"           php_folding = 2  for folding all { } regions
 "           php_sync_method = x
 "                             x=-1 to sync by search ( default )
 "                             x>0 to sync at least x lines backwards
@@ -63,27 +57,12 @@
 "
 "
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
+if exists("b:current_syntax")
   finish
 endif
 
 if !exists("main_syntax")
   let main_syntax = 'php'
-endif
-
-if version < 600
-  unlet! php_folding
-  if exists("php_sync_method") && !php_sync_method
-    let php_sync_method=-1
-  endif
-  so <sfile>:p:h/html.vim
-else
-  runtime! syntax/html.vim
-  unlet b:current_syntax
 endif
 
 " accept old options
@@ -100,23 +79,7 @@ if exists("php_parentError") && !exists("php_parent_error_open") && !exists("php
   let php_parent_error_open=1
 endif
 
-syn cluster htmlPreproc add=phpRegion,phpRegionAsp,phpRegionSc
-
-if version < 600
-  syn include @sqlTop <sfile>:p:h/sql.vim
-else
-  syn include @sqlTop syntax/sql.vim
-endif
-syn sync clear
-unlet b:current_syntax
-syn cluster sqlTop remove=sqlString,sqlComment
-if exists( "php_sql_query")
-  syn cluster phpAddStrings contains=@sqlTop
-endif
-
-if exists( "php_htmlInStrings")
-  syn cluster phpAddStrings add=@htmlTop
-endif
+syn cluster htmlPreproc add=phpRegion,phpRegionSc
 
 syn case match
 
@@ -131,14 +94,10 @@ syn keyword phpCoreConstant PHP_VERSION PHP_OS DEFAULT_INCLUDE_PATH PEAR_INSTALL
 
 syn case ignore
 
-syn keyword phpConstant  __LINE__ __FILE__ __FUNCTION__ __METHOD__ __CLASS__  contained
+syn keyword phpConstant  __LINE__ __DIR__ __FILE__ __FUNCTION__ __METHOD__ __CLASS__  contained
 
-
-" Function and Methods ripped from php_manual_de.tar.gz Jan 2003
-syn keyword phpMethods  name specified value create_attribute create_cdata_section create_comment create_element_ns create_element create_entity_reference create_processing_instruction create_text_node doctype document_element dump_file dump_mem get_element_by_id get_elements_by_tagname html_dump_mem xinclude entities internal_subset name notations public_id system_id get_attribute_node get_attribute get_elements_by_tagname has_attribute remove_attribute set_attribute tagname add_namespace append_child append_sibling attributes child_nodes clone_node dump_node first_child get_content has_attributes has_child_nodes insert_before is_blank_node last_child next_sibling node_name node_type node_value owner_document parent_node prefix previous_sibling remove_child replace_child replace_node set_content set_name set_namespace unlink_node data target process result_dump_file result_dump_mem contained
-syn keyword phpMethods  key langdepvalue value values checkin checkout children mimetype read content copy dbstat dcstat dstanchors dstofsrcanchors count reason find ftstat hwstat identify info insert insertanchor insertcollection insertdocument link lock move assign attreditable count insert remove title value object objectbyanchor parents description type remove replace setcommitedversion srcanchors srcsofdst unlock user userlist contained
-syn keyword phpMethods  getHeight getWidth addAction addShape setAction setdown setHit setOver setUp addColor move moveTo multColor remove Rotate rotateTo scale scaleTo setDepth setName setRatio skewX skewXTo skewY skewYTo moveTo rotateTo scaleTo skewXTo skewYTo getwidth addEntry getshape1 getshape2 add nextframe output remove save setbackground setdimension setframes setrate streammp3 addFill drawCurve drawCurveTo drawLine drawLineTo movePen movePenTo setLeftFill setLine setRightFill add nextframe remove setframes addString getWidth moveTo setColor setFont setHeight setSpacing addstring align setbounds setcolor setFont setHeight setindentation setLeftMargin setLineSpacing setMargins setname setrightMargin contained
-syn keyword phpMethods  attributes children get_attr get_nodes has_children has_siblings is_asp is_comment is_html is_jsp is_jste is_text is_xhtml is_xml next prev tidy_node contained
+syn keyword phpMethods  attributes children get_attr get_nodes has_children has_siblings is_comment is_html is_jsp is_jste is_text is_xhtml is_xml next prev tidy_node contained
+syn keyword phpFunctions in_array array_merge error_log contained
 
 " Conditional
 syn keyword phpConditional  declare else enddeclare endswitch elseif endif if switch  contained
@@ -159,7 +118,7 @@ syn keyword phpKeyword  var const contained
 syn keyword phpType bool[ean] int[eger] real double float string array object NULL  contained
 
 " Structure
-syn keyword phpStructure  extends implements instanceof parent self contained
+syn keyword phpStructure extends implements instanceof parent self contained
 
 " Operator
 syn match phpOperator "[-=+%^&|*!.~?:]" contained display
@@ -183,7 +142,7 @@ syn region  phpIdentifierComplexP matchgroup=phpParent start="\[" end="]" contai
 syn match phpMethodsVar "->\h\w*" contained contains=phpMethods,phpMemberSelector display
 
 " Include
-syn keyword phpInclude  include require include_once require_once contained
+syn keyword phpInclude  use include require include_once require_once contained
 
 " Peter Hodge - added 'clone' keyword
 " Define
@@ -219,15 +178,9 @@ if exists("php_parent_error_open")
 else
   syn region  phpComment  start="/\*" end="\*/" contained contains=phpTodo extend
 endif
-if version >= 600
-  syn match phpComment  "#.\{-}\(?>\|$\)\@="  contained contains=phpTodo
-  syn match phpComment  "//.\{-}\(?>\|$\)\@=" contained contains=phpTodo
-else
-  syn match phpComment  "#.\{-}$" contained contains=phpTodo
-  syn match phpComment  "#.\{-}?>"me=e-2  contained contains=phpTodo
-  syn match phpComment  "//.\{-}$"  contained contains=phpTodo
-  syn match phpComment  "//.\{-}?>"me=e-2 contained contains=phpTodo
-endif
+
+syn match phpComment  "#.\{-}\(?>\|$\)\@="  contained contains=phpTodo
+syn match phpComment  "//.\{-}\(?>\|$\)\@=" contained contains=phpTodo
 
 " String
 if exists("php_parent_error_open")
@@ -245,8 +198,8 @@ if version >= 600
   syn case match
   syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\I\i*\)$" end="^\z1\(;\=$\)\@=" contained contains=phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
 " including HTML,JavaScript,SQL even if not enabled via options
-  syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(html\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
-  syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=@sqlTop,phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
+  syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(html\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
+  syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(sql\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@=" contained contains=phpIdentifier,phpIdentifierSimply,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
   syn region  phpHereDoc  matchgroup=Delimiter start="\(<<<\)\@<=\z(\(\I\i*\)\=\(javascript\)\c\(\i*\)\)$" end="^\z1\(;\=$\)\@="  contained contains=@htmlJavascript,phpIdentifierSimply,phpIdentifier,phpIdentifierComplex,phpSpecialChar,phpMethodsVar keepend extend
   syn case ignore
 endif
@@ -270,67 +223,17 @@ syn cluster phpClTop  contains=@phpClFunction,phpFoldFunction,phpFoldClass,phpFo
 
 " Php Region
 if exists("php_parent_error_open")
-  if exists("php_noShortTags")
-    syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop
-  else
-    syn region   phpRegion  matchgroup=Delimiter start="<?\(php\)\=" end="?>" contains=@phpClTop
-  endif
+  syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop
   syn region   phpRegionSc  matchgroup=Delimiter start=+<script language="php">+ end=+</script>+  contains=@phpClTop
-  if exists("php_asp_tags")
-    syn region   phpRegionAsp matchgroup=Delimiter start="<%\(=\)\=" end="%>" contains=@phpClTop
-  endif
 else
-  if exists("php_noShortTags")
-    syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop keepend
-  else
-    syn region   phpRegion  matchgroup=Delimiter start="<?\(php\)\=" end="?>" contains=@phpClTop keepend
-  endif
+  syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop keepend
   syn region   phpRegionSc  matchgroup=Delimiter start=+<script language="php">+ end=+</script>+  contains=@phpClTop keepend
-  if exists("php_asp_tags")
-    syn region   phpRegionAsp matchgroup=Delimiter start="<%\(=\)\=" end="%>" contains=@phpClTop keepend
-  endif
 endif
 
-" Fold
-if exists("php_folding") && php_folding==1
-" match one line constructs here and skip them at folding
-  syn keyword phpSCKeyword  abstract final private protected public static  contained
-  syn keyword phpFCKeyword  function  contained
-  syn keyword phpStorageClass global  contained
-  syn match phpDefine "\(\s\|^\)\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function\(\s\+.*[;}]\)\@="  contained contains=phpSCKeyword
-  syn match phpStructure  "\(\s\|^\)\(abstract\s\+\|final\s\+\)*class\(\s\+.*}\)\@="  contained
-  syn match phpStructure  "\(\s\|^\)interface\(\s\+.*}\)\@="  contained
-  syn match phpException  "\(\s\|^\)try\(\s\+.*}\)\@="  contained
-  syn match phpException  "\(\s\|^\)catch\(\s\+.*}\)\@="  contained
-
-  set foldmethod=syntax
-  syn region  phpFoldHtmlInside matchgroup=Delimiter start="?>" end="<?\(php\)\=" contained transparent contains=@htmlTop
-  syn region  phpFoldFunction matchgroup=Storageclass start="^\z(\s*\)\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function\s\([^};]*$\)\@="rs=e-9 matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldHtmlInside,phpFCKeyword contained transparent fold extend
-  syn region  phpFoldFunction matchgroup=Define start="^function\s\([^};]*$\)\@=" matchgroup=Delimiter end="^}" contains=@phpClFunction,phpFoldHtmlInside contained transparent fold extend
-  syn region  phpFoldClass  matchgroup=Structure start="^\z(\s*\)\(abstract\s\+\|final\s\+\)*class\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction,phpSCKeyword contained transparent fold extend
-  syn region  phpFoldInterface  matchgroup=Structure start="^\z(\s*\)interface\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-  syn region  phpFoldCatch  matchgroup=Exception start="^\z(\s*\)catch\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-  syn region  phpFoldTry  matchgroup=Exception start="^\z(\s*\)try\s\+\([^}]*$\)\@=" matchgroup=Delimiter end="^\z1}" contains=@phpClFunction,phpFoldFunction contained transparent fold extend
-elseif exists("php_folding") && php_folding==2
-  syn keyword phpDefine function  contained
-  syn keyword phpStructure  abstract class interface  contained
-  syn keyword phpException  catch throw try contained
-  syn keyword phpStorageClass final global private protected public static  contained
-
-  set foldmethod=syntax
-  syn region  phpFoldHtmlInside matchgroup=Delimiter start="?>" end="<?\(php\)\=" contained transparent contains=@htmlTop
-  syn region  phpParent matchgroup=Delimiter start="{" end="}"  contained contains=@phpClFunction,phpFoldHtmlInside transparent fold
-else
-  syn keyword phpDefine function  contained
-  syn keyword phpStructure  abstract class interface  contained
-  syn keyword phpException  catch throw try contained
-  syn keyword phpStorageClass final global private protected public static  contained
-endif
-
-" ================================================================
-" Peter Hodge - June 9, 2006
-" Some of these changes (highlighting isset/unset/echo etc) are not so
-" critical, but they make things more colourful. :-)
+syn keyword phpDefine function  contained
+syn keyword phpStructure  abstract class interface  contained
+syn keyword phpException  catch throw try contained
+syn keyword phpStorageClass final global private protected public static  contained
 
 " corrected highlighting for an escaped '\$' inside a double-quoted string
 syn match phpSpecialChar  "\\\$"  contained display
@@ -350,7 +253,7 @@ syntax keyword phpStructure list contained
 syntax keyword phpConditional switch contained
 syntax keyword phpStatement die contained
 
-" Highlighting for PHP5's user-definable magic class methods
+" Highlighting for PHP's user-definable magic class methods
 syntax keyword phpSpecialFunction containedin=ALLBUT,phpComment,phpStringDouble,phpStringSingle,phpIdentifier
   \ __construct __destruct __call __toString __sleep __wakeup __set __get __unset __isset __clone __set_state
 " Highlighting for __autoload slightly different from line above
@@ -358,8 +261,7 @@ syntax keyword phpSpecialFunction containedin=ALLBUT,phpComment,phpStringDouble,
   \ __autoload
 highlight link phpSpecialFunction phpOperator
 
-" Highlighting for PHP5's built-in classes
-" - built-in classes harvested from get_declared_classes() in 5.1.4
+" Highlighting for PHP's built-in classes
 syntax keyword phpClasses containedin=ALLBUT,phpComment,phpStringDouble,phpStringSingle,phpIdentifier,phpMethodsVar
   \ stdClass __PHP_Incomplete_Class php_user_filter Directory ArrayObject
   \ Exception ErrorException LogicException BadFunctionCallException BadMethodCallException DomainException
@@ -371,18 +273,10 @@ syntax keyword phpClasses containedin=ALLBUT,phpComment,phpStringDouble,phpStrin
   \ PDO PDOException PDOStatement PDORow
   \ Reflection ReflectionFunction ReflectionParameter ReflectionMethod ReflectionClass
   \ ReflectionObject ReflectionProperty ReflectionExtension ReflectionException
-  \ SplFileInfo SplFileObject SplTempFileObject SplObjectStorage
-  \ XMLWriter LibXMLError XMLReader SimpleXMLElement SimpleXMLIterator
   \ DOMException DOMStringList DOMNameList DOMDomError DOMErrorHandler
-  \ DOMImplementation DOMImplementationList DOMImplementationSource
-  \ DOMNode DOMNameSpaceNode DOMDocumentFragment DOMDocument DOMNodeList DOMNamedNodeMap
-  \ DOMCharacterData DOMAttr DOMElement DOMText DOMComment DOMTypeinfo DOMUserDataHandler
-  \ DOMLocator DOMConfiguration DOMCdataSection DOMDocumentType DOMNotation DOMEntity
-  \ DOMEntityReference DOMProcessingInstruction DOMStringExtend DOMXPath
 highlight link phpClasses phpFunctions
 
-" Highlighting for PHP5's built-in interfaces
-" - built-in classes harvested from get_declared_interfaces() in 5.1.4
+" Highlighting for PHP's built-in interfaces
 syntax keyword phpInterfaces containedin=ALLBUT,phpComment,phpStringDouble,phpStringSingle,phpIdentifier,phpMethodsVar
   \ Iterator IteratorAggregate RecursiveIterator OuterIterator SeekableIterator
   \ Traversable ArrayAccess Serializable Countable SplObserver SplSubject Reflector
@@ -402,13 +296,8 @@ endif
 if php_special_functions
     " Highlighting for PHP built-in functions which exhibit special behaviours
     " - isset()/unset()/empty() are not real functions.
-    " - compact()/extract() directly manipulate variables in the local scope where
-    "   regular functions would not be able to.
-    " - eval() is the token 'make_your_code_twice_as_complex()' function for PHP.
-    " - user_error()/trigger_error() can be overloaded by set_error_handler and also
-    "   have the capacity to terminate your script when type is E_USER_ERROR.
     syntax keyword phpSpecialFunction containedin=ALLBUT,phpComment,phpStringDouble,phpStringSingle
-  \ user_error trigger_error isset unset eval extract compact empty
+  \ user_error trigger_error isset unset eval extract compact empty error_log
 endif
 
 if php_alt_assignByReference
@@ -433,15 +322,8 @@ endif
 
 " Sync
 if php_sync_method==-1
-  if exists("php_noShortTags")
-    syn sync match phpRegionSync grouphere phpRegion "^\s*<?php\s*$"
-  else
-    syn sync match phpRegionSync grouphere phpRegion "^\s*<?\(php\)\=\s*$"
-  endif
+  syn sync match phpRegionSync grouphere phpRegion "^\s*<?php\s*$"
   syn sync match phpRegionSync grouphere phpRegionSc +^\s*<script language="php">\s*$+
-  if exists("php_asp_tags")
-    syn sync match phpRegionSync grouphere phpRegionAsp "^\s*<%\(=\)\=\s*$"
-  endif
   syn sync match phpRegionSync grouphere NONE "^\s*?>\s*$"
   syn sync match phpRegionSync grouphere NONE "^\s*%>\s*$"
   syn sync match phpRegionSync grouphere phpRegion "function\s.*(.*\$"
@@ -452,69 +334,44 @@ else
   exec "syn sync fromstart"
 endif
 
-" Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_php_syn_inits")
-  if version < 508
-    let did_php_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-
-  HiLink   phpConstant  Constant
-  HiLink   phpCoreConstant  Constant
-  HiLink   phpComment Comment
-  HiLink   phpException Exception
-  HiLink   phpBoolean Boolean
-  HiLink   phpStorageClass  StorageClass
-  HiLink   phpSCKeyword StorageClass
-  HiLink   phpFCKeyword Define
-  HiLink   phpStructure Structure
-  HiLink   phpStringSingle  String
-  HiLink   phpStringDouble  String
-  HiLink   phpBacktick  String
-  HiLink   phpNumber  Number
-  HiLink   phpFloat Float
-  HiLink   phpMethods Function
-  HiLink   phpFunctions Function
-  HiLink   phpBaselib Function
-  HiLink   phpRepeat  Repeat
-  HiLink   phpConditional Conditional
-  HiLink   phpLabel Label
-  HiLink   phpStatement Statement
-  HiLink   phpKeyword Statement
-  HiLink   phpType  Type
-  HiLink   phpInclude Include
-  HiLink   phpDefine  Define
-  HiLink   phpSpecialChar SpecialChar
-  HiLink   phpParent  Delimiter
-  HiLink   phpIdentifierConst Delimiter
-  HiLink   phpParentError Error
-  HiLink   phpOctalError  Error
-  HiLink   phpTodo  Todo
-  HiLink   phpMemberSelector  Structure
-  if exists("php_oldStyle")
-  hi  phpIntVar guifg=Red ctermfg=DarkRed
-  hi  phpEnvVar guifg=Red ctermfg=DarkRed
-  hi  phpOperator guifg=SeaGreen ctermfg=DarkGreen
-  hi  phpVarSelector guifg=SeaGreen ctermfg=DarkGreen
-  hi  phpRelation guifg=SeaGreen ctermfg=DarkGreen
-  hi  phpIdentifier guifg=DarkGray ctermfg=Brown
-  hi  phpIdentifierSimply guifg=DarkGray ctermfg=Brown
-  else
-  HiLink  phpIntVar Identifier
-  HiLink  phpEnvVar Identifier
-  HiLink  phpOperator Operator
-  HiLink  phpVarSelector  Operator
-  HiLink  phpRelation Operator
-  HiLink  phpIdentifier Identifier
-  HiLink  phpIdentifierSimply Identifier
-  endif
-
-  delcommand HiLink
-endif
+hi def link phpConstant  Constant
+hi def link phpCoreConstant  Constant
+hi def link phpComment Comment
+hi def link phpException Exception
+hi def link phpBoolean Boolean
+hi def link phpStorageClass StorageClass
+hi def link phpSCKeyword StorageClass
+hi def link phpFCKeyword Define
+hi def link phpStructure Structure
+hi def link phpStringSingle String
+hi def link phpStringDouble String
+hi def link phpBacktick String
+hi def link phpNumber  Number
+hi def link phpFloat Number
+hi def link phpMethods Function
+hi def link phpFunctions Function
+hi def link phpRepeat  Repeat
+hi def link phpConditional Conditional
+hi def link phpLabel Label
+hi def link phpStatement Statement
+hi def link phpKeyword Statement
+hi def link phpType  Type
+hi def link phpInclude Include
+hi def link phpDefine  Define
+hi def link phpSpecialChar SpecialChar
+hi def link phpParent  Delimiter
+hi def link phpIdentifierConst Delimiter
+hi def link phpParentError Error
+hi def link phpOctalError  Error
+hi def link phpTodo  Todo
+hi def link phpMemberSelector  Structure
+hi def link phpIntVar Identifier
+hi def link phpEnvVar Identifier
+hi def link phpOperator Operator
+hi def link phpVarSelector  Operator
+hi def link phpRelation Operator
+hi def link phpIdentifier Identifier
+hi def link phpIdentifierSimply Identifier
 
 let b:current_syntax = "php"
 
