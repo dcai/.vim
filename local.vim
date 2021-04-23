@@ -269,13 +269,13 @@ inoremap <End>  <C-o><End>
 
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-nnoremap <Down> gj
-nnoremap <Up> gk
+nnoremap <silent> <Down> gj
+nnoremap <silent> <Up> gk
 
-vnoremap j gj
-vnoremap k gk
-vnoremap <Down> gj
-vnoremap <Up> gk
+vnoremap <silent> j gj
+vnoremap <silent> k gk
+vnoremap <silent> <Down> gj
+vnoremap <silent> <Up> gk
 " Press Ctrl-O switches to normal mode for one command
 " http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 inoremap <Down> <C-o>gj
