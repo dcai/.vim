@@ -62,8 +62,8 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 
 " utils
 " =====
-Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-let g:colorizer_auto_filetype='vim,css'
+" Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
+" let g:colorizer_auto_filetype='vim,css'
 Plug 'diepm/vim-rest-console'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
