@@ -156,6 +156,11 @@ function! ChangeCurrentDirectory()
     let g:ale_fix_on_save = 0
   endif
 
+  if match(l:file, 'php\|phps') > -1
+    " disable auto fix for php
+    let g:ale_fix_on_save = 0
+  endif
+
   " Install moodle coding style:
   "   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
   " Above command add moodle coding style to
@@ -164,7 +169,7 @@ function! ChangeCurrentDirectory()
   " let s:php_coding_standard = 'WordPress-Core'
   let l:php_coding_standard = 'PSR12'
   if l:dir =~ 'moodle'
-    let g:ale_fix_on_save = 0
+    " let g:ale_fix_on_save = 0
     let l:php_coding_standard = 'moodle'
   endif
   let g:ale_php_phpcs_standard = l:php_coding_standard
