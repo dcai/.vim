@@ -19,6 +19,8 @@ let g:ale_php_cs_fixer_options = ''
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '>'
 let g:ale_set_loclist = 1
+let g:ale_pandoc_use_gfm = 1
+let g:ale_pandoc_options = '--columns=120'
 
 " Ale linters settings
 let g:ale_linters = {
@@ -49,6 +51,3 @@ let g:ale_fixers = {
   \ 'typescript': ['prettier'],
   \ 'yaml': ['prettier'],
 \}
-
-let g:ale_pandoc_options = '--columns=120'
-let g:ale_pandoc_use_gfm = 1
