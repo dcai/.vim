@@ -43,7 +43,7 @@ let g:ale_fixers = {
   \ 'javascriptreact': ['prettier'],
   \ 'json': ['prettier'],
   \ 'dokuwiki': ['pandoc'],
-  \ 'markdown': ['pandoc'],
+  \ 'markdown': ['prettier'],
   \ 'less': ['prettier'],
   \ 'php': ['php_cs_fixer'],
   \ 'python': ['black'],
