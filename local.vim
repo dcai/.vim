@@ -169,7 +169,7 @@ function! ChangeCurrentDirectory()
   " let s:php_coding_standard = 'WordPress-Core'
   let l:php_coding_standard = 'PSR12'
   if l:dir =~ 'moodle'
-    " let g:ale_fix_on_save = 0
+    let g:ale_fix_on_save = 0
     let l:php_coding_standard = 'moodle'
   endif
   let g:ale_php_phpcs_standard = l:php_coding_standard
