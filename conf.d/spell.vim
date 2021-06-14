@@ -36,18 +36,12 @@ command! -nargs=0 DisableSpell call EnableLexical(0)
 
 augroup lexical
   autocmd!
+  autocmd FileType * call EnableLexical(0)
   autocmd FileType markdown,mkd call EnableLexical(1)
   autocmd FileType textile call EnableLexical(1)
   autocmd FileType text call EnableLexical(1)
   autocmd FileType org call EnableLexical(1)
   autocmd FileType gitcommit call EnableLexical(1)
   autocmd FileType vimwiki call EnableLexical(1)
-
-  autocmd FileType vim call EnableLexical(0)
-  autocmd FileType javascript call EnableLexical(0)
-  autocmd FileType python call EnableLexical(0)
-  autocmd FileType php call EnableLexical(0)
-  autocmd FileType json call EnableLexical(0)
-  autocmd FileType lua call EnableLexical(0)
-  autocmd FileType fish call EnableLexical(0)
+  autocmd FileType rst call EnableLexical(1)
 augroup END
