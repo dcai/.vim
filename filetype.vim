@@ -56,6 +56,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile .jshintrc set filetype=json
   autocmd BufRead,BufNewFile .tern-config set filetype=json
   autocmd BufRead,BufNewFile tsconfig.json set filetype=json5
+  autocmd BufRead,BufNewFile */mdk/config-dist.json set filetype=json5
 
   " graphql
   autocmd BufNewFile,BufRead *.prisma setfiletype graphql
