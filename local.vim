@@ -156,6 +156,11 @@ function! ChangeCurrentDirectory()
     let g:ale_fix_on_save = 0
   endif
 
+  if match(l:file, 'mdk') > -1
+    " disable auto fix for html
+    let g:ale_fix_on_save = 0
+  endif
+
   if match(l:file, 'php\|phps') > -1
     " disable auto fix for php
     let g:ale_fix_on_save = 0
