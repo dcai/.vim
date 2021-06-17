@@ -7,7 +7,12 @@ let s:TYPE = {
       \ 'string': type(''),
       \ 'list': type([])
       \ }
-let g:fzf_layout = { 'down': '~30%' }
+" let g:fzf_layout = { 'down': '~30%' }
+let g:fzf_layout = { 'window':
+    \   {
+    \     'width': 1.0, 'height': 0.6, 'yoffset': 1.0, 'border': 'top'
+    \   }
+    \ }
 " export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
 let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
 " [Buffers] Jump to the existing window if possible
