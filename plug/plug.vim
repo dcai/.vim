@@ -96,7 +96,8 @@ Plug 'evidens/vim-twig'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
-Plug 'vim-scripts/nginx.vim'
+" Plug 'vim-scripts/nginx.vim'
+Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
 Plug 'niftylettuce/vim-jinja'
 Plug 'mustache/vim-mustache-handlebars'
