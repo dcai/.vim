@@ -80,6 +80,7 @@ Plug 'haya14busa/vim-textobj-function-syntax'
 " javascript
 " ==========
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'moll/vim-node'
 Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
