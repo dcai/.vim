@@ -107,6 +107,7 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
+Plug 'posva/vim-vue'
 
 """""" 16 color schemes
 """""" ================
