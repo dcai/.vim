@@ -52,4 +52,5 @@ let g:ale_fixers = {
   \ 'sql': ['pgformatter'],
   \ 'typescript': ['prettier'],
   \ 'yaml': ['prettier'],
+  \ 'vue': ['prettier'],
 \}
