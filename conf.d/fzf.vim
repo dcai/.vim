@@ -1,20 +1,12 @@
 """""""""""""""""""""""""""""""""""""""
 """ FZF
 """""""""""""""""""""""""""""""""""""""
-let s:TYPE = {
-      \ 'dict': type({}),
-      \ 'funcref': type(function('call')),
-      \ 'string': type(''),
-      \ 'list': type([])
-      \ }
-" let g:fzf_layout = { 'down': '~30%' }
-let g:fzf_layout = { 'window':
-    \   {
-    \     'width': 1.0, 'height': 0.6, 'yoffset': 1.0, 'border': 'top'
-    \   }
-    \ }
-" export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
-let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
+let g:fzf_command_prefix = 'Fzf'
+" Preview window on the upper side of the window with 40% height,
+" Empty value to disable preview window altogether
+" let g:fzf_preview_window = []
+" hidden by default, ctrl-/ to toggle
+let g:fzf_preview_window = ['right:40%:hidden', 'ctrl-/']
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " Customize fzf colors to match your color scheme
@@ -39,6 +31,15 @@ let g:fzf_colors =
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/fzf-history'
+
+" let g:fzf_layout = { 'down': '~30%' }
+let g:fzf_layout = {
+    \   'window': {
+    \     'width': 1.0, 'height': 0.6, 'yoffset': 1.0, 'border': 'top'
+    \   }
+    \ }
+
+let s:fzf_base_options = extend({'options': ''}, g:fzf_layout)
 
 function! s:extend(base, extra)
   let base = copy(a:base)
@@ -126,10 +127,10 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-nnoremap <silent> <c-l> :Buffers<cr>
-nnoremap <silent> <c-p> :GFiles<cr>
-nnoremap <silent> <leader>fr :History<CR>
+nnoremap <silent> <c-l> :FzfBuffers<cr>
+nnoremap <silent> <c-p> :FzfGFiles<cr>
+nnoremap <silent> <leader>fr :FzfHistory<CR>
 nnoremap <silent> <leader>. :RgGitRoot<CR>
-nnoremap <silent> <leader>\ :Commands<cr>
+nnoremap <silent> <leader>\ :FzfCommands<cr>
 nnoremap <silent> <leader>/ :RgInDir .<CR>
 nnoremap <silent> K :call RgSearchWordGit()<CR>
