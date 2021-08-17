@@ -51,9 +51,9 @@ function! s:hi(group, value)
   exe l:cmd
 endfunction
 
-let s:active = {'fg': 'white', 'bg': 'darkblue', 'cterm': 'none'}
+let s:active = {'fg': 'darkgrey', 'bg': 'green', 'cterm': 'none'}
 let s:inactive = {'fg': 'white', 'bg': 'darkgrey', 'cterm': 'none'}
-let s:insertmode = {'fg': 'white', 'bg': 'darkgreen', 'cterm': 'none'}
+let s:insertmode = {'fg': 'white', 'bg': 'darkred', 'cterm': 'none'}
 
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
