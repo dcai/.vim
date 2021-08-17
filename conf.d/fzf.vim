@@ -128,8 +128,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 nnoremap <silent> <c-l> :Buffers<cr>
 nnoremap <silent> <c-p> :GFiles<cr>
-nnoremap <silent> <c-\> :Commands<cr>
 nnoremap <silent> <leader>fr :History<CR>
 nnoremap <silent> <leader>. :RgGitRoot<CR>
+nnoremap <silent> <leader>\ :Commands<cr>
 nnoremap <silent> <leader>/ :RgInDir .<CR>
 nnoremap <silent> K :call RgSearchWordGit()<CR>
