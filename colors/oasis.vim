@@ -112,7 +112,8 @@ let s:definition =
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': 'darkblue', 'cterm': 'bold'},
     \ 'Normal':                     {'bg': s:bgcolor, 'fg': s:fgcolor},
-    \ 'NormalFloat':                {'bg': s:yellow},
+    \ 'NormalFloat':                {'bg': 'white'},
+    \ 'Pmenu':                      {'bg': 'yellow', 'fg': 'black'},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
     \ 'PreProc':                    {'fg': 'LightCyan'},
@@ -145,10 +146,10 @@ let s:definition =
     \ 'jsObjectKey':                {'fg': 'lightgreen', 'bg': s:highlightbg},
     \ 'ALEError':                   {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
     \ 'ALEWarning':                 {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
-    \ 'CocErrorFloat':              {'bg': s:white, 'fg': s:red},
-    \ 'CocWarningFloat':            {'bg': s:white, 'fg': s:yellow},
-    \ 'CocInfoFloat':               {'bg': s:white, 'fg': s:blue},
-    \ 'CocHintFloat':               {'bg': s:white, 'fg': s:green},
+    \ 'CocErrorFloat':              {'fg': s:red},
+    \ 'CocWarningFloat':            {'fg': s:red},
+    \ 'CocInfoFloat':               {'fg': s:blue},
+    \ 'CocHintFloat':               {'fg': 'black'},
 \ }
 
 for [group, value] in items(s:definition)
