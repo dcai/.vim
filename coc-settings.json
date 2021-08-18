@@ -1,5 +1,5 @@
 {
-  "diagnostic.displayByAle": true,
+  "//diagnostic.displayByAle": true,
   "//intelephense.licenceKey": "your licence key",
   "javascript.validate.enable": false,
   "typescript.validate.enable": false,
