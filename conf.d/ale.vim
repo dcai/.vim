@@ -1,7 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
-nnoremap <c-\> :ALEFix<CR>
 " let g:ale_completion_enabled = 1
 let g:ale_disable_lsp = 0
 let g:ale_set_highlights = 1
@@ -16,15 +15,15 @@ let g:ale_set_quickfix = 1
 let g:ale_php_cs_fixer_use_global = 1
 let g:ale_php_cs_fixer_options = ''
 
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = '>'
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
 let g:ale_set_loclist = 1
 let g:ale_pandoc_use_gfm = 1
 let g:ale_pandoc_options = '--columns=120'
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'php': ['phpcs'],
+  \ 'php': [],
   \ 'javascript': ['eslint'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],

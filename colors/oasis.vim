@@ -84,10 +84,6 @@ endfunction
 
 let s:definition =
 \ {
-    \ 'ALEError':                   {'fg': s:red, 'cterm': 'underline'},
-    \ 'ALEErrorLine':               {'bg': s:none},
-    \ 'ALEWarning':                 {'fg': s:red, 'cterm': 'underline'},
-    \ 'ALEWarningLine':             {'bg': s:none},
     \ 'Boolean':                    {'fg': s:valuefg},
     \ 'ColorColumn':                {'bg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
@@ -116,6 +112,7 @@ let s:definition =
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': 'darkblue', 'cterm': 'bold'},
     \ 'Normal':                     {'bg': s:bgcolor, 'fg': s:fgcolor},
+    \ 'NormalFloat':                {'bg': s:yellow},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
     \ 'PreProc':                    {'fg': 'LightCyan'},
@@ -145,7 +142,13 @@ let s:definition =
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
     \ 'WarningMsg':                 {'fg': 'brown'},
     \ 'jsFuncArgs':                 {'fg': s:blue},
-    \ 'jsObjectKey':                {'fg': 'lightgreen', 'bg': s:highlightbg}
+    \ 'jsObjectKey':                {'fg': 'lightgreen', 'bg': s:highlightbg},
+    \ 'ALEError':                   {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
+    \ 'ALEWarning':                 {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
+    \ 'CocErrorFloat':              {'bg': s:white, 'fg': s:red},
+    \ 'CocWarningFloat':            {'bg': s:white, 'fg': s:yellow},
+    \ 'CocInfoFloat':               {'bg': s:white, 'fg': s:blue},
+    \ 'CocHintFloat':               {'bg': s:white, 'fg': s:green},
 \ }
 
 for [group, value] in items(s:definition)
