@@ -1,5 +1,17 @@
 let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls']
 
+" coc use system node instead of node from asdf or nvm
+function! s:FindNodePath()
+  let l:paths = ['/usr/local/bin/node', '/usr/bin/node']
+  for p in l:paths
+    if executable(p)
+      return p
+    endif
+  endfor
+endfunction
+
+let g:coc_node_path = s:FindNodePath()
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
