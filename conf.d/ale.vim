@@ -28,7 +28,7 @@ let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint'],
-  \ 'vim': ['ale_custom_linting_rules', 'vint'],
+  \ 'vim': ['vimls'],
 \}
 
 let g:ale_fixers = {
