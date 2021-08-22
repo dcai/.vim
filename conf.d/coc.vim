@@ -1,4 +1,4 @@
-let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls', 'coc-vimlsp']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls', 'coc-vimlsp', 'coc-snippets']
 
 " coc use system node instead of node from asdf or nvm
 function! s:FindNodePath()
@@ -137,20 +137,16 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>es :CocCommand snippets.editSnippets<CR>
 
 " Use <C-\> for trigger snippet expand.
-" imap <C-\> <Plug>(coc-snippets-expand)
-
+imap <C-\> <Plug>(coc-snippets-expand)
 imap <c-x><c-s> <esc>:CocList snippets<CR>
 
 " Use <C-j> for select text for visual placeholder of snippet.
 " vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-\> <Plug>(coc-snippets-expand-jump)
-
 let g:coc_snippet_next = '<tab>'
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'

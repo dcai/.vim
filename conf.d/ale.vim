@@ -53,3 +53,5 @@ let g:ale_fixers = {
   \ 'yaml': ['prettier'],
   \ 'vue': ['prettier'],
 \}
+
+nnoremap <silent> <leader>= :ALEFix<cr>
