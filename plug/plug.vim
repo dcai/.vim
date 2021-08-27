@@ -108,6 +108,7 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 Plug 'posva/vim-vue'
+Plug 'kongo2002/fsharp-vim'
 
 """""" 16 color schemes
 """""" ================
