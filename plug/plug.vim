@@ -80,11 +80,11 @@ Plug 'haya14busa/vim-textobj-function-syntax'
 " javascript
 " ==========
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'moll/vim-node'
+Plug 'zoubin/vim-gotofile'
 Plug 'jparise/vim-graphql'
 Plug 'GutenYe/json5.vim'
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 
 " Python
 " ======
