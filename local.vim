@@ -150,6 +150,10 @@ function! ChangeCurrentDirectory()
     " disable auto fix for woolworths projects
     let g:ale_fix_on_save = 0
   endif
+  if l:dir =~ 'iag'
+    " disable auto fix for iag projects
+    let g:ale_fix_on_save = 0
+  endif
 
   if match(l:file, 'html\|twig\|jinja2') > -1
     " disable auto fix for html
