@@ -26,6 +26,8 @@ augroup filetypeGroup
 
   autocmd filetype help call HelpFileMode()
 
+  autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
+
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
 
@@ -37,6 +39,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
   autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
   autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
+  autocmd BufRead,BufNewFile .env* set filetype=dosini
 
   " php-fpm config
   autocmd BufRead,BufNewFile php-fpm.conf set filetype=dosini
