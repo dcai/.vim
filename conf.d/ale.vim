@@ -27,7 +27,7 @@ let g:ale_linters = {
   \ 'javascript': ['eslint'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
-  \ 'typescript': ['eslint'],
+  \ 'typescript': ['eslint', 'tslint'],
   \ 'vim': ['vimls'],
 \}
 
@@ -50,6 +50,7 @@ let g:ale_fixers = {
   \ 'sh': ['shfmt'],
   \ 'sql': ['pgformatter'],
   \ 'typescript': ['prettier'],
+  \ 'typescriptreact': ['prettier'],
   \ 'yaml': ['prettier'],
   \ 'vue': ['prettier'],
 \}
