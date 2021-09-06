@@ -2,7 +2,7 @@ let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls', 'coc-vimlsp', 'coc-s
 
 " coc use system node instead of node from asdf or nvm
 function! s:FindNodePath()
-  let l:paths = ['/usr/local/bin/node', '/usr/bin/node']
+  let l:paths = ['/usr/local/bin/node', '/usr/bin/node', '/opt/homebrew/bin/node']
   for p in l:paths
     if executable(p)
       return p
