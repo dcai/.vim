@@ -15,6 +15,9 @@ let g:ale_set_quickfix = 1
 let g:ale_php_cs_fixer_use_global = 1
 let g:ale_php_cs_fixer_options = ''
 
+" javascript
+let g:ale_javascript_eslint_suppress_missing_config = 1
+
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_set_loclist = 1
