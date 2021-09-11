@@ -28,6 +28,7 @@ let g:ale_pandoc_options = '--columns=120'
 let g:ale_linters = {
   \ 'php': [],
   \ 'javascript': ['eslint'],
+  \ 'json': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint', 'tslint'],
