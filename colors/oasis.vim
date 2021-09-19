@@ -4,7 +4,6 @@
 """"""""""""""""""""""""""""""""""""""""""""
 
 let g:colors_name='oasis'
-set background=dark
 
 if exists("syntax_on")
   syntax reset
@@ -37,30 +36,49 @@ endif
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:bgcolor       = "none"
-let s:fgcolor       = "yellow"
+let s:is_dark = (&background == 'dark')
+if s:is_dark
+  set background=dark
+  let s:bgcolor       = "none"
+  let s:fgcolor       = "yellow"
+  let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
+  let s:datatypefg    = "green"       " const/let/types
+  let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
+  let s:conditionalfg = "lightgreen"  " if/else
+  let s:repeatfg      = "lightyellow" " for/while
+  let s:preprocfg     = 'cyan'
+else
+  set background=light
+  let s:bgcolor       = "none"
+  let s:fgcolor       = "black"
+  let s:statementfg   = "darkyellow"
+  let s:datatypefg    = "darkgreen"
+  let s:identifierfg  = "darkgreen"
+  let s:conditionalfg = "darkgreen"
+  let s:repeatfg      = "darkyellow"
+  let s:preprocfg     = 'darkcyan'
+endif
+
 let s:valuefg       = "darkgreen"   " js string literal, boolean
 let s:stringfg      = "gray"        " js string literal, boolean
 let s:commentfg     = "darkgray"
-let s:datatypefg    = "green"       " const/let/types
-let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
 let s:identifierbg  = s:bgcolor     " js function class name, import/export, function/method name
 let s:specialfg     = "darkred"     " js 'this' reference
 let s:operatorfg    = "blue"        " + - / *, new is operator too
-let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
-let s:repeatfg      = "lightyellow" " for/while
-let s:conditionalfg = "lightgreen"  " if/else
 let s:highlightbg   = 'darkgray'
-let s:red           = 'red'
-let s:green         = 'green'
-let s:white         = 'white'
 let s:black         = 'black'
 let s:blue          = 'blue'
-let s:yellow        = 'yellow'
-let s:none          = 'none'
+let s:brown         = 'brown'
+let s:darkcyan      = 'darkcyan'
 let s:darkgray      = 'darkgray'
-let s:lightgray     = 'lightgray'
+let s:darkgreen     = 'darkgreen'
 let s:darkred       = 'darkred'
+let s:green         = 'green'
+let s:lightgray     = 'lightgray'
+let s:none          = 'none'
+let s:red           = 'red'
+let s:white         = 'white'
+let s:yellow        = 'yellow'
 
 hi clear
 hi clear ALEWarning
@@ -94,7 +112,7 @@ let s:definition =
     \ 'DiffChange':                 {'bg': s:yellow, 'fg': s:black},
     \ 'DiffDelete':                 {'bg': s:red, 'fg': s:white},
     \ 'DiffText':                   {'bg': s:blue, 'fg': s:white},
-    \ 'Directory':                  {'fg': 'darkcyan'},
+    \ 'Directory':                  {'fg': s:darkcyan},
     \ 'Error':                      {'fg': s:lightgray, 'bg': s:red, 'cterm': 'bold'},
     \ 'ErrorMsg':                   {'fg': s:lightgray, 'bg': s:red, 'cterm': 'bold'},
     \ 'Exception':                  {'fg': s:red, 'bg': s:highlightbg},
@@ -103,20 +121,20 @@ let s:definition =
     \ 'Function':                   {'fg': s:operatorfg},
     \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
-    \ 'IncSearch':                  {'fg': s:green, 'bg': 'darkgreen', 'cterm': 'bold'},
+    \ 'IncSearch':                  {'fg': s:green, 'bg': s:darkgreen, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:operatorfg},
     \ 'Label':                      {'fg': s:operatorfg},
     \ 'LineNr':                     {'fg': s:lightgray},
-    \ 'ModeMsg':                    {'fg': 'brown'},
-    \ 'MoreMsg':                    {'fg': 'darkgreen'},
+    \ 'ModeMsg':                    {'fg': s:brown},
+    \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:darkred},
-    \ 'NonText':                    {'fg': 'darkblue', 'cterm': 'bold'},
+    \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
     \ 'Normal':                     {'bg': s:bgcolor, 'fg': s:fgcolor},
-    \ 'NormalFloat':                {'bg': 'white'},
-    \ 'Pmenu':                      {'bg': 'yellow', 'fg': 'black'},
+    \ 'NormalFloat':                {'bg': s:white},
+    \ 'Pmenu':                      {'bg': s:yellow, 'fg': s:black},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
-    \ 'PreProc':                    {'fg': 'LightCyan'},
+    \ 'PreProc':                    {'fg': s:preprocfg},
     \ 'Question':                   {'fg': s:green},
     \ 'Repeat':                     {'fg': s:repeatfg, 'bg': s:highlightbg},
     \ 'Search':                     {'fg': s:black, 'bg': s:green},
@@ -128,7 +146,7 @@ let s:definition =
     \ 'StorageClass':               {'fg': s:darkred},
     \ 'Special':                    {'fg': s:specialfg},
     \ 'SpecialChar':                {'fg': s:specialfg},
-    \ 'SpecialKey':                 {'fg': 'darkgreen'},
+    \ 'SpecialKey':                 {'fg': s:darkgreen},
     \ 'SpellBad':                   {'bg': s:red, 'fg': s:white, 'cterm': 'underline'},
     \ 'SpellCap':                   {'bg': s:red, 'fg': s:white, 'cterm': 'underline'},
     \ 'SpellLocal':                 {'bg': s:red, 'fg': s:white, 'cterm': 'underline'},
@@ -138,18 +156,18 @@ let s:definition =
     \ 'Title':                      {'fg': s:green},
     \ 'Type':                       {'fg': s:datatypefg},
     \ 'Underlined':                 {'cterm': 'underline'},
-    \ 'VertSplit':                  {'fg': 'lightgreen'},
+    \ 'VertSplit':                  {'fg': s:green},
     \ 'Visual':                     {'cterm': 'reverse'},
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
-    \ 'WarningMsg':                 {'fg': 'brown'},
+    \ 'WarningMsg':                 {'fg': s:brown},
     \ 'jsFuncArgs':                 {'fg': s:blue},
-    \ 'jsObjectKey':                {'fg': 'lightgreen', 'bg': s:highlightbg},
+    \ 'jsObjectKey':                {'fg': s:green, 'bg': s:highlightbg},
     \ 'ALEError':                   {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
     \ 'ALEWarning':                 {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
     \ 'CocErrorFloat':              {'fg': s:red},
     \ 'CocWarningFloat':            {'fg': s:red},
     \ 'CocInfoFloat':               {'fg': s:blue},
-    \ 'CocHintFloat':               {'fg': 'black'},
+    \ 'CocHintFloat':               {'fg': s:black},
 \ }
 
 for [group, value] in items(s:definition)
