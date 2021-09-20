@@ -36,31 +36,32 @@ endif
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:is_dark = (&background == 'dark')
-if s:is_dark
-  set background=dark
-  let s:bgcolor       = "none"
-  let s:fgcolor       = "yellow"
-  let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
-  let s:datatypefg    = "green"       " const/let/types
-  let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
-  let s:conditionalfg = "lightgreen"  " if/else
-  let s:repeatfg      = "lightyellow" " for/while
-  let s:preprocfg     = 'cyan'
-else
+let s:is_light = (&background == 'light')
+if s:is_light
   set background=light
   let s:bgcolor       = "none"
-  let s:fgcolor       = "black"
+  let s:fgcolor       = "darkgreen"
   let s:statementfg   = "darkyellow"
   let s:datatypefg    = "darkgreen"
   let s:identifierfg  = "darkgreen"
   let s:conditionalfg = "darkgreen"
   let s:repeatfg      = "darkyellow"
   let s:preprocfg     = 'darkcyan'
+  let s:stringfg      = "darkgray"
+else
+  set background=dark
+  let s:bgcolor       = "none"
+  let s:fgcolor       = "green"
+  let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
+  let s:datatypefg    = "green"       " const/let/types
+  let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
+  let s:conditionalfg = "lightgreen"  " if/else
+  let s:repeatfg      = "lightyellow" " for/while
+  let s:preprocfg     = 'cyan'
+  let s:stringfg      = "red"        " js string literal, boolean
 endif
 
 let s:valuefg       = "darkgreen"   " js string literal, boolean
-let s:stringfg      = "gray"        " js string literal, boolean
 let s:commentfg     = "darkgray"
 let s:identifierbg  = s:bgcolor     " js function class name, import/export, function/method name
 let s:specialfg     = "darkred"     " js 'this' reference
