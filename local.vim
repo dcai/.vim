@@ -253,8 +253,8 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" press jjj in insert mode to save and return normal mode
-inoremap jjj <Esc>:w<cr>
+" press jj to escape
+inoremap jj <Esc>
 
 " Format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
