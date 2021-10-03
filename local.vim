@@ -253,6 +253,8 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" press <c-l> to escape
+inoremap <c-l> <Esc>
 " press jj to escape
 inoremap jj <Esc>
 
