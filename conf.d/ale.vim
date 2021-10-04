@@ -57,6 +57,7 @@ let g:ale_fixers = {
   \ 'typescriptreact': ['prettier'],
   \ 'yaml': ['prettier'],
   \ 'vue': ['prettier'],
+  \ 'xml': ['xmllint'],
 \}
 
 nnoremap <silent> <leader>= :ALEFix<cr>
