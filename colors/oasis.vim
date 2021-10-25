@@ -103,6 +103,8 @@ endfunction
 
 let s:definition =
 \ {
+    \ 'ALEError':                   {'cterm': 'bold,underline'},
+    \ 'ALEWarning':                 {'cterm': 'underline'},
     \ 'Boolean':                    {'fg': s:valuefg},
     \ 'ColorColumn':                {'bg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
@@ -163,8 +165,6 @@ let s:definition =
     \ 'WarningMsg':                 {'fg': s:brown},
     \ 'jsFuncArgs':                 {'fg': s:blue},
     \ 'jsObjectKey':                {'fg': s:green, 'bg': s:highlightbg},
-    \ 'ALEError':                   {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
-    \ 'ALEWarning':                 {'bg': s:yellow, 'fg': s:red, 'cterm': 'underline'},
     \ 'CocErrorFloat':              {'fg': s:red},
     \ 'CocWarningFloat':            {'fg': s:red},
     \ 'CocInfoFloat':               {'fg': s:blue},
