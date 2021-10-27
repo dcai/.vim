@@ -104,9 +104,9 @@ endfunction
 let s:definition =
 \ {
     \ 'ALEError':                   {'cterm': 'bold,underline'},
-    \ 'ALEErrorSign':               {'bg': s:darkred},
+    \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
     \ 'ALEWarning':                 {'cterm': 'underline'},
-    \ 'ALEWarningSign':             {'bg': s:yellow},
+    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
     \ 'Boolean':                    {'fg': s:valuefg},
     \ 'ColorColumn':                {'bg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
