@@ -1,6 +1,6 @@
-command! Greview      :Git! diff --staged
+command! Greview     :Git diff
 nnoremap <c-g>       :Git<CR> " git status
-nnoremap <leader>gr  :Greview<cr>
+nnoremap <leader>gr  :Greview<cr> " git diff
 nnoremap <leader>gw  :Gwrite<CR><CR>
 nnoremap <leader>cv  :Git commit -v<cr>
 nnoremap <leader>cF  :Git commit --no-verify --fixup HEAD -a<cr>
