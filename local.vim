@@ -274,8 +274,8 @@ nnoremap T :Vexplore<cr>
 " open new file
 nnoremap gf :e <cfile><CR>
 
-map <c-j> <ESC>:bn<CR>
-map <c-k> <ESC>:bp<CR>
+map <c-j> <ESC>:cn<CR> " next item in quickfix
+map <c-k> <ESC>:cp<CR> : prev item in quickfix
 
 " Press <Home> or <End> to the 1st and last
 " char of the line
