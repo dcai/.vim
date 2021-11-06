@@ -8,7 +8,7 @@ nnoremap <leader>pr  :Dispatch! git pull --rebase<CR>
 nnoremap <leader>pf  :Dispatch! git push --force-with-lease<CR>
 nnoremap <leader>ps  :Dispatch! git push<CR>
 " nnoremap <leader>psf :Git push --force<CR>
-nnoremap <leader>rb  :Git rebase -i origin/master~1<CR>
+nnoremap <leader>rb  :Git rebase -i origin/master<CR>
 
 function! GitFileMode()
   nnoremap <buffer> n <c-n>
