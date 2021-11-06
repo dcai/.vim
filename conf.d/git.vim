@@ -4,8 +4,8 @@ nnoremap <leader>gw   :Gwrite<CR><CR>
 nnoremap <leader>gcv  :Git commit -v<cr>
 nnoremap <leader>gcf  :Git commit --no-verify --fixup HEAD -a<cr>
 nnoremap <leader>gpr  :Dispatch! git pull --rebase<CR>
-nnoremap <leader>gp   :Dispatch! git push --force-with-lease<CR>
-nnoremap <leader>gpf  :Dispatch! git push<CR>
+nnoremap <leader>gpf  :Dispatch! git push --force-with-lease<CR>
+nnoremap <leader>gps  :Dispatch! git push<CR>
 nnoremap <leader>gr   :Git rebase -i origin/master<CR>
 " nnoremap <leader>psf :Git push --force<CR>
 
