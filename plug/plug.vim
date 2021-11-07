@@ -130,6 +130,7 @@ Plug 'kongo2002/fsharp-vim'
 " Plug 'vim-scripts/peaksea'
 " Plug 'sheerun/vim-wombat-scheme'
 " Plug 'jnurmine/Zenburn'
+" Plug 'ghifarit53/tokyonight-vim'
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
