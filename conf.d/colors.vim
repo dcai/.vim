@@ -1,5 +1,6 @@
 try
-  colorscheme oasis
+  " colorscheme oasis
+  colorscheme zenburn
   " colorscheme desertink
   " colorscheme gotham
   " colorscheme lucius
