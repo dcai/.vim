@@ -117,11 +117,13 @@ Plug 'kongo2002/fsharp-vim'
 
 """""" color schemes
 """""" =============
+Plug 'jnurmine/Zenburn'
+Plug 'jacoborus/tender.vim'
+Plug 'morhetz/gruvbox'
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'romainl/Apprentice'
 " Plug 'jonathanfilip/vim-lucius'
 " Plug 'Lokaltog/vim-distinguished'
-" Plug 'morhetz/gruvbox'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'sjl/badwolf'
 " Plug 'whatyouhide/vim-gotham'
@@ -129,8 +131,8 @@ Plug 'kongo2002/fsharp-vim'
 " Plug 'chriskempson/base16-vim'
 " Plug 'vim-scripts/peaksea'
 " Plug 'sheerun/vim-wombat-scheme'
-" Plug 'jnurmine/Zenburn'
 " Plug 'ghifarit53/tokyonight-vim'
+" Plug 'ayu-theme/ayu-vim'
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
