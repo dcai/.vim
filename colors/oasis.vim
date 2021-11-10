@@ -50,7 +50,7 @@ if s:is_light
   let s:stringfg      = "darkgray"
 else
   set background=dark
-  let s:bgcolor       = "none"
+  let s:bgcolor       = "black"
   let s:fgcolor       = "green"
   let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
   let s:datatypefg    = "green"       " const/let/types
