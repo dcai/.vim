@@ -112,14 +112,15 @@ Plug 'kongo2002/fsharp-vim'
 
 """""" 16 color schemes
 """""" ================
-" Plug 'noahfrederick/vim-noctu' " 16 colors
+Plug 'noahfrederick/vim-noctu' " 16 colors
 " Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
 
 """""" color schemes
 """""" =============
 Plug 'jnurmine/Zenburn'
 Plug 'jacoborus/tender.vim'
-Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
+" Plug 'morhetz/gruvbox'
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'romainl/Apprentice'
 " Plug 'jonathanfilip/vim-lucius'
