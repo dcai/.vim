@@ -1,11 +1,11 @@
 try
   " colorscheme oasis
-  colorscheme zenburn
+  " colorscheme zenburn
   " colorscheme desertink
   " colorscheme gotham
   " colorscheme lucius
   " colorscheme apprentice
-  " colorscheme gruvbox
+  colorscheme gruvbox
   " colorscheme jellybeans
   " colorscheme badwolf
   " colorscheme noctu
