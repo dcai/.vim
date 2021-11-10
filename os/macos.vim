@@ -12,9 +12,10 @@ vmap <leader>yy :w !pbcopy<CR><CR>
 set noantialias
 
 if has("gui_macvim")
+  set guifont=TamzenForPowerline:h16
+  " set guifont=Monaco:h14
   " set guifont=Hack:h14
   " set guifont=Source\ Code\ Pro\ for\ Powerline:h16
-  set guifont=TamzenForPowerline:h16
   " set guifont=Anonymous\ Pro\ for\ Powerline:h18
   " set guifont=Cousine\ for\ Powerline:h16
   " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
@@ -39,5 +40,4 @@ if has("gui_macvim")
   " set guifont=Roboto\ Mono\ Thin\ for\ Powerline:h15
   " set guifont=Roboto\ Mono\ Light\ for\ Powerline:h18
   " set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
-  " set guifont=Monaco:h14
 endif
