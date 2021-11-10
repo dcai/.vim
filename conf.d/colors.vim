@@ -1,13 +1,16 @@
+set background=dark
 try
-  " colorscheme oasis
+  " colorscheme solarized
+  colorscheme oasis
   " colorscheme zenburn
   " colorscheme desertink
   " colorscheme gotham
   " colorscheme lucius
   " colorscheme apprentice
-  colorscheme gruvbox
+  " colorscheme gruvbox
   " colorscheme jellybeans
   " colorscheme badwolf
+  " colorscheme tender
   " colorscheme noctu
   " colorscheme wombat
   " colorscheme distinguished

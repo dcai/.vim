@@ -41,10 +41,8 @@ if s:is_light
   set background=light
   let s:bgcolor       = "none"
   let s:fgcolor       = "darkgreen"
-  let s:statementfg   = "darkyellow"
   let s:datatypefg    = "darkgreen"
   let s:identifierfg  = "darkgreen"
-  let s:conditionalfg = "darkgreen"
   let s:repeatfg      = "darkyellow"
   let s:preprocfg     = 'darkcyan'
   let s:stringfg      = "darkgray"
@@ -52,21 +50,21 @@ else
   set background=dark
   let s:bgcolor       = "black"
   let s:fgcolor       = "green"
-  let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
   let s:datatypefg    = "green"       " const/let/types
   let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
-  let s:conditionalfg = "lightgreen"  " if/else
   let s:repeatfg      = "lightyellow" " for/while
   let s:preprocfg     = 'cyan'
   let s:stringfg      = "red"        " js string literal, boolean
 endif
 
+let s:conditionalfg = "red"         " if/else
+let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
 let s:valuefg       = "darkgreen"   " js string literal, boolean
 let s:commentfg     = "darkgray"
 let s:identifierbg  = s:bgcolor     " js function class name, import/export, function/method name
 let s:specialfg     = "darkred"     " js 'this' reference
 let s:operatorfg    = "blue"        " + - / *, new is operator too
-let s:highlightbg   = 'darkgray'
+let s:highlightbg   = 'lightgray'
 let s:black         = 'black'
 let s:blue          = 'blue'
 let s:brown         = 'brown'
@@ -101,12 +99,7 @@ function! s:hi(group, value)
   exe l:cmd
 endfunction
 
-let s:definition =
-\ {
-    \ 'ALEError':                   {'cterm': 'bold,underline'},
-    \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
-    \ 'ALEWarning':                 {'cterm': 'underline'},
-    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
+let s:standard = {
     \ 'Boolean':                    {'fg': s:valuefg},
     \ 'ColorColumn':                {'bg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
@@ -144,10 +137,6 @@ let s:definition =
     \ 'Repeat':                     {'fg': s:repeatfg, 'bg': s:highlightbg},
     \ 'Search':                     {'fg': s:black, 'bg': s:green},
     \ 'SignColumn':                 {'bg': s:none},
-    \ 'SignifySignAdd':             {'fg': s:green},
-    \ 'SignifySignChange':          {'fg': s:yellow},
-    \ 'SignifySignDelete':          {'fg': s:darkred},
-    \ 'SignifySignDeleteFirstLine': {'fg': s:darkred},
     \ 'StorageClass':               {'fg': s:darkred},
     \ 'Special':                    {'fg': s:specialfg},
     \ 'SpecialChar':                {'fg': s:specialfg},
@@ -165,17 +154,42 @@ let s:definition =
     \ 'Visual':                     {'cterm': 'reverse'},
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
     \ 'WarningMsg':                 {'fg': s:brown},
-    \ 'jsFuncArgs':                 {'fg': s:blue},
-    \ 'jsObjectKey':                {'fg': s:green, 'bg': s:highlightbg},
-    \ 'CocErrorFloat':              {'fg': s:red},
-    \ 'CocWarningFloat':            {'fg': s:red},
-    \ 'CocInfoFloat':               {'fg': s:blue},
-    \ 'CocHintFloat':               {'fg': s:black},
 \ }
 
-for [group, value] in items(s:definition)
+for [group, value] in items(s:standard)
     call s:hi(group, value)
 endfor
+
+let s:custom = {
+    \ 'ALEError':                   {'cterm': 'bold,underline'},
+    \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
+    \ 'ALEWarning':                 {'cterm': 'underline'},
+    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
+    \ 'CocErrorFloat':              {'fg': s:red},
+    \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
+    \ 'CocHintFloat':               {'fg': s:black},
+    \ 'CocInfoFloat':               {'fg': s:blue},
+    \ 'CocWarningFloat':            {'fg': s:red},
+    \ 'SignifySignAdd':             {'fg': s:green},
+    \ 'SignifySignChange':          {'fg': s:yellow},
+    \ 'SignifySignDelete':          {'fg': s:darkred},
+    \ 'SignifySignDeleteFirstLine': {'fg': s:darkred},
+\ }
+
+for [group, value] in items(s:custom)
+    call s:hi(group, value)
+endfor
+
+" javascript syntax definitions:
+" https://github.com/pangloss/vim-javascript/blob/1.2.5.1/syntax/javascript.vim#L243-L363
+let s:js = {
+    \ 'jsFuncArgs':                 {'fg': s:blue},
+    \ 'jsObjectKey':                {'fg': s:black, 'bg': s:highlightbg},
+\ }
+for [group, value] in items(s:js)
+    call s:hi(group, value)
+endfor
+
 
 "" Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
