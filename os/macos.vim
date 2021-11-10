@@ -9,9 +9,12 @@ nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <leader>yy :.w !pbcopy<CR><CR>
 vmap <leader>yy :w !pbcopy<CR><CR>
 
+set noantialias
+
 if has("gui_macvim")
-  set guifont=Hack:h14
-  " set guifont=Source\ Code\ Pro\ for\ Powerline:h18
+  " set guifont=Hack:h14
+  " set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+  set guifont=TamzenForPowerline:h16
   " set guifont=Anonymous\ Pro\ for\ Powerline:h18
   " set guifont=Cousine\ for\ Powerline:h16
   " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
