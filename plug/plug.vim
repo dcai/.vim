@@ -7,6 +7,23 @@ let s:plugged='$HOME/.local/vim/plug'
 let s:autoload='$HOME/' . g:vimrc . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 
+function! InstallCoc(info)
+  if a:info.status ==? 'installed' || a:info.force
+    " XXX: CocInstall is not available at this point
+    " :CocInstall coc-tsserver coc-python coc-snippets
+    " :CocInstall https://github.com/andys8/vscode-jest-snippets
+  endif
+endfunction
+
+function! InstallAle(info)
+  if a:info.status ==? 'installed' || a:info.force
+    !npm install -g prettier eslint lua-fmt
+    " !pip3 install --user vim-vint pathlib typing
+    " !composer global require 'squizlabs/php_codesniffer=*'
+    " !composer global require 'friendsofphp/php-cs-fixer'
+  endif
+endfunction
+
 " Install vim-plug if we don't already have it
 if empty(glob(expand(s:vimplug)))
   " Ensure all needed directories exist  (Thanks @kapadiamush)
@@ -18,105 +35,57 @@ endif
 
 call plug#begin(expand(s:plugged))
 
-Plug 'junegunn/vader.vim', { 'for': 'vader' }
+if v:version > 800
+  Plug 'dcai/ale', { 'do': function('InstallAle') }
+  " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
+else
+  Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+endif
 
-" git
-" ===
+if g:osuname ==? 'Windows'
+  call IncludeScript('plug/windows.vim')
+else
+  call IncludeScript('plug/unix.vim')
+endif
+
+if has("patch-8.0.1453")
+  Plug 'neoclide/coc.nvim',
+    \ { 'branch': 'release',
+    \   'do': function('InstallCoc')
+    \ }
+endif
+
+Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-
-" usability
-" =========
 Plug 'reedes/vim-lexical'
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'djoshea/vim-autoread'
-Plug 'easymotion/vim-easymotion'
-Plug 'godlygeek/tabular'
-Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
-Plug 'qpkorr/vim-bufkill'
-" Plug 'mg979/vim-visual-multi'
-Plug 'terryma/vim-smooth-scroll'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
-" Plug 'bronson/vim-visual-star-search'
-Plug 'lfv89/vim-interestingwords'
-nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
-vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
-nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
-nnoremap <silent> n :call WordNavigation(1)<cr>
-nnoremap <silent> N :call WordNavigation(0)<cr>
 Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'maxbrunsfeld/vim-yankstack'
-" Plug 'kien/rainbow_parentheses.vim'
-" Plug 'ludovicchabant/vim-gutentags'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-nmap z/ <Plug>(incsearch-fuzzy-/)
-nmap z? <Plug>(incsearch-fuzzy-?)
-nmap zz/ <Plug>(incsearch-fuzzyspell-/)
-nmap zz? <Plug>(incsearch-fuzzyspell-?)
-" map zg/ <Plug>(incsearch-fuzzy-stay)
-" map zg/ <Plug>(incsearch-fuzzyspell-stay)
-
-" utils
-" =====
-" Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-" let g:colorizer_auto_filetype='vim,css'
-Plug 'diepm/vim-rest-console'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'mhinz/vim-signify'
+" Plug 'mg979/vim-visual-multi'
+" Plug 'bronson/vim-visual-star-search'
+" Plug 'maxbrunsfeld/vim-yankstack'
+" Plug 'kien/rainbow_parentheses.vim'
+" Plug 'diepm/vim-rest-console'
+" Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
+" let g:colorizer_auto_filetype='vim,css'
 
-" Text objects
-" ============
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-function'
-Plug 'bps/vim-textobj-python', { 'for': 'python' }
-" Plug 'thinca/vim-textobj-function-javascript'
-Plug 'haya14busa/vim-textobj-function-syntax'
-
-" javascript
-" ==========
-Plug 'pangloss/vim-javascript'
-Plug 'zoubin/vim-gotofile'
-Plug 'jparise/vim-graphql'
-Plug 'GutenYe/json5.vim'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-
-" Python
-" ======
-Plug 'vim-scripts/indentpython.vim'
-Plug 'vim-scripts/python_match.vim'
-
-" Other syntax
-" ============
-Plug 'evidens/vim-twig'
-Plug 'dag/vim-fish', { 'for': 'fish' }
-Plug 'jceb/vim-orgmode', { 'for': 'org' }
-Plug 'tpope/vim-speeddating', { 'for': 'org' }
-" Plug 'vim-scripts/nginx.vim'
-Plug 'chr4/nginx.vim'
-Plug 'glensc/vim-syntax-lighttpd'
-Plug 'niftylettuce/vim-jinja'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'cespare/vim-toml'
-Plug 'dzeban/vim-log-syntax'
-Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-Plug 'posva/vim-vue'
-Plug 'kongo2002/fsharp-vim'
-
-"""""" 16 color schemes
-"""""" ================
+"""""""""""""""""""""""""""""""""""""""
+""" 16 color schemes
+"""""""""""""""""""""""""""""""""""""""
 Plug 'noahfrederick/vim-noctu' " 16 colors
 " Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
 
-"""""" color schemes
-"""""" =============
+"""""""""""""""""""""""""""""""""""""""
+""" full color schemes
+"""""""""""""""""""""""""""""""""""""""
 Plug 'jnurmine/Zenburn'
 Plug 'jacoborus/tender.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -135,42 +104,129 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'ghifarit53/tokyonight-vim'
 " Plug 'ayu-theme/ayu-vim'
 
-function! InstallCoc(info)
-  if a:info.status ==? 'installed' || a:info.force
-    " XXX: CocInstall is not available at this point
-    " :CocInstall coc-tsserver coc-python coc-snippets
-    " :CocInstall https://github.com/andys8/vscode-jest-snippets
-  endif
-endfunction
+"""""""""""""""""""""""""""""""""""""""
+""" syntax
+"""""""""""""""""""""""""""""""""""""""
+Plug 'evidens/vim-twig'
+Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'jceb/vim-orgmode', { 'for': 'org' }
+Plug 'tpope/vim-speeddating', { 'for': 'org' }
+" Plug 'vim-scripts/nginx.vim'
+Plug 'chr4/nginx.vim'
+Plug 'glensc/vim-syntax-lighttpd'
+Plug 'niftylettuce/vim-jinja'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'cespare/vim-toml'
+Plug 'dzeban/vim-log-syntax'
+Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
+Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
+Plug 'posva/vim-vue'
+Plug 'kongo2002/fsharp-vim'
 
-function! InstallAle(info)
-  if a:info.status ==? 'installed' || a:info.force
-    !npm install -g prettier eslint lua-fmt
-    " !pip3 install --user vim-vint pathlib typing
-    " !composer global require 'squizlabs/php_codesniffer=*'
-    " !composer global require 'friendsofphp/php-cs-fixer'
-  endif
-endfunction
+"""""""""""""""""""""""""""""""""""""""
+""" lfv89/vim-interestingwords
+"""""""""""""""""""""""""""""""""""""""
+Plug 'lfv89/vim-interestingwords'
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> n :call WordNavigation(1)<cr>
+nnoremap <silent> N :call WordNavigation(0)<cr>
 
-if has("patch-8.0.1453")
-  Plug 'neoclide/coc.nvim',
-        \ { 'branch': 'release',
-        \   'do': function('InstallCoc')
-        \ }
-endif
+"""""""""""""""""""""""""""""""""""""""
+""" movement
+"""""""""""""""""""""""""""""""""""""""
+" Plug 'easymotion/vim-easymotion'
+" nmap s <Plug>(easymotion-overwin-f2)
+" nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
+Plug 'justinmk/vim-sneak'
+let g:sneak#label = 1
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+nmap z/ <Plug>(incsearch-fuzzy-/)
+nmap z? <Plug>(incsearch-fuzzy-?)
+nmap zz/ <Plug>(incsearch-fuzzyspell-/)
+nmap zz? <Plug>(incsearch-fuzzyspell-?)
+" map zg/ <Plug>(incsearch-fuzzy-stay)
+" map zg/ <Plug>(incsearch-fuzzyspell-stay)
 
-if v:version > 800
+"""""""""""""""""""""""""""""""""""""""
+""" Text objects
+"""""""""""""""""""""""""""""""""""""""
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-function'
+Plug 'bps/vim-textobj-python', { 'for': 'python' }
+Plug 'haya14busa/vim-textobj-function-syntax'
+" Plug 'thinca/vim-textobj-function-javascript'
 
-  Plug 'dcai/ale', { 'do': function('InstallAle') }
-  " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
+"""""""""""""""""""""""""""""""""""""""
+""" javascript
+"""""""""""""""""""""""""""""""""""""""
+Plug 'pangloss/vim-javascript'
+Plug 'zoubin/vim-gotofile'
+Plug 'jparise/vim-graphql'
+Plug 'GutenYe/json5.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
+
+"""""""""""""""""""""""""""""""""""""""
+""" Python
+"""""""""""""""""""""""""""""""""""""""
+Plug 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/python_match.vim'
+
+"""""""""""""""""""""""""""""""""""""""
+""" bufkill
+"""""""""""""""""""""""""""""""""""""""
+Plug 'qpkorr/vim-bufkill'
+if exists(':BD')
+  nnoremap X :BD<cr>
 else
-  Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+  nnoremap X :bd<cr>
 endif
 
-if g:osuname ==? 'Windows'
-  call IncludeScript('plug/windows.vim')
-else
-  call IncludeScript('plug/unix.vim')
-endif
+"""""""""""""""""""""""""""""""""""""""
+""" vim-smooth-scroll
+"""""""""""""""""""""""""""""""""""""""
+Plug 'terryma/vim-smooth-scroll'
 
+let g:smooth_scroll_duration=10
+map <silent> <c-u> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 2)<CR>
+map <silent> <c-d> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 2)<CR>
+map <silent> <c-b> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
+map <silent> <c-f> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
+
+map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
+map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
+
+"""""""""""""""""""""""""""""""""""""""
+""" junegunn/vim-easy-align
+"""""""""""""""""""""""""""""""""""""""
+Plug 'junegunn/vim-easy-align'
+" gaip*|
+" ^^ Align table cells by `|`
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"""""""""""""""""""""""""""""""""""""""
+""" Tabular
+"""""""""""""""""""""""""""""""""""""""
+Plug 'godlygeek/tabular'
+nmap <Leader>t= :Tabularize /=<CR>
+vmap <Leader>t= :Tabularize /=<CR>
+nmap <Leader>t: :Tabularize /:\zs<CR>
+vmap <Leader>t: :Tabularize /:\zs<CR>
+
+"""""""""""""""""""""""""""""""""""""""
+""" ludovicchabant/vim-gutentags
+"""""""""""""""""""""""""""""""""""""""
+" Plug 'ludovicchabant/vim-gutentags'
+" let g:gutentags_ctags_executable_javascript = 'jsctags'
+" let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
+"       \ '_darcs', '_FOSSIL_', '.fslckout', 'Makefile', 'yarn.lock',
+"       \ '.editorconfig', 'eslintrc', 'eslintrc.js', 'package.json',
+"       \ '.jscsrc']
 call plug#end()
