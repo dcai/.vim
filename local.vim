@@ -325,3 +325,23 @@ else
   " nnoremap <leader>cf :let @+=expand("%")<CR>
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
+
+try
+  " colorscheme solarized
+  colorscheme oasis
+  " colorscheme zenburn
+  " colorscheme desertink
+  " colorscheme gotham
+  " colorscheme lucius
+  " colorscheme apprentice
+  " colorscheme gruvbox
+  " colorscheme jellybeans
+  " colorscheme badwolf
+  " colorscheme tender
+  " colorscheme noctu
+  " colorscheme wombat
+  " colorscheme distinguished
+  " colorscheme seoul256
+catch /^Vim\%((\a\+)\)\=:E185/
+  " deal with it
+endtry
