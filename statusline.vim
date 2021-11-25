@@ -51,7 +51,7 @@ function! s:hi(group, value)
   exe l:cmd
 endfunction
 
-let s:active = {'fg': 'white', 'bg': 'green', 'cterm': 'none'}
+let s:active = {'fg': 'black', 'bg': 'green', 'cterm': 'none'}
 let s:inactive = {'fg': 'white', 'bg': 'darkgrey', 'cterm': 'none'}
 let s:insertmode = {'fg': 'white', 'bg': 'darkred', 'cterm': 'none'}
 
