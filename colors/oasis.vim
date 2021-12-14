@@ -57,7 +57,8 @@ else
   let s:stringfg      = "red"        " js string literal, boolean
 endif
 
-let s:conditionalfg = "red"         " if/else
+let s:conditionalfg = "black"       " if/else, ifelse
+let s:conditionalbg = "green"       " if/else, ifelse
 let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
 let s:valuefg       = "darkgreen"   " js string literal, boolean
 let s:commentfg     = "darkgray"
@@ -103,7 +104,7 @@ let s:standard = {
     \ 'Boolean':                    {'fg': s:valuefg},
     \ 'ColorColumn':                {'bg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
-    \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:highlightbg},
+    \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
     \ 'Constant':                   {'fg': s:valuefg},
     \ 'Define':                     {'fg': s:operatorfg},
     \ 'DiffAdd':                    {'bg': s:green, 'fg': s:black},
