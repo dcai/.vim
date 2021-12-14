@@ -57,6 +57,10 @@ else
   let s:stringfg      = "red"        " js string literal, boolean
 endif
 
+let s:aleerrorfg    = "red"
+let s:aleerrorbg    = "white"
+let s:alewarnfg     = "red"
+let s:alewarnbg     = "yellow"
 let s:jspropkeyfg   = 'black'       " javascript object property key
 let s:jspropkeybg   = 'darkgreen'
 let s:conditionalfg = "black"       " if/else, ifelse
@@ -164,9 +168,9 @@ for [group, value] in items(s:standard)
 endfor
 
 let s:custom = {
-    \ 'ALEError':                   {'cterm': 'bold,underline'},
+    \ 'ALEError':                   {'fg': s:aleerrorfg, 'bg': s:aleerrorbg, 'cterm': 'bold,underline'},
     \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
-    \ 'ALEWarning':                 {'cterm': 'underline'},
+    \ 'ALEWarning':                 {'fg': s:alewarnfg, 'bg': s:alewarnbg, 'cterm': 'underline'},
     \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
     \ 'CocErrorFloat':              {'fg': s:red},
     \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
