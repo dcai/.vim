@@ -57,6 +57,8 @@ else
   let s:stringfg      = "red"        " js string literal, boolean
 endif
 
+let s:jspropkeyfg   = 'black'       " javascript object property key
+let s:jspropkeybg   = 'darkgreen'
 let s:conditionalfg = "black"       " if/else, ifelse
 let s:conditionalbg = "green"       " if/else, ifelse
 let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
@@ -185,7 +187,7 @@ endfor
 " https://github.com/pangloss/vim-javascript/blob/1.2.5.1/syntax/javascript.vim#L243-L363
 let s:js = {
     \ 'jsFuncArgs':                 {'fg': s:blue},
-    \ 'jsObjectKey':                {'fg': s:black, 'bg': s:highlightbg},
+    \ 'jsObjectKey':                {'fg': s:jspropkeyfg, 'bg': s:jspropkeybg},
 \ }
 for [group, value] in items(s:js)
     call s:hi(group, value)
