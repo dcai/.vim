@@ -29,9 +29,9 @@ set statusline+=[%{LinterStatus()}]
 set statusline+=%=                              " left/right separator
 set statusline+=%y                              " filetype
 set statusline+=[
-set statusline+=%{strlen(&fenc)?&fenc:'none'}\| " file encoding
-set statusline+=%{&ff}                          " file format
-set statusline+=\|%{&bomb?'bom':'nobom'}        " BOM
+set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\| " file encoding
+set statusline+=%{&fileformat}                  " file format
+set statusline+=%{&bomb?'\|BOM':''}             " BOM
 set statusline+=]
 set statusline+=[
 set statusline+=%l                              " cursor line/total lines
