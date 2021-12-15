@@ -57,8 +57,8 @@ else
   let s:stringfg      = "red"        " js string literal, boolean
 endif
 
-let s:aleerrorfg    = "red"
-let s:aleerrorbg    = "white"
+let s:aleerrorfg    = "white"
+let s:aleerrorbg    = "red"
 let s:alewarnfg     = "red"
 let s:alewarnbg     = "yellow"
 let s:jspropkeyfg   = 'black'       " javascript object property key
