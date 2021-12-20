@@ -1,4 +1,4 @@
-let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls', 'coc-vimlsp', 'coc-snippets', 'coc-highlight', 'coc-python']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-phpls', 'coc-vimlsp', 'coc-snippets', 'coc-highlight', 'coc-pyright']
 
 " coc use system node instead of node from asdf or nvm
 function! s:FindNodePath()
