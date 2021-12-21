@@ -3,11 +3,20 @@
   "//intelephense.licenceKey": "your licence key",
   "javascript.validate.enable": false,
   "typescript.validate.enable": false,
-  "extends": {
-    "javascriptreact": ["javascript"],
-    "typescript": ["javascript"]
-  },
   "snippets": {
-    "userSnippetsDirectory": "~/.coc-snippets"
+    "userSnippetsDirectory": "~/src/coc-snippets",
+    "extends": {
+      "typescriptreact": [
+        "typescript",
+        "javascript",
+        "javascriptreact"
+      ],
+      "javascriptreact": [
+        "javascript"
+      ],
+      "typescript": [
+        "javascript"
+      ]
+    }
   }
 }
