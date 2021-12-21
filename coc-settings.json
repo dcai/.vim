@@ -3,6 +3,9 @@
   "//intelephense.licenceKey": "your licence key",
   "javascript.validate.enable": false,
   "typescript.validate.enable": false,
+  "session": {
+    "directory": "~/.local/vim/sessions/"
+  },
   "snippets": {
     "userSnippetsDirectory": "~/src/coc-snippets",
     "extends": {
