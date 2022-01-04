@@ -9,7 +9,9 @@ nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <leader>yy :.w !pbcopy<CR><CR>
 vmap <leader>yy :w !pbcopy<CR><CR>
 
-set noantialias
+if !has('nvim')
+  set noantialias
+endif
 
 if has("gui_macvim")
   set guifont=TamzenForPowerline:h16
