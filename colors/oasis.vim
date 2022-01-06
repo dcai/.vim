@@ -85,6 +85,8 @@ let s:none          = 'none'
 let s:red           = 'red'
 let s:white         = 'white'
 let s:yellow        = 'yellow'
+let s:searchbg      = 'blue'
+let s:searchfg      = 'white'
 
 hi clear
 hi clear ALEWarning
@@ -126,7 +128,7 @@ let s:standard = {
     \ 'Function':                   {'fg': s:operatorfg},
     \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
-    \ 'IncSearch':                  {'fg': s:green, 'bg': s:darkgreen, 'cterm': 'bold'},
+    \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:operatorfg},
     \ 'Label':                      {'fg': s:operatorfg},
     \ 'LineNr':                     {'fg': s:lightgray},
@@ -142,7 +144,7 @@ let s:standard = {
     \ 'PreProc':                    {'fg': s:preprocfg},
     \ 'Question':                   {'fg': s:green},
     \ 'Repeat':                     {'fg': s:repeatfg, 'bg': s:highlightbg},
-    \ 'Search':                     {'fg': s:black, 'bg': s:green},
+    \ 'Search':                     {'fg': s:searchfg, 'bg': s:searchbg},
     \ 'SignColumn':                 {'bg': s:none},
     \ 'StorageClass':               {'fg': s:darkred},
     \ 'Special':                    {'fg': s:specialfg},
