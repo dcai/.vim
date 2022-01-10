@@ -274,6 +274,8 @@ nnoremap T :Vexplore<cr>
 " open new file
 nnoremap gf :e <cfile><CR>
 
+noremap U :redo<cr>
+
 map <c-j> <ESC>:cn<CR> " next item in quickfix
 map <c-k> <ESC>:cp<CR> : prev item in quickfix
 
