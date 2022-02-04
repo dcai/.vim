@@ -259,6 +259,7 @@ inoremap <c-l> <Esc>
 inoremap jj <Esc>
 inoremap kk <Esc>
 inoremap jk <Esc>
+inoremap ll <Esc>
 
 " Format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
