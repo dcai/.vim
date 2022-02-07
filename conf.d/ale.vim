@@ -61,4 +61,4 @@ let g:ale_fixers = {
   \ 'xml': ['xmllint'],
 \}
 
-nnoremap <silent> <leader>= :ALEFix<cr>
+nnoremap <silent> <leader>, :ALEFix<cr>
