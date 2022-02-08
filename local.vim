@@ -305,8 +305,8 @@ inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
 " toggle most recently used file
-" ctrl-6 <c-6> doesn't work for some terminals
-" noremap <c-x> :e #<cr>
+" ctrl-6 <c-6> <c-^> doesn't work for some terminals
+nnoremap <leader>aa :e #<cr>
 
 nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
