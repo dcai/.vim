@@ -257,8 +257,8 @@ nnoremap N Nzzzv
 inoremap <c-l> <Esc>
 " press jj to escape
 inoremap jj <Esc>
-inoremap kk <Esc>
 inoremap jk <Esc>
+" inoremap kk <Esc> " not good, many words end with k
 " inoremap ll <Esc> " not good, ll is common in english
 
 " Format entire buffer
