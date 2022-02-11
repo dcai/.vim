@@ -100,7 +100,11 @@ if !empty($XDG_CACHE_HOME)
 endif
 let &backupdir=s:mkdir_p("~/.local/vim/backup")
 set undofile " enable persistent undo
-let &undodir=s:mkdir_p('~/.local/vim/undo')
+if has('nvim')
+  let &undodir=s:mkdir_p('~/.local/nvim/undo')
+else
+  let &undodir=s:mkdir_p('~/.local/vim/undo')
+endif
 
 " default indent & wrapping settings {{{
 set expandtab
