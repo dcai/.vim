@@ -1,13 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""
-"               __           _        "
-"          ____/ /________ _(_)       "
-"         / __  / ___/ __ `/ /        "
-"        / /_/ / /__/ /_/ / /         "
-"        \__,_/\___/\__,_/_/          "
-"                                     "
-"       Dongsheng Cai <d@tux.im>      "
-"                                     "
-"""""""""""""""""""""""""""""""""""""""
 set nocompatible
 " this enables filetype specific plugin and indent files
 " run :filetype see status

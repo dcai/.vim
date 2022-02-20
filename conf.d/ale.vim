@@ -51,7 +51,7 @@ let g:ale_fixers = {
   \ 'lua': ['luafmt'],
   \ 'markdown': ['prettier'],
   \ 'php': ['php_cs_fixer'],
-  \ 'python': ['black'],
+  \ 'python': ['black', 'isort'],
   \ 'sh': ['shfmt'],
   \ 'sql': ['pgformatter'],
   \ 'typescript': ['prettier'],

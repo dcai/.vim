@@ -1,15 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""
-"               __           _        "
-"          ____/ /________ _(_)       "
-"         / __  / ___/ __ `/ /        "
-"        / /_/ / /__/ /_/ / /         "
-"        \__,_/\___/\__,_/_/          "
-"                                     "
-"       Dongsheng Cai <d@tux.im>      "
-"                                     "
-"""""""""""""""""""""""""""""""""""""""
-" http://www.figlet.org/fonts/slant.flf
-
 " Fold stuff {{{
 set foldmethod=marker
 set nofoldenable

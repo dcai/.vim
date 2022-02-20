@@ -114,7 +114,6 @@ Plug 'tpope/vim-speeddating', { 'for': 'org' }
 " Plug 'vim-scripts/nginx.vim'
 Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
-Plug 'niftylettuce/vim-jinja'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'cespare/vim-toml'
 Plug 'dzeban/vim-log-syntax'
