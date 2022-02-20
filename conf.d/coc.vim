@@ -3,8 +3,7 @@ let g:coc_global_extensions = [
       \ 'coc-phpls',
       \ 'coc-vimlsp',
       \ 'coc-snippets',
-      \ 'coc-highlight',
-      \ 'coc-pyright'
+      \ 'coc-highlight'
       \ ]
 
 " coc use system node instead of node from asdf or nvm
