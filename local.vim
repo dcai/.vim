@@ -139,22 +139,9 @@ function! ChangeCurrentDirectory()
     exec 'cd ' . l:dir
   endif
 
-  let g:ale_fix_on_save = 1
-  if l:dir =~ 'wow'
-    " disable auto fix for woolworths projects
-    let g:ale_fix_on_save = 0
-  endif
-  if l:dir =~ 'iag'
-    " disable auto fix for iag projects
-    let g:ale_fix_on_save = 0
-  endif
+  let g:ale_fix_on_save = 0
 
   if match(l:file, 'html\|twig\|jinja2') > -1
-    " disable auto fix for html
-    let g:ale_fix_on_save = 0
-  endif
-
-  if match(l:file, 'mdk') > -1
     " disable auto fix for html
     let g:ale_fix_on_save = 0
   endif
