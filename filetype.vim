@@ -68,6 +68,7 @@ augroup filetypeGroup
   " git
   autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
   autocmd BufRead,BufNewFile */.git/* set filetype=gitconfig
+  autocmd BufRead,BufNewFile */gitconfig.d/* set filetype=gitconfig
 
   "others
   autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
