@@ -258,8 +258,8 @@ nnoremap gf :e <cfile><CR>
 
 noremap U :redo<cr>
 
-map <c-j> <ESC>:cn<CR> " next item in quickfix
-map <c-k> <ESC>:cp<CR> : prev item in quickfix
+" map <c-j> <ESC>:cn<CR> " next item in quickfix
+" map <c-k> <ESC>:cp<CR> : prev item in quickfix
 
 " Press <Home> or <End> to the 1st and last
 " char of the line

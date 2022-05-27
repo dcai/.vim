@@ -122,6 +122,7 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 Plug 'posva/vim-vue'
 Plug 'kongo2002/fsharp-vim'
+Plug 'hashivim/vim-terraform'
 
 """""""""""""""""""""""""""""""""""""""
 """ lfv89/vim-interestingwords
