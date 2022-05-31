@@ -28,11 +28,11 @@ let g:ale_xml_xmllint_indentsize = 4
 " Ale linters settings
 let g:ale_linters = {
   \ 'php': [],
-  \ 'javascript': ['cspell', 'tsserver', 'eslint'],
+  \ 'javascript': ['tsserver', 'eslint'],
   \ 'json': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
-  \ 'typescript': ['cspell', 'tsserver', 'eslint'],
+  \ 'typescript': ['tsserver', 'eslint'],
   \ 'vim': ['vimls'],
 \}
 
