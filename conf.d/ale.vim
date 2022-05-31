@@ -32,7 +32,7 @@ let g:ale_linters = {
   \ 'json': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
-  \ 'typescript': ['eslint', 'tslint'],
+  \ 'typescript': ['eslint', 'tsserver'],
   \ 'vim': ['vimls'],
 \}
 
