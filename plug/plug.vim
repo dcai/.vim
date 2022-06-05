@@ -42,6 +42,10 @@ else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
 endif
 
+
+if has('nvim')
+  call IncludeScript('plug/nvim.vim')
+endif
 if g:osuname ==? 'Windows'
   call IncludeScript('plug/windows.vim')
 else
