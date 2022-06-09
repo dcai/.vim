@@ -1,3 +1,4 @@
+let g:coc_disable_transparent_cursor = 1
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-vimlsp',
