@@ -238,4 +238,7 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 "       \ '_darcs', '_FOSSIL_', '.fslckout', 'Makefile', 'yarn.lock',
 "       \ '.editorconfig', 'eslintrc', 'eslintrc.js', 'package.json',
 "       \ '.jscsrc']
+
+Plug 'iberianpig/tig-explorer.vim'
+
 call plug#end()
