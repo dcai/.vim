@@ -45,6 +45,8 @@ else
 endif
 
 " use ctrl-j and ctrl-k to choose autocomplete items
+" adapted from:
+" https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources#use-tab-and-s-tab-to-navigate-the-completion-list
 inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<c-j>"
 inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<c-k>"
 
@@ -155,8 +157,6 @@ imap <c-x><c-s> <esc>:CocList snippets<CR>
 " Use <C-j> for both expand and jump (make expand higher priority.)
 " imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+let g:coc_snippet_prev = '<c-p>'
 let g:coc_snippet_next = '<tab>'
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_next = '<c-n>'
