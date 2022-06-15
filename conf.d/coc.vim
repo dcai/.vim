@@ -44,6 +44,10 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
+" use ctrl-j and ctrl-k to choose autocomplete items
+inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<c-j>"
+inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<c-k>"
+
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
