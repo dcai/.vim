@@ -112,6 +112,8 @@ set linebreak
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+" disable colorcolumn
+set colorcolumn=
 
 function! SoftWrap()
   let s:old_tw = &textwidth
