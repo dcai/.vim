@@ -110,7 +110,7 @@ endfunction
 
 let s:standard = {
     \ 'Boolean':                    {'fg': s:valuefg},
-    \ 'ColorColumn':                {'bg': s:red},
+    \ 'ColorColumn':                {'bg': s:none},
     \ 'Comment':                    {'fg': s:commentfg},
     \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
     \ 'Constant':                   {'fg': s:valuefg},
