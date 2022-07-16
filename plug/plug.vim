@@ -161,6 +161,7 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-function'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
+Plug 'wellle/targets.vim'
 Plug 'haya14busa/vim-textobj-function-syntax'
 " Plug 'thinca/vim-textobj-function-javascript'
 
