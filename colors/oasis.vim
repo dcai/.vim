@@ -35,42 +35,31 @@ endif
 " |  14   |  3*  |        Yellow, LightYellow         |
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+set background=dark
+" let s:is_light = (&background == 'light')
 
-let s:is_light = (&background == 'light')
-if s:is_light
-  set background=light
-  let s:bgcolor       = "none"
-  let s:fgcolor       = "darkgreen"
-  let s:datatypefg    = "darkgreen"
-  let s:identifierfg  = "darkgreen"
-  let s:repeatfg      = "darkyellow"
-  let s:preprocfg     = 'darkcyan'
-  let s:stringfg      = "darkgray"
-else
-  set background=dark
-  let s:bgcolor       = "black"
-  let s:fgcolor       = "green"
-  let s:datatypefg    = "green"       " const/let/types
-  let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
-  let s:repeatfg      = "lightyellow" " for/while
-  let s:preprocfg     = 'cyan'
-  let s:stringfg      = "red"        " js string literal, boolean
-endif
+let s:bgcolor       = "black"
+let s:fgcolor       = "green"
+let s:datatypefg    = "green"       " const/let/types
+let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
+let s:repeatfg      = "lightyellow" " for/while
+let s:preprocfg     = 'cyan'
+let s:stringfg      = "red"        " js string literal, boolean
+let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return/vim's let
 
 let s:aleerrorfg    = "white"
 let s:aleerrorbg    = "red"
 let s:alewarnfg     = "red"
 let s:alewarnbg     = "yellow"
-let s:jspropkeyfg   = 'black'       " javascript object property key
+let s:jspropkeyfg   = 'white'       " javascript object property key
 let s:jspropkeybg   = 'darkgreen'
 let s:conditionalfg = "black"       " if/else, ifelse
 let s:conditionalbg = "green"       " if/else, ifelse
-let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return
 let s:valuefg       = "darkgreen"   " js string literal, boolean
 let s:commentfg     = "darkgray"
-let s:identifierbg  = s:bgcolor     " js function class name, import/export, function/method name
+let s:identifierbg  = 'black'       " js function class name, import/export, function/method name
 let s:specialfg     = "darkred"     " js 'this' reference
-let s:operatorfg    = "blue"        " + - / *, new is operator too
+let s:operatorfg    = "lightgrey"    " + - / *, new is operator too
 let s:highlightbg   = 'lightgray'
 let s:black         = 'black'
 let s:blue          = 'blue'
@@ -81,7 +70,7 @@ let s:darkgreen     = 'darkgreen'
 let s:darkred       = 'darkred'
 let s:green         = 'green'
 let s:lightgray     = 'lightgray'
-let s:none          = 'none'
+let s:none          = 'NONE'
 let s:red           = 'red'
 let s:white         = 'white'
 let s:yellow        = 'yellow'
@@ -101,10 +90,18 @@ hi clear DiffDelete
 hi clear DiffText
 
 function! s:hi(group, value)
-  let l:ctermbg = has_key(a:value, 'bg') ? join(["ctermbg", a:value.bg], "=") : ""
-  let l:ctermfg = has_key(a:value, 'fg') ? join(["ctermfg", a:value.fg], "=") : ""
+  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : 'green'
+  let l:defaultbg = has_key(a:value, 'bg') ? a:value.bg : 'NONE'
+
+  let l:ctermbg = join(["ctermbg", l:defaultbg], "=")
+  let l:ctermfg = join(["ctermfg", l:defaultfg], "=")
+
+  let l:guifg = has_key(a:value, 'guifg') ? join(["guifg", a:value.guifg], "=") : join(['guifg', l:defaultfg], '=')
+  let l:guibg = has_key(a:value, 'guibg') ? join(["guibg", a:value.guibg], "=") : join(['guibg', l:defaultbg], '=')
+
   let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
-  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg], " ")
+
+  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg, l:guifg, l:guibg], " ")
   exe l:cmd
 endfunction
 
@@ -125,7 +122,7 @@ let s:standard = {
     \ 'Exception':                  {'fg': s:red, 'bg': s:highlightbg},
     \ 'FoldColumn':                 {'fg': s:darkgray},
     \ 'Folded':                     {'fg': s:darkgray},
-    \ 'Function':                   {'fg': s:operatorfg},
+    \ 'Function':                   {'fg': 'lightblue'},
     \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
@@ -136,17 +133,16 @@ let s:standard = {
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
-    \ 'Normal':                     {'bg': s:bgcolor, 'fg': s:fgcolor},
+    \ 'Normal':                     {'fg': s:fgcolor, 'guibg': 'black'},
     \ 'NormalFloat':                {'bg': s:white},
-    \ 'Pmenu':                      {'bg': s:yellow, 'fg': s:black},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
+    \ 'Pmenu':                      {'bg': s:yellow, 'fg': s:black},
     \ 'PreProc':                    {'fg': s:preprocfg},
     \ 'Question':                   {'fg': s:green},
     \ 'Repeat':                     {'fg': s:repeatfg, 'bg': s:highlightbg},
     \ 'Search':                     {'fg': s:searchfg, 'bg': s:searchbg},
     \ 'SignColumn':                 {'bg': s:none},
-    \ 'StorageClass':               {'fg': s:darkred},
     \ 'Special':                    {'fg': s:specialfg},
     \ 'SpecialChar':                {'fg': s:specialfg},
     \ 'SpecialKey':                 {'fg': s:darkgreen},
@@ -155,12 +151,13 @@ let s:standard = {
     \ 'SpellLocal':                 {'bg': s:red, 'fg': s:white, 'cterm': 'underline'},
     \ 'SpellRare':                  {'bg': s:red, 'fg': s:white, 'cterm': 'underline'},
     \ 'Statement':                  {'fg': s:statementfg},
+    \ 'StorageClass':               {'fg': s:darkred},
     \ 'String':                     {'fg': s:stringfg},
     \ 'Title':                      {'fg': s:green},
     \ 'Type':                       {'fg': s:datatypefg},
     \ 'Underlined':                 {'cterm': 'underline'},
     \ 'VertSplit':                  {'fg': s:green},
-    \ 'Visual':                     {'cterm': 'reverse'},
+    \ 'Visual':                     {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': 'white'},
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
     \ 'WarningMsg':                 {'fg': s:brown},
 \ }
@@ -192,6 +189,9 @@ endfor
 " javascript syntax definitions:
 " https://github.com/pangloss/vim-javascript/blob/1.2.5.1/syntax/javascript.vim#L243-L363
 let s:js = {
+    \ 'jsxTagName':                  {'fg': s:green},
+    \ 'tsxTagName':                  {'fg': s:green},
+    \ 'jsxElement':                  {'fg': s:red},
     \ 'jsFuncArgs':                 {'fg': s:blue},
     \ 'jsObjectKey':                {'fg': s:jspropkeyfg, 'bg': s:jspropkeybg},
 \ }
