@@ -289,8 +289,12 @@ inoremap <Up> <C-o>gk
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
 nnoremap <leader>aa :e #<cr>
 
+" open file in sublime
+nnoremap <leader>ee :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
+
 nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
+
 nnoremap <leader>qq :qall<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>
