@@ -6,6 +6,7 @@
 let s:plugged='$HOME/.local/vim/plug'
 let s:autoload='$HOME/' . g:vimrc . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
+let g:plug_shallow=3
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
@@ -36,7 +37,7 @@ endif
 call plug#begin(expand(s:plugged))
 
 if v:version > 800
-  Plug 'dcai/ale', { 'do': function('InstallAle') }
+  Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
 else
   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
@@ -119,7 +120,7 @@ Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'cespare/vim-toml'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
