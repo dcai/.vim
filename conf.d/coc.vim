@@ -18,38 +18,39 @@ endfunction
 
 let g:coc_node_path = s:FindNodePath()
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+" Map <tab> for trigger completion, completion confirm, snippet expand and jump
+" like VSCode
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ CheckBackspaces() ? "\<TAB>" :
-      \ coc#refresh()
+    \ coc#pum#visible() ? coc#_select_confirm() :
+        \ coc#expandableOrJumpable() ?
+            \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+                \ <SID>check_back_space() ? "\<TAB>" :
+                \ coc#refresh()
 
-function! CheckBackspaces() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> to trigger completion.
-" inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
 
 " use ctrl-j and ctrl-k to choose autocomplete items
 " adapted from:
 " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources#use-tab-and-s-tab-to-navigate-the-completion-list
-inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<c-j>"
-inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<c-k>"
+inoremap <expr> <c-j> coc#pum#visible() ? coc#pum#next(1) : "\<c-j>"
+inoremap <expr> <c-k> coc#pum#visible() ? coc#pum#prev(1) : "\<c-p>"
 
+" Use <CR> to confirm completion, use:
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+
+" To make <CR> to confirm selection of selected complete item or notify coc.nvim
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+                            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use <c-space> to trigger completion:
+" if has('nvim')
+"     inoremap <silent><expr> <c-space> coc#refresh()
+" else
+"     inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -154,7 +155,7 @@ imap <c-x><c-s> <esc>:CocList snippets<CR>
 " imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 let g:coc_snippet_prev = '<c-p>'
-let g:coc_snippet_next = '<tab>'
+" let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_next = '<c-n>'
 
 " Use `[g` and `]g` to navigate diagnostics
