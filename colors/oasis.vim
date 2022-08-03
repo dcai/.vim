@@ -176,6 +176,8 @@ let s:custom = {
     \ 'CocHintFloat':               {'fg': s:black},
     \ 'CocInfoFloat':               {'fg': s:blue},
     \ 'CocWarningFloat':            {'fg': s:red},
+    \ 'CocMenuSel':                 {'bg': s:red},
+    \ 'CocSearch':                  {'fg': 'darkblue'},
     \ 'SignifySignAdd':             {'fg': s:green},
     \ 'SignifySignChange':          {'fg': s:yellow},
     \ 'SignifySignDelete':          {'fg': s:darkred},
