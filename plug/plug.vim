@@ -89,12 +89,12 @@ Plug 'noahfrederick/vim-noctu' " 16 colors
 " Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
 
 """""""""""""""""""""""""""""""""""""""
-""" full color schemes
+""" full colorschemes
 """""""""""""""""""""""""""""""""""""""
-Plug 'jnurmine/Zenburn'
-Plug 'jacoborus/tender.vim'
-Plug 'altercation/vim-colors-solarized'
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
+" Plug 'jnurmine/Zenburn'
+" Plug 'jacoborus/tender.vim'
+" Plug 'altercation/vim-colors-solarized'
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'romainl/Apprentice'
 " Plug 'jonathanfilip/vim-lucius'
