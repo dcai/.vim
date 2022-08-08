@@ -9,21 +9,21 @@ nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <leader>yy :.w !pbcopy<CR><CR>
 vmap <leader>yy :w !pbcopy<CR><CR>
 
-if !has('nvim')
-  set noantialias
-endif
+" if !has('nvim')
+"   set noantialias
+" endif
 
 if has("gui_macvim")
-  set guifont=TamzenForPowerline:h16
-  " set guifont=Monaco:h14
-  " set guifont=Hack:h14
+  " set guifont=TamzenForPowerline:h16
+  " set guifont=Monaco:h18
+  " set guifont=Hack:h20
   " set guifont=Source\ Code\ Pro\ for\ Powerline:h16
   " set guifont=Anonymous\ Pro\ for\ Powerline:h18
   " set guifont=Cousine\ for\ Powerline:h16
   " set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
   " set guifont=Droid\ Sans\ Mono\ Dotted\ for\ Powerline:h16
   " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
-  " set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h16
+  set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline:h20
   " set guifont=Fira\ Mono\ for\ Powerline:h16
   " set guifont=Fira\ Mono\ Medium\ for\ Powerline:h16
   " set guifont=Inconsolata\ for\ Powerline:h14
