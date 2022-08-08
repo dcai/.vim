@@ -35,7 +35,6 @@ endif
 " |  14   |  3*  |        Yellow, LightYellow         |
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark
 " let s:is_light = (&background == 'light')
 
 let s:bgcolor       = "black"

@@ -61,7 +61,6 @@ set backspace=indent,eol,start
 " always show status line
 set laststatus=2
 set number
-" set nonumber
 set showmatch
 set switchbuf=usetab
 
@@ -316,22 +315,26 @@ else
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
 
+set background=dark
 try
-  " colorscheme solarized
-  colorscheme oasis
-  " colorscheme zenburn
-  " colorscheme desertink
-  " colorscheme gotham
-  " colorscheme lucius
-  " colorscheme apprentice
-  " colorscheme gruvbox
-  " colorscheme jellybeans
-  " colorscheme badwolf
-  " colorscheme tender
-  " colorscheme noctu
-  " colorscheme wombat
-  " colorscheme distinguished
-  " colorscheme seoul256
+  if !has('gui_running')
+    colorscheme oasis
+  else
+    colorscheme gruvbox
+    " colorscheme solarized
+    " colorscheme zenburn
+    " colorscheme desertink
+    " colorscheme gotham
+    " colorscheme lucius
+    " colorscheme apprentice
+    " colorscheme jellybeans
+    " colorscheme badwolf
+    " colorscheme tender
+    " colorscheme noctu
+    " colorscheme wombat
+    " colorscheme distinguished
+    " colorscheme seoul256
+  endif
 catch /^Vim\%((\a\+)\)\=:E185/
   " deal with it
 endtry
