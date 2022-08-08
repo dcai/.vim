@@ -319,8 +319,11 @@ set background=dark
 try
   if !has('gui_running')
     colorscheme oasis
+    " colorscheme noctu
   else
-    colorscheme gruvbox
+    " colorscheme oasis
+    " colorscheme gruvbox
+    colorscheme tender
     " colorscheme solarized
     " colorscheme zenburn
     " colorscheme desertink
@@ -329,8 +332,6 @@ try
     " colorscheme apprentice
     " colorscheme jellybeans
     " colorscheme badwolf
-    " colorscheme tender
-    " colorscheme noctu
     " colorscheme wombat
     " colorscheme distinguished
     " colorscheme seoul256
