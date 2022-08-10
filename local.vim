@@ -322,8 +322,8 @@ try
     " colorscheme noctu
   else
     " colorscheme oasis
-    " colorscheme gruvbox
-    colorscheme tender
+    colorscheme gruvbox
+    " colorscheme tender
     " colorscheme solarized
     " colorscheme zenburn
     " colorscheme desertink
@@ -335,6 +335,7 @@ try
     " colorscheme wombat
     " colorscheme distinguished
     " colorscheme seoul256
+    " colorscheme tokyonight
   endif
 catch /^Vim\%((\a\+)\)\=:E185/
   " deal with it
