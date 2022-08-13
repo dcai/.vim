@@ -29,10 +29,12 @@ let g:ale_xml_xmllint_indentsize = 4
 let g:ale_linters = {
   \ 'php': [],
   \ 'javascript': ['eslint', 'tsserver'],
+  \ 'javascriptreact': ['eslint', 'tsserver'],
   \ 'json': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint', 'tsserver'],
+  \ 'typescriptreact': ['eslint', 'tsserver'],
   \ 'vim': ['vimls'],
 \}
 
