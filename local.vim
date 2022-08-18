@@ -128,6 +128,16 @@ function! TrimWhiteSpace()
 endfunction
 " }}}
 
+" Toggle quickfix
+function! ToggleQuickFix()
+  if empty(filter(getwininfo(), 'v:val.quickfix'))
+    copen
+  else
+    cclose
+  endif
+endfunction
+nnoremap <silent> <leader>tt :call ToggleQuickFix()<cr>
+
 " Keep in current dir {{{
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
 """""""""""""""""""""""""""""""""""""""
@@ -284,6 +294,7 @@ vnoremap <silent> <Up> gk
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
+nnoremap <silent> <leader>ss :w<CR><CR>
 " toggle most recently used file
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
 nnoremap <leader>aa :e #<cr>
