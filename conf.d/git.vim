@@ -1,5 +1,5 @@
 command! Greview      :Git diff
-nnoremap <c-g>        :Git<CR> " git status
+nnoremap <leader>gg        :Git<CR> " git status
 nnoremap <leader>gw   :Gwrite<CR><CR>
 nnoremap <leader>gcv  :Git commit -v<cr>
 nnoremap <leader>gcf  :Git commit --no-verify --fixup HEAD -a<cr>
