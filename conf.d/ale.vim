@@ -33,7 +33,6 @@ let g:ale_linters = {
   \ 'json': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
-  \ 'terraform': ['terraform'],
   \ 'typescript': ['eslint', 'tsserver'],
   \ 'typescriptreact': ['eslint', 'tsserver'],
   \ 'vim': ['vimls'],
