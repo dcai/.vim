@@ -326,6 +326,14 @@ else
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
 
+" copied from https://www.zhihu.com/question/533699196/answer/2503107479
+" Open scratch split buffers
+nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+" run shell command
+nmap <space>sh<space> yy<space>ttss<space>P:.!bash<cr>
+xmap <space>sh<space> y<space>ttss<space>P:%!bash<cr>
+
 set background=dark
 try
   if !has('gui_running')
