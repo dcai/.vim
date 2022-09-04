@@ -306,6 +306,7 @@ nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
 nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 
 nnoremap <leader>qq :qall<cr>
+nnoremap <leader>wq :silent wq<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>
 
