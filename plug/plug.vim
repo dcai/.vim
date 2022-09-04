@@ -161,7 +161,6 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 """ Text objects
 """""""""""""""""""""""""""""""""""""""
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
 
@@ -184,12 +183,12 @@ Plug 'vim-scripts/python_match.vim'
 """""""""""""""""""""""""""""""""""""""
 """ bufkill
 """""""""""""""""""""""""""""""""""""""
-Plug 'qpkorr/vim-bufkill'
-if exists(':BD')
-  nnoremap X :BD<cr>
-else
-  nnoremap X :bd<cr>
-endif
+" Plug 'qpkorr/vim-bufkill'
+" if exists(':BD')
+"   nnoremap X :BD!<cr>
+" else
+"   nnoremap X :bd!<cr>
+" endif
 
 """""""""""""""""""""""""""""""""""""""
 """  yuttie/comfortable-motion.vim

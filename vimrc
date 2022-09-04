@@ -33,6 +33,7 @@ function! IncludeDir(dirname)
 endfunction
 call IncludeScript('plug/plug.vim')
 call IncludeScript('local.vim')
+call IncludeScript('keybindings.vim')
 
 if has('gui_running')
   call IncludeScript('gui.vim')
