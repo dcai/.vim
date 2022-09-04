@@ -136,7 +136,7 @@ function! ToggleQuickFix()
     cclose
   endif
 endfunction
-nnoremap <silent> <leader>tt :call ToggleQuickFix()<cr>
+nnoremap <silent> <leader>tf :call ToggleQuickFix()<cr>
 
 " Keep in current dir {{{
 " http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
@@ -307,6 +307,7 @@ nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 
 nnoremap <leader>qq :qall<cr>
 nnoremap <leader>wq :silent wq<cr>
+nnoremap <leader>qw :silent wq<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>
 
