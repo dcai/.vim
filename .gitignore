@@ -3,3 +3,4 @@ bundle
 thesaurus/
 *.spl
 autoload/plug.vim.old
+out.txt
