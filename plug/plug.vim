@@ -148,6 +148,8 @@ nnoremap <silent> N :call WordNavigation(0)<cr>
 " nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
+" case insensitive search
+let g:sneak#use_ic_scs = 1
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 nmap z/ <Plug>(incsearch-fuzzy-/)
