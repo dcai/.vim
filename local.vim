@@ -111,6 +111,9 @@ set linebreak
 set showmode
 " disable colorcolumn
 set colorcolumn=
+" split more naturally
+set splitbelow
+set splitright
 
 function! SoftWrap()
   let s:old_tw = &textwidth
