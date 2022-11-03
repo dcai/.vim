@@ -94,6 +94,9 @@ nnoremap <leader>qq :qall<cr>
 nnoremap <leader>wq :silent wq<cr>
 nnoremap <leader>qw :silent wq<cr>
 nnoremap <leader>xx :bd!<cr>
+nnoremap <leader>on :on<cr>
+nnoremap <leader>vs :vs<cr>
+nnoremap <leader>sp :vs<cr>
 nnoremap XX :bd!<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>

@@ -40,6 +40,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \ 'c': ['clang-format'],
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['pandoc'],
   \ 'fish': ['fish_indent'],
