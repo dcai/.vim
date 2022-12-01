@@ -28,6 +28,7 @@ let g:ale_xml_xmllint_indentsize = 4
 " Ale linters settings
 let g:ale_linters = {
   \ 'php': [],
+  \ 'c': ['clangd', 'ccls'],
   \ 'javascript': ['eslint', 'tsserver'],
   \ 'javascriptreact': ['eslint', 'tsserver'],
   \ 'json': [],
