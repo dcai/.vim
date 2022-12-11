@@ -76,5 +76,5 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
 
   " zmk
-  autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=c
+  autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
 augroup end
