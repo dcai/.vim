@@ -39,46 +39,48 @@ let g:colors_name='oasis'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let s:is_light = (&background == 'light')
 
-
-let s:red           = "red"
-let s:darkred       = 'darkred'
 let s:black         = 'black'
 let s:blue          = 'blue'
+let s:cyan          = 'cyan'
 let s:brown         = 'brown'
 let s:darkcyan      = 'darkcyan'
+let s:darkblue      = 'darkblue'
 let s:darkgray      = 'darkgray'
 let s:darkgreen     = 'darkgreen'
+let s:darkred       = 'darkred'
 let s:green         = 'green'
 let s:lightgray     = 'lightgray'
+let s:lightgreen    = 'lightgreen'
+let s:lightblue     = 'lightblue'
+let s:lightyellow   = 'lightyellow'
 let s:none          = 'NONE'
+let s:red           = 'red'
 let s:white         = 'white'
 let s:yellow        = 'yellow'
 
-let s:bgcolor       = "black"
-let s:fgcolor       = "green"
-let s:datatypefg    = "green"       " const/let/types
-let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
-let s:repeatfg      = "lightyellow" " for/while
-let s:preprocfg     = 'cyan'
+let s:bgcolor       = s:black
+let s:fgcolor       = s:green
+let s:datatypefg    = s:green       " const/let/types
+let s:identifierfg  = s:lightgreen  " js function class name, import/export, function/method name
+let s:repeatfg      = s:lightyellow " for/while
+let s:preprocfg     = s:cyan
 let s:stringfg      = s:red        " js string literal, boolean
-let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return/vim's let
+let s:statementfg   = s:lightyellow " jsxmarkup/async/await/return/vim's let
 
-let s:aleerrorfg    = "white"
+let s:aleerrorfg    = s:white
 let s:aleerrorbg    = s:red
 let s:alewarnfg     = s:red
-let s:alewarnbg     = "yellow"
-let s:jspropkeyfg   = s:red       " javascript object property key
-let s:jspropkeybg   = 'darkgreen'
-let s:conditionalfg = "black"       " if/else, ifelse
-let s:conditionalbg = "green"       " if/else, ifelse
-let s:valuefg       = "darkgreen"   " js string literal, boolean
-let s:commentfg     = "darkgray"
-let s:identifierbg  = 'black'       " js function class name, import/export, function/method name
+let s:alewarnbg     = s:yellow
+let s:conditionalfg = s:black       " if/else, ifelse
+let s:conditionalbg = s:green       " if/else, ifelse
+let s:valuefg       = s:darkgreen   " js string literal, boolean
+let s:commentfg     = s:darkgray
+let s:identifierbg  = s:black       " js function class name, import/export, function/method name
 let s:specialfg     = s:darkred     " js 'this' reference
-let s:operatorfg    = "lightgrey"    " + - / *, new is operator too
-let s:highlightbg   = 'lightgray'
-let s:searchbg      = 'blue'
-let s:searchfg      = 'white'
+let s:operatorfg    = s:lightgray    " + - / *, new is operator too
+let s:highlightbg   = s:lightgray
+let s:searchbg      = s:darkred
+let s:searchfg      = s:lightgreen
 
 hi clear
 hi clear ALEWarning
@@ -93,8 +95,8 @@ hi clear DiffDelete
 hi clear DiffText
 
 function! s:hi(group, value)
-  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : 'green'
-  let l:defaultbg = has_key(a:value, 'bg') ? a:value.bg : 'NONE'
+  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : s:green
+  let l:defaultbg = has_key(a:value, 'bg') ? a:value.bg : s:none
 
   let l:ctermbg = join(["ctermbg", l:defaultbg], "=")
   let l:ctermfg = join(["ctermfg", l:defaultfg], "=")
@@ -125,7 +127,7 @@ let s:standard = {
     \ 'Exception':                  {'fg': s:red, 'bg': s:highlightbg},
     \ 'FoldColumn':                 {'fg': s:darkgray},
     \ 'Folded':                     {'fg': s:darkgray},
-    \ 'Function':                   {'fg': 'lightblue'},
+    \ 'Function':                   {'fg': s:lightblue},
     \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
@@ -136,7 +138,7 @@ let s:standard = {
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
-    \ 'Normal':                     {'fg': s:fgcolor, 'guibg': 'black'},
+    \ 'Normal':                     {'fg': s:fgcolor, 'guibg': s:black},
     \ 'NormalFloat':                {'bg': s:white},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
@@ -160,7 +162,7 @@ let s:standard = {
     \ 'Type':                       {'fg': s:datatypefg},
     \ 'Underlined':                 {'cterm': 'underline'},
     \ 'VertSplit':                  {'fg': s:green},
-    \ 'Visual':                     {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': 'white'},
+    \ 'Visual':                     {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': s:white},
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
     \ 'WarningMsg':                 {'fg': s:brown},
 \ }
@@ -180,7 +182,7 @@ let s:custom = {
     \ 'CocInfoFloat':               {'fg': s:blue},
     \ 'CocWarningFloat':            {'fg': s:red},
     \ 'CocMenuSel':                 {'bg': s:red},
-    \ 'CocSearch':                  {'fg': 'darkblue'},
+    \ 'CocSearch':                  {'fg': s:darkblue},
     \ 'SignifySignAdd':             {'fg': s:green},
     \ 'SignifySignChange':          {'fg': s:yellow},
     \ 'SignifySignDelete':          {'fg': s:darkred},
@@ -194,11 +196,11 @@ endfor
 " javascript syntax definitions:
 " https://github.com/pangloss/vim-javascript/blob/1.2.5.1/syntax/javascript.vim#L243-L363
 let s:js = {
-    \ 'jsxTagName':                  {'fg': s:green},
-    \ 'tsxTagName':                  {'fg': s:green},
-    \ 'jsxElement':                  {'fg': s:red},
-    \ 'jsFuncArgs':                 {'fg': s:blue},
-    \ 'jsObjectKey':                {'fg': s:jspropkeyfg, 'bg': s:jspropkeybg},
+    \ 'jsxTagName':  {'fg': s:green},
+    \ 'tsxTagName':  {'fg': s:green},
+    \ 'jsxElement':  {'fg': s:red},
+    \ 'jsFuncArgs':  {'fg': s:white},
+    \ 'jsObjectKey': {'fg': s:red, 'bg': s:darkgreen},
 \ }
 for [group, value] in items(s:js)
     call s:hi(group, value)
