@@ -39,42 +39,44 @@ let g:colors_name='oasis'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let s:is_light = (&background == 'light')
 
-let s:bgcolor       = "black"
-let s:fgcolor       = "green"
-let s:datatypefg    = "green"       " const/let/types
-let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
-let s:repeatfg      = "lightyellow" " for/while
-let s:preprocfg     = 'cyan'
-let s:stringfg      = "red"        " js string literal, boolean
-let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return/vim's let
 
-let s:aleerrorfg    = "white"
-let s:aleerrorbg    = "red"
-let s:alewarnfg     = "red"
-let s:alewarnbg     = "yellow"
-let s:jspropkeyfg   = 'red'       " javascript object property key
-let s:jspropkeybg   = 'darkgreen'
-let s:conditionalfg = "black"       " if/else, ifelse
-let s:conditionalbg = "green"       " if/else, ifelse
-let s:valuefg       = "darkgreen"   " js string literal, boolean
-let s:commentfg     = "darkgray"
-let s:identifierbg  = 'black'       " js function class name, import/export, function/method name
-let s:specialfg     = "darkred"     " js 'this' reference
-let s:operatorfg    = "lightgrey"    " + - / *, new is operator too
-let s:highlightbg   = 'lightgray'
+let s:red           = "red"
+let s:darkred       = 'darkred'
 let s:black         = 'black'
 let s:blue          = 'blue'
 let s:brown         = 'brown'
 let s:darkcyan      = 'darkcyan'
 let s:darkgray      = 'darkgray'
 let s:darkgreen     = 'darkgreen'
-let s:darkred       = 'darkred'
 let s:green         = 'green'
 let s:lightgray     = 'lightgray'
 let s:none          = 'NONE'
-let s:red           = 'red'
 let s:white         = 'white'
 let s:yellow        = 'yellow'
+
+let s:bgcolor       = "black"
+let s:fgcolor       = "green"
+let s:datatypefg    = "green"       " const/let/types
+let s:identifierfg  = "lightgreen"  " js function class name, import/export, function/method name
+let s:repeatfg      = "lightyellow" " for/while
+let s:preprocfg     = 'cyan'
+let s:stringfg      = s:red        " js string literal, boolean
+let s:statementfg   = "lightyellow" " jsxmarkup/async/await/return/vim's let
+
+let s:aleerrorfg    = "white"
+let s:aleerrorbg    = s:red
+let s:alewarnfg     = s:red
+let s:alewarnbg     = "yellow"
+let s:jspropkeyfg   = s:red       " javascript object property key
+let s:jspropkeybg   = 'darkgreen'
+let s:conditionalfg = "black"       " if/else, ifelse
+let s:conditionalbg = "green"       " if/else, ifelse
+let s:valuefg       = "darkgreen"   " js string literal, boolean
+let s:commentfg     = "darkgray"
+let s:identifierbg  = 'black'       " js function class name, import/export, function/method name
+let s:specialfg     = s:darkred     " js 'this' reference
+let s:operatorfg    = "lightgrey"    " + - / *, new is operator too
+let s:highlightbg   = 'lightgray'
 let s:searchbg      = 'blue'
 let s:searchfg      = 'white'
 
