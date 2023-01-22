@@ -17,5 +17,5 @@ function! s:ToggleTerminal() abort
     endif
 endfunction
 
-nnoremap <silent> <Leader>tt :call <SID>ToggleTerminal()<CR>
-tnoremap <silent> <Leader>tt <C-w>N:call <SID>ToggleTerminal()<CR>
+" nnoremap <silent> <Leader>tt :call <SID>ToggleTerminal()<CR>
+" tnoremap <silent> <Leader>tt <C-w>N:call <SID>ToggleTerminal()<CR>

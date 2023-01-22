@@ -148,9 +148,10 @@ function! ToggleQuickFix()
     cclose
   endif
 endfunction
-nnoremap <silent> <leader>tf :call ToggleQuickFix()<cr>
+nnoremap <silent> <leader>qf :call ToggleQuickFix()<cr>
 
-" copied from https://www.zhihu.com/question/533699196/answer/2503107479
+" copied from
+" https://www.zhihu.com/question/533699196/answer/2503107479
 " Open scratch split buffers
 nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
 nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
