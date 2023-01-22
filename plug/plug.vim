@@ -84,6 +84,17 @@ Plug 'jiangmiao/auto-pairs'
 " let g:colorizer_auto_filetype='vim,css'
 
 """""""""""""""""""""""""""""""""""""""
+""" vimux
+"""""""""""""""""""""""""""""""""""""""
+Plug 'preservim/vimux'
+let g:VimuxOrientation = "h"
+
+Plug 'tyru/open-browser.vim'
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap <leader>gx <Plug>(openbrowser-smart-search)
+vmap <leader>gx <Plug>(openbrowser-smart-search)
+
+"""""""""""""""""""""""""""""""""""""""
 """ 16 color schemes
 """""""""""""""""""""""""""""""""""""""
 Plug 'noahfrederick/vim-noctu' " 16 colors
