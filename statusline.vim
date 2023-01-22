@@ -58,9 +58,9 @@ let s:insertmode = {'fg': 'white', 'bg': 'darkred', 'cterm': 'none'}
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
 
-au InsertEnter  * call InsertEnter(v:insertmode)
-au InsertChange * call InsertEnte(v:insertmode)
-au InsertLeave  * call InsertLeave()
+" au InsertEnter  * call InsertEnter(v:insertmode)
+" au InsertChange * call InsertEnte(v:insertmode)
+" au InsertLeave  * call InsertLeave()
 
 function! InsertLeave()
   call s:hi('statusline', s:active)
