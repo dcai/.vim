@@ -9,17 +9,18 @@ function! LastPath()
   \]
 
   let cmd = join(parts, ' | ')
-  let lastFile = system(cmd)
-  let path = split(lastFile, ':')
-  if filereadable(path[0])
-    exe 'e ' . path[0]
-    call cursor(str2nr(path[1]), str2nr(path[2]))
+  let lastfile = system(cmd)
+  let tokens = split(lastfile, ':')
+  let fullpath = get(tokens, 0)
+  if filereadable(fullpath)
+    exe 'e ' . fullpath
+    call cursor(str2nr(tokens[1]), str2nr(tokens[2]))
   else
-    echo "LastPath(): File not found " . lastFile
+    echo "LastPath(): File not found " . lastfile
   endif
 endfunction
 
-function! Term(cmd)
+function! Terminal(cmd)
    call VimuxRunCommand(a:cmd)
    call system('tmux select-pane -t ' . g:VimuxRunnerIndex)
 endfunction
@@ -33,7 +34,7 @@ function! StartTestsWatch()
   " call VimuxRunCommand(testrunner)
 endfunction
 
-map <leader>ttt :call Term('pwd')<cr>
+map <leader>ttt :call Terminal('pwd')<cr>
 map <leader>ttf :call LastPath()<cr>
 map <leader>ttc :call VimuxCloseRunner()<cr>
 map <leader>utw :call StartTestsWatch()<cr>
