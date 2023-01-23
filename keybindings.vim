@@ -16,9 +16,6 @@ map q\ <nop>
 map q? <nop>
 nmap q: <nop>
 
-" close everything
-nmap <silent> Q :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
-
 " Keep search matches in the middle of the window.
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
 " suddenly appears inside a fold.
@@ -93,11 +90,12 @@ nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 nnoremap <leader>qq :qall<cr>
 nnoremap <leader>wq :silent wq<cr>
 nnoremap <leader>qw :silent wq<cr>
-nnoremap <leader>xx :bd!<cr>
+nnoremap <leader>bd :bd!<cr>
+" close everything
+nnoremap <silent> <leader>xx :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
 nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
 nnoremap <leader>sp :vs<cr>
-nnoremap XX :bd!<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>
 
