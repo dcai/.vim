@@ -87,7 +87,7 @@ nnoremap <leader>aa :e #<cr>
 " open file in sublime
 nnoremap <leader>ee :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
-nnoremap <leader>ev :vsplit $HOME/.vim/local.vim<cr>
+nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
 nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
 
 nnoremap <leader>qq :qall<cr>
