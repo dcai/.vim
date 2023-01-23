@@ -75,6 +75,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
+Plug 'iberianpig/tig-explorer.vim'
 " Plug 'mg979/vim-visual-multi'
 " Plug 'bronson/vim-visual-star-search'
 " Plug 'maxbrunsfeld/vim-yankstack'
@@ -262,8 +263,6 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 "       \ '_darcs', '_FOSSIL_', '.fslckout', 'Makefile', 'yarn.lock',
 "       \ '.editorconfig', 'eslintrc', 'eslintrc.js', 'package.json',
 "       \ '.jscsrc']
-
-" Plug 'iberianpig/tig-explorer.vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
 Plug 'junegunn/fzf.vim'
