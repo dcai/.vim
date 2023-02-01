@@ -79,8 +79,8 @@ let s:identifierbg  = s:black       " js function class name, import/export, fun
 let s:specialfg     = s:darkred     " js 'this' reference
 let s:operatorfg    = s:lightgray    " + - / *, new is operator too
 let s:highlightbg   = s:lightgray
-let s:searchbg      = s:darkred
-let s:searchfg      = s:lightgreen
+let s:searchbg      = s:yellow
+let s:searchfg      = s:black
 
 hi clear
 hi clear ALEWarning
