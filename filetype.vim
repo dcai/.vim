@@ -28,6 +28,9 @@ augroup filetypeGroup
 
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
 
+  " dotenv
+  autocmd BufRead,BufNewFile *.env setf dosini
+
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
 
