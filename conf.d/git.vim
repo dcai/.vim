@@ -8,6 +8,10 @@ nnoremap <leader>gpf  :Dispatch! git push --tags --force-with-lease<CR>
 nnoremap <leader>gp   :Dispatch! git push<CR>
 nnoremap <leader>gr   :Git rebase -i --committer-date-is-author-date origin/HEAD<CR>
 
+nnoremap <leader>gds :Gvdiffsplit!<CR>
+nnoremap <leader>gdl :diffget //2<CR>
+nnoremap <leader>gdr :diffget //3<CR>
+
 " Tig
 nnoremap <leader>gg   :TigOpenProjectRootDir<CR>
 nnoremap <leader>gm   :TigBlame<CR>
