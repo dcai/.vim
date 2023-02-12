@@ -62,7 +62,6 @@ endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
 Plug 'reedes/vim-lexical'
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'djoshea/vim-autoread'
@@ -76,6 +75,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
 Plug 'iberianpig/tig-explorer.vim'
+" Plug 'junegunn/gv.vim'
 " Plug 'mg979/vim-visual-multi'
 " Plug 'bronson/vim-visual-star-search'
 " Plug 'maxbrunsfeld/vim-yankstack'
@@ -96,40 +96,12 @@ nmap <leader>gx <Plug>(openbrowser-smart-search)
 vmap <leader>gx <Plug>(openbrowser-smart-search)
 
 """""""""""""""""""""""""""""""""""""""
-""" 16 color schemes
-"""""""""""""""""""""""""""""""""""""""
-Plug 'noahfrederick/vim-noctu' " 16 colors
-" Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
-
-"""""""""""""""""""""""""""""""""""""""
-""" full colorschemes
-"""""""""""""""""""""""""""""""""""""""
-Plug 'morhetz/gruvbox'
-Plug 'jnurmine/Zenburn'
-Plug 'jacoborus/tender.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'nanotech/jellybeans.vim'
-Plug 'romainl/Apprentice'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'Lokaltog/vim-distinguished'
-Plug 'junegunn/seoul256.vim'
-Plug 'sjl/badwolf'
-Plug 'whatyouhide/vim-gotham'
-Plug 'toupeira/vim-desertink'
-Plug 'chriskempson/base16-vim'
-Plug 'vim-scripts/peaksea'
-Plug 'sheerun/vim-wombat-scheme'
-Plug 'ghifarit53/tokyonight-vim'
-Plug 'ayu-theme/ayu-vim'
-
-"""""""""""""""""""""""""""""""""""""""
 """ syntax
 """""""""""""""""""""""""""""""""""""""
 Plug 'evidens/vim-twig'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }
-" Plug 'vim-scripts/nginx.vim'
 Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
@@ -138,9 +110,9 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-Plug 'posva/vim-vue'
-Plug 'kongo2002/fsharp-vim'
 Plug 'hashivim/vim-terraform'
+" Plug 'posva/vim-vue'
+" Plug 'kongo2002/fsharp-vim'
 
 """""""""""""""""""""""""""""""""""""""
 """ lfv89/vim-interestingwords
