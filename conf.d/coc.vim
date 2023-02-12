@@ -78,20 +78,22 @@ nmap <leader>rn <Plug>(coc-rename)
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup cocgroup
-  autocmd!
-  " Highlight the symbol and its references when holding the cursor.
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd BufEnter *
-        \ if exists(':CocAction')
-            \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
-        \ | endif
+if exists(":CocConfig")
+  augroup cocgroup
+    autocmd!
+    " Highlight the symbol and its references when holding the cursor.
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd BufEnter *
+          \ if exists(':CocAction')
+              \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
+          \ | endif
 
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+    " Setup formatexpr specified filetype(s).
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder.
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup end
+endif
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
