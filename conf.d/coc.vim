@@ -2,9 +2,35 @@ let g:coc_disable_transparent_cursor = 1
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-vimlsp',
+      \ 'coc-pyright',
       \ 'coc-snippets',
       \ 'coc-highlight'
       \ ]
+" Use <C-j> for select text for visual placeholder of snippet.
+" vmap <C-j> <Plug>(coc-snippets-select)
+" Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
+let g:coc_snippet_prev = '<c-p>'
+" let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_next = '<c-n>'
+
+
+function! ShowDocumentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
+    else
+      call feedkeys('K', 'in')
+    endif
+  endif
+endfunction
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " coc use system node instead of node from asdf or nvm
 function! s:FindNodePath()
@@ -21,16 +47,11 @@ let g:coc_node_path = s:FindNodePath()
 " Map <tab> for trigger completion, completion confirm, snippet expand and jump
 " like VSCode
 inoremap <silent><expr> <TAB>
-    \ coc#pum#visible() ? coc#_select_confirm() :
-        \ coc#expandableOrJumpable() ?
-            \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+      \ coc#pum#visible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ?
+      \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
 " use ctrl-j and ctrl-k to choose autocomplete items
 " adapted from:
@@ -43,7 +64,7 @@ inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 " To make <CR> to confirm selection of selected complete item or notify coc.nvim
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
-                            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use <c-space> to trigger completion:
 " if has('nvim')
@@ -59,18 +80,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use D to show documentation in preview window.
 nnoremap <silent> D :call ShowDocumentation()<CR>
-function! ShowDocumentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-      if CocAction('hasProvider', 'hover')
-        call CocActionAsync('doHover')
-      else
-        call feedkeys('K', 'in')
-      endif
-  endif
-endfunction
-
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -78,22 +87,20 @@ nmap <leader>rn <Plug>(coc-rename)
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
 
-if exists(":CocConfig")
-  augroup cocgroup
-    autocmd!
-    " Highlight the symbol and its references when holding the cursor.
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    autocmd BufEnter *
-          \ if exists(':CocAction')
-              \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
-          \ | endif
+augroup cocgroup
+  autocmd!
+  " Highlight the symbol and its references when holding the cursor.
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  autocmd BufEnter *
+        \ if exists(':CocAction')
+        \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
+        \ | endif
 
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder.
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  augroup end
-endif
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
@@ -150,15 +157,6 @@ nnoremap <silent> <space>es :CocCommand snippets.editSnippets<CR>
 " Use <C-\> for trigger snippet expand.
 imap <C-\> <Plug>(coc-snippets-expand)
 imap <c-x><c-s> <esc>:CocList snippets<CR>
-
-" Use <C-j> for select text for visual placeholder of snippet.
-" vmap <C-j> <Plug>(coc-snippets-select)
-" Use <C-j> for both expand and jump (make expand higher priority.)
-" imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-let g:coc_snippet_prev = '<c-p>'
-" let g:coc_snippet_next = '<tab>'
-let g:coc_snippet_next = '<c-n>'
 
 " Use `[g` and `]g` to navigate diagnostics
 " nmap <silent> [g <Plug>(coc-diagnostic-prev)
