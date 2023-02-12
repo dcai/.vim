@@ -53,7 +53,7 @@ else
   call IncludeScript('plug/unix.vim')
 endif
 
-if has("patch-8.0.1453")
+if has("patch-8.0.1453") && !has('nvim')
   Plug 'neoclide/coc.nvim',
     \ { 'branch': 'release',
     \   'do': function('InstallCoc')

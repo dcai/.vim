@@ -54,6 +54,9 @@ if g:wsl ==? 'Microsoft'
 endif
 
 call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
+if has('nvim')
+  call IncludeDir('$HOME/' . g:vimrc . '/lua/*.lua')
+endif
 
 " if !exists('g:lightline')
   call IncludeScript('statusline.vim')
