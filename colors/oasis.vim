@@ -81,6 +81,7 @@ let s:operatorfg    = s:lightgray    " + - / *, new is operator too
 let s:highlightbg   = s:lightgray
 let s:searchbg      = s:yellow
 let s:searchfg      = s:black
+let s:functionargs  = s:yellow
 
 hi clear
 hi clear ALEWarning
@@ -199,7 +200,7 @@ let s:js = {
     \ 'jsxTagName':  {'fg': s:green},
     \ 'tsxTagName':  {'fg': s:green},
     \ 'jsxElement':  {'fg': s:red},
-    \ 'jsFuncArgs':  {'fg': s:white},
+    \ 'jsFuncArgs':  {'fg': s:functionargs},
     \ 'jsObjectKey': {'fg': s:red, 'bg': s:darkgreen},
 \ }
 for [group, value] in items(s:js)
