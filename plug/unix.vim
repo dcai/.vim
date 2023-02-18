@@ -1,6 +1,3 @@
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/fzf.vim'
-
 " function! BuildYCM(info)
 "   " info is a dictionary with 3 fields
 "   " - name:   name of the plugin
