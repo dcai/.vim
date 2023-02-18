@@ -252,7 +252,7 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 
 " Plug 'iberianpig/tig-explorer.vim'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
 Plug 'junegunn/fzf.vim'
 
 call plug#end()
