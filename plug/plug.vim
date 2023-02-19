@@ -4,6 +4,9 @@
 """""""""""""""""""""""""""""""""""""""
 
 let s:plugged='$HOME/.local/vim/plug'
+if has('nvim')
+  let s:plugged='$HOME/.local/nvim/plug'
+endif
 let s:autoload='$HOME/' . g:vimrc . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 let g:plug_shallow=3
@@ -44,26 +47,37 @@ else
 endif
 
 
+" just for neovim
 if has('nvim')
-  call IncludeScript('plug/nvim.vim')
-endif
-if g:osuname ==? 'Windows'
-  call IncludeScript('plug/windows.vim')
-else
-  call IncludeScript('plug/unix.vim')
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'SirVer/ultisnips'
+  Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+  Plug 'glepnir/lspsaga.nvim'
+  Plug 'nvim-tree/nvim-web-devicons'
 endif
 
-if has("patch-8.0.1453") && !has('nvim')
+if g:osuname ==? 'Windows'
+  " only windows
+endif
+
+if !has('nvim')
+  " not for nvim
   Plug 'neoclide/coc.nvim',
-    \ { 'branch': 'release',
-    \   'do': function('InstallCoc')
-    \ }
+        \ { 'branch': 'release',
+        \   'do': function('InstallCoc')
+        \ }
+  Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
 Plug 'reedes/vim-lexical'
-Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
 Plug 'djoshea/vim-autoread'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
