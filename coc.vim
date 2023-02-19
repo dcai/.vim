@@ -32,17 +32,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" coc use system node instead of node from asdf or nvm
-function! s:FindNodePath()
-  let l:paths = ['/usr/local/bin/node', '/usr/bin/node', '/opt/homebrew/bin/node']
-  for p in l:paths
-    if executable(p)
-      return p
-    endif
-  endfor
-endfunction
-
-let g:coc_node_path = s:FindNodePath()
+let g:coc_node_path = FindExecutable(['/usr/local/bin/node', '/usr/bin/node', '/opt/homebrew/bin/node'])
 
 " Map <tab> for trigger completion, completion confirm, snippet expand and jump
 " like VSCode
