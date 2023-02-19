@@ -140,7 +140,7 @@ let s:standard = {
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
     \ 'Normal':                     {'fg': s:fgcolor, 'guibg': s:black},
-    \ 'NormalFloat':                {'bg': s:white},
+    \ 'NormalFloat':                {'bg': s:darkgray},
     \ 'Number':                     {'fg': s:valuefg},
     \ 'Operator':                   {'fg': s:operatorfg},
     \ 'Pmenu':                      {'bg': s:yellow, 'fg': s:black},
