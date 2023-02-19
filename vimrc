@@ -31,6 +31,15 @@ function! IncludeDir(dirname)
     exe 'source' f
   endfor
 endfunction
+
+function! FindExecutable(paths)
+  for p in a:paths
+    if executable(p)
+      return p
+    endif
+  endfor
+endfunction
+
 call IncludeScript('plug/plug.vim')
 call IncludeScript('local.vim')
 call IncludeScript('keybindings.vim')
