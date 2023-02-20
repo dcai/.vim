@@ -58,6 +58,8 @@ if has('nvim')
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'jose-elias-alvarez/null-ls.nvim'
 endif
 
 if g:osuname ==? 'Windows'
