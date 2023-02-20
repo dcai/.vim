@@ -64,11 +64,6 @@ endif
 
 call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
 
-if has('nvim')
-  call IncludeScript('nvim.vim')
-  call IncludeDir('$HOME/' . g:vimrc . '/lua/*.lua')
-endif
-
 if !has('nvim')
   call IncludeScript('coc.vim')
 endif
