@@ -1,4 +1,4 @@
-local status, nvim_lsp = pcall(require, "lspconfig")
+local status, nvim_lspconfig = pcall(require, "lspconfig")
 
 if (not status) then
     return
@@ -9,7 +9,7 @@ if (not status) then
     return
 end
 
-nvim_lsp.pyright.setup {}
+nvim_lspconfig.pyright.setup {}
 
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...)
@@ -111,9 +111,9 @@ cmp.setup.cmdline(
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- TypeScript
-nvim_lsp.tsserver.setup {
+nvim_lspconfig.tsserver.setup {
     filetypes = {"typescript", "typescriptreact", "typescript.tsx"},
-    cmd = {"typescript-language-server", "--stdio"},
+    -- cmd = {"typescript-language-server", "--stdio"},
     on_attach = on_attach,
     capabilities = capabilities
 }

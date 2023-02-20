@@ -1,39 +1,13 @@
 require("lspsaga").setup(
     {
         lightbulb = {
-            enable = false,
-            enable_in_insert = true,
-            -- cache_code_action = true,
-            sign = true,
-            sign_priority = 40,
-            virtual_text = true
+            enable = false
         },
         symbol_in_winbar = {
-            enable = true,
-            separator = " | ",
-            hide_keyword = true,
-            show_file = true,
-            folder_level = 2,
-            respect_root = false,
-            color_mode = false
+            enable = true
         },
         ui = {
-            -- Currently, only the round theme exists
-            -- theme = "round",
-            -- This option only works in Neovim 0.9
-            title = false,
-            -- Border type can be single, double, rounded, solid, shadow.
-            border = "solid",
-            winblend = 0,
-            expand = "^",
-            collapse = ">",
-            preview = "p",
-            code_action = "A",
-            diagnostic = "🐞",
-            incoming = " ",
-            outgoing = " ",
-            hover = "H",
-            kind = {}
+            title = false
         }
     }
 )
