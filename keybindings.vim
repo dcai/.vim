@@ -84,8 +84,14 @@ nnoremap <leader>aa :e #<cr>
 " open file in sublime
 nnoremap <leader>ee :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
-nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
-nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
+
+if has("nvim")
+  nnoremap <leader>ev :e $HOME/.vim/init.vim<cr>
+  nnoremap <leader>sv :source $HOME/.vim/init.vim<cr>
+else
+  nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
+  nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
+endif
 
 nnoremap <leader>qq :qall<cr>
 nnoremap <leader>wq :silent wq<cr>
