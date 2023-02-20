@@ -4,10 +4,24 @@ if (not status) then
     return
 end
 
-local status, cmp = pcall(require, "cmp")
-if (not status) then
+local cmpstatus, cmp = pcall(require, "cmp")
+if (not cmpstatus) then
     return
 end
+local nulllsstatus, null_ls = pcall(require, "null-ls")
+if (not nulllsstatus) then
+    return
+end
+
+null_ls.setup(
+    {
+        sources = {
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.diagnostics.eslint,
+            null_ls.builtins.completion.spell
+        }
+    }
+)
 
 nvim_lspconfig.pyright.setup {}
 nvim_lspconfig.lua_ls.setup {
