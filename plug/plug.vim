@@ -49,6 +49,7 @@ endif
 
 " just for neovim
 if has('nvim')
+  Plug 'SirVer/ultisnips'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -56,10 +57,7 @@ if has('nvim')
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/nvim-cmp'
-  Plug 'SirVer/ultisnips'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-  Plug 'glepnir/lspsaga.nvim'
-  Plug 'nvim-tree/nvim-web-devicons'
 endif
 
 if g:osuname ==? 'Windows'

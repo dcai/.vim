@@ -11,14 +11,20 @@ end
 
 nvim_lspconfig.pyright.setup {}
 
+local opts = {noremap = true, silent = true}
+-- vim.keymap.set("n", "<leader>ee", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<leader>ee", vim.diagnostic.setloclist, opts)
+
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    -- Mappings.
-    local opts = {noremap = true, silent = true}
-    -- buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    -- buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    local bufopts = {noremap = true, silent = true, buffer = bufnr}
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 end
 
 cmp.setup(
@@ -39,6 +45,8 @@ cmp.setup(
             {
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                ["<c-j>"] = cmp.mapping(cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}), {"i"}),
+                ["<c-k>"] = cmp.mapping(cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}), {"i"}),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
                 ["<tab>"] = cmp.mapping.confirm(
@@ -54,7 +62,7 @@ cmp.setup(
                 {name = "buffer"},
                 {name = "nvim_lsp"},
                 {name = "ultisnips"}
-                -- {name = "vsnip"} -- For vsnip users.
+                -- { name = "vsnip" } -- For vsnip users.
                 -- { name = 'luasnip' }, -- For luasnip users.
                 -- { name = 'snippy' }, -- For snippy users.
             },
