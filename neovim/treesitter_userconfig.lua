@@ -10,6 +10,7 @@ require "nvim-treesitter.configs".setup {
     auth_install = true,
     ensure_installed = {
         "css",
+        "toml",
         "fish",
         "graphql",
         "html",

@@ -83,6 +83,16 @@ if !has('nvim')
   Plug 'GutenYe/json5.vim'
   Plug 'MaxMEllon/vim-jsx-pretty'
   Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
+  " syntax
+  Plug 'evidens/vim-twig'
+  Plug 'dag/vim-fish', { 'for': 'fish' }
+  Plug 'cespare/vim-toml', { 'branch': 'main' }
+  Plug 'jceb/vim-orgmode', { 'for': 'org' }
+  """""""""""""""""""""""""""""""""""""""
+  """ Python
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'vim-scripts/indentpython.vim'
+  Plug 'vim-scripts/python_match.vim'
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -122,14 +132,9 @@ vmap <leader>gx <Plug>(openbrowser-smart-search)
 """""""""""""""""""""""""""""""""""""""
 """ syntax
 """""""""""""""""""""""""""""""""""""""
-Plug 'evidens/vim-twig'
-Plug 'dag/vim-fish', { 'for': 'fish' }
-Plug 'jceb/vim-orgmode', { 'for': 'org' }
-Plug 'tpope/vim-speeddating', { 'for': 'org' }
 Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
@@ -173,12 +178,6 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
-
-"""""""""""""""""""""""""""""""""""""""
-""" Python
-"""""""""""""""""""""""""""""""""""""""
-Plug 'vim-scripts/indentpython.vim'
-Plug 'vim-scripts/python_match.vim'
 
 """""""""""""""""""""""""""""""""""""""
 """ bufkill
