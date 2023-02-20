@@ -7,15 +7,21 @@ require "nvim-treesitter.configs".setup {
         enable = false,
         disable = {}
     },
+    auth_install = true,
     ensure_installed = {
-        "tsx",
-        "lua",
+        "css",
         "fish",
-        "json",
-        "yaml",
         "html",
-        "vim"
+        "javascript",
+        "json",
+        "json5",
+        "graphql",
+        "lua",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml"
     }
 }
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.tsx.filename_to_parsename = {"javascript", "typescript.tsx"}
+parser_config.tsx.filetype_to_parsername = {"javascript", "typescript.tsx"}

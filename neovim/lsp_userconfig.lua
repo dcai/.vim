@@ -113,7 +113,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- TypeScript
 nvim_lspconfig.tsserver.setup {
     filetypes = {"typescript", "typescriptreact", "typescript.tsx"},
-    -- cmd = {"typescript-language-server", "--stdio"},
+    cmd = {"typescript-language-server", "--stdio"},
     on_attach = on_attach,
     capabilities = capabilities
 }
