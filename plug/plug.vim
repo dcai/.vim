@@ -73,6 +73,16 @@ if !has('nvim')
         \   'do': function('InstallCoc')
         \ }
   Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
+
+  """""""""""""""""""""""""""""""""""""""
+  """ javascript
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'pangloss/vim-javascript'
+  Plug 'zoubin/vim-gotofile'
+  Plug 'jparise/vim-graphql'
+  Plug 'GutenYe/json5.vim'
+  Plug 'MaxMEllon/vim-jsx-pretty'
+  Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -163,16 +173,6 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
-
-"""""""""""""""""""""""""""""""""""""""
-""" javascript
-"""""""""""""""""""""""""""""""""""""""
-Plug 'pangloss/vim-javascript'
-Plug 'zoubin/vim-gotofile'
-Plug 'jparise/vim-graphql'
-Plug 'GutenYe/json5.vim'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 
 """""""""""""""""""""""""""""""""""""""
 """ Python
