@@ -60,7 +60,7 @@ if has('nvim')
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x'  }
+  Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 endif
 
 if g:osuname ==? 'Windows'
@@ -94,6 +94,8 @@ if !has('nvim')
   """""""""""""""""""""""""""""""""""""""
   Plug 'vim-scripts/indentpython.vim'
   Plug 'vim-scripts/python_match.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
+  Plug 'junegunn/fzf.vim'
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -249,8 +251,5 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 "       \ '_darcs', '_FOSSIL_', '.fslckout', 'Makefile', 'yarn.lock',
 "       \ '.editorconfig', 'eslintrc', 'eslintrc.js', 'package.json',
 "       \ '.jscsrc']
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
-Plug 'junegunn/fzf.vim'
 
 call plug#end()
