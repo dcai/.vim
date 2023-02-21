@@ -20,7 +20,7 @@ let g:ale_javascript_eslint_suppress_missing_config = 1
 " let g:ale_javascript_prettier_use_global = 1
 
 let g:ale_lua_stylua_options =
-  \ '-s --indent-type Spaces --indent-width 2 --quote-style ForceSingle'
+  \ '-s --indent-type Spaces --indent-width 2 --quote-style ForceSingle --column-width 80'
 
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'

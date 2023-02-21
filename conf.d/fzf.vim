@@ -122,21 +122,24 @@ function! FzfSpell()
         \ {'source': suggestions, 'sink': function("FzfSpellSink")},
         \ s:fzf_base_options))
 endfunction
-nnoremap z= :call FzfSpell()<CR>
 
-" apt install wbritish
-" use wamerican for american spelling
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+if !has('nvim')
+  nnoremap z= :call FzfSpell()<CR>
 
-nnoremap <silent> <leader>bb :FzfBuffers<cr>
-nnoremap <silent> <leader>ll :FzfBuffers<cr>
-nnoremap <silent> <leader>fd :FzfFiles<cr>
-nnoremap <silent> <leader>ff :FzfGFiles<cr>
-nnoremap <silent> <leader>fr :FzfHistory<CR>
-nnoremap <silent> <leader>. :RgGitRoot<CR>
-nnoremap <silent> <leader>\ :FzfCommands<cr>
-nnoremap <silent> <leader>/ :RgInDir .<CR>
-nnoremap <silent> K :call RgSearchWordGit()<CR>
+  " apt install wbritish
+  " use wamerican for american spelling
+  imap <c-x><c-k> <plug>(fzf-complete-word)
+  imap <c-x><c-f> <plug>(fzf-complete-path)
+  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+  imap <c-x><c-l> <plug>(fzf-complete-line)
+
+  nnoremap <silent> <leader>bb :FzfBuffers<cr>
+  nnoremap <silent> <leader>ll :FzfBuffers<cr>
+  nnoremap <silent> <leader>fd :FzfFiles<cr>
+  nnoremap <silent> <leader>ff :FzfGFiles<cr>
+  nnoremap <silent> <leader>fr :FzfHistory<CR>
+  nnoremap <silent> <leader>. :RgGitRoot<CR>
+  nnoremap <silent> <leader>/ :FzfCommands<cr>
+  nnoremap <silent> <leader>\ :RgInDir .<CR>
+  nnoremap <silent> K :call RgSearchWordGit()<CR>
+endif
