@@ -6,10 +6,10 @@ let g:fzf_command_prefix = 'Fzf'
 " You can toggle file preview with ctrl-/.
 " It will show on the right with 50% width, but if the width is smaller
 " than 70 columns, it will show above the candidate list
-let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
+" let g:fzf_preview_window = ['right,50%,<70(up,40%)', 'ctrl-/']
 
 " Empty value to disable preview window altogether
-" let g:fzf_preview_window = []
+let g:fzf_preview_window = []
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
