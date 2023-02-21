@@ -19,6 +19,9 @@ let g:ale_php_cs_fixer_options = ''
 let g:ale_javascript_eslint_suppress_missing_config = 1
 " let g:ale_javascript_prettier_use_global = 1
 
+let g:ale_lua_stylua_options =
+  \ '-s --indent-type Spaces --indent-width 2 --quote-style ForceSingle'
+
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_set_loclist = 1
@@ -55,7 +58,7 @@ let g:ale_fixers = {
   \ 'json': ['prettier'],
   \ 'json5': ['prettier'],
   \ 'less': ['prettier'],
-  \ 'lua': ['luafmt'],
+  \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
   \ 'php': ['php_cs_fixer'],
   \ 'python': ['black', 'isort'],
