@@ -113,6 +113,7 @@ endfunction
 
 let s:standard = {
     \ 'Boolean':                    {'fg': s:valuefg},
+    \ 'FloatBorder':                {'fg': s:yellow},
     \ 'ColorColumn':                {'bg': s:none},
     \ 'Comment':                    {'fg': s:commentfg},
     \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
@@ -173,6 +174,7 @@ for [group, value] in items(s:standard)
 endfor
 
 let s:custom = {
+    \ 'FzfLuaNormal':               {'fg': s:yellow},
     \ 'ALEError':                   {'fg': s:aleerrorfg, 'bg': s:aleerrorbg, 'cterm': 'bold,underline'},
     \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
     \ 'ALEWarning':                 {'fg': s:alewarnfg, 'bg': s:alewarnbg, 'cterm': 'underline'},
