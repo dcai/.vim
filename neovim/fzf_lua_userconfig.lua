@@ -46,3 +46,18 @@ fzflua.setup({
     },
   },
 })
+
+function fzfKeymap(key, cmd)
+  vim.api.nvim_set_keymap(
+    'n',
+    key,
+    string.format('<cmd>lua require(\'fzf-lua\').%s()<CR>', cmd),
+    { noremap = true, silent = true }
+  )
+end
+fzfKeymap('<leader>ff', 'git_files')
+fzfKeymap('<leader>fr', 'oldfiles')
+fzfKeymap('<leader>ll', 'buffers')
+fzfKeymap('<leader>.', 'live_grep')
+fzfKeymap('<leader>/', 'builtin')
+fzfKeymap('K', 'grep_cword')
