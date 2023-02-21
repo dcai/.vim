@@ -60,6 +60,7 @@ if has('nvim')
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x'  }
 endif
 
 if g:osuname ==? 'Windows'
