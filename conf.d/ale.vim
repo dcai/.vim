@@ -25,8 +25,8 @@ let g:ale_lua_stylua_options =
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 let g:ale_set_loclist = 1
-let g:ale_pandoc_use_gfm = 1
-let g:ale_pandoc_options = '--columns=120'
+let g:ale_plaintext_pandoc_use_gfm = 1
+let g:ale_plaintext_pandoc_options = '--columns=120'
 let g:ale_xml_xmllint_indentsize = 4
 
 " Ale linters settings
@@ -48,7 +48,7 @@ let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'c': ['clang-format'],
   \ 'css': ['prettier'],
-  \ 'dokuwiki': ['pandoc'],
+  \ 'dokuwiki': ['plaintext'],
   \ 'fish': ['fish_indent'],
   \ 'go': ['gofmt'],
   \ 'graphql': ['prettier'],
