@@ -84,11 +84,33 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
+    { name = 'buffer' },
+    {
+      name = 'path',
+      option = {
+        -- Options go into this table
+      },
+    },
+    {
+      name = 'tmux',
+
+      option = {
+        -- Source from all panes in session instead of adjacent panes
+        all_panes = false,
+        -- Completion popup label
+        label = '[tmux]',
+        -- Trigger character
+        trigger_characters = { '.' },
+        -- Specify trigger characters for filetype(s)
+        -- { filetype = { '.' } }
+        trigger_characters_ft = {},
+        -- Keyword patch mattern
+        keyword_pattern = [[\w\+]],
+      },
+    },
     -- { name = "vsnip" } -- For vsnip users.
     -- { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'buffer' },
   }),
 })
 

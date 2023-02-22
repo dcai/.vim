@@ -56,6 +56,7 @@ if has('nvim')
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
+  Plug 'andersevenrud/cmp-tmux'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'nvim-lua/plenary.nvim'
