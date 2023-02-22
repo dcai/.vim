@@ -1,6 +1,6 @@
-local status, fzflua = pcall(require, 'fzf-lua')
+local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
 
-if not status then
+if not fzflua_loaded then
   return
 end
 
@@ -47,14 +47,15 @@ fzflua.setup({
   },
 })
 
-function fzfKeymap(key, cmd)
+local fzfKeymap = function(key, cmd)
   vim.api.nvim_set_keymap(
     'n',
     key,
-    string.format('<cmd>lua require(\'fzf-lua\').%s()<CR>', cmd),
+    string.format('<cmd>lua require("fzf-lua").%s()<CR>', cmd),
     { noremap = true, silent = true }
   )
 end
+
 fzfKeymap('<leader>ff', 'git_files')
 fzfKeymap('<leader>fr', 'oldfiles')
 fzfKeymap('<leader>ll', 'buffers')

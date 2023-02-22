@@ -1,15 +1,15 @@
-local status, nvim_lspconfig = pcall(require, 'lspconfig')
+local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
 
-if not status then
+if not lspconfig_loaded then
   return
 end
 
-local cmpstatus, cmp = pcall(require, 'cmp')
-if not cmpstatus then
+local cmp_loaded, cmp = pcall(require, 'cmp')
+if not cmp_loaded then
   return
 end
-local nulllsstatus, null_ls = pcall(require, 'null-ls')
-if not nulllsstatus then
+local nullls_loaded, null_ls = pcall(require, 'null-ls')
+if not nullls_loaded then
   return
 end
 
@@ -17,7 +17,7 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.completion.spell,
+    -- null_ls.builtins.completion.spell,
   },
 })
 
@@ -26,6 +26,18 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, opts)
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+local check_back_space = function()
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    return true
+  else
+    return false
+  end
+end
 
 cmp.setup({
   snippet = {
@@ -43,14 +55,30 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<c-j>'] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { 'i' }),
-    ['<c-k>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { 'i' }),
+    ['<c-j>'] = cmp.mapping(
+      cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+      { 'i' }
+    ),
+    ['<c-k>'] = cmp.mapping(
+      cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      { 'i' }
+    ),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<tab>'] = cmp.mapping.confirm({
-      select = true,
-      behavior = cmp.ConfirmBehavior.Replace,
-    }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<tab>'] = function()
+      if cmp and cmp.visible() then
+        cmp.select_next_item()
+      elseif check_back_space() then
+        return t('<Tab>')
+      else
+        cmp.complete()
+      end
+      return ''
+    end,
+    -- ['<tab>'] = cmp.mapping.confirm({
+    --   select = true,
+    --   behavior = cmp.ConfirmBehavior.Replace,
+    -- }),
   }),
   sources = cmp.config.sources({
     { name = 'buffer' },

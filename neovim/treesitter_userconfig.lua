@@ -1,4 +1,10 @@
-require('nvim-treesitter.configs').setup({
+local ts_loaded, tsconfig = pcall(require, 'nvim-treesitter.configs')
+
+if not ts_loaded then
+  return
+end
+
+tsconfig.setup({
   highlight = {
     enable = true,
     disable = {},
