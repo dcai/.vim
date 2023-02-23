@@ -4,6 +4,8 @@ if not lspconfig_loaded then
   return
 end
 
+local lsp_defaults = nvim_lspconfig.util.default_config
+
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
   return
@@ -39,6 +41,8 @@ local check_back_space = function()
   end
 end
 
+local select_opts = { behavior = cmp.SelectBehavior.Insert }
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -65,25 +69,54 @@ cmp.setup({
     ),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<tab>'] = function()
+    ['<tab>'] = cmp.mapping(function(fallback)
+      local col = vim.fn.col('.') - 1
       if cmp and cmp.visible() then
-        cmp.select_next_item()
+        cmp.select_next_item(select_opts)
       elseif check_back_space() then
         return t('<Tab>')
+      elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        fallback()
       else
         cmp.complete()
       end
-      return ''
-    end,
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item(select_opts)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
     -- ['<tab>'] = cmp.mapping.confirm({
     --   select = true,
     --   behavior = cmp.ConfirmBehavior.Replace,
     -- }),
   }),
+  formatting = {
+    fields = { 'menu', 'abbr', 'kind' },
+    format = function(entry, item)
+      local menu_icon = {
+        -- nvim_lsp = 'Ƒ',
+        -- ultisnips = 'λ',
+        -- tmux = 'Ω',
+        -- path = '⋗',
+        nvim_lsp = 'LSP',
+        ultisnips = 'SNIP',
+        tmux = 'TMUX',
+        path = 'PATH',
+      }
+
+      if menu_icon[entry.source.name] then
+        item.menu = menu_icon[entry.source.name]
+      end
+      return item
+    end,
+  },
   sources = cmp.config.sources({
-    { name = 'buffer' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
+    { name = 'buffer' },
     { name = 'buffer' },
     {
       name = 'path',
@@ -93,7 +126,7 @@ cmp.setup({
     },
     {
       name = 'tmux',
-
+      keyword_length = 3,
       option = {
         -- Source from all panes in session instead of adjacent panes
         all_panes = false,
@@ -141,9 +174,6 @@ cmp.setup.cmdline(':', {
   }),
 })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 local commonBufKeyMap = function(client, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'D', vim.lsp.buf.hover, bufopts)
@@ -154,14 +184,18 @@ local commonBufKeyMap = function(client, bufnr)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
 end
 
--- TypeScript
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lsp_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
+
 nvim_lspconfig.tsserver.setup({
   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
   cmd = { 'typescript-language-server', '--stdio' },
   on_attach = function(client, bufnr)
     commonBufKeyMap(client, bufnr)
   end,
-  capabilities = capabilities,
 })
 
 nvim_lspconfig.pyright.setup({
@@ -169,10 +203,15 @@ nvim_lspconfig.pyright.setup({
     commonBufKeyMap(client, bufnr)
   end,
 })
+
 nvim_lspconfig.lua_ls.setup({
   on_attach = function(client, bufnr)
     commonBufKeyMap(client, bufnr)
   end,
+  single_file_support = true,
+  flags = {
+    debounce_text_changes = 150,
+  },
   settings = {
     Lua = {
       diagnostics = {
