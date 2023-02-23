@@ -76,7 +76,7 @@ vnoremap <silent> <Up> gk
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
-nnoremap <silent> <leader>ss :w<CR><CR>
+nnoremap <silent> <leader>ww :w<CR><CR>
 " toggle most recently used file
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
 nnoremap <leader>aa :e #<cr>
@@ -87,10 +87,10 @@ nnoremap <leader>ee :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSu
 
 if has("nvim")
   nnoremap <leader>ev :e $HOME/.vim/init.vim<cr>
-  nnoremap <leader>sv :source $HOME/.vim/init.vim<cr>
+  nnoremap <leader>ee :source $HOME/.vim/init.vim<cr>
 else
   nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
-  nnoremap <leader>sv :source $HOME/.vim/vimrc<cr>
+  nnoremap <leader>ee :source $HOME/.vim/vimrc<cr>
 endif
 
 nnoremap <leader>qq :qall<cr>

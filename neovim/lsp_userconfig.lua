@@ -24,10 +24,11 @@ null_ls.setup({
 })
 
 local opts = { noremap = true, silent = true }
--- vim.keymap.set("n", "<leader>ee", vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<leader>ee', vim.diagnostic.setloclist, opts)
+-- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setloclist, opts)
+-- vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>dd', vim.diagnostic.setqflist, opts)
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -70,12 +71,10 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<tab>'] = cmp.mapping(function(fallback)
-      local col = vim.fn.col('.') - 1
       if cmp and cmp.visible() then
         cmp.select_next_item(select_opts)
       elseif check_back_space() then
-        return t('<Tab>')
-      elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        -- return t('<Tab>')
         fallback()
       else
         cmp.complete()
