@@ -50,7 +50,7 @@ cmp.setup({
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
       -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      vim.fn['UltiSnips#Anon'](args.body) -- For `ultisnips` users.
+      vim.fn['UltiSnips#Anon'](args.body)
     end,
   },
   window = {
@@ -117,12 +117,7 @@ cmp.setup({
     { name = 'ultisnips' },
     { name = 'buffer' },
     { name = 'buffer' },
-    {
-      name = 'path',
-      option = {
-        -- Options go into this table
-      },
-    },
+    { name = 'path' },
     {
       name = 'tmux',
       keyword_length = 3,
