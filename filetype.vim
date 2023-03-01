@@ -28,8 +28,12 @@ augroup filetypeGroup
 
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
 
+  " direnv
+  autocmd BufRead,BufNewFile *.envrc setf sh
+
   " dotenv
   autocmd BufRead,BufNewFile *.env setf dosini
+  autocmd BufRead,BufNewFile env.* setf dosini
 
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
@@ -42,7 +46,6 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
   autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
   autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
-  autocmd BufRead,BufNewFile .env* set filetype=dosini
   autocmd BufRead,BufNewFile editorconfig set filetype=dosini
 
   " php-fpm config
