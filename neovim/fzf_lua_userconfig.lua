@@ -1,8 +1,14 @@
 local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
-
 if not fzflua_loaded then
   return
 end
+
+local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
+if not lspconfig_loaded then
+  return
+end
+
+local root_pattern = nvim_lspconfig.util.root_pattern
 
 fzflua.setup({
   winopts = {
@@ -44,21 +50,40 @@ fzflua.setup({
         foldmethod = 'manual',
       },
     },
+    -- previewers = {
+    --   builtin = {
+    --     extensions = {
+    --       ['png'] = { 'viu', '-b' },
+    --       ['jpg'] = { 'viu', '-b' },
+    --     },
+    --   },
+    -- },
   },
 })
 
-local fzfKeymap = function(key, cmd)
-  vim.api.nvim_set_keymap(
-    'n',
-    key,
-    string.format('<cmd>lua require("fzf-lua").%s()<CR>', cmd),
-    { noremap = true, silent = true }
-  )
+function FzfLuaLiveGrep()
+  local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
+  fzflua.live_grep({ cwd = project_root, multiprocess = true })
 end
 
-fzfKeymap('<leader>ff', 'git_files')
-fzfKeymap('<leader>fr', 'oldfiles')
-fzfKeymap('<leader>ll', 'buffers')
-fzfKeymap('<leader>.', 'live_grep')
-fzfKeymap('<leader>/', 'builtin')
-fzfKeymap('K', 'grep_cword')
+function FzfLuaGrepCword()
+  local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
+  fzflua.grep_cword({ cwd = project_root })
+end
+
+local fzfKeymap = function(key, input, raw)
+  local cmd = ''
+  if raw then
+    cmd = string.format('<cmd>lua %s<CR>', input)
+  else
+    cmd = string.format('<cmd>lua require("fzf-lua").%s<CR>', input)
+  end
+  vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = true })
+end
+
+fzfKeymap('<leader>ff', 'git_files()', false)
+fzfKeymap('<leader>fr', 'oldfiles()', false)
+fzfKeymap('<leader>ll', 'buffers()', false)
+fzfKeymap('<leader>.', 'FzfLuaLiveGrep()', true)
+fzfKeymap('<leader>/', 'builtin()', false)
+fzfKeymap('K', 'FzfLuaGrepCword()', true)
