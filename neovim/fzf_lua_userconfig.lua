@@ -8,6 +8,8 @@ if not lspconfig_loaded then
   return
 end
 
+FzfLuaConfig = {}
+
 local root_pattern = nvim_lspconfig.util.root_pattern
 
 fzflua.setup({
@@ -61,12 +63,12 @@ fzflua.setup({
   },
 })
 
-function FzfLuaLiveGrep()
+FzfLuaConfig.live_grep = function()
   local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
   fzflua.live_grep({ cwd = project_root, multiprocess = true })
 end
 
-function FzfLuaGrepCword()
+FzfLuaConfig.grep_cword = function()
   local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
   fzflua.grep_cword({ cwd = project_root })
 end
@@ -84,6 +86,6 @@ end
 fzfKeymap('<leader>ff', 'git_files()', false)
 fzfKeymap('<leader>fr', 'oldfiles()', false)
 fzfKeymap('<leader>ll', 'buffers()', false)
-fzfKeymap('<leader>.', 'FzfLuaLiveGrep()', true)
+fzfKeymap('<leader>.', 'FzfLuaConfig.live_grep()', true)
 fzfKeymap('<leader>/', 'builtin()', false)
-fzfKeymap('K', 'FzfLuaGrepCword()', true)
+fzfKeymap('K', 'FzfLuaConfig.grep_cword()', true)
