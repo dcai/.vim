@@ -82,16 +82,16 @@ nnoremap <silent> <leader>ww :w<CR><CR>
 nnoremap <leader>aa :e #<cr>
 
 " open file in sublime
-nnoremap <leader>ee :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
+nnoremap <leader>st :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
 
 if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
   nnoremap <leader>ev :e $HOME/.vim/init.vim<cr>
-  nnoremap <leader>ee :source $HOME/.vim/init.vim<cr>
+  nnoremap <leader>rr :source $HOME/.vim/init.vim<cr>
 else
   nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
-  nnoremap <leader>ee :source $HOME/.vim/vimrc<cr>
+  nnoremap <leader>rr :source $HOME/.vim/vimrc<cr>
 endif
 
 nnoremap <leader>qq :qall<cr>
@@ -155,11 +155,11 @@ function! ToggleQuickFix()
 endfunction
 nnoremap <silent> <leader>tq :call ToggleQuickFix()<cr>
 
-" copied from
-" https://www.zhihu.com/question/533699196/answer/2503107479
+" " copied from
+" " https://www.zhihu.com/question/533699196/answer/2503107479
 " Open scratch split buffers
-nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
-nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
-" run shell command
-nmap <space>sh<space> yy<space>ttss<space>P:.!bash<cr>
-xmap <space>sh<space> y<space>ttss<space>P:%!bash<cr>
+" nnoremap <silent> <space>ttss<space> :new<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+" nnoremap <silent> <space>ttsv<space> :vnew<cr>:setl bt=nofile bh=wipe nobl noswf<cr>
+" " run shell command
+" nmap <space>sh<space> yy<space>ttss<space>P:.!bash<cr>
+" xmap <space>sh<space> y<space>ttss<space>P:%!bash<cr>

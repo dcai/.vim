@@ -83,6 +83,7 @@ local fzfKeymap = function(key, input, raw)
   vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = true })
 end
 
+fzfKeymap('<leader>ee', 'quickfix()', false)
 fzfKeymap('<leader>ff', 'git_files()', false)
 fzfKeymap('<leader>fr', 'oldfiles()', false)
 fzfKeymap('<leader>ll', 'buffers()', false)
