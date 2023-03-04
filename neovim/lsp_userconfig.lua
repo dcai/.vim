@@ -184,9 +184,24 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
   require('cmp_nvim_lsp').default_capabilities()
 )
 
+local function organize_imports()
+  local params = {
+    command = '_typescript.organizeImports',
+    arguments = { vim.api.nvim_buf_get_name(0) },
+    title = '',
+  }
+  vim.lsp.buf.execute_command(params)
+end
+
 nvim_lspconfig.tsserver.setup({
   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
   cmd = { 'typescript-language-server', '--stdio' },
+  commands = {
+    OrganizeImports = {
+      organize_imports,
+      description = 'Organize Imports',
+    },
+  },
   on_attach = function(client, bufnr)
     commonBufKeyMap(client, bufnr)
   end,
