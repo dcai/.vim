@@ -40,9 +40,8 @@ function! FindExecutable(paths)
   endfor
 endfunction
 
-call IncludeScript('plug/plug.vim')
 call IncludeScript('local.vim')
-call IncludeScript('keybindings.vim')
+call IncludeScript('keymap.vim')
 
 if has('gui_running')
   call IncludeScript('gui.vim')
@@ -68,6 +67,12 @@ if !has('nvim')
   call IncludeScript('coc.vim')
 endif
 
+""""""""""""""""""""""""""""""""""""""""
+" load vim-plug
+" should load after config
+""""""""""""""""""""""""""""""""""""""""
+call IncludeScript('plug/plug.vim')
+
 " if !exists('g:lightline')
-call IncludeScript('statusline.vim')
+  call IncludeScript('statusline.vim')
 " endif

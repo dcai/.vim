@@ -153,7 +153,7 @@ function! ToggleQuickFix()
     cclose
   endif
 endfunction
-nnoremap <silent> <leader>qf :call ToggleQuickFix()<cr>
+nnoremap <silent> <leader>tq :call ToggleQuickFix()<cr>
 
 " copied from
 " https://www.zhihu.com/question/533699196/answer/2503107479
