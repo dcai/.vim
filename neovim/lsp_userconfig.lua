@@ -24,11 +24,11 @@ null_ls.setup({
 })
 
 local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 -- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setloclist, opts)
 -- vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<leader>dd', vim.diagnostic.setqflist, opts)
+-- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setqflist, opts)
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)

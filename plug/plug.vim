@@ -21,7 +21,7 @@ endfunction
 
 function! InstallAle(info)
   if a:info.status ==? 'installed' || a:info.force
-    !npm install -g prettier eslint lua-fmt
+    " !npm install -g prettier eslint
     " !pip3 install --user vim-vint pathlib typing
     " !composer global require 'squizlabs/php_codesniffer=*'
     " !composer global require 'friendsofphp/php-cs-fixer'
@@ -75,8 +75,7 @@ if !has('nvim')
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
         \ }
-  Plug 'bronson/vim-trailing-whitespace' " highlight trailing whitespaces
-
+  Plug 'bronson/vim-trailing-whitespace'
   """""""""""""""""""""""""""""""""""""""
   """ javascript
   """""""""""""""""""""""""""""""""""""""
@@ -86,7 +85,9 @@ if !has('nvim')
   Plug 'GutenYe/json5.vim'
   Plug 'MaxMEllon/vim-jsx-pretty'
   Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-  " syntax
+  """""""""""""""""""""""""""""""""""""""
+  """ syntax
+  """""""""""""""""""""""""""""""""""""""
   Plug 'evidens/vim-twig'
   Plug 'dag/vim-fish', { 'for': 'fish' }
   Plug 'cespare/vim-toml', { 'branch': 'main' }
@@ -244,14 +245,9 @@ vmap <Leader>t= :Tabularize /=<CR>
 nmap <Leader>t: :Tabularize /:\zs<CR>
 vmap <Leader>t: :Tabularize /:\zs<CR>
 
-"""""""""""""""""""""""""""""""""""""""
-""" ludovicchabant/vim-gutentags
-"""""""""""""""""""""""""""""""""""""""
-" Plug 'ludovicchabant/vim-gutentags'
-" let g:gutentags_ctags_executable_javascript = 'jsctags'
-" let g:gutentags_project_root = ['.git', '.hg', '.bzr', '_darcs',
-"       \ '_darcs', '_FOSSIL_', '.fslckout', 'Makefile', 'yarn.lock',
-"       \ '.editorconfig', 'eslintrc', 'eslintrc.js', 'package.json',
-"       \ '.jscsrc']
+
+" Plug 'milkypostman/vim-togglelist'
+" nmap <script> <silent> <leader>tl :call ToggleLocationList()<CR>
+" nmap <script> <silent> <leader>tq :call ToggleQuickfixList()<CR>
 
 call plug#end()
