@@ -9,7 +9,12 @@
 
 [^1]
 
+```
+git clone https://github.com/dcai/.vim.git ~/.vim
+ln -s ~/.vim ~/.config/nvim
+```
+
 Extended `vimrc` since 2008[^2].
 
 [^1]: `figlet -f slant 'dcai vimrc'`
-[^2]: pre 2014 history was tracked in git: `2f299642859b9efe0d5b1619ceeabcab16158a19`
+[^2]: Pre-2014 history was tracked in git: `2f299642859b9efe0d5b1619ceeabcab16158a19`

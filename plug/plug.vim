@@ -62,6 +62,7 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+  Plug 'nathom/filetype.nvim'
 endif
 
 if g:osuname ==? 'Windows'
@@ -97,6 +98,8 @@ if !has('nvim')
   Plug 'vim-scripts/python_match.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
   Plug 'junegunn/fzf.vim'
+  Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+  Plug 'hashivim/vim-terraform'
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -141,9 +144,7 @@ Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-Plug 'hashivim/vim-terraform'
 " Plug 'posva/vim-vue'
 " Plug 'kongo2002/fsharp-vim'
 
