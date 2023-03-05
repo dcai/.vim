@@ -3,7 +3,7 @@
 """ https://github.com/reedes/vim-lexical
 """""""""""""""""""""""""""""""""""""""
 
-set spelllang=en
+set spelllang=en,cjk
 set nospell
 set spellcapcheck=
 
