@@ -63,6 +63,7 @@ if has('nvim')
   Plug 'jose-elias-alvarez/null-ls.nvim'
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
   Plug 'nathom/filetype.nvim'
+  Plug 'folke/which-key.nvim'
 endif
 
 if g:osuname ==? 'Windows'
