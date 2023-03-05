@@ -87,8 +87,8 @@ nnoremap <leader>st :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSu
 
 if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
-  nnoremap <leader>ev :e $HOME/.vim/init.vim<cr>
-  nnoremap <leader>rr :source $HOME/.vim/init.vim<cr>
+  nnoremap <leader>ev :e $HOME/.vim/init.lua<cr>
+  nnoremap <leader>rr :source $HOME/.vim/init.lua<cr>
 else
   nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
   nnoremap <leader>rr :source $HOME/.vim/vimrc<cr>
