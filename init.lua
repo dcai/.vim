@@ -4,7 +4,7 @@ vim.cmd(string.format('source %s/vimrc', vim_home))
 
 function find_executable(files)
   for _, file in ipairs(files) do
-    if vim.fn.executable(file) then
+    if vim.fn.executable(file) == 1 then
       return file
     end
   end
