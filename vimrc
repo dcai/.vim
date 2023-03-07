@@ -11,6 +11,8 @@ endif
 
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
+set path=.,src,node_nodules
+set suffixesadd=.js,.jsx,.ts,.tsx
 
 if has('win64') || has('win32') || has('win16')
   let g:osuname = 'Windows'

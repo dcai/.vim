@@ -81,7 +81,7 @@ if !has('nvim')
   """ javascript
   """""""""""""""""""""""""""""""""""""""
   Plug 'pangloss/vim-javascript'
-  Plug 'zoubin/vim-gotofile'
+  " Plug 'zoubin/vim-gotofile'
   Plug 'jparise/vim-graphql'
   Plug 'GutenYe/json5.vim'
   Plug 'MaxMEllon/vim-jsx-pretty'
