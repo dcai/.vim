@@ -2,6 +2,11 @@
 """  key mappings
 """"""""""""""""""""""""""""""""""""""""
 
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -87,7 +92,7 @@ if has("nvim")
   nnoremap <leader>ev :e $HOME/.vim/init.lua<cr>
   nnoremap <leader>rr :source $HOME/.vim/init.lua<cr>
 else
-  nnoremap <leader>ev :e $HOME/.vim/local.vim<cr>
+  nnoremap <leader>ev :e $HOME/.vim/vimrc<cr>
   nnoremap <leader>rr :source $HOME/.vim/vimrc<cr>
 endif
 

@@ -64,6 +64,7 @@ if has('nvim')
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
   Plug 'nathom/filetype.nvim'
   Plug 'folke/which-key.nvim'
+  Plug 'echasnovski/mini.nvim'
 endif
 
 if g:osuname ==? 'Windows'
