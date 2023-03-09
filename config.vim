@@ -9,8 +9,6 @@ else
   syntax on
 endif
 
-" set shell=/bin/bash\ --norc\ --noprofile
-set shell=/bin/sh
 set path=.,src,node_nodules
 set suffixesadd=.js,.jsx,.ts,.tsx
 
