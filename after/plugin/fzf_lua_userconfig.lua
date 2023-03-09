@@ -35,10 +35,11 @@ fzflua.setup({
       scrollborder_e = 'FloatBorder', -- scrollbar "empty" section highlight
       scrollborder_f = 'FloatBorder', -- scrollbar "full" section highlight
     },
+    preview_opts = 'hidden',
     preview = {
       -- default = 'cat',
       border = 'border',
-      -- hidden = 'hidden',
+      hidden = 'hidden',
       title = false,
       winopts = {
         number = false,
