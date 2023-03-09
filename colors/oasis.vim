@@ -39,49 +39,57 @@ let g:colors_name='oasis'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let s:is_light = (&background == 'light')
 
-let s:black         = 'black'
 let s:blue          = 'blue'
-let s:cyan          = 'cyan'
-let s:brown         = 'brown'
-let s:darkcyan      = 'darkcyan'
 let s:darkblue      = 'darkblue'
+
+let s:green         = 'Green'
+let s:darkgreen     = 'DarkGreen'
+
+let s:red           = 'Red'
+let s:darkred       = 'DarkRed'
+
+let s:cyan          = 'cyan'
+let s:darkcyan      = 'darkcyan'
+
+let s:magenta       = 'Magenta'
+let s:darkmagenta   = 'DarkMagenta'
+
 let s:darkgray      = 'darkgray'
-let s:darkgreen     = 'darkgreen'
-let s:darkred       = 'darkred'
-let s:green         = 'green'
-let s:lightgray     = 'lightgray'
-let s:lightgreen    = 'lightgreen'
-let s:lightblue     = 'lightblue'
-let s:lightyellow   = 'lightyellow'
-let s:none          = 'NONE'
-let s:red           = 'red'
-let s:white         = 'white'
+let s:gray          = 'Gray'
+
 let s:yellow        = 'yellow'
+let s:darkyellow    = 'darkyellow'
 
-let s:bgcolor       = s:black
-let s:fgcolor       = s:green
-let s:datatypefg    = s:green       " const/let/types
-let s:identifierfg  = s:lightgreen  " js function class name, import/export, function/method name
-let s:repeatfg      = s:lightyellow " for/while
-let s:preprocfg     = s:cyan
-let s:stringfg      = s:red        " js string literal, boolean
-let s:statementfg   = s:lightyellow " jsxmarkup/async/await/return/vim's let
+let s:black         = 'black'
+let s:white         = 'white'
 
-let s:aleerrorfg    = s:white
+let s:none          = 'NONE'
+
 let s:aleerrorbg    = s:red
-let s:alewarnfg     = s:red
+let s:aleerrorfg    = s:white
 let s:alewarnbg     = s:yellow
-let s:conditionalfg = s:black       " if/else, ifelse
-let s:conditionalbg = s:green       " if/else, ifelse
-let s:valuefg       = s:darkgreen   " js string literal, boolean
+let s:alewarnfg     = s:red
+let s:bgcolor       = s:black
 let s:commentfg     = s:darkgray
-let s:identifierbg  = s:black       " js function class name, import/export, function/method name
-let s:specialfg     = s:darkred     " js 'this' reference
-let s:operatorfg    = s:lightgray    " + - / *, new is operator too
-let s:highlightbg   = s:lightgray
+let s:conditionalbg = s:green     " if/else, ifelse
+let s:conditionalfg = s:black     " if/else, ifelse
+let s:datatypefg    = s:green     " const/let/types
+let s:fgcolor       = s:green
+let s:functionargs  = s:yellow
+let s:highlightbg   = s:gray
+let s:identifierbg  = s:black     " js function class name, import/export name, function/method name
+let s:identifierfg  = s:green     " js function class name, import/export name, function/method name
+let s:operatorfg    = s:gray      " + - / *, new is operator too
+let s:preprocfg     = s:cyan
+let s:repeatfg      = s:yellow    " for/while
 let s:searchbg      = s:yellow
 let s:searchfg      = s:black
-let s:functionargs  = s:yellow
+let s:specialfg     = s:darkred   " js 'this' reference
+let s:statementfg   = s:yellow    " jsxmarkup/async/await/return/vim's let
+let s:stringfg      = s:gray      " js string literal, boolean
+let s:valuefg       = s:darkgreen " js string literal, boolean
+let s:functionfg    = s:blue
+let s:functionbg    = s:black
 
 hi clear
 hi clear ALEWarning
@@ -96,7 +104,7 @@ hi clear DiffDelete
 hi clear DiffText
 
 function! s:hi(group, value)
-  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : s:green
+  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : s:magenta
   let l:defaultbg = has_key(a:value, 'bg') ? a:value.bg : s:none
 
   let l:ctermbg = join(["ctermbg", l:defaultbg], "=")
@@ -124,19 +132,19 @@ let s:standard = {
     \ 'DiffDelete':                 {'bg': s:red, 'fg': s:black},
     \ 'DiffText':                   {'bg': s:blue, 'fg': s:black},
     \ 'Directory':                  {'fg': s:darkcyan},
-    \ 'Error':                      {'fg': s:lightgray, 'bg': s:red, 'cterm': 'bold'},
-    \ 'ErrorMsg':                   {'fg': s:lightgray, 'bg': s:red, 'cterm': 'bold'},
+    \ 'Error':                      {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
+    \ 'ErrorMsg':                   {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
     \ 'Exception':                  {'fg': s:red, 'bg': s:highlightbg},
     \ 'FoldColumn':                 {'fg': s:darkgray},
     \ 'Folded':                     {'fg': s:darkgray},
-    \ 'Function':                   {'fg': s:lightblue},
+    \ 'Function':                   {'fg': s:functionfg, 'bg': s:functionbg},
     \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:operatorfg},
     \ 'Label':                      {'fg': s:operatorfg},
-    \ 'LineNr':                     {'fg': s:lightgray},
-    \ 'ModeMsg':                    {'fg': s:brown},
+    \ 'LineNr':                     {'fg': s:gray},
+    \ 'ModeMsg':                    {'fg': s:yellow},
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:darkred},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
@@ -153,10 +161,10 @@ let s:standard = {
     \ 'Special':                    {'fg': s:specialfg},
     \ 'SpecialChar':                {'fg': s:specialfg},
     \ 'SpecialKey':                 {'fg': s:darkgreen},
-    \ 'SpellBad':                   {'fg': s:brown, 'cterm': 'underline'},
-    \ 'SpellCap':                   {'fg': s:brown, 'cterm': 'underline'},
-    \ 'SpellLocal':                 {'fg': s:brown, 'cterm': 'underline'},
-    \ 'SpellRare':                  {'fg': s:brown, 'cterm': 'underline'},
+    \ 'SpellBad':                   {'fg': s:darkyellow, 'cterm': 'underline'},
+    \ 'SpellCap':                   {'fg': s:darkyellow, 'cterm': 'underline'},
+    \ 'SpellLocal':                 {'fg': s:darkyellow, 'cterm': 'underline'},
+    \ 'SpellRare':                  {'fg': s:darkyellow, 'cterm': 'underline'},
     \ 'Statement':                  {'fg': s:statementfg},
     \ 'StorageClass':               {'fg': s:darkred},
     \ 'String':                     {'fg': s:stringfg},
@@ -166,7 +174,7 @@ let s:standard = {
     \ 'VertSplit':                  {'fg': s:green},
     \ 'Visual':                     {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': s:white},
     \ 'VisualNOS':                  {'cterm': 'bold,underline'},
-    \ 'WarningMsg':                 {'fg': s:brown},
+    \ 'WarningMsg':                 {'fg': s:yellow},
 \ }
 
 for [group, value] in items(s:standard)
