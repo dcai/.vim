@@ -143,7 +143,7 @@ let s:standard = {
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:operatorfg},
     \ 'Label':                      {'fg': s:operatorfg},
-    \ 'LineNr':                     {'fg': s:gray},
+    \ 'LineNr':                     {'fg': s:green, 'bg': s:none},
     \ 'ModeMsg':                    {'fg': s:yellow},
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:darkred},
