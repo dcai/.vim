@@ -102,6 +102,8 @@ hi clear DiffAdd
 hi clear DiffChange
 hi clear DiffDelete
 hi clear DiffText
+hi clear LineNr
+hi clear SignColumn
 
 function! s:hi(group, value)
   let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : s:magenta
