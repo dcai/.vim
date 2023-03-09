@@ -1,11 +1,4 @@
-function find_executable(files)
-  for _, file in ipairs(files) do
-    if vim.fn.executable(file) == 1 then
-      return file
-    end
-  end
-  return nil
-end
+require('lib')
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -16,4 +9,4 @@ vim.g.python3_host_prog = find_executable({
 })
 
 local vim_home = vim.fn.expand('<sfile>:p:h')
-vim.cmd(string.format('source %s/vimrc', vim_home))
+vim.cmd(f('source {vim_home}/vimrc'))
