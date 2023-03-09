@@ -1,3 +1,8 @@
+" don't know why but shell should be defined in this script
+" if move to config.vim, it slows the neovim a lot.
+" set shell=/bin/bash\ --norc\ --noprofile
+set shell=/bin/sh
+
 if has('win64') || has('win32') || has('win16')
   let g:osuname = 'Windows'
   let g:vimrc = 'vimfiles'
@@ -5,7 +10,7 @@ if has('win64') || has('win32') || has('win16')
 else
   let g:osuname = substitute(system('uname'), "\n", '', '')
   let g:vimrc ='.vim'
-  let g:wsl = matchstr(substitute(system('uname -r'), "\n", '', ''), 'microsoft')
+  let g:wsl = matchstr(g:osuname, 'microsoft')
 endif
 
 function! IncludeScript(scriptname)
