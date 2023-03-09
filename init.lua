@@ -11,8 +11,8 @@ vim.g.python3_host_prog = find_executable({
 local vim_home = vim.fn.expand('<sfile>:p:h')
 vim.cmd(f('source {vim_home}/loader.vim'))
 
--- local ok, _ = pcall(vim.cmd, 'colorscheme minischeme')
-local ok, _ = pcall(vim.cmd, 'colorscheme oasis')
-if not ok then
+xpcall(function()
+  vim.cmd('colorscheme oasis')
+end, function()
   vim.cmd('colorscheme default')
-end
+end)
