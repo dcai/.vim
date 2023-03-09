@@ -1,3 +1,19 @@
+set nocompatible
+" this enables filetype specific plugin and indent files
+" run :filetype see status
+filetype plugin indent on
+
+if exists('syntax_on')
+  syntax reset
+else
+  syntax on
+endif
+
+" set shell=/bin/bash\ --norc\ --noprofile
+set shell=/bin/sh
+set path=.,src,node_nodules
+set suffixesadd=.js,.jsx,.ts,.tsx
+
 " Fold stuff {{{
 set foldmethod=marker
 set nofoldenable
@@ -178,36 +194,3 @@ augroup onEnterBuffer
   autocmd BufEnter * call ChangeCurrentDirectory()
 augroup END
 " }}}
-
-" set timeout
-
-let mapleader = "\<Space>"
-let g:mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
-let g:maplocalleader = "\<Space>"
-
-set background=dark
-try
-  if !has('gui_running')
-    colorscheme oasis
-    " colorscheme noctu
-  else
-    " colorscheme oasis
-    colorscheme gruvbox
-    " colorscheme tender
-    " colorscheme solarized
-    " colorscheme zenburn
-    " colorscheme desertink
-    " colorscheme gotham
-    " colorscheme lucius
-    " colorscheme apprentice
-    " colorscheme jellybeans
-    " colorscheme badwolf
-    " colorscheme wombat
-    " colorscheme distinguished
-    " colorscheme seoul256
-    " colorscheme tokyonight
-  endif
-catch /^Vim\%((\a\+)\)\=:E185/
-  " deal with it
-endtry
