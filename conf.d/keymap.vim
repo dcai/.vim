@@ -2,11 +2,6 @@
 """  key mappings
 """"""""""""""""""""""""""""""""""""""""
 
-let mapleader = "\<Space>"
-let g:mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
-let g:maplocalleader = "\<Space>"
-
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap w!! w !sudo tee % >/dev/null
 

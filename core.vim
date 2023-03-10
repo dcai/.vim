@@ -9,6 +9,11 @@ else
   syntax on
 endif
 
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
+
 set path=.,src,node_nodules
 set suffixesadd=.js,.jsx,.ts,.tsx
 
