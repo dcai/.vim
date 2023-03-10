@@ -30,6 +30,8 @@ function! FindExecutable(paths)
     endif
   endfor
 endfunction
+
+" this must load before others
 call IncludeScript('core.vim')
 
 call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
