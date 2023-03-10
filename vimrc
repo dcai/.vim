@@ -1,14 +1,12 @@
 let s:vim_home = expand('<sfile>:p:h')
 exec 'source ' . s:vim_home . '/loader.vim'
 
-call IncludeScript('coc.vim')
+call IncludeDir('$HOME/' . g:vimrc . '/conf.d/vim8/*.vim')
 
-set background=dark
 try
   if !has('gui_running')
     colorscheme oasis
   else
-    " colorscheme oasis
     colorscheme gruvbox
     " colorscheme tender
     " colorscheme solarized
@@ -25,5 +23,5 @@ try
     " colorscheme tokyonight
   endif
 catch /^Vim\%((\a\+)\)\=:E185/
-  " deal with it
+  colorscheme default
 endtry
