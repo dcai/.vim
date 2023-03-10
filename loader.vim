@@ -31,6 +31,8 @@ function! FindExecutable(paths)
   endfor
 endfunction
 
+call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
+
 if has('gui_running')
   call IncludeScript('gui.vim')
 else
@@ -48,8 +50,6 @@ endif
 if g:wsl ==? 'Microsoft'
   call IncludeScript('os/wsl.vim')
 endif
-
-call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
 
 
 """"""""""""""""""""""""""""""""""""""""
