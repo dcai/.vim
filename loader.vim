@@ -31,9 +31,6 @@ function! FindExecutable(paths)
   endfor
 endfunction
 
-call IncludeScript('config.vim')
-call IncludeScript('keymap.vim')
-
 if has('gui_running')
   call IncludeScript('gui.vim')
 else
