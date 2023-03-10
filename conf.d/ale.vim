@@ -29,7 +29,9 @@ let g:ale_xml_xmllint_indentsize = 4
 let g:ale_javascript_eslint_suppress_missing_config = 1
 let g:ale_javascript_eslint_use_global = 1
 " let g:ale_javascript_prettier_executable = 'prettierd'
-let g:ale_javascript_prettier_use_global = 1
+" shouldn't global prettier as the project might
+" use different version which generates different format
+let g:ale_javascript_prettier_use_global = 0
 
 " Ale linters settings
 let g:ale_linters = {
