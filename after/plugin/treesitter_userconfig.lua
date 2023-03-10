@@ -23,6 +23,7 @@ tsconfig.setup({
     'fish',
     'graphql',
     'html',
+    'http',
     'ini',
     'javascript',
     'jq',
