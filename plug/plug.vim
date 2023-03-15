@@ -52,6 +52,7 @@ if has('nvim')
   Plug 'SirVer/ultisnips'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
@@ -64,15 +65,16 @@ if has('nvim')
   Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
   Plug 'nathom/filetype.nvim'
   Plug 'folke/which-key.nvim'
-  Plug 'echasnovski/mini.nvim'
+  " Plug 'echasnovski/mini.nvim'
+  Plug 'lewis6991/gitsigns.nvim'
 endif
 
 if g:osuname ==? 'Windows'
   " only windows
 endif
 
+" not for nvim
 if !has('nvim')
-  " not for nvim
   Plug 'neoclide/coc.nvim',
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
@@ -103,6 +105,7 @@ if !has('nvim')
   Plug 'junegunn/fzf.vim'
   Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
   Plug 'hashivim/vim-terraform'
+  Plug 'mhinz/vim-signify'
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -116,7 +119,6 @@ Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
-Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
 Plug 'iberianpig/tig-explorer.vim'
 " Plug 'junegunn/gv.vim'
@@ -127,6 +129,7 @@ Plug 'iberianpig/tig-explorer.vim'
 " Plug 'diepm/vim-rest-console'
 " Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
 " let g:colorizer_auto_filetype='vim,css'
+Plug 'ntpeters/vim-better-whitespace'
 
 """""""""""""""""""""""""""""""""""""""
 """ vimux
