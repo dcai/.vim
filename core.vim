@@ -17,6 +17,11 @@ let g:maplocalleader = "\<Space>"
 set path=.,src,node_nodules
 set suffixesadd=.js,.jsx,.ts,.tsx
 
+" so vim could treat "is-word" as whole word
+" use textobject `dw` to delete it
+" https://til.hashrocket.com/posts/t8osyzywau-treat-words-with-dash-as-a-word-in-vim
+set iskeyword+=-
+
 " Fold stuff {{{
 set foldmethod=marker
 set nofoldenable
