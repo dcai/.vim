@@ -9,6 +9,9 @@ whichkey.setup({
   -- refer to the configuration section below
 })
 local loaded, gitsigns = pcall(require, 'gitsigns')
+if not loaded then
+  return
+end
 gitsigns.setup({
 
   signs = {
