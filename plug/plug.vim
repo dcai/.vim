@@ -67,6 +67,7 @@ if has('nvim')
   Plug 'folke/which-key.nvim'
   " Plug 'echasnovski/mini.nvim'
   Plug 'lewis6991/gitsigns.nvim'
+  Plug 'gpanders/editorconfig.nvim'
 endif
 
 if g:osuname ==? 'Windows'
@@ -106,6 +107,7 @@ if !has('nvim')
   Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
   Plug 'hashivim/vim-terraform'
   Plug 'mhinz/vim-signify'
+  Plug 'editorconfig/editorconfig-vim'
 endif
 
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
@@ -117,7 +119,6 @@ Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/matchit.zip'
 Plug 'scrooloose/nerdcommenter'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
 Plug 'iberianpig/tig-explorer.vim'
