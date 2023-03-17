@@ -1,1 +1,1 @@
-command! Jq %!jq .
+command! Jq %!jq --sort-keys .
