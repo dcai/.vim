@@ -65,31 +65,55 @@ let s:white         = 'white'
 
 let s:none          = 'NONE'
 
+let s:defaultbg     = s:none
+let s:defaultfg     = s:white
+
 let s:aleerrorbg    = s:red
 let s:aleerrorfg    = s:white
 let s:alewarnbg     = s:yellow
 let s:alewarnfg     = s:red
-let s:bgcolor       = s:black
 let s:commentfg     = s:darkgray
-let s:conditionalbg = s:green     " if/else, ifelse
-let s:conditionalfg = s:black     " if/else, ifelse
-let s:datatypefg    = s:green     " const/let/types
-let s:fgcolor       = s:green
 let s:functionargs  = s:yellow
-let s:highlightbg   = s:gray
-let s:identifierbg  = s:black     " js function class name, import/export name, function/method name
-let s:identifierfg  = s:green     " js function class name, import/export name, function/method name
-let s:operatorfg    = s:gray      " + - / *, new is operator too
+" js function class name, import/export name, function/method name
+" variable names
+let s:identifierbg  = s:none
+let s:identifierfg  = s:green
+
+" import is operator too
+let s:includefg     = s:darkgray
+let s:includebg     = s:none
 let s:preprocfg     = s:cyan
-let s:repeatfg      = s:yellow    " for/while
-let s:searchbg      = s:yellow
+" for/while
+let s:repeatfg      = s:yellow
+" if/else, ifelse, ternary operator
+let s:conditionalbg = s:black
+let s:conditionalfg = s:cyan
+
+let s:searchbg      = s:green
 let s:searchfg      = s:black
-let s:specialfg     = s:darkred   " js 'this' reference
-let s:statementfg   = s:yellow    " jsxmarkup/async/await/return/vim's let
-let s:stringfg      = s:gray      " js string literal, boolean
-let s:valuefg       = s:darkgreen " js string literal, boolean
-let s:functionfg    = s:blue
-let s:functionbg    = s:black
+" js 'this' reference
+let s:specialfg     = s:red
+let s:specialbg     = s:darkgray
+" for regular vim: jsxmarkup/async/await/return/vim's let
+let s:statementfg   = s:yellow
+" js string literal
+let s:stringfg      = s:gray
+let s:constantfg    = s:darkgreen
+let s:boolean       = s:blue
+let s:labelfg       = s:green
+let s:functionfg    = s:green
+let s:functionbg    = s:darkgray
+" imported object/class/enum
+let s:typefg        = s:darkyellow
+let s:typebg        = s:none
+" export/const/await/async/new/as
+let s:keywordfg     = s:cyan
+let s:keywordbg     = s:black
+" = > semicolon brackets
+let s:delimiterfg   = s:yellow
+let s:delimiterbg   = s:none
+" + - / * =
+let s:operatorfg    = s:yellow
 
 hi clear
 hi clear ALEWarning
@@ -106,14 +130,14 @@ hi clear LineNr
 hi clear SignColumn
 
 function! s:hi(group, value)
-  let l:defaultfg = has_key(a:value, 'fg') ? a:value.fg : s:magenta
-  let l:defaultbg = has_key(a:value, 'bg') ? a:value.bg : s:none
+  let l:fgcolor = has_key(a:value, 'fg') ? a:value.fg : s:defaultfg
+  let l:bgcolor = has_key(a:value, 'bg') ? a:value.bg : s:defaultbg
 
-  let l:ctermbg = join(["ctermbg", l:defaultbg], "=")
-  let l:ctermfg = join(["ctermfg", l:defaultfg], "=")
+  let l:ctermbg = join(["ctermbg", l:bgcolor], "=")
+  let l:ctermfg = join(["ctermfg", l:fgcolor], "=")
 
-  let l:guifg = has_key(a:value, 'guifg') ? join(["guifg", a:value.guifg], "=") : join(['guifg', l:defaultfg], '=')
-  let l:guibg = has_key(a:value, 'guibg') ? join(["guibg", a:value.guibg], "=") : join(['guibg', l:defaultbg], '=')
+  let l:guifg = has_key(a:value, 'guifg') ? join(["guifg", a:value.guifg], "=") : join(['guifg', l:fgcolor], '=')
+  let l:guibg = has_key(a:value, 'guibg') ? join(["guibg", a:value.guibg], "=") : join(['guibg', l:bgcolor], '=')
 
   let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
 
@@ -121,57 +145,40 @@ function! s:hi(group, value)
   exe l:cmd
 endfunction
 
-let s:standard = {
-    \ 'Boolean':                    {'fg': s:valuefg},
-    \ 'FloatBorder':                {'fg': s:yellow},
+let s:ui = {
     \ 'ColorColumn':                {'bg': s:none},
-    \ 'Comment':                    {'fg': s:commentfg},
-    \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
-    \ 'Constant':                   {'fg': s:valuefg},
-    \ 'Define':                     {'fg': s:operatorfg},
     \ 'DiffAdd':                    {'bg': s:green, 'fg': s:black},
     \ 'DiffChange':                 {'bg': s:yellow, 'fg': s:black},
     \ 'DiffDelete':                 {'bg': s:red, 'fg': s:black},
     \ 'DiffText':                   {'bg': s:blue, 'fg': s:black},
     \ 'Directory':                  {'fg': s:darkcyan},
-    \ 'Error':                      {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
     \ 'ErrorMsg':                   {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
-    \ 'Exception':                  {'fg': s:red, 'bg': s:highlightbg},
+    \ 'FloatBorder':                {'fg': s:blue},
     \ 'FoldColumn':                 {'fg': s:darkgray},
     \ 'Folded':                     {'fg': s:darkgray},
-    \ 'Function':                   {'fg': s:functionfg, 'bg': s:functionbg},
-    \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
-    \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
-    \ 'Include':                    {'fg': s:operatorfg},
-    \ 'Label':                      {'fg': s:operatorfg},
     \ 'LineNr':                     {'fg': s:green, 'bg': s:none},
+    \ 'MatchParen':                 {'bg': s:darkgreen},
     \ 'ModeMsg':                    {'fg': s:yellow},
     \ 'MoreMsg':                    {'fg': s:darkgreen},
-    \ 'Noise':                      {'fg': s:darkred},
+    \ 'Noise':                      {'fg': s:gray},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
-    \ 'Normal':                     {'fg': s:fgcolor, 'guibg': s:black},
-    \ 'NormalFloat':                {'bg': s:darkgray},
-    \ 'Number':                     {'fg': s:valuefg},
-    \ 'Operator':                   {'fg': s:operatorfg},
-    \ 'Pmenu':                      {'bg': s:yellow, 'fg': s:black},
-    \ 'PreProc':                    {'fg': s:preprocfg},
+    \ 'Normal':                     {'fg': s:defaultfg, 'guibg': s:black},
+    \ 'NormalFloat':                {'bg': s:darkgray, 'fg': s:green},
+    \ 'NormalNC':                   {'fg': s:gray},
+    \ 'Pmenu':                      {'bg': s:blue, 'fg': s:blue},
+    \ 'PmenuSbar':                  {'bg': s:blue},
+    \ 'PmenuSel':                   {'bg': s:red, 'fg': s:red},
+    \ 'PmenuThumb':                 {'bg': s:yellow},
     \ 'Question':                   {'fg': s:green},
-    \ 'Repeat':                     {'fg': s:repeatfg, 'bg': s:highlightbg},
+    \ 'Quote':                      {'fg': s:yellow},
     \ 'Search':                     {'fg': s:searchfg, 'bg': s:searchbg},
     \ 'SignColumn':                 {'bg': s:none},
-    \ 'Special':                    {'fg': s:specialfg},
-    \ 'SpecialChar':                {'fg': s:specialfg},
-    \ 'SpecialKey':                 {'fg': s:darkgreen},
     \ 'SpellBad':                   {'fg': s:darkyellow, 'cterm': 'underline'},
     \ 'SpellCap':                   {'fg': s:darkyellow, 'cterm': 'underline'},
     \ 'SpellLocal':                 {'fg': s:darkyellow, 'cterm': 'underline'},
     \ 'SpellRare':                  {'fg': s:darkyellow, 'cterm': 'underline'},
-    \ 'Statement':                  {'fg': s:statementfg},
-    \ 'StorageClass':               {'fg': s:darkred},
-    \ 'String':                     {'fg': s:stringfg},
-    \ 'Title':                      {'fg': s:green},
-    \ 'Type':                       {'fg': s:datatypefg},
+    \ 'Title':                      {'fg': s:green, 'bg': s:darkgray},
     \ 'Underlined':                 {'cterm': 'underline'},
     \ 'VertSplit':                  {'fg': s:green},
     \ 'Visual':                     {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': s:white},
@@ -179,12 +186,50 @@ let s:standard = {
     \ 'WarningMsg':                 {'fg': s:yellow},
 \ }
 
-for [group, value] in items(s:standard)
+for [group, value] in items(s:ui)
+    call s:hi(group, value)
+endfor
+
+let s:syntax = {
+    \ 'Boolean':                    {'fg': s:boolean},
+    \ 'Character':                  {'fg': s:red},
+    \ 'Comment':                    {'fg': s:commentfg},
+    \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
+    \ 'Constant':                   {'fg': s:constantfg},
+    \ 'Debug':                      {'fg': s:gray},
+    \ 'Define':                     {'bg': s:red},
+    \ 'Delimiter':                  {'fg': s:delimiterfg, 'bg': s:delimiterbg},
+    \ 'Error':                      {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
+    \ 'Exception':                  {'fg': s:red, 'bg': s:none},
+    \ 'Function':                   {'fg': s:functionfg, 'bg': s:functionbg},
+    \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
+    \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
+    \ 'Include':                    {'fg': s:includefg, 'bg': s:includebg},
+    \ 'Keyword':                    {'fg': s:keywordfg,  'bg': s:keywordbg},
+    \ 'Label':                      {'fg': s:labelfg},
+    \ 'Macro':                      {'fg': s:red},
+    \ 'Number':                     {'fg': s:blue},
+    \ 'Operator':                   {'fg': s:operatorfg},
+    \ 'PreCondit':                  {'fg': s:preprocfg},
+    \ 'PreProc':                    {'fg': s:preprocfg},
+    \ 'Repeat':                     {'fg': s:repeatfg},
+    \ 'Special':                    {'fg': s:specialfg, 'bg': s:specialbg},
+    \ 'SpecialKey':                 {'fg': s:specialfg, 'bg': s:specialbg},
+    \ 'Statement':                  {'fg': s:statementfg},
+    \ 'StorageClass':               {'fg': s:darkred},
+    \ 'String':                     {'fg': s:stringfg},
+    \ 'Structure':                  {'fg': s:red},
+    \ 'Tag':                        {'fg': s:red},
+    \ 'Todo':                       {'fg': s:red},
+    \ 'Type':                       {'fg': s:typefg, 'bg': s:typebg},
+    \ 'Typedef':                    {'fg': s:red},
+\ }
+
+for [group, value] in items(s:syntax)
     call s:hi(group, value)
 endfor
 
 let s:custom = {
-    \ 'FzfLuaNormal':               {'fg': s:yellow},
     \ 'ALEError':                   {'fg': s:aleerrorfg, 'bg': s:aleerrorbg, 'cterm': 'bold,underline'},
     \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
     \ 'ALEWarning':                 {'fg': s:alewarnfg, 'bg': s:alewarnbg, 'cterm': 'underline'},
@@ -193,9 +238,9 @@ let s:custom = {
     \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
     \ 'CocHintFloat':               {'fg': s:black},
     \ 'CocInfoFloat':               {'fg': s:blue},
-    \ 'CocWarningFloat':            {'fg': s:red},
     \ 'CocMenuSel':                 {'bg': s:red},
     \ 'CocSearch':                  {'fg': s:darkblue},
+    \ 'CocWarningFloat':            {'fg': s:red},
     \ 'SignifySignAdd':             {'fg': s:green},
     \ 'SignifySignChange':          {'fg': s:yellow},
     \ 'SignifySignDelete':          {'fg': s:darkred},
@@ -203,6 +248,20 @@ let s:custom = {
 \ }
 
 for [group, value] in items(s:custom)
+    call s:hi(group, value)
+endfor
+
+let s:cmp = {
+    \ 'CmpItemAbbrDeprecated':  {'fg': s:green, 'bg': s:none},
+    \ 'CmpItemAbbrMatch':  {'fg': s:black, 'bg': s:green},
+    \ 'CmpItemMenu':  {'fg': s:green, 'bg': s:none},
+    \ 'CmpItemKind':  {'fg': s:yellow, 'bg': s:none},
+    \ 'CmpItemKindFunction':  {'fg': s:blue, 'bg': s:none},
+    \ 'CmpItemKindMethod':  {'fg': s:magenta, 'bg': s:none},
+    \ 'CmpItemKindKeyword':  {'fg': s:red, 'bg': s:none},
+    \ 'CmpItemKindVariable':  {'fg': s:cyan, 'bg': s:none},
+\ }
+for [group, value] in items(s:cmp)
     call s:hi(group, value)
 endfor
 
@@ -219,6 +278,12 @@ for [group, value] in items(s:js)
     call s:hi(group, value)
 endfor
 
+let s:active = {'fg': s:black, 'bg': s:yellow, 'cterm': 'none'}
+let s:inactive = {'fg': s:white, 'bg': s:darkgray, 'cterm': 'none'}
+let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
+
+call s:hi('statusline', s:active)
+call s:hi('statuslineNC', s:inactive)
 
 "" Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white

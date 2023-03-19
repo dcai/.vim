@@ -43,32 +43,20 @@ set statusline+=%h                              " help file flag
 set statusline+=%r                              " read only flag
 " }}}
 
-function! s:hi(group, value)
-  let l:ctermbg = has_key(a:value, 'bg') ? join(["ctermbg", a:value.bg], "=") : ""
-  let l:ctermfg = has_key(a:value, 'fg') ? join(["ctermfg", a:value.fg], "=") : ""
-  let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
-  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg], " ")
-  exe l:cmd
-endfunction
-
-let s:active = {'fg': 'black', 'bg': 'green', 'cterm': 'none'}
-let s:inactive = {'fg': 'white', 'bg': 'darkgrey', 'cterm': 'none'}
-let s:insertmode = {'fg': 'white', 'bg': 'darkred', 'cterm': 'none'}
-
-call s:hi('statusline', s:active)
-call s:hi('statuslineNC', s:inactive)
-
 " au InsertEnter  * call InsertEnter(v:insertmode)
 " au InsertChange * call InsertEnte(v:insertmode)
 " au InsertLeave  * call InsertLeave()
-
-function! InsertLeave()
-  call s:hi('statusline', s:active)
-endfunction
-
-function! InsertEnter(mode)
-  call s:hi('statusline', s:insertmode)
-endfunction
+" let s:active = {'fg': 'black', 'bg': 'green', 'cterm': 'none'}
+" let s:inactive = {'fg': 'white', 'bg': 'darkgrey', 'cterm': 'none'}
+" let s:insertmode = {'fg': 'white', 'bg': 'darkred', 'cterm': 'none'}
+"
+" function! InsertLeave()
+"   call s:hi('statusline', s:active)
+" endfunction
+"
+" function! InsertEnter(mode)
+"   call s:hi('statusline', s:insertmode)
+" endfunction
 
 " function! InsertStatuslineColor(mode)
   " if a:mode == 'i'
