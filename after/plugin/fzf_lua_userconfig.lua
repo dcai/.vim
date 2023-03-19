@@ -18,7 +18,7 @@ fzflua.setup({
     row = 1,
     height = 0.5,
     hl = {
-      normal = 'FzfLuaNormal', -- window normal color (fg+bg)
+      normal = 'Normal', -- window normal color (fg+bg)
       border = 'FloatBorder', -- border color
       help_normal = 'Normal', -- <F1> window normal
       help_border = 'FloatBorder', -- <F1> window border
@@ -27,7 +27,7 @@ fzflua.setup({
       cursorline = 'CursorLine', -- cursor line
       cursorlinenr = 'CursorLineNr', -- cursor line number
       search = 'IncSearch', -- search matches (ctags|help)
-      title = 'FzfLuaNormal', -- preview border title (file/buffer)
+      title = 'Title', -- preview border title (file/buffer)
       -- Only used with 'winopts.preview.scrollbar = 'float'
       scrollfloat_e = 'PmenuSbar', -- scrollbar "empty" section highlight
       scrollfloat_f = 'PmenuThumb', -- scrollbar "full" section highlight
