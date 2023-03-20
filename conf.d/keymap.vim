@@ -91,15 +91,18 @@ else
   nnoremap <leader>rr :source $HOME/.vim/vimrc<cr>
 endif
 
-nnoremap <leader>qq :qall<cr>
-nnoremap <leader>wq :silent wq<cr>
-nnoremap <leader>qw :silent wq<cr>
-nnoremap <leader>bd :bd!<cr>
-" close everything
-nnoremap <silent> <leader>xx :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
-nnoremap <leader>on :on<cr>
-nnoremap <leader>vs :vs<cr>
-nnoremap <leader>sp :vs<cr>
+if !exists('g:vscode')
+  nnoremap <leader>qq :qall<cr>
+  nnoremap <leader>wq :silent wq<cr>
+  nnoremap <leader>qw :silent wq<cr>
+  nnoremap <leader>bd :bd!<cr>
+
+  " close everything
+  nnoremap <silent> <leader>xx :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
+  nnoremap <leader>on :on<cr>
+  nnoremap <leader>vs :vs<cr>
+  nnoremap <leader>sp :vs<cr>
+endif
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :noh<CR><CR>
 

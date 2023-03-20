@@ -62,9 +62,12 @@ if has('nvim')
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
-  Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+  if !exists('g:vscode')
+    " don't use fzf in vscode
+    Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+    Plug 'folke/which-key.nvim'
+  endif
   Plug 'nathom/filetype.nvim'
-  Plug 'folke/which-key.nvim'
   " Plug 'echasnovski/mini.nvim'
   Plug 'lewis6991/gitsigns.nvim'
   Plug 'gpanders/editorconfig.nvim'
