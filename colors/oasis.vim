@@ -89,7 +89,7 @@ let s:repeatfg      = s:yellow
 let s:conditionalbg = s:black
 let s:conditionalfg = s:cyan
 
-let s:searchbg      = s:green
+let s:searchbg      = s:darkyellow
 let s:searchfg      = s:black
 " js 'this' reference
 let s:specialfg     = s:red
