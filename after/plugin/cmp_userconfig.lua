@@ -1,8 +1,14 @@
 local copilot_loaded, copilot = pcall(require, 'copilot')
 if copilot_loaded then
   copilot.setup({
-    suggestion = { enabled = false },
-    panel = { enabled = false },
+    suggestion = { enabled = false, auto_trigger = false },
+    panel = {
+      enabled = true,
+      auto_refresh = true,
+      layout = {
+        position = 'right',
+      },
+    },
     filetypes = {
       yaml = false,
       markdown = false,
@@ -49,6 +55,23 @@ local has_words_before = function()
 end
 
 cmp.setup({
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      require('copilot_cmp.comparators').prioritize,
+      -- Below is the default comparitor list and order for nvim-cmp
+      cmp.config.compare.offset,
+      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   snippet = {
     expand = function(args)
       vim.fn['UltiSnips#Anon'](args.body)
