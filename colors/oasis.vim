@@ -93,7 +93,7 @@ let s:searchbg      = s:darkyellow
 let s:searchfg      = s:black
 " js 'this' reference
 let s:specialfg     = s:red
-let s:specialbg     = s:darkgray
+let s:specialbg     = s:white
 " for regular vim: jsxmarkup/async/await/return/vim's let
 let s:statementfg   = s:yellow
 " js string literal
