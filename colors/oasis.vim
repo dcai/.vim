@@ -76,8 +76,8 @@ let s:commentfg     = s:darkgray
 let s:functionargs  = s:yellow
 " js function class name, import/export name, function/method name
 " variable names
-let s:identifierbg  = s:none
-let s:identifierfg  = s:green
+let s:identifierbg  = s:darkgray
+let s:identifierfg  = s:darkgreen
 
 " import is operator too
 let s:includefg     = s:darkgray
@@ -202,7 +202,7 @@ let s:syntax = {
     \ 'Error':                      {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
     \ 'Exception':                  {'fg': s:red, 'bg': s:none},
     \ 'Function':                   {'fg': s:functionfg, 'bg': s:functionbg},
-    \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg, 'cterm': "bold"},
+    \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:includefg, 'bg': s:includebg},
     \ 'Keyword':                    {'fg': s:keywordfg,  'bg': s:keywordbg},
