@@ -1,3 +1,23 @@
+local copilot_loaded, copilot = pcall(require, 'copilot')
+if copilot_loaded then
+  copilot.setup({
+    suggestion = { enabled = false },
+    panel = { enabled = false },
+    filetypes = {
+      yaml = false,
+      markdown = false,
+      help = false,
+      gitcommit = false,
+      gitrebase = false,
+      ['*'] = true,
+    },
+    copilot_node_command = 'node', -- Node.js version must be > 16.x
+    server_opts_overrides = {},
+  })
+
+  require('copilot_cmp').setup()
+end
+
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
   return
@@ -16,6 +36,18 @@ local check_back_space = function()
   end
 end
 
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0
+    and vim.api
+        .nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]
+        :match('^%s*$')
+      == nil
+end
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -29,26 +61,35 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<c-j>'] = cmp.mapping(
-      cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-      { 'i' }
-    ),
-    ['<c-k>'] = cmp.mapping(
-      cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-      { 'i' }
-    ),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
+    -- ['<c-j>'] = cmp.mapping(
+    --   cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    --   { 'i' }
+    -- ),
+    -- ['<c-k>'] = cmp.mapping(
+    --   cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+    --   { 'i' }
+    -- ),
+    -- ['<C-e>'] = cmp.mapping.abort(),
+    -- ['<C-Space>'] = cmp.mapping.complete(),
     ['<tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      -- local copilotAccept = vim.fn['copilot#Accept']()
+      if cmp.visible() and has_words_before() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
       elseif vim.fn['UltiSnips#CanJumpForwards']() == 1 then
         vim.api.nvim_feedkeys(t('<Plug>(ultisnips_jump_forward)'), 'm', true)
-      elseif check_back_space() then
-        fallback()
       else
-        cmp.complete()
+        -- cmp.complete() populates list of options
+        -- cmp.complete()
+        -- fallback() is tab character
+        fallback()
       end
+      -- elseif copilotAccept ~= '' and type(copilotAccept) == 'string' then
+      --   vim.api.nvim_feedkeys(copilotAccept, 'i', true)
+      -- elseif check_back_space() then
+      --   fallback()
+      -- else
+      --   cmp.complete()
+      -- end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -90,6 +131,7 @@ cmp.setup({
         ultisnips = 'SNIP',
         tmux = 'TMUX',
         path = 'PATH',
+        copilot = 'COPILOT',
       }
 
       if menu_icon[entry.source.name] then
@@ -99,6 +141,7 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
+    { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
     { name = 'buffer' },

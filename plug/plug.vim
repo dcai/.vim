@@ -72,6 +72,9 @@ if has('nvim')
   " Plug 'echasnovski/mini.nvim'
   Plug 'lewis6991/gitsigns.nvim'
   Plug 'gpanders/editorconfig.nvim'
+  " Plug 'github/copilot.vim'
+  Plug 'zbirenbaum/copilot.lua'
+  Plug 'zbirenbaum/copilot-cmp'
 endif
 
 if g:osuname ==? 'Windows'
