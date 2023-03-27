@@ -16,3 +16,7 @@ xpcall(function()
 end, function()
   vim.cmd('colorscheme default')
 end)
+
+vim.cmd([[
+
+]])
