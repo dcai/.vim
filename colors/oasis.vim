@@ -76,8 +76,8 @@ let s:commentfg     = s:darkgray
 let s:functionargs  = s:yellow
 " js function class name, import/export name, function/method name
 " variable names
-let s:identifierbg  = s:darkgray
 let s:identifierfg  = s:darkgreen
+let s:identifierbg  = s:black
 
 " import is operator too
 let s:includefg     = s:darkgray
