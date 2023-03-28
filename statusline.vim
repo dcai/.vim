@@ -27,6 +27,7 @@ set statusline+=%m                              " modified flag
 set statusline+=%{FugitiveStatus()}
 " set statusline+=[%{LinterStatus()}]
 set statusline+=%=                              " left/right separator
+" set statusline+=%3{codeium#GetStatusString()}
 set statusline+=%y                              " filetype
 set statusline+=[
 set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\| " file encoding
