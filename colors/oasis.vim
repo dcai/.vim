@@ -230,9 +230,12 @@ for [group, value] in items(s:syntax)
 endfor
 
 let s:custom = {
-    \ 'ALEError':                   {'fg': s:aleerrorfg, 'bg': s:aleerrorbg, 'cterm': 'bold,underline'},
+    \ 'ALEVirtualTextError':        {'fg': s:darkgray, 'bg': s:none, 'cterm': 'italic'},
+    \ 'ALEVirtualTextWarning':      {'fg': s:darkgray, 'bg': s:none},
+    \ 'ALEVirtualTextInfo':         {'fg': s:darkgray, 'bg': s:none},
+    \ 'ALEError':                   {'fg': s:none, 'bg': s:aleerrorbg, 'cterm': 'bold,underline'},
     \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
-    \ 'ALEWarning':                 {'fg': s:alewarnfg, 'bg': s:alewarnbg, 'cterm': 'underline'},
+    \ 'ALEWarning':                 {'fg': s:none, 'bg': s:alewarnbg, 'cterm': 'underline'},
     \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
     \ 'CocErrorFloat':              {'fg': s:red},
     \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
