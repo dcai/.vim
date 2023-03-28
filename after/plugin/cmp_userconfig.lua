@@ -54,11 +54,19 @@ local has_words_before = function()
       == nil
 end
 
+function prioritizeCopilot(entry1, entry2)
+  if entry1.copilot and not entry2.copilot then
+    return true
+  elseif entry2.copilot and not entry1.copilot then
+    return false
+  end
+end
+
 cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      require('copilot_cmp.comparators').prioritize,
+      prioritizeCopilot,
       -- Below is the default comparitor list and order for nvim-cmp
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
