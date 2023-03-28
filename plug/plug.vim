@@ -76,6 +76,8 @@ if has('nvim')
   " Plug 'github/copilot.vim'
   Plug 'zbirenbaum/copilot.lua'
   Plug 'zbirenbaum/copilot-cmp'
+  Plug 'jcdickinson/codeium.nvim'
+  Plug 'Exafunction/codeium.vim'
 endif
 
 if g:osuname ==? 'Windows'

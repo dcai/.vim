@@ -1,3 +1,8 @@
+local codeium_loaded, codeium = pcall(require, 'codeium')
+if codeium_loaded then
+  codeium.setup({})
+end
+
 local copilot_loaded, copilot = pcall(require, 'copilot')
 if copilot_loaded then
   copilot.setup({
@@ -163,6 +168,7 @@ cmp.setup({
         tmux = 'TMUX',
         path = 'PATH',
         copilot = 'COPILOT',
+        codeium = 'Codeium',
       }
 
       if menu_icon[entry.source.name] then
@@ -172,6 +178,7 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
+    { name = 'codeium' },
     { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
