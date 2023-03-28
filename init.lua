@@ -20,7 +20,12 @@ end)
 vim.cmd([[
   let g:codeium_no_map_tab = v:true
   imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-  imap <C-j>   <Cmd>call codeium#CycleCompletions(1)<CR>
-  imap <C-k>   <Cmd>call codeium#CycleCompletions(-1)<CR>
-  imap <C-x>   <Cmd>call codeium#Clear()<CR>
+  imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
+  imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
+  imap <C-x> <Cmd>call codeium#Clear()<CR>
 ]])
+
+-- vim.cmd([[
+--   let g:copilot_no_tab_map = v:true
+--   imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
+-- ]])
