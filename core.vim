@@ -109,12 +109,15 @@ endfunction
 if !empty($XDG_CACHE_HOME)
   let g:netrw_home=s:mkdir_p($XDG_CACHE_HOME.'/vim')
 endif
-let &backupdir=s:mkdir_p("~/.local/vim/backup")
-set undofile " enable persistent undo
+
+" enable persistent undo
+set undofile
 if has('nvim')
   let &undodir=s:mkdir_p('~/.local/nvim/undo')
+  let &backupdir=s:mkdir_p("~/.local/nvim/backup")
 else
   let &undodir=s:mkdir_p('~/.local/vim/undo')
+  let &backupdir=s:mkdir_p("~/.local/vim/backup")
 endif
 
 " default indent & wrapping settings {{{
