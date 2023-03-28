@@ -83,4 +83,5 @@ augroup filetypeGroup
 
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
+  autocmd BufRead,BufNewFile *.tf set filetype=terraform
 augroup end
