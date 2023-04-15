@@ -72,7 +72,9 @@ if has('nvim')
   Plug 'nathom/filetype.nvim'
   " Plug 'echasnovski/mini.nvim'
   Plug 'lewis6991/gitsigns.nvim'
-  Plug 'gpanders/editorconfig.nvim'
+  if !has('nvim-0.9')
+    Plug 'gpanders/editorconfig.nvim'
+  endif
   " Plug 'github/copilot.vim'
   Plug 'zbirenbaum/copilot.lua'
   Plug 'zbirenbaum/copilot-cmp'
