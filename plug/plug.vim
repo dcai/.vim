@@ -129,7 +129,7 @@ Plug 'djoshea/vim-autoread'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/matchit.zip'
+Plug 'chrisbra/matchit'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
