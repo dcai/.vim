@@ -68,7 +68,7 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
-  Plug 'folke/which-key.nvim', Cond(!exists('g:vscode'))
+  " Plug 'folke/which-key.nvim', Cond(!exists('g:vscode'))
   " Plug 'nathom/filetype.nvim'
   " Plug 'echasnovski/mini.nvim'
   Plug 'lewis6991/gitsigns.nvim'
