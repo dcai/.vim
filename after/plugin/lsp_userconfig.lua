@@ -54,7 +54,13 @@ local function organize_imports()
 end
 
 nvim_lspconfig.tsserver.setup({
-  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+  filetypes = {
+    'typescript',
+    'typescriptreact',
+    'typescript.tsx',
+    'javascript',
+    'javascriptreact',
+  },
   cmd = { 'typescript-language-server', '--stdio' },
   commands = {
     OrganizeImports = {
