@@ -55,11 +55,12 @@ end
 
 nvim_lspconfig.tsserver.setup({
   filetypes = {
+    'javascript',
+    'javascriptreact',
+    'javascript.jsx',
     'typescript',
     'typescriptreact',
     'typescript.tsx',
-    'javascript',
-    'javascriptreact',
   },
   cmd = { 'typescript-language-server', '--stdio' },
   commands = {
