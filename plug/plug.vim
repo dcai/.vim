@@ -54,6 +54,7 @@ endfunction
 " just for neovim
 if has('nvim')
   Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+  Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'SirVer/ultisnips'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}

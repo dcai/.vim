@@ -1,11 +1,31 @@
-local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
-
-if not lspconfig_loaded then
+-----------------------------------------------------------------------------
+--- mason
+-----------------------------------------------------------------------------
+local mason_loaded, mason = pcall(require, 'mason')
+if not mason_loaded then
   return
 end
+local path = require('mason-core.path')
+mason.setup({
+  install_root_dir = path.concat({ vim.fn.stdpath('data'), 'mason' }),
+})
+-----------------------------------------------------------------------------
+--- mason-lspconfig
+-----------------------------------------------------------------------------
+local mason_lspconfig_loaded, mason_lspconfig =
+  pcall(require, 'mason-lspconfig')
+mason_lspconfig.setup({
+  ensure_installed = {
+    'lua_ls',
+    'pyright',
+    'tsserver',
+  },
+  automatic_installation = true,
+})
 
-local lsp_defaults = nvim_lspconfig.util.default_config
-
+-----------------------------------------------------------------------------
+--- null-ls
+-----------------------------------------------------------------------------
 local nullls_loaded, null_ls = pcall(require, 'null-ls')
 if not nullls_loaded then
   return
@@ -18,6 +38,17 @@ null_ls.setup({
     -- null_ls.builtins.completion.spell,
   },
 })
+
+-----------------------------------------------------------------------------
+--- lspconfig
+-----------------------------------------------------------------------------
+local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
+
+if not lspconfig_loaded then
+  return
+end
+
+local lsp_defaults = nvim_lspconfig.util.default_config
 
 -- local opts = { noremap = true, silent = true }
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
