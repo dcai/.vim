@@ -3,11 +3,8 @@
 "
 """""""""""""""""""""""""""""""""""""""
 
-let s:plugged='$HOME/.local/vim/plug'
-if has('nvim')
-  let s:plugged='$HOME/.local/nvim/plug'
-endif
-let s:autoload='$HOME/' . g:vimrc . '/autoload'
+let s:plugged=g:vim_data . '/plug'
+let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 let g:plug_shallow=3
 

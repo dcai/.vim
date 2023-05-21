@@ -3,6 +3,13 @@
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 
+let g:vim_home = expand('<sfile>:p:h')
+
+let g:vim_data = '$HOME/.local/vim'
+if has('nvim')
+  let g:vim_data = '$HOME/.local/share/nvim'
+endif
+
 if has('win64') || has('win32') || has('win16')
   let g:osuname = 'Windows'
   let g:vimrc = 'vimfiles'
@@ -14,7 +21,7 @@ else
 endif
 
 function! IncludeScript(scriptname)
-  execute 'source $HOME/' . g:vimrc . '/' . a:scriptname
+  execute 'source ' . g:vim_home . '/' . a:scriptname
 endfunction
 
 function! IncludeDir(dirname)
@@ -34,7 +41,7 @@ endfunction
 " this must load before others
 call IncludeScript('core.vim')
 
-call IncludeDir('$HOME/' . g:vimrc . '/conf.d/*.vim')
+call IncludeDir(g:vim_home . '/conf.d/*.vim')
 
 if has('gui_running')
   call IncludeScript('gui.vim')
