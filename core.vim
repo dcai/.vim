@@ -112,13 +112,8 @@ endif
 
 " enable persistent undo
 set undofile
-if has('nvim')
-  let &undodir=s:mkdir_p('~/.local/nvim/undo')
-  let &backupdir=s:mkdir_p("~/.local/nvim/backup")
-else
-  let &undodir=s:mkdir_p('~/.local/vim/undo')
-  let &backupdir=s:mkdir_p("~/.local/vim/backup")
-endif
+let &undodir=s:mkdir_p(g:vim_data . '/undo')
+let &backupdir=s:mkdir_p(g:vim_data . '/backup')
 
 " default indent & wrapping settings {{{
 set expandtab
