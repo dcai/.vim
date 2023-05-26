@@ -46,5 +46,5 @@ local default_opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, expr = true, silent = true }
 
 function keymap(mode, from, to)
-   vim.api.nvim_set_keymap (mode, from, to, default_opts)
+  vim.api.nvim_set_keymap(mode, from, to, default_opts)
 end
