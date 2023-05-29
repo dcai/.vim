@@ -158,7 +158,7 @@ let s:ui = {
     \ 'Folded':                     {'fg': s:darkgray},
     \ 'IncSearch':                  {'fg': s:searchfg, 'bg': s:searchbg, 'cterm': 'bold'},
     \ 'LineNr':                     {'fg': s:green, 'bg': s:none},
-    \ 'MatchParen':                 {'bg': s:darkgreen},
+    \ 'MatchParen':                 {'bg': s:none, 'fg': s:red},
     \ 'ModeMsg':                    {'fg': s:yellow},
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:gray},
@@ -288,7 +288,7 @@ let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
 
-"" Cursor color is controlled by iterm color scheme
+"" !!! READ !!! Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
