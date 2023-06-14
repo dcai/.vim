@@ -20,3 +20,5 @@ vmap <leader>cc <Plug>CommentaryLine
 nnoremap <leader>qq :action CloseProject<cr>
 nnoremap <leader>ff :action GotoFile<cr>
 nnoremap <leader>, :action ReformatCode<cr>
+nnoremap <leader>. :action SearchEverywhere<cr>
+nnoremap <leader>rn :action RenameElement<cr>

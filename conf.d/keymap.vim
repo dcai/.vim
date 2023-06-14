@@ -33,6 +33,9 @@ inoremap jk <Esc>
 " inoremap kk <Esc> " not good, many words end with k
 " inoremap ll <Esc> " not good, ll is common in english
 
+nnoremap L $
+nnoremap H ^
+
 " Format entire buffer
 " credit: http://vim.wikia.com/wiki/Fix_indentation
 " how this works:
