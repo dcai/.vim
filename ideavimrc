@@ -1,0 +1,22 @@
+set sneak
+set ideajoin
+set matchit
+set surround
+set commentary
+set multiple-cursors
+
+source ~/.vim/core.vim
+source ~/.vim/conf.d/keymap.vim
+
+nnoremap <leader>ev :e ~/.ideavimrc<cr>
+nnoremap <leader>rr :source ~/.ideavimrc<cr>
+nnoremap <leader>bd :bd!<cr>
+xmap <leader>ci <Plug>Commentary
+" nmap <leader>ci <Plug>Commentary
+omap <leader>ci <Plug>Commentary
+nmap <leader>ci <Plug>CommentaryLine
+nmap <leader>cc <Plug>CommentaryLine
+vmap <leader>cc <Plug>CommentaryLine
+nnoremap <leader>qq :action CloseProject<cr>
+nnoremap <leader>ff :action GotoFile<cr>
+nnoremap <leader>, :action ReformatCode<cr>
