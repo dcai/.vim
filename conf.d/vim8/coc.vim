@@ -80,11 +80,11 @@ nmap <leader>rn <Plug>(coc-rename)
 augroup cocgroup
   autocmd!
   " Highlight the symbol and its references when holding the cursor.
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd BufEnter *
-        \ if exists(':CocAction')
-        \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
-        \ | endif
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
+  " autocmd BufEnter *
+  "      \ if exists(':CocAction')
+  "      \ | execute "autocmd CursorHold <buffer> silent call CocActionAsync('highlight')"
+  "      \ | endif
 
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
