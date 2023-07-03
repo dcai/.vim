@@ -24,7 +24,7 @@ endfunction
 " status line {{{
 set statusline=%f                               " tail of the filename
 set statusline+=%m                              " modified flag
-set statusline+=%{FugitiveStatus()}
+" set statusline+=%{FugitiveStatus()}
 " set statusline+=[%{LinterStatus()}]
 set statusline+=%=                              " left/right separator
 " set statusline+=%3{codeium#GetStatusString()}
