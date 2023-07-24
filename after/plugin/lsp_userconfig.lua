@@ -1,6 +1,6 @@
------------------------------------------------------------------------------
+-------------------------------
 --- mason
------------------------------------------------------------------------------
+-------------------------------
 local mason_loaded, mason = pcall(require, 'mason')
 if not mason_loaded then
   return
@@ -9,9 +9,9 @@ local path = require('mason-core.path')
 mason.setup({
   install_root_dir = path.concat({ vim.fn.stdpath('data'), 'mason' }),
 })
------------------------------------------------------------------------------
+-------------------------------
 --- mason-lspconfig
------------------------------------------------------------------------------
+-------------------------------
 local mason_lspconfig_loaded, mason_lspconfig =
   pcall(require, 'mason-lspconfig')
 mason_lspconfig.setup({
@@ -23,29 +23,29 @@ mason_lspconfig.setup({
   automatic_installation = true,
 })
 
------------------------------------------------------------------------------
+-------------------------------
 --- null-ls
------------------------------------------------------------------------------
-local nullls_loaded, null_ls = pcall(require, 'null-ls')
-if not nullls_loaded then
-  return
-end
-
-null_ls.setup({
-  debug = true,
-  sources = {
-    -- null_ls.builtins.formatting.prettier,
-    -- null_ls.builtins.formatting.stylua,
-    -- null_ls.builtins.formatting.shfmt,
-    -- null_ls.builtins.formatting.eslint,
-    -- null_ls.builtins.diagnostics.eslint,
-    -- null_ls.builtins.completion.spell,
-  },
-})
-
------------------------------------------------------------------------------
+-------------------------------
+-- local nullls_loaded, null_ls = pcall(require, 'null-ls')
+-- if not nullls_loaded then
+--   return
+-- end
+--
+-- null_ls.setup({
+--   debug = true,
+--   sources = {
+--     -- null_ls.builtins.formatting.prettier,
+--     -- null_ls.builtins.formatting.stylua,
+--     -- null_ls.builtins.formatting.shfmt,
+--     -- null_ls.builtins.formatting.eslint,
+--     -- null_ls.builtins.diagnostics.eslint,
+--     -- null_ls.builtins.completion.spell,
+--   },
+-- })
+--
+-------------------------------
 --- lspconfig
------------------------------------------------------------------------------
+-------------------------------
 local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
