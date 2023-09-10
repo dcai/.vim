@@ -15,7 +15,7 @@ tsconfig.setup({
   },
   auth_install = true,
   ensure_installed = {
-    'bash',
+    -- 'bash',
     'c',
     'css',
     'diff',
