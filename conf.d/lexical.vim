@@ -8,9 +8,8 @@ set nospell
 set spellcapcheck=
 
 let s:vimspelldir='$HOME/.local/vim/spell'
-let s:mthesaurfile=s:vimspelldir . '/mthesaur.txt'
-" let s:spellfile=s:vimspelldir . '/en.utf-8.add'
-let s:spellfile='$HOME/Library/CloudStorage/Dropbox/src/vimspell/en.utf-8.add'
+let s:dropboxspelldir='$HOME/Library/CloudStorage/Dropbox/src/vimspell'
+let s:mthesaurfile=s:dropboxspelldir . '/mthesaur.txt'
 
 if empty(glob(expand(s:vimspelldir)))
   execute '!mkdir -p ' . expand(s:vimspelldir)
@@ -21,10 +20,18 @@ function! DownloadMthesaurfile()
 endfunction
 
 let g:lexical#spell = 1
-let g:lexical#thesaurus = [s:mthesaurfile]
 let g:lexical#dictionary = ["/usr/share/dict/words",]
-let g:lexical#spellfile = [s:spellfile,]
 let g:lexical#spelllang = ["en_us","en_au",]
+
+if filereadable(s:mthesaurfile)
+  let g:lexical#thesaurus = [s:mthesaurfile]
+endif
+
+" let s:spellfile=s:vimspelldir . '/en.utf-8.add'
+let s:spellfile=s:dropboxspelldir . '/en.utf-8.add'
+if filereadable(s:spellfile)
+  let g:lexical#spellfile = [s:spellfile,]
+endif
 
 function! EnableLexical(v)
   if !exists('g:loaded_lexical')
