@@ -42,9 +42,26 @@ function find_executable(files)
   return nil
 end
 
-local default_opts = { noremap = true, silent = true }
 local expr_opts = { noremap = true, expr = true, silent = true }
 
 function keymap(mode, from, to)
-  vim.api.nvim_set_keymap(mode, from, to, default_opts)
+  vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
+end
+
+-- copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
+local gsub = require('string').gsub
+local gmatch = require('string').gmatch
+
+function slugify(string, replacement)
+  if replacement == nil then
+    replacement = '-'
+  end
+  local result = ''
+  -- loop through each word or number
+  for word in gmatch(string, '(%w+)') do
+    result = result .. word .. replacement
+  end
+  -- remove trailing separator
+  result = gsub(result, replacement .. '$', '')
+  return result:lower()
 end
