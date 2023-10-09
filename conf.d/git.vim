@@ -5,7 +5,7 @@ nnoremap <leader>gcf  :Dispatch! git commit --no-verify --fixup HEAD -a<cr>
 nnoremap <leader>gcc  :Git commit<cr>
 nnoremap <leader>gpr  :Dispatch! git pull --tags --rebase<CR>
 nnoremap <leader>gpf  :Dispatch! git push --tags --force-with-lease<CR>
-nnoremap <leader>gp   :Dispatch! git push<CR>
+nnoremap <leader>gps   :Dispatch! git push<CR>
 nnoremap <leader>gr   :Git rebase -i --committer-date-is-author-date origin/HEAD<CR>
 
 nnoremap <leader>gds :Gvdiffsplit!<CR>
