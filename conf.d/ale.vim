@@ -37,6 +37,7 @@ let g:ale_javascript_prettier_use_global = 0
 " Ale linters settings
 let g:ale_linters = {
   \ 'php': [],
+  \ 'graphql': [],
   \ 'markdown': ['cspell'],
   \ 'c': ['clangd', 'ccls'],
   \ 'javascript': ['eslint', 'tsserver'],
