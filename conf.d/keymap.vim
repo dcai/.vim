@@ -84,6 +84,11 @@ nnoremap <leader>aa :e #<cr>
 " open file in sublime
 nnoremap <leader>st :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
+function OpenFolder()
+  let d = expand("%:p:h")
+  silent execute '!open ' . d
+endfunction
+nnoremap <leader>oo :call OpenFolder()<CR>
 
 if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
