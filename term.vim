@@ -62,7 +62,12 @@ function! StartTestsWatch()
   call VimuxRunCommand(testrunner)
 endfunction
 
-map <leader>tt :call Terminal('pwd')<cr>
+
+map <leader>tp :VimuxPromptCommand<cr>
+map <leader>tl :VimuxRunLastCommand<cr>
+map <leader>tt :VimuxInspectRunner<cr>
+map <leader>tq :VimuxCloseRunner<cr>
+map <leader>tx :VimuxInterruptRunner<cr>
+map <leader>tz :call VimuxZoomRunner()<cr>
 map <leader>tf :call LastPath()<cr>
-map <leader>tc :call VimuxCloseRunner()<cr>
 map <leader>tw :call StartTestsWatch()<cr>
