@@ -38,14 +38,15 @@ function! LastPath()
   \]
 
   let cmd = join(parts, ' | ')
-  let lastfile = system(cmd)
+  let lastfile = trim(system(cmd))
   let tokens = split(lastfile, ':')
   let fullpath = get(tokens, 0)
+  " for mocha, run it with `--full-trace` argument to print full path
   if filereadable(fullpath)
     exe 'e ' . fullpath
     call cursor(str2nr(tokens[1]), str2nr(tokens[2]))
   else
-    echo "LastPath(): File not found " . lastfile
+    echo "LastPath(): File not found: " . lastfile
   endif
 endfunction
 
@@ -57,13 +58,11 @@ endfunction
 function! StartTestsWatch()
   let root = systemlist('git rev-parse --show-toplevel')[0]
   let filepath = expand('%:p')
-  let testrunner = 'npx mocha --full-trace --watch ' . filepath
-  let cmd = "tmux split-window -h -c '" . root . "' '" . testrunner . "'"
-  " let result = system(cmd)
-  " call VimuxRunCommand(testrunner)
+  let testrunner = 'cd "' . root . '" && npx mocha --full-trace --watch ' . filepath
+  call VimuxRunCommand(testrunner)
 endfunction
 
-map <leader>ttt :call Terminal('pwd')<cr>
-map <leader>ttf :call LastPath()<cr>
-map <leader>ttc :call VimuxCloseRunner()<cr>
-map <leader>utw :call StartTestsWatch()<cr>
+map <leader>tt :call Terminal('pwd')<cr>
+map <leader>tf :call LastPath()<cr>
+map <leader>tc :call VimuxCloseRunner()<cr>
+map <leader>tw :call StartTestsWatch()<cr>
