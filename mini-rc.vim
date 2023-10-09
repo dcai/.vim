@@ -229,7 +229,8 @@ imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
 nnoremap <leader>ev :e! $HOME/.vim/vimrc<cr>
-nnoremap <leader>rr :source $HOME/.vim/vimrc<cr>
+nnoremap <leader>rc :source $HOME/.vim/vimrc<cr>
+nnoremap <leader>rr :source %<cr>
 " BD is vim-bufkill plugin command
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>qq :qall<cr>
