@@ -31,7 +31,7 @@ tsconfig.setup({
     -- 'json',
     -- 'json5',
     -- 'kotlin',
-    -- 'lua',
+    'lua',
     -- 'make',
     -- 'markdown',
     -- 'markdown_inline',

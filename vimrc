@@ -8,19 +8,6 @@ try
     colorscheme oasis
   else
     colorscheme gruvbox
-    " colorscheme tender
-    " colorscheme solarized
-    " colorscheme zenburn
-    " colorscheme desertink
-    " colorscheme gotham
-    " colorscheme lucius
-    " colorscheme apprentice
-    " colorscheme jellybeans
-    " colorscheme badwolf
-    " colorscheme wombat
-    " colorscheme distinguished
-    " colorscheme seoul256
-    " colorscheme tokyonight
   endif
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default

@@ -56,6 +56,17 @@ if has('nvim')
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'lewis6991/gitsigns.nvim'
+  if !has('nvim-0.9')
+    Plug 'gpanders/editorconfig.nvim'
+  endif
+  " Plug 'jcdickinson/codeium.nvim'
+  Plug 'Exafunction/codeium.vim'
+
+  """"""""""""""""""""""""""""""""""""""""""
+  """ BEGIN code completion plugins
+  """"""""""""""""""""""""""""""""""""""""""
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
@@ -63,21 +74,12 @@ if has('nvim')
   Plug 'andersevenrud/cmp-tmux'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-  Plug 'nvim-lua/plenary.nvim'
-  " Plug 'jose-elias-alvarez/null-ls.nvim'
-  Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
-  " Plug 'folke/which-key.nvim', Cond(!exists('g:vscode'))
-  " Plug 'nathom/filetype.nvim'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ END code completion
+  """"""""""""""""""""""""""""""""""""""""""
+  Plug 'ibhagwan/fzf-lua'
+  " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   " Plug 'echasnovski/mini.nvim'
-  Plug 'lewis6991/gitsigns.nvim'
-  if !has('nvim-0.9')
-    Plug 'gpanders/editorconfig.nvim'
-  endif
-  " Plug 'github/copilot.vim'
-  " Plug 'zbirenbaum/copilot.lua'
-  " Plug 'zbirenbaum/copilot-cmp'
-  " Plug 'jcdickinson/codeium.nvim'
-  Plug 'Exafunction/codeium.vim'
 endif
 
 if g:osuname ==? 'Windows'
@@ -91,35 +93,13 @@ if !has('nvim')
         \   'do': function('InstallCoc')
         \ }
   Plug 'bronson/vim-trailing-whitespace'
-  """""""""""""""""""""""""""""""""""""""
-  """ javascript
-  """""""""""""""""""""""""""""""""""""""
-  Plug 'pangloss/vim-javascript'
-  " Plug 'zoubin/vim-gotofile'
-  Plug 'jparise/vim-graphql'
-  Plug 'GutenYe/json5.vim'
-  Plug 'MaxMEllon/vim-jsx-pretty'
-  Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-  """""""""""""""""""""""""""""""""""""""
-  """ syntax
-  """""""""""""""""""""""""""""""""""""""
-  Plug 'evidens/vim-twig'
-  Plug 'dag/vim-fish', { 'for': 'fish' }
-  Plug 'cespare/vim-toml', { 'branch': 'main' }
-  Plug 'jceb/vim-orgmode', { 'for': 'org' }
-  """""""""""""""""""""""""""""""""""""""
-  """ Python
-  """""""""""""""""""""""""""""""""""""""
-  Plug 'vim-scripts/indentpython.vim'
-  Plug 'vim-scripts/python_match.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
   Plug 'junegunn/fzf.vim'
-  Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-  Plug 'hashivim/vim-terraform'
   Plug 'mhinz/vim-signify'
   Plug 'editorconfig/editorconfig-vim'
 endif
 
+Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
 Plug 'reedes/vim-lexical'
@@ -127,32 +107,26 @@ Plug 'djoshea/vim-autoread'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-surround'
-" Plug 'chrisbra/matchit'
 Plug 'andymass/vim-matchup'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'iberianpig/tig-explorer.vim'
-" Plug 'junegunn/gv.vim'
 " Plug 'mg979/vim-visual-multi'
 " Plug 'bronson/vim-visual-star-search'
 " Plug 'maxbrunsfeld/vim-yankstack'
 " Plug 'kien/rainbow_parentheses.vim'
 " Plug 'diepm/vim-rest-console'
-" Plug 'chrisbra/Colorizer' " :ColorHighlight in colorscheme file
-" let g:colorizer_auto_filetype='vim,css'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'tyru/open-browser.vim'
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap <leader>gx <Plug>(openbrowser-smart-search)
+vmap <leader>gx <Plug>(openbrowser-smart-search)
 
 """""""""""""""""""""""""""""""""""""""
 """ vimux
 """""""""""""""""""""""""""""""""""""""
 Plug 'preservim/vimux'
 let g:VimuxOrientation = "h"
-
-Plug 'tyru/open-browser.vim'
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap <leader>gx <Plug>(openbrowser-smart-search)
-vmap <leader>gx <Plug>(openbrowser-smart-search)
 
 """""""""""""""""""""""""""""""""""""""
 """ syntax
@@ -163,8 +137,6 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-" Plug 'posva/vim-vue'
-" Plug 'kongo2002/fsharp-vim'
 
 """""""""""""""""""""""""""""""""""""""
 """ navigate
@@ -262,10 +234,8 @@ vmap <Leader>t= :Tabularize /=<CR>
 nmap <Leader>t: :Tabularize /:\zs<CR>
 vmap <Leader>t: :Tabularize /:\zs<CR>
 
-
-" Plug 'milkypostman/vim-togglelist'
-" nmap <script> <silent> <leader>tl :call ToggleLocationList()<CR>
-" nmap <script> <silent> <leader>tq :call ToggleQuickfixList()<CR>
-
-Plug 'dstein64/vim-startuptime'
+"""""""""""""""""""""""""""""""""""""""
+""" colorschemes
+"""""""""""""""""""""""""""""""""""""""
+Plug 'rafi/awesome-vim-colorschemes'
 call plug#end()
