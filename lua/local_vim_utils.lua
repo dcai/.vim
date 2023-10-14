@@ -1,3 +1,6 @@
+local gsub = require('string').gsub
+local gmatch = require('string').gmatch
+
 -- credit: https://hisham.hm/2016/01/04/string-interpolation-in-lua/
 function f(str)
   local outer_env = _ENV
@@ -44,14 +47,11 @@ end
 
 local expr_opts = { noremap = true, expr = true, silent = true }
 
-function keymap(mode, from, to)
+function global_keymap(mode, from, to)
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
 -- copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
-local gsub = require('string').gsub
-local gmatch = require('string').gmatch
-
 function slugify(string, replacement)
   if replacement == nil then
     replacement = '-'
@@ -65,3 +65,5 @@ function slugify(string, replacement)
   result = gsub(result, replacement .. '$', '')
   return result:lower()
 end
+
+

@@ -113,7 +113,7 @@ end, {
   expr = true,
 })
 
-keymap('n', '<leader>nc', ':NoteNew<cr>')
-keymap('n', '<leader>nt', ':NoteToday<cr>')
-keymap('n', '<leader>ngb', ':NoteGitBranch<cr>')
-keymap('n', '<leader>ngg', ':NoteGit<cr>')
+global_keymap('n', '<leader>nc', ':NoteNew<cr>')
+global_keymap('n', '<leader>nt', ':NoteToday<cr>')
+global_keymap('n', '<leader>ngb', ':NoteGitBranch<cr>')
+global_keymap('n', '<leader>ngg', ':NoteGit<cr>')
