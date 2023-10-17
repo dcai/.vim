@@ -62,8 +62,8 @@ if has('nvim')
     Plug 'gpanders/editorconfig.nvim'
   endif
   " Plug 'jcdickinson/codeium.nvim'
-  Plug 'Exafunction/codeium.vim'
-
+  " Plug 'Exafunction/codeium.vim'
+   Plug 'Exafunction/codeium.nvim'
   """"""""""""""""""""""""""""""""""""""""""
   """ BEGIN code completion plugins
   """"""""""""""""""""""""""""""""""""""""""

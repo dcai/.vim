@@ -183,7 +183,6 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
     { name = 'buffer' },
-    { name = 'buffer' },
     { name = 'path' },
     {
       name = 'tmux',
