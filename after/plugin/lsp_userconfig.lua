@@ -24,26 +24,6 @@ mason_lspconfig.setup({
 })
 
 -------------------------------
---- null-ls
--------------------------------
--- local nullls_loaded, null_ls = pcall(require, 'null-ls')
--- if not nullls_loaded then
---   return
--- end
---
--- null_ls.setup({
---   debug = true,
---   sources = {
---     -- null_ls.builtins.formatting.prettier,
---     -- null_ls.builtins.formatting.stylua,
---     -- null_ls.builtins.formatting.shfmt,
---     -- null_ls.builtins.formatting.eslint,
---     -- null_ls.builtins.diagnostics.eslint,
---     -- null_ls.builtins.completion.spell,
---   },
--- })
---
--------------------------------
 --- lspconfig
 -------------------------------
 local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
@@ -53,6 +33,7 @@ if not lspconfig_loaded then
 end
 
 local lsp_defaults = nvim_lspconfig.util.default_config
+local root_pattern = nvim_lspconfig.util.root_pattern
 
 -- local opts = { noremap = true, silent = true }
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -103,6 +84,12 @@ nvim_lspconfig.tsserver.setup({
     'typescriptreact',
     'typescript.tsx',
   },
+  root_dir = root_pattern(
+    'package.json',
+    'tsconfig.json',
+    'jsconfig.json',
+    '.git'
+  ),
   cmd = { 'typescript-language-server', '--stdio' },
   commands = {
     OrganizeImports = {
