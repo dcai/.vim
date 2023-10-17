@@ -50,6 +50,7 @@ endfunction
 
 " just for neovim
 if has('nvim')
+  Plug 'ruifm/gitlinker.nvim'
   Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'SirVer/ultisnips'
@@ -100,6 +101,7 @@ if !has('nvim')
 endif
 
 Plug 'dstein64/vim-startuptime'
+Plug 'MattesGroeger/vim-bookmarks'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
 Plug 'reedes/vim-lexical'
