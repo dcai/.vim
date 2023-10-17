@@ -144,6 +144,13 @@ function! SoftWrap()
   let &textwidth = s:old_tw
 endfunction
 
+if has('nvim')
+  set clipboard+=unnamedplus
+else
+  set clipboard=unnamed
+endif
+
+
 " Removes trailing spaces
 function! TrimWhiteSpace()
   %s/\s\+$//e

@@ -125,10 +125,9 @@ if g:osuname ==? 'Windows'
   " This will copy the path in 8.3 short format, for DOS and Windows 9x
   " nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
 else
-  " copy to vim default register
-  nnoremap <leader>cp :let @"=expand("%:p")<CR>
-  nnoremap <leader>cf :let @"=expand("%")<CR>
-  " copy to clipboard
+  " copy to vim * register
+  nnoremap <leader>cp :let @*=expand("%:p")<CR>
+  nnoremap <leader>cf :let @*=expand("%")<CR>
   " nnoremap <leader>cf :let @*=expand("%")<CR>
   " nnoremap <leader>cp :let @*=expand("%:p")<CR>
   " nnoremap <leader>cf :let @+=expand("%")<CR>
