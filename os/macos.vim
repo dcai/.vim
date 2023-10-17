@@ -1,9 +1,3 @@
-if exists('$TMUX')
-  " TODO: find out how to access clipboard in tmux
-else
-  set clipboard=unnamed
-endif
-
 nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 " imap <leader>pp <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <leader>yy :.w !pbcopy<CR><CR>
