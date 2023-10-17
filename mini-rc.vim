@@ -180,6 +180,53 @@ map <silent> * :call VisualSearch('f')<CR>
 map <silent> # :call VisualSearch('b')<CR>
 
 """""""""""""""""""""""""""""""""""""""
+""" status line
+"""""""""""""""""""""""""""""""""""""""
+set statusline=%f                               " tail of the filename
+set statusline+=%m                              " modified flag
+set statusline+=%=                              " left/right separator
+set statusline+=%y                              " filetype
+set statusline+=[
+set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\| " file encoding
+set statusline+=%{&fileformat}                  " file format
+set statusline+=%{&bomb?'\|BOM':''}             " BOM
+set statusline+=]
+set statusline+=[
+set statusline+=%l                              " cursor line/total lines
+set statusline+=\/%L                            " total lines
+" set statusline+=\ %P                            " percent through file
+" set statusline+=\|%c                            " cursor column
+set statusline+=]
+set statusline+=%h                              " help file flag
+set statusline+=%r                              " read only flag
+
+"""""""""""""""""""""""""""""""""""""""
+""" vim-plug
+"""""""""""""""""""""""""""""""""""""""
+let s:plugged='$HOME/.local/mini-vim/plug'
+let s:autoload='$HOME/.vim/autoload'
+let s:vimplug=s:autoload . '/plug.vim'
+let g:plug_shallow=3
+" Install vim-plug if we don't already have it
+if empty(glob(expand(s:vimplug)))
+  " Ensure all needed directories exist  (Thanks @kapadiamush)
+  execute '!mkdir -p ' . expand(s:plugged)
+  execute '!mkdir -p ' . expand(s:autoload)
+  " Download the actual plugin manager
+  execute '!curl -fLo ' . s:vimplug . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+call plug#begin(expand(s:plugged))
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+let g:fzf_preview_window = []
+let g:fzf_buffers_jump = 1
+let g:fzf_command_prefix = 'Fzf'
+nnoremap <silent> <leader>ff :FzfGFiles<cr>
+nnoremap <silent> <leader>fr :FzfHistory<CR>
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""
 """ key mappings
 """""""""""""""""""""""""""""""""""""""
 "set timeout
@@ -241,24 +288,3 @@ nnoremap <silent> <leader>ww :w<CR><CR>
 nnoremap <silent> <CR> :noh<CR><CR>
 " sudo write
 cnoremap w!! w !sudo tee % >/dev/null
-
-"""""""""""""""""""""""""""""""""""""""
-""" status line
-"""""""""""""""""""""""""""""""""""""""
-set statusline=%f                               " tail of the filename
-set statusline+=%m                              " modified flag
-set statusline+=%=                              " left/right separator
-set statusline+=%y                              " filetype
-set statusline+=[
-set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\| " file encoding
-set statusline+=%{&fileformat}                  " file format
-set statusline+=%{&bomb?'\|BOM':''}             " BOM
-set statusline+=]
-set statusline+=[
-set statusline+=%l                              " cursor line/total lines
-set statusline+=\/%L                            " total lines
-" set statusline+=\ %P                            " percent through file
-" set statusline+=\|%c                            " cursor column
-set statusline+=]
-set statusline+=%h                              " help file flag
-set statusline+=%r                              " read only flag
