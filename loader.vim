@@ -68,6 +68,6 @@ endif
 """"""""""""""""""""""""""""""""""""""""
 call IncludeScript('plug/plug.vim')
 
-" if !exists('g:lightline')
+if !exists('g:lightline')
   call IncludeScript('statusline.vim')
-" endif
+endif
