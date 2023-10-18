@@ -85,7 +85,6 @@ local fzfKeymap = function(key, input, raw)
 end
 
 fzfKeymap('<leader>fc', 'colorschemes()', false)
-fzfKeymap('<leader>ee', 'quickfix()', false)
 fzfKeymap('<leader>ff', 'git_files()', false)
 fzfKeymap('<leader>fr', 'oldfiles()', false)
 fzfKeymap('<leader>ll', 'buffers()', false)
