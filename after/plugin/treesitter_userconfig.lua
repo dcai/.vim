@@ -1,10 +1,10 @@
-local ts_loaded, tsconfig = pcall(require, 'nvim-treesitter.configs')
+local loaded, treesitter_config = pcall(require, 'nvim-treesitter.configs')
 
-if not ts_loaded then
+if not loaded then
   return
 end
 
-tsconfig.setup({
+treesitter_config.setup({
   highlight = {
     enable = true,
     disable = {},
@@ -13,7 +13,7 @@ tsconfig.setup({
     enable = false,
     disable = {},
   },
-  auth_install = true,
+  auto_install = true,
   ensure_installed = {
     -- 'bash',
     -- 'c',
@@ -42,7 +42,7 @@ tsconfig.setup({
     -- 'twig',
     'python',
     'typescript',
-    -- 'vim',
+    'vim',
     -- 'yaml',
   },
   textobjects = {
