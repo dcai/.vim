@@ -37,7 +37,6 @@ let g:colors_name='oasis'
 " |  14   |  3*  |        Yellow, LightYellow         |
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let s:is_light = (&background == 'light')
 
 let s:blue          = 'blue'
 let s:darkblue      = 'darkblue'
@@ -76,18 +75,24 @@ let s:commentfg     = s:darkgray
 let s:functionargs  = s:yellow
 " js function class name, import/export name, function/method name
 " variable names
-let s:identifierfg  = s:darkgreen
-let s:identifierbg  = s:black
+let s:identifierfg  = s:darkyellow
+let s:identifierbg  = s:darkgray
+
+let s:variablefg  = s:blue
+let s:variablebg  = s:black
+
+let s:fieldfg  = s:yellow
+let s:fieldbg  = s:none
 
 " import is operator too
 let s:includefg     = s:darkgray
 let s:includebg     = s:none
-let s:preprocfg     = s:cyan
+let s:keyword       = s:cyan
 " for/while
 let s:repeatfg      = s:yellow
 " if/else, ifelse, ternary operator
-let s:conditionalbg = s:black
 let s:conditionalfg = s:cyan
+let s:conditionalbg = s:darkgray
 
 let s:searchbg      = s:darkyellow
 let s:searchfg      = s:black
@@ -113,9 +118,9 @@ let s:keywordbg     = s:black
 let s:delimiterfg   = s:yellow
 let s:delimiterbg   = s:none
 " + - / * =
-let s:operatorfg    = s:yellow
+let s:operatorfg    = s:red
+let s:exceptionfg   = s:red
 
-hi clear
 hi clear ALEWarning
 hi clear ALEError
 hi clear SpellBad
@@ -210,8 +215,8 @@ let s:syntax = {
     \ 'Macro':                      {'fg': s:red},
     \ 'Number':                     {'fg': s:blue},
     \ 'Operator':                   {'fg': s:operatorfg},
-    \ 'PreCondit':                  {'fg': s:preprocfg},
-    \ 'PreProc':                    {'fg': s:preprocfg},
+    \ 'PreCondit':                  {'fg': s:keyword},
+    \ 'PreProc':                    {'fg': s:keyword},
     \ 'Repeat':                     {'fg': s:repeatfg},
     \ 'Special':                    {'fg': s:specialfg, 'bg': s:specialbg},
     \ 'SpecialKey':                 {'fg': s:specialfg, 'bg': s:specialbg},
@@ -287,6 +292,29 @@ let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
 
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
+
+" https://neovim.io/doc/user/treesitter.html#treesitter-highlight
+let s:treesitter = {
+    \ '@boolean':          {'fg': s:boolean},
+    \ '@attribute':        {'fg': s:red},
+    \ '@repeat':           {'fg': s:repeatfg},
+    \ '@keyword':          {'fg': s:keyword},
+    \ '@keyword.function': {'fg': s:yellow},
+    \ '@keyword.return':   {'fg': s:blue},
+    \ '@keyword.operator': {'fg': s:operatorfg},
+    \ '@function':         {'fg': s:functionfg, 'bg': s:functionbg},
+    \ '@conditional':      {'fg': s:conditionalfg, 'bg': s:conditionalbg},
+    \ '@identifier':       {'fg': s:identifierfg, 'bg': s:identifierbg},
+    \ '@variable':         {'fg': s:variablefg, 'bg': s:variablebg},
+    \ '@field':            {'fg': s:fieldfg, 'bg': s:fieldbg},
+    \ '@parameter':        {'fg': s:blue, 'bg': s:fieldbg},
+    \ '@string':           {'fg': s:stringfg},
+    \ '@exception':        {'fg': s:exceptionfg},
+\ }
+
+for [group, value] in items(s:treesitter)
+    call s:hi(group, value)
+endfor
 
 "" !!! READ !!! Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
