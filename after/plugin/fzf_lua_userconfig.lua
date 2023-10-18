@@ -13,6 +13,7 @@ FzfLuaConfig = {}
 local root_pattern = nvim_lspconfig.util.root_pattern
 
 fzflua.setup({
+  "max-perf",
   winopts = {
     width = 1,
     row = 1,
