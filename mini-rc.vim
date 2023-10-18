@@ -256,6 +256,10 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+
+" quick marker, use '' to access it
+nnoremap <leader><leader> m'
+
 " press jj in insert mode twice to return normal mode
 inoremap jj <ESC>
 

@@ -25,6 +25,9 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+
+nnoremap <leader><leader> m'
+
 " press <c-l> to escape
 " inoremap <c-l> <Esc>
 " press jj to escape
@@ -82,13 +85,13 @@ nnoremap <silent> <leader>ww :w<CR><CR>
 nnoremap <leader>aa :e #<cr>
 
 " open file in sublime
-nnoremap <leader>st :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
+nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
-function OpenFolder()
+function OpenDir()
   let d = expand("%:p:h")
   silent execute '!open ' . d
 endfunction
-nnoremap <leader>oo :call OpenFolder()<CR>
+nnoremap <leader>od :call OpenDir()<CR>
 
 if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
