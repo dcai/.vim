@@ -50,6 +50,8 @@ endfunction
 
 " just for neovim
 if has('nvim')
+  Plug 'ibhagwan/fzf-lua'
+  " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   Plug 'ruifm/gitlinker.nvim'
   Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
   Plug 'williamboman/mason-lspconfig.nvim'
@@ -62,9 +64,7 @@ if has('nvim')
   if !has('nvim-0.9')
     Plug 'gpanders/editorconfig.nvim'
   endif
-  " Plug 'jcdickinson/codeium.nvim'
-  " Plug 'Exafunction/codeium.vim'
-   Plug 'Exafunction/codeium.nvim'
+  Plug 'Exafunction/codeium.nvim'
   """"""""""""""""""""""""""""""""""""""""""
   """ BEGIN code completion plugins
   """"""""""""""""""""""""""""""""""""""""""
@@ -78,9 +78,6 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
   """"""""""""""""""""""""""""""""""""""""""
-  Plug 'ibhagwan/fzf-lua'
-  " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
-  " Plug 'echasnovski/mini.nvim'
 endif
 
 if g:osuname ==? 'Windows'
@@ -112,11 +109,6 @@ Plug 'andymass/vim-matchup'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'mg979/vim-visual-multi'
-" Plug 'bronson/vim-visual-star-search'
-" Plug 'maxbrunsfeld/vim-yankstack'
-" Plug 'kien/rainbow_parentheses.vim'
-" Plug 'diepm/vim-rest-console'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tyru/open-browser.vim'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
@@ -148,17 +140,6 @@ Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 " case insensitive search
 let g:sneak#use_ic_scs = 1
-"""""""""""""""""""""""""""""""""""""""
-""" fuzzy search
-"""""""""""""""""""""""""""""""""""""""
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-nmap z/ <Plug>(incsearch-fuzzy-/)
-nmap z? <Plug>(incsearch-fuzzy-?)
-nmap zz/ <Plug>(incsearch-fuzzyspell-/)
-nmap zz? <Plug>(incsearch-fuzzyspell-?)
-" map zg/ <Plug>(incsearch-fuzzy-stay)
-" map zg/ <Plug>(incsearch-fuzzyspell-stay)
 
 """""""""""""""""""""""""""""""""""""""
 """ Text objects
@@ -166,16 +147,6 @@ nmap zz? <Plug>(incsearch-fuzzyspell-?)
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
-
-"""""""""""""""""""""""""""""""""""""""
-""" bufkill
-"""""""""""""""""""""""""""""""""""""""
-" Plug 'qpkorr/vim-bufkill'
-" if exists(':BD')
-"   nnoremap X :BD!<cr>
-" else
-"   nnoremap X :bd!<cr>
-" endif
 
 """""""""""""""""""""""""""""""""""""""
 """  yuttie/comfortable-motion.vim
