@@ -8,12 +8,12 @@ if not lspconfig_loaded then
   return
 end
 
-FzfLuaConfig = {}
-
 local root_pattern = nvim_lspconfig.util.root_pattern
 
+local fzf_profile = 'max-pref'
+
 fzflua.setup({
-  "max-perf",
+  fzf_profile,
   winopts = {
     width = 1,
     row = 1,
@@ -54,41 +54,30 @@ fzflua.setup({
         foldmethod = 'manual',
       },
     },
-    -- previewers = {
-    --   builtin = {
-    --     extensions = {
-    --       ['png'] = { 'viu', '-b' },
-    --       ['jpg'] = { 'viu', '-b' },
-    --     },
-    --   },
-    -- },
   },
 })
 
-FzfLuaConfig.live_grep = function()
+function live_grep()
   local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
   fzflua.live_grep({ cwd = project_root, multiprocess = true })
 end
 
-FzfLuaConfig.grep_cword = function()
+function grep_cword()
   local project_root = root_pattern('.git')(vim.fn.expand('%:p:h'))
   fzflua.grep_cword({ cwd = project_root })
 end
 
-local fzfKeymap = function(key, input, raw)
-  local cmd = ''
-  if raw then
-    cmd = string.format('<cmd>lua %s<CR>', input)
-  else
-    cmd = string.format('<cmd>lua require("fzf-lua").%s<CR>', input)
-  end
-  vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = true })
+local fzfkm = function(key, fn, opt)
+  opt = opt or {}
+  local kmopts = { noremap = true, silent = true }
+  vim.keymap.set('n', key, fn, kmopts)
 end
 
-fzfKeymap('<leader>fc', 'colorschemes()', false)
-fzfKeymap('<leader>ff', 'git_files()', false)
-fzfKeymap('<leader>fr', 'oldfiles()', false)
-fzfKeymap('<leader>ll', 'buffers()', false)
-fzfKeymap('<leader>.', 'FzfLuaConfig.live_grep()', true)
-fzfKeymap('<leader>/', 'builtin()', false)
-fzfKeymap('K', 'FzfLuaConfig.grep_cword()', true)
+fzfkm('<leader>ff', fzflua.git_files)
+fzfkm('<leader>fc', fzflua.colorschemes)
+fzfkm('<leader>fr', fzflua.oldfiles)
+fzfkm('<leader>fb', fzflua.buffers)
+fzfkm('<leader>/', fzflua.builtin)
+fzfkm('<leader>\\', fzflua.files)
+fzfkm('<leader>.', live_grep)
+fzfkm('K', grep_cword)

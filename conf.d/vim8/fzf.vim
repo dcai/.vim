@@ -133,8 +133,8 @@ if !has('nvim')
   imap <c-x><c-j> <plug>(fzf-complete-file-ag)
   imap <c-x><c-l> <plug>(fzf-complete-line)
 
-  nnoremap <silent> <leader>bb :FzfBuffers<cr>
   nnoremap <silent> <leader>ll :FzfBuffers<cr>
+  nnoremap <silent> <leader>fb :FzfBuffers<cr>
   nnoremap <silent> <leader>fd :FzfFiles<cr>
   nnoremap <silent> <leader>ff :FzfGFiles<cr>
   nnoremap <silent> <leader>fr :FzfHistory<CR>
