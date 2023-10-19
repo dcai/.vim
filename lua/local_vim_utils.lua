@@ -66,14 +66,16 @@ function slugify(string, replacement)
   return result:lower()
 end
 
-function parent_dir(input)
-  local processed = input
-  local last_char = input:sub(-1)
-  if last_char == '/' then
-    processed = input:sub(1, -2)
+function trim_right(str, char)
+  local last_char = str:sub(-1)
+  if last_char == char then
+    return str:sub(1, -2)
   end
+  return str
+end
 
-  return processed:match('(.*/)')
+function parent_dir(input)
+  return trim_right(input, '/'):match('(.*/)')
 end
 
 -- @return project root dir
