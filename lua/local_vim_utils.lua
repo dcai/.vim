@@ -66,4 +66,32 @@ function slugify(string, replacement)
   return result:lower()
 end
 
+function parent_dir(input)
+  local processed = input
+  local last_char = input:sub(-1)
+  if last_char == '/' then
+    processed = input:sub(1, -2)
+  end
 
+  return processed:match('(.*/)')
+end
+
+-- @return project root dir
+function project_root()
+  local current_file = vim.fn.expand('%:p:h')
+  local dir = parent_dir(current_file)
+
+  while dir do
+    local git_dir = dir .. '.git'
+    local is_git_dir = io.open(git_dir, 'r')
+
+    if is_git_dir then
+      io.close(is_git_dir)
+      return dir
+    else
+      dir = parent_dir(dir)
+    end
+  end
+
+  return nil
+end
