@@ -120,8 +120,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tyru/open-browser.vim'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap <leader>gx <Plug>(openbrowser-smart-search)
-vmap <leader>gx <Plug>(openbrowser-smart-search)
+nmap <leader>ob <Plug>(openbrowser-smart-search)
+vmap <leader>ob <Plug>(openbrowser-smart-search)
 
 """""""""""""""""""""""""""""""""""""""
 """ vimux
@@ -140,22 +140,14 @@ Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 
 """""""""""""""""""""""""""""""""""""""
-""" navigate
+""" vim-sneak
+""" alternatives:
+"""   hop, lightspeed, clever-f
 """""""""""""""""""""""""""""""""""""""
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 " case insensitive search
 let g:sneak#use_ic_scs = 1
-Plug 'lfv89/vim-interestingwords'
-" nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
-" vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
-" nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
-nnoremap <silent> n :call WordNavigation(1)<cr>
-nnoremap <silent> N :call WordNavigation(0)<cr>
-" Plug 'easymotion/vim-easymotion'
-" nmap s <Plug>(easymotion-overwin-f2)
-" nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
-
 """""""""""""""""""""""""""""""""""""""
 """ fuzzy search
 """""""""""""""""""""""""""""""""""""""

@@ -289,6 +289,6 @@ nnoremap <leader>wq :silent wq<cr>
 nnoremap <leader>qw :silent wq<cr>
 nnoremap <silent> <leader>ww :w<CR><CR>
 " enter to clear search highlight
-nnoremap <silent> <CR> :noh<CR><CR>
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
 " sudo write
 cnoremap w!! w !sudo tee % >/dev/null

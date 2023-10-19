@@ -119,7 +119,7 @@ if !exists('g:vscode')
   nnoremap <leader>sp :vs<cr>
 endif
 " This unsets the 'last search pattern' register by hitting return
-nnoremap <silent> <CR> :noh<CR><CR>
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 " Convert slashes to backslashes for Windows.
 if g:osuname ==? 'Windows'
@@ -136,25 +136,6 @@ else
   " nnoremap <leader>cf :let @+=expand("%")<CR>
   " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
-
-" Visual Search
-function! VisualSearch(direction) range
-  " From an idea by Michael Naumann
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-  let l:pattern = escape(@", '\\/.*$^~[]')
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-  if a:direction == 'b'
-    execute "normal ?" . l:pattern . "^M"
-  else
-    execute "normal /" . l:pattern . "^M"
-  endif
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-" press * or # to search in visual mode
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
 
 set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
