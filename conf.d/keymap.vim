@@ -131,11 +131,8 @@ else
   " copy to vim * register
   nnoremap <leader>cp :let @*=expand("%:p")<CR>
   nnoremap <leader>cf :let @*=expand("%")<CR>
-  " nnoremap <leader>cf :let @*=expand("%")<CR>
-  " nnoremap <leader>cp :let @*=expand("%:p")<CR>
-  " nnoremap <leader>cf :let @+=expand("%")<CR>
-  " nnoremap <leader>cp :let @+=expand("%:p")<CR>
 endif
+nnoremap <leader>cl :let @*=execute('messages')<CR>
 
 set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
