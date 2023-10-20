@@ -1,10 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""
 """  key mappings
 """"""""""""""""""""""""""""""""""""""""
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cnoremap w!! w !sudo tee % >/dev/null
-
 noremap <F15> <nop>
 noremap! <F15> <nop>
 noremap <F16> <nop>
@@ -25,12 +21,8 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-
 nnoremap <leader><leader> m'
 
-" press <c-l> to escape
-" inoremap <c-l> <Esc>
-" press jj to escape
 inoremap jj <Esc>
 inoremap jk <Esc>
 " inoremap kk <Esc> " not good, many words end with k
@@ -82,7 +74,7 @@ inoremap <Up> <C-o>gk
 nnoremap <silent> <leader>ww :w<CR><CR>
 " toggle most recently used file
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
-nnoremap <leader>aa :e #<cr>
+nnoremap <silent> <leader>aa :e #<cr>
 
 " open file in sublime
 nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
@@ -121,21 +113,18 @@ endif
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
+" copy messages to register
+nnoremap <leader>ym :let @*=execute('messages')<CR>
 " Convert slashes to backslashes for Windows.
 if g:osuname ==? 'Windows'
-  nmap <leader>cp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-  nmap <leader>cf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-  " This will copy the path in 8.3 short format, for DOS and Windows 9x
-  " nmap ,c8 :let @*=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
+  nmap <leader>yp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap <leader>yf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
 else
-  " copy to vim * register
-  nnoremap <leader>cp :let @*=expand("%:p")<CR>
-  nnoremap <leader>cf :let @*=expand("%")<CR>
+  " copy fullpath to vim * register
+  nnoremap <leader>yp :let @*=expand("%:p")<CR>
+  " copy file name to vim register
+  nnoremap <leader>yf :let @*=expand("%")<CR>
 endif
-nnoremap <leader>cl :let @*=execute('messages')<CR>
-
-set pastetoggle=<F2>
-nnoremap <F2> :set invpaste paste?<CR>
 
 " Toggle quickfix
 function! ToggleQuickFix()
@@ -155,3 +144,6 @@ nnoremap <silent> <leader>qf :call ToggleQuickFix()<cr>
 " " run shell command
 " nmap <space>sh<space> yy<space>ttss<space>P:.!bash<cr>
 " xmap <space>sh<space> y<space>ttss<space>P:%!bash<cr>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cnoremap w!! w !sudo tee % >/dev/null
