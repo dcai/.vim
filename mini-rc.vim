@@ -222,8 +222,17 @@ Plug 'junegunn/fzf.vim'
 let g:fzf_preview_window = []
 let g:fzf_buffers_jump = 1
 let g:fzf_command_prefix = 'Fzf'
+let g:fzf_layout = {
+    \   'window': {
+    \     'width': 1.0, 'height': 0.6, 'yoffset': 1.0, 'border': 'top'
+    \   }
+    \ }
 nnoremap <silent> <leader>ff :FzfGFiles<cr>
 nnoremap <silent> <leader>fr :FzfHistory<CR>
+nnoremap <silent> <leader>fb :FzfBuffers<CR>
+Plug 'tpope/vim-surround'
+Plug 'andymass/vim-matchup'
+Plug 'scrooloose/nerdcommenter'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""
@@ -279,9 +288,10 @@ vmap <Up> gk
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
-nnoremap <leader>ev :e! $HOME/.vim/vimrc<cr>
-nnoremap <leader>rc :source $HOME/.vim/vimrc<cr>
-nnoremap <leader>rr :source %<cr>
+nnoremap <silent> <leader>aa :e #<cr>
+nnoremap <leader>ev :e! $MYVIMRC<cr>
+nnoremap <leader>rr :source $MYVIMRC<cr>
+nnoremap <leader>rf :source %<cr>
 " BD is vim-bufkill plugin command
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>qq :qall<cr>
