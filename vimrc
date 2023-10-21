@@ -1,7 +1,7 @@
 let s:vim_home = expand('<sfile>:p:h')
 exec 'source ' . s:vim_home . '/loader.vim'
 
-call IncludeDir('$HOME/' . g:vimrc . '/conf.d/vim8/*.vim')
+call IncludeDir('$HOME/' . g:vimrc . '/vim8/*.vim')
 
 try
   if !has('gui_running')
