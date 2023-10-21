@@ -10,8 +10,8 @@
 [^1]
 
 ```
-git clone https://github.com/dcai/.vim.git ~/.vim
-ln -s ~/.vim ~/.config/nvim
+git clone https://github.com/dcai/.vim.git ~/.config/nvim
+ln -s ~/.config/nvim .vim
 ```
 
 Extended `vimrc` since 2008[^2].
