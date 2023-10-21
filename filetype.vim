@@ -9,23 +9,41 @@ function! HelpFileMode()
 endfunction
 
 
-""""""""""""""""""""""""""""""
+" 1. Select the group with ":augroup {name}".
+" 2. Delete any old autocommands with ":au!".
+" 3. Define the autocommands.
+" 4. Go back to the default group with "augroup END".
+
+"""""""""""""""""""""""""""""""
+" default file type
+"""""""""""""""""""""""""""""""
+augroup defaultFiletypeGroup
+  " Remove all group autocommands
+  autocmd!
+  " if no filetype specified, set ft=text
+  autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
+augroup END
+
+"""""""""""""""""""""""""""""""
+" helpfile
+"""""""""""""""""""""""""""""""
+augroup helpFiletypeGroup
+  " Remove all group autocommands
+  autocmd!
+  autocmd filetype help call HelpFileMode()
+augroup END
+
+"""""""""""""""""""""""""""""""
 " NFO
 """""""""""""""""""""""""""""""
 augroup nfoFiletypeGroup
   autocmd!
   autocmd BufReadPre  *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
   autocmd BufReadPost *.nfo call RestoreFileEncodings()
-augroup end
+augroup END
 
 augroup filetypeGroup
   autocmd!
-
-  " if no filetype specified, set ft=text
-  autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
-
-  autocmd filetype help call HelpFileMode()
-
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
 
   " direnv
@@ -84,4 +102,4 @@ augroup filetypeGroup
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
   autocmd BufRead,BufNewFile *.tf set filetype=terraform
-augroup end
+augroup END
