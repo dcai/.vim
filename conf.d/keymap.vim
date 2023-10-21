@@ -87,16 +87,12 @@ nnoremap <leader>od :call OpenDir()<CR>
 
 if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
-  nnoremap <leader>ev :e $HOME/.vim/init.lua<cr>
-  " nnoremap <leader>rr :source $HOME/.vim/init.lua<cr>
-  nnoremap <leader>rc :source $MYVIMRC<cr>
-else
-  nnoremap <leader>ev :e $HOME/.vim/vimrc<cr>
-  nnoremap <leader>rc :source $HOME/.vim/vimrc<cr>
 endif
 
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>rr :source $MYVIMRC<cr>
 " source current file
-nnoremap <leader>rr :source %<cr>
+nnoremap <leader>rf :source %<cr>
 
 if !exists('g:vscode')
   nnoremap <leader>qq :qall<cr>
