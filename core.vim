@@ -22,11 +22,6 @@ set suffixesadd=.js,.jsx,.ts,.tsx
 " https://til.hashrocket.com/posts/t8osyzywau-treat-words-with-dash-as-a-word-in-vim
 set iskeyword+=-
 
-" Fold stuff {{{
-set foldmethod=marker
-set nofoldenable
-" }}}
-
 " Encoding and Decoding {{{ 1
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
@@ -143,6 +138,11 @@ function! SoftWrap()
   normal gggqG
   let &textwidth = s:old_tw
 endfunction
+
+set nofoldenable
+" zR: unfold all
+" zA: fold all
+set foldmethod=marker
 
 if has('nvim')
   set clipboard+=unnamedplus
