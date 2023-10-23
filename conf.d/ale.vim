@@ -43,7 +43,7 @@ let g:ale_linters = {
   \ 'javascript': ['eslint', 'tsserver'],
   \ 'javascriptreact': ['eslint', 'tsserver'],
   \ 'json': [],
-  \ 'lua': ['luac'],
+  \ 'lua': ['luac', 'luacheck'],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint', 'tsserver'],
