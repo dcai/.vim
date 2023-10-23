@@ -9,7 +9,7 @@ vim.g.python3_host_prog = find_executable({
 })
 
 local vim_home = vim.fn.expand('<sfile>:p:h')
-vim.cmd(f('source {vim_home}/loader.vim'))
+vim.cmd('source ' .. vim_home .. '/loader.vim')
 
 xpcall(function()
   vim.cmd('colorscheme oasis')
