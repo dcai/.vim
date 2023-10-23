@@ -25,12 +25,10 @@ function! InstallAle(info)
   endif
 endfunction
 
-" Install vim-plug if we don't already have it
+" download vim-plug if not installed
 if empty(glob(expand(s:vimplug)))
-  " Ensure all needed directories exist  (Thanks @kapadiamush)
   execute '!mkdir -p ' . expand(s:plugged)
   execute '!mkdir -p ' . expand(s:autoload)
-  " Download the actual plugin manager
   execute '!curl -fLo ' . s:vimplug . ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 
