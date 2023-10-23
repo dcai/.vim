@@ -92,7 +92,7 @@ set grepformat=%f:%l:%c:%m
 
 set noswapfile
 set nowritebackup
-function! s:mkdir_p(dirname)
+function! Mkdir(dirname)
   let l:path = expand(a:dirname)
   if !isdirectory(l:path)
     call mkdir(l:path, 'p')
@@ -102,13 +102,13 @@ endfunction
 
 " https://stackoverflow.com/a/26898986/69938
 if !empty($XDG_CACHE_HOME)
-  let g:netrw_home=s:mkdir_p($XDG_CACHE_HOME.'/vim')
+  let g:netrw_home=Mkdir($XDG_CACHE_HOME.'/vim')
 endif
 
 " enable persistent undo
 set undofile
-let &undodir=s:mkdir_p(g:vim_data . '/undo')
-let &backupdir=s:mkdir_p(g:vim_data . '/backup')
+let &undodir=Mkdir(g:vim_data . '/undo')
+let &backupdir=Mkdir(g:vim_data . '/backup')
 
 " default indent & wrapping settings {{{
 set expandtab
