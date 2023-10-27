@@ -7,5 +7,3 @@ set guioptions=ar
 set guioptions-=m
 "remove toolbar
 set guioptions-=T
-
-set t_Co=256
