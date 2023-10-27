@@ -292,31 +292,33 @@ let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
 
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
-
-" https://neovim.io/doc/user/treesitter.html#treesitter-highlight
-let s:treesitter = {
-    \ '@boolean':          {'fg': s:boolean},
-    \ '@attribute':        {'fg': s:red},
-    \ '@repeat':           {'fg': s:repeatfg},
-    \ '@keyword':          {'fg': s:keyword},
-    \ '@keyword.function': {'fg': s:yellow},
-    \ '@keyword.return':   {'fg': s:blue},
-    \ '@keyword.operator': {'fg': s:operatorfg},
-    \ '@function':         {'fg': s:functionfg, 'bg': s:functionbg},
-    \ '@conditional':      {'fg': s:conditionalfg, 'bg': s:conditionalbg},
-    \ '@identifier':       {'fg': s:identifierfg, 'bg': s:identifierbg},
-    \ '@variable':         {'fg': s:variablefg, 'bg': s:variablebg},
-    \ '@field':            {'fg': s:fieldfg, 'bg': s:fieldbg},
-    \ '@parameter':        {'fg': s:blue, 'bg': s:fieldbg},
-    \ '@string':           {'fg': s:stringfg},
-    \ '@exception':        {'fg': s:exceptionfg},
-\ }
-
-for [group, value] in items(s:treesitter)
-    call s:hi(group, value)
-endfor
-
 "" !!! READ !!! Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
+
+if has('nvim')
+  " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
+  let s:treesitter = {
+      \ '@boolean':          {'fg': s:boolean},
+      \ '@attribute':        {'fg': s:red},
+      \ '@repeat':           {'fg': s:repeatfg},
+      \ '@keyword':          {'fg': s:keyword},
+      \ '@keyword.function': {'fg': s:yellow},
+      \ '@keyword.return':   {'fg': s:blue},
+      \ '@keyword.operator': {'fg': s:operatorfg},
+      \ '@function':         {'fg': s:functionfg, 'bg': s:functionbg},
+      \ '@conditional':      {'fg': s:conditionalfg, 'bg': s:conditionalbg},
+      \ '@identifier':       {'fg': s:identifierfg, 'bg': s:identifierbg},
+      \ '@variable':         {'fg': s:variablefg, 'bg': s:variablebg},
+      \ '@field':            {'fg': s:fieldfg, 'bg': s:fieldbg},
+      \ '@parameter':        {'fg': s:blue, 'bg': s:fieldbg},
+      \ '@string':           {'fg': s:stringfg},
+      \ '@exception':        {'fg': s:exceptionfg},
+  \ }
+
+  for [group, value] in items(s:treesitter)
+      call s:hi(group, value)
+  endfor
+endif
+
