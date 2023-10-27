@@ -41,8 +41,6 @@ endfunction
 " this must load before others
 call IncludeScript('core.vim')
 
-call IncludeDir(g:vim_home . '/conf.d/*.vim')
-
 if has('gui_running')
   call IncludeScript('gui.vim')
 endif
@@ -60,6 +58,7 @@ if g:wsl ==? 'Microsoft'
 endif
 
 
+call IncludeDir(g:vim_home . '/before/*.vim')
 """"""""""""""""""""""""""""""""""""""""
 " load vim-plug
 " should load after config
