@@ -45,8 +45,6 @@ call IncludeDir(g:vim_home . '/conf.d/*.vim')
 
 if has('gui_running')
   call IncludeScript('gui.vim')
-else
-  call IncludeScript('term.vim')
 endif
 
 if g:osuname ==? 'Linux'
