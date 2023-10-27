@@ -5,7 +5,7 @@ set shell=/bin/sh
 
 let g:vim_home = expand('<sfile>:p:h')
 
-let g:vim_data = '$HOME/.local/vim'
+let g:vim_data = '$HOME/.local/share/vim'
 if has('nvim')
   let g:vim_data = '$HOME/.local/share/nvim'
 endif
