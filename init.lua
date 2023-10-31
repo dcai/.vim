@@ -11,21 +11,11 @@ vim.g.python3_host_prog = find_executable({
 local vim_home = vim.fn.expand('<sfile>:p:h')
 vim.cmd('source ' .. vim_home .. '/loader.vim')
 
-xpcall(function()
-  vim.cmd('colorscheme oasis')
-end, function()
-  vim.cmd('colorscheme default')
-end)
+vim.opt.cmdheight = 0
+vim.opt.termguicolors = false
 
--- vim.cmd([[
---   let g:codeium_no_map_tab = v:true
---   imap <script><silent><nowait><expr> <C-f> codeium#Accept()
---   imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
---   imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
---   imap <C-x> <Cmd>call codeium#Clear()<CR>
--- ]])
---
--- vim.cmd([[
---   let g:copilot_no_tab_map = v:true
---   imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
--- ]])
+xpcall(function()
+  vim.cmd.colorscheme('oasis')
+end, function()
+  vim.cmd.colorscheme('default')
+end)
