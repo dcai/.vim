@@ -66,6 +66,7 @@ let s:none          = 'NONE'
 
 let s:defaultbg     = s:none
 let s:defaultfg     = s:white
+let s:defaultguibg  = '#012619'
 
 let s:aleerrorbg    = s:red
 let s:aleerrorfg    = s:white
@@ -76,10 +77,10 @@ let s:functionargs  = s:yellow
 " js function class name, import/export name, function/method name
 " variable names
 let s:identifierfg  = s:darkyellow
-let s:identifierbg  = s:darkgray
+let s:identifierbg  = s:none
 
-let s:variablefg  = s:blue
-let s:variablebg  = s:black
+let s:variablefg  = s:darkyellow
+let s:variablebg  = s:none
 
 let s:fieldfg  = s:yellow
 let s:fieldbg  = s:none
@@ -98,7 +99,7 @@ let s:searchbg      = s:darkyellow
 let s:searchfg      = s:black
 " js 'this' reference
 let s:specialfg     = s:red
-let s:specialbg     = s:white
+let s:specialbg     = s:none
 " for regular vim: jsxmarkup/async/await/return/vim's let
 let s:statementfg   = s:yellow
 " js string literal
@@ -107,7 +108,7 @@ let s:constantfg    = s:darkgreen
 let s:boolean       = s:blue
 let s:labelfg       = s:green
 let s:functionfg    = s:green
-let s:functionbg    = s:darkgray
+let s:functionbg    = s:none
 " imported object/class/enum
 let s:typefg        = s:darkyellow
 let s:typebg        = s:none
@@ -141,10 +142,10 @@ function! s:hi(group, value)
   let l:ctermbg = join(["ctermbg", l:bgcolor], "=")
   let l:ctermfg = join(["ctermfg", l:fgcolor], "=")
 
-  let l:guifg = has_key(a:value, 'guifg') ? join(["guifg", a:value.guifg], "=") : join(['guifg', l:fgcolor], '=')
-  let l:guibg = has_key(a:value, 'guibg') ? join(["guibg", a:value.guibg], "=") : join(['guibg', l:bgcolor], '=')
+  let l:guifg = has_key(a:value, 'guifg') ? "guifg=" . a:value.guifg : join(['guifg', l:fgcolor], '=')
+  let l:guibg = has_key(a:value, 'guibg') ? "guibg=" . a:value.guibg : join(['guibg', l:bgcolor], '=')
 
-  let l:cterm = has_key(a:value, 'cterm') ? join(["cterm", a:value.cterm], "=") : ""
+  let l:cterm = has_key(a:value, 'cterm') ? "cterm=" . a:value.cterm : ""
 
   let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg, l:guifg, l:guibg], " ")
   exe l:cmd
@@ -168,7 +169,7 @@ let s:ui = {
     \ 'MoreMsg':                    {'fg': s:darkgreen},
     \ 'Noise':                      {'fg': s:gray},
     \ 'NonText':                    {'fg': s:darkcyan, 'cterm': 'bold'},
-    \ 'Normal':                     {'fg': s:defaultfg, 'guibg': s:black},
+    \ 'Normal':                     {'fg': s:defaultfg, 'guibg': s:defaultguibg},
     \ 'NormalFloat':                {'bg': s:darkgray, 'fg': s:green},
     \ 'NormalNC':                   {'fg': s:gray},
     \ 'Pmenu':                      {'bg': s:blue, 'fg': s:blue},
@@ -286,12 +287,21 @@ for [group, value] in items(s:js)
     call s:hi(group, value)
 endfor
 
-let s:active = {'fg': s:black, 'bg': s:yellow, 'cterm': 'none'}
-let s:inactive = {'fg': s:white, 'bg': s:darkgray, 'cterm': 'none'}
+let s:active = {
+            \'fg': s:black,
+            \'bg': s:yellow,
+            \'cterm': 'none'
+            \}
+let s:inactive = {
+            \'fg': s:white,
+            \'bg': s:darkgray,
+            \'cterm': 'none'
+            \}
 let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
 
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
+
 "" !!! READ !!! Cursor color is controlled by iterm color scheme
 " hi Cursor       cterm=none       ctermbg=red      ctermfg=white
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
@@ -321,4 +331,3 @@ if has('nvim')
       call s:hi(group, value)
   endfor
 endif
-
