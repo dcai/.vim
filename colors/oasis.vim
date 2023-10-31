@@ -135,17 +135,20 @@ hi clear DiffText
 hi clear LineNr
 hi clear SignColumn
 
+function! s:get_or(value, key, default)
+  return has_key(a:value, a:key) ? a:key . "=" . a:value[a:key] : a:key . '=' . a:default
+endfunction
+
 function! s:hi(group, value)
   let l:fgcolor = has_key(a:value, 'fg') ? a:value.fg : s:defaultfg
   let l:bgcolor = has_key(a:value, 'bg') ? a:value.bg : s:defaultbg
 
-  let l:ctermbg = join(["ctermbg", l:bgcolor], "=")
-  let l:ctermfg = join(["ctermfg", l:fgcolor], "=")
+  let l:ctermbg = "ctermbg=" . l:bgcolor
+  let l:ctermfg = "ctermfg=" . l:fgcolor
 
-  let l:guifg = has_key(a:value, 'guifg') ? "guifg=" . a:value.guifg : join(['guifg', l:fgcolor], '=')
-  let l:guibg = has_key(a:value, 'guibg') ? "guibg=" . a:value.guibg : join(['guibg', l:bgcolor], '=')
-
-  let l:cterm = has_key(a:value, 'cterm') ? "cterm=" . a:value.cterm : ""
+  let l:guifg = s:get_or(a:value, 'guifg', l:fgcolor)
+  let l:guibg = s:get_or(a:value, 'guibg', l:bgcolor)
+  let l:cterm = s:get_or(a:value, 'cterm', 'none')
 
   let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg, l:guifg, l:guibg], " ")
   exe l:cmd
