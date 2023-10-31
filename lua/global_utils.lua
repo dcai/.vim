@@ -45,9 +45,8 @@ function find_executable(files)
   return nil
 end
 
-local expr_opts = { noremap = true, expr = true, silent = true }
-
 function global_keymap(mode, from, to)
+  -- local expr_opts = { noremap = true, expr = true, silent = true }
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
