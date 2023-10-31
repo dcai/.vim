@@ -1,2 +1,2 @@
 std = 'max'
-globals = { 'vim' }
+globals = { 'vim', 'find_executable' }
