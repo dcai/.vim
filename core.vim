@@ -14,7 +14,7 @@ let g:mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 
-set path=.,src,node_nodules
+set path=.,src,node_modules,lib
 set suffixesadd=.js,.jsx,.ts,.tsx
 
 " so vim could treat "is-word" as whole word
@@ -56,12 +56,8 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
-set wildignore+=node_modules
-" http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
 set synmaxcol=300
-set tags=tags;
 set updatetime=100
-set viminfo='500
 if &history < 1000
   set history=1000
 endif
@@ -75,7 +71,7 @@ set hidden
 " Avoid hit ENTER to continue normal
 set shortmess+=a
 set virtualedit=all
-"more powerful backspacing
+" more powerful backspacing
 set backspace=indent,eol,start
 " always show status line
 set laststatus=2
@@ -83,12 +79,10 @@ set number
 set showmatch
 set switchbuf=usetab
 
-" Search Setting {{{
 set ignorecase
 set hlsearch
 set incsearch
 set grepformat=%f:%l:%c:%m
-" }}}
 
 set noswapfile
 set nowritebackup
