@@ -2,8 +2,8 @@ std = 'max'
 globals = {
   'apply_theme',
   'find_executable',
-  'get_all_config',
-  'get_config',
+  'get_all_local_config',
+  'get_local_config',
   'global_keymap',
   'parent_dir',
   'project_root',
