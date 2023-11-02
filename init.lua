@@ -8,9 +8,8 @@ vim.g.python3_host_prog = find_executable({
   '/usr/bin/python3',
 })
 
-local vim_home = vim.fn.expand('<sfile>:p:h')
-vim.cmd('source ' .. vim_home .. '/loader.vim')
-
 vim.opt.cmdheight = 0
+
+-- local vim_home = vim.fn.expand('<sfile>:p:h')
+vim.cmd('source ' .. vim.fn.stdpath('config') .. '/loader.vim')
 useTheme('gruvbox', true)
--- useTheme('oasis', true)
