@@ -22,7 +22,7 @@ set suffixesadd=.js,.jsx,.ts,.tsx
 " https://til.hashrocket.com/posts/t8osyzywau-treat-words-with-dash-as-a-word-in-vim
 set iskeyword+=-
 
-" Encoding and Decoding {{{ 1
+" Encoding and Decoding
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
 set encoding=utf-8
@@ -32,7 +32,6 @@ set encoding=utf-8
 " else
 "   set signcolumn=yes
 " endif
-
 set signcolumn=auto
 
 if has('multi_byte')
@@ -41,17 +40,6 @@ if has('multi_byte')
   endif
 endif
 
-" Common code for encodings, used by *.nfo files
-function! SetFileEncodings(encodings)
-  let b:myfileencodingsbak=&fileencodings
-  let &fileencodings=a:encodings
-endfunction
-
-function! RestoreFileEncodings()
-  let &fileencodings=b:myfileencodingsbak
-  unlet b:myfileencodingsbak
-endfunction
-" }}}
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.bbl,.blg,.brf,.cb,.ind,.idx,
       \.ilg,.inx,.out,.toc,.class,.pyc
@@ -104,7 +92,6 @@ set undofile
 let &undodir=Mkdir(g:vim_data . '/undo')
 let &backupdir=Mkdir(g:vim_data . '/backup')
 
-" default indent & wrapping settings {{{
 set expandtab
 set tabstop=8
 set softtabstop=4
@@ -122,8 +109,9 @@ set linebreak
 set showmode
 " disable colorcolumn
 set colorcolumn=
-" split more naturally
+" splitting a new window below the current one
 set splitbelow
+" splitting new window right of the current one
 set splitright
 
 function! SoftWrap()
@@ -145,17 +133,12 @@ else
 endif
 
 
-" Removes trailing spaces
 function! TrimWhiteSpace()
   %s/\s\+$//e
   %s/[ \t\r]\+$//e
 endfunction
-" }}}
 
-" Keep in current dir {{{
-" http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
-"""""""""""""""""""""""""""""""""""""""
-" switch to current dir
+" switch to current editing file's dir
 function! ChangeCurrentDirectory()
   let l:dir = expand('%:p:h')
   let l:file = expand('%:p')
@@ -164,40 +147,11 @@ function! ChangeCurrentDirectory()
     exec 'cd ' . l:dir
   endif
 
-  let g:ale_fix_on_save = 0
-
-  if match(l:file, 'html\|twig\|jinja2') > -1
-    " disable auto fix for html
-    let g:ale_fix_on_save = 0
-  endif
-
-  if match(l:file, 'php\|phps') > -1
-    " disable auto fix for php
-    let g:ale_fix_on_save = 0
-  endif
-
-  " Install moodle coding style:
-  "   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
-  " Above command add moodle coding style to
-  "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
-  " let s:php_coding_standard = 'moodle'
-  " let s:php_coding_standard = 'WordPress-Core'
-  let l:php_coding_standard = 'PSR12'
-  if l:dir =~ 'moodle'
-    let g:ale_fix_on_save = 0
-    let l:php_coding_standard = 'moodle'
-  endif
-  let g:ale_php_phpcs_standard = l:php_coding_standard
-  let g:ale_php_phpcbf_standard = l:php_coding_standard
-
-  unlet l:php_coding_standard
   unlet l:file
   unlet l:dir
 endfunction
 
 augroup onEnterBuffer
   autocmd!
-  autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
   autocmd BufEnter * call ChangeCurrentDirectory()
 augroup END
-" }}}

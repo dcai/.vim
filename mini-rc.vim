@@ -48,13 +48,9 @@ set mouse=a
 set noerrorbells
 set visualbell
 set showcmd
-" set cursorline
 set hidden
-" Avoid hit ENTER to continue normal
 set shortmess+=a
-"set ve[rsion]
 set ve=all
-"more powerful backspacing
 set backspace=indent,eol,start
 set nofoldenable
 " always show status line
@@ -75,11 +71,8 @@ let $MANPAGER = "sed -e 's:\\x1B\\[[[:digit:]]\\+m::g'"
 """""""""""""""""""""""""""""""""""""""
 """ wrap
 """""""""""""""""""""""""""""""""""""""
-" http://blog.ezyang.com/2010/03/vim-textwidth/
 set wrap
-"set nowrap
 set linebreak
-"set textwidth=72
 set formatoptions=cqt
 set wrapmargin=0
 """""""""""""""""""""""""""""""""""""""
@@ -149,12 +142,14 @@ set smartindent
 """""""""""""""""""""""""""""""""""""""
 function! CHANGE_CURR_DIR()
   let _dir = expand("%:p:h")
-  exec "cd " . _dir  . ""
+  if isdirectory(_dir)
+    exec 'cd ' . _dir
+  endif
   unlet _dir
 endfunction
 autocmd BufEnter * call CHANGE_CURR_DIR()
-autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+" autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+" autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
 
 """""""""""""""""""""""""""""""""""""""
 """ Visual Search
