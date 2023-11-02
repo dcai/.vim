@@ -12,5 +12,5 @@ local vim_home = vim.fn.expand('<sfile>:p:h')
 vim.cmd('source ' .. vim_home .. '/loader.vim')
 
 vim.opt.cmdheight = 0
--- useTheme('gruvbox', true)
-useTheme('oasis', true)
+useTheme('gruvbox', true)
+-- useTheme('oasis', true)
