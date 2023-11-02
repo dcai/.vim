@@ -1,11 +1,12 @@
 std = 'max'
 globals = {
-  'useTheme',
-  'vim',
   'find_executable',
-  'slugify',
-  'trim_right',
+  'global_keymap',
   'parent_dir',
   'project_root',
-  'global_keymap',
+  'slugify',
+  'source',
+  'trim_right',
+  'use_theme',
+  'vim',
 }

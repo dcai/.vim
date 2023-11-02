@@ -97,11 +97,16 @@ function project_root()
   return nil
 end
 
-function useTheme(colorscheme, termguicolors)
+function use_theme(colorscheme, termguicolors)
   vim.opt.termguicolors = termguicolors and true or false
   xpcall(function()
     vim.cmd.colorscheme(colorscheme)
   end, function()
     vim.cmd.colorscheme('default')
   end)
+end
+
+function source(path)
+  -- local vim_home = vim.fn.expand('<sfile>:p:h')
+  vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
 end
