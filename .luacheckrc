@@ -1,5 +1,6 @@
 std = 'max'
 globals = {
+  'useTheme',
   'vim',
   'find_executable',
   'slugify',

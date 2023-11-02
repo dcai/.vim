@@ -38,6 +38,8 @@ let g:colors_name='oasis'
 " |  15   |  7*  |               White                |
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let s:termguicolors = &termguicolors
+
 let s:blue          = 'blue'
 let s:darkblue      = 'darkblue'
 
@@ -62,6 +64,12 @@ let s:darkyellow    = 'darkyellow'
 let s:black         = 'black'
 let s:white         = 'white'
 
+if s:termguicolors
+  let s:blue        = 'lightblue'
+  let s:green       = 'lightgreen'
+  let s:yellow      = 'lightyellow'
+endif
+
 let s:none          = 'NONE'
 
 let s:defaultbg     = s:none
@@ -73,11 +81,7 @@ let s:aleerrorfg    = s:white
 let s:alewarnbg     = s:yellow
 let s:alewarnfg     = s:red
 let s:commentfg     = s:darkgray
-let s:functionargs  = s:yellow
-" js function class name, import/export name, function/method name
-" variable names
-let s:identifierfg  = s:darkyellow
-let s:identifierbg  = s:none
+let s:identifier    = {'fg': s:yellow, 'bg': s:none}
 
 let s:variablefg  = s:darkyellow
 let s:variablebg  = s:none
@@ -105,10 +109,10 @@ let s:statementfg   = s:yellow
 " js string literal
 let s:stringfg      = s:gray
 let s:constantfg    = s:darkgreen
-let s:boolean       = s:blue
+let s:boolean       = {'fg': s:blue}
+let s:number        = {'fg': s:yellow}
 let s:labelfg       = s:green
-let s:functionfg    = s:green
-let s:functionbg    = s:none
+let s:function      = {'fg': s:green, 'bg': s:none}
 " imported object/class/enum
 let s:typefg        = s:darkyellow
 let s:typebg        = s:none
@@ -200,7 +204,10 @@ for [group, value] in items(s:ui)
 endfor
 
 let s:syntax = {
-    \ 'Boolean':                    {'fg': s:boolean},
+    \ 'Boolean':                    s:boolean,
+    \ 'Number':                     s:number,
+    \ 'Function':                   s:function,
+    \ 'Identifier':                 s:identifier,
     \ 'Character':                  {'fg': s:red},
     \ 'Comment':                    {'fg': s:commentfg},
     \ 'Conditional':                {'fg': s:conditionalfg, 'bg': s:conditionalbg},
@@ -210,14 +217,11 @@ let s:syntax = {
     \ 'Delimiter':                  {'fg': s:delimiterfg, 'bg': s:delimiterbg},
     \ 'Error':                      {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
     \ 'Exception':                  {'fg': s:red, 'bg': s:none},
-    \ 'Function':                   {'fg': s:functionfg, 'bg': s:functionbg},
-    \ 'Identifier':                 {'fg': s:identifierfg, 'bg': s:identifierbg},
     \ 'Ignore':                     {'fg': s:darkgray, 'cterm': 'bold'},
     \ 'Include':                    {'fg': s:includefg, 'bg': s:includebg},
     \ 'Keyword':                    {'fg': s:keywordfg,  'bg': s:keywordbg},
     \ 'Label':                      {'fg': s:labelfg},
     \ 'Macro':                      {'fg': s:red},
-    \ 'Number':                     {'fg': s:blue},
     \ 'Operator':                   {'fg': s:operatorfg},
     \ 'PreCondit':                  {'fg': s:keyword},
     \ 'PreProc':                    {'fg': s:keyword},
@@ -283,7 +287,7 @@ let s:js = {
     \ 'jsxTagName':  {'fg': s:green},
     \ 'tsxTagName':  {'fg': s:green},
     \ 'jsxElement':  {'fg': s:red},
-    \ 'jsFuncArgs':  {'fg': s:functionargs},
+    \ 'jsFuncArgs':  {'fg': s:yellow},
     \ 'jsObjectKey': {'fg': s:red, 'bg': s:darkgreen},
 \ }
 for [group, value] in items(s:js)
@@ -292,7 +296,9 @@ endfor
 
 let s:active = {
             \'fg': s:black,
-            \'bg': s:yellow,
+            \'bg': s:darkgreen,
+            \'guifg': s:darkgreen,
+            \'guibg': s:black,
             \'cterm': 'none'
             \}
 let s:inactive = {
@@ -313,16 +319,16 @@ call s:hi('statuslineNC', s:inactive)
 if has('nvim')
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
-      \ '@boolean':          {'fg': s:boolean},
+      \ '@boolean':          s:boolean,
+      \ '@function':         s:function,
+      \ '@identifier':       s:identifier,
       \ '@attribute':        {'fg': s:red},
       \ '@repeat':           {'fg': s:repeatfg},
       \ '@keyword':          {'fg': s:keyword},
       \ '@keyword.function': {'fg': s:yellow},
       \ '@keyword.return':   {'fg': s:blue},
       \ '@keyword.operator': {'fg': s:operatorfg},
-      \ '@function':         {'fg': s:functionfg, 'bg': s:functionbg},
       \ '@conditional':      {'fg': s:conditionalfg, 'bg': s:conditionalbg},
-      \ '@identifier':       {'fg': s:identifierfg, 'bg': s:identifierbg},
       \ '@variable':         {'fg': s:variablefg, 'bg': s:variablebg},
       \ '@field':            {'fg': s:fieldfg, 'bg': s:fieldbg},
       \ '@parameter':        {'fg': s:blue, 'bg': s:fieldbg},

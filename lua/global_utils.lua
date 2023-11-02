@@ -96,3 +96,12 @@ function project_root()
 
   return nil
 end
+
+function useTheme(colorscheme, termguicolors)
+  vim.opt.termguicolors = termguicolors and true or false
+  xpcall(function()
+    vim.cmd.colorscheme(colorscheme)
+  end, function()
+    vim.cmd.colorscheme('default')
+  end)
+end
