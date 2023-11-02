@@ -15,7 +15,9 @@ vim.opt.cmdheight = 0
 vim.opt.termguicolors = false
 
 xpcall(function()
-  vim.cmd.colorscheme('oasis')
+  -- vim.cmd.colorscheme('oasis')
+  vim.cmd.colorscheme('gruvbox')
+  vim.g.gruvbox_contrast_dark="soft"
 end, function()
   vim.cmd.colorscheme('default')
 end)
