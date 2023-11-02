@@ -110,3 +110,24 @@ function source(path)
   -- local vim_home = vim.fn.expand('<sfile>:p:h')
   vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
 end
+
+local get_or = function(table, key, default)
+  return table[key] or default
+end
+
+function get_all_config()
+  local configfile = vim.fn.stdpath('data') .. '/local.lua'
+  local loaded, config = pcall(dofile, configfile)
+  return loaded and config or {}
+end
+
+function get_config(key, default)
+  return get_or(get_all_config(), key, default)
+end
+
+--- apply given theme if no config found
+-- @param theme fallback theme
+function apply_theme(theme)
+  local termguicolors = get_config('termguicolors', false)
+  use_theme(get_config('colorscheme', theme), termguicolors)
+end

@@ -11,4 +11,4 @@ vim.g.python3_host_prog = find_executable({
 vim.opt.cmdheight = 0
 
 source('loader.vim')
-use_theme('gruvbox', true)
+apply_theme('oasis')
