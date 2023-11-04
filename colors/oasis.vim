@@ -56,6 +56,12 @@ let g:colors_name='oasis'
 " nocombine	override attributes instead of combining them
 " NONE		no attributes used (used to reset it)
 
+let s:none          = 'NONE'
+let s:bold          = 'bold'
+let s:italic        = 'italic'
+let s:underline     = 'underline'
+let s:reverse       = 'reverse'
+
 let s:termguicolors = &termguicolors
 
 let s:blue          = 'blue'
@@ -88,12 +94,10 @@ if s:termguicolors
   let s:yellow      = 'lightyellow'
 endif
 
-let s:none          = 'NONE'
-
 let s:defaultbg     = s:none
 let s:defaultfg     = s:white
 let s:defaultguibg  = '#012619'
-let s:comment       = {'fg': s:gray}
+let s:comment       = {'fg': s:gray, 'cterm': s:italic}
 let s:identifier    = {'fg': s:yellow, 'bg': s:none}
 let s:repeat        = {'fg': s:yellow}
 let s:conditional   = {'fg': s:cyan, 'bg': s:darkgray}
@@ -173,15 +177,15 @@ let s:ui = {
     \ 'Quote':        {'fg': s:yellow},
     \ 'Search':       s:search,
     \ 'SignColumn':   {'bg': s:none},
-    \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': 'underline'},
-    \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': 'underline'},
-    \ 'SpellLocal':   {'fg': s:darkyellow, 'cterm': 'underline'},
-    \ 'SpellRare':    {'fg': s:darkyellow, 'cterm': 'underline'},
+    \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': s:underline},
+    \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': s:underline},
+    \ 'SpellLocal':   {'fg': s:darkyellow, 'cterm': s:underline},
+    \ 'SpellRare':    {'fg': s:darkyellow, 'cterm': s:underline},
     \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
-    \ 'Underlined':   {'cterm': 'underline'},
+    \ 'Underlined':   {'cterm': s:underline},
     \ 'VertSplit':    {'fg': s:green},
-    \ 'Visual':       {'cterm': 'reverse', 'guibg': s:darkgreen, 'guifg': s:white},
-    \ 'VisualNOS':    {'cterm': 'bold,underline'},
+    \ 'Visual':       {'cterm': s:reverse, 'guibg': s:darkgreen, 'guifg': s:white},
+    \ 'VisualNOS':    {'cterm': s:underline},
     \ 'WarningMsg':   {'fg': s:yellow},
 \ }
 call s:apply(s:ui)
@@ -223,13 +227,13 @@ let s:syntax = {
 call s:apply(s:syntax)
 
 let s:custom = {
-    \ 'ALEVirtualTextError':        {'fg': s:darkgray, 'bg': s:none, 'cterm': 'italic'},
+    \ 'ALEVirtualTextError':        {'fg': s:darkgray, 'bg': s:none, 'cterm': s:italic},
     \ 'ALEVirtualTextWarning':      {'fg': s:darkgray, 'bg': s:none},
     \ 'ALEVirtualTextInfo':         {'fg': s:darkgray, 'bg': s:none},
-    \ 'ALEError':                   {'fg': s:none, 'bg': s:red, 'cterm': 'bold,underline'},
-    \ 'ALEErrorSign':               {'bg': s:darkred, 'cterm': 'bold'},
-    \ 'ALEWarning':                 {'fg': s:none, 'bg': s:yellow, 'cterm': 'underline'},
-    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black, 'cterm': 'bold'},
+    \ 'ALEError':                   {'fg': s:none, 'bg': s:red, 'cterm': s:underline},
+    \ 'ALEErrorSign':               {'bg': s:darkred},
+    \ 'ALEWarning':                 {'fg': s:none, 'bg': s:yellow, 'cterm': s:underline},
+    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black},
     \ 'CocErrorFloat':              {'fg': s:red},
     \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
     \ 'CocHintFloat':               {'fg': s:black},
@@ -309,4 +313,3 @@ let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
 
 call s:hi('statusline', s:active)
 call s:hi('statuslineNC', s:inactive)
-
