@@ -129,14 +129,15 @@ endfunction
 function! s:hi(group, value)
   let l:fgcolor = s:get_or(a:value, 'fg', s:defaultfg)
   let l:bgcolor = s:get_or(a:value, 'bg', s:defaultbg)
+  let l:attrlist = s:get_or(a:value, 'cterm', s:none)
 
   let l:ctermbg = "ctermbg=" . l:bgcolor
   let l:ctermfg = "ctermfg=" . l:fgcolor
 
   let l:guifg = s:keyvalue(a:value, 'guifg', l:fgcolor)
   let l:guibg = s:keyvalue(a:value, 'guibg', l:bgcolor)
-  let l:cterm = s:keyvalue(a:value, 'cterm', s:none)
-  let l:gui = s:keyvalue(a:value, 'gui', s:none)
+  let l:cterm = 'term=' . l:attrlist
+  let l:gui = 'gui=' . l:attrlist
 
   let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg, l:guifg, l:guibg, l:gui], " ")
   exe l:cmd
