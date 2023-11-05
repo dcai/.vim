@@ -298,19 +298,57 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
-let s:active = {
-            \'fg': s:black,
-            \'bg': s:darkgreen,
-            \'guibg': s:darkgreen,
-            \'guifg': s:black,
-            \'cterm': 'none',
-            \'gui': 'none'
-            \}
-let s:inactive = {
-            \'fg': s:white,
-            \'bg': s:darkgray,
-            \}
-let s:insertmode = {'fg': s:white, 'bg': s:darkred, 'cterm': 'none'}
+let s:statusline_active = {
+      \'fg': s:black,
+      \'bg': s:darkyellow,
+      \'cterm': 'none',
+      \'gui': 'none'
+      \}
+let s:statusline_inactive = {
+      \'fg': s:white,
+      \'bg': s:darkgray,
+      \}
+let s:statusline_insertmode = {
+      \'fg': s:white,
+      \'bg': s:darkgreen,
+      \'cterm': 'none'
+      \}
+let s:statusline_v = {'bg': s:magenta, 'fg': s:black}
 
-call s:hi('statusline', s:active)
-call s:hi('statuslineNC', s:inactive)
+let s:mode_statusline = {
+      \'n': s:statusline_active,
+      \'i': s:statusline_insertmode,
+      \'V': s:statusline_v,
+      \'v': s:statusline_v,
+      \}
+
+call s:hi('statusline', s:statusline_active)
+call s:hi('statuslineNC', s:statusline_inactive)
+
+" function! s:InsertLeave()
+"   call s:hi('statusline', s:statusline_active)
+" endfunction
+"
+" function! s:InsertEnter(mode)
+"     if a:mode == 'n'
+"         call s:hi('statusline', s:statusline_insertmode)
+"     endif
+"     if a:mode == 'r'
+"         call s:hi('statusline', s:statusline_insertmode)
+"     endif
+" endfunction
+"
+function! s:ModeChanged()
+   let l:default = s:get_or(s:mode_statusline, 'n', {})
+   let l:mode = mode()
+   let l:hl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:default
+   call s:hi('statusline', l:hl)
+endfunction
+
+augroup ModeChangeGroup
+    autocmd!
+    " autocmd InsertEnter  * call s:InsertEnter(v:insertmode)
+    " autocmd InsertChange * call s:InsertEnter(v:insertmode)
+    " autocmd InsertLeave  * call s:InsertLeave()
+    autocmd ModeChanged  * call s:ModeChanged()
+augroup END
