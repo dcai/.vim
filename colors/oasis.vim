@@ -149,8 +149,11 @@ function! s:apply(table)
   endfor
 endfunction
 
+let s:normal = {'fg': s:defaultfg, 'guibg': s:defaultguibg}
+let s:normal_v = {'bg': s:black}
+
 let s:ui = {
-    \ 'Normal':       {'fg': s:defaultfg, 'guibg': s:defaultguibg},
+    \ 'Normal':       s:normal,
     \ 'NormalFloat':  {'bg': s:darkgray, 'fg': s:green},
     \ 'NormalNC':     {'fg': s:gray},
     \ 'ColorColumn':  {'bg': s:none},
@@ -322,6 +325,12 @@ let s:mode_statusline = {
       \'v': s:statusline_v,
       \}
 
+let s:mode_normal = {
+      \'n': s:normal,
+      \'V': s:normal_v,
+      \'v': s:normal_v,
+      \}
+
 call s:hi('statusline', s:statusline_active)
 call s:hi('statuslineNC', s:statusline_inactive)
 
@@ -339,10 +348,14 @@ call s:hi('statuslineNC', s:statusline_inactive)
 " endfunction
 "
 function! s:ModeChanged()
-   let l:default = s:get_or(s:mode_statusline, 'n', {})
+   let l:stldefault = s:get_or(s:mode_statusline, 'n', {})
    let l:mode = mode()
-   let l:hl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:default
-   call s:hi('statusline', l:hl)
+   let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:stldefault
+   call s:hi('statusline', l:stlhl)
+
+   let l:normal = s:get_or(s:mode_normal, 'n', {})
+   let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : l:normal
+   call s:hi('Normal', l:normalhl)
 endfunction
 
 augroup ModeChangeGroup
