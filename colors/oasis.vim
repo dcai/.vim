@@ -151,6 +151,7 @@ endfunction
 
 let s:normal = {'fg': s:defaultfg, 'guibg': s:defaultguibg}
 let s:normal_v = {'bg': s:black}
+let s:normal_c = {'fg': s:darkgreen}
 
 let s:ui = {
     \ 'Normal':       s:normal,
@@ -188,7 +189,7 @@ let s:ui = {
     \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
     \ 'Underlined':   {'cterm': s:underline},
     \ 'VertSplit':    {'fg': s:green},
-    \ 'Visual':       {'cterm': s:reverse, 'guibg': s:darkgreen, 'guifg': s:white},
+    \ 'Visual':       {'cterm': s:reverse},
     \ 'VisualNOS':    {'cterm': s:underline},
     \ 'WarningMsg':   {'fg': s:yellow},
 \ }
@@ -269,6 +270,10 @@ call s:apply(s:js)
 " hi CursorLine   cterm=none       ctermbg=red
 
 if has('nvim')
+  let s:neovim_only = {
+      \ 'MsgArea': {'fg': s:white, 'bg': s:darkgreen},
+  \ }
+  call s:apply(s:neovim_only)
   let s:cmp = {
       \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
       \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
@@ -329,6 +334,7 @@ let s:mode_normal = {
       \'n': s:normal,
       \'V': s:normal_v,
       \'v': s:normal_v,
+      \'c': s:normal_c,
       \}
 
 call s:hi('statusline', s:statusline_active)
@@ -350,6 +356,7 @@ call s:hi('statuslineNC', s:statusline_inactive)
 function! s:ModeChanged()
    let l:stldefault = s:get_or(s:mode_statusline, 'n', {})
    let l:mode = mode()
+   echom "mode: " . l:mode
    let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:stldefault
    call s:hi('statusline', l:stlhl)
 
