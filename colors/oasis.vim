@@ -155,7 +155,7 @@ let s:normal_c = {'fg': s:darkgreen}
 
 let s:ui = {
     \ 'Normal':       s:normal,
-    \ 'NormalFloat':  {'bg': s:darkgray, 'fg': s:green},
+    \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
     \ 'NormalNC':     {'fg': s:gray},
     \ 'ColorColumn':  {'bg': s:none},
     \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
