@@ -9,7 +9,8 @@ if exists("syntax_on")
   syntax reset
 endif
 
-let g:colors_name='oasis'
+let s:name='oasis'
+let g:colors_name=s:name
 
 """""""""""""""""""""""""""""""""""""
 " color reference:
@@ -145,7 +146,7 @@ endfunction
 
 function! s:apply(table)
   for [group, value] in items(a:table)
-      call s:hi(group, value)
+    call s:hi(group, value)
   endfor
 endfunction
 
@@ -156,6 +157,8 @@ let s:normal_c = {'fg': s:darkgreen}
 let s:ui = {
     \ 'Normal':       s:normal,
     \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
+    \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
+    \ 'FloatBorder':  {'fg': s:blue},
     \ 'NormalNC':     {'fg': s:gray},
     \ 'ColorColumn':  {'bg': s:none},
     \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
@@ -164,7 +167,6 @@ let s:ui = {
     \ 'DiffText':     {'bg': s:blue, 'fg': s:black},
     \ 'Directory':    {'fg': s:darkcyan},
     \ 'ErrorMsg':     {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
-    \ 'FloatBorder':  {'fg': s:blue},
     \ 'FoldColumn':   {'fg': s:darkgray},
     \ 'Folded':       {'fg': s:darkgray},
     \ 'IncSearch':    s:search,
@@ -340,35 +342,21 @@ let s:mode_normal = {
 call s:hi('statusline', s:statusline_active)
 call s:hi('statuslineNC', s:statusline_inactive)
 
-" function! s:InsertLeave()
-"   call s:hi('statusline', s:statusline_active)
-" endfunction
-"
-" function! s:InsertEnter(mode)
-"     if a:mode == 'n'
-"         call s:hi('statusline', s:statusline_insertmode)
-"     endif
-"     if a:mode == 'r'
-"         call s:hi('statusline', s:statusline_insertmode)
-"     endif
-" endfunction
-"
 function! s:ModeChanged()
-   let l:stldefault = s:get_or(s:mode_statusline, 'n', {})
-   let l:mode = mode()
-   echom "mode: " . l:mode
-   let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:stldefault
-   call s:hi('statusline', l:stlhl)
+  if g:colors_name != s:name
+      return
+  endif
+  let l:stldefault = s:get_or(s:mode_statusline, 'n', {})
+  let l:mode = mode()
+  let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:stldefault
+  call s:hi('statusline', l:stlhl)
 
-   let l:normal = s:get_or(s:mode_normal, 'n', {})
-   let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : l:normal
-   call s:hi('Normal', l:normalhl)
+  let l:normal = s:get_or(s:mode_normal, 'n', {})
+  let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : l:normal
+  call s:hi('Normal', l:normalhl)
 endfunction
 
 augroup ModeChangeGroup
-    autocmd!
-    " autocmd InsertEnter  * call s:InsertEnter(v:insertmode)
-    " autocmd InsertChange * call s:InsertEnter(v:insertmode)
-    " autocmd InsertLeave  * call s:InsertLeave()
-    autocmd ModeChanged  * call s:ModeChanged()
+  autocmd!
+  autocmd ModeChanged  * call s:ModeChanged()
 augroup END
