@@ -108,8 +108,8 @@ end
 
 --- apply given theme if no config found
 -- @param theme fallback theme
-function apply_theme(theme)
-  local termguicolors = get_local_config('termguicolors', false)
+function apply_theme(theme, truecolor)
+  local termguicolors = get_local_config('termguicolors', truecolor or false)
   use_theme(get_local_config('colorscheme', theme), termguicolors)
 end
 
