@@ -1,11 +1,14 @@
+" Normal mode paste
 nmap <leader>pp :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-" imap <leader>pp <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+
+" Normal mode yank current line to system clipboard
+" the dot before w represents the current line
 nmap <leader>yy :.w !pbcopy<CR><CR>
+
+" Visual mode yank selected text
 vmap <leader>yy :w !pbcopy<CR><CR>
 
-" if !has('nvim')
-"   set noantialias
-" endif
+" imap <leader>pp <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 
 if has("gui_macvim")
   " set guifont=TamzenForPowerline:h16
