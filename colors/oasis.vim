@@ -4,7 +4,13 @@
 """"""""""""""""""""""""""""""""""""""""""""
 
 set background=dark
+
 hi clear
+hi clear statusline
+hi clear statuslineNC
+hi clear Normal
+hi clear Visual
+
 if exists("syntax_on")
   syntax reset
 endif
@@ -150,9 +156,29 @@ function! s:apply(table)
   endfor
 endfunction
 
-let s:normal = {'fg': s:defaultfg, 'guibg': s:defaultguibg}
-let s:normal_v = {'bg': s:black}
-let s:normal_c = {'fg': s:darkgreen}
+let s:normal = {
+      \'cterm': s:none,
+      \'gui': s:none,
+      \'fg': s:defaultfg,
+      \'guibg': s:defaultguibg
+      \}
+let s:normal_v = {
+      \'cterm': s:none,
+      \'gui': s:none,
+      \'bg': s:black,
+      \}
+let s:normal_c = {
+      \'cterm': s:none,
+      \'gui': s:none,
+      \'fg': s:darkgreen
+      \}
+
+let s:visual = {
+      \'cterm': s:none,
+      \'gui': s:none,
+      \'bg': s:blue,
+      \'fg': s:darkgreen
+      \}
 
 let s:ui = {
     \ 'Normal':       s:normal,
@@ -169,7 +195,6 @@ let s:ui = {
     \ 'ErrorMsg':     {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
     \ 'FoldColumn':   {'fg': s:darkgray},
     \ 'Folded':       {'fg': s:darkgray},
-    \ 'IncSearch':    s:search,
     \ 'LineNr':       {'fg': s:green, 'bg': s:none},
     \ 'MatchParen':   {'bg': s:none, 'fg': s:red},
     \ 'ModeMsg':      {'fg': s:yellow},
@@ -183,6 +208,7 @@ let s:ui = {
     \ 'Question':     {'fg': s:green},
     \ 'Quote':        {'fg': s:yellow},
     \ 'Search':       s:search,
+    \ 'IncSearch':    s:search,
     \ 'SignColumn':   {'bg': s:none},
     \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': s:underline},
     \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': s:underline},
@@ -191,7 +217,7 @@ let s:ui = {
     \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
     \ 'Underlined':   {'cterm': s:underline},
     \ 'VertSplit':    {'fg': s:green},
-    \ 'Visual':       {'cterm': s:reverse},
+    \ 'Visual':       s:visual,
     \ 'VisualNOS':    {'cterm': s:underline},
     \ 'WarningMsg':   {'fg': s:yellow},
 \ }
@@ -308,26 +334,34 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
-let s:statusline_active = {
+let s:statusline = {
       \'fg': s:black,
       \'bg': s:darkyellow,
-      \'cterm': 'none',
-      \'gui': 'none'
+      \'cterm': s:none,
+      \'gui': s:none
       \}
-let s:statusline_inactive = {
+let s:statuslineNC = {
       \'fg': s:white,
       \'bg': s:darkgray,
+      \'cterm': s:none,
+      \'gui': s:none
       \}
-let s:statusline_insertmode = {
+let s:statusline_i = {
       \'fg': s:white,
       \'bg': s:darkgreen,
-      \'cterm': 'none'
+      \'cterm': s:none,
+      \'gui': s:none
       \}
-let s:statusline_v = {'bg': s:magenta, 'fg': s:black}
+let s:statusline_v = {
+            \'bg': s:magenta,
+            \'fg': s:black,
+            \'cterm': s:none,
+            \'gui': s:none
+            \}
 
 let s:mode_statusline = {
-      \'n': s:statusline_active,
-      \'i': s:statusline_insertmode,
+      \'n': s:statusline,
+      \'i': s:statusline_i,
       \'V': s:statusline_v,
       \'v': s:statusline_v,
       \}
@@ -339,20 +373,19 @@ let s:mode_normal = {
       \'c': s:normal_c,
       \}
 
-call s:hi('statusline', s:statusline_active)
-call s:hi('statuslineNC', s:statusline_inactive)
+call s:hi('statusline', s:statusline)
+call s:hi('statuslineNC', s:statuslineNC)
 
 function! s:ModeChanged()
   if g:colors_name != s:name
       return
   endif
-  let l:stldefault = s:get_or(s:mode_statusline, 'n', {})
   let l:mode = mode()
-  let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : l:stldefault
+
+  let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : s:statusline
   call s:hi('statusline', l:stlhl)
 
-  let l:normal = s:get_or(s:mode_normal, 'n', {})
-  let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : l:normal
+  let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : s:normal
   call s:hi('Normal', l:normalhl)
 endfunction
 
