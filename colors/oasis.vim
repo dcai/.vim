@@ -181,115 +181,115 @@ let s:visual = {
       \}
 
 let s:ui = {
-    \ 'Normal':       s:normal,
-    \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
-    \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
-    \ 'FloatBorder':  {'fg': s:blue},
-    \ 'NormalNC':     {'fg': s:gray},
-    \ 'ColorColumn':  {'bg': s:none},
-    \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
-    \ 'DiffChange':   {'bg': s:yellow, 'fg': s:black},
-    \ 'DiffDelete':   {'bg': s:red, 'fg': s:black},
-    \ 'DiffText':     {'bg': s:blue, 'fg': s:black},
-    \ 'Directory':    {'fg': s:darkcyan},
-    \ 'ErrorMsg':     {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
-    \ 'FoldColumn':   {'fg': s:darkgray},
-    \ 'Folded':       {'fg': s:darkgray},
-    \ 'LineNr':       {'fg': s:green, 'bg': s:none},
-    \ 'MatchParen':   {'bg': s:none, 'fg': s:red},
-    \ 'ModeMsg':      {'fg': s:yellow},
-    \ 'MoreMsg':      {'fg': s:darkgreen},
-    \ 'Noise':        {'fg': s:gray},
-    \ 'NonText':      {'fg': s:darkcyan, 'cterm': 'bold'},
-    \ 'Pmenu':        {'bg': s:blue, 'fg': s:blue},
-    \ 'PmenuSbar':    {'bg': s:blue},
-    \ 'PmenuSel':     {'bg': s:red, 'fg': s:red},
-    \ 'PmenuThumb':   {'bg': s:yellow},
-    \ 'Question':     {'fg': s:green},
-    \ 'Quote':        {'fg': s:yellow},
-    \ 'Search':       s:search,
-    \ 'IncSearch':    s:search,
-    \ 'SignColumn':   {'bg': s:none},
-    \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': s:underline},
-    \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': s:underline},
-    \ 'SpellLocal':   {'fg': s:darkyellow, 'cterm': s:underline},
-    \ 'SpellRare':    {'fg': s:darkyellow, 'cterm': s:underline},
-    \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
-    \ 'Underlined':   {'cterm': s:underline},
-    \ 'VertSplit':    {'fg': s:green},
-    \ 'Visual':       s:visual,
-    \ 'VisualNOS':    {'cterm': s:underline},
-    \ 'WarningMsg':   {'fg': s:yellow},
-\ }
+      \ 'Normal':       s:normal,
+      \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
+      \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
+      \ 'FloatBorder':  {'fg': s:blue},
+      \ 'NormalNC':     {'fg': s:gray},
+      \ 'ColorColumn':  {'bg': s:none},
+      \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
+      \ 'DiffChange':   {'bg': s:yellow, 'fg': s:black},
+      \ 'DiffDelete':   {'bg': s:red, 'fg': s:black},
+      \ 'DiffText':     {'bg': s:blue, 'fg': s:black},
+      \ 'Directory':    {'fg': s:darkcyan},
+      \ 'ErrorMsg':     {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
+      \ 'FoldColumn':   {'fg': s:darkgray},
+      \ 'Folded':       {'fg': s:darkgray},
+      \ 'LineNr':       {'fg': s:green, 'bg': s:none},
+      \ 'MatchParen':   {'bg': s:none, 'fg': s:red},
+      \ 'ModeMsg':      {'fg': s:yellow},
+      \ 'MoreMsg':      {'fg': s:darkgreen},
+      \ 'Noise':        {'fg': s:gray},
+      \ 'NonText':      {'fg': s:darkcyan, 'cterm': 'bold'},
+      \ 'Pmenu':        {'bg': s:blue, 'fg': s:blue},
+      \ 'PmenuSbar':    {'bg': s:blue},
+      \ 'PmenuSel':     {'bg': s:red, 'fg': s:red},
+      \ 'PmenuThumb':   {'bg': s:yellow},
+      \ 'Question':     {'fg': s:green},
+      \ 'Quote':        {'fg': s:yellow},
+      \ 'Search':       s:search,
+      \ 'IncSearch':    s:search,
+      \ 'SignColumn':   {'bg': s:none},
+      \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': s:underline},
+      \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': s:underline},
+      \ 'SpellLocal':   {'fg': s:darkyellow, 'cterm': s:underline},
+      \ 'SpellRare':    {'fg': s:darkyellow, 'cterm': s:underline},
+      \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
+      \ 'Underlined':   {'cterm': s:underline},
+      \ 'VertSplit':    {'fg': s:green},
+      \ 'Visual':       s:visual,
+      \ 'VisualNOS':    {'cterm': s:underline},
+      \ 'WarningMsg':   {'fg': s:yellow},
+      \ }
 call s:apply(s:ui)
 
 let s:syntax = {
-    \ 'Boolean':      s:boolean,
-    \ 'Number':       s:number,
-    \ 'Function':     s:function,
-    \ 'Identifier':   s:identifier,
-    \ 'Character':    {'fg': s:red},
-    \ 'Comment':      s:comment,
-    \ 'Conditional':  s:conditional,
-    \ 'Constant':     {'fg': s:darkgreen},
-    \ 'Debug':        {'fg': s:gray},
-    \ 'Define':       {'bg': s:red},
-    \ 'Delimiter':    s:delimiter,
-    \ 'Error':        {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
-    \ 'Exception':    {'fg': s:red, 'bg': s:none},
-    \ 'Ignore':       {'fg': s:darkgray, 'cterm': 'bold'},
-    \ 'Include':      {'fg': s:darkgray, 'bg': s:none},
-    \ 'Keyword':      {'fg': s:keywordfg,  'bg': s:keywordbg},
-    \ 'Label':        {'fg': s:green},
-    \ 'Macro':        {'fg': s:red},
-    \ 'Operator':     s:operator,
-    \ 'PreCondit':    {'fg': s:keywordfg},
-    \ 'PreProc':      {'fg': s:keywordfg},
-    \ 'Repeat':       s:repeat,
-    \ 'Special':      s:special,
-    \ 'SpecialKey':   s:special,
-    \ 'Statement':    {'fg': s:darkyellow},
-    \ 'StorageClass': {'fg': s:darkred},
-    \ 'String':       s:string,
-    \ 'Structure':    {'fg': s:red},
-    \ 'Tag':          {'fg': s:red},
-    \ 'Todo':         {'fg': s:red},
-    \ 'Type':         s:type,
-    \ 'Typedef':      {'fg': s:red},
-\ }
+      \ 'Boolean':      s:boolean,
+      \ 'Number':       s:number,
+      \ 'Function':     s:function,
+      \ 'Identifier':   s:identifier,
+      \ 'Character':    {'fg': s:red},
+      \ 'Comment':      s:comment,
+      \ 'Conditional':  s:conditional,
+      \ 'Constant':     {'fg': s:darkgreen},
+      \ 'Debug':        {'fg': s:gray},
+      \ 'Define':       {'bg': s:red},
+      \ 'Delimiter':    s:delimiter,
+      \ 'Error':        {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
+      \ 'Exception':    {'fg': s:red, 'bg': s:none},
+      \ 'Ignore':       {'fg': s:darkgray, 'cterm': 'bold'},
+      \ 'Include':      {'fg': s:darkgray, 'bg': s:none},
+      \ 'Keyword':      {'fg': s:keywordfg,  'bg': s:keywordbg},
+      \ 'Label':        {'fg': s:green},
+      \ 'Macro':        {'fg': s:red},
+      \ 'Operator':     s:operator,
+      \ 'PreCondit':    {'fg': s:keywordfg},
+      \ 'PreProc':      {'fg': s:keywordfg},
+      \ 'Repeat':       s:repeat,
+      \ 'Special':      s:special,
+      \ 'SpecialKey':   s:special,
+      \ 'Statement':    {'fg': s:darkyellow},
+      \ 'StorageClass': {'fg': s:darkred},
+      \ 'String':       s:string,
+      \ 'Structure':    {'fg': s:red},
+      \ 'Tag':          {'fg': s:red},
+      \ 'Todo':         {'fg': s:red},
+      \ 'Type':         s:type,
+      \ 'Typedef':      {'fg': s:red},
+      \ }
 call s:apply(s:syntax)
 
 let s:custom = {
-    \ 'ALEVirtualTextError':        {'fg': s:darkgray, 'bg': s:none, 'cterm': s:italic},
-    \ 'ALEVirtualTextWarning':      {'fg': s:darkgray, 'bg': s:none},
-    \ 'ALEVirtualTextInfo':         {'fg': s:darkgray, 'bg': s:none},
-    \ 'ALEError':                   {'fg': s:none, 'bg': s:red, 'cterm': s:underline},
-    \ 'ALEErrorSign':               {'bg': s:darkred},
-    \ 'ALEWarning':                 {'fg': s:none, 'bg': s:yellow, 'cterm': s:underline},
-    \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black},
-    \ 'CocErrorFloat':              {'fg': s:red},
-    \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
-    \ 'CocHintFloat':               {'fg': s:black},
-    \ 'CocInfoFloat':               {'fg': s:blue},
-    \ 'CocMenuSel':                 {'bg': s:red},
-    \ 'CocSearch':                  {'fg': s:darkblue},
-    \ 'CocWarningFloat':            {'fg': s:red},
-    \ 'SignifySignAdd':             {'fg': s:green},
-    \ 'SignifySignChange':          {'fg': s:yellow},
-    \ 'SignifySignDelete':          {'fg': s:darkred},
-    \ 'SignifySignDeleteFirstLine': {'fg': s:darkred},
-\ }
+      \ 'ALEVirtualTextError':        {'fg': s:darkgray, 'bg': s:none, 'cterm': s:italic},
+      \ 'ALEVirtualTextWarning':      {'fg': s:darkgray, 'bg': s:none},
+      \ 'ALEVirtualTextInfo':         {'fg': s:darkgray, 'bg': s:none},
+      \ 'ALEError':                   {'fg': s:none, 'bg': s:red, 'cterm': s:underline},
+      \ 'ALEErrorSign':               {'bg': s:darkred},
+      \ 'ALEWarning':                 {'fg': s:none, 'bg': s:yellow, 'cterm': s:underline},
+      \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black},
+      \ 'CocErrorFloat':              {'fg': s:red},
+      \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
+      \ 'CocHintFloat':               {'fg': s:black},
+      \ 'CocInfoFloat':               {'fg': s:blue},
+      \ 'CocMenuSel':                 {'bg': s:red},
+      \ 'CocSearch':                  {'fg': s:darkblue},
+      \ 'CocWarningFloat':            {'fg': s:red},
+      \ 'SignifySignAdd':             {'fg': s:green},
+      \ 'SignifySignChange':          {'fg': s:yellow},
+      \ 'SignifySignDelete':          {'fg': s:darkred},
+      \ 'SignifySignDeleteFirstLine': {'fg': s:darkred},
+      \ }
 call s:apply(s:custom)
 
 " javascript syntax definitions:
 " https://github.com/pangloss/vim-javascript/blob/1.2.5.1/syntax/javascript.vim#L243-L363
 let s:js = {
-    \ 'jsxTagName':  {'fg': s:green},
-    \ 'tsxTagName':  {'fg': s:green},
-    \ 'jsxElement':  {'fg': s:red},
-    \ 'jsFuncArgs':  {'fg': s:yellow},
-    \ 'jsObjectKey': {'fg': s:red, 'bg': s:darkgreen},
-\ }
+      \ 'jsxTagName':  {'fg': s:green},
+      \ 'tsxTagName':  {'fg': s:green},
+      \ 'jsxElement':  {'fg': s:red},
+      \ 'jsFuncArgs':  {'fg': s:yellow},
+      \ 'jsObjectKey': {'fg': s:red, 'bg': s:darkgreen},
+      \ }
 call s:apply(s:js)
 
 "" !!! READ !!! Cursor color is controlled by iterm color scheme
@@ -299,86 +299,86 @@ call s:apply(s:js)
 
 if has('nvim')
   let s:neovim_only = {
-      \ 'MsgArea': {'fg': s:white, 'bg': s:darkgreen},
-  \ }
+        \ 'MsgArea': {'fg': s:white, 'bg': s:darkgreen},
+        \ }
   call s:apply(s:neovim_only)
   let s:cmp = {
-      \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
-      \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
-      \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
-      \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
-      \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
-      \ 'CmpItemKindMethod':     {'fg': s:magenta, 'bg': s:none},
-      \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
-      \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
-  \ }
+        \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
+        \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
+        \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
+        \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
+        \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
+        \ 'CmpItemKindMethod':     {'fg': s:magenta, 'bg': s:none},
+        \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
+        \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
+        \ }
   call s:apply(s:cmp)
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
-      \ '@boolean':          s:boolean,
-      \ '@function':         s:function,
-      \ '@identifier':       s:identifier,
-      \ '@attribute':        {'fg': s:red},
-      \ '@repeat':           s:repeat,
-      \ '@keyword':          {'fg': s:keywordfg},
-      \ '@keyword.function': {'fg': s:yellow},
-      \ '@keyword.return':   {'fg': s:blue},
-      \ '@keyword.operator': s:operator,
-      \ '@conditional':      s:conditional,
-      \ '@variable':         s:variable,
-      \ '@field':            s:field,
-      \ '@parameter':        {'fg': s:blue, 'bg': s:none},
-      \ '@string':           s:string,
-      \ '@exception':        {'fg': s:exceptionfg},
-  \ }
+        \ '@boolean':          s:boolean,
+        \ '@function':         s:function,
+        \ '@identifier':       s:identifier,
+        \ '@attribute':        {'fg': s:red},
+        \ '@repeat':           s:repeat,
+        \ '@keyword':          {'fg': s:keywordfg},
+        \ '@keyword.function': {'fg': s:yellow},
+        \ '@keyword.return':   {'fg': s:blue},
+        \ '@keyword.operator': s:operator,
+        \ '@conditional':      s:conditional,
+        \ '@variable':         s:variable,
+        \ '@field':            s:field,
+        \ '@parameter':        {'fg': s:blue, 'bg': s:none},
+        \ '@string':           s:string,
+        \ '@exception':        {'fg': s:exceptionfg},
+        \ }
   call s:apply(s:treesitter)
 endif
 
 let s:statusline = {
-      \'fg': s:black,
-      \'bg': s:darkyellow,
-      \'cterm': s:none,
-      \'gui': s:none
-      \}
+      \ 'fg': s:black,
+      \ 'bg': s:darkyellow,
+      \ 'cterm': s:none,
+      \ 'gui': s:none
+      \ }
 let s:statuslineNC = {
-      \'fg': s:white,
-      \'bg': s:darkgray,
-      \'cterm': s:none,
-      \'gui': s:none
-      \}
+      \ 'fg': s:white,
+      \ 'bg': s:darkgray,
+      \ 'cterm': s:none,
+      \ 'gui': s:none
+      \ }
 let s:statusline_i = {
-      \'fg': s:white,
-      \'bg': s:darkgreen,
-      \'cterm': s:none,
-      \'gui': s:none
-      \}
+      \ 'fg': s:white,
+      \ 'bg': s:darkgreen,
+      \ 'cterm': s:none,
+      \ 'gui': s:none
+      \ }
 let s:statusline_v = {
-            \'bg': s:magenta,
-            \'fg': s:black,
-            \'cterm': s:none,
-            \'gui': s:none
-            \}
+      \ 'bg': s:magenta,
+      \ 'fg': s:black,
+      \ 'cterm': s:none,
+      \ 'gui': s:none
+      \ }
 
 let s:mode_statusline = {
-      \'n': s:statusline,
-      \'i': s:statusline_i,
-      \'V': s:statusline_v,
-      \'v': s:statusline_v,
-      \}
+      \ 'n': s:statusline,
+      \ 'i': s:statusline_i,
+      \ 'V': s:statusline_v,
+      \ 'v': s:statusline_v,
+      \ }
 
 let s:mode_normal = {
-      \'n': s:normal,
-      \'V': s:normal_v,
-      \'v': s:normal_v,
-      \'c': s:normal_c,
-      \}
+      \ 'n': s:normal,
+      \ 'V': s:normal_v,
+      \ 'v': s:normal_v,
+      \ 'c': s:normal_c,
+      \ }
 
 call s:hi('statusline', s:statusline)
 call s:hi('statuslineNC', s:statuslineNC)
 
 function! s:ModeChanged()
   if g:colors_name != s:name
-      return
+    return
   endif
   let l:mode = mode()
 
