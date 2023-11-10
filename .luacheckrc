@@ -1,6 +1,7 @@
 std = 'max'
 globals = {
   'apply_theme',
+  'contains',
   'find_executable',
   'get_all_local_config',
   'get_local_config',

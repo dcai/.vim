@@ -36,6 +36,16 @@ function f(str)
   )
 end
 
+function contains(table, val)
+  for index, value in ipairs(table) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
+end
+
 function find_executable(files)
   for _, file in ipairs(files) do
     if vim.fn.executable(file) == 1 then

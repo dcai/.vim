@@ -4,6 +4,12 @@ if not loaded then
   return
 end
 
+-- treesitter's yaml parser doesn't get along well with template vars like this:
+--   {{BASE_URL}}
+-- so disabling it
+local disable_file_types = function(ft, buf)
+  return contains({ 'yaml', 'yml' }, ft)
+end
 treesitter_config.setup({
   auto_install = true,
   sync_install = false,
@@ -11,42 +17,20 @@ treesitter_config.setup({
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
+    disable = disable_file_types,
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  -- these are always installed, otherwise install on demand (when particular file type opens)
   ensure_installed = {
-    -- 'bash',
-    -- 'c',
-    -- 'css',
-    -- 'diff',
-    -- 'dockerfile',
-    -- 'fish',
-    -- 'graphql',
-    -- 'html',
-    -- 'http',
-    -- 'ini',
     'javascript',
-    -- 'jq',
-    -- 'jsdoc',
-    -- 'json',
-    -- 'json5',
-    -- 'kotlin',
-    'lua',
-    -- 'make',
-    -- 'markdown',
-    -- 'markdown_inline',
-    -- 'org',
-    -- 'terraform',
-    -- 'toml',
-    -- 'tsx',
-    -- 'twig',
-    'python',
     'typescript',
+    'lua',
+    'python',
     'vim',
-    'yaml',
   },
   indent = {
     enable = true,
