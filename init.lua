@@ -10,5 +10,9 @@ vim.g.python3_host_prog = find_executable({
 
 vim.opt.cmdheight = 0
 
+handle_vim_event('ColorScheme', function()
+  set_config('colorscheme.name', vim.g.colors_name)
+end)
+
 source('loader.vim')
 apply_theme('oasis', true)

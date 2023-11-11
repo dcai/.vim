@@ -1,5 +1,6 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
+local ini = require('ini')
 
 -- credit: https://hisham.hm/2016/01/04/string-interpolation-in-lua/
 function f(str)
@@ -119,8 +120,9 @@ end
 --- apply given theme if no config found
 -- @param theme fallback theme
 function apply_theme(theme, truecolor)
-  local termguicolors = get_local_config('termguicolors', truecolor or false)
-  use_theme(get_local_config('colorscheme', theme), termguicolors)
+  local termguicolors =
+    get_local_config('colorscheme.termguicolors', truecolor or false)
+  use_theme(get_local_config('colorscheme.name', theme), termguicolors)
 end
 
 function source(path)
@@ -128,16 +130,91 @@ function source(path)
   vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
 end
 
-local get_or = function(table, key, default)
-  return table[key] or default
+function file_exists(filepath)
+  local status = vim.fn.filereadable(filepath) == 1
+
+  return status
+end
+
+function touch(filepath)
+  if not file_exists(filepath) then
+    local file, error_message = io.open(filepath, 'w')
+    if file then
+      file:close()
+    else
+      print(error_message)
+    end
+  end
+end
+
+function split(inputstr, sep)
+  if sep == nil then
+    sep = '%s'
+  end
+  local t = {}
+  for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
+    table.insert(t, str)
+  end
+  return t
+end
+
+function get_or(table, key, default)
+  local parts = split(key, '.')
+  local v = table
+  for i, k in ipairs(parts) do
+    v = v[k]
+  end
+  return v or default
 end
 
 function get_all_local_config()
-  local configfile = vim.fn.stdpath('data') .. '/local.lua'
-  local loaded, config = pcall(dofile, configfile)
-  return loaded and config or {}
+  local userconfig = vim.fn.stdpath('data') .. '/user.ini'
+  touch(userconfig)
+  local config = ini.load(userconfig)
+  -- print(vim.inspect(config))
+  return config or {}
 end
 
 function get_local_config(key, default)
-  return get_or(get_all_local_config(), key, default)
+  local config = get_or(get_all_local_config(), key, default)
+  return config
+end
+
+function set(tbl, path, value)
+  local keys = {}
+  for key in path:gmatch('[^.]+') do
+    table.insert(keys, key)
+  end
+  local current = tbl
+  for i = 1, #keys - 1 do
+    local key = keys[i]
+    if not current[key] or type(current[key]) ~= 'table' then
+      current[key] = {}
+    end
+    current = current[key]
+  end
+  local finalKey = keys[#keys]
+  current[finalKey] = value
+end
+
+function set_config(path, value)
+  local userconfig = vim.fn.stdpath('data') .. '/user.ini'
+  local config = get_all_local_config()
+  set(config, path, value)
+  ini.save(userconfig, config)
+end
+
+function handle_vim_event(evt, func)
+  local cmd_name = 'Handle' .. evt
+  local group_name = 'On' .. evt .. 'Group'
+  vim.api.nvim_create_user_command(cmd_name, func, { nargs = 0, desc = evt })
+
+  local colorSchemeChange =
+    vim.api.nvim_create_augroup(group_name, { clear = true })
+
+  vim.api.nvim_create_autocmd(evt, {
+    pattern = '*',
+    command = cmd_name,
+    group = colorSchemeChange,
+  })
 end
