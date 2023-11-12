@@ -1,6 +1,5 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
-local ini = require('ini')
 
 -- credit: https://hisham.hm/2016/01/04/string-interpolation-in-lua/
 function f(str)
@@ -35,16 +34,6 @@ function f(str)
       end
     end)
   )
-end
-
-function contains(table, val)
-  for index, value in ipairs(table) do
-    if value == val then
-      return true
-    end
-  end
-
-  return false
 end
 
 function find_executable(files)
@@ -121,8 +110,8 @@ end
 -- @param theme fallback theme
 function apply_theme(theme, truecolor)
   local termguicolors =
-    get_local_config('colorscheme.termguicolors', truecolor or false)
-  use_theme(get_local_config('colorscheme.name', theme), termguicolors)
+    get_user_config('colorscheme.termguicolors', truecolor or false)
+  use_theme(get_user_config('colorscheme.name', theme), termguicolors)
 end
 
 function source(path)
@@ -136,6 +125,19 @@ function file_exists(filepath)
   return status
 end
 
+function readfile(file)
+  local f = assert(io.open(file, 'r'))
+  local content = f:read('*all')
+  f:close()
+  return content
+end
+
+function writefile(file, contents)
+  local f = assert(io.open(file, 'w'))
+  f:write(contents)
+  f:close()
+end
+
 function touch(filepath)
   if not file_exists(filepath) then
     local file, error_message = io.open(filepath, 'w')
@@ -147,44 +149,47 @@ function touch(filepath)
   end
 end
 
-function split(inputstr, sep)
-  if sep == nil then
-    sep = '%s'
-  end
-  local t = {}
-  for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
-    table.insert(t, str)
-  end
-  return t
-end
-
 function get_or(table, key, default)
-  local parts = split(key, '.')
+  if vim.tbl_isempty(table) then
+    return default
+  end
   local v = table
-  for i, k in ipairs(parts) do
+  for k in vim.gsplit(key, '.', { plain = true }) do
     v = v[k]
   end
-  return v or default
+  if v == 'true' or v == true then
+    return true
+  elseif v == 'false' or v == false then
+    return false
+  elseif v == nil then
+    return default
+  end
+  return v
+end
+
+local function user_config_file_path()
+  return vim.fn.stdpath('data') .. '/user.json'
 end
 
 function get_all_local_config()
-  local userconfig = vim.fn.stdpath('data') .. '/user.ini'
-  touch(userconfig)
-  local config = ini.load(userconfig)
-  -- print(vim.inspect(config))
-  return config or {}
+  local userconfigfile = user_config_file_path()
+  touch(userconfigfile)
+  local json = readfile(userconfigfile)
+  local ok, config = pcall(vim.json.decode, json)
+  if ok then
+    return config
+  else
+    return {}
+  end
 end
 
-function get_local_config(key, default)
+function get_user_config(key, default)
   local config = get_or(get_all_local_config(), key, default)
   return config
 end
 
 function set(tbl, path, value)
-  local keys = {}
-  for key in path:gmatch('[^.]+') do
-    table.insert(keys, key)
-  end
+  local keys = vim.split(path, '.', { plain = true })
   local current = tbl
   for i = 1, #keys - 1 do
     local key = keys[i]
@@ -197,11 +202,11 @@ function set(tbl, path, value)
   current[finalKey] = value
 end
 
-function set_config(path, value)
-  local userconfig = vim.fn.stdpath('data') .. '/user.ini'
+function set_user_config(path, value)
+  local userconfigfile = user_config_file_path()
   local config = get_all_local_config()
   set(config, path, value)
-  ini.save(userconfig, config)
+  writefile(userconfigfile, vim.json.encode(config))
 end
 
 function handle_vim_event(evt, func)

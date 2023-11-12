@@ -8,7 +8,7 @@ end
 --   {{BASE_URL}}
 -- so disabling it
 local disable_file_types = function(ft, buf)
-  return contains({ 'yaml', 'yml' }, ft)
+  return vim.tbl_contains({ 'yaml', 'yml' }, ft)
 end
 treesitter_config.setup({
   auto_install = true,
