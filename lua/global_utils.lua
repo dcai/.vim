@@ -209,17 +209,20 @@ function set_user_config(path, value)
   writefile(userconfigfile, vim.json.encode(config))
 end
 
-function handle_vim_event(evt, func)
-  local cmd_name = 'Handle' .. evt
+function handle_vim_event_by_command(evt, command)
   local group_name = 'On' .. evt .. 'Group'
-  vim.api.nvim_create_user_command(cmd_name, func, { nargs = 0, desc = evt })
-
-  local colorSchemeChange =
-    vim.api.nvim_create_augroup(group_name, { clear = true })
-
-  vim.api.nvim_create_autocmd(evt, {
+  return vim.api.nvim_create_autocmd(evt, {
+    command = command,
     pattern = '*',
-    command = cmd_name,
-    group = colorSchemeChange,
+    group = vim.api.nvim_create_augroup(group_name, { clear = true }),
+  })
+end
+
+function handle_vim_event_by_callback(evt, callback)
+  local group_name = 'On' .. evt .. 'Group'
+  return vim.api.nvim_create_autocmd(evt, {
+    pattern = '*',
+    group = vim.api.nvim_create_augroup(group_name, { clear = true }),
+    callback = callback,
   })
 end

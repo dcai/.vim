@@ -10,8 +10,9 @@ vim.g.python3_host_prog = find_executable({
 
 vim.opt.cmdheight = 0
 
-handle_vim_event('ColorScheme', function()
-  set_user_config('colorscheme.name', vim.g.colors_name)
+handle_vim_event_by_callback('ColorScheme', function(ev)
+  local cs = ev.match or vim.g.colors_name
+  set_user_config('colorscheme.name', cs)
 end)
 
 source('loader.vim')
