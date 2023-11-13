@@ -337,6 +337,8 @@ endif
 let s:statusline = {
       \ 'fg': s:black,
       \ 'bg': s:darkyellow,
+      \ 'guifg': s:white,
+      \ 'guibg': '#295535',
       \ 'cterm': s:none,
       \ 'gui': s:none
       \ }
