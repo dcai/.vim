@@ -1,42 +1,71 @@
 function! LinterStatus() abort
     if !exists(":ALEInfo")
-      return
+        return
     endif
     let l:counts = ale#statusline#Count(bufnr(''))
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
 
     return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
-    \)
+                \   '%dW %dE',
+                \   all_non_errors,
+                \   all_errors
+                \)
 endfunction
 
 function! FugitiveStatus() abort
     if !exists(":Git")
-      return
+        return
     endif
     return FugitiveStatusline()
 endfunction
 
 
-set statusline=[%{mode()}]                      " editing mode
-set statusline+=%f
-set statusline+=%m                              " modified flag
+" got from https://jdhao.github.io/2019/11/03/vim_custom_statusline/
+let g:currentmode={
+            \  'n'  : 'NORMAL',
+            \  'v'  : 'VISUAL',
+            \  'V'  : 'V·Line',
+            \  "\<C-V>" : 'V·Block',
+            \  'i'  : 'INSERT',
+            \  'R'  : 'R',
+            \  'Rv' : 'V·Replace',
+            \  'c'  : 'Command',
+            \  't'  : 'Term',
+            \}
+
+set statusline=
+" use User5 highlight group
+set statusline+=%5*
+set statusline+=%{toupper(g:currentmode[mode()])}
+" reset highlight group
+set statusline+=%0*
+" a space
+set statusline+=\ %f
+" modified flag
+set statusline+=%m
 " set statusline+=%{FugitiveStatus()}
 " set statusline+=[%{LinterStatus()}]
-set statusline+=%=                              " left/right separator
+" left/right separator
+set statusline+=%=
+set statusline+=%6*  " start User6 highlight group
+" cursor line/total lines
+set statusline+=Line:\ %l
+set statusline+=\ of\ %L
+set statusline+=\ \|\ Col:\ %c
+" reset highlight group
+set statusline+=%0*
+" filetype
+set statusline+=\ %y
 set statusline+=[
-set statusline+=%l                              " cursor line/total lines
-set statusline+=\/%L                            " total lines
-set statusline+=\|%c                            " cursor column
+" file encoding
+set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\|
+" file format
+set statusline+=%{&fileformat}
+" BOM
+set statusline+=%{&bomb?'\|BOM':''}
 set statusline+=]
-set statusline+=%y                              " filetype
-set statusline+=[
-set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\| " file encoding
-set statusline+=%{&fileformat}                  " file format
-set statusline+=%{&bomb?'\|BOM':''}             " BOM
-set statusline+=]
-set statusline+=%h                              " help file flag
-set statusline+=%r                              " read only flag
+" help file flag
+set statusline+=%h
+" read only flag
+set statusline+=%r

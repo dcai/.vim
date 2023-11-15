@@ -103,7 +103,14 @@ endif
 
 let s:defaultbg     = s:none
 let s:defaultfg     = s:white
-let s:defaultguibg  = '#012619'
+
+
+let s:nicedarkgreen = '#012619'
+let s:nicemidgreen =  '#295535'
+let s:nicelightgreen = '#A6CC57'
+
+
+let s:defaultguibg  = s:nicedarkgreen
 let s:comment       = {'fg': s:gray, 'cterm': s:italic}
 let s:identifier    = {'fg': s:yellow, 'bg': s:none}
 let s:repeat        = {'fg': s:yellow}
@@ -220,6 +227,8 @@ let s:ui = {
       \ 'Visual':       s:visual,
       \ 'VisualNOS':    {'cterm': s:underline},
       \ 'WarningMsg':   {'fg': s:yellow},
+      \ 'User5':        {'bg': s:white,'fg': s:black,'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User6':        {'bg': s:white,'fg': s:black,'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
       \ }
 call s:apply(s:ui)
 
@@ -337,8 +346,8 @@ endif
 let s:statusline = {
       \ 'fg': s:black,
       \ 'bg': s:darkyellow,
-      \ 'guifg': s:white,
-      \ 'guibg': '#295535',
+      \ 'guifg': s:nicelightgreen,
+      \ 'guibg': s:nicemidgreen,
       \ 'cterm': s:none,
       \ 'gui': s:none
       \ }
