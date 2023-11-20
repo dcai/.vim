@@ -153,7 +153,17 @@ function! s:hi(group, value)
   let l:cterm = 'term=' . l:attrlist
   let l:gui = 'gui=' . l:attrlist
 
-  let l:cmd = join(["hi", a:group, l:cterm, l:ctermbg, l:ctermfg, l:guifg, l:guibg, l:gui], " ")
+  let l:cmd = join(
+        \[
+        \  "hi",
+        \  a:group,
+        \  l:cterm,
+        \  l:ctermbg,
+        \  l:ctermfg,
+        \  l:guifg,
+        \  l:guibg,
+        \  l:gui
+        \], " ")
   exe l:cmd
 endfunction
 
@@ -227,8 +237,8 @@ let s:ui = {
       \ 'Visual':       s:visual,
       \ 'VisualNOS':    {'cterm': s:underline},
       \ 'WarningMsg':   {'fg': s:yellow},
-      \ 'User5':        {'bg': s:white,'fg': s:black,'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User6':        {'bg': s:white,'fg': s:black,'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User5':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User6':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
       \ }
 call s:apply(s:ui)
 
