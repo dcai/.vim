@@ -3,31 +3,31 @@ if codeium_loaded then
   codeium.setup({})
 end
 
-local copilot_loaded, copilot = pcall(require, 'copilot')
-if copilot_loaded then
-  copilot.setup({
-    suggestion = { enabled = false, auto_trigger = false },
-    panel = {
-      enabled = true,
-      auto_refresh = true,
-      layout = {
-        position = 'right',
-      },
-    },
-    filetypes = {
-      yaml = false,
-      markdown = false,
-      help = false,
-      gitcommit = false,
-      gitrebase = false,
-      ['*'] = true,
-    },
-    copilot_node_command = 'node', -- Node.js version must be > 16.x
-    server_opts_overrides = {},
-  })
-
-  require('copilot_cmp').setup()
-end
+-- local copilot_loaded, copilot = pcall(require, 'copilot')
+-- if copilot_loaded then
+--   copilot.setup({
+--     suggestion = { enabled = false, auto_trigger = false },
+--     panel = {
+--       enabled = true,
+--       auto_refresh = true,
+--       layout = {
+--         position = 'right',
+--       },
+--     },
+--     filetypes = {
+--       yaml = false,
+--       markdown = false,
+--       help = false,
+--       gitcommit = false,
+--       gitrebase = false,
+--       ['*'] = true,
+--     },
+--     copilot_node_command = 'node', -- Node.js version must be > 16.x
+--     server_opts_overrides = {},
+--   })
+--
+--   require('copilot_cmp').setup()
+-- end
 
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
@@ -59,11 +59,15 @@ local has_words_before = function()
       == nil
 end
 
-function prioritizeCopilot(entry1, entry2)
-  if entry1.copilot and not entry2.copilot then
-    return true
-  elseif entry2.copilot and not entry1.copilot then
-    return false
+local prioritizeSource = function(source)
+  return function(entry1, entry2)
+    -- print(vim.inspect(entry1))
+    -- writefile('/tmp/nvim.log', vim.inspect(entry1))
+    if entry1[source] and not entry2[source] then
+      return true
+    elseif entry2[source] and not entry1[source] then
+      return false
+    end
   end
 end
 
@@ -71,7 +75,7 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      prioritizeCopilot,
+      -- prioritizeSource('copilot'),
       -- Below is the default comparitor list and order for nvim-cmp
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
@@ -88,6 +92,7 @@ cmp.setup({
   snippet = {
     expand = function(args)
       vim.fn['UltiSnips#Anon'](args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   window = {
@@ -163,11 +168,12 @@ cmp.setup({
         -- ultisnips = 'λ',
         -- tmux = 'Ω',
         -- path = '⋗',
-        nvim_lsp = 'LSP',
-        ultisnips = 'SNIP',
-        tmux = 'TMUX',
+        nvim_lsp = 'lsp',
+        ultisnips = 'Ulti',
+        luasnip = 'lsnip',
+        tmux = 'tmux',
         path = 'PATH',
-        copilot = 'COPILOT',
+        -- copilot = 'Copilot',
         codeium = 'Codeium',
       }
 
@@ -179,9 +185,10 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'codeium' },
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
     {
