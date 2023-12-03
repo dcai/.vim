@@ -69,6 +69,14 @@ function! TestCurrentFileWithJest()
   call VimuxRunCommand(testrunner)
 endfunction
 
+function! TestCurrentFileWithJestJsdom()
+  " let root = systemlist('git rev-parse --show-toplevel')[0]
+  let root = FindNodejsProjectRoot()
+  let filepath = expand('%:p')
+  let testrunner = 'cd "' . root . '" && npx jest --env=jsdom --silent=false --coverage=false --watch ' . filepath
+  call VimuxRunCommand(testrunner)
+endfunction
+
 map <leader>tp :VimuxPromptCommand<cr>
 map <leader>tl :VimuxRunLastCommand<cr>
 map <leader>tt :VimuxInspectRunner<cr>
