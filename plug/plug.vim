@@ -128,7 +128,6 @@ let g:VimuxOrientation = "h"
 Plug 'chr4/nginx.vim'
 Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'dzeban/vim-log-syntax'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 
