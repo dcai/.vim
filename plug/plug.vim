@@ -7,6 +7,7 @@ let s:plugged=g:vim_data . '/plug'
 let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 let g:plug_shallow=3
+let g:no_codeium = getenv("NO_CODEIUM") == 'true'
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
@@ -66,7 +67,7 @@ if has('nvim')
   if !has('nvim-0.9')
     Plug 'gpanders/editorconfig.nvim'
   endif
-  Plug 'Exafunction/codeium.nvim'
+  Plug 'Exafunction/codeium.nvim', Cond(!g:no_codeium, {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
   """ BEGIN code completion plugins
   """"""""""""""""""""""""""""""""""""""""""
