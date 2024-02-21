@@ -35,12 +35,12 @@ endif
 
 call plug#begin(expand(s:plugged))
 
-if v:version >= 800
-  Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
-  " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
-else
-  Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
-endif
+Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
+" if v:version >= 800
+"   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
+" else
+"   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+" endif
 
 function! Cond(cond, ...)
   let opts = get(a:000, 0, {})
