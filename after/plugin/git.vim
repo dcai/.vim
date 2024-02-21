@@ -8,7 +8,7 @@ nnoremap <leader>gcf  :Dispatch! git commit --no-verify --fixup HEAD -a<cr>
 nnoremap <leader>gpr  :Dispatch! git pull --tags --rebase<CR>
 nnoremap <leader>gpf  :Dispatch! git push --tags --force-with-lease<CR>
 nnoremap <leader>gps  :Dispatch! git push<CR>
-nnoremap <leader>grb  :Git rebase -i --committer-date-is-author-date origin/HEAD<CR>
+nnoremap <leader>grb  :Git rebase -i --committer-date-is-author-date origin/HEAD~5<CR>
 
 nnoremap <leader>gds :Gvdiffsplit!<CR>
 nnoremap <leader>gdl :diffget //2<CR>

@@ -46,8 +46,10 @@ nnoremap T :Vexplore<cr>
 
 noremap U :redo<cr>
 
-" map <c-j> <ESC>:cn<CR> " next item in quickfix
-" map <c-k> <ESC>:cp<CR> : prev item in quickfix
+" next item in quickfix
+map <c-j> <ESC>:cn<CR>
+" prev item in quickfix
+map <c-k> <ESC>:cp<CR>
 
 " Press <Home> or <End> to the 1st and last
 " char of the line
