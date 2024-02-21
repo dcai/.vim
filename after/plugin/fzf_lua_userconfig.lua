@@ -3,11 +3,6 @@ if not fzflua_loaded then
   return
 end
 
-local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
-if not lspconfig_loaded then
-  return
-end
-
 local fzf_profile = 'max-pref'
 
 fzflua.setup({
@@ -75,6 +70,7 @@ fzfkm('<leader>ff', fzflua.git_files)
 fzfkm('<leader>fc', fzflua.colorschemes)
 fzfkm('<leader>fr', fzflua.oldfiles)
 fzfkm('<leader>fb', fzflua.buffers)
+fzfkm('<leader>fq', fzflua.quickfix)
 fzfkm('<leader>/', fzflua.builtin)
 fzfkm('<leader>\\', fzflua.files)
 fzfkm('<leader>.', live_grep)
