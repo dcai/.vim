@@ -7,7 +7,7 @@ set spelllang=en,cjk
 set nospell
 set spellcapcheck=
 
-let s:vimspelldir='$HOME/.local/vim/spell'
+let s:vimspelldir=g:vim_data . '/spell'
 let s:dropboxspelldir='$HOME/Library/CloudStorage/Dropbox/src/vimspell'
 let s:mthesaurfile=s:dropboxspelldir . '/mthesaur.txt'
 
