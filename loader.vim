@@ -38,6 +38,10 @@ function! FindExecutable(paths)
   endfor
 endfunction
 
+function! IsEnvVarSet(name)
+  return !empty(getenv(a:name))
+endfunction
+
 " this must load before others
 call IncludeScript('core.vim')
 
