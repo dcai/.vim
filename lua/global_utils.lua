@@ -38,8 +38,9 @@ end
 
 function find_executable(files)
   for _, file in ipairs(files) do
-    if vim.fn.executable(file) == 1 then
-      return file
+    local resolved = vim.fn.expand(file)
+    if vim.fn.executable(resolved) == 1 then
+      return resolved
     end
   end
   return nil
