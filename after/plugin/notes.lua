@@ -58,9 +58,9 @@ local create_note_for_project = function(with_branch)
 end
 
 vim.api.nvim_create_user_command('NoteToday', function()
-  -- local today = note_today()
+  local today = note_today()
   local now = note_now()
-  -- local dir = vim.g.notes_home
+  local dir = vim.g.notes_home
   local filename = dir .. '/Journal/' .. today .. '.md'
   vim.cmd('edit ' .. filename)
   note_insert_text(string.format('###### %s', now))
