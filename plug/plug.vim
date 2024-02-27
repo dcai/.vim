@@ -98,6 +98,9 @@ if !has('nvim')
   Plug 'editorconfig/editorconfig-vim'
 endif
 
+Plug '907th/vim-auto-save'
+let g:auto_save = 1  " enable AutoSave on Vim startup
+
 Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
