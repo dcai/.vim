@@ -48,6 +48,7 @@ endfunction
 
 " just for neovim
 if has('nvim')
+  Plug 'pocco81/auto-save.nvim'
   Plug 'ibhagwan/fzf-lua'
   " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   Plug 'ruifm/gitlinker.nvim'
@@ -96,10 +97,9 @@ if !has('nvim')
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-signify'
   Plug 'editorconfig/editorconfig-vim'
+  Plug '907th/vim-auto-save'
+  let g:auto_save = 1  " enable AutoSave on Vim startup
 endif
-
-Plug '907th/vim-auto-save'
-let g:auto_save = 1  " enable AutoSave on Vim startup
 
 Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
