@@ -101,6 +101,11 @@ if !has('nvim')
   let g:auto_save = 1  " enable AutoSave on Vim startup
 endif
 
+Plug 'AndrewRadev/bufferize.vim'
+let g:bufferize_command = 'new'
+let g:bufferize_keep_buffers = 1
+let g:bufferize_focus_output = 1
+
 Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
