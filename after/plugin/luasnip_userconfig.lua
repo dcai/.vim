@@ -5,13 +5,8 @@ if loaded then
   require('luasnip.loaders.from_vscode').lazy_load()
   -- load from custom folders
   require('luasnip.loaders.from_vscode').lazy_load({
-    paths = {
-      '~/src/vssnips',
-    },
+    paths = { '~/src/vim-snippets' },
   })
-  local fromSnipmate = require('luasnip.loaders.from_snipmate')
-  fromSnipmate.lazy_load()
-  fromSnipmate.lazy_load({
-    paths = { '~/src/test-snip' },
-  })
+  -- local fromSnipmate = require('luasnip.loaders.from_snipmate')
+  -- fromSnipmate.lazy_load()
 end
