@@ -23,8 +23,8 @@ nnoremap N Nzzzv
 
 nnoremap <leader><leader> m'
 
-inoremap jj <Esc>
-inoremap jk <Esc>
+inoremap jj <Esc>:w!<cr>
+" inoremap jk <Esc>
 " inoremap kk <Esc> " not good, many words end with k
 " inoremap ll <Esc> " not good, ll is common in english
 
