@@ -1,4 +1,4 @@
-let g:UltiSnipsSnippetDirectories=["~/src/coc-snippets"]
+let g:UltiSnipsSnippetDirectories=["~/src/vim-snippets"]
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
 let g:UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
