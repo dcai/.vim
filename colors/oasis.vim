@@ -18,6 +18,10 @@ endif
 let s:name='oasis'
 let g:colors_name=s:name
 
+" https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+match ExtraWhitespace /\s\+$/
+highlight ExtraWhitespace ctermbg=red guibg=red
+
 """""""""""""""""""""""""""""""""""""
 " color reference:
 "   - https://jonasjacek.github.io/colors/
@@ -316,43 +320,6 @@ call s:apply(s:js)
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
 
-if has('nvim')
-  let s:neovim_only = {
-        \ 'MsgArea': s:statuslineNC
-        \ }
-  call s:apply(s:neovim_only)
-  let s:cmp = {
-        \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
-        \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
-        \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
-        \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
-        \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
-        \ 'CmpItemKindMethod':     {'fg': s:magenta, 'bg': s:none},
-        \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
-        \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
-        \ }
-  call s:apply(s:cmp)
-  " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
-  let s:treesitter = {
-        \ '@boolean':          s:boolean,
-        \ '@function':         s:function,
-        \ '@identifier':       s:identifier,
-        \ '@attribute':        {'fg': s:red},
-        \ '@repeat':           s:repeat,
-        \ '@keyword':          {'fg': s:keywordfg},
-        \ '@keyword.function': {'fg': s:yellow},
-        \ '@keyword.return':   {'fg': s:blue},
-        \ '@keyword.operator': s:operator,
-        \ '@conditional':      s:conditional,
-        \ '@variable':         s:variable,
-        \ '@field':            s:field,
-        \ '@parameter':        {'fg': s:blue, 'bg': s:none},
-        \ '@string':           s:string,
-        \ '@exception':        {'fg': s:exceptionfg},
-        \ }
-  call s:apply(s:treesitter)
-endif
-
 let s:statusline = {
       \ 'fg': s:black,
       \ 'bg': s:darkyellow,
@@ -397,6 +364,43 @@ let s:mode_normal = {
 
 call s:hi('statusline', s:statusline)
 call s:hi('statuslineNC', s:statuslineNC)
+
+if has('nvim')
+  let s:neovim_only = {
+        \ 'MsgArea': s:statuslineNC
+        \ }
+  call s:apply(s:neovim_only)
+  let s:cmp = {
+        \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
+        \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
+        \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
+        \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
+        \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
+        \ 'CmpItemKindMethod':     {'fg': s:magenta, 'bg': s:none},
+        \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
+        \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
+        \ }
+  call s:apply(s:cmp)
+  " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
+  let s:treesitter = {
+        \ '@boolean':          s:boolean,
+        \ '@function':         s:function,
+        \ '@identifier':       s:identifier,
+        \ '@attribute':        {'fg': s:red},
+        \ '@repeat':           s:repeat,
+        \ '@keyword':          {'fg': s:keywordfg},
+        \ '@keyword.function': {'fg': s:yellow},
+        \ '@keyword.return':   {'fg': s:blue},
+        \ '@keyword.operator': s:operator,
+        \ '@conditional':      s:conditional,
+        \ '@variable':         s:variable,
+        \ '@field':            s:field,
+        \ '@parameter':        {'fg': s:blue, 'bg': s:none},
+        \ '@string':           s:string,
+        \ '@exception':        {'fg': s:exceptionfg},
+        \ }
+  call s:apply(s:treesitter)
+endif
 
 function! s:ModeChanged()
   if g:colors_name != s:name
