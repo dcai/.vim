@@ -48,6 +48,7 @@ endfunction
 
 " just for neovim
 if has('nvim')
+  Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
   Plug 'ibhagwan/fzf-lua'
   " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
@@ -95,11 +96,16 @@ if !has('nvim')
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
         \ }
-  Plug 'bronson/vim-trailing-whitespace'
+  " Plug 'bronson/vim-trailing-whitespace'
+  Plug 'ntpeters/vim-better-whitespace'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install --bin --no-update-rc --no-completion --no-key-bindings' }
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-signify'
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'tpope/vim-surround'
+  Plug 'jiangmiao/auto-pairs'
+
   Plug '907th/vim-auto-save'
   let g:auto_save = 1  " enable AutoSave on Vim startup
 endif
@@ -109,19 +115,15 @@ let g:bufferize_command = 'new'
 let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
 
+" Plug 'mbbill/undotree'
 Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'tpope/vim-fugitive'
 Plug 'reedes/vim-lexical'
 Plug 'djoshea/vim-autoread'
-Plug 'mbbill/undotree'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
-Plug 'tpope/vim-surround'
 Plug 'andymass/vim-matchup'
-Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
-Plug 'jiangmiao/auto-pairs'
-Plug 'ntpeters/vim-better-whitespace'
 Plug 'tyru/open-browser.vim'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap <leader>ob <Plug>(openbrowser-smart-search)
@@ -139,7 +141,7 @@ let g:VimuxOrientation = "h"
 Plug 'chr4/nginx.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
+" Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 
 """""""""""""""""""""""""""""""""""""""
 """ vim-sneak
