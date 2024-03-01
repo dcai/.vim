@@ -12,7 +12,7 @@ vim.g.node_host_prog = find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
-vim.opt.cmdheight = 0
+-- vim.opt.cmdheight = 0
 
 handle_vim_event_by_callback('ColorScheme', function(ev)
   local cs = ev.match or vim.g.colors_name

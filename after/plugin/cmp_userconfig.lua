@@ -82,24 +82,16 @@ cmp.setup({
     -- ['<C-e>'] = cmp.mapping.abort(),
     -- ['<C-Space>'] = cmp.mapping.complete(),
     ['<tab>'] = cmp.mapping(function(fallback)
-      -- local copilotAccept = vim.fn['copilot#Accept']()
       if cmp.visible() and has_words_before() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      -- below checks whether it is possible to jump forward to the next snippet placeholder
       elseif vim.fn['UltiSnips#CanJumpForwards']() == 1 then
         vim.api.nvim_feedkeys(t('<Plug>(ultisnips_jump_forward)'), 'm', true)
       else
-        -- cmp.complete() populates list of options
-        -- cmp.complete()
-        -- fallback() is tab character
+        -- cmp.complete(): populates the UI of complete
+        -- fallback(): pass through, insert <tab>
         fallback()
       end
-      -- elseif copilotAccept ~= '' and type(copilotAccept) == 'string' then
-      --   vim.api.nvim_feedkeys(copilotAccept, 'i', true)
-      -- elseif check_back_space() then
-      --   fallback()
-      -- else
-      --   cmp.complete()
-      -- end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
