@@ -318,7 +318,7 @@ call s:apply(s:js)
 
 if has('nvim')
   let s:neovim_only = {
-        \ 'MsgArea': {'fg': s:white, 'bg': s:darkgreen},
+        \ 'MsgArea': s:statuslineNC
         \ }
   call s:apply(s:neovim_only)
   let s:cmp = {
@@ -363,7 +363,8 @@ let s:statusline = {
       \ }
 let s:statuslineNC = {
       \ 'fg': s:white,
-      \ 'bg': s:darkgray,
+      \ 'bg': s:darkgreen,
+      \ 'guibg': s:nicedarkgreen,
       \ 'cterm': s:none,
       \ 'gui': s:none
       \ }
