@@ -2,6 +2,12 @@
 " Vimux plugin
 
 """""""""""""""""""""""""""""""""""""""
+
+let g:VimuxRunnerType = "pane"
+" let g:VimuxRunnerType = "window"
+let g:VimuxOrientation = "h"
+" let g:VimuxOrientation = "v"
+
 function! LastPath()
   " 1. select right pane
   " 2. capture pane text and grep last path printed by mocha test
@@ -30,7 +36,7 @@ function! Terminal(cmd)
   call system('tmux select-pane -t ' . g:VimuxRunnerIndex)
 endfunction
 
-let s:project_root = ''
+let s:project_root=''
 function! FindNodejsProjectRoot() abort
   " reset to empty
   let s:project_root = ''
@@ -53,32 +59,48 @@ function! FindNodejsProjectRoot() abort
   return s:project_root
 endfunction
 
+function s:cd(dir)
+  return 'cd ' . a:dir
+endfunction
+
+function s:and(...)
+  return join(a:000, ' && ')
+endfunction
+
+function! s:jest(env, path)
+  return 'npx jest --env=' . a:env . ' --silent=false --coverage=false --watch --runTestsByPath ' . a:path
+endfunction
+
+function! s:mocha(path)
+  return 'npx mocha --full-trace --watch ' . a:path
+endfunction
+
 function! TestCurrentFileWithMocha()
   " let root = systemlist('git rev-parse --show-toplevel')[0]
+  " let dir = expand('%:p:h')
+  " let filepath = bufname("%")
   let root = FindNodejsProjectRoot()
   let filepath = expand('%:p')
-  let testrunner = 'cd "' . root . '" && npx mocha --full-trace --watch ' . filepath
+  let testrunner = s:and(s:cd(root), s:mocha(filepath))
   call VimuxRunCommand(testrunner)
 endfunction
 
-function! TestCurrentFileWithJest()
-  " let root = systemlist('git rev-parse --show-toplevel')[0]
-  let root = FindNodejsProjectRoot()
+function! TestCurrentFileWithJestNode()
   let filepath = expand('%:p')
-  let testrunner = 'cd "' . root . '" && npx jest --silent=false --coverage=false --watch ' . filepath
+  let root = FindNodejsProjectRoot()
+  let testrunner = s:and(s:cd(root), s:jest('node', filepath))
   call VimuxRunCommand(testrunner)
 endfunction
 
 function! TestCurrentFileWithJestJsdom()
-  " let root = systemlist('git rev-parse --show-toplevel')[0]
   let root = FindNodejsProjectRoot()
   let filepath = expand('%:p')
-  let testrunner = 'cd "' . root . '" && npx jest --env=jsdom --silent=false --coverage=false --watch ' . filepath
+  let testrunner = s:and(s:cd(root), s:jest('jsdom', filepath))
   call VimuxRunCommand(testrunner)
 endfunction
 
 command! TestMocha     :call TestCurrentFileWithMocha()
-command! TestJest      :call TestCurrentFileWithJest()
+command! TestJestNode  :call TestCurrentFileWithJestNode()
 command! TestJestJsdom :call TestCurrentFileWithJestJsdom()
 
 map <leader>tp :VimuxPromptCommand<cr>
