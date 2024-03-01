@@ -77,6 +77,10 @@ function! TestCurrentFileWithJestJsdom()
   call VimuxRunCommand(testrunner)
 endfunction
 
+command! TestMocha     :call TestCurrentFileWithMocha()
+command! TestJest      :call TestCurrentFileWithJest()
+command! TestJestJsdom :call TestCurrentFileWithJestJsdom()
+
 map <leader>tp :VimuxPromptCommand<cr>
 map <leader>tl :VimuxRunLastCommand<cr>
 map <leader>tt :VimuxInspectRunner<cr>
