@@ -51,6 +51,7 @@ if &history < 1000
 endif
 set autoread
 set mouse=a
+set mousescroll=ver:25,hor:2
 set noerrorbells
 set visualbell
 set showcmd

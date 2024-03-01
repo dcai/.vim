@@ -7,6 +7,7 @@ let s:plugged=g:vim_data . '/plug'
 let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 let g:plug_shallow=3
+let s:oldvim=!has('nvim')
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
@@ -91,7 +92,7 @@ if g:osuname ==? 'Windows'
 endif
 
 " not for nvim
-if !has('nvim')
+if s:oldvim
   Plug 'neoclide/coc.nvim',
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
@@ -105,9 +106,53 @@ if !has('nvim')
   Plug 'scrooloose/nerdcommenter'
   Plug 'tpope/vim-surround'
   Plug 'jiangmiao/auto-pairs'
+  """""""""""""""""""""""""""""""""""""""
+  """ Text objects
+  """""""""""""""""""""""""""""""""""""""
+  " Plug 'kana/vim-textobj-user'
+  " Plug 'kana/vim-textobj-indent'
+  Plug 'wellle/targets.vim'
+
+  """""""""""""""""""""""""""""""""""""""
+  """ junegunn/vim-easy-align
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'junegunn/vim-easy-align'
+  " gaip*|
+  " ^^ Align table cells by `|`
+  " Start interactive EasyAlign in visual mode (e.g. vipga)
+  xmap ga <Plug>(EasyAlign)
+  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+  nmap ga <Plug>(EasyAlign)
 
   Plug '907th/vim-auto-save'
   let g:auto_save = 1  " enable AutoSave on Vim startup
+
+  """""""""""""""""""""""""""""""""""""""
+  """  yuttie/comfortable-motion.vim
+  """""""""""""""""""""""""""""""""""""""
+  " Plug 'yuttie/comfortable-motion.vim'
+  " let g:comfortable_motion_no_default_key_mappings = 1
+  "
+  " nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
+  " nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
+  "
+  " nnoremap <silent> <C-b> :call comfortable_motion#flick(-100)<CR>
+  " nnoremap <silent> <C-f> :call comfortable_motion#flick(100)<CR>
+  "
+  " nnoremap <silent> <PageUp> :call comfortable_motion#flick(-200)<CR>
+  " nnoremap <silent> <PageDown> :call comfortable_motion#flick(200)<CR>
+
+  """""""""""""""""""""""""""""""""""""""
+  """ vim-smooth-scroll
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'terryma/vim-smooth-scroll'
+  let g:smooth_scroll_duration=10
+  map <silent> <c-u> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 2)<CR>
+  map <silent> <c-d> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 2)<CR>
+  map <silent> <c-b> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 4)<CR>
+  map <silent> <c-f> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 4)<CR>
+  map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
+  map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
 endif
 
 Plug 'AndrewRadev/bufferize.vim'
@@ -152,55 +197,6 @@ Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 " case insensitive search
 let g:sneak#use_ic_scs = 1
-
-"""""""""""""""""""""""""""""""""""""""
-""" Text objects
-"""""""""""""""""""""""""""""""""""""""
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-indent'
-Plug 'wellle/targets.vim'
-
-"""""""""""""""""""""""""""""""""""""""
-"""  yuttie/comfortable-motion.vim
-"""""""""""""""""""""""""""""""""""""""
-" Plug 'yuttie/comfortable-motion.vim'
-" let g:comfortable_motion_no_default_key_mappings = 1
-"
-" nnoremap <silent> <C-u> :call comfortable_motion#flick(-100)<CR>
-" nnoremap <silent> <C-d> :call comfortable_motion#flick(100)<CR>
-"
-" nnoremap <silent> <C-b> :call comfortable_motion#flick(-100)<CR>
-" nnoremap <silent> <C-f> :call comfortable_motion#flick(100)<CR>
-"
-" nnoremap <silent> <PageUp> :call comfortable_motion#flick(-200)<CR>
-" nnoremap <silent> <PageDown> :call comfortable_motion#flick(200)<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-""" vim-smooth-scroll
-"""""""""""""""""""""""""""""""""""""""
-Plug 'terryma/vim-smooth-scroll'
-let g:smooth_scroll_duration=10
-
-map <silent> <c-u> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 2)<CR>
-map <silent> <c-d> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 2)<CR>
-
-map <silent> <c-b> :call smooth_scroll#up(&scroll, smooth_scroll_duration, 4)<CR>
-map <silent> <c-f> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 4)<CR>
-
-map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
-map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-""" junegunn/vim-easy-align
-"""""""""""""""""""""""""""""""""""""""
-Plug 'junegunn/vim-easy-align'
-" gaip*|
-" ^^ Align table cells by `|`
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 """""""""""""""""""""""""""""""""""""""
 """ Tabular
 """""""""""""""""""""""""""""""""""""""
