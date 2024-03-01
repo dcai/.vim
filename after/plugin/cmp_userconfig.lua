@@ -1,41 +1,3 @@
-local codeium_loaded, codeium = pcall(require, 'codeium')
-if codeium_loaded then
-  vim.cmd([[
-    let g:codeium_no_map_tab = v:true
-    imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-    imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-    imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
-    imap <C-x> <Cmd>call codeium#Clear()<CR>
-  ]])
-  codeium.setup({})
-end
-
--- local copilot_loaded, copilot = pcall(require, 'copilot')
--- if copilot_loaded then
---   copilot.setup({
---     suggestion = { enabled = false, auto_trigger = false },
---     panel = {
---       enabled = true,
---       auto_refresh = true,
---       layout = {
---         position = 'right',
---       },
---     },
---     filetypes = {
---       yaml = false,
---       markdown = false,
---       help = false,
---       gitcommit = false,
---       gitrebase = false,
---       ['*'] = true,
---     },
---     copilot_node_command = 'node', -- Node.js version must be > 16.x
---     server_opts_overrides = {},
---   })
---
---   require('copilot_cmp').setup()
--- end
-
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
   return
@@ -175,13 +137,13 @@ cmp.setup({
         -- ultisnips = 'λ',
         -- tmux = 'Ω',
         -- path = '⋗',
-        nvim_lsp = 'lsp',
-        ultisnips = 'Ulti',
-        luasnip = 'lsnip',
+        nvim_lsp = 'λ',
+        ultisnips = 'φ',
+        luasnip = 'ι',
         tmux = 'tmux',
         path = 'PATH',
         -- copilot = 'Copilot',
-        codeium = 'Codeium',
+        -- codeium = 'Codeium',
       }
 
       if menu_icon[entry.source.name] then
@@ -191,13 +153,18 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
-    { name = 'codeium' },
+    -- { name = 'codeium' },
     -- { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
     { name = 'luasnip' },
     { name = 'buffer' },
-    { name = 'path' },
+    {
+      name = 'path',
+      option = {
+        trailing_slash = true,
+      },
+    },
     {
       name = 'tmux',
       keyword_length = 3,
