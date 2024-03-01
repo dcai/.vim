@@ -80,5 +80,5 @@ let g:ale_fixers = {
 \}
 
 nnoremap <leader>, :ALEFix<cr>
-nnoremap <silent> [d :ALEPreviousWrap<cr>
-nnoremap <silent> ]d :ALENextWrap<cr>
+nnoremap <silent> [d :ALEPrevious<cr>
+nnoremap <silent> ]d :ALENext<cr>
