@@ -56,9 +56,9 @@ if has('nvim')
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'SirVer/ultisnips'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-  Plug 'L3MON4D3/LuaSnip',
-  Plug 'saadparwaiz1/cmp_luasnip'
-  Plug 'rafamadriz/friendly-snippets'
+  " Plug 'L3MON4D3/LuaSnip',
+  " Plug 'saadparwaiz1/cmp_luasnip'
+  " Plug 'rafamadriz/friendly-snippets'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -73,11 +73,11 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ BEGIN code completion plugins
   """"""""""""""""""""""""""""""""""""""""""
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'hrsh7th/cmp-cmdline'
   Plug 'andersevenrud/cmp-tmux'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/nvim-cmp'
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
@@ -137,7 +137,6 @@ let g:VimuxOrientation = "h"
 """ syntax
 """""""""""""""""""""""""""""""""""""""
 Plug 'chr4/nginx.vim'
-Plug 'glensc/vim-syntax-lighttpd'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
 Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }

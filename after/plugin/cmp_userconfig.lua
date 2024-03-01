@@ -61,7 +61,7 @@ cmp.setup({
   snippet = {
     expand = function(args)
       vim.fn['UltiSnips#Anon'](args.body)
-      require('luasnip').lsp_expand(args.body)
+      -- require('luasnip').lsp_expand(args.body)
     end,
   },
   window = {
@@ -131,7 +131,7 @@ cmp.setup({
         -- path = '⋗',
         nvim_lsp = 'λ',
         ultisnips = 'φ',
-        luasnip = 'ι',
+        -- luasnip = 'ι',
         tmux = 'tmux',
         path = 'PATH',
         -- copilot = 'Copilot',
@@ -149,7 +149,7 @@ cmp.setup({
     -- { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'ultisnips' },
-    { name = 'luasnip' },
+    -- { name = 'luasnip' },
     { name = 'buffer' },
     {
       name = 'path',
