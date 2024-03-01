@@ -62,9 +62,10 @@ require('mini.comment').setup({
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Toggle comment on current line
-    comment_line = '<leader>cc',
+    -- comment_line = '<leader>cc',
+    comment_line = '<c-_>',
     -- Toggle comment on visual selection
-    comment_visual = '<leader>cc',
+    comment_visual = '<c-_>',
 
     -- Toggle comment (like `gcip` - comment inner paragraph) for both
     -- Normal and Visual modes
