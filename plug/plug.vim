@@ -215,5 +215,5 @@ nmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""""""
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'rebelot/kanagawa.nvim'
-Plug 'rose-pine/neovim'
+" Plug 'rose-pine/neovim'
 call plug#end()
