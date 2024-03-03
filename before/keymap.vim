@@ -78,6 +78,18 @@ nnoremap <silent> <leader>ww :w<CR><CR>
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
 nnoremap <silent> <leader>aa :e #<cr>
 
+function TryEditTestFile()
+  let l:filename = expand('%:r')
+  let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx']
+  for ext in l:exts
+    let l:filepath = l:filename . '.' . ext
+    if filereadable(l:filepath)
+        execute ':e ' . l:filepath
+    endif
+  endfor
+endfunction
+nnoremap <silent> <leader>at :call TryEditTestFile()<cr>
+
 " open file in sublime
 nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 
