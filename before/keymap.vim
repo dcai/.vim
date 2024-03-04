@@ -72,6 +72,7 @@ vnoremap <silent> <Up> gk
 " http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
+inoremap <C-c> <ESC>
 
 nnoremap <silent> <leader>ww :w<CR><CR>
 " toggle most recently used file
