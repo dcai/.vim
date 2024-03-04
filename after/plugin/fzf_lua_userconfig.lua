@@ -1,5 +1,5 @@
-local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
-if not fzflua_loaded then
+local loaded, fzflua = pcall(require, 'fzf-lua')
+if not loaded then
   return
 end
 
@@ -50,26 +50,26 @@ fzflua.setup({
   },
 })
 
-function live_grep()
+local live_grep = function()
   local root = project_root()
   fzflua.live_grep({ cwd = root, multiprocess = true })
 end
 
-function grep_cword()
+local grep_cword = function()
   local root = project_root()
   fzflua.grep_cword({ cwd = root })
 end
 
 local fzfkm = function(key, fn, opt)
-  opt = opt or {}
-  local kmopts = { noremap = true, silent = true }
-  vim.keymap.set('n', key, fn, kmopts)
+  opt = opt or { noremap = true, silent = true }
+  vim.keymap.set('n', key, fn, opt)
 end
 
 fzfkm('<leader>ff', fzflua.git_files)
 fzfkm('<leader>fc', fzflua.colorschemes)
 fzfkm('<leader>fr', fzflua.oldfiles)
 fzfkm('<leader>fb', fzflua.buffers)
+fzfkm('<leader>bb', fzflua.buffers)
 fzfkm('<leader>fq', fzflua.quickfix)
 fzfkm('<leader>/', fzflua.builtin)
 fzfkm('<leader>\\', fzflua.files)
