@@ -65,6 +65,17 @@ local fzfkm = function(key, fn, opt)
   vim.keymap.set('n', key, fn, opt)
 end
 
+local fzfharpoon = function()
+  local harpoon = require('harpoon')
+  local harpoon_files = harpoon:list()
+  local files = {}
+  for _, item in ipairs(harpoon_files.items) do
+    table.insert(files, item.value)
+  end
+  -- print(vim.inspect(files))
+  fzflua.fzf_exec(files, { actions = fzflua.defaults.actions.files })
+end
+
 fzfkm('<leader>ff', fzflua.git_files)
 fzfkm('<leader>fc', fzflua.colorschemes)
 fzfkm('<leader>fr', fzflua.oldfiles)
@@ -74,4 +85,5 @@ fzfkm('<leader>fq', fzflua.quickfix)
 fzfkm('<leader>/', fzflua.builtin)
 fzfkm('<leader>\\', fzflua.files)
 fzfkm('<leader>.', live_grep)
+fzfkm('<leader>ft', fzfharpoon)
 fzfkm('K', grep_cword)

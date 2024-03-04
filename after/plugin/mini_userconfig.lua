@@ -211,7 +211,7 @@ animate.setup({
   -- Window resize
   resize = {
     -- Whether to enable this animation
-    enable = true,
+    enable = false,
     -- -- Timing of animation (how steps will progress in time)
     -- timing = --<function: implements linear total 250ms animation duration>,
     -- -- Subresize generator for all steps of resize animations
@@ -221,7 +221,7 @@ animate.setup({
   -- Window open
   open = {
     -- Whether to enable this animation
-    enable = true,
+    enable = false,
     -- -- Timing of animation (how steps will progress in time)
     -- timing = --<function: implements linear total 250ms animation duration>,
     -- -- Floating window config generator visualizing specific window
@@ -233,7 +233,7 @@ animate.setup({
   -- Window close
   close = {
     -- -- Whether to enable this animation
-    -- enable = true,
+    enable = false,
     -- -- Timing of animation (how steps will progress in time)
     -- timing = --<function: implements linear total 250ms animation duration>,
     -- -- Floating window config generator visualizing specific window
