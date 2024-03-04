@@ -19,6 +19,10 @@ autoSave.setup({
     local fn = vim.fn
     local utils = require('auto-save.utils.data')
 
+    -- https://github.com/ThePrimeagen/harpoon/issues/434#issuecomment-1864904972
+    if vim.bo[buf].filetype == 'harpoon' then
+      return false
+    end
     if
       fn.getbufvar(buf, '&modifiable') == 1
       and utils.not_in(fn.getbufvar(buf, '&filetype'), {})
