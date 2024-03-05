@@ -49,7 +49,8 @@ endfunction
 
 " just for neovim
 if has('nvim')
-  Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
+  Plug 'desdic/marlin.nvim'
+  " Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
   Plug 'ibhagwan/fzf-lua'
