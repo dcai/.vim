@@ -65,25 +65,30 @@ local fzfkm = function(key, fn, opt)
   vim.keymap.set('n', key, fn, opt)
 end
 
-local fzfharpoon = function()
-  local harpoon = require('harpoon')
-  local harpoon_files = harpoon:list()
+local fzfbookmarks = function()
+  local results = require('marlin').get_indexes()
+  -- local harpoon = require('harpoon')
+  -- local harpoon_files = harpoon:list()
+  -- local results = harpoon_files.items
+  print(vim.inspect(results))
   local files = {}
-  for _, item in ipairs(harpoon_files.items) do
-    table.insert(files, item.value)
+  for _, item in ipairs(results) do
+    table.insert(
+      files,
+      string.format('%s:%d:%d', item.filename, item.row, item.col)
+    )
   end
-  -- print(vim.inspect(files))
+  print('files: ' .. vim.inspect(files))
   fzflua.fzf_exec(files, { actions = fzflua.defaults.actions.files })
 end
 
 fzfkm('<leader>ff', fzflua.git_files)
 fzfkm('<leader>fc', fzflua.colorschemes)
 fzfkm('<leader>fr', fzflua.oldfiles)
-fzfkm('<leader>fb', fzflua.buffers)
 fzfkm('<leader>bb', fzflua.buffers)
 fzfkm('<leader>fq', fzflua.quickfix)
 fzfkm('<leader>/', fzflua.builtin)
 fzfkm('<leader>\\', fzflua.files)
 fzfkm('<leader>.', live_grep)
-fzfkm('<leader>ft', fzfharpoon)
+fzfkm('<leader>fb', fzfbookmarks)
 fzfkm('K', grep_cword)
