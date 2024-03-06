@@ -12,8 +12,7 @@ mason.setup({
 -------------------------------
 --- mason-lspconfig
 -------------------------------
-local mason_lspconfig_loaded, mason_lspconfig =
-  pcall(require, 'mason-lspconfig')
+local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
   ensure_installed = {
     'lua_ls',
@@ -67,12 +66,11 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 )
 
 local function organize_imports()
-  local params = {
+  vim.lsp.buf.execute_command({
     command = '_typescript.organizeImports',
     arguments = { vim.api.nvim_buf_get_name(0) },
     title = '',
-  }
-  vim.lsp.buf.execute_command(params)
+  })
 end
 
 nvim_lspconfig.tsserver.setup({
@@ -97,6 +95,9 @@ nvim_lspconfig.tsserver.setup({
       description = 'Organize Imports',
     },
   },
+  init_options = {
+    hostInfo = 'neovim',
+  },
   on_attach = common_on_attach,
 })
 
@@ -115,7 +116,11 @@ nvim_lspconfig.lua_ls.setup({
         globals = { 'vim' },
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
+        -- library = vim.api.nvim_get_runtime_file('', true),
+        library = {
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        },
         checkThirdParty = false,
       },
     },
