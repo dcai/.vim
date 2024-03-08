@@ -205,6 +205,7 @@ animate.setup({
     -- Whether to enable this animation
     enable = true,
     timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
+    -- for mouse scroll: set mousescroll=ver:25,hor:2
     subscroll = animate.gen_subscroll.equal({ max_output_steps = 120 }),
   },
 
