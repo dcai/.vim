@@ -85,7 +85,7 @@ end
 fzfkm('<leader>ff', fzflua.git_files)
 fzfkm('<leader>fc', fzflua.colorschemes)
 fzfkm('<leader>fr', fzflua.oldfiles)
-fzfkm('<leader>bb', fzflua.buffers)
+fzfkm('<leader>ll', fzflua.buffers)
 fzfkm('<leader>fq', fzflua.quickfix)
 fzfkm('<leader>/', fzflua.builtin)
 fzfkm('<leader>\\', fzflua.files)
