@@ -98,7 +98,7 @@ function project_root()
   return nil
 end
 
-function use_theme(colorscheme, termguicolors)
+function apply_colorscheme(colorscheme, termguicolors)
   vim.opt.termguicolors = termguicolors and true or false
   xpcall(function()
     vim.cmd.colorscheme(colorscheme)
@@ -107,12 +107,11 @@ function use_theme(colorscheme, termguicolors)
   end)
 end
 
---- apply given theme if no config found
--- @param theme fallback theme
-function apply_theme(theme, truecolor)
-  local termguicolors =
-    get_user_config('colorscheme.termguicolors', truecolor or false)
-  use_theme(get_user_config('colorscheme.name', theme), termguicolors)
+function setup_colorscheme()
+  local defaulcolorscheme = 'oasis'
+  local termguicolors = get_user_config('colorscheme.termguicolors', true)
+  local cs = get_user_config('colorscheme.name', defaulcolorscheme)
+  apply_colorscheme(cs, termguicolors)
 end
 
 function source(path)
