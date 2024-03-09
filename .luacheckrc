@@ -1,6 +1,6 @@
 std = 'max'
 globals = {
-  'apply_theme',
+  'setup_colorscheme',
   'file_exists',
   'find_executable',
   'get_all_local_config',
@@ -18,7 +18,7 @@ globals = {
   'source',
   'touch',
   'trim_right',
-  'use_theme',
+  'apply_colorscheme',
   'writefile',
   'vim',
 }

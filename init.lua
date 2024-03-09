@@ -20,4 +20,4 @@ handle_vim_event_by_callback('ColorScheme', function(ev)
 end)
 
 source('loader.vim')
-apply_theme('oasis', true)
+setup_colorscheme()
