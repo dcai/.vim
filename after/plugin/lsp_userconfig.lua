@@ -185,7 +185,7 @@ if lspsaga_loaded then
       },
     },
     lightbulb = {
-      enable = true,
+      enable = false,
       sign = true,
       debounce = 10,
       sign_priority = 40,
