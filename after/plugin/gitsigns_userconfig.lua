@@ -59,9 +59,9 @@ gitsigns.setup({
     map({ 'o', 'x' }, 'ah', ':<C-U>Gitsigns select_hunk<CR>')
 
     -- Navigation
-    map('n', ']c', function()
+    map('n', ']h', function()
       if vim.wo.diff then
-        return ']c'
+        return ']h'
       end
       vim.schedule(function()
         gs.next_hunk()
@@ -69,9 +69,9 @@ gitsigns.setup({
       return '<Ignore>'
     end, { expr = true })
 
-    map('n', '[c', function()
+    map('n', '[h', function()
       if vim.wo.diff then
-        return '[c'
+        return '[h'
       end
       vim.schedule(function()
         gs.prev_hunk()
