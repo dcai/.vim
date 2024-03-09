@@ -52,6 +52,7 @@ endif
 set autoread
 set mouse=a
 set mousescroll=ver:25,hor:2
+set scrolloff=10
 set noerrorbells
 set visualbell
 set showcmd
