@@ -58,12 +58,13 @@ if has('nvim')
   Plug 'ruifm/gitlinker.nvim'
   Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
   Plug 'williamboman/mason-lspconfig.nvim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvimdev/lspsaga.nvim'
   Plug 'SirVer/ultisnips'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   " Plug 'L3MON4D3/LuaSnip',
   " Plug 'saadparwaiz1/cmp_luasnip'
   " Plug 'rafamadriz/friendly-snippets'
-  Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   Plug 'nvim-lua/plenary.nvim'
