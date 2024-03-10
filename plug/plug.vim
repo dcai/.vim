@@ -1,6 +1,5 @@
 """""""""""""""""""""""""""""""""""""""
-"               vim-plug
-"
+"""            vim-plug
 """""""""""""""""""""""""""""""""""""""
 
 let s:plugged=g:vim_data . '/plug'
@@ -8,6 +7,11 @@ let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
 let g:plug_shallow=3
 let s:oldvim=!has('nvim')
+
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 function! InstallCoc(info)
   if a:info.status ==? 'installed' || a:info.force
@@ -35,43 +39,40 @@ endif
 
 call plug#begin(expand(s:plugged))
 
-Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
-" if v:version >= 800
-"   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
-" else
-"   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
-" endif
-
-function! Cond(cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
-endfunction
-
-" just for neovim
+""""""""""""""""""""""""""""""""""""""""""
+""" neovim only
+""""""""""""""""""""""""""""""""""""""""""
 if has('nvim')
-  Plug 'desdic/marlin.nvim'
-  " Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
+  Plug 'nvim-lua/plenary.nvim'
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
-  Plug 'ibhagwan/fzf-lua'
-  " Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
-  Plug 'ruifm/gitlinker.nvim'
-  Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-  Plug 'williamboman/mason-lspconfig.nvim'
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'nvimdev/lspsaga.nvim'
+  Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
+  Plug 'desdic/marlin.nvim'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ ultisnips
+  """"""""""""""""""""""""""""""""""""""""""
   Plug 'SirVer/ultisnips'
   Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-  " Plug 'L3MON4D3/LuaSnip',
-  " Plug 'saadparwaiz1/cmp_luasnip'
-  " Plug 'rafamadriz/friendly-snippets'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ LSP
+  """"""""""""""""""""""""""""""""""""""""""
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvimdev/lspsaga.nvim'
+  Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+  Plug 'williamboman/mason-lspconfig.nvim'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ treesitter
+  """"""""""""""""""""""""""""""""""""""""""
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-  Plug 'nvim-lua/plenary.nvim'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ git
+  """"""""""""""""""""""""""""""""""""""""""
   Plug 'lewis6991/gitsigns.nvim'
-  if !has('nvim-0.9')
-    Plug 'gpanders/editorconfig.nvim'
-  endif
+  Plug 'ruifm/gitlinker.nvim'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ AI
+  """"""""""""""""""""""""""""""""""""""""""
   Plug 'Exafunction/codeium.nvim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
   " Plug 'zbirenbaum/copilot.lua', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'master'})
   " Plug 'github/copilot.vim', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'release'})
@@ -87,12 +88,77 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
   """"""""""""""""""""""""""""""""""""""""""
+  if !has('nvim-0.9')
+    Plug 'gpanders/editorconfig.nvim'
+  endif
 endif
 
+"""""""""""""""""""""""""""""""""""""""
+""" Ale
+"""""""""""""""""""""""""""""""""""""""
+Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
+"""""""""""""""""""""""""""""""""""""""
+""" vimux
+"""""""""""""""""""""""""""""""""""""""
+Plug 'preservim/vimux'
+let g:VimuxOrientation = "h"
+"""""""""""""""""""""""""""""""""""""""
+""" vim-sneak
+""" alternatives:
+"""   hop, leap.nvim, clever-f
+"""""""""""""""""""""""""""""""""""""""
+Plug 'justinmk/vim-sneak'
+let g:sneak#label = 1
+" case insensitive search
+let g:sneak#use_ic_scs = 1
 
-if g:osuname ==? 'Windows'
-  " only windows
-endif
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
+Plug 'tpope/vim-fugitive'
+Plug 'dstein64/vim-startuptime'
+Plug 'junegunn/vader.vim', { 'for': 'vader' }
+Plug 'reedes/vim-lexical'
+Plug 'djoshea/vim-autoread'
+Plug 'andymass/vim-matchup'
+Plug 'tyru/open-browser.vim'
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap <leader>ob <Plug>(openbrowser-smart-search)
+vmap <leader>ob <Plug>(openbrowser-smart-search)
+" Plug 'mbbill/undotree'
+
+"""""""""""""""""""""""""""""""""""""""
+""" syntax
+"""""""""""""""""""""""""""""""""""""""
+Plug 'chr4/nginx.vim'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
+" Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
+
+
+Plug 'AndrewRadev/bufferize.vim'
+let g:bufferize_command = 'new'
+let g:bufferize_keep_buffers = 1
+let g:bufferize_focus_output = 1
+"""""""""""""""""""""""""""""""""""""""
+""" Tabular
+"""""""""""""""""""""""""""""""""""""""
+" Plug 'godlygeek/tabular'
+" nmap <Leader>t= :Tabularize /=<CR>
+" vmap <Leader>t= :Tabularize /=<CR>
+" nmap <Leader>t: :Tabularize /:\zs<CR>
+" vmap <Leader>t: :Tabularize /:\zs<CR>
+" if v:version >= 800
+"   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
+" else
+"   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+" endif
+
+"""""""""""""""""""""""""""""""""""""""
+""" colorschemes
+"""""""""""""""""""""""""""""""""""""""
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'rebelot/kanagawa.nvim'
+" Plug 'rose-pine/neovim'
 
 " not for nvim
 if s:oldvim
@@ -158,61 +224,7 @@ if s:oldvim
   map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
 endif
 
-Plug 'AndrewRadev/bufferize.vim'
-let g:bufferize_command = 'new'
-let g:bufferize_keep_buffers = 1
-let g:bufferize_focus_output = 1
-
-" Plug 'mbbill/undotree'
-Plug 'dstein64/vim-startuptime'
-Plug 'junegunn/vader.vim', { 'for': 'vader' }
-Plug 'tpope/vim-fugitive'
-Plug 'reedes/vim-lexical'
-Plug 'djoshea/vim-autoread'
-Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
-Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-dispatch'
-Plug 'tyru/open-browser.vim'
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap <leader>ob <Plug>(openbrowser-smart-search)
-vmap <leader>ob <Plug>(openbrowser-smart-search)
-
-"""""""""""""""""""""""""""""""""""""""
-""" vimux
-"""""""""""""""""""""""""""""""""""""""
-Plug 'preservim/vimux'
-let g:VimuxOrientation = "h"
-
-"""""""""""""""""""""""""""""""""""""""
-""" syntax
-"""""""""""""""""""""""""""""""""""""""
-Plug 'chr4/nginx.vim'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-" Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-
-"""""""""""""""""""""""""""""""""""""""
-""" vim-sneak
-""" alternatives:
-"""   hop, lightspeed, clever-f
-"""""""""""""""""""""""""""""""""""""""
-Plug 'justinmk/vim-sneak'
-let g:sneak#label = 1
-" case insensitive search
-let g:sneak#use_ic_scs = 1
-"""""""""""""""""""""""""""""""""""""""
-""" Tabular
-"""""""""""""""""""""""""""""""""""""""
-" Plug 'godlygeek/tabular'
-" nmap <Leader>t= :Tabularize /=<CR>
-" vmap <Leader>t= :Tabularize /=<CR>
-" nmap <Leader>t: :Tabularize /:\zs<CR>
-" vmap <Leader>t: :Tabularize /:\zs<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-""" colorschemes
-"""""""""""""""""""""""""""""""""""""""
-Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'rebelot/kanagawa.nvim'
-" Plug 'rose-pine/neovim'
+if g:osuname ==? 'Windows'
+  " only windows
+endif
 call plug#end()
