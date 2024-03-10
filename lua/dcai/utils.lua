@@ -143,10 +143,12 @@ function touch(filepath)
     local file, error_message = io.open(filepath, 'w')
     if file then
       file:close()
+      return file
     else
       print(error_message)
     end
   end
+  return nil
 end
 
 function get_or(table, key, default)
