@@ -85,9 +85,8 @@ function! Mkdir(dirname)
 endfunction
 
 " https://stackoverflow.com/a/26898986/69938
-if !empty($XDG_CACHE_HOME)
-  let g:netrw_home=Mkdir($XDG_CACHE_HOME.'/vim')
-endif
+" let g:netrw_home=Mkdir(g:vim_data)
+let g:netrw_home=g:vim_data
 
 " enable persistent undo
 set undofile
