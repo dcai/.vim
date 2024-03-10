@@ -50,7 +50,7 @@ local create_note_for_project = function(with_branch)
       local dir = vim.g.notes_home
       local project_dir = vim.fn.expand(dir .. '/projects/' .. git_root)
       vim.fn.mkdir(project_dir, 'p')
-      local filename = project_dir .. '/' .. git_branch .. 'md'
+      local filename = project_dir .. '/' .. git_branch .. '.md'
       vim.cmd('edit ' .. filename)
       note_insert_text(string.format('###### %s', now))
     end
@@ -68,8 +68,7 @@ end, {})
 
 vim.api.nvim_create_user_command('NoteNew', function(opt)
   local note = opt.args
-  if note then
-  else
+  if not note then
     note = vim.fn.input("What's note name? ")
   end
   note_create_or_edit(note)
