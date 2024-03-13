@@ -21,4 +21,9 @@ globals = {
   'apply_colorscheme',
   'writefile',
   'vim',
+  'red',
+  'purple',
+  'green',
+  'yellow',
+  'blue',
 }

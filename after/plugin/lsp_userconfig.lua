@@ -41,18 +41,21 @@ local function organize_imports()
   })
 end
 
-local common_on_attach = function(_client, bufnr)
+local common_on_attach = function(_client, buffer)
   vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
-  local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', 'D', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'R', vim.lsp.buf.rename, opts)
-  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  -- vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+  local function map(mode, lhs, rhs, desc)
+    local opts = { noremap = true, silent = true, buffer = buffer, desc = desc }
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+  map('n', 'K', vim.lsp.buf.hover, 'hover doc')
+  map('n', '<leader>rn', vim.lsp.buf.rename, 'rename variable')
+  map('n', 'R', vim.lsp.buf.rename, 'rename variable')
+  map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'code action')
+  map('n', 'gd', vim.lsp.buf.definition, 'go to definition')
+  map('n', 'gr', vim.lsp.buf.references, 'go to references')
+  -- map('n', 'gD', vim.lsp.buf.declaration, '')
+  -- map('n', 'gi', vim.lsp.buf.implementation, '')
+  -- map('n', 'go', vim.lsp.buf.type_definition, '')
 end
 
 nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
@@ -121,20 +124,11 @@ if fzfloaded then
   local function lsp_to_fzf(item)
     local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
     local fzf_trim = true
-    local ansi = {
-      reset = string.char(0x001b) .. '[0m',
-      red = string.char(0x001b) .. '[31m',
-      green = string.char(0x001b) .. '[32m',
-      yellow = string.char(0x001b) .. '[33m',
-      blue = string.char(0x001b) .. '[34m',
-      purple = string.char(0x001b) .. '[35m',
-    }
-    local fmt = string.format
     local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
-    local path = fmt('%s%s%s', ansi.purple, filename, ansi.reset)
-    local lnum = fmt('%s%s%s', ansi.green, item.lnum, ansi.reset)
+    local path = purple(filename)
+    local lnum = green(item.lnum)
     local text = fzf_trim and vim.trim(item.text) or item.text
-    return fmt('%s:%s:%s: %s', path, lnum, item.col, text)
+    return string.format('%s:%s:%s: %s', path, lnum, item.col, text)
   end
 
   -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua

@@ -228,3 +228,23 @@ function handle_vim_event_by_callback(evt, callback)
     callback = callback,
   })
 end
+
+local function colortext(color)
+  local ansi = {
+    reset = string.char(0x001b) .. '[0m',
+    red = string.char(0x001b) .. '[31m',
+    green = string.char(0x001b) .. '[32m',
+    yellow = string.char(0x001b) .. '[33m',
+    blue = string.char(0x001b) .. '[34m',
+    purple = string.char(0x001b) .. '[35m',
+  }
+  return function(text)
+    return string.format('%s%s%s', ansi[color], text, ansi.reset)
+  end
+end
+
+red = colortext('red')
+green = colortext('green')
+yellow = colortext('yellow')
+blue = colortext('blue')
+purple = colortext('purple')
