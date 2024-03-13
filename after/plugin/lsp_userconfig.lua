@@ -156,7 +156,7 @@ if fzfloaded then
   local location_handler = wrap_handler(function(_label, result, _ctx, _config)
     result = vim.tbl_islist(result) and result or { result }
     if #result == 1 then
-      return vim.lsp.util.jump_to_location(result[1])
+      return vim.lsp.util.jump_to_location(result[1], offset_encoding)
     end
     local items = vim.lsp.util.locations_to_items(result, offset_encoding)
     local source = vim.tbl_map(lsp_to_fzf, items)
