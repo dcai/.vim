@@ -31,38 +31,7 @@ if not lspconfig_loaded then
   return
 end
 
-local lsp_defaults = nvim_lspconfig.util.default_config
 local root_pattern = nvim_lspconfig.util.root_pattern
-
--- local opts = { noremap = true, silent = true }
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
--- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setloclist, opts)
--- vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts)
--- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setqflist, opts)
-
-local common_on_attach = function(_client, bufnr)
-  vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
-
-  local opts = { noremap = true, silent = true, buffer = bufnr }
-  -- local opts = { noremap = true, silent = true }
-  vim.keymap.set('n', 'D', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'R', vim.lsp.buf.rename, opts)
-  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-  -- vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-end
-
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lsp_defaults.capabilities,
-  -- must use require here
-  require('cmp_nvim_lsp').default_capabilities()
-)
 
 local function organize_imports()
   vim.lsp.buf.execute_command({
@@ -71,6 +40,26 @@ local function organize_imports()
     title = '',
   })
 end
+
+local common_on_attach = function(_client, bufnr)
+  vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
+  local opts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'D', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+  vim.keymap.set('n', 'R', vim.lsp.buf.rename, opts)
+  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+  -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+  -- vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+end
+
+nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+  'force', -- force: use value from the rightmost map
+  nvim_lspconfig.util.default_config.capabilities,
+  require('cmp_nvim_lsp').default_capabilities() -- must use require here
+)
 
 nvim_lspconfig.tsserver.setup({
   filetypes = {
