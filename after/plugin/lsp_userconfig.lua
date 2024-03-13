@@ -5,9 +5,9 @@ local mason_loaded, mason = pcall(require, 'mason')
 if not mason_loaded then
   return
 end
-local path = require('mason-core.path')
+local masonpath = require('mason-core.path')
 mason.setup({
-  install_root_dir = path.concat({ vim.fn.stdpath('data'), 'mason' }),
+  install_root_dir = masonpath.concat({ vim.fn.stdpath('data'), 'mason' }),
 })
 -------------------------------
 --- mason-lspconfig
@@ -41,17 +41,16 @@ local root_pattern = nvim_lspconfig.util.root_pattern
 -- vim.keymap.set("n", "<leader>dd", vim.diagnostic.open_float, opts)
 -- vim.keymap.set('n', '<leader>dd', vim.diagnostic.setqflist, opts)
 
-local common_on_attach = function(client, bufnr)
+local common_on_attach = function(_client, bufnr)
   vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
 
   local opts = { noremap = true, silent = true, buffer = bufnr }
   -- local opts = { noremap = true, silent = true }
   vim.keymap.set('n', 'D', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
   vim.keymap.set('n', 'R', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-  vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, opts)
+  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+  -- vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
@@ -127,6 +126,45 @@ nvim_lspconfig.lua_ls.setup({
   },
   on_attach = common_on_attach,
 })
+
+local fzfloaded, fzflua = pcall(require, 'fzf-lua')
+if fzfloaded then
+  local function lsp_to_fzf(item)
+    local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
+    local fzf_trim = true
+    local ansi = {
+      reset = string.char(0x001b) .. '[0m',
+      red = string.char(0x001b) .. '[31m',
+      green = string.char(0x001b) .. '[32m',
+      yellow = string.char(0x001b) .. '[33m',
+      blue = string.char(0x001b) .. '[34m',
+      purple = string.char(0x001b) .. '[35m',
+    }
+    local fmt = string.format
+    local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
+    local path = fmt('%s%s%s', ansi.purple, filename, ansi.reset)
+    local lnum = fmt('%s%s%s', ansi.green, item.lnum, ansi.reset)
+    local text = fzf_trim and vim.trim(item.text) or item.text
+    return fmt('%s:%s:%s: %s', path, lnum, item.col, text)
+  end
+
+  -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
+  local location_handler = function(_label, result)
+    result = vim.tbl_islist(result) and result or { result }
+    if #result == 1 then
+      return vim.lsp.util.jump_to_location(result[1])
+    end
+    local items = vim.lsp.util.locations_to_items(result)
+    local source = vim.tbl_map(lsp_to_fzf, items)
+    fzflua.fzf_exec(source, { actions = fzflua.defaults.actions.files })
+  end
+
+  vim.lsp.handlers['textDocument/declaration'] = location_handler
+  vim.lsp.handlers['textDocument/definition'] = location_handler
+  vim.lsp.handlers['textDocument/implementation'] = location_handler
+  vim.lsp.handlers['textDocument/references'] = location_handler
+  vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
+end
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 
