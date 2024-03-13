@@ -149,7 +149,7 @@ if fzfloaded then
   end
 
   -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
-  local location_handler = function(_label, result)
+  local location_handler = function(_err, result, _ctx, _config)
     result = vim.tbl_islist(result) and result or { result }
     if #result == 0 then
       return
