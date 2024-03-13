@@ -3,10 +3,30 @@ if not loaded then
   return
 end
 
+-- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
+-- fzf-native:	utilizes fzf's native previewing ability in the terminal where possible using bat for previews
+-- fzf-tmux:	similar to fzf-native and opens in a tmux popup (requires tmux > 3.2)
+-- fzf-vim:	closest to fzf.vim's defaults (+icons), also sets up user commands (:Files, :Rg, etc)
+-- max-perf:	similar to fzf-native and disables icons globally for max performance
+-- telescope:	closest match to telescope defaults in look and feel and keybinds
+-- skim:	uses skim as an fzf alternative, (requires the sk binary)
 local fzf_profile = 'max-pref'
 
 fzflua.setup({
   fzf_profile,
+  fzf_opts = {
+    ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-history',
+  },
+  files = {
+    fzf_opts = {
+      ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-files-history',
+    },
+  },
+  grep = {
+    fzf_opts = {
+      ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-grep-history',
+    },
+  },
   winopts = {
     width = 1,
     row = 1,
@@ -50,19 +70,21 @@ fzflua.setup({
   },
 })
 
-local live_grep = function()
-  local root = project_root()
-  fzflua.live_grep({ cwd = root, multiprocess = true })
+local function live_grep()
+  fzflua.live_grep({ cwd = project_root(), multiprocess = true })
 end
 
-local grep_cword = function()
-  local root = project_root()
-  fzflua.grep_cword({ cwd = root })
+local function grep_cword()
+  fzflua.grep_cword({ cwd = project_root() })
 end
 
-local fzfkm = function(key, fn, opt)
-  opt = opt or { noremap = true, silent = true }
-  vim.keymap.set('n', key, fn, opt)
+local function fzfkm(key, fn, opt)
+  vim.keymap.set(
+    'n',
+    key,
+    fn,
+    vim.tbl_deep_extend('force', { noremap = true, silent = true }, opt or {})
+  )
 end
 
 local fzfbookmarks = function()

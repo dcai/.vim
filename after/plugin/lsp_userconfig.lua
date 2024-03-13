@@ -47,7 +47,7 @@ local common_on_attach = function(_client, buffer)
     local opts = { noremap = true, silent = true, buffer = buffer, desc = desc }
     vim.keymap.set(mode, lhs, rhs, opts)
   end
-  map('n', 'K', vim.lsp.buf.hover, 'hover doc')
+  map('n', 'D', vim.lsp.buf.hover, 'hover doc')
   map('n', '<leader>rn', vim.lsp.buf.rename, 'rename variable')
   map('n', 'R', vim.lsp.buf.rename, 'rename variable')
   map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'code action')
@@ -121,6 +121,27 @@ nvim_lspconfig.lua_ls.setup({
 
 local fzfloaded, fzflua = pcall(require, 'fzf-lua')
 if fzfloaded then
+  local offset_encoding
+  local function wrap_handler(handler)
+    return function(label)
+      return function(err, result, ctx, config)
+        if err then
+          return print(
+            string.format('%s: %s', 'wrap_handler() error', err.message)
+          )
+        end
+        -- Print message if no result
+        if not result or vim.tbl_isempty(result) then
+          return print(string.format('No %s found', string.lower(label)))
+        end
+
+        -- Save offset encoding
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        offset_encoding = client and client.offset_encoding or 'utf-16'
+        return handler(label, result, ctx, config)
+      end
+    end
+  end
   local function lsp_to_fzf(item)
     local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
     local fzf_trim = true
@@ -132,24 +153,23 @@ if fzfloaded then
   end
 
   -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
-  local location_handler = function(_err, result, _ctx, _config)
+  local location_handler = wrap_handler(function(_label, result, _ctx, _config)
     result = vim.tbl_islist(result) and result or { result }
-    if #result == 0 then
-      return
-    end
     if #result == 1 then
       return vim.lsp.util.jump_to_location(result[1])
     end
-    local items = vim.lsp.util.locations_to_items(result)
+    local items = vim.lsp.util.locations_to_items(result, offset_encoding)
     local source = vim.tbl_map(lsp_to_fzf, items)
     fzflua.fzf_exec(source, { actions = fzflua.defaults.actions.files })
-  end
+  end)
 
-  vim.lsp.handlers['textDocument/declaration'] = location_handler
-  vim.lsp.handlers['textDocument/definition'] = location_handler
-  vim.lsp.handlers['textDocument/implementation'] = location_handler
-  vim.lsp.handlers['textDocument/references'] = location_handler
-  vim.lsp.handlers['textDocument/typeDefinition'] = location_handler
+  vim.lsp.handlers['textDocument/declaration'] = location_handler('declaration')
+  vim.lsp.handlers['textDocument/definition'] = location_handler('definition')
+  vim.lsp.handlers['textDocument/implementation'] =
+    location_handler('implementation')
+  vim.lsp.handlers['textDocument/references'] = location_handler('references')
+  vim.lsp.handlers['textDocument/typeDefinition'] =
+    location_handler('typeDefinition')
 end
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
