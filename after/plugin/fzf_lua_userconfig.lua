@@ -70,7 +70,6 @@ local fzfbookmarks = function()
   -- local harpoon = require('harpoon')
   -- local harpoon_files = harpoon:list()
   -- local results = harpoon_files.items
-  print(vim.inspect(results))
   local files = {}
   for _, item in ipairs(results) do
     table.insert(
@@ -78,7 +77,6 @@ local fzfbookmarks = function()
       string.format('%s:%d:%d', item.filename, item.row, item.col)
     )
   end
-  print('files: ' .. vim.inspect(files))
   fzflua.fzf_exec(files, { actions = fzflua.defaults.actions.files })
 end
 
