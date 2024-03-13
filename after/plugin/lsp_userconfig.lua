@@ -151,6 +151,9 @@ if fzfloaded then
   -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
   local location_handler = function(_label, result)
     result = vim.tbl_islist(result) and result or { result }
+    if #result == 0 then
+      return
+    end
     if #result == 1 then
       return vim.lsp.util.jump_to_location(result[1])
     end
