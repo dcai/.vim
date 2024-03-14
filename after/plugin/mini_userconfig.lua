@@ -277,3 +277,4 @@ require('mini.notify').setup({
     winblend = 25,
   },
 })
+vim.notify = require('mini.notify').make_notify()

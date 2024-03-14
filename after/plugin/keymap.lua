@@ -134,8 +134,16 @@ local mappings = {
       cmd('source $MYVIMRC'),
       'reload vimrc',
     },
-    f = {
-      cmd('source %'),
+    ['%'] = {
+      function()
+        local ft = vim.bo.filetype
+        if ft == 'vim' or ft == 'lua' then
+          vim.cmd('source %')
+          vim.notify('current buffer sourced', vim.log.levels.WARN)
+        else
+          vim.notify('nothing')
+        end
+      end,
       'reload current buffer',
     },
   },

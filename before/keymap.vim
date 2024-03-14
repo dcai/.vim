@@ -112,19 +112,18 @@ nnoremap <silent> <leader>at :call EditMatchingTestFile()<cr>
 " nnoremap <leader>od :call OpenDir()<CR>
 
 nnoremap <silent> <leader>ww :w<CR><CR>
+nnoremap <leader>qq :qall<cr>
+nnoremap <leader>bd :bd!<cr>
+nnoremap <leader>on :on<cr>
+nnoremap <leader>vs :vs<cr>
+nnoremap <leader>sp :vs<cr>
+nnoremap <leader>qw :silent wq<cr>
 
 let s:notvscode = !exists('g:vscode')
 let s:notneovim = !has('nvim')
 if s:notvscode && s:notneovim
-  nnoremap <leader>qq :qall<cr>
-  nnoremap <leader>qw :silent wq<cr>
-  nnoremap <leader>bd :bd!<cr>
-
   " close everything
   nnoremap <silent> <leader>xx :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
-  nnoremap <leader>on :on<cr>
-  nnoremap <leader>vs :vs<cr>
-  nnoremap <leader>sp :vs<cr>
 
   nnoremap <leader>re :e $MYVIMRC<cr>
   nnoremap <leader>rr :source $MYVIMRC<cr>
