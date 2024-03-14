@@ -202,10 +202,13 @@ let s:visual = {
       \}
 
 let s:ui = {
+      \ 'Cursor':       {'fg': s:red, 'bg':s:none},
+      \ 'CursorColumn': {'fg': s:red, 'bg':s:none},
+      \ 'CursorLine':   {'fg': s:red, 'bg':s:none},
       \ 'Normal':       s:normal,
       \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
       \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
-      \ 'FloatBorder':  {'fg': s:blue},
+      \ 'FloatBorder':  {'fg': s:green},
       \ 'NormalNC':     {'fg': s:gray},
       \ 'ColorColumn':  {'bg': s:none},
       \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
