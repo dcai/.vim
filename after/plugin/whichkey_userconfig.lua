@@ -111,6 +111,10 @@ local mappings = {
       'git rebase 5 commits ago',
     },
     s = { '<cmd>Git<cr>', 'git status' },
+    y = {
+      cmd('lua require("gitlinker").get_buf_range_url("n")'),
+      'open the file in web',
+    },
   },
   -- Language Server Protocol (LSP)
   l = {
