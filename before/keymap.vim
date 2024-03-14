@@ -115,10 +115,12 @@ if has("nvim")
   nnoremap <leader>es :UltiSnipsEdit<cr>
 endif
 
-nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <leader>rr :source $MYVIMRC<cr>
-" source current file
-nnoremap <leader>rf :source %<cr>
+if !has('nvim')
+  nnoremap <leader>re :e $MYVIMRC<cr>
+  nnoremap <leader>rr :source $MYVIMRC<cr>
+  " source current file
+  nnoremap <leader>rf :source %<cr>
+end
 
 if !exists('g:vscode')
   nnoremap <leader>qq :qall<cr>
