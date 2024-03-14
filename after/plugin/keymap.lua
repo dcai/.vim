@@ -83,6 +83,53 @@ local function dp(str, desc)
   return cmd(string.format('Dispatch! %s', str), desc)
 end
 
+local function open_git_hosting_web()
+  require('gitlinker').get_buf_range_url('n')
+end
+
+local git_keymap = {
+  name = 'git',
+  -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
+  -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
+  -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
+  -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
+  -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
+  -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
+  a = { cmd('Gwrite'), 'git add' },
+  A = { cmd('git add -A'), 'git add untracked' },
+  b = { cmd('FzfLua git_branches'), 'Checkout branch' },
+  c = { cmd('Git commit -a'), 'commit all' },
+  d = { cmd('Git diff'), 'Diff' },
+  f = { dp('git commit --no-verify --fixup HEAD -a'), 'fixup' },
+  g = { dp('git pull --tags --rebase'), 'git pull' },
+  h = { dp('git stash'), 'git stash' },
+  H = { dp('git stash pop'), 'git stash pop' },
+  l = { cmd('Gllog'), 'list commits' },
+  m = { require('gitsigns').blame_line, 'Blame line' },
+  M = { cmd('Git blame'), 'Blame' },
+  p = { dp('git push -u --no-verify'), 'git push' },
+  P = {
+    dp('git push -u --force-with-lease --no-verify'),
+    'force push with lease',
+  },
+  r = {
+    cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
+    'rebase',
+  },
+  s = { cmd('Git'), 'git status' },
+  S = { cmd('FzfLua git_status'), 'Changed files' },
+  y = { open_git_hosting_web, 'open the file in web' },
+}
+
+local lsp_keymap = {
+  name = 'lsp',
+  a = { vim.lsp.buf.code_action, 'Code Action' },
+  f = { vim.lsp.buf.format, 'Format' },
+  i = { cmd('LspInfo'), 'Info' },
+  r = { vim.lsp.buf.rename, 'Rename' },
+  q = { require('fzf-lua').quickfix, 'linting' },
+}
+
 local mappings = {
   ['w'] = { '<cmd>w!<CR>', 'Save' },
   o = {
@@ -102,10 +149,7 @@ local mappings = {
       dp('/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl %'),
       'open file in sublime',
     },
-    g = {
-      cmd('lua require("gitlinker").get_buf_range_url("n")'),
-      'open file in git web',
-    },
+    g = { open_git_hosting_web, 'open file in git web' },
   },
   e = {
     name = 'edit things',
@@ -156,66 +200,8 @@ local mappings = {
       'reload current buffer',
     },
   },
-  -- Git
-  g = {
-    name = 'git',
-    -- l = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
-    -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
-    -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
-    -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
-    -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
-    -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-    -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
-    a = { cmd('Gwrite'), 'git add' },
-    A = { cmd('git add -A'), 'git add untracked' },
-    b = { cmd('FzfLua git_branches'), 'Checkout branch' },
-    c = { cmd('Git commit -a'), 'commit all' },
-    d = { cmd('Git diff'), 'Diff' },
-    f = {
-      dp('git commit --no-verify --fixup HEAD -a'),
-      'fixup',
-    },
-    g = { dp('git pull --tags --rebase'), 'git pull' },
-    h = { dp('git stash'), 'git stash' },
-    H = { dp('git stash pop'), 'git stash pop' },
-    m = {
-      function()
-        require('gitsigns').blame_line()
-      end,
-      'Blame line',
-    },
-    M = { cmd('Git blame'), 'Blame' },
-    p = { dp('git push -u --no-verify'), 'git push' },
-    P = {
-      dp('git push -u --force-with-lease --no-verify'),
-      'force push with lease',
-    },
-    r = {
-      cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
-      'rebase',
-    },
-    s = { '<cmd>Git<cr>', 'git status' },
-    S = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
-    y = {
-      function()
-        require('gitlinker').get_buf_range_url('n')
-      end,
-      'open the file in web',
-    },
-  },
-  -- Language Server Protocol (LSP)
-  l = {
-    name = 'lsp',
-    a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code Action' },
-    w = { '<cmd>FzfLua diagnostics_document<cr>', 'Diagnostics' },
-    f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
-    i = { '<cmd>LspInfo<cr>', 'Info' },
-    j = { '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', 'Next Error' },
-    k = { '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', 'Prev Error' },
-    l = { '<cmd>lua vim.lsp.codelens.run()<cr>', 'CodeLens Action' },
-    q = { '<cmd>lua vim.diagnostic.setloclist()<cr>', 'Quickfix' },
-    r = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename' },
-  },
+  g = git_keymap,
+  l = lsp_keymap,
 }
 
 local opts = {
