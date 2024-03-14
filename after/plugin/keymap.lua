@@ -132,7 +132,11 @@ local mappings = {
   r = {
     name = 'vimrc',
     e = {
-      cmd('e $MYVIMRC'),
+      function()
+        local fzf = require('fzf-lua')
+        fzf.git_files({ cwd = '~/.config/nvim' })
+        -- vim.cmd('e $MYVIMRC')
+      end,
       'edit root vimrc',
     },
     r = {
