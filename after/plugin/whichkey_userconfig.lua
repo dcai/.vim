@@ -1,12 +1,9 @@
-local loaded, whichkey = pcall(require, 'which-key')
+local loaded, which_key = pcall(require, 'which-key')
 if not loaded then
   return
 end
 
-whichkey.setup({
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
+which_key.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -17,7 +14,8 @@ whichkey.setup({
     -- the presets plugin, adds help for a bunch of default keybindings in Neovim
     -- No actual key bindings are created
     presets = {
-      operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      operators = false,
       motions = true, -- adds help for motions
       text_objects = true, -- help for text objects triggered after entering an operator
       windows = true, -- default bindings on <c-w>
@@ -32,9 +30,9 @@ whichkey.setup({
   key_labels = {
     -- override the label used to display some keys. It doesn't effect WK in any other way.
     -- For example:
-    -- ["<space>"] = "SPC",
-    -- ["<cr>"] = "RET",
-    -- ["<tab>"] = "TAB",
+    ['<space>'] = 'SPC',
+    ['<cr>'] = 'RET',
+    ['<tab>'] = 'TAB',
   },
   icons = {
     breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
@@ -71,3 +69,47 @@ whichkey.setup({
     v = { 'j', 'k' },
   },
 })
+
+local mappings = {
+  ['w'] = { '<cmd>w!<CR>', 'Save' },
+  ['qq'] = { '<cmd>q!<CR>', 'Quit' },
+  -- Git
+  g = {
+    name = 'Git',
+    j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
+    k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
+    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", 'Blame' },
+    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
+    -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
+    -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
+    -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
+    o = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
+    b = { '<cmd>FzfLua git_branches<cr>', 'Checkout branch' },
+    c = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
+    d = { '<cmd>Gitsigns diffthis HEAD<cr>', 'Diff' },
+  },
+  -- Language Server Protocol (LSP)
+  l = {
+    name = 'LSP',
+    a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code Action' },
+    w = { '<cmd>FzfLua diagnostics_document<cr>', 'Diagnostics' },
+    f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
+    i = { '<cmd>LspInfo<cr>', 'Info' },
+    j = { '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', 'Next Error' },
+    k = { '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', 'Prev Error' },
+    l = { '<cmd>lua vim.lsp.codelens.run()<cr>', 'CodeLens Action' },
+    q = { '<cmd>lua vim.diagnostic.setloclist()<cr>', 'Quickfix' },
+    r = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename' },
+  },
+}
+
+local opts = {
+  mode = 'n', -- NORMAL mode
+  prefix = '<leader>',
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+}
+
+which_key.register(mappings, opts)

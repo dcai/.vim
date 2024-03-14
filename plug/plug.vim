@@ -49,7 +49,7 @@ if has('nvim')
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   Plug 'desdic/marlin.nvim'
   Plug 'elihunter173/dirbuf.nvim'
-  " Plug 'folke/which-key.nvim'
+  Plug 'folke/which-key.nvim'
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
   """"""""""""""""""""""""""""""""""""""""""
