@@ -15,6 +15,14 @@ local fzf_profile = 'max-pref'
 fzflua.setup({
   fzf_profile,
   fzf_opts = {
+    -- set to `false` to remove a flag
+    -- set to `true` for a no-value flag
+    -- for raw args use `fzf_args` instead
+    ['--ansi'] = true,
+    ['--info'] = 'inline',
+    ['--height'] = '100%',
+    ['--layout'] = 'reverse',
+    ['--border'] = 'none',
     ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-history',
   },
   files = {
@@ -27,10 +35,35 @@ fzflua.setup({
       ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-grep-history',
     },
   },
+  colorschemes = {
+    prompt = 'Colorschemes❯ ',
+    live_preview = true, -- apply the colorscheme on preview?
+    winopts = { height = 1, width = 0.20 },
+    -- uncomment to ignore colorschemes names (lua patterns)
+    -- ignore_patterns   = { "^delek$", "^blue$" },
+    -- uncomment to execute a callback on preview|close
+    -- e.g. a call to reset statusline highlights
+    -- cb_preview        = function() ... end,
+    -- cb_exit           = function() ... end,
+  },
+  git = {
+    files = {
+      prompt = 'GitFiles❯ ',
+      cmd = 'git ls-files --exclude-standard',
+      multiprocess = true, -- run command in a separate process
+      git_icons = true, -- show git icons?
+      file_icons = false, -- show file icons?
+      color_icons = true, -- colorize file|git icons
+      -- force display the cwd header line regardless of your current working
+      -- directory can also be used to hide the header when not wanted
+      -- cwd_header = true
+    },
+  },
   winopts = {
     width = 1,
     row = 1,
     height = 0.5,
+    -- border = false,
     hl = {
       normal = 'Normal', -- window normal color (fg+bg)
       border = 'FloatBorder', -- border color
@@ -52,7 +85,7 @@ fzflua.setup({
     preview_opts = 'hidden',
     preview = {
       -- default = 'cat',
-      border = 'border',
+      border = 'noborder',
       hidden = 'hidden',
       title = false,
       winopts = {
