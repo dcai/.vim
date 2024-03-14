@@ -159,13 +159,15 @@ local mappings = {
   -- Git
   g = {
     name = 'git',
-    -- d = { cmd('Gitsigns diffthis HEAD'), 'Diff' },
-    -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
+    -- l = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
     -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
+    -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
+    -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
+    -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
     -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
     -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
-    -- l = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
     a = { cmd('Gwrite'), 'git add' },
+    A = { cmd('git add -A'), 'git add untracked' },
     b = { cmd('FzfLua git_branches'), 'Checkout branch' },
     c = { cmd('Git commit -a'), 'commit all' },
     d = { cmd('Git diff'), 'Diff' },
@@ -176,22 +178,28 @@ local mappings = {
     g = { dp('git pull --tags --rebase'), 'git pull' },
     h = { dp('git stash'), 'git stash' },
     H = { dp('git stash pop'), 'git stash pop' },
-    -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
-    -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
-    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", 'Blame' },
-    o = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
-    p = { '<cmd>Dispatch! git push -u --no-verify<cr>', 'git push' },
+    m = {
+      function()
+        require('gitsigns').blame_line()
+      end,
+      'Blame line',
+    },
+    M = { cmd('Git blame'), 'Blame' },
+    p = { dp('git push -u --no-verify'), 'git push' },
     P = {
       dp('git push -u --force-with-lease --no-verify'),
       'force push with lease',
     },
     r = {
       cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
-      'rebase 5 commits ago',
+      'rebase',
     },
     s = { '<cmd>Git<cr>', 'git status' },
+    S = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
     y = {
-      cmd('lua require("gitlinker").get_buf_range_url("n")'),
+      function()
+        require('gitlinker').get_buf_range_url('n')
+      end,
       'open the file in web',
     },
   },
