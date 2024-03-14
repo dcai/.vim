@@ -50,6 +50,7 @@ if has('nvim')
   Plug 'desdic/marlin.nvim'
   Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
+  Plug 'folke/tokyonight.nvim'
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
   """"""""""""""""""""""""""""""""""""""""""
