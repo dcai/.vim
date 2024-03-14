@@ -70,12 +70,17 @@ which_key.setup({
   },
 })
 
-local function cmd(str)
-  return string.format('<cmd>%s<cr>', str)
+local function cmd(command, desc)
+  return function()
+    vim.cmd(command)
+    if desc then
+      vim.notify(desc)
+    end
+  end
 end
 
-local function dp(str)
-  return cmd(string.format('Dispatch! %s', str))
+local function dp(str, desc)
+  return cmd(string.format('Dispatch! %s', str), desc)
 end
 
 local mappings = {
@@ -112,7 +117,7 @@ local mappings = {
   y = {
     name = 'yank things',
     p = {
-      cmd('let @*=expand("%:p")'),
+      cmd('let @*=expand("%:p")', 'file path yanked'),
       'yank file full path',
     },
     f = {
@@ -150,6 +155,7 @@ local mappings = {
   -- Git
   g = {
     name = 'git',
+    -- d = { cmd('Gitsigns diffthis HEAD'), 'Diff' },
     -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
     -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
     -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
@@ -158,7 +164,7 @@ local mappings = {
     a = { cmd('Gwrite'), 'git add' },
     b = { cmd('FzfLua git_branches'), 'Checkout branch' },
     c = { cmd('Git commit -a'), 'commit all' },
-    d = { cmd('Gitsigns diffthis HEAD'), 'Diff' },
+    d = { cmd('Git diff'), 'Diff' },
     f = {
       dp('git commit --no-verify --fixup HEAD -a'),
       'fixup',
