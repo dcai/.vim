@@ -64,10 +64,6 @@ nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
 
-vnoremap <silent> j gj
-vnoremap <silent> k gk
-vnoremap <silent> <Down> gj
-vnoremap <silent> <Up> gk
 " Press Ctrl-O switches to normal mode for one command
 " http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 inoremap <Down> <C-o>gj
@@ -79,7 +75,6 @@ inoremap <C-c> <ESC>
 nnoremap <silent> <leader>aa :e #<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
-
 
 function TryFileWithExts(filename, exts)
   for ext in a:exts
