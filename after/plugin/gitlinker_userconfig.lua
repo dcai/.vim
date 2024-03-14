@@ -59,5 +59,6 @@ gitlinker.setup({
     ['git.savannah.gnu.org'] = hosts.get_cgit_type_url,
   },
   -- default mapping to call url generation with action_callback
-  mappings = '<leader>gy',
+  -- mappings = '<leader>gy',
+  mappings = nil,
 })
