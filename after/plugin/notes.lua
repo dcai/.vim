@@ -81,38 +81,7 @@ vim.api.nvim_create_user_command(
 )
 vim.api.nvim_create_user_command('NoteGit', create_note_for_project(false), {})
 
-vim.keymap.set('n', '<leader>nl', function()
-  if fzflua_loaded then
-    fzflua.files({
-      cwd = vim.g.notes_home,
-      file_ignore_patterns = {
-        'node_modules',
-        '.png',
-        '.pdf',
-        '.jpg',
-        '.docx',
-        '.pptx',
-      },
-    })
-  end
-end, {
-  noremap = true,
-  expr = true,
-})
-
-vim.keymap.set('n', '<leader>ns', function()
-  if fzflua_loaded then
-    fzflua.live_grep({
-      cwd = vim.g.notes_home,
-      multiprocess = true,
-    })
-  end
-end, {
-  noremap = true,
-  expr = true,
-})
-
-global_keymap('n', '<leader>nc', ':NoteNew<cr>')
-global_keymap('n', '<leader>nt', ':NoteToday<cr>')
-global_keymap('n', '<leader>ngb', ':NoteGitBranch<cr>')
-global_keymap('n', '<leader>ngg', ':NoteGit<cr>')
+-- global_keymap('n', '<leader>nc', ':NoteNew<cr>')
+-- global_keymap('n', '<leader>nt', ':NoteToday<cr>')
+-- global_keymap('n', '<leader>nb', ':NoteGitBranch<cr>')
+-- global_keymap('n', '<leader>ng', ':NoteGit<cr>')

@@ -70,6 +70,17 @@ which_key.setup({
   },
 })
 
+local function make_mapping_opts(mode)
+  return {
+    mode = mode, -- NORMAL mode
+    prefix = '<leader>',
+    buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = true, -- use `nowait` when creating keymaps
+  }
+end
+
 local function cmd(command, desc)
   return function()
     vim.cmd(command)
@@ -87,6 +98,18 @@ local function open_git_hosting_web()
   require('gitlinker').get_buf_range_url('n')
 end
 
+local vimux_keymap = {
+  i = { cmd('VimuxInspectRunner'), 'Inspect runner' },
+  j = { cmd('TestJestJsdom'), 'jest jsdom this file' },
+  J = { cmd('TestJestNode'), 'jest node this file' },
+  l = { cmd('VimuxRunLastCommand'), 'last command' },
+  m = { cmd('TestMocha'), 'mocha this file' },
+  p = { cmd('VimuxPromptCommand'), 'prompt command' },
+  q = { cmd('VimuxCloseRunner'), 'close runner' },
+  x = { cmd('call VimuxZoomRunner()'), 'zoom in' },
+  z = { cmd('call LastPath()'), 'open last path in runner' },
+}
+
 local git_keymap = {
   name = 'git',
   -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
@@ -96,7 +119,7 @@ local git_keymap = {
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
   -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
   a = { cmd('Gwrite'), 'git add' },
-  A = { cmd('git add -A'), 'git add untracked' },
+  A = { cmd('Git add -A'), 'git add untracked' },
   b = { cmd('FzfLua git_branches'), 'Checkout branch' },
   c = { cmd('Git commit -a'), 'commit all' },
   d = { cmd('Git diff'), 'Diff' },
@@ -130,47 +153,49 @@ local lsp_keymap = {
   q = { require('fzf-lua').quickfix, 'linting' },
 }
 
-local mappings = {
-  ['w'] = { '<cmd>w!<CR>', 'Save' },
-  o = {
-    name = 'open things',
-    b = {
-      '<Plug>(openbrowser-smart-search)',
-      'search current word in browser',
-    },
-    d = {
-      function()
-        local folder = vim.fn.expand('%:p:h')
-        vim.fn.execute('!open ' .. folder)
-      end,
-      'open in folder',
-    },
-    f = {
-      dp('/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl %'),
-      'open file in sublime',
-    },
-    g = { open_git_hosting_web, 'open file in git web' },
+local yank_keymap = {
+  name = 'yank things',
+  p = {
+    cmd('let @*=expand("%:p")', 'file path yanked'),
+    'yank file full path',
   },
+  f = {
+    cmd('let @*=expand("%")'),
+    'yank file name',
+  },
+  m = {
+    cmd('let @*=execute("messages")'),
+    'yank messages',
+  },
+}
+
+local openthings_keymap = {
+  name = 'open things',
+  b = {
+    '<Plug>(openbrowser-smart-search)',
+    'search current word in browser',
+  },
+  d = {
+    function()
+      local folder = vim.fn.expand('%:p:h')
+      vim.fn.execute('!open ' .. folder)
+    end,
+    'open in folder',
+  },
+  f = {
+    dp('/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl %'),
+    'open file in sublime',
+  },
+  g = { open_git_hosting_web, 'open file in git web' },
+}
+
+local n_keymap = {
+  ['w'] = { '<cmd>w!<CR>', 'Save' },
   e = {
     name = 'edit things',
     s = {
       cmd('UltiSnipsEdit'),
       'edit snippet for current buffer',
-    },
-  },
-  y = {
-    name = 'yank things',
-    p = {
-      cmd('let @*=expand("%:p")', 'file path yanked'),
-      'yank file full path',
-    },
-    f = {
-      cmd('let @*=expand("%")'),
-      'yank file name',
-    },
-    m = {
-      cmd('let @*=execute("messages")'),
-      'yank messages',
     },
   },
   r = {
@@ -200,17 +225,51 @@ local mappings = {
       'reload current buffer',
     },
   },
+  n = {
+    b = { cmd('NoteGitBranch'), 'create new note for current git branch' },
+    c = { cmd('NoteNew'), 'create new note' },
+    g = { cmd('NoteGit'), 'create new note for current git repo' },
+    t = { cmd('NoteToday'), 'create new note for today' },
+    l = {
+      function()
+        require('fzf-lua').files({
+          cwd = vim.g.notes_home,
+        })
+      end,
+      'list all notes',
+    },
+    s = {
+      function()
+        print(vim.g.notes_home)
+        require('fzf-lua').live_grep({
+          cwd = vim.g.notes_home,
+          file_ignore_patterns = {
+            'node_modules',
+            '.png',
+            '.pdf',
+            '.jpg',
+            '.docx',
+            '.pptx',
+          },
+        })
+      end,
+      'list all notes',
+    },
+  },
+  o = openthings_keymap,
+  y = yank_keymap,
   g = git_keymap,
   l = lsp_keymap,
+  t = vimux_keymap,
 }
 
-local opts = {
-  mode = 'n', -- NORMAL mode
-  prefix = '<leader>',
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+which_key.register(n_keymap, make_mapping_opts('n'))
+
+local v_keymap = {
+  g = git_keymap,
+  l = lsp_keymap,
+  o = openthings_keymap,
+  y = yank_keymap,
 }
 
-which_key.register(mappings, opts)
+which_key.register(v_keymap, make_mapping_opts('v'))

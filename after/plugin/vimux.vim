@@ -103,10 +103,12 @@ command! TestMocha     :call TestCurrentFileWithMocha()
 command! TestJestNode  :call TestCurrentFileWithJestNode()
 command! TestJestJsdom :call TestCurrentFileWithJestJsdom()
 
-map <leader>tp :VimuxPromptCommand<cr>
-map <leader>tl :VimuxRunLastCommand<cr>
-map <leader>tt :VimuxInspectRunner<cr>
-map <leader>tq :VimuxCloseRunner<cr>
-map <leader>tx :VimuxInterruptRunner<cr>
-map <leader>tz :call VimuxZoomRunner()<cr>
-map <leader>tf :call LastPath()<cr>
+if !has('nvim')
+  map <leader>tp :VimuxPromptCommand<cr>
+  map <leader>tl :VimuxRunLastCommand<cr>
+  map <leader>ti :VimuxInspectRunner<cr>
+  map <leader>tq :VimuxCloseRunner<cr>
+  map <leader>tx :VimuxInterruptRunner<cr>
+  map <leader>tz :call VimuxZoomRunner()<cr>
+  map <leader>tf :call LastPath()<cr>
+endif
