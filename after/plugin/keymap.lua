@@ -80,7 +80,50 @@ end
 
 local mappings = {
   ['w'] = { '<cmd>w!<CR>', 'Save' },
-  ['qq'] = { '<cmd>q!<CR>', 'Quit' },
+  o = {
+    name = 'open things',
+    b = {
+      '<Plug>(openbrowser-smart-search)',
+      'search current word in browser',
+    },
+    d = {
+      function()
+        local folder = vim.fn.expand('%:p:h')
+        vim.fn.execute('!open ' .. folder)
+      end,
+      'open in folder',
+    },
+    f = {
+      dp('/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl %'),
+      'open file in sublime',
+    },
+    g = {
+      cmd('lua require("gitlinker").get_buf_range_url("n")'),
+      'open file in git web',
+    },
+  },
+  e = {
+    name = 'edit things',
+    s = {
+      cmd('UltiSnipsEdit'),
+      'edit snippet for current buffer',
+    },
+  },
+  y = {
+    name = 'yank things',
+    p = {
+      cmd('let @*=expand("%:p")'),
+      'yank file full path',
+    },
+    f = {
+      cmd('let @*=expand("%")'),
+      'yank file name',
+    },
+    m = {
+      cmd('let @*=execute("messages")'),
+      'yank messages',
+    },
+  },
   r = {
     name = 'vimrc',
     e = {
@@ -98,7 +141,7 @@ local mappings = {
   },
   -- Git
   g = {
-    name = 'Git',
+    name = 'git',
     -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
     -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
     -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
@@ -133,7 +176,7 @@ local mappings = {
   },
   -- Language Server Protocol (LSP)
   l = {
-    name = 'LSP',
+    name = 'lsp',
     a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code Action' },
     w = { '<cmd>FzfLua diagnostics_document<cr>', 'Diagnostics' },
     f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },

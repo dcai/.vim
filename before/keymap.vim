@@ -74,10 +74,11 @@ inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 inoremap <C-c> <ESC>
 
-nnoremap <silent> <leader>ww :w<CR><CR>
 " toggle most recently used file
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
 nnoremap <silent> <leader>aa :e #<cr>
+" This unsets the 'last search pattern' register by hitting return
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 
 function TryFileWithExts(filename, exts)
@@ -103,28 +104,19 @@ endfunction
 nnoremap <silent> <leader>at :call EditMatchingTestFile()<cr>
 
 " open file in sublime
-nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
+" nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
+" function OpenDir()
+"   let d = expand("%:p:h")
+"   silent execute '!open ' . d
+" endfunction
+" nnoremap <leader>od :call OpenDir()<CR>
 
-function OpenDir()
-  let d = expand("%:p:h")
-  silent execute '!open ' . d
-endfunction
-nnoremap <leader>od :call OpenDir()<CR>
+nnoremap <silent> <leader>ww :w<CR><CR>
 
-if has("nvim")
-  nnoremap <leader>es :UltiSnipsEdit<cr>
-endif
-
-if !has('nvim')
-  nnoremap <leader>re :e $MYVIMRC<cr>
-  nnoremap <leader>rr :source $MYVIMRC<cr>
-  " source current file
-  nnoremap <leader>rf :source %<cr>
-end
-
-if !exists('g:vscode')
+let s:notvscode = !exists('g:vscode')
+let s:notneovim = !has('nvim')
+if s:notvscode && s:notneovim
   nnoremap <leader>qq :qall<cr>
-  nnoremap <leader>wq :silent wq<cr>
   nnoremap <leader>qw :silent wq<cr>
   nnoremap <leader>bd :bd!<cr>
 
@@ -133,21 +125,24 @@ if !exists('g:vscode')
   nnoremap <leader>on :on<cr>
   nnoremap <leader>vs :vs<cr>
   nnoremap <leader>sp :vs<cr>
-endif
-" This unsets the 'last search pattern' register by hitting return
-nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
-" copy messages to register
-nnoremap <leader>ym :let @*=execute('messages')<CR>
-" Convert slashes to backslashes for Windows.
-if g:osuname ==? 'Windows'
-  nmap <leader>yp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-  nmap <leader>yf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-else
-  " copy fullpath to vim * register
-  nnoremap <leader>yp :let @*=expand("%:p")<CR>
-  " copy file name to vim register
-  nnoremap <leader>yf :let @*=expand("%")<CR>
+  nnoremap <leader>re :e $MYVIMRC<cr>
+  nnoremap <leader>rr :source $MYVIMRC<cr>
+  " source current file
+  nnoremap <leader>rf :source %<cr>
+
+  " copy messages to register
+  nnoremap <leader>ym :let @*=execute('messages')<CR>
+  " Convert slashes to backslashes for Windows.
+  if g:osuname ==? 'Windows'
+    nmap <leader>yp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+    nmap <leader>yf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  else
+    " copy fullpath to vim * register
+    nnoremap <leader>yp :let @*=expand("%:p")<CR>
+    " copy file name to vim register
+    nnoremap <leader>yf :let @*=expand("%")<CR>
+  endif
 endif
 
 " Toggle quickfix
