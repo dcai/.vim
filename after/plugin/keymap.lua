@@ -28,11 +28,11 @@ which_key.setup({
   -- to enable all native operators, set the preset / operators plugin above
   -- operators = { gc = "Comments" },
   key_labels = {
-    -- override the label used to display some keys. It doesn't effect WK in any other way.
-    -- For example:
-    ['<space>'] = 'SPC',
-    ['<cr>'] = 'RET',
-    ['<tab>'] = 'TAB',
+    -- -- override the label used to display some keys. It doesn't effect WK in any other way.
+    -- -- For example:
+    -- ['<space>'] = 'SPC',
+    -- ['<cr>'] = 'RET',
+    -- ['<tab>'] = 'TAB',
   },
   icons = {
     breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
@@ -81,6 +81,21 @@ end
 local mappings = {
   ['w'] = { '<cmd>w!<CR>', 'Save' },
   ['qq'] = { '<cmd>q!<CR>', 'Quit' },
+  r = {
+    name = 'vimrc',
+    e = {
+      cmd('e $MYVIMRC'),
+      'edit root vimrc',
+    },
+    r = {
+      cmd('source $MYVIMRC'),
+      'reload vimrc',
+    },
+    f = {
+      cmd('source %'),
+      'reload current buffer',
+    },
+  },
   -- Git
   g = {
     name = 'Git',
@@ -91,14 +106,14 @@ local mappings = {
     -- l = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
     a = { cmd('Gwrite'), 'git add' },
     b = { cmd('FzfLua git_branches'), 'Checkout branch' },
-    c = { cmd('Git commit -a'), 'git commit all' },
+    c = { cmd('Git commit -a'), 'commit all' },
     d = { cmd('Gitsigns diffthis HEAD'), 'Diff' },
     f = {
       dp('git commit --no-verify --fixup HEAD -a'),
-      'git fixup',
+      'fixup',
     },
-    j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
-    k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
+    -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
+    -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", 'Blame' },
     o = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
     p = { '<cmd>Dispatch! git push -u --no-verify<cr>', 'git push' },
@@ -108,7 +123,7 @@ local mappings = {
     },
     r = {
       cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
-      'git rebase 5 commits ago',
+      'rebase 5 commits ago',
     },
     s = { '<cmd>Git<cr>', 'git status' },
     y = {
