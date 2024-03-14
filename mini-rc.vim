@@ -284,15 +284,14 @@ imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
 nnoremap <silent> <leader>aa :e #<cr>
-nnoremap <leader>ev :e! $MYVIMRC<cr>
+nnoremap <leader>re :e! $MYVIMRC<cr>
 nnoremap <leader>rr :source $MYVIMRC<cr>
 nnoremap <leader>rf :source %<cr>
 " BD is vim-bufkill plugin command
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>qq :qall<cr>
-nnoremap <leader>wq :silent wq<cr>
 nnoremap <leader>qw :silent wq<cr>
-nnoremap <silent> <leader>ww :w<CR><CR>
+nnoremap <silent> <leader>w :w<CR><CR>
 " enter to clear search highlight
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 " sudo write
