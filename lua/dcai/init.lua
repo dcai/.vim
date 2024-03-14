@@ -12,17 +12,11 @@ vim.g.node_host_prog = find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
+-- vim.opt.cmdheight = 0
 local shadafile = os.getenv('NVIM_SHADA')
 if shadafile then
   vim.opt.shadafile = shadafile
 end
-
--- vim.opt.cmdheight = 0
-
-handle_vim_event_by_callback('ColorScheme', function(ev)
-  local cs = ev.match or vim.g.colors_name
-  set_user_config('colorscheme.name', cs)
-end)
 
 source('loader.vim')
 setup_colorscheme()

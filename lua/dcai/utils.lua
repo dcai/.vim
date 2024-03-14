@@ -112,6 +112,9 @@ function setup_colorscheme()
   local termguicolors = get_user_config('colorscheme.termguicolors', true)
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
   apply_colorscheme(cs, termguicolors)
+  handle_vim_event_by_callback('ColorScheme', function(ev)
+    set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
+  end)
 end
 
 function source(path)
