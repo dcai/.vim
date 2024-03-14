@@ -70,23 +70,47 @@ which_key.setup({
   },
 })
 
+local function cmd(str)
+  return string.format('<cmd>%s<cr>', str)
+end
+
+local function dp(str)
+  return cmd(string.format('Dispatch! %s', str))
+end
+
 local mappings = {
   ['w'] = { '<cmd>w!<CR>', 'Save' },
   ['qq'] = { '<cmd>q!<CR>', 'Quit' },
   -- Git
   g = {
     name = 'Git',
+    -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
+    -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
+    -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
+    -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
+    -- l = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
+    a = { cmd('Gwrite'), 'git add' },
+    b = { cmd('FzfLua git_branches'), 'Checkout branch' },
+    c = { cmd('Git commit -a'), 'git commit all' },
+    d = { cmd('Gitsigns diffthis HEAD'), 'Diff' },
+    f = {
+      dp('git commit --no-verify --fixup HEAD -a'),
+      'git fixup',
+    },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", 'Blame' },
-    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
-    -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-    -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
-    -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
     o = { '<cmd>FzfLua git_status<cr>', 'Changed files' },
-    b = { '<cmd>FzfLua git_branches<cr>', 'Checkout branch' },
-    c = { '<cmd>FzfLua git_commits<cr>', 'Checkout commit' },
-    d = { '<cmd>Gitsigns diffthis HEAD<cr>', 'Diff' },
+    p = { '<cmd>Dispatch! git push -u --no-verify<cr>', 'git push' },
+    P = {
+      dp('git push -u --force-with-lease --no-verify'),
+      'force push with lease',
+    },
+    r = {
+      cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
+      'git rebase 5 commits ago',
+    },
+    s = { '<cmd>Git<cr>', 'git status' },
   },
   -- Language Server Protocol (LSP)
   l = {
