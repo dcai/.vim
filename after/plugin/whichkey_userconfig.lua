@@ -207,7 +207,7 @@ local openthings_keymap = {
 }
 
 local n_keymap = {
-  ['w'] = { '<cmd>w!<CR>', 'Save' },
+  ['w'] = { cmd('w!'), 'write' },
   e = {
     name = 'edit things',
     s = {
