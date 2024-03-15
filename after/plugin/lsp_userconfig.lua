@@ -120,6 +120,9 @@ nvim_lspconfig.lua_ls.setup({
 local fzfloaded, fzflua = pcall(require, 'fzf-lua')
 if fzfloaded then
   local offset_encoding
+  ---wrap function for error handling and encoding setting
+  ---@param handler function
+  ---@return function
   local function wrap_handler(handler)
     return function(label)
       return function(err, result, ctx, config)
