@@ -95,7 +95,14 @@ local function dp(str, desc)
 end
 
 local function open_git_hosting_web()
-  require('gitlinker').get_buf_range_url('n')
+  local mode = vim.fn.mode()
+  if string.lower(mode) == 'v' then
+    mode = 'v'
+  else
+    mode = 'n'
+  end
+
+  require('gitlinker').get_buf_range_url(mode)
 end
 local function call_if_test(func)
   return function()
