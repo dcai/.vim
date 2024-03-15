@@ -60,8 +60,9 @@ end
 vim.api.nvim_create_user_command('NoteToday', function()
   local today = note_today()
   local now = note_now()
-  local dir = vim.g.notes_home
-  local filename = dir .. '/Journal/' .. today .. '.md'
+  local dir = vim.g.notes_home .. '/Journal/'
+  vim.fn.mkdir(dir, 'p')
+  local filename = dir .. today .. '.md'
   vim.cmd('edit ' .. filename)
   note_insert_text(string.format('###### %s', now))
 end, {})
