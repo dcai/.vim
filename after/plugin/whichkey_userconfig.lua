@@ -3,6 +3,9 @@ if not loaded then
   return
 end
 
+local subl_path =
+  '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
+
 which_key.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -70,6 +73,9 @@ which_key.setup({
   },
 })
 
+---generate opts for the plugin based on mode
+---@param mode any
+---@return table
 local function make_mapping_opts(mode)
   return {
     mode = mode,
@@ -81,6 +87,9 @@ local function make_mapping_opts(mode)
   }
 end
 
+---@param command string
+---@param desc string
+---@return nil
 local function cmd(command, desc)
   return function()
     vim.cmd(command)
@@ -90,6 +99,8 @@ local function cmd(command, desc)
   end
 end
 
+---@param command string
+---@param desc string
 local function dp(str, desc)
   return cmd(string.format('Dispatch! %s', str), desc)
 end
@@ -104,6 +115,8 @@ local function open_git_hosting_web()
 
   require('gitlinker').get_buf_range_url(mode)
 end
+
+---@param func string custom function name in string
 local function call_if_test(func)
   return function()
     local file = vim.fn.expand('%')
@@ -115,8 +128,9 @@ local function call_if_test(func)
     end
   end
 end
+
 local vimux_keymap = {
-  i = { cmd('VimuxInspectRunner'), 'Inspect runner' },
+  i = { cmd('VimuxInspectRunner'), 'inspect runner' },
   j = { call_if_test('TestCurrentFileWithJestJsdom'), 'jest jsdom this file' },
   J = { call_if_test('TestCurrentFileWithJestNode'), 'jest node this file' },
   l = { cmd('VimuxRunLastCommand'), 'last command' },
@@ -137,16 +151,16 @@ local git_keymap = {
   -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
   a = { cmd('Gwrite'), 'git add' },
   A = { cmd('Git add -A'), 'git add untracked' },
-  b = { cmd('FzfLua git_branches'), 'Checkout branch' },
+  b = { cmd('FzfLua git_branches'), 'checkout branch' },
   c = { cmd('Git commit -a'), 'commit all' },
-  d = { cmd('Git diff'), 'Diff' },
+  d = { cmd('Git diff'), 'diff' },
   f = { dp('git commit --no-verify --fixup HEAD -a'), 'fixup' },
   g = { dp('git pull --tags --rebase'), 'git pull' },
   h = { dp('git stash'), 'git stash' },
   H = { dp('git stash pop'), 'git stash pop' },
   l = { cmd('Gllog'), 'list commits' },
-  m = { require('gitsigns').blame_line, 'Blame line' },
-  M = { cmd('Git blame'), 'Blame' },
+  m = { require('gitsigns').blame_line, 'blame line' },
+  M = { cmd('Git blame'), 'git blame' },
   p = { dp('git push -u --no-verify'), 'git push' },
   P = {
     dp('git push -u --force-with-lease --no-verify'),
@@ -157,16 +171,16 @@ local git_keymap = {
     'rebase',
   },
   s = { cmd('Git'), 'git status' },
-  S = { cmd('FzfLua git_status'), 'Changed files' },
+  S = { cmd('FzfLua git_status'), 'changed files' },
   y = { open_git_hosting_web, 'open the file in web' },
 }
 
 local lsp_keymap = {
   name = 'lsp',
-  a = { vim.lsp.buf.code_action, 'Code Action' },
-  f = { vim.lsp.buf.format, 'Format' },
-  i = { cmd('LspInfo'), 'Info' },
-  r = { vim.lsp.buf.rename, 'Rename' },
+  a = { vim.lsp.buf.code_action, 'code action' },
+  f = { vim.lsp.buf.format, 'format code' },
+  I = { cmd('LspInfo'), 'lsp info' },
+  r = { vim.lsp.buf.rename, 'rename' },
   q = { require('fzf-lua').quickfix, 'linting' },
 }
 
@@ -200,7 +214,7 @@ local openthings_keymap = {
     'open in folder',
   },
   f = {
-    dp('/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl %'),
+    dp(subl_path .. ' %'),
     'open file in sublime',
   },
   g = { open_git_hosting_web, 'open file in git web' },

@@ -26,7 +26,7 @@ function f(str)
         end,
       })
       local fn, err =
-        load('return ' .. code, 'expression `' .. code .. '`', 't', exp_env)
+          load('return ' .. code, 'expression `' .. code .. '`', 't', exp_env)
       if fn then
         return tostring(fn())
       else
@@ -36,6 +36,9 @@ function f(str)
   )
 end
 
+---return the first executable from given list
+---@param files string[]
+---@return string|nil
 function find_executable(files)
   for _, file in ipairs(files) do
     local resolved = vim.fn.expand(file)
@@ -46,12 +49,19 @@ function find_executable(files)
   return nil
 end
 
+---create keymap item
+---@param mode string
+---@param from string
+---@param to string
 function global_keymap(mode, from, to)
   -- local expr_opts = { noremap = true, expr = true, silent = true }
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
--- copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
+---copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
+---@param string string
+---@param replacement string
+---@return string
 function slugify(string, replacement)
   if replacement == nil then
     replacement = '-'
@@ -78,7 +88,8 @@ function parent_dir(input)
   return trim_right(input, '/'):match('(.*/)')
 end
 
--- @return project root dir
+---find project root
+---@return string|nil
 function project_root()
   local current_file = vim.fn.expand('%:p:h')
   local dir = parent_dir(current_file)
@@ -232,7 +243,11 @@ function handle_vim_event_by_callback(evt, callback)
   })
 end
 
+---higher order function to color text
+---@param color string
+---@return function
 local function colortext(color)
+  ---@enum ansi_colors
   local ansi = {
     reset = string.char(0x001b) .. '[0m',
     red = string.char(0x001b) .. '[31m',
