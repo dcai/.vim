@@ -15,7 +15,7 @@ which_key.setup({
     -- No actual key bindings are created
     presets = {
       -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      operators = false,
+      operators = true,
       motions = true, -- adds help for motions
       text_objects = true, -- help for text objects triggered after entering an operator
       windows = true, -- default bindings on <c-w>
@@ -72,7 +72,7 @@ which_key.setup({
 
 local function make_mapping_opts(mode)
   return {
-    mode = mode, -- NORMAL mode
+    mode = mode,
     prefix = '<leader>',
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
     silent = true, -- use `silent` when creating keymaps
@@ -97,13 +97,23 @@ end
 local function open_git_hosting_web()
   require('gitlinker').get_buf_range_url('n')
 end
-
+local function call_if_test(func)
+  return function()
+    local file = vim.fn.expand('%')
+    if string.find(file, 'spec.') or string.find(file, 'test.') then
+      vim.notify('start test runner for ' .. file)
+      vim.call(func)
+    else
+      vim.notify('this is not a test file')
+    end
+  end
+end
 local vimux_keymap = {
   i = { cmd('VimuxInspectRunner'), 'Inspect runner' },
-  j = { cmd('TestJestJsdom'), 'jest jsdom this file' },
-  J = { cmd('TestJestNode'), 'jest node this file' },
+  j = { call_if_test('TestCurrentFileWithJestJsdom'), 'jest jsdom this file' },
+  J = { call_if_test('TestCurrentFileWithJestNode'), 'jest node this file' },
   l = { cmd('VimuxRunLastCommand'), 'last command' },
-  m = { cmd('TestMocha'), 'mocha this file' },
+  m = { call_if_test('TestCurrentFileWithMocha'), 'mocha this file' },
   p = { cmd('VimuxPromptCommand'), 'prompt command' },
   q = { cmd('VimuxCloseRunner'), 'close runner' },
   x = { cmd('call VimuxZoomRunner()'), 'zoom in' },
