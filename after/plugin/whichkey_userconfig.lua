@@ -337,7 +337,6 @@ local n_keymap = {
   o = openthings_keymap,
   y = yank_keymap,
   t = vimux_keymap,
-  w = { cmd('w!'), 'write' },
 }
 
 which_key.register(n_keymap, make_mapping_opts('n'))

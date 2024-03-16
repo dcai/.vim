@@ -28,6 +28,7 @@ nnoremap H ^
 " nnoremap T :Vexplore<cr>
 nnoremap U :redo<cr>
 " close everything
+nnoremap WW :w!<cr>
 nnoremap XX :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
 nnoremap QQ :qall!<cr>
 nnoremap <silent> j gj
