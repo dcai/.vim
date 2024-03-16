@@ -100,6 +100,7 @@ augroup END
 augroup filetypeGroup
   autocmd!
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
+  autocmd BufRead,BufNewFile *npmrc* setf dosini
 
   " direnv
   autocmd BufRead,BufNewFile *.envrc setf sh
