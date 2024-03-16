@@ -11,6 +11,10 @@ map q: <nop>
 map q\ <nop>
 map q? <nop>
 nmap q: <nop>
+" disable qf and qk so wont trigger recording
+nmap qj <nop>
+nmap qk <nop>
+nmap qq <nop>
 
 " Keep search matches in the middle of the window.
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
@@ -70,84 +74,15 @@ inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 inoremap <C-c> <ESC>
 
-" toggle most recently used file
-" ctrl-6 <c-6> <c-^> doesn't work for some terminals
-nnoremap <silent> <leader>aa :e #<cr>
 " This unsets the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
-
-function TryFileWithExts(filename, exts)
-  for ext in a:exts
-    let l:filepath = a:filename . '.' . ext
-    if filereadable(l:filepath)
-        execute ':e ' . l:filepath
-    endif
-  endfor
-endfunction
-
-function EditMatchingTestFile()
-  let l:filename = expand('%:r')
-  let l:istestfile=l:filename =~ 'test$' || l:filename =~ 'spec$'
-  if l:istestfile
-      let l:parts=split(l:filename, '\.')
-      call TryFileWithExts(join(l:parts[0:-2], '.'), ['js', 'ts', 'jsx', 'tsx'])
-      return
-  endif
-  let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx']
-  call TryFileWithExts(l:filename, l:exts)
-endfunction
-nnoremap <silent> <leader>at :call EditMatchingTestFile()<cr>
-
-" open file in sublime
-" nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
-" function OpenDir()
-"   let d = expand("%:p:h")
-"   silent execute '!open ' . d
-" endfunction
-" nnoremap <leader>od :call OpenDir()<CR>
-
-nnoremap <silent> <leader>ww :w<CR><CR>
-nnoremap <leader>qq :qall<cr>
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
-nnoremap <leader>sp :vs<cr>
-nnoremap <leader>qw :silent wq<cr>
-
-let s:notvscode = !exists('g:vscode')
-let s:notneovim = !has('nvim')
-if s:notvscode && s:notneovim
-  " close everything
-  nnoremap <silent> <leader>xx :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
-
-  nnoremap <leader>re :e $MYVIMRC<cr>
-  nnoremap <leader>rr :source $MYVIMRC<cr>
-  " source current file
-  nnoremap <leader>rf :source %<cr>
-
-  " copy messages to register
-  nnoremap <leader>ym :let @*=execute('messages')<CR>
-  " Convert slashes to backslashes for Windows.
-  if g:osuname ==? 'Windows'
-    nmap <leader>yp :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-    nmap <leader>yf :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-  else
-    " copy fullpath to vim * register
-    nnoremap <leader>yp :let @*=expand("%:p")<CR>
-    " copy file name to vim register
-    nnoremap <leader>yf :let @*=expand("%")<CR>
-  endif
-endif
-
-" Toggle quickfix
-function! ToggleQuickFix()
-  if empty(filter(getwininfo(), 'v:val.quickfix'))
-    copen
-  else
-    cclose
-  endif
-endfunction
-nnoremap <silent> <leader>qf :call ToggleQuickFix()<cr>
+nnoremap <leader>sp :sp<cr>
+" close everything
+nnoremap XX :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
+nnoremap QQ :qall<cr>
 
 " " copied from
 " " https://www.zhihu.com/question/533699196/answer/2503107479

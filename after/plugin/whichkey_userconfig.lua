@@ -2,6 +2,7 @@ local loaded, which_key = pcall(require, 'which-key')
 if not loaded then
   return
 end
+local fzf = require('fzf-lua')
 
 local subl_path =
   '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
@@ -139,6 +140,32 @@ local vimux_keymap = {
   q = { cmd('VimuxCloseRunner'), 'close runner' },
   x = { cmd('call VimuxZoomRunner()'), 'zoom in' },
   z = { cmd('call LastPath()'), 'open last path in runner' },
+  t = {
+    function()
+      vim.call('EditMatchingTestFile')
+    end,
+    'alternate test file',
+  },
+}
+
+local function marlin_marks()
+  local results = require('marlin').get_indexes()
+  local files = {}
+  for _, item in ipairs(results) do
+    table.insert(
+      files,
+      string.format('%s:%d:%d', item.filename, item.row, item.col)
+    )
+  end
+  fzf.fzf_exec(files, { actions = fzf.defaults.actions.files })
+end
+
+local fzf_keymap = {
+  name = 'fzf',
+  ['b'] = { fzf.buffers, 'buffers' },
+  ['c'] = { fzf.colorschemes, 'vim colorschemes' },
+  ['r'] = { fzf.oldfiles, 'recent files' },
+  ['m'] = { marlin_marks, 'marlin files' },
 }
 
 local git_keymap = {
@@ -220,8 +247,81 @@ local openthings_keymap = {
   g = { open_git_hosting_web, 'open file in git web' },
 }
 
+local notes_keymap = {
+  b = { cmd('NoteGitBranch'), 'create new note for current git branch' },
+  c = { cmd('NoteNew'), 'create new note' },
+  g = { cmd('NoteGit'), 'create new note for current git repo' },
+  t = { cmd('NoteToday'), 'create new note for today' },
+  l = {
+    function()
+      require('fzf-lua').files({
+        cwd = vim.g.notes_home,
+      })
+    end,
+    'list all notes',
+  },
+  s = {
+    function()
+      print(vim.g.notes_home)
+      require('fzf-lua').live_grep({
+        cwd = vim.g.notes_home,
+        file_ignore_patterns = {
+          'node_modules',
+          '.png',
+          '.pdf',
+          '.jpg',
+          '.docx',
+          '.pptx',
+        },
+      })
+    end,
+    'list all notes',
+  },
+}
+local vimrc_keymap = {
+  name = 'vimrc',
+  e = {
+    function()
+      fzf.git_files({ cwd = '~/.config/nvim' })
+      -- vim.cmd('e $MYVIMRC')
+    end,
+    'edit root vimrc',
+  },
+  r = {
+    cmd('source $MYVIMRC'),
+    'reload vimrc',
+  },
+  ['%'] = {
+    function()
+      local ft = vim.bo.filetype
+      if ft == 'vim' or ft == 'lua' then
+        vim.cmd('source %')
+        vim.notify('current buffer sourced', vim.log.levels.WARN)
+      else
+        vim.notify('nothing')
+      end
+    end,
+    'reload current buffer',
+  },
+}
+
 local n_keymap = {
-  ['w'] = { cmd('w!'), 'write' },
+  a = { cmd('e #'), 'toggle last used file' },
+  j = {
+    cmd('FzfLua git_files'),
+    'list files in project',
+  },
+  k = {
+    cmd('FzfLua buffers'),
+    'list buffers',
+  },
+  ['.'] = {
+    function()
+      fzf.live_grep({ cwd = project_root(), multiprocess = true })
+    end,
+    'grep current repo',
+  },
+  ['/'] = { fzf.builtin, 'fzf-lua builtin' },
   e = {
     name = 'edit things',
     s = {
@@ -229,74 +329,21 @@ local n_keymap = {
       'edit snippet for current buffer',
     },
   },
-  r = {
-    name = 'vimrc',
-    e = {
-      function()
-        local fzf = require('fzf-lua')
-        fzf.git_files({ cwd = '~/.config/nvim' })
-        -- vim.cmd('e $MYVIMRC')
-      end,
-      'edit root vimrc',
-    },
-    r = {
-      cmd('source $MYVIMRC'),
-      'reload vimrc',
-    },
-    ['%'] = {
-      function()
-        local ft = vim.bo.filetype
-        if ft == 'vim' or ft == 'lua' then
-          vim.cmd('source %')
-          vim.notify('current buffer sourced', vim.log.levels.WARN)
-        else
-          vim.notify('nothing')
-        end
-      end,
-      'reload current buffer',
-    },
-  },
-  n = {
-    b = { cmd('NoteGitBranch'), 'create new note for current git branch' },
-    c = { cmd('NoteNew'), 'create new note' },
-    g = { cmd('NoteGit'), 'create new note for current git repo' },
-    t = { cmd('NoteToday'), 'create new note for today' },
-    l = {
-      function()
-        require('fzf-lua').files({
-          cwd = vim.g.notes_home,
-        })
-      end,
-      'list all notes',
-    },
-    s = {
-      function()
-        print(vim.g.notes_home)
-        require('fzf-lua').live_grep({
-          cwd = vim.g.notes_home,
-          file_ignore_patterns = {
-            'node_modules',
-            '.png',
-            '.pdf',
-            '.jpg',
-            '.docx',
-            '.pptx',
-          },
-        })
-      end,
-      'list all notes',
-    },
-  },
-  o = openthings_keymap,
-  y = yank_keymap,
+  f = fzf_keymap,
   g = git_keymap,
   l = lsp_keymap,
+  r = vimrc_keymap,
+  n = notes_keymap,
+  o = openthings_keymap,
+  y = yank_keymap,
   t = vimux_keymap,
+  w = { cmd('w!'), 'write' },
 }
 
 which_key.register(n_keymap, make_mapping_opts('n'))
 
 local v_keymap = {
+  f = fzf_keymap,
   g = git_keymap,
   l = lsp_keymap,
   o = openthings_keymap,
