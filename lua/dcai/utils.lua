@@ -26,7 +26,7 @@ function f(str)
         end,
       })
       local fn, err =
-          load('return ' .. code, 'expression `' .. code .. '`', 't', exp_env)
+        load('return ' .. code, 'expression `' .. code .. '`', 't', exp_env)
       if fn then
         return tostring(fn())
       else
@@ -248,7 +248,7 @@ end
 ---@return function
 local function colortext(color)
   ---@enum ansi_colors
-  local ansi = {
+  local ansi_colors = {
     reset = string.char(0x001b) .. '[0m',
     red = string.char(0x001b) .. '[31m',
     green = string.char(0x001b) .. '[32m',
@@ -257,7 +257,7 @@ local function colortext(color)
     purple = string.char(0x001b) .. '[35m',
   }
   return function(text)
-    return string.format('%s%s%s', ansi[color], text, ansi.reset)
+    return string.format('%s%s%s', ansi_colors[color], text, ansi_colors.reset)
   end
 end
 
