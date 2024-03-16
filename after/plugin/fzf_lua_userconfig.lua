@@ -103,45 +103,6 @@ fzflua.setup({
   },
 })
 
-local function live_grep()
-  fzflua.live_grep({ cwd = project_root(), multiprocess = true })
-end
-
-local function grep_cword()
+vim.keymap.set('n', 'K', function()
   fzflua.grep_cword({ cwd = project_root() })
-end
-
-local function fzfkm(key, fn, opt)
-  vim.keymap.set(
-    'n',
-    key,
-    fn,
-    vim.tbl_deep_extend('force', { noremap = true, silent = true }, opt or {})
-  )
-end
-
-local fzfbookmarks = function()
-  local results = require('marlin').get_indexes()
-  -- local harpoon = require('harpoon')
-  -- local harpoon_files = harpoon:list()
-  -- local results = harpoon_files.items
-  local files = {}
-  for _, item in ipairs(results) do
-    table.insert(
-      files,
-      string.format('%s:%d:%d', item.filename, item.row, item.col)
-    )
-  end
-  fzflua.fzf_exec(files, { actions = fzflua.defaults.actions.files })
-end
-
-fzfkm('<leader>.', live_grep)
-fzfkm('<leader>/', fzflua.builtin)
-fzfkm('<leader>\\', fzflua.files)
-fzfkm('<leader>bb', fzflua.buffers)
-fzfkm('<leader>fb', fzflua.buffers)
-fzfkm('<leader>fc', fzflua.colorschemes)
-fzfkm('<leader>ff', fzflua.git_files)
-fzfkm('<leader>fm', fzfbookmarks)
-fzfkm('<leader>fr', fzflua.oldfiles)
-fzfkm('K', grep_cword)
+end, { noremap = true, silent = true })

@@ -156,3 +156,33 @@ augroup onEnterBuffer
   autocmd!
   autocmd BufEnter * call ChangeCurrentDirectory()
 augroup END
+
+function TryFileWithExts(filename, exts)
+  for ext in a:exts
+    let l:filepath = a:filename . '.' . ext
+    if filereadable(l:filepath)
+        execute ':e ' . l:filepath
+    endif
+  endfor
+endfunction
+
+function EditMatchingTestFile()
+  let l:filename = expand('%:r')
+  let l:istestfile=l:filename =~ 'test$' || l:filename =~ 'spec$'
+  if l:istestfile
+      let l:parts=split(l:filename, '\.')
+      call TryFileWithExts(join(l:parts[0:-2], '.'), ['js', 'ts', 'jsx', 'tsx'])
+      return
+  endif
+  let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx']
+  call TryFileWithExts(l:filename, l:exts)
+endfunction
+
+" Toggle quickfix
+function! ToggleQuickFix()
+  if empty(filter(getwininfo(), 'v:val.quickfix'))
+    copen
+  else
+    cclose
+  endif
+endfunction
