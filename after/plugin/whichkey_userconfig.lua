@@ -208,7 +208,7 @@ local lsp_keymap = {
   f = { vim.lsp.buf.format, 'format code' },
   I = { cmd('LspInfo'), 'lsp info' },
   r = { vim.lsp.buf.rename, 'rename' },
-  q = { require('fzf-lua').quickfix, 'linting' },
+  q = { fzf.quickfix, 'linting' },
 }
 
 local yank_keymap = {
@@ -254,7 +254,7 @@ local notes_keymap = {
   t = { cmd('NoteToday'), 'create new note for today' },
   l = {
     function()
-      require('fzf-lua').files({
+      fzf.files({
         cwd = vim.g.notes_home,
       })
     end,
@@ -263,7 +263,7 @@ local notes_keymap = {
   s = {
     function()
       print(vim.g.notes_home)
-      require('fzf-lua').live_grep({
+      fzf.live_grep({
         cwd = vim.g.notes_home,
         file_ignore_patterns = {
           'node_modules',
