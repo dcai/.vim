@@ -15,9 +15,12 @@ mason.setup({
 local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
   ensure_installed = {
+    'gopls',
+    'bashls',
     'lua_ls',
     'pyright',
     'tsserver',
+    'vimls',
   },
   automatic_installation = true,
 })
@@ -62,6 +65,8 @@ nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
   require('cmp_nvim_lsp').default_capabilities() -- must use require here
 )
 nvim_lspconfig.vimls.setup({})
+nvim_lspconfig.gopls.setup({})
+nvim_lspconfig.bashls.setup({})
 nvim_lspconfig.tsserver.setup({
   filetypes = {
     'javascript',

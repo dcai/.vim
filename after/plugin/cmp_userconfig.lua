@@ -31,7 +31,6 @@ end
 local prioritizeSource = function(source)
   return function(entry1, entry2)
     -- print(vim.inspect(entry1))
-    -- writefile('/tmp/nvim.log', vim.inspect(entry1))
     if entry1[source] and not entry2[source] then
       return true
     elseif entry2[source] and not entry1[source] then
@@ -40,22 +39,20 @@ local prioritizeSource = function(source)
   end
 end
 
+local compare = cmp.config.compare
+
 cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      -- prioritizeSource('copilot'),
-      -- Below is the default comparitor list and order for nvim-cmp
-      cmp.config.compare.offset,
-      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.locality,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
+      compare.score,
+      compare.offset,
+      compare.exact,
+      compare.recently_used,
+      compare.kind,
+      compare.sort_text,
+      compare.length,
+      compare.order,
     },
   },
   snippet = {
@@ -147,7 +144,7 @@ cmp.setup({
   sources = cmp.config.sources({
     -- { name = 'codeium' },
     -- { name = 'copilot' },
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', priority = 99 },
     { name = 'ultisnips' },
     -- { name = 'luasnip' },
     { name = 'buffer' },
@@ -159,6 +156,7 @@ cmp.setup({
     },
     {
       name = 'tmux',
+      priority = 1,
       keyword_length = 3,
       option = {
         -- Source from all panes in session instead of adjacent panes
