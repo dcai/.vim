@@ -22,7 +22,6 @@ set suffixesadd=.js,.jsx,.ts,.tsx
 " https://til.hashrocket.com/posts/t8osyzywau-treat-words-with-dash-as-a-word-in-vim
 set iskeyword+=-
 
-" Encoding and Decoding
 set fileformats=unix,dos
 set fileencodings=utf-8,gbk,big5,latin1
 set encoding=utf-8
@@ -40,18 +39,17 @@ if has('multi_byte')
   endif
 endif
 
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
-      \.bbl,.blg,.brf,.cb,.ind,.idx,
-      \.ilg,.inx,.out,.toc,.class,.pyc
+set suffixes=.bak,~,.swp,.o,.aux,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,
+      \.ilg,.inx,.toc,.class,.pyc
 
 set synmaxcol=300
 set updatetime=100
-if &history < 1000
-  set history=1000
+if &history < 9000
+  set history=9000
 endif
 set autoread
 set mouse=a
-set mousescroll=ver:25,hor:2
+set mousescroll=ver:15,hor:2
 set scrolloff=10
 set noerrorbells
 set visualbell
@@ -106,7 +104,6 @@ set wrap
 set formatoptions=cqt
 set wrapmargin=0
 set linebreak
-
 set showmode
 " disable colorcolumn
 set colorcolumn=
@@ -114,14 +111,6 @@ set colorcolumn=
 set splitbelow
 " splitting new window right of the current one
 set splitright
-
-function! SoftWrap()
-  let s:old_tw = &textwidth
-  set textwidth=999999
-  normal gggqG
-  let &textwidth = s:old_tw
-endfunction
-
 set nofoldenable
 " zR: unfold all
 " zA: fold all
@@ -133,6 +122,12 @@ else
   set clipboard=unnamed
 endif
 
+function! SoftWrap()
+  let s:old_tw = &textwidth
+  set textwidth=999999
+  normal gggqG
+  let &textwidth = s:old_tw
+endfunction
 
 function! TrimWhiteSpace()
   %s/\s\+$//e
