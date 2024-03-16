@@ -76,6 +76,9 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ AI
   """"""""""""""""""""""""""""""""""""""""""
+  "" this is for inline code suggestions
+  Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
+  "" this is nvim plugin for cmp
   Plug 'Exafunction/codeium.nvim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
   " Plug 'zbirenbaum/copilot.lua', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'master'})
   " Plug 'github/copilot.vim', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'release'})
