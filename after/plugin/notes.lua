@@ -1,4 +1,4 @@
-vim.g.notes_home = '~/Library/CloudStorage/Dropbox/Documents/txt'
+vim.g.notes_home = '$HOME/Library/CloudStorage/Dropbox/Documents/txt'
 local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
 
 local note_today = function()
