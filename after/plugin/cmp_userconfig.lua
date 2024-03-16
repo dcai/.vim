@@ -30,7 +30,6 @@ end
 
 local prioritizeSource = function(source)
   return function(entry1, entry2)
-    -- print(vim.inspect(entry1))
     if entry1[source] and not entry2[source] then
       return true
     elseif entry2[source] and not entry1[source] then
@@ -45,10 +44,11 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      compare.score,
       compare.offset,
       compare.exact,
+      compare.score,
       compare.recently_used,
+      compare.locality,
       compare.kind,
       compare.sort_text,
       compare.length,
@@ -122,17 +122,17 @@ cmp.setup({
     fields = { 'menu', 'abbr', 'kind' },
     format = function(entry, item)
       local menu_icon = {
+        -- luasnip = 'ι',
         -- nvim_lsp = 'Ƒ',
         -- ultisnips = 'λ',
         -- tmux = 'Ω',
         -- path = '⋗',
-        nvim_lsp = 'λ',
-        ultisnips = 'φ',
-        -- luasnip = 'ι',
+        nvim_lsp = 'lsp',
+        ultisnips = 'snip',
         tmux = 'tmux',
         path = 'PATH',
         -- copilot = 'Copilot',
-        -- codeium = 'Codeium',
+        codeium = 'Codeium',
       }
 
       if menu_icon[entry.source.name] then
@@ -142,10 +142,10 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
-    -- { name = 'codeium' },
+    { name = 'codeium', group_index = 1 },
     -- { name = 'copilot' },
-    { name = 'nvim_lsp', priority = 99 },
-    { name = 'ultisnips' },
+    { name = 'nvim_lsp', group_index = 3 },
+    { name = 'ultisnips', group_index = 5 },
     -- { name = 'luasnip' },
     { name = 'buffer' },
     {
@@ -156,20 +156,19 @@ cmp.setup({
     },
     {
       name = 'tmux',
-      priority = 1,
-      keyword_length = 3,
+      -- priority = 1,
+      group_index = 10,
       option = {
         -- Source from all panes in session instead of adjacent panes
-        all_panes = true,
+        all_panes = false,
+        -- trigger_characters = { '.' },
+        -- keyword_pattern = [[\w\+]],
+        keyword_pattern = [[[\w\-]+]],
         -- Completion popup label
         label = '[tmux]',
-        -- Trigger character
-        trigger_characters = { '.' },
         -- Specify trigger characters for filetype(s)
         -- { filetype = { '.' } }
         trigger_characters_ft = {},
-        -- Keyword patch mattern
-        keyword_pattern = [[[\w\-]+]],
         -- Capture full pane history
         -- `false`: show completion suggestion from text in the visible pane (default)
         -- `true`: show completion suggestion from text starting from the beginning of the pane history.
