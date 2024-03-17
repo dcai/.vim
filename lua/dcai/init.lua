@@ -23,19 +23,18 @@ setup_colorscheme()
 
 ---load all files under a given folder
 ---@param dir string
-local function require_dir(dir)
-  local config_dir = vim.fn.stdpath('config')
-  local modfolder = string.format('%s/lua/%s', config_dir, dir)
-  local globpath = string.format('%s/*.lua', modfolder)
-  local filepaths = vim.fn.split(vim.fn.glob(globpath), '\n')
-  local modnames = vim.tbl_map(function(filepath)
-    local filename = string.gsub(filepath, modfolder .. '/', '')
-    return string.match(filename, '(.+).lua$')
-  end, filepaths)
-  for _, submod in ipairs(modnames) do
-    local mod = string.format('%s.%s', string.gsub(dir, '/', '.'), submod)
-    package.loaded[mod] = nil
-    require(mod)
-  end
-end
-require_dir('dcai/after')
+-- local function require_dir(dir)
+--   local config_dir = vim.fn.stdpath('config')
+--   local modfolder = string.format('%s/lua/%s', config_dir, dir)
+--   local globpath = string.format('%s/*.lua', modfolder)
+--   local filepaths = vim.fn.split(vim.fn.glob(globpath), '\n')
+--   local modnames = vim.tbl_map(function(filepath)
+--     local filename = string.gsub(filepath, modfolder .. '/', '')
+--     return string.match(filename, '(.+).lua$')
+--   end, filepaths)
+--   for _, submod in ipairs(modnames) do
+--     local mod = string.format('%s.%s', string.gsub(dir, '/', '.'), submod)
+--     package.loaded[mod] = nil
+--     require(mod)
+--   end
+-- end
