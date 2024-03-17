@@ -1,6 +1,16 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
+function P(val)
+  print(vim.inspect(val))
+  return val
+end
+
+function R(module)
+  package.loaded[module] = nil
+  return require(module)
+end
+
 -- credit: https://hisham.hm/2016/01/04/string-interpolation-in-lua/
 function f(str)
   local outer_env = _ENV
