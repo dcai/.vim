@@ -15,7 +15,7 @@ else
   " copy file name to vim register
   nnoremap <leader>yf :let @*=expand("%")<CR>
 endif
-open file in sublime
+" open file in sublime
 nnoremap <leader>of :Dispatch! /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl %<CR>
 function OpenDir()
   let d = expand("%:p:h")

@@ -18,10 +18,6 @@ endif
 let s:name='oasis'
 let g:colors_name=s:name
 
-" https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-match ExtraWhitespace /\s\+$/
-highlight ExtraWhitespace ctermbg=red guibg=red
-
 """""""""""""""""""""""""""""""""""""
 " color reference:
 "   - https://jonasjacek.github.io/colors/

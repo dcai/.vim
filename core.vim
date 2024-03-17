@@ -49,7 +49,6 @@ if &history < 9000
 endif
 set autoread
 set mouse=a
-set mousescroll=ver:15,hor:2
 set scrolloff=10
 set noerrorbells
 set visualbell
@@ -118,6 +117,7 @@ set foldmethod=marker
 
 if has('nvim')
   set clipboard+=unnamedplus
+  set mousescroll=ver:15,hor:2
 else
   set clipboard=unnamed
 endif
