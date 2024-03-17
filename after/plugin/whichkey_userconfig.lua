@@ -298,7 +298,6 @@ local vimrc_keymap = {
   R = {
     function()
       cmd('source $MYVIMRC')
-      R('dcai')
       vim.notify('loaded vimrc and lua configs!', vim.log.levels.WARN)
     end,
     'reload vimrc and lua configs',
