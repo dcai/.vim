@@ -350,6 +350,10 @@ local editing_keymap = {
     cmd('UltiSnipsEdit'),
     'edit snippet for current buffer',
   },
+  X = {
+    marlin.remove_all,
+    '',
+  },
 }
 
 local live_grep = function()
