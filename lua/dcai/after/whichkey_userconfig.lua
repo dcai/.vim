@@ -213,6 +213,13 @@ local lsp_keymap = {
 
 local yank_keymap = {
   name = 'yank things',
+  l = {
+    function()
+      local loaded_packages = vim.tbl_keys(package.loaded)
+      vim.fn.setreg('*', vim.inspect(loaded_packages))
+    end,
+    'yank loaded package names',
+  },
   p = {
     cmd('let @*=expand("%:p")', 'file path yanked'),
     'yank file full path',
@@ -287,11 +294,15 @@ local vimrc_keymap = {
     end,
     'edit root vimrc',
   },
-  r = {
-    cmd('source $MYVIMRC'),
-    'reload vimrc',
+  R = {
+    function()
+      cmd('source $MYVIMRC')
+      R('dcai')
+      vim.notify('loaded vimrc and lua configs!', vim.log.levels.WARN)
+    end,
+    'reload vimrc and lua configs',
   },
-  ['%'] = {
+  r = {
     function()
       local ft = vim.bo.filetype
       if ft == 'vim' or ft == 'lua' then

@@ -1,5 +1,7 @@
 std = 'max'
 globals = {
+  'R',
+  'P',
   'setup_colorscheme',
   'file_exists',
   'find_executable',
