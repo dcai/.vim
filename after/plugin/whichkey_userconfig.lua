@@ -56,7 +56,7 @@ which_key.setup({
     winblend = 0,
   },
   layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
+    height = { min = 5, max = 25 }, -- min and max height of the columns
     width = { min = 20, max = 50 }, -- min and max width of the columns
     spacing = 3, -- spacing between columns
     align = 'left', -- align columns left, center or right
@@ -85,7 +85,8 @@ local function make_mapping_opts(mode)
     buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
     silent = true, -- use `silent` when creating keymaps
     noremap = true, -- use `noremap` when creating keymaps
-    nowait = true, -- use `nowait` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+    expr = false,
   }
 end
 
@@ -132,6 +133,7 @@ local function call_if_test(func)
 end
 
 local vimux_keymap = {
+  name = 'vimux',
   i = { cmd('VimuxInspectRunner'), 'inspect runner' },
   j = { call_if_test('TestCurrentFileWithJestJsdom'), 'jest jsdom this file' },
   J = { call_if_test('TestCurrentFileWithJestNode'), 'jest node this file' },
@@ -256,6 +258,7 @@ local openthings_keymap = {
 }
 
 local notes_keymap = {
+  name = 'notes',
   b = { cmd('NoteGitBranch'), 'create new note for current git branch' },
   c = { cmd('NoteNew'), 'create new note' },
   g = { cmd('NoteGit'), 'create new note for current git repo' },
@@ -316,43 +319,52 @@ local vimrc_keymap = {
   },
 }
 
-local n_keymap = {
-  a = { cmd('e #'), 'toggle last used file' },
-  j = {
-    cmd('FzfLua git_files'),
-    'list files in project',
-  },
-  k = {
-    cmd('FzfLua buffers'),
-    'list buffers',
-  },
-  ['.'] = {
-    function()
-      fzf.live_grep({ cwd = project_root(), multiprocess = true })
-    end,
-    'grep current repo',
-  },
-  ['/'] = { fzf.builtin, 'fzf-lua builtin' },
+local chatgpt_keymap_n = {
+  name = 'chatgpt',
+  n = { cmd('GpChatNew'), 'new Chat' },
+  c = { cmd('GpChatToggle'), 'toggle Chat' },
+  d = { cmd('GpChatDelete'), 'delete chat' },
+  f = { cmd('GpChatFinder'), 'chat Finder' },
+}
+
+local editthings_keymap = {
+  name = 'edit things',
   e = {
-    name = 'edit things',
-    s = {
-      cmd('UltiSnipsEdit'),
-      'edit snippet for current buffer',
-    },
+    cmd('e ~/.config/nvim/after/plugin/whichkey_userconfig.lua'),
+    'vim config file',
   },
+  s = {
+    cmd('UltiSnipsEdit'),
+    'edit snippet for current buffer',
+  },
+}
+
+local live_grep = function()
+  fzf.live_grep({ cwd = project_root() })
+end
+
+local n_keymap = {
+  ['.'] = { live_grep, 'grep current repo' },
+  ['/'] = { fzf.builtin, 'fzf-lua builtin' },
+  a = { cmd('e #'), 'toggle last used file' },
+  c = chatgpt_keymap_n,
+  e = editthings_keymap,
   f = fzf_keymap,
   g = git_keymap,
+  j = { cmd('FzfLua git_files'), 'list files in project' },
+  k = { cmd('FzfLua buffers'), 'list buffers' },
   l = lsp_keymap,
-  r = vimrc_keymap,
   n = notes_keymap,
   o = openthings_keymap,
-  y = yank_keymap,
+  r = vimrc_keymap,
   t = vimux_keymap,
+  y = yank_keymap,
 }
 
 which_key.register(n_keymap, make_mapping_opts('n'))
 
 local v_keymap = {
+  c = chatgpt_keymap_n,
   f = fzf_keymap,
   g = git_keymap,
   l = lsp_keymap,
