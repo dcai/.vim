@@ -122,6 +122,9 @@ else
   set clipboard=unnamed
 endif
 
+set list listchars=tab:»\ ,trail:￮,precedes:←,extends:→,nbsp:⏑
+set showbreak=↪\
+
 function! SoftWrap()
   let s:old_tw = &textwidth
   set textwidth=999999
