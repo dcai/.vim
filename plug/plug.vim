@@ -168,6 +168,10 @@ let g:bufferize_focus_output = 1
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rose-pine/neovim'
+Plug 'sainnhe/everforest'
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'medium'
+let g:everforest_better_performance = 1
 
 " not for nvim
 if s:oldvim
