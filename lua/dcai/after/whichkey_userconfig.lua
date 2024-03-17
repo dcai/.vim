@@ -1,5 +1,6 @@
 local loaded, which_key = pcall(require, 'which-key')
 if not loaded then
+  print('which-key not loaded')
   return
 end
 local fzf = require('fzf-lua')

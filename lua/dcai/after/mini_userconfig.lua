@@ -1,5 +1,6 @@
 local loaded, mini_surround = pcall(require, 'mini.surround')
 if not loaded then
+  print('mini.surround not loaded')
   return
 end
 
