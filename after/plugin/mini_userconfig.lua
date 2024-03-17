@@ -14,16 +14,17 @@ mini_surround.setup({
 
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
-    add = 'as', -- Add surrounding in Normal and Visual modes
-    delete = 'ds', -- Delete surrounding
-    find = 'fs', -- Find surrounding (to the right)
-    find_left = 'sF', -- Find surrounding (to the left)
-    highlight = 'sh', -- Highlight surrounding
     replace = 'cs', -- Replace surrounding
-    update_n_lines = 'sn', -- Update `n_lines`
+    delete = 'ds', -- Delete surrounding
+    add = 'ys', -- Add surrounding in Normal and Visual modes
 
-    suffix_last = 'l', -- Suffix to search with "prev" method
-    suffix_next = 'n', -- Suffix to search with "next" method
+    find = '', -- Find surrounding (to the right)
+    find_left = '', -- Find surrounding (to the left)
+    highlight = '', -- Highlight surrounding
+    update_n_lines = '', -- Update `n_lines`
+
+    suffix_last = '', -- Suffix to search with "prev" method
+    suffix_next = '', -- Suffix to search with "next" method
   },
 
   -- Number of lines within which surrounding is searched
