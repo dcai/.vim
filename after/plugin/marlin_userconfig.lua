@@ -24,5 +24,5 @@ end, { desc = 'remove file' })
 for index = 1, 4 do
   keymap('n', '<Leader>' .. index, function()
     marlin.open(index)
-  end, { desc = 'goto ' .. index })
+  end, { desc = 'marlin ' .. index })
 end
