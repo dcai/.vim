@@ -10,6 +10,7 @@ marlin.setup({
     missing_root = false,
   },
 })
+
 local keymap = vim.keymap.set
 keymap('n', '<Leader>fa', function()
   marlin.add()

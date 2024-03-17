@@ -326,9 +326,22 @@ local chatgpt_keymap_n = {
   d = { cmd('GpChatDelete'), 'delete chat' },
   f = { cmd('GpChatFinder'), 'chat Finder' },
 }
+local marlin = require('marlin')
 
-local editthings_keymap = {
+local editing_keymap = {
   name = 'edit things',
+  a = {
+    marlin.add,
+    'add file to marlin collection',
+  },
+  D = {
+    marlin.remove,
+    'remove file from marlin collection',
+  },
+  l = {
+    marlin_marks,
+    'list marlin collection',
+  },
   e = {
     cmd('e ~/.config/nvim/after/plugin/whichkey_userconfig.lua'),
     'vim config file',
@@ -348,7 +361,7 @@ local n_keymap = {
   ['/'] = { fzf.builtin, 'fzf-lua builtin' },
   a = { cmd('e #'), 'toggle last used file' },
   c = chatgpt_keymap_n,
-  e = editthings_keymap,
+  e = editing_keymap,
   f = fzf_keymap,
   g = git_keymap,
   j = { cmd('FzfLua git_files'), 'list files in project' },
