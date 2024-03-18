@@ -3,8 +3,8 @@ if lspsaga_loaded then
   lspsaga.setup({
     ui = {
       border = 'rounded',
-      devicon = true,
-      foldericon = true,
+      devicon = false,
+      foldericon = false,
       title = true,
       expand = '⊞',
       collapse = '⊟',
