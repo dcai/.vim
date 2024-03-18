@@ -169,8 +169,9 @@ local fzf_keymap = {
   name = 'fzf',
   ['b'] = { fzf.buffers, 'buffers' },
   ['c'] = { fzf.colorschemes, 'colorschemes' },
-  ['r'] = { fzf.oldfiles, 'recent files' },
+  ['f'] = { fzf.git_files, 'project files' },
   ['m'] = { marlin_marks, 'marlin files' },
+  ['r'] = { fzf.oldfiles, 'recent files' },
 }
 
 local git_keymap = {
