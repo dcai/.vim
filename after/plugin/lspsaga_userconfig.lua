@@ -8,7 +8,7 @@ if lspsaga_loaded then
       title = true,
       expand = '⊞',
       collapse = '⊟',
-      code_action = '💡',
+      code_action = ' ',
       actionfix = ' ',
       lines = { '┗', '┣', '┃', '━', '┏' },
       kind = nil,
