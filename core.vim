@@ -159,7 +159,7 @@ function TryFileWithExts(filename, exts)
   for ext in a:exts
     let l:filepath = a:filename . '.' . ext
     if filereadable(l:filepath)
-        execute ':e ' . l:filepath
+      execute ':e ' . l:filepath
     endif
   endfor
 endfunction
@@ -168,9 +168,9 @@ function EditMatchingTestFile()
   let l:filename = expand('%:r')
   let l:istestfile=l:filename =~ 'test$' || l:filename =~ 'spec$'
   if l:istestfile
-      let l:parts=split(l:filename, '\.')
-      call TryFileWithExts(join(l:parts[0:-2], '.'), ['js', 'ts', 'jsx', 'tsx'])
-      return
+    let l:parts=split(l:filename, '\.')
+    call TryFileWithExts(join(l:parts[0:-2], '.'), ['js', 'ts', 'jsx', 'tsx'])
+    return
   endif
   let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx']
   call TryFileWithExts(l:filename, l:exts)
