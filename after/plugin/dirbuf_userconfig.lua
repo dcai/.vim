@@ -1,5 +1,6 @@
 local loaded, dirbuf = pcall(require, 'dirbuf')
 if not loaded then
+  print('dirbuf not loaded!')
   return
 end
 

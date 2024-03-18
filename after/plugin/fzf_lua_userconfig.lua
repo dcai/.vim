@@ -1,5 +1,6 @@
 local loaded, fzflua = pcall(require, 'fzf-lua')
 if not loaded then
+  print('fzf-lua not loaded!')
   return
 end
 

@@ -1,6 +1,6 @@
 local loaded, gitsigns = pcall(require, 'gitsigns')
-
 if not loaded then
+  print('gitsigns not found!')
   return
 end
 
