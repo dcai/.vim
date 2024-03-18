@@ -1,5 +1,6 @@
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
+  print('gp plugin not found!')
   return
 end
 

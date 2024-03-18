@@ -1,5 +1,6 @@
 local loaded, marlin = pcall(require, 'marlin')
 if not loaded then
+  print('marlin not loaded!')
   return
 end
 

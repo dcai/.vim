@@ -1,5 +1,6 @@
 local loaded, autosave = pcall(require, 'auto-save')
 if not loaded then
+  print('pocco81/auto-save.nvim not loaded!')
   return
 end
 -- https://github.com/pocco81/auto-save.nvim

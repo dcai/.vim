@@ -1,6 +1,6 @@
 local loaded, gitlinker = pcall(require, 'gitlinker')
-
 if not loaded then
+  print('gitlinker not found!')
   return
 end
 
