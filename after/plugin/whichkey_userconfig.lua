@@ -152,7 +152,9 @@ local vimux_keymap = {
 }
 
 local function marlin_marks()
-  local results = require('marlin').get_indexes()
+  local marlin = require('marlin')
+  marlin.load_project_files()
+  local results = marlin.get_indexes()
   local files = {}
   for _, item in ipairs(results) do
     table.insert(
