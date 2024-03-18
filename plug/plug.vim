@@ -51,7 +51,7 @@ if has('nvim')
   Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
   Plug 'folke/tokyonight.nvim'
-  Plug 'Robitx/gp.nvim'
+  Plug 'Robitx/gp.nvim' , Cond(!IsEnvVarSet('NO_GPNVIM'), {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
   """"""""""""""""""""""""""""""""""""""""""

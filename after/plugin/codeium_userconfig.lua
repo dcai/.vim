@@ -1,6 +1,7 @@
 local loaded, codeium = pcall(require, 'codeium')
 if not loaded then
   print('Codeium not loaded!')
+  return
 end
 -- for Exafunction/codeium.vim
 vim.cmd([[
