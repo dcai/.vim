@@ -36,14 +36,15 @@ let g:ale_javascript_prettier_use_global = 0
 
 " Ale linters settings
 let g:ale_linters = {
-  \ 'php': [],
-  \ 'graphql': [],
-  \ 'markdown': ['cspell'],
   \ 'c': ['clangd', 'ccls'],
+  \ 'go': ['gopls'],
+  \ 'graphql': [],
   \ 'javascript': ['eslint', 'tsserver'],
   \ 'javascriptreact': ['eslint', 'tsserver'],
   \ 'json': [],
   \ 'lua': ['luac', 'luacheck'],
+  \ 'markdown': ['cspell'],
+  \ 'php': [],
   \ 'python': ['flake8'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': ['eslint', 'tsserver'],
@@ -57,7 +58,7 @@ let g:ale_fixers = {
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'fish': ['fish_indent'],
-  \ 'go': ['gofmt'],
+  \ 'go': ['gopls'],
   \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
@@ -74,9 +75,9 @@ let g:ale_fixers = {
   \ 'terraform': ['terraform'],
   \ 'typescript': ['prettier'],
   \ 'typescriptreact': ['prettier'],
-  \ 'yaml': ['prettier'],
   \ 'vue': ['prettier'],
   \ 'xml': ['xmllint'],
+  \ 'yaml': ['prettier'],
 \}
 
 nnoremap <leader>, :ALEFix<cr>
