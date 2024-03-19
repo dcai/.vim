@@ -74,27 +74,41 @@ local organize_imports = {
   end,
 }
 
+local function map(mode, buffer)
+  local opts = { noremap = true, silent = true, buffer = buffer }
+  return function(lhs, rhs, desc)
+    if desc then
+      opts.desc = desc
+    end
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+
 local function common_on_attach(client, buffer)
   vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
   vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
-  local function map(mode, lhs, rhs, desc)
-    local opts = { noremap = true, silent = true, buffer = buffer, desc = desc }
-    vim.keymap.set(mode, lhs, rhs, opts)
+  local nmap = map('n', buffer)
+  local xmap = map('x', buffer)
+  nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
+  if vim.lsp.buf.range_code_action then
+    xmap('gA', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', 'Code action')
+  else
+    xmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   end
-  map('n', 'D', vim.lsp.buf.hover, 'hover doc')
-  map('n', 'R', vim.lsp.buf.rename, 'rename variable')
-  map('n', 'gd', vim.lsp.buf.definition, 'go to definition')
-  map('n', 'gr', vim.lsp.buf.references, 'go to references')
-  map('n', 'OI', function()
+  nmap('D', vim.lsp.buf.hover, 'hover doc')
+  nmap('R', vim.lsp.buf.rename, 'rename variable')
+  nmap('gd', vim.lsp.buf.definition, 'go to definition')
+  nmap('gr', vim.lsp.buf.references, 'go to references')
+  nmap('OI', function()
     if organize_imports[client.name] then
       organize_imports[client.name](client, buffer)
     else
       print('No organize imports for ' .. client.name)
     end
   end, 'Organize Imports')
-  -- map('n', 'gD', vim.lsp.buf.declaration, '')
-  -- map('n', 'gi', vim.lsp.buf.implementation, '')
-  -- map('n', 'go', vim.lsp.buf.type_definition, '')
+  -- nmap('gD', vim.lsp.buf.declaration, '')
+  -- nmap('gi', vim.lsp.buf.implementation, '')
+  -- nmap('go', vim.lsp.buf.type_definition, '')
 end
 
 nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
