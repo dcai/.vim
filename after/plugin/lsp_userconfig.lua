@@ -37,16 +37,46 @@ end
 
 local root_pattern = nvim_lspconfig.util.root_pattern
 
-local function organize_imports()
-  vim.lsp.buf.execute_command({
-    command = '_typescript.organizeImports',
-    arguments = { vim.api.nvim_buf_get_name(0) },
-    title = '',
-  })
-end
+local timeout_ms = 3000
+local organize_imports = {
+  tsserver = function(_client, buffer)
+    buffer = buffer or vim.api.nvim_get_current_buf()
+    local params = {
+      command = '_typescript.organizeImports',
+      arguments = { vim.api.nvim_buf_get_name(buffer) },
+      title = 'Organize Imports',
+    }
+    vim.lsp.buf_request_sync(
+      buffer,
+      'workspace/executeCommand',
+      params,
+      timeout_ms
+    )
+  end,
+  gopls = function(client, buffer)
+    local params = vim.lsp.util.make_range_params()
+    params.context = { only = { 'source.organizeImports' } }
+    local result = vim.lsp.buf_request_sync(
+      buffer,
+      'textDocument/codeAction',
+      params,
+      timeout_ms
+    )
+    for _, res in pairs(result or {}) do
+      for _, r in pairs(res.result or {}) do
+        if r.edit then
+          vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+        else
+          vim.lsp.buf.execute_command(r.command)
+        end
+      end
+    end
+  end,
+}
 
-local common_on_attach = function(_client, buffer)
+local function common_on_attach(client, buffer)
   vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
+  vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
   local function map(mode, lhs, rhs, desc)
     local opts = { noremap = true, silent = true, buffer = buffer, desc = desc }
     vim.keymap.set(mode, lhs, rhs, opts)
@@ -55,6 +85,13 @@ local common_on_attach = function(_client, buffer)
   map('n', 'R', vim.lsp.buf.rename, 'rename variable')
   map('n', 'gd', vim.lsp.buf.definition, 'go to definition')
   map('n', 'gr', vim.lsp.buf.references, 'go to references')
+  map('n', 'OI', function()
+    if organize_imports[client.name] then
+      organize_imports[client.name](client, buffer)
+    else
+      print('No organize imports for ' .. client.name)
+    end
+  end, 'Organize Imports')
   -- map('n', 'gD', vim.lsp.buf.declaration, '')
   -- map('n', 'gi', vim.lsp.buf.implementation, '')
   -- map('n', 'go', vim.lsp.buf.type_definition, '')
@@ -65,9 +102,15 @@ nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
   nvim_lspconfig.util.default_config.capabilities,
   require('cmp_nvim_lsp').default_capabilities() -- must use require here
 )
-nvim_lspconfig.vimls.setup({})
-nvim_lspconfig.gopls.setup({})
-nvim_lspconfig.bashls.setup({})
+nvim_lspconfig.vimls.setup({
+  on_attach = common_on_attach,
+})
+nvim_lspconfig.gopls.setup({
+  on_attach = common_on_attach,
+})
+nvim_lspconfig.bashls.setup({
+  on_attach = common_on_attach,
+})
 nvim_lspconfig.tsserver.setup({
   filetypes = {
     'javascript',
@@ -86,7 +129,13 @@ nvim_lspconfig.tsserver.setup({
   cmd = { 'typescript-language-server', '--stdio' },
   commands = {
     OrganizeImports = {
-      organize_imports,
+      function()
+        vim.lsp.buf.execute_command({
+          command = '_typescript.organizeImports',
+          arguments = { vim.api.nvim_buf_get_name(0) },
+          title = '',
+        })
+      end,
       description = 'Organize Imports',
     },
   },
