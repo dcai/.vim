@@ -58,7 +58,7 @@ let g:ale_fixers = {
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'fish': ['fish_indent'],
-  \ 'go': ['gopls'],
+  \ 'go': ['goimports'],
   \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
   \ 'javascript': ['prettier'],
