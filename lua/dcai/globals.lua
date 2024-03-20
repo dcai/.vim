@@ -7,7 +7,8 @@ function P(val)
 end
 
 function R(module)
-  package.loaded[module] = nil
+  require('plenary.reload').reload_module(module)
+  -- package.loaded[module] = nil
   return require(module)
 end
 

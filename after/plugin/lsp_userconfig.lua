@@ -163,6 +163,26 @@ nvim_lspconfig.pyright.setup({
   on_attach = common_on_attach,
 })
 
+local lua_runtime_path = vim.split(package.path, ';')
+table.insert(lua_runtime_path, 'lua/?.lua')
+table.insert(lua_runtime_path, 'lua/?/init.lua')
+
+local function plugin_path(plugin_name)
+  return string.format('%s/plug/%s/lua', vim.fn.stdpath('data'), plugin_name)
+end
+
+local workspace_libs = {
+  checkThirdParty = false,
+  library = vim.api.nvim_get_runtime_file('', true),
+  -- library = {
+  --   vim.fn.expand('$VIMRUNTIME/lua'),
+  --   vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+  --   vim.fn.stdpath('config') .. '/lua',
+  --   plugin_path('fzf-lua'),
+  --   plugin_path('plenary.nvim'),
+  -- },
+}
+
 nvim_lspconfig.lua_ls.setup({
   single_file_support = true,
   flags = {
@@ -170,17 +190,15 @@ nvim_lspconfig.lua_ls.setup({
   },
   settings = {
     Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        path = lua_runtime_path,
+      },
+      telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim' },
       },
-      workspace = {
-        -- library = vim.api.nvim_get_runtime_file('', true),
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
-        checkThirdParty = false,
-      },
+      workspace = workspace_libs,
     },
   },
   on_attach = common_on_attach,
