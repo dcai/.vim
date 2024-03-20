@@ -170,6 +170,7 @@ local fzf_keymap = {
   ['b'] = { fzf.buffers, 'buffers' },
   ['c'] = { fzf.colorschemes, 'colorschemes' },
   ['f'] = { fzf.git_files, 'project files' },
+  ['g'] = { fzf.buffers, 'buffers' },
   ['m'] = { marlin_marks, 'marlin files' },
   ['r'] = { fzf.oldfiles, 'recent files' },
 }
@@ -331,6 +332,7 @@ local chatgpt_keymap_n = {
 }
 local marlin = require('marlin')
 
+local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
 local editing_keymap = {
   name = 'edit things',
   a = {
@@ -341,17 +343,29 @@ local editing_keymap = {
     marlin.remove,
     'remove file from marlin collection',
   },
+  e = {
+    function()
+      local f = vim.fn.expand('#')
+      if f == '' then
+        -- vim.notify('No file to alternate', vim.log.levels.WARN)
+        vim.cmd('e ' .. vimrc_to_edit)
+      else
+        vim.cmd('e #')
+      end
+    end,
+    'toggle last used file',
+  },
   l = {
     marlin_marks,
     'list marlin collection',
   },
-  e = {
-    cmd('e ~/.config/nvim/after/plugin/whichkey_userconfig.lua'),
-    'vim config file',
-  },
   s = {
     cmd('UltiSnipsEdit'),
     'edit snippet for current buffer',
+  },
+  v = {
+    cmd('e ' .. vimrc_to_edit),
+    'edit vimrc',
   },
   X = {
     marlin.remove_all,
@@ -366,16 +380,6 @@ end
 local n_keymap = {
   ['.'] = { live_grep, 'grep current repo' },
   ['/'] = { fzf.builtin, 'fzf-lua builtin' },
-  a = {
-    name = 'alternative files',
-    a = { cmd('e #'), 'toggle last used file' },
-    t = {
-      function()
-        vim.call('EditMatchingTestFile')
-      end,
-      'alternate test file',
-    },
-  },
   c = chatgpt_keymap_n,
   e = editing_keymap,
   f = fzf_keymap,
