@@ -366,13 +366,20 @@ end
 local n_keymap = {
   ['.'] = { live_grep, 'grep current repo' },
   ['/'] = { fzf.builtin, 'fzf-lua builtin' },
-  a = { cmd('e #'), 'toggle last used file' },
+  a = {
+    name = 'alternative files',
+    a = { cmd('e #'), 'toggle last used file' },
+    t = {
+      function()
+        vim.call('EditMatchingTestFile')
+      end,
+      'alternate test file',
+    },
+  },
   c = chatgpt_keymap_n,
   e = editing_keymap,
   f = fzf_keymap,
   g = git_keymap,
-  j = { cmd('FzfLua git_files'), 'list files in project' },
-  k = { cmd('FzfLua buffers'), 'list buffers' },
   l = lsp_keymap,
   n = notes_keymap,
   o = openthings_keymap,

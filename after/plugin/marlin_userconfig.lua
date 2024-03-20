@@ -14,10 +14,10 @@ marlin.setup({
     missing_root = true,
   },
 })
-
-local keymap = vim.keymap.set
-for index = 1, 4 do
-  keymap('n', '<Leader>' .. index, function()
-    marlin.open(index)
-  end, { desc = 'marlin ' .. index })
-end
+--
+-- local keymap = vim.keymap.set
+-- for index = 1, 4 do
+--   keymap('n', '<Leader>' .. index, function()
+--     marlin.open(index)
+--   end, { desc = 'marlin ' .. index })
+-- end
