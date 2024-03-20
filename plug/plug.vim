@@ -5,7 +5,9 @@
 let s:plugged=g:vim_data . '/plug'
 let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'
-let g:plug_shallow=3
+" this is a boolean value not the depth
+let g:plug_shallow=1
+let g:plug_threads=16
 let s:oldvim=!has('nvim')
 
 function! Cond(cond, ...)
@@ -47,7 +49,8 @@ if has('nvim')
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
-  Plug 'desdic/marlin.nvim'
+  " Plug 'desdic/marlin.nvim'
+  Plug 'dcai/marlin.nvim'
   Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
   Plug 'folke/tokyonight.nvim'
