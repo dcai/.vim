@@ -9,8 +9,9 @@ marlin.setup({
   datafile = vim.fn.stdpath('data') .. '/marlin.json',
   open_callback = require('marlin.callbacks').change_buffer,
   sorter = require('marlin.sorters').by_name,
+  save_cursor_location = false,
   suppress = {
-    missing_root = false,
+    missing_root = true,
   },
 })
 
