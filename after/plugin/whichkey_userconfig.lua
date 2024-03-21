@@ -6,25 +6,22 @@ end
 local fzf = require('fzf-lua')
 local marlin = require('marlin')
 local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
-local subl_path =
-  '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
+local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 
----@param command string
----@param desc string
----@return nil
-local function cmd(command, desc)
-  return function()
-    vim.cmd(command)
-    if desc then
-      vim.notify(desc)
-    end
-  end
+local function cmd(vim_cmd, desc, notify_after)
+  return {
+    function()
+      vim.cmd(vim_cmd)
+      if notify_after then
+        vim.notify(notify_after)
+      end
+    end,
+    desc or vim_cmd,
+  }
 end
 
----@param command string
----@param desc string
-local function dp(str, desc)
-  return cmd(string.format('Dispatch! %s', str), desc)
+local function dp(shell_cmd, desc, notify_after)
+  return cmd(string.format('Dispatch! %s', shell_cmd), desc, notify_after)
 end
 
 local function open_git_hosting_web()
@@ -38,33 +35,33 @@ local function open_git_hosting_web()
   require('gitlinker').get_buf_range_url(mode)
 end
 
----@param func string custom function name in string
-local function run_testfile(func)
+---@param vimscript_func string custom function name in string
+local function run_testfile(vimscript_func)
   return {
     function()
       local file = vim.fn.expand('%')
       if string.find(file, 'spec.') or string.find(file, 'test.') then
         vim.notify('start test runner for ' .. file)
-        vim.call(func)
+        vim.call(vimscript_func)
       else
         vim.notify('this is not a test file')
       end
     end,
-    func,
+    vimscript_func,
   }
 end
 
 local vimux_keymap = {
   name = 'vimux',
-  i = { cmd('VimuxInspectRunner'), 'inspect runner' },
-  j = { unpack(run_testfile('TestCurrentFileWithJestJsdom')) },
-  J = { unpack(run_testfile('TestCurrentFileWithJestNode')) },
-  l = { cmd('VimuxRunLastCommand'), 'last command' },
-  m = { unpack(run_testfile('TestCurrentFileWithMocha')) },
-  p = { cmd('VimuxPromptCommand'), 'prompt command' },
-  q = { cmd('VimuxCloseRunner'), 'close runner' },
-  x = { cmd('call VimuxZoomRunner()'), 'zoom in' },
-  z = { cmd('call LastPath()'), 'open last path in runner' },
+  i = cmd('VimuxInspectRunner', 'inspect runner'),
+  j = run_testfile('TestCurrentFileWithJestJsdom'),
+  J = run_testfile('TestCurrentFileWithJestNode'),
+  l = cmd('VimuxRunLastCommand', 'last command'),
+  m = run_testfile('TestCurrentFileWithMocha'),
+  p = cmd('VimuxPromptCommand', 'prompt command'),
+  q = cmd('VimuxCloseRunner', 'close runner'),
+  x = cmd('call VimuxZoomRunner()', 'zoom in'),
+  z = cmd('call LastPath()', 'open last path in runner'),
   t = {
     function()
       vim.call('EditMatchingTestFile')
@@ -104,29 +101,26 @@ local git_keymap = {
   -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
   -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
-  a = { cmd('Gwrite'), 'git add' },
-  A = { cmd('Git add -A'), 'git add untracked' },
-  b = { cmd('FzfLua git_branches'), 'checkout branch' },
-  c = { cmd('Git commit -a'), 'commit all' },
-  d = { cmd('Git diff'), 'diff' },
-  f = { dp('git commit --no-verify --fixup HEAD -a'), 'fixup' },
-  g = { dp('git pull --tags --rebase'), 'git pull' },
-  h = { dp('git stash'), 'git stash' },
-  H = { dp('git stash pop'), 'git stash pop' },
-  l = { cmd('Gllog'), 'list commits' },
+  a = cmd('Gwrite', 'git add'),
+  A = cmd('Git add -A', 'git add untracked'),
+  b = cmd('FzfLua git_branches', 'checkout branch'),
+  c = cmd('Git commit -a', 'commit all'),
+  d = cmd('Git diff', 'diff'),
+  f = dp('git commit --no-verify --fixup HEAD -a', 'fixup'),
+  g = dp('git pull --tags --rebase', 'git pull'),
+  h = dp('git stash', 'git stash'),
+  H = dp('git stash pop', 'git stash pop'),
+  l = cmd('Gllog', 'list commits'),
   m = { require('gitsigns').blame_line, 'blame line' },
-  M = { cmd('Git blame'), 'git blame' },
-  p = { dp('git push -u --no-verify'), 'git push' },
-  P = {
-    dp('git push -u --force-with-lease --no-verify'),
-    'force push with lease',
-  },
-  r = {
-    cmd('Git rebase -i --committer-date-is-author-date origin/HEAD~5'),
-    'rebase',
-  },
-  s = { cmd('Git'), 'git status' },
-  S = { cmd('FzfLua git_status'), 'changed files' },
+  M = cmd('Git blame', 'git blame'),
+  p = dp('git push -u --no-verify', 'git push'),
+  P = dp('git push -u --force-with-lease --no-verify', 'force push with lease'),
+  r = cmd(
+    'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
+    'rebase'
+  ),
+  s = cmd('Git', 'git status'),
+  S = cmd('FzfLua git_status', 'changed files'),
   y = { open_git_hosting_web, 'open the file in web' },
 }
 
@@ -134,7 +128,7 @@ local lsp_keymap = {
   name = 'lsp',
   a = { vim.lsp.buf.code_action, 'code action' },
   f = { vim.lsp.buf.format, 'format code' },
-  I = { cmd('LspInfo'), 'lsp info' },
+  I = cmd('LspInfo', 'lsp info'),
   r = { vim.lsp.buf.rename, 'rename' },
   q = { fzf.quickfix, 'linting' },
 }
@@ -148,18 +142,9 @@ local yank_keymap = {
     end,
     'yank loaded package names',
   },
-  p = {
-    cmd('let @*=expand("%:p")', 'file path yanked'),
-    'yank file full path',
-  },
-  f = {
-    cmd('let @*=expand("%")'),
-    'yank file name',
-  },
-  m = {
-    cmd('let @*=execute("messages")'),
-    'yank messages',
-  },
+  p = cmd('let @*=expand("%:p")', 'yank file full path', 'file path yanked'),
+  f = cmd('let @*=expand("%")', 'yank file name'),
+  m = cmd('let @*=execute("messages")', 'yank messages'),
 }
 
 local openthings_keymap = {
@@ -176,7 +161,7 @@ local openthings_keymap = {
     'open in folder',
   },
   f = {
-    dp(subl_path .. ' %'),
+    dp(subl .. ' %'),
     'open file in sublime',
   },
   g = { open_git_hosting_web, 'open file in git web' },
@@ -184,10 +169,10 @@ local openthings_keymap = {
 
 local notes_keymap = {
   name = 'notes',
-  b = { cmd('NoteGitBranch'), 'create new note for current git branch' },
-  c = { cmd('NoteNew'), 'create new note' },
-  g = { cmd('NoteGit'), 'create new note for current git repo' },
-  t = { cmd('NoteToday'), 'create new note for today' },
+  b = cmd('NoteGitBranch', 'create new note for current git branch'),
+  c = cmd('NoteNew', 'create new note'),
+  g = cmd('NoteGit', 'create new note for current git repo'),
+  t = cmd('NoteToday', 'create new note for today'),
   l = {
     function()
       fzf.files({
@@ -223,13 +208,11 @@ local vimrc_keymap = {
     end,
     'edit root vimrc',
   },
-  R = {
-    function()
-      cmd('source $MYVIMRC')
-      vim.notify('loaded vimrc and lua configs!', vim.log.levels.WARN)
-    end,
+  R = cmd(
+    'source $MYVIMRC',
     'reload vimrc and lua configs',
-  },
+    'Config reloaded!'
+  ),
   r = {
     function()
       local ft = vim.bo.filetype
@@ -246,10 +229,10 @@ local vimrc_keymap = {
 
 local chatgpt_keymap_n = {
   name = 'chatgpt',
-  n = { cmd('GpChatNew'), 'new Chat' },
-  c = { cmd('GpChatToggle'), 'toggle Chat' },
-  d = { cmd('GpChatDelete'), 'delete chat' },
-  f = { cmd('GpChatFinder'), 'chat Finder' },
+  n = cmd('GpChatNew', 'new Chat'),
+  c = cmd('GpChatToggle', 'toggle Chat'),
+  d = cmd('GpChatDelete', 'delete chat'),
+  f = cmd('GpChatFinder', 'chat Finder'),
 }
 local editing_keymap = {
   name = 'edit things',
@@ -277,14 +260,8 @@ local editing_keymap = {
     marlin_marks,
     'list marlin collection',
   },
-  s = {
-    cmd('UltiSnipsEdit'),
-    'edit snippet for current buffer',
-  },
-  v = {
-    cmd('e ' .. vimrc_to_edit),
-    'edit vimrc',
-  },
+  s = cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
+  v = cmd('e ' .. vimrc_to_edit, 'edit vimrc'),
   X = {
     marlin.remove_all,
     '',
