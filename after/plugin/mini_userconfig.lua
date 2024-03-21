@@ -251,11 +251,25 @@ require('mini.notify').setup({
   content = {
     -- Function which formats the notification message
     -- By default prepends message with notification time
-    format = nil,
+    format = function(notif)
+      -- {
+      --   hl_group = "DiagnosticInfo",
+      --   level = "INFO",
+      --   msg = "test",
+      --   ts_add = 1711014047.1013,
+      --   ts_update = 1711014047.1013
+      -- }
+      return notif.msg
+    end,
 
     -- Function which orders notification array from most to least important
     -- By default orders first by level and then by update timestamp
-    sort = nil,
+    sort = function(notif_arr)
+      table.sort(notif_arr, function(a, b)
+        return a.ts_update > b.ts_update
+      end)
+      return notif_arr
+    end,
   },
 
   -- Notifications about LSP progress
