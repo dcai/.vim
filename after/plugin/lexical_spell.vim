@@ -7,13 +7,9 @@ set spelllang=en,cjk
 set nospell
 set spellcapcheck=
 
-let s:vimspelldir=g:vim_data . '/spell'
 let s:dropboxspelldir='$HOME/Library/CloudStorage/Dropbox/src/vimspell'
-let s:mthesaurfile=s:dropboxspelldir . '/mthesaur.txt'
-
-if empty(glob(expand(s:vimspelldir)))
-  execute '!mkdir -p ' . expand(s:vimspelldir)
-endif
+let s:mthesaurfile=expand(s:dropboxspelldir . '/mthesaur.txt')
+let s:spellfile=expand(s:dropboxspelldir . '/en.utf-8.add')
 
 function! DownloadMthesaurfile()
   execute '!curl -fLo ' . s:mthesaurfile . ' https://www.gutenberg.org/files/3202/files/mthesaur.txt'
@@ -27,8 +23,6 @@ if filereadable(s:mthesaurfile)
   let g:lexical#thesaurus = [s:mthesaurfile]
 endif
 
-" let s:spellfile=s:vimspelldir . '/en.utf-8.add'
-let s:spellfile=s:dropboxspelldir . '/en.utf-8.add'
 if filereadable(s:spellfile)
   let g:lexical#spellfile = [s:spellfile,]
 endif
