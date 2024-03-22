@@ -78,7 +78,7 @@ if has('nvim')
   Plug 'lewis6991/gitsigns.nvim'
   Plug 'ruifm/gitlinker.nvim'
   """"""""""""""""""""""""""""""""""""""""""
-  """ AI
+  """ coding assist
   """"""""""""""""""""""""""""""""""""""""""
   "" this is for inline code suggestions
   Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
@@ -98,15 +98,25 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
   """"""""""""""""""""""""""""""""""""""""""
-  if !has('nvim-0.9')
-    Plug 'gpanders/editorconfig.nvim'
-  endif
 endif
-
+"""""""""""""""""""""""""""""""""""""""
+""" colorschemes
+"""""""""""""""""""""""""""""""""""""""
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'rebelot/kanagawa.nvim'
+" Plug 'rose-pine/neovim'
+Plug 'sainnhe/everforest'
+let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
+let g:everforest_better_performance = 1
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
 Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
+" if v:version >= 800
+"   Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
+" else
+"   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
+" endif
 """""""""""""""""""""""""""""""""""""""
 """ vimux
 """""""""""""""""""""""""""""""""""""""
@@ -121,7 +131,9 @@ Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 " case insensitive search
 let g:sneak#use_ic_scs = 1
-
+"""""""""""""""""""""""""""""""""""""""
+""" utils
+"""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-fugitive'
@@ -131,50 +143,20 @@ Plug 'reedes/vim-lexical'
 Plug 'djoshea/vim-autoread'
 Plug 'andymass/vim-matchup'
 Plug 'tyru/open-browser.vim'
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-if !has('nvim')
-  nmap <leader>ob <Plug>(openbrowser-smart-search)
-endif
-vmap <leader>ob <Plug>(openbrowser-smart-search)
 " Plug 'mbbill/undotree'
-
 """""""""""""""""""""""""""""""""""""""
 """ syntax
 """""""""""""""""""""""""""""""""""""""
 Plug 'chr4/nginx.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-" Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-
-
+"""""""""""""""""""""""""""""""""""""""
+""" bufferize
+"""""""""""""""""""""""""""""""""""""""
 Plug 'AndrewRadev/bufferize.vim'
 let g:bufferize_command = 'new'
 let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
-"""""""""""""""""""""""""""""""""""""""
-""" Tabular
-"""""""""""""""""""""""""""""""""""""""
-" Plug 'godlygeek/tabular'
-" nmap <Leader>t= :Tabularize /=<CR>
-" vmap <Leader>t= :Tabularize /=<CR>
-" nmap <Leader>t: :Tabularize /:\zs<CR>
-" vmap <Leader>t: :Tabularize /:\zs<CR>
-" if v:version >= 800
-"   " Plug 'dense-analysis/ale', { 'do': function('InstallAle') }
-" else
-"   Plug 'scrooloose/syntastic', { 'for': ['php', 'sh', 'python', 'javascript'] }
-" endif
-
-"""""""""""""""""""""""""""""""""""""""
-""" colorschemes
-"""""""""""""""""""""""""""""""""""""""
-Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'rebelot/kanagawa.nvim'
-" Plug 'rose-pine/neovim'
-Plug 'sainnhe/everforest'
-" Available values: 'hard', 'medium'(default), 'soft'
-let g:everforest_background = 'hard'
-let g:everforest_better_performance = 1
 
 " not for nvim
 if s:oldvim
@@ -238,6 +220,14 @@ if s:oldvim
   map <silent> <c-f> :call smooth_scroll#down(&scroll, smooth_scroll_duration, 4)<CR>
   map <silent> <PageUp> :call smooth_scroll#up(&scroll*2, smooth_scroll_duration, 4)<CR>
   map <silent> <PageDown> :call smooth_scroll#down(&scroll*2, smooth_scroll_duration, 4)<CR>
+  """""""""""""""""""""""""""""""""""""""
+  """ Tabular
+  """""""""""""""""""""""""""""""""""""""
+  " Plug 'godlygeek/tabular'
+  " nmap <Leader>t= :Tabularize /=<CR>
+  " vmap <Leader>t= :Tabularize /=<CR>
+  " nmap <Leader>t: :Tabularize /:\zs<CR>
+  " vmap <Leader>t: :Tabularize /:\zs<CR>
 endif
 
 if g:osuname ==? 'Windows'
