@@ -4,11 +4,7 @@ if not cmp_loaded then
   return
 end
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
+local function check_back_space()
   local col = vim.fn.col('.') - 1
   if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
     return true
@@ -17,7 +13,7 @@ local check_back_space = function()
   end
 end
 
-local has_words_before = function()
+local function has_words_before()
   if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
     return false
   end
@@ -27,6 +23,16 @@ local has_words_before = function()
         .nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]
         :match('^%s*$')
       == nil
+end
+
+local function feedkeys(key, mode)
+  -- Replaces terminal codes and keycodes
+  -- (<CR>, <Esc>, ...) in a string with the internal representation.
+  local keys = vim.api.nvim_replace_termcodes(key, true, true, true)
+  mode = mode or ''
+  -- Sends input-keys to Nvim, subject to various quirks
+  -- controlled by mode flags. This is a blocking call, unlike nvim_input().
+  vim.api.nvim_feedkeys(keys, mode, true)
 end
 
 local prioritizeSource = function(source)
@@ -40,6 +46,53 @@ local prioritizeSource = function(source)
 end
 
 local compare = cmp.config.compare
+
+-- `behavior=cmp.ConfirmBehavior.Insert`: inserts the selected item and
+--   moves adjacent text to the right (default).
+-- `behavior=cmp.ConfirmBehavior.Replace`: replaces adjacent text with
+--   the selected item.
+-- If you didn't select any item and the option table contains `select = true`,
+-- nvim-cmp will automatically select the first item.
+
+local handle_enter = cmp.mapping({
+  i = function(fallback)
+    if cmp.visible() and has_words_before() then
+      cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
+      -- cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+    else
+      fallback()
+    end
+  end,
+  s = cmp.mapping.confirm({ select = true }),
+  c = cmp.mapping.confirm({
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
+  }),
+})
+local handle_up = cmp.mapping(function(fallback)
+  if cmp.visible() then
+    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+  elseif vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
+    return feedkeys('<Plug>(ultisnips_jump_backward)')
+  else
+    fallback()
+  end
+end, { 'i', 's' })
+
+local handle_down = cmp.mapping(function(fallback)
+  if cmp.visible() and has_words_before() then
+    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+    -- below checks whether it is possible to jump forward to the next snippet placeholder
+  elseif vim.fn['UltiSnips#CanJumpForwards']() == 1 then
+    return feedkeys('<Plug>(ultisnips_jump_forward)')
+  elseif has_words_before() then
+    cmp.complete()
+  else
+    -- cmp.complete(): populates the UI of complete
+    -- fallback(): pass through, insert <tab>
+    fallback()
+  end
+end, { 'i', 's' })
 
 cmp.setup({
   sorting = {
@@ -67,57 +120,13 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    -- ['<C-p>'] = cmp.mapping.scroll_docs(-4),
-    -- ['<C-n>'] = cmp.mapping.scroll_docs(4),
-    -- ['<c-j>'] = cmp.mapping(
-    --   cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-    --   { 'i' }
-    -- ),
-    -- ['<c-k>'] = cmp.mapping(
-    --   cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-    --   { 'i' }
-    -- ),
     -- ['<C-e>'] = cmp.mapping.abort(),
     -- ['<C-Space>'] = cmp.mapping.complete(),
-    ['<tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() and has_words_before() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-      -- below checks whether it is possible to jump forward to the next snippet placeholder
-      elseif vim.fn['UltiSnips#CanJumpForwards']() == 1 then
-        vim.api.nvim_feedkeys(t('<Plug>(ultisnips_jump_forward)'), 'm', true)
-      else
-        -- cmp.complete(): populates the UI of complete
-        -- fallback(): pass through, insert <tab>
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-      elseif vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
-        return vim.api.nvim_feedkeys(
-          t('<Plug>(ultisnips_jump_backward)'),
-          'm',
-          true
-        )
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<CR>'] = cmp.mapping({
-      i = function(fallback)
-        if cmp.visible() and cmp.get_active_entry() then
-          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-        else
-          fallback()
-        end
-      end,
-      s = cmp.mapping.confirm({ select = true }),
-      c = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
-      }),
-    }),
+    ['<tab>'] = handle_down,
+    ['<down>'] = handle_down,
+    ['<S-Tab>'] = handle_up,
+    ['<up>'] = handle_up,
+    ['<CR>'] = handle_enter,
   }),
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
