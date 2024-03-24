@@ -101,6 +101,7 @@ local handle_down = cmp.mapping(function(fallback)
 end, { 'i', 's' })
 
 cmp.setup({
+  preselect = cmp.PreselectMode.None,
   sorting = {
     priority_weight = 2,
     comparators = {
@@ -125,7 +126,7 @@ cmp.setup({
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
-  mapping = cmp.mapping.preset.insert({
+  mapping = {
     -- ['<C-e>'] = cmp.mapping.abort(),
     -- ['<C-Space>'] = cmp.mapping.complete(),
     ['<tab>'] = handle_down,
@@ -133,7 +134,7 @@ cmp.setup({
     ['<S-Tab>'] = handle_up,
     ['<up>'] = handle_up,
     ['<CR>'] = handle_enter,
-  }),
+  },
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
     format = function(entry, item)
