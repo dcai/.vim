@@ -14,6 +14,9 @@ treesitter_config.setup({
   auto_install = true,
   sync_install = false,
   incremental_selection = { enable = true },
+  matchup = {
+    enable = true, -- enabled matchup plugin: https://github.com/andymass/vim-matchup
+  },
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
@@ -26,10 +29,11 @@ treesitter_config.setup({
   },
   -- these are always installed, otherwise install on demand (when particular file type opens)
   ensure_installed = {
-    'javascript',
-    'typescript',
+    'go',
     'lua',
     'python',
+    'javascript',
+    'typescript',
     'vim',
   },
   indent = {
@@ -57,7 +61,7 @@ treesitter_config.setup({
         -- [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
       },
       goto_next_end = {
-        -- [']F'] = '@function.outer',
+        [']F'] = '@function.outer',
         -- [']['] = '@class.outer',
       },
       goto_previous_start = {
@@ -65,7 +69,7 @@ treesitter_config.setup({
         -- ['[['] = '@class.outer',
       },
       goto_previous_end = {
-        -- ['[F'] = '@function.outer',
+        ['[F'] = '@function.outer',
         -- ['[]'] = '@class.outer',
       },
       -- Below will go to either the start or the end, whichever is closer.
