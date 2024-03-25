@@ -53,7 +53,6 @@ if has('nvim')
   Plug 'dcai/marlin.nvim'
   Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
-  Plug 'folke/tokyonight.nvim'
   Plug 'Robitx/gp.nvim' , Cond(!IsEnvVarSet('NO_GPNVIM'), {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
@@ -145,12 +144,6 @@ Plug 'andymass/vim-matchup'
 Plug 'tyru/open-browser.vim'
 " Plug 'mbbill/undotree'
 """""""""""""""""""""""""""""""""""""""
-""" syntax
-"""""""""""""""""""""""""""""""""""""""
-Plug 'chr4/nginx.vim'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
-"""""""""""""""""""""""""""""""""""""""
 """ bufferize
 """""""""""""""""""""""""""""""""""""""
 Plug 'AndrewRadev/bufferize.vim'
@@ -160,6 +153,13 @@ let g:bufferize_focus_output = 1
 
 " not for nvim
 if s:oldvim
+  """""""""""""""""""""""""""""""""""""""
+  """ syntax
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'chr4/nginx.vim'
+  Plug 'mustache/vim-mustache-handlebars'
+  Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
+  """""""""""""""""""""""""""""""""""""""
   Plug 'neoclide/coc.nvim',
         \ { 'branch': 'release',
         \   'do': function('InstallCoc')
