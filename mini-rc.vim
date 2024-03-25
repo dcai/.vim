@@ -260,10 +260,6 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-
-" quick marker, use '' to access it
-nnoremap <leader><leader> m'
-
 " press jj in insert mode twice to return normal mode
 inoremap jj <ESC>
 
@@ -283,15 +279,18 @@ vmap <Up> gk
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
-nnoremap <silent> <leader>aa :e #<cr>
-nnoremap <leader>re :e! $MYVIMRC<cr>
-nnoremap <leader>rr :source $MYVIMRC<cr>
-nnoremap <leader>rf :source %<cr>
+nnoremap <silent> <leader>ee :e #<cr>
+nnoremap <leader>ev :e! $MYVIMRC<cr>
+nnoremap <leader>rr :source %<cr>
+nnoremap <leader>rR :source $MYVIMRC<cr>
 " BD is vim-bufkill plugin command
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>qq :qall<cr>
+nnoremap <leader>on :on<cr>
+nnoremap <leader>vs :vs<cr>
+nnoremap <leader>sp :sp<cr>
 nnoremap <leader>qw :silent wq<cr>
-nnoremap <silent> <leader>w :w<CR><CR>
+nnoremap <silent> <leader>ww :w<CR><CR>
 " enter to clear search highlight
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 " sudo write
