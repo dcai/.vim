@@ -91,6 +91,7 @@ let &undodir=Mkdir(g:vim_data . '/undo')
 let &backupdir=Mkdir(g:vim_data . '/backup')
 
 set expandtab
+set termguicolors
 set tabstop=8
 set softtabstop=4
 set shiftwidth=4

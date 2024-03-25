@@ -1,7 +1,8 @@
-nnoremap <leader>re :e $MYVIMRC<cr>
-nnoremap <leader>rr :source $MYVIMRC<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ee :e #<cr>
+nnoremap <leader>rR :source $MYVIMRC<cr>
 " source current file
-nnoremap <leader>rf :source %<cr>
+nnoremap <leader>rr :source %<cr>
 
 " copy messages to register
 nnoremap <leader>ym :let @*=execute('messages')<CR>
@@ -24,6 +25,5 @@ endfunction
 nnoremap <leader>od :call OpenDir()<CR>
 " toggle last used file
 " ctrl-6 <c-6> <c-^> doesn't work for some terminals
-nnoremap <leader>a :e #<cr>
 nnoremap <leader>tt :call EditMatchingTestFile()<cr>
 nnoremap <leader>tf :call ToggleQuickFix()<cr>
