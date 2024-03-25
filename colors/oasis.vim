@@ -321,7 +321,7 @@ call s:apply(s:js)
 
 let s:statusline = {
       \ 'fg': s:black,
-      \ 'bg': s:darkyellow,
+      \ 'bg': s:green,
       \ 'guifg': s:nicelightgreen,
       \ 'guibg': s:nicemidgreen,
       \ 'cterm': s:none,
