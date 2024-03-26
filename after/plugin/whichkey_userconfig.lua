@@ -101,6 +101,8 @@ local git_keymap = {
   -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
   -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
+  ['2'] = cmd('diffget //2'),
+  ['3'] = cmd('diffget //3'),
   a = cmd('Gwrite', 'git add'),
   A = cmd('Git add -A', 'git add untracked'),
   b = cmd('FzfLua git_branches', 'checkout branch'),
@@ -122,6 +124,7 @@ local git_keymap = {
   s = cmd('Git', 'git status'),
   S = cmd('FzfLua git_status', 'changed files'),
   y = { open_git_hosting_web, 'open the file in web' },
+  v = cmd('Gvdiffsplit!', '3-way diff'),
 }
 
 local lsp_keymap = {

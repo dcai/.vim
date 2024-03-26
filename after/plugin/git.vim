@@ -10,14 +10,10 @@ if !has('nvim')
   nnoremap <leader>gp  :Dispatch! git push --tags --force-with-lease --no-verify<CR>
   nnoremap <leader>gP  :Dispatch! git push -uf --no-verify<CR>
   nnoremap <leader>gr  :Git rebase -i --committer-date-is-author-date origin/HEAD~5<CR>
-  " nnoremap <leader>gds :Gvdiffsplit!<CR>
-  " nnoremap <leader>gdl :diffget //2<CR>
-  " nnoremap <leader>gdr :diffget //3<CR>
+  nnoremap <leader>gv :Gvdiffsplit!<CR>
+  nnoremap <leader>g2 :diffget //2<CR>
+  nnoremap <leader>g3 :diffget //3<CR>
 endif
-
-" Tig
-" nnoremap <leader>gg   :TigOpenProjectRootDir<CR>
-" nnoremap <leader>gm   :TigBlame<CR>
 
 function! GitFileMode()
   nnoremap <buffer> n <c-n>
