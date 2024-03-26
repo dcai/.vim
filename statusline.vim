@@ -13,13 +13,17 @@ function! LinterStatus() abort
                 \)
 endfunction
 
-function! FugitiveStatus() abort
-    if !exists(":Git")
-        return
-    endif
-    return FugitiveStatusline()
-endfunction
+" function! FugitiveStatus() abort
+"     if !exists(":Git")
+"         return
+"     endif
+"     return FugitiveStatusline()
+" endfunction
 
+function! GitBranch()
+  let l:cmd="git rev-parse --abbrev-ref HEAD 2>/dev/null | fold -w30 | head -n1"
+  return trim(system(l:cmd))
+endfunction
 
 " got from https://jdhao.github.io/2019/11/03/vim_custom_statusline/
 let g:currentmode={
@@ -44,14 +48,12 @@ set statusline+=%0*
 set statusline+=\ %f
 " modified flag
 set statusline+=%m
-" set statusline+=%{FugitiveStatus()}
 " set statusline+=[%{LinterStatus()}]
 " left/right separator
 set statusline+=%=
 set statusline+=%6*  " start User6 highlight group
 " cursor line/total lines
-set statusline+=Line:\ %l
-set statusline+=\ of\ %L
+set statusline+=\[%l\]\ /\ %L
 set statusline+=\ \|\ Col:\ %c
 " reset highlight group
 set statusline+=%0*
@@ -69,3 +71,4 @@ set statusline+=]
 set statusline+=%h
 " read only flag
 set statusline+=%r
+set statusline+=\[%{GitBranch()}\]
