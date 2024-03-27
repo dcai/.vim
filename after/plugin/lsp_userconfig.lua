@@ -22,7 +22,7 @@ mason_lspconfig.setup({
     'tsserver',
     'vimls',
   },
-  automatic_installation = true,
+  automatic_installation = false,
 })
 
 -------------------------------
@@ -118,9 +118,11 @@ nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
 nvim_lspconfig.vimls.setup({
   on_attach = common_on_attach,
 })
-nvim_lspconfig.gopls.setup({
-  on_attach = common_on_attach,
-})
+if vim.fn.executable('go') == 1 then
+  nvim_lspconfig.gopls.setup({
+    on_attach = common_on_attach,
+  })
+end
 nvim_lspconfig.bashls.setup({
   on_attach = common_on_attach,
 })
