@@ -172,14 +172,16 @@ end
 
 local workspace_libs = {
   checkThirdParty = false,
-  library = vim.api.nvim_get_runtime_file('', true),
-  -- library = {
-  --   vim.fn.expand('$VIMRUNTIME/lua'),
-  --   vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
-  --   vim.fn.stdpath('config') .. '/lua',
-  --   plugin_path('fzf-lua'),
-  --   plugin_path('plenary.nvim'),
-  -- },
+  ---- it's slow to load all
+  -- library = vim.api.nvim_get_runtime_file('', true),
+  --- Load selected libs
+  library = {
+    vim.fn.expand('$VIMRUNTIME/lua'),
+    vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+    vim.fn.stdpath('config') .. '/lua',
+    plugin_path('fzf-lua'),
+    plugin_path('plenary.nvim'),
+  },
 }
 
 nvim_lspconfig.lua_ls.setup({
