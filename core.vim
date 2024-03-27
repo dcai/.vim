@@ -118,7 +118,7 @@ set foldmethod=marker
 
 if has('nvim')
   set clipboard+=unnamedplus
-  set mousescroll=ver:15,hor:2
+  set mousescroll=ver:25,hor:2
 else
   set clipboard=unnamed
 endif
