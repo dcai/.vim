@@ -94,6 +94,8 @@ if has('nvim')
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/nvim-cmp'
+  Plug 'petertriho/cmp-git'
+  Plug 'dmitmel/cmp-cmdline-history'
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
   """"""""""""""""""""""""""""""""""""""""""
