@@ -100,6 +100,58 @@ local handle_down = cmp.mapping(function(fallback)
   end
 end, { 'i', 's' })
 
+local source_tmux = {
+  name = 'tmux',
+  -- priority = 1,
+  group_index = 10,
+  option = {
+    -- Source from all panes in session instead of adjacent panes
+    all_panes = true,
+    trigger_characters = { '.' },
+    keyword_pattern = [[\w\+]],
+    -- keyword_pattern = [[[\w\-]+]],
+    -- Specify trigger characters for filetype(s)
+    -- { filetype = { '.' } }
+    trigger_characters_ft = {},
+    -- Capture full pane history
+    -- `false`: show completion suggestion from text in the visible pane (default)
+    -- `true`: show completion suggestion from text starting from the beginning of the pane history.
+    --         This works by passing `-S -` flag to `tmux capture-pane` command. See `man tmux` for details.
+    capture_history = true,
+  },
+}
+
+local source_path = {
+  name = 'path',
+  option = {
+    trailing_slash = true,
+  },
+}
+
+local function formatter(entry, item)
+  local source_name = entry.source.name
+  local menu_icon = {
+    -- luasnip = 'ι',
+    -- nvim_lsp = 'Ƒ',
+    -- ultisnips = 'λ',
+    -- path = '⋗',
+    -- copilot = 'Copilot',
+    buffer = 'BUF',
+    cmdline = 'CMD',
+    cmdline_history = 'CMD_H',
+    codeium = 'λ',
+    git = 'GIT',
+    nvim_lsp = 'lsp',
+    path = 'PATH',
+    tmux = 'tmux',
+    ultisnips = 'snip',
+  }
+  local icon = menu_icon[source_name]
+  if icon then
+    item.menu = icon
+  end
+  return item
+end
 cmp.setup({
   preselect = cmp.PreselectMode.None,
   sorting = {
@@ -137,89 +189,36 @@ cmp.setup({
   },
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
-    format = function(entry, item)
-      local menu_icon = {
-        -- luasnip = 'ι',
-        -- nvim_lsp = 'Ƒ',
-        -- ultisnips = 'λ',
-        -- tmux = 'Ω',
-        -- path = '⋗',
-        nvim_lsp = 'lsp',
-        ultisnips = 'snip',
-        tmux = 'tmux',
-        path = 'PATH',
-        -- copilot = 'Copilot',
-        codeium = 'Codeium',
-      }
-
-      if menu_icon[entry.source.name] then
-        item.menu = menu_icon[entry.source.name]
-      end
-      return item
-    end,
+    format = formatter,
   },
   sources = cmp.config.sources({
-    { name = 'codeium', group_index = 1 },
-    -- { name = 'copilot' },
-    { name = 'nvim_lsp', group_index = 3 },
-    { name = 'ultisnips', group_index = 5 },
-    -- { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'codeium' },
+    { name = 'ultisnips' },
     { name = 'buffer' },
-    {
-      name = 'path',
-      option = {
-        trailing_slash = true,
-      },
-    },
-    {
-      name = 'tmux',
-      -- priority = 1,
-      group_index = 10,
-      option = {
-        -- Source from all panes in session instead of adjacent panes
-        all_panes = false,
-        -- trigger_characters = { '.' },
-        -- keyword_pattern = [[\w\+]],
-        keyword_pattern = [[[\w\-]+]],
-        -- Completion popup label
-        label = '[tmux]',
-        -- Specify trigger characters for filetype(s)
-        -- { filetype = { '.' } }
-        trigger_characters_ft = {},
-        -- Capture full pane history
-        -- `false`: show completion suggestion from text in the visible pane (default)
-        -- `true`: show completion suggestion from text starting from the beginning of the pane history.
-        --         This works by passing `-S -` flag to `tmux capture-pane` command. See `man tmux` for details.
-        capture_history = false,
-      },
-    },
+    source_path,
   }),
 })
 
--- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
-    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-  }, {
     { name = 'buffer' },
+    source_path,
   }),
 })
 
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' },
   },
 })
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' },
-    { name = 'cmdline_history' },
-  }, {
     { name = 'cmdline' },
+    { name = 'cmdline_history' },
+    source_path,
+    source_tmux,
   }),
 })
