@@ -172,6 +172,7 @@ if s:oldvim
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-signify'
   Plug 'editorconfig/editorconfig-vim'
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
   Plug 'scrooloose/nerdcommenter'
   Plug 'tpope/vim-surround'
   Plug 'jiangmiao/auto-pairs'
