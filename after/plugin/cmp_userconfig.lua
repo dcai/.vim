@@ -219,6 +219,6 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' },
     { name = 'cmdline_history' },
     source_path,
-    source_tmux,
+    -- source_tmux,
   }),
 })
