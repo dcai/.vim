@@ -138,7 +138,7 @@ local function formatter(entry, item)
     -- copilot = 'Copilot',
     buffer = 'BUF',
     cmdline = 'CMD',
-    cmdline_history = 'CMD_H',
+    cmdline_history = 'HIST',
     codeium = 'λ',
     git = 'GIT',
     nvim_lsp = 'lsp',
@@ -217,8 +217,8 @@ cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'cmdline' },
-    { name = 'cmdline_history' },
-    source_path,
+    -- { name = 'cmdline_history' },
+    -- source_path,
     -- source_tmux,
   }),
 })
