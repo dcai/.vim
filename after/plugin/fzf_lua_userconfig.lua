@@ -4,6 +4,8 @@ if not loaded then
   return
 end
 
+local actions = require('fzf-lua.actions')
+
 -- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
 -- fzf-native:	utilizes fzf's native previewing ability in the terminal where possible using bat for previews
 -- fzf-tmux:	similar to fzf-native and opens in a tmux popup (requires tmux > 3.2)
@@ -15,56 +17,14 @@ local fzf_profile = 'max-pref'
 
 fzflua.setup({
   fzf_profile,
-  fzf_opts = {
-    -- set to `false` to remove a flag
-    -- set to `true` for a no-value flag
-    -- for raw args use `fzf_args` instead
-    ['--ansi'] = true,
-    ['--info'] = 'inline',
-    ['--height'] = '100%',
-    ['--layout'] = 'reverse',
-    ['--border'] = 'none',
-    ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-history',
-  },
-  files = {
-    fzf_opts = {
-      ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-files-history',
-    },
-  },
-  grep = {
-    fzf_opts = {
-      ['--history'] = vim.fn.stdpath('data') .. '/fzf-lua-grep-history',
-    },
-  },
-  colorschemes = {
-    prompt = 'Colorschemes❯ ',
-    live_preview = true, -- apply the colorscheme on preview?
-    winopts = { height = 1, width = 0.20 },
-    -- uncomment to ignore colorschemes names (lua patterns)
-    -- ignore_patterns   = { "^delek$", "^blue$" },
-    -- uncomment to execute a callback on preview|close
-    -- e.g. a call to reset statusline highlights
-    -- cb_preview        = function() ... end,
-    -- cb_exit           = function() ... end,
-  },
-  git = {
-    files = {
-      prompt = 'GitFiles❯ ',
-      cmd = 'git ls-files --exclude-standard',
-      multiprocess = true, -- run command in a separate process
-      git_icons = true, -- show git icons?
-      file_icons = false, -- show file icons?
-      color_icons = true, -- colorize file|git icons
-      -- force display the cwd header line regardless of your current working
-      -- directory can also be used to hide the header when not wanted
-      -- cwd_header = true
-    },
-  },
   winopts = {
     width = 1,
-    row = 1,
+    row = 1, -- window row position (0=top, 1=bottom)
+    col = 1, -- window col position (0=left, 1=right)
     height = 0.5,
-    -- border = false,
+    fullscreen = false, -- start fullscreen?
+    border = false,
+    -- border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     hl = {
       normal = 'Normal', -- window normal color (fg+bg)
       border = 'FloatBorder', -- border color
@@ -83,9 +43,8 @@ fzflua.setup({
       scrollborder_e = 'FloatBorder', -- scrollbar "empty" section highlight
       scrollborder_f = 'FloatBorder', -- scrollbar "full" section highlight
     },
-    preview_opts = 'hidden',
     preview = {
-      -- default = 'cat',
+      -- default = 'bat',
       border = 'noborder',
       hidden = 'hidden',
       title = false,
@@ -100,6 +59,145 @@ fzflua.setup({
         foldenable = false,
         foldmethod = 'manual',
       },
+    },
+  },
+  fzf_opts = {
+    -- set to `false` to remove a flag
+    -- set to `true` for a no-value flag
+    -- for raw args use `fzf_args` instead
+    ['--ansi'] = true,
+    ['--info'] = 'inline',
+    ['--height'] = '100%',
+    ['--layout'] = 'reverse',
+    ['--border'] = 'none',
+    ['--history'] = vim.fn.stdpath('data') .. '/fzf-history',
+  },
+  files = {
+    fzf_opts = {
+      ['--history'] = vim.fn.stdpath('data') .. '/fzf-files-history',
+    },
+  },
+  grep = {
+    prompt = 'grep❯ ',
+    multiprocess = true, -- run command in a separate process
+    git_icons = true, -- show git icons?
+    file_icons = true, -- show file icons?
+    color_icons = true, -- colorize file|git icons
+    -- executed command priority is 'cmd' (if exists)
+    -- otherwise auto-detect prioritizes `rg` over `grep`
+    -- default options are controlled by 'rg|grep_opts'
+    -- cmd            = "rg --vimgrep",
+    grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
+    rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+    -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
+    -- search strings will be split using the 'glob_separator' and translated
+    -- to '--iglob=' arguments, requires 'rg'
+    -- can still be used when 'false' by calling 'live_grep_glob' directly
+    rg_glob = false, -- default to glob parsing?
+    glob_flag = '--iglob', -- for case sensitive globs use '--glob'
+    glob_separator = '%s%-%-', -- query separator pattern (lua): ' --'
+    -- advanced usage: for custom argument parsing define
+    -- 'rg_glob_fn' to return a pair:
+    --   first returned argument is the new search query
+    --   second returned argument are additional rg flags
+    -- rg_glob_fn = function(query, opts)
+    --   ...
+    --   return new_query, flags
+    -- end,
+    actions = {
+      -- actions inherit from 'actions.files' and merge
+      -- this action toggles between 'grep' and 'live_grep'
+      ['ctrl-g'] = { actions.grep_lgrep },
+      -- uncomment to enable '.gitignore' toggle for grep
+      -- ["ctrl-r"]   = { actions.toggle_ignore }
+    },
+    no_header = false, -- hide grep|cwd header?
+    no_header_i = false, -- hide interactive header?
+    fzf_opts = {
+      ['--history'] = vim.fn.stdpath('data') .. '/fzf-grep-history',
+    },
+  },
+  colorschemes = {
+    prompt = 'Colorschemes❯ ',
+    live_preview = true,
+    winopts = { height = 1, width = 0.20 },
+    actions = { ['default'] = actions.colorscheme },
+    -- uncomment to ignore colorschemes names (lua patterns)
+    -- ignore_patterns   = { "^delek$", "^blue$" },
+    -- uncomment to execute a callback on preview|close
+    -- e.g. a call to reset statusline highlights
+    -- cb_preview        = function() ... end,
+    -- cb_exit           = function() ... end,
+  },
+  awesome_colorschemes = {
+    prompt = 'Colorschemes❯ ',
+    live_preview = true,
+    max_threads = 5,
+    winopts = { row = 0, col = 0.99, width = 0.50 },
+    fzf_opts = {
+      ['--info'] = 'default',
+      ['--multi'] = true,
+      ['--delimiter'] = '[:]',
+      ['--with-nth'] = '3..',
+      ['--tiebreak'] = 'index',
+    },
+    actions = {
+      ['default'] = actions.colorscheme,
+      ['ctrl-/'] = { fn = actions.cs_update, reload = true },
+      ['ctrl-g'] = { fn = actions.toggle_bg, exec_silent = true },
+      ['ctrl-x'] = { fn = actions.cs_delete, reload = true },
+    },
+    -- uncomment to execute a callback on preview|close
+    -- cb_preview = function() end,
+    -- cb_exit = function() end,
+  },
+  oldfiles = {
+    prompt = 'oldfiles❯ ',
+    cwd_only = false,
+    stat_file = true, -- verify files exist on disk
+    include_current_session = false, -- include bufs from current session
+  },
+  buffers = {
+    prompt = 'Buffers❯ ',
+    file_icons = false, -- show file icons?
+    color_icons = false, -- colorize file|git icons
+    sort_lastused = true, -- sort buffers() by last used
+    show_unloaded = true, -- show unloaded buffers
+    cwd_only = false, -- buffers for the cwd only
+    cwd = nil, -- buffers list for a given dir
+    actions = {
+      -- actions inherit from 'actions.buffers' and merge
+      -- by supplying a table of functions we're telling
+      -- fzf-lua to not close the fzf window, this way we
+      -- can resume the buffers picker on the same window
+      -- eliminating an otherwise unaesthetic win "flash"
+      ['ctrl-x'] = { fn = actions.buf_del, reload = true },
+    },
+  },
+  git = {
+    icons = {
+      ['M'] = { icon = 'M', color = 'yellow' },
+      ['D'] = { icon = 'D', color = 'red' },
+      ['A'] = { icon = 'A', color = 'green' },
+      ['R'] = { icon = 'R', color = 'yellow' },
+      ['C'] = { icon = 'C', color = 'yellow' },
+      ['T'] = { icon = 'T', color = 'magenta' },
+      ['?'] = { icon = '?', color = 'magenta' },
+      -- override git icons?
+      -- ["M"]        = { icon = "★", color = "red" },
+      -- ["D"]        = { icon = "✗", color = "red" },
+      -- ["A"]        = { icon = "+", color = "green" },
+    },
+    files = {
+      prompt = 'GitFiles❯ ',
+      cmd = 'git ls-files --exclude-standard',
+      multiprocess = true,
+      git_icons = true, -- git status icon
+      file_icons = false, -- show file icons?
+      color_icons = true, -- colorize file|git icons
+      -- force display the cwd header line regardless of your current working
+      -- directory can also be used to hide the header when not wanted
+      -- cwd_header = true
     },
   },
 })
