@@ -62,6 +62,7 @@ let g:ale_fixers = {
   \ 'go': ['goimports'],
   \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
+  \ 'gotmpl': ['prettier'],
   \ 'javascript': ['prettier'],
   \ 'javascriptreact': ['prettier'],
   \ 'json': ['prettier'],
