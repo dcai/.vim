@@ -3,6 +3,8 @@ command! Greview :Git diff
 function! GitFileMode()
   nmap <buffer> n )
   nmap <buffer> p (
+  nmap <c-j> :lnext<CR>
+  nmap <c-k> :lprev<CR>
   nmap <buffer> q :q<CR>
   nmap <buffer> <tab> =
   setlocal nonumber
