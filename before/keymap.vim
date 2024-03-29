@@ -30,6 +30,7 @@ nnoremap U :redo<cr>
 " close everything
 nnoremap WW :w!<cr>
 nnoremap XX :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
+nnoremap XC :cexpr []<cr>:lexpr []<cr>
 nnoremap QQ :qall<cr>
 nnoremap QA :qall!<cr>
 nnoremap ON :on<cr>
