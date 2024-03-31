@@ -235,10 +235,15 @@ fzflua.setup({
       -- git-delta is automatically detected as pager, uncomment to disable
       -- preview_pager = false,
       actions = {
-        ['default'] = function(selected, opts)
+
+        ['default'] = function(selected, _opts)
           local line = selected[1]
           local commit_hash = line:match('[^ ]+')
           vim.cmd('Git show ' .. commit_hash)
+        end,
+        ['ctrl-u'] = function(selected, _opts)
+          local line = selected[1]
+          vim.fn.setreg([[+]], line)
         end,
         -- remove `exec_silent` or set to `false` to exit after yank
         ['ctrl-y'] = { fn = actions.git_yank_commit, exec_silent = true },
