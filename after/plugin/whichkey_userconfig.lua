@@ -93,6 +93,7 @@ local fzf_keymap = {
   ['r'] = { fzf.oldfiles, 'recent files' },
 }
 
+local gitsigns = require('gitsigns')
 local git_keymap = {
   name = 'git',
   -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
@@ -100,7 +101,8 @@ local git_keymap = {
   -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
   -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-  -- u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", 'unstage' },
+  ['+'] = { gitsigns.stage_hunk, 'stage hunk' },
+  ['-'] = { gitsigns.undo_stage_hunk, 'unstage hunk' },
   ['2'] = cmd('diffget //2'),
   ['3'] = cmd('diffget //3'),
   a = cmd('Gwrite', 'git add'),
