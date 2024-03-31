@@ -8,6 +8,9 @@ function! GitFileMode()
   nmap <buffer> q :q<CR>
   nmap <buffer> <tab> =
   setlocal nonumber
+  setlocal foldmethod=syntax
+  setlocal foldlevelstart=0
+  setlocal foldlevel=0
 endfunction
 
 augroup fugitiveGroup
