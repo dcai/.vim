@@ -124,15 +124,6 @@ Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
 Plug 'preservim/vimux'
 let g:VimuxOrientation = "h"
 """""""""""""""""""""""""""""""""""""""
-""" vim-sneak
-""" alternatives:
-"""   hop, leap.nvim, clever-f
-"""""""""""""""""""""""""""""""""""""""
-Plug 'justinmk/vim-sneak'
-let g:sneak#label = 1
-" case insensitive search
-let g:sneak#use_ic_scs = 1
-"""""""""""""""""""""""""""""""""""""""
 """ utils
 """""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-dispatch'
@@ -231,6 +222,15 @@ if s:oldvim
   " vmap <Leader>t= :Tabularize /=<CR>
   " nmap <Leader>t: :Tabularize /:\zs<CR>
   " vmap <Leader>t: :Tabularize /:\zs<CR>
+  """""""""""""""""""""""""""""""""""""""
+  """ vim-sneak
+  """ alternatives:
+  """   hop, leap.nvim, clever-f
+  """""""""""""""""""""""""""""""""""""""
+  Plug 'justinmk/vim-sneak'
+  let g:sneak#label = 1
+  " case insensitive search
+  let g:sneak#use_ic_scs = 1
 endif
 
 if g:osuname ==? 'Windows'
