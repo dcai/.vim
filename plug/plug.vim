@@ -144,7 +144,7 @@ Plug 'reedes/vim-lexical'
 Plug 'djoshea/vim-autoread'
 Plug 'andymass/vim-matchup'
 Plug 'tyru/open-browser.vim'
-" Plug 'mbbill/undotree'
+Plug 'mbbill/undotree'
 """""""""""""""""""""""""""""""""""""""
 """ bufferize
 """""""""""""""""""""""""""""""""""""""
