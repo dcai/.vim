@@ -46,24 +46,13 @@ nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
 nnoremap <leader>sp :sp<cr>
 
-" Format entire buffer
-" credit: http://vim.wikia.com/wiki/Fix_indentation
-" how this works:
-"   mz: mark current location to `z`
-"   gg: go to file top
-"   =: format
-"   G: to the end of file
-"   `z: jump back to mark `z`
-"   gg=G would reformat the whole file but lose current location
-nnoremap = mzgg=G`z
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" apply to all modes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " next item in quickfix
-nmap <c-j> <ESC>:cn<CR>
+map <c-j> <ESC>:cn<CR>
 " prev item in quickfix
-nmap <c-k> <ESC>:cp<CR>
+map <c-k> <ESC>:cp<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" command"line mode
@@ -77,6 +66,5 @@ cnoremap w!! w !sudo tee % >/dev/null
 ""  Press Ctrl-O switches to normal mode for one command
 ""  http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" inoremap jk <Esc>
 inoremap jj <Esc>:w!<cr>
 inoremap <C-c>  <ESC>
