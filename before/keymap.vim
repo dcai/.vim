@@ -61,9 +61,9 @@ nnoremap = mzgg=G`z
 "" apply to all modes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " next item in quickfix
-map <c-j> <ESC>:cn<CR>
+nmap <c-j> <ESC>:cn<CR>
 " prev item in quickfix
-map <c-k> <ESC>:cp<CR>
+nmap <c-k> <ESC>:cp<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" command"line mode
