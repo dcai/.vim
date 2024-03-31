@@ -7,7 +7,7 @@ end
 autosave.setup({
   enabled = true,
   -- saves the file at most every `debounce_delay` milliseconds
-  debounce_delay = 2000,
+  debounce_delay = 10000,
   execution_message = {
     message = function()
       return ('auto-save: saved at ' .. vim.fn.strftime('%H:%M:%S'))
@@ -15,7 +15,8 @@ autosave.setup({
     dim = 0.18, -- dim the color of `message`
     cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
   },
-  trigger_events = { 'InsertLeave', 'TextChanged' }, -- vim events that trigger auto-save. See :h events
+  -- vim events that trigger auto-save. See :h events
+  trigger_events = { 'InsertLeave', 'TextChanged' },
   condition = function(buf)
     local fn = vim.fn
     local modifiable = fn.getbufvar(buf, '&modifiable') == 1
