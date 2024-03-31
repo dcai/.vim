@@ -61,6 +61,40 @@ fzflua.setup({
       },
     },
   },
+  keymap = {
+    -- These override the default tables completely
+    -- no need to set to `false` to disable a bind
+    -- delete or modify is sufficient
+    builtin = {
+      -- neovim `:tmap` mappings for the fzf win
+      ['<F1>'] = 'toggle-help',
+      ['<F2>'] = 'toggle-fullscreen',
+      -- Only valid with the 'builtin' previewer
+      ['<F3>'] = 'toggle-preview-wrap',
+      ['<F4>'] = 'toggle-preview',
+      -- Rotate preview clockwise/counter-clockwise
+      ['<F5>'] = 'toggle-preview-ccw',
+      ['<F6>'] = 'toggle-preview-cw',
+      ['<S-down>'] = 'preview-page-down',
+      ['<S-up>'] = 'preview-page-up',
+      ['<S-left>'] = 'preview-page-reset',
+    },
+    fzf = {
+      -- fzf '--bind=' options
+      ['ctrl-z'] = 'abort',
+      ['ctrl-u'] = 'unix-line-discard',
+      ['ctrl-a'] = 'beginning-of-line',
+      ['ctrl-e'] = 'end-of-line',
+      ['alt-a'] = 'toggle-all',
+      ['ctrl-f'] = 'half-page-down',
+      ['ctrl-b'] = 'half-page-up',
+      -- Only valid with fzf previewers (bat/cat/git/etc)
+      ['f3'] = 'toggle-preview-wrap',
+      ['ctrl-/'] = 'toggle-preview',
+      ['ctrl-j'] = 'preview-page-down',
+      ['ctrl-k'] = 'preview-page-up',
+    },
+  },
   fzf_opts = {
     -- set to `false` to remove a flag
     -- set to `true` for a no-value flag
@@ -187,6 +221,28 @@ fzflua.setup({
       -- ["M"]        = { icon = "★", color = "red" },
       -- ["D"]        = { icon = "✗", color = "red" },
       -- ["A"]        = { icon = "+", color = "green" },
+    },
+    commits = {
+      prompt = 'Commits❯ ',
+      winopts = {
+        height = 1,
+        fullscreen = true,
+        preview = { hidden = 'nohidden' },
+      },
+      cmd = [[git log --color --pretty=format:"%C(yellow)%h%Creset ]]
+        .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
+      preview = 'git show --color {1}',
+      -- git-delta is automatically detected as pager, uncomment to disable
+      -- preview_pager = false,
+      actions = {
+        ['default'] = function(selected, opts)
+          local line = selected[1]
+          local commit_hash = line:match('[^ ]+')
+          vim.cmd('Git show ' .. commit_hash)
+        end,
+        -- remove `exec_silent` or set to `false` to exit after yank
+        ['ctrl-y'] = { fn = actions.git_yank_commit, exec_silent = true },
+      },
     },
     files = {
       prompt = 'GitFiles❯ ',
