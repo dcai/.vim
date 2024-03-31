@@ -295,3 +295,14 @@ nnoremap <silent> <leader>ww :w<CR><CR>
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 " sudo write
 cnoremap w!! w !sudo tee % >/dev/null
+
+" Format entire buffer
+" credit: http://vim.wikia.com/wiki/Fix_indentation
+" how this works:
+"   mz: mark current location to `z`
+"   gg: go to file top
+"   =: format
+"   G: to the end of file
+"   `z: jump back to mark `z`
+"   gg=G would reformat the whole file but lose current location
+nnoremap = mzgg=G`z
