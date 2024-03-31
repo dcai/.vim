@@ -98,7 +98,7 @@ local function common_on_attach(client, buffer)
   nmap('R', vim.lsp.buf.rename, 'rename variable')
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
   nmap('gr', vim.lsp.buf.references, 'go to references')
-  nmap('OI', function()
+  nmap('II', function()
     if organize_imports[client.name] then
       organize_imports[client.name](client, buffer)
     else
