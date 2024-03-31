@@ -16,7 +16,8 @@ mini_surround.setup({
   mappings = {
     replace = 'cs', -- Replace surrounding
     delete = 'ds', -- Delete surrounding
-    add = 'ys', -- Add surrounding in Normal and Visual modes
+    --- don't use ys as it slows down the yank action
+    -- add = 'ys', -- Add surrounding in Normal and Visual modes
 
     find = '', -- Find surrounding (to the right)
     find_left = '', -- Find surrounding (to the left)
