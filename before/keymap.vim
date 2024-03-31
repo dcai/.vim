@@ -31,8 +31,9 @@ nnoremap U :redo<cr>
 nnoremap WW :w!<cr>
 nnoremap XX :ccl<cr>:lcl<cr>:pcl<cr>:helpclose<cr>
 nnoremap XC :cexpr []<cr>:lexpr []<cr>
-nnoremap QQ :qall<cr>
-nnoremap QA :qall!<cr>
+nnoremap ZZ :qall<cr>
+" nnoremap QQ :qall<cr>
+" nnoremap QA :qall!<cr>
 nnoremap ON :on<cr>
 nnoremap BD :bd!<cr>
 nnoremap <silent> j gj
