@@ -6,7 +6,7 @@ end
 local fzf = require('fzf-lua')
 local marlin = require('marlin')
 local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
-local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
+local subl = [[/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl]]
 
 local function cmd(vim_cmd, desc, notify_after)
   return {
