@@ -116,6 +116,14 @@ local git_keymap = {
   H = dp('git stash pop', 'git stash pop'),
   -- l = cmd('Gllog', 'list commits'),
   l = { fzf.git_commits, 'git log' },
+  L = {
+    function()
+      -- local current_file_path = vim.fn.expand('%:p')
+      local current_file_path = vim.api.nvim_buf_get_name(0)
+      vim.cmd('Git log ' .. current_file_path)
+    end,
+    "current buffer's git log",
+  },
   m = { require('gitsigns').blame_line, 'blame line' },
   M = cmd('Git blame', 'git blame'),
   p = dp('git push -u --no-verify', 'git push'),
