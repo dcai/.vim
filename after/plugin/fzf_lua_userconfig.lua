@@ -86,13 +86,13 @@ fzflua.setup({
       ['ctrl-a'] = 'beginning-of-line',
       ['ctrl-e'] = 'end-of-line',
       ['alt-a'] = 'toggle-all',
-      ['ctrl-f'] = 'half-page-down',
-      ['ctrl-b'] = 'half-page-up',
+      ['ctrl-n'] = 'half-page-down',
+      ['ctrl-p'] = 'half-page-up',
       -- Only valid with fzf previewers (bat/cat/git/etc)
       ['f3'] = 'toggle-preview-wrap',
       ['ctrl-/'] = 'toggle-preview',
-      ['ctrl-j'] = 'preview-page-down',
-      ['ctrl-k'] = 'preview-page-up',
+      ['ctrl-f'] = 'preview-page-down',
+      ['ctrl-b'] = 'preview-page-up',
     },
   },
   fzf_opts = {
@@ -230,8 +230,8 @@ fzflua.setup({
         preview = { hidden = 'nohidden' },
       },
       cmd = [[git log --color --pretty=format:"%C(yellow)%h%Creset ]]
-        .. [[%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
-      preview = 'git show --color {1}',
+        .. [[%Cgreen(%><(12)%ch%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
+      preview = 'git show --format=fuller --color {1}',
       -- git-delta is automatically detected as pager, uncomment to disable
       -- preview_pager = false,
       actions = {
@@ -239,7 +239,7 @@ fzflua.setup({
         ['default'] = function(selected, _opts)
           local line = selected[1]
           local commit_hash = line:match('[^ ]+')
-          vim.cmd('Git show ' .. commit_hash)
+          vim.cmd('Git show --format=fuller ' .. commit_hash)
         end,
         ['ctrl-u'] = function(selected, _opts)
           local line = selected[1]
