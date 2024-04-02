@@ -1,4 +1,6 @@
 command! Greview :Git diff
+let g:fugitive_pty = 0
+let g:fugitive_dynamic_colors = 1
 
 function! GitFileMode()
   nmap <buffer> n )
