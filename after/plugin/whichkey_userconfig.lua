@@ -210,7 +210,7 @@ local notes_keymap = {
         },
       })
     end,
-    'list all notes',
+    'full text search in notes',
   },
 }
 local vimrc_keymap = {
