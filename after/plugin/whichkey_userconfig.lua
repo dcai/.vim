@@ -255,7 +255,10 @@ local chatgpt_keymap_v = {
 local editing_keymap = {
   name = 'edit things',
   a = {
-    marlin.add,
+    function()
+      marlin.add()
+      marlin.save()
+    end,
     'add file to marlin collection',
   },
   D = {
