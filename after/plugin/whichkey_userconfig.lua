@@ -256,15 +256,19 @@ local editing_keymap = {
   name = 'edit things',
   a = {
     function()
+      local f = vim.fn.expand('#')
       marlin.add()
       marlin.save()
+      vim.notify(f .. ' added to marlin')
     end,
     'add file to marlin collection',
   },
   D = {
     function()
+      local f = vim.fn.expand('#')
       marlin.remove()
       marlin.save()
+      vim.notify(f .. ' removed from marlin')
     end,
     'remove file from marlin collection',
   },
