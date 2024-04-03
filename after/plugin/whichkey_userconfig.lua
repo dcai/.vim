@@ -262,7 +262,10 @@ local editing_keymap = {
     'add file to marlin collection',
   },
   D = {
-    marlin.remove,
+    function()
+      marlin.remove()
+      marlin.save()
+    end,
     'remove file from marlin collection',
   },
   e = {
