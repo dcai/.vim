@@ -39,9 +39,18 @@ command! -nargs=0 DisableSpell call EnableLexical(0)
 
 augroup lexical
   autocmd!
+  " disable all by default
   autocmd FileType * call EnableLexical(0)
+  " enable below
+  autocmd FileType go call EnableLexical(1)
+  autocmd FileType javascript call EnableLexical(1)
+  autocmd FileType javascriptreact call EnableLexical(1)
+  autocmd FileType lua call EnableLexical(1)
   autocmd FileType markdown call EnableLexical(1)
+  autocmd FileType org call EnableLexical(1)
+  autocmd FileType python call EnableLexical(1)
   autocmd FileType text call EnableLexical(1)
   autocmd FileType typescript call EnableLexical(1)
-  autocmd FileType javascript call EnableLexical(1)
+  autocmd FileType typescriptreact call EnableLexical(1)
+  autocmd FileType vim call EnableLexical(1)
 augroup END
