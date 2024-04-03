@@ -248,6 +248,10 @@ local chatgpt_keymap_n = {
   d = cmd('GpChatDelete', 'delete chat'),
   f = cmd('GpChatFinder', 'chat Finder'),
 }
+local chatgpt_keymap_v = {
+  name = 'chatgpt',
+  e = { ":'<,'>GpExplain<cr>", 'explain selcted code' },
+}
 local editing_keymap = {
   name = 'edit things',
   a = {
@@ -319,7 +323,7 @@ end
 which_key.register(n_keymap, make_mapping_opts('n'))
 
 local v_keymap = {
-  c = chatgpt_keymap_n,
+  c = chatgpt_keymap_v,
   f = fzf_keymap,
   g = git_keymap,
   l = lsp_keymap,
