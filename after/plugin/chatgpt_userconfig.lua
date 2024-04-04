@@ -3,7 +3,32 @@ if not loaded then
   return
 end
 
+local chatlogs_home = vim.g.dropbox_home
+    and vim.g.dropbox_home .. '/Documents/txt/chatgpt_logs'
+  or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
+
 local config = {
+  chat_dir = vim.fn.expand(chatlogs_home),
+  chat_user_prefix = [[😒 What do you want? ]],
+  -- chat topic model (string with model name or table with model name and parameters)
+  chat_topic_gen_model = 'gpt-3.5-turbo-16k',
+  chat_shortcut_respond = {
+    modes = { 'n', 'i', 'v', 'x' },
+    -- shortcut = '<C-g><C-g>',
+    shortcut = '<c-x><c-x>',
+  },
+  chat_shortcut_delete = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<Plug>vd',
+  },
+  chat_shortcut_stop = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<Plug>vs',
+  },
+  chat_shortcut_new = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<Plug>vn',
+  },
   openai_api_key = os.getenv('OPENAI_API_KEY'),
   -- api endpoint (you can change this to azure endpoint)
   -- prefix for all commands
@@ -76,10 +101,7 @@ local config = {
     },
   },
 
-  -- directory for storing chat files
-  chat_dir = vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats',
   -- chat user prompt prefix
-  chat_user_prefix = 'What do you want to know? ',
   -- chat assistant prompt prefix (static string or a table {static, template})
   -- first string has to be static, second string can contain template {{agent}}
   -- just a static string is legacy and the [{{agent}}] element is added automatically
@@ -88,33 +110,12 @@ local config = {
   -- chat topic generation prompt
   chat_topic_gen_prompt = 'Summarize the topic of our conversation above'
     .. ' in two or three words. Respond only with those words.',
-  -- chat topic model (string with model name or table with model name and parameters)
-  chat_topic_gen_model = 'gpt-3.5-turbo-16k',
   -- explicitly confirm deletion of a chat file
   chat_confirm_delete = true,
   -- conceal model parameters in chat
-  chat_conceal_model_params = true,
-  -- local shortcuts bound to the chat buffer
-  -- (be careful to choose something which will work across specified modes)
-  chat_shortcut_respond = {
-    modes = { 'n', 'i', 'v', 'x' },
-    -- shortcut = '<C-g><C-g>',
-    shortcut = '<leader>v',
-  },
-  chat_shortcut_delete = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vd',
-  },
-  chat_shortcut_stop = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vs',
-  },
-  chat_shortcut_new = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vn',
-  },
+  chat_conceal_model_params = false,
   -- default search term when using :GpChatFinder
-  chat_finder_pattern = 'topic ',
+  chat_finder_pattern = 'topir ',
   -- if true, finished ChatResponder won't move the cursor to the end of the buffer
   chat_free_cursor = false,
 

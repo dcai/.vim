@@ -7,7 +7,7 @@ end
 -- treesitter's yaml parser doesn't get along well with golang template vars like this:
 -- so disabling it
 local disable_file_types = function(ft, _buf)
-  return vim.tbl_contains({ 'yaml', 'yml' }, ft)
+  return vim.tbl_contains({ 'yaml', 'yml', 'markdown', 'md' }, ft)
 end
 treesitter_config.setup({
   auto_install = true,
@@ -142,8 +142,8 @@ treesitter_config.setup({
 local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
 parser_config.tsx.filetype_to_parsername = { 'javascript', 'typescript.tsx' }
 parser_config.gotmpl = {
-  filetype = "gotmpl",
-  used_by = {"gohtmltmpl", "gotexttmpl", "gotmpl", "yaml"}
+  filetype = 'gotmpl',
+  used_by = { 'gohtmltmpl', 'gotexttmpl', 'gotmpl', 'yaml' },
 }
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'

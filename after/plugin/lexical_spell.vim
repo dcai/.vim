@@ -7,7 +7,7 @@ set spelllang=en,cjk
 set nospell
 set spellcapcheck=
 
-let s:dropboxspelldir='$HOME/Library/CloudStorage/Dropbox/src/vimspell'
+let s:dropboxspelldir=g:dropbox_home . '/src/vimspell'
 let s:mthesaurfile=expand(s:dropboxspelldir . '/mthesaur.txt')
 let s:spellfile=expand(s:dropboxspelldir . '/en.utf-8.add')
 
@@ -46,7 +46,6 @@ augroup lexical
   autocmd FileType javascript call EnableLexical(1)
   autocmd FileType javascriptreact call EnableLexical(1)
   autocmd FileType lua call EnableLexical(1)
-  autocmd FileType markdown call EnableLexical(1)
   autocmd FileType org call EnableLexical(1)
   autocmd FileType python call EnableLexical(1)
   autocmd FileType text call EnableLexical(1)
