@@ -245,7 +245,7 @@ local chatgpt_keymap_n = {
   name = 'chatgpt',
   n = cmd('GpChatNew', 'new Chat'),
   c = cmd('GpChatToggle', 'toggle Chat'),
-  d = cmd('GpChatDelete', 'delete chat'),
+  D = cmd('GpChatDelete', 'delete chat'),
   f = cmd('GpChatFinder', 'chat Finder'),
 }
 local chatgpt_keymap_v = {
