@@ -7,7 +7,7 @@ end
 -- treesitter's yaml parser doesn't get along well with golang template vars like this:
 -- so disabling it
 local disable_file_types = function(ft, _buf)
-  return vim.tbl_contains({ 'yaml', 'yml', 'markdown', 'md' }, ft)
+  return vim.tbl_contains({ 'yaml', 'yml' }, ft)
 end
 treesitter_config.setup({
   auto_install = true,
