@@ -246,11 +246,17 @@ local chatgpt_keymap_n = {
   D = cmd('GpChatDelete', 'delete chat'),
   c = cmd('GpNew', 'Enter a prompt'),
   f = cmd('GpChatFinder', 'chat Finder'),
+  n = cmd('GpChatNew', 'new chat'),
   t = cmd('GpChatToggle', 'Toggle chat'),
 }
+
+local function wrapGpCmd(str)
+  return ":<c-u>'<,'>" .. str .. '<cr>'
+end
 local chatgpt_keymap_v = {
   name = 'chatgpt',
-  e = { ":'<,'>GpExplain<cr>", 'explain selcted code' },
+  n = { wrapGpCmd('GpChatNew'), 'visual new chat' },
+  e = { wrapGpCmd('GpExplain'), 'explain selcted code' },
 }
 local editing_keymap = {
   name = 'edit things',
