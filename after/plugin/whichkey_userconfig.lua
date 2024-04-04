@@ -195,9 +195,8 @@ local notes_keymap = {
     end,
     'list all notes',
   },
-  s = {
+  ['.'] = {
     function()
-      print(vim.g.notes_home)
       fzf.live_grep({
         cwd = vim.g.notes_home,
         file_ignore_patterns = {
