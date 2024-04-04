@@ -243,10 +243,10 @@ local vimrc_keymap = {
 
 local chatgpt_keymap_n = {
   name = 'chatgpt',
-  n = cmd('GpChatNew', 'new Chat'),
-  c = cmd('GpChatToggle', 'toggle Chat'),
   D = cmd('GpChatDelete', 'delete chat'),
+  c = cmd('GpNew', 'Enter a prompt'),
   f = cmd('GpChatFinder', 'chat Finder'),
+  t = cmd('GpChatToggle', 'Toggle chat'),
 }
 local chatgpt_keymap_v = {
   name = 'chatgpt',
