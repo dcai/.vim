@@ -3,7 +3,7 @@
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 
-let g:dropbox_home = '$HOME/Library/CloudStorage/Dropbox'
+let g:dropbox_home = expand('$HOME/Library/CloudStorage/Dropbox')
 let g:vim_home = expand('<sfile>:p:h')
 
 let g:vim_data = '$HOME/.local/share/vim'
