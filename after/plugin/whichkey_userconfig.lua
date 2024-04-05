@@ -143,6 +143,12 @@ local lsp_keymap = {
   a = { vim.lsp.buf.code_action, 'code action' },
   f = { vim.lsp.buf.format, 'format code' },
   I = cmd('LspInfo', 'lsp info'),
+  p = {
+    function()
+      require('lspsaga.definition'):init(2, 1)
+    end,
+    'Peek type',
+  },
   r = { vim.lsp.buf.rename, 'rename' },
   q = { fzf.quickfix, 'linting' },
 }
