@@ -29,7 +29,7 @@ let g:ale_xml_xmllint_indentsize = 4
 " javascript
 " let g:ale_javascript_eslint_executable = ''
 let g:ale_javascript_eslint_suppress_missing_config = 1
-let g:ale_javascript_eslint_use_global = 1
+let g:ale_javascript_eslint_use_global = 0
 " let g:ale_javascript_prettier_executable = 'prettierd'
 " shouldn't global prettier as the project might
 " use different version which generates different format
