@@ -57,6 +57,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'c': ['clang-format'],
+  \ 'cs': ['clang-format'],
+  \ 'cpp': ['clang-format'],
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'fish': ['fish_indent'],
@@ -64,6 +66,7 @@ let g:ale_fixers = {
   \ 'graphql': ['prettier'],
   \ 'html': ['prettier'],
   \ 'gotmpl': ['prettier'],
+  \ 'java': ['clang-format'],
   \ 'javascript': ['prettier'],
   \ 'javascriptreact': ['prettier'],
   \ 'json': ['prettier'],
