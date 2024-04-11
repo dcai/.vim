@@ -27,7 +27,7 @@ autosave.setup({
 
     for _, item in ipairs(blacklist_dirs) do
       if string.find(filepath, item) then
-        print("Match for '" .. item .. "' found in '" .. filepath .. "'")
+        print("auto-save: '" .. item .. "' found in " .. filepath)
         return false
       end
     end
