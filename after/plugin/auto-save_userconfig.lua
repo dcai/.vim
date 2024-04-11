@@ -16,13 +16,24 @@ autosave.setup({
     cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
   },
   -- vim events that trigger auto-save. See :h events
-  trigger_events = { 'InsertLeave', 'TextChanged' },
+  -- trigger_events = { 'InsertLeave', 'TextChanged' },
+  trigger_events = { 'InsertLeave' },
   condition = function(buf)
-    local fn = vim.fn
-    local modifiable = fn.getbufvar(buf, '&modifiable') == 1
-    local ft = fn.getbufvar(buf, '&filetype')
-    local blacklist = { 'sagafinder', 'harpoon' }
-    if modifiable and not vim.tbl_contains(blacklist, ft) then
+    local filepath = vim.fn.expand('%:p')
+
+    local modifiable = vim.fn.getbufvar(buf, '&modifiable') == 1
+    local ft = vim.fn.getbufvar(buf, '&filetype')
+    local blacklist_dirs = { '/hammerspoon/' }
+
+    for _, item in ipairs(blacklist_dirs) do
+      if string.find(filepath, item) then
+        print("Match for '" .. item .. "' found in '" .. filepath .. "'")
+        return false
+      end
+    end
+
+    local blacklist_filetypes = { 'sagafinder', 'harpoon' }
+    if modifiable and not vim.tbl_contains(blacklist_filetypes, ft) then
       return true
     end
     return false
