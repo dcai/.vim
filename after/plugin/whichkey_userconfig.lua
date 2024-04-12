@@ -7,6 +7,7 @@ local fzf = require('fzf-lua')
 local marlin = require('marlin')
 local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
 local subl = [[/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl]]
+local zed = [[/opt/homebrew/bin/zed]]
 
 local function cmd(vim_cmd, desc, notify_after)
   return {
@@ -181,8 +182,9 @@ local openthings_keymap = {
     'open in folder',
   },
   f = {
-    dp(subl .. ' %'),
-    'open file in sublime',
+    -- dp(subl .. ' %'),
+    dp(zed .. ' %'),
+    'open file in gui editor',
   },
   g = { open_git_hosting_web, 'open file in git web' },
 }
