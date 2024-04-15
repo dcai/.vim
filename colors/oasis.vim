@@ -106,6 +106,10 @@ let s:niceyellow = '#F0D000'
 let s:nicedarkgreen = '#012619'
 let s:nicemidgreen =  '#295535'
 let s:nicelightgreen = '#A6CC57'
+let s:nicered = '#B30000'
+let s:niceblue = '#0040FF'
+let s:nicegray = '#8F8F8F'
+let s:nicepurple = '#ca5cdd'
 
 let s:defaultctermbg = s:none
 let s:defaultctermfg = s:white
@@ -113,13 +117,14 @@ let s:defaultguifg   = s:nicewhite
 let s:defaultguibg   = s:nicedarkgreen
 
 let s:comment       = {'fg': s:gray, 'cterm': s:italic}
-let s:identifier    = {'fg': s:yellow, 'bg': s:none}
+" let s:identifier    = {'fg': s:magenta, 'guifg': s:nicepurple, 'bg': s:none}
+let s:identifier    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
 let s:repeat        = {'fg': s:yellow}
 let s:conditional   = {'fg': s:cyan, 'bg': s:darkgray}
 let s:boolean       = {'fg': s:blue}
 let s:number        = {'fg': s:darkyellow}
 let s:function      = {'fg': s:green, 'bg': s:none}
-let s:variable      = {'fg': s:darkyellow, 'bg': s:none}
+let s:variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
 let s:special       = {'fg': s:red, 'bg': s:none}
 let s:search        = {'fg': s:black, 'bg': s:darkyellow, 'cterm': 'bold'}
 let s:string        = {'fg': s:darkgray}
@@ -127,10 +132,14 @@ let s:field         = {'fg': s:yellow, 'bg': s:none}
 " = > semicolon brackets
 let s:delimiter     = {'fg': s:yellow, 'bg': s:none}
 " + - / * =
-let s:operator      = {'fg': s:red}
+let s:operator      = {'fg': s:magenta,'guifg':s:nicepurple}
+" public, protected, private, abstract
+let s:modifier      = {'fg': s:gray}
 let s:type          = {'fg': s:darkyellow, 'bg': s:none}
 let s:keywordfg     = s:cyan
 let s:keywordbg     = s:black
+let s:keywordguifg  = s:niceyellow
+let s:keywordguibg  = s:none
 let s:exceptionfg   = s:red
 
 function! s:get_or(value, key, default)
@@ -267,7 +276,7 @@ let s:syntax = {
       \ 'Exception':    {'fg': s:red, 'bg': s:none},
       \ 'Ignore':       {'fg': s:darkgray, 'cterm': 'bold'},
       \ 'Include':      {'fg': s:darkgray, 'bg': s:none},
-      \ 'Keyword':      {'fg': s:keywordfg,  'bg': s:keywordbg},
+      \ 'Keyword':      {'fg': s:keywordfg,'guifg':s:keywordguifg,'bg': s:keywordbg},
       \ 'Label':        {'fg': s:green},
       \ 'Macro':        {'fg': s:red},
       \ 'Operator':     s:operator,
@@ -281,7 +290,7 @@ let s:syntax = {
       \ 'String':       s:string,
       \ 'Structure':    {'fg': s:red},
       \ 'Tag':          {'fg': s:red},
-      \ 'Todo':         {'fg': s:red},
+      \ 'Todo':         {'bg': s:red, 'guibg': s:red},
       \ 'Type':         s:type,
       \ 'Typedef':      {'fg': s:red},
       \ }
@@ -388,21 +397,28 @@ if has('nvim')
   call s:apply(s:cmp)
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
-        \ '@boolean':          s:boolean,
-        \ '@function':         s:function,
-        \ '@identifier':       s:identifier,
-        \ '@attribute':        {'fg': s:red},
-        \ '@repeat':           s:repeat,
-        \ '@keyword':          {'fg': s:keywordfg},
-        \ '@keyword.function': {'fg': s:yellow},
-        \ '@keyword.return':   {'fg': s:blue},
-        \ '@keyword.operator': s:operator,
-        \ '@conditional':      s:conditional,
-        \ '@variable':         s:variable,
-        \ '@field':            s:field,
-        \ '@parameter':        {'fg': s:blue, 'bg': s:none},
-        \ '@string':           s:string,
-        \ '@exception':        {'fg': s:exceptionfg},
+        \ '@attribute':          {'guifg':s:nicered},
+        \ '@boolean':            s:boolean,
+        \ '@comment.error':      {'guibg':s:red},
+        \ '@comment.todo':       {'guibg':s:white},
+        \ '@comment.warning':    {'guibg':s:yellow},
+        \ '@conditional':        s:conditional,
+        \ '@exception':          {'guifg':s:exceptionfg},
+        \ '@field':              s:field,
+        \ '@function':           s:function,
+        \ '@identifier':         s:identifier,
+        \ '@keyword':            {'guifg':s:keywordguifg},
+        \ '@keyword.function':   {'guifg':s:yellow},
+        \ '@keyword.modifier':   s:modifier,
+        \ '@keyword.operator':   s:operator,
+        \ '@keyword.return':     {'fg':s:blue},
+        \ '@lsp.type.class':     {'guifg':s:nicepurple},
+        \ '@lsp.type.namespace': {'guifg':s:niceblue},
+        \ '@lsp.type.interface': {'guifg':s:nicewhite},
+        \ '@parameter':          {'guifg':s:blue},
+        \ '@repeat':             s:repeat,
+        \ '@string':             s:string,
+        \ '@variable':           s:variable,
         \ }
   call s:apply(s:treesitter)
 endif
