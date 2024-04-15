@@ -10,7 +10,7 @@ if codeium_loaded then
   codeium.setup({})
 end
 
-local function check_back_space()
+local function _check_back_space()
   local col = vim.fn.col('.') - 1
   if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
     return true
@@ -41,7 +41,7 @@ local function feedkeys(key, mode)
   vim.api.nvim_feedkeys(keys, mode, true)
 end
 
-local prioritizeSource = function(source)
+local _prioritizeSource = function(source)
   return function(entry1, entry2)
     if entry1[source] and not entry2[source] then
       return true
@@ -100,7 +100,7 @@ local handle_down = cmp.mapping(function(fallback)
   end
 end, { 'i', 's' })
 
-local source_tmux = {
+local _source_tmux = {
   name = 'tmux',
   -- priority = 1,
   group_index = 10,

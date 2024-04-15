@@ -1,7 +1,7 @@
-local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
-if not fzflua_loaded then
-  return
-end
+-- local fzflua_loaded, fzflua = pcall(require, 'fzf-lua')
+-- if not fzflua_loaded then
+--   return
+-- end
 
 vim.g.notes_home = vim.g.dropbox_home .. '/Documents/txt'
 
