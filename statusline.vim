@@ -22,7 +22,11 @@ endfunction
 
 function! GitBranch()
   let l:cmd="git rev-parse --abbrev-ref HEAD 2>/dev/null | fold -w30 | head -n1"
-  return trim(system(l:cmd))
+  let l:branch = trim(system(l:cmd))
+  if empty(l:branch)
+    return 'NOT IN GIT'
+  endif
+  return l:branch
 endfunction
 
 " got from https://jdhao.github.io/2019/11/03/vim_custom_statusline/
@@ -53,10 +57,10 @@ set statusline+=%m
 set statusline+=%=
 set statusline+=%6*  " start User6 highlight group
 " cursor line/total lines
-set statusline+=\[%l\]\ /\ %L
+set statusline+=\ \[%l\]\ /\ %L
 set statusline+=\ \|\ Col:\ %c
 " reset highlight group
-set statusline+=%0*
+set statusline+=\ %0*
 " filetype
 set statusline+=\ %y
 set statusline+=[
@@ -71,4 +75,6 @@ set statusline+=]
 set statusline+=%h
 " read only flag
 set statusline+=%r
+set statusline+=\ %1*  " start User1 highlight group
 set statusline+=\[%{GitBranch()}\]
+set statusline+=%0*
