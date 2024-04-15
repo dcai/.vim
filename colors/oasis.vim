@@ -113,13 +113,14 @@ let s:niceblue = '#87ceeb'
 let s:nicegray = '#8F8F8F'
 let s:nicepurple = '#ca5cdd'
 let s:slategray = '#708090'
+let s:darkslategray = '#2F4F4F'
 
 let s:defaultctermbg = s:none
 let s:defaultctermfg = s:white
 let s:defaultguifg   = s:beige
 let s:defaultguibg   = s:nicedarkgreen
 
-let s:comment       = {'fg': s:gray, 'cterm': s:italic}
+let s:comment       = {'fg': s:gray,'guifg':s:darkslategray,'cterm': s:italic}
 " let s:identifier    = {'fg': s:magenta, 'guifg': s:nicepurple, 'bg': s:none}
 let s:identifier    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
 let s:repeat        = {'fg': s:yellow}
