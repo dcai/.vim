@@ -44,7 +44,7 @@ let g:currentmode={
 
 set statusline=
 " use User5 highlight group
-set statusline+=%5*
+set statusline+=%2*
 set statusline+=%{toupper(g:currentmode[mode()])}
 " reset highlight group
 set statusline+=%0*
@@ -55,7 +55,7 @@ set statusline+=%m
 " set statusline+=[%{LinterStatus()}]
 " left/right separator
 set statusline+=%=
-set statusline+=%6*  " start User6 highlight group
+set statusline+=%2*  " start User2 highlight group
 " cursor line/total lines
 set statusline+=\ \[%l\]\ /\ %L
 set statusline+=\ \|\ Col:\ %c

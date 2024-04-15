@@ -101,19 +101,22 @@ if s:termguicolors
 endif
 
 let s:niceblack = '#0F0F0F'
-let s:nicewhite = '#F0F0F0'
+let s:beige = '#f5f5dc'
+let s:ivory = '#fffff0'
+let s:olive = '#808000'
 let s:niceyellow = '#F0D000'
 let s:nicedarkgreen = '#012619'
 let s:nicemidgreen =  '#295535'
 let s:nicelightgreen = '#A6CC57'
 let s:nicered = '#B30000'
-let s:niceblue = '#0040FF'
+let s:niceblue = '#87ceeb'
 let s:nicegray = '#8F8F8F'
 let s:nicepurple = '#ca5cdd'
+let s:slategray = '#708090'
 
 let s:defaultctermbg = s:none
 let s:defaultctermfg = s:white
-let s:defaultguifg   = s:nicewhite
+let s:defaultguifg   = s:beige
 let s:defaultguibg   = s:nicedarkgreen
 
 let s:comment       = {'fg': s:gray, 'cterm': s:italic}
@@ -127,8 +130,9 @@ let s:function      = {'fg': s:green, 'bg': s:none}
 let s:variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
 let s:special       = {'fg': s:red, 'bg': s:none}
 let s:search        = {'fg': s:black, 'bg': s:darkyellow, 'cterm': 'bold'}
-let s:string        = {'fg': s:darkgray}
+let s:string        = {'fg': s:darkgray,'guifg':s:slategray}
 let s:field         = {'fg': s:yellow, 'bg': s:none}
+let s:badspell      = {'fg': s:darkgray, 'cterm': s:underline}
 " = > semicolon brackets
 let s:delimiter     = {'fg': s:yellow, 'bg': s:none}
 " + - / * =
@@ -138,7 +142,7 @@ let s:modifier      = {'fg': s:gray}
 let s:type          = {'fg': s:darkyellow, 'bg': s:none}
 let s:keywordfg     = s:cyan
 let s:keywordbg     = s:black
-let s:keywordguifg  = s:niceyellow
+let s:keywordguifg  = s:niceblue
 let s:keywordguibg  = s:none
 let s:exceptionfg   = s:red
 
@@ -241,10 +245,10 @@ let s:ui = {
       \ 'Search':       s:search,
       \ 'IncSearch':    s:search,
       \ 'SignColumn':   {'bg': s:none},
-      \ 'SpellBad':     {'fg': s:darkyellow, 'cterm': s:underline},
-      \ 'SpellCap':     {'fg': s:darkyellow, 'cterm': s:underline},
-      \ 'SpellLocal':   {'fg': s:darkyellow, 'cterm': s:underline},
-      \ 'SpellRare':    {'fg': s:darkyellow, 'cterm': s:underline},
+      \ 'SpellBad':     s:badspell,
+      \ 'SpellCap':     s:badspell,
+      \ 'SpellLocal':   s:badspell,
+      \ 'SpellRare':    s:badspell,
       \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
       \ 'Underlined':   {'cterm': s:underline},
       \ 'VertSplit':    {'fg': s:green},
@@ -252,11 +256,11 @@ let s:ui = {
       \ 'VisualNOS':    {'cterm': s:underline},
       \ 'WarningMsg':   {'fg': s:yellow},
       \ 'User1':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User2':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User3':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User4':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User5':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User6':        {'guibg':s:niceyellow,'guifg':s:nicedarkgreen},
+      \ 'User2':        {'guibg':s:niceyellow,'guifg':s:nicedarkgreen},
+      \ 'User3':        {'guibg':s:nicepurple,'guifg':s:nicedarkgreen},
+      \ 'User4':        {'guibg':s:niceblue,'guifg':s:nicedarkgreen},
+      \ 'User5':        {'guibg':s:niceblack,'guifg':s:nicedarkgreen},
+      \ 'User6':        {'guibg':s:nicegray,'guifg':s:nicedarkgreen},
       \ }
 call s:apply(s:ui)
 
@@ -292,7 +296,7 @@ let s:syntax = {
       \ 'Tag':          {'fg': s:red},
       \ 'Todo':         {'bg': s:red, 'guibg': s:red},
       \ 'Type':         s:type,
-      \ 'Typedef':      {'fg': s:red},
+      \ 'Typedef':      {'fg': s:magenta},
       \ }
 call s:apply(s:syntax)
 
@@ -399,9 +403,9 @@ if has('nvim')
   let s:treesitter = {
         \ '@attribute':          {'guifg':s:nicered},
         \ '@boolean':            s:boolean,
-        \ '@comment.error':      {'guibg':s:red},
-        \ '@comment.todo':       {'guibg':s:white},
-        \ '@comment.warning':    {'guibg':s:yellow},
+        \ '@comment.error':      {'guifg':s:red},
+        \ '@comment.todo':       {'guifg':s:white},
+        \ '@comment.warning':    {'guifg':s:yellow},
         \ '@conditional':        s:conditional,
         \ '@exception':          {'guifg':s:exceptionfg},
         \ '@field':              s:field,
@@ -411,13 +415,15 @@ if has('nvim')
         \ '@keyword.function':   {'guifg':s:yellow},
         \ '@keyword.modifier':   s:modifier,
         \ '@keyword.operator':   s:operator,
-        \ '@keyword.return':     {'fg':s:blue},
+        \ '@keyword.return':     {'guifg':s:blue},
         \ '@lsp.type.class':     {'guifg':s:nicepurple},
+        \ '@lsp.type.interface': {'guifg':s:beige},
         \ '@lsp.type.namespace': {'guifg':s:niceblue},
-        \ '@lsp.type.interface': {'guifg':s:nicewhite},
+        \ '@lsp.type.struct':    {'guifg':s:black},
         \ '@parameter':          {'guifg':s:blue},
         \ '@repeat':             s:repeat,
         \ '@string':             s:string,
+        \ '@type.definition':    {'guifg':s:olive},
         \ '@variable':           s:variable,
         \ }
   call s:apply(s:treesitter)
