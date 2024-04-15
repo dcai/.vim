@@ -168,6 +168,10 @@ nvim_lspconfig.csharp_ls.setup({
   on_attach = common_on_attach,
 })
 
+nvim_lspconfig.mojo.setup({
+  on_attach = common_on_attach,
+})
+
 local lua_runtime_path = vim.split(package.path, ';')
 table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')

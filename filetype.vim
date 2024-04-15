@@ -143,6 +143,9 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile .eslintrc set filetype=json5
   autocmd BufRead,BufNewFile */mdk/config-dist.json set filetype=json5
 
+  " mojo
+  autocmd BufRead,BufNewFile *.mojo set filetype=mojo
+
   " graphql
   autocmd BufNewFile,BufRead *.prisma setfiletype graphql
 
