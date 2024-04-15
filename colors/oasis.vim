@@ -114,38 +114,44 @@ let s:nicegray = '#8F8F8F'
 let s:nicepurple = '#ca5cdd'
 let s:slategray = '#708090'
 let s:darkslategray = '#2F4F4F'
+let s:seagreen = '#2E8B57'
+let s:limegreen = '#32CD32'
+let s:lime = '#00FF00'
+let s:forestgreen = '#228B22'
+let s:teal = '#008080'
+
+let s:keywordfg     = s:cyan
+let s:keywordbg     = s:black
+let s:keywordguifg  = s:niceblue
+let s:keywordguibg  = s:none
+let s:exceptionfg   = s:red
 
 let s:defaultctermbg = s:none
 let s:defaultctermfg = s:white
 let s:defaultguifg   = s:beige
 let s:defaultguibg   = s:nicedarkgreen
 
-let s:comment       = {'fg': s:gray,'guifg':s:darkslategray,'cterm': s:italic}
+let s:dict_comment       = {'fg': s:gray,'guifg':s:darkslategray,'cterm': s:italic}
 " let s:identifier    = {'fg': s:magenta, 'guifg': s:nicepurple, 'bg': s:none}
-let s:identifier    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
-let s:repeat        = {'fg': s:yellow}
-let s:conditional   = {'fg': s:cyan, 'bg': s:darkgray}
-let s:boolean       = {'fg': s:blue}
-let s:number        = {'fg': s:darkyellow}
-let s:function      = {'fg': s:green, 'bg': s:none}
-let s:variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
-let s:special       = {'fg': s:red, 'bg': s:none}
-let s:search        = {'fg': s:black, 'bg': s:darkyellow, 'cterm': 'bold'}
-let s:string        = {'fg': s:darkgray,'guifg':s:slategray}
-let s:field         = {'fg': s:yellow, 'bg': s:none}
-let s:badspell      = {'fg': s:darkgray, 'cterm': s:underline}
+let s:dict_identifier    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
+let s:dict_repeat        = {'fg': s:yellow}
+let s:dict_conditional   = {'fg': s:cyan, 'bg': s:darkgray}
+let s:dict_boolean       = {'fg': s:blue}
+let s:dict_number        = {'fg': s:darkyellow}
+let s:dict_function      = {'fg': s:green, 'bg': s:none}
+let s:dict_variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
+let s:dict_special       = {'fg': s:red, 'bg': s:none}
+let s:dict_search        = {'fg': s:black, 'bg': s:darkyellow, 'cterm': 'bold'}
+let s:dict_string        = {'fg': s:darkgray,'guifg':s:slategray}
+let s:dict_field         = {'fg': s:yellow, 'bg': s:none}
+let s:dict_badspell      = {'fg': s:darkgray, 'cterm': s:underline}
 " = > semicolon brackets
-let s:delimiter     = {'fg': s:yellow, 'bg': s:none}
+let s:dict_delimiter     = {'fg': s:yellow, 'bg': s:none}
 " + - / * =
-let s:operator      = {'fg': s:magenta,'guifg':s:nicepurple}
+let s:dict_operator      = {'fg': s:magenta,'guifg':s:nicepurple}
 " public, protected, private, abstract
-let s:modifier      = {'fg': s:gray}
-let s:type          = {'fg': s:darkyellow, 'bg': s:none}
-let s:keywordfg     = s:cyan
-let s:keywordbg     = s:black
-let s:keywordguifg  = s:niceblue
-let s:keywordguibg  = s:none
-let s:exceptionfg   = s:red
+let s:dict_modifier      = {'fg': s:gray}
+let s:dict_type          = {'fg': s:darkyellow, 'bg': s:none}
 
 function! s:get_or(value, key, default)
   return has_key(a:value, a:key) ? a:value[a:key] : a:default
@@ -243,13 +249,13 @@ let s:ui = {
       \ 'PmenuThumb':   {'bg': s:yellow},
       \ 'Question':     {'fg': s:green},
       \ 'Quote':        {'fg': s:yellow},
-      \ 'Search':       s:search,
-      \ 'IncSearch':    s:search,
+      \ 'Search':       s:dict_search,
+      \ 'IncSearch':    s:dict_search,
       \ 'SignColumn':   {'bg': s:none},
-      \ 'SpellBad':     s:badspell,
-      \ 'SpellCap':     s:badspell,
-      \ 'SpellLocal':   s:badspell,
-      \ 'SpellRare':    s:badspell,
+      \ 'SpellBad':     s:dict_badspell,
+      \ 'SpellCap':     s:dict_badspell,
+      \ 'SpellLocal':   s:dict_badspell,
+      \ 'SpellRare':    s:dict_badspell,
       \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
       \ 'Underlined':   {'cterm': s:underline},
       \ 'VertSplit':    {'fg': s:green},
@@ -266,17 +272,17 @@ let s:ui = {
 call s:apply(s:ui)
 
 let s:syntax = {
-      \ 'Boolean':      s:boolean,
-      \ 'Number':       s:number,
-      \ 'Function':     s:function,
-      \ 'Identifier':   s:identifier,
+      \ 'Boolean':      s:dict_boolean,
+      \ 'Number':       s:dict_number,
+      \ 'Function':     s:dict_function,
+      \ 'Identifier':   s:dict_identifier,
       \ 'Character':    {'fg': s:red},
-      \ 'Comment':      s:comment,
-      \ 'Conditional':  s:conditional,
+      \ 'Comment':      s:dict_comment,
+      \ 'Conditional':  s:dict_conditional,
       \ 'Constant':     {'fg': s:darkgreen},
       \ 'Debug':        {'fg': s:gray},
       \ 'Define':       {'bg': s:red},
-      \ 'Delimiter':    s:delimiter,
+      \ 'Delimiter':    s:dict_delimiter,
       \ 'Error':        {'fg': s:gray, 'bg': s:red, 'cterm': 'bold'},
       \ 'Exception':    {'fg': s:red, 'bg': s:none},
       \ 'Ignore':       {'fg': s:darkgray, 'cterm': 'bold'},
@@ -284,19 +290,19 @@ let s:syntax = {
       \ 'Keyword':      {'fg': s:keywordfg,'guifg':s:keywordguifg,'bg': s:keywordbg},
       \ 'Label':        {'fg': s:green},
       \ 'Macro':        {'fg': s:red},
-      \ 'Operator':     s:operator,
+      \ 'Operator':     s:dict_operator,
       \ 'PreCondit':    {'fg': s:keywordfg},
       \ 'PreProc':      {'fg': s:keywordfg},
-      \ 'Repeat':       s:repeat,
-      \ 'Special':      s:special,
-      \ 'SpecialKey':   s:special,
+      \ 'Repeat':       s:dict_repeat,
+      \ 'Special':      s:dict_special,
+      \ 'SpecialKey':   s:dict_special,
       \ 'Statement':    {'fg': s:darkyellow},
       \ 'StorageClass': {'fg': s:darkred},
-      \ 'String':       s:string,
+      \ 'String':       s:dict_string,
       \ 'Structure':    {'fg': s:red},
       \ 'Tag':          {'fg': s:red},
       \ 'Todo':         {'bg': s:red, 'guibg': s:red},
-      \ 'Type':         s:type,
+      \ 'Type':         s:dict_type,
       \ 'Typedef':      {'fg': s:magenta},
       \ }
 call s:apply(s:syntax)
@@ -402,31 +408,40 @@ if has('nvim')
   call s:apply(s:cmp)
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
-        \ '@attribute':          {'guifg':s:nicered},
-        \ '@boolean':            s:boolean,
-        \ '@comment.error':      {'guifg':s:red},
-        \ '@comment.todo':       {'guifg':s:white},
-        \ '@comment.warning':    {'guifg':s:yellow},
-        \ '@conditional':        s:conditional,
-        \ '@exception':          {'guifg':s:exceptionfg},
-        \ '@field':              s:field,
-        \ '@function':           s:function,
-        \ '@identifier':         s:identifier,
-        \ '@keyword':            {'guifg':s:keywordguifg},
-        \ '@keyword.function':   {'guifg':s:yellow},
-        \ '@keyword.modifier':   s:modifier,
-        \ '@keyword.operator':   s:operator,
-        \ '@keyword.return':     {'guifg':s:blue},
-        \ '@lsp.type.class':     {'guifg':s:nicepurple},
-        \ '@lsp.type.interface': {'guifg':s:beige},
-        \ '@lsp.type.namespace': {'guifg':s:niceblue},
-        \ '@lsp.type.struct':    {'guifg':s:black},
-        \ '@lsp.type.enum':      {'guifg':s:olive},
-        \ '@parameter':          {'guifg':s:blue},
-        \ '@repeat':             s:repeat,
-        \ '@string':             s:string,
-        \ '@type.definition':    {'guifg':s:olive},
-        \ '@variable':           s:variable,
+        \ '@attribute':             {'guifg':s:nicered},
+        \ '@boolean':               s:dict_boolean,
+        \ '@comment.error':         {'guifg':s:red},
+        \ '@comment.todo':          {'guifg':s:white},
+        \ '@comment.warning':       {'guifg':s:yellow},
+        \ '@conditional':           s:dict_conditional,
+        \ '@constant':              {'guifg':s:darkgreen},
+        \ '@character':             {'guifg':s:darkgreen},
+        \ '@exception':             {'guifg':s:exceptionfg},
+        \ '@function':              s:dict_function,
+        \ '@keyword':               {'guifg':s:keywordguifg},
+        \ '@keyword.function':      {'guifg':s:yellow},
+        \ '@keyword.modifier':      s:dict_modifier,
+        \ '@keyword.operator':      s:dict_operator,
+        \ '@keyword.return':        {'guifg':s:blue},
+        \ '@lsp.type.class':        {'guifg':s:nicepurple},
+        \ '@lsp.type.enum':         {'guifg':s:olive},
+        \ '@lsp.type.interface':    {'guifg':s:beige},
+        \ '@lsp.type.namespace':    {'guifg':s:niceblue},
+        \ '@lsp.type.struct':       {'guifg':s:black},
+        \ '@module':                {'guifg':s:lime},
+        \ '@number':                {'guifg':s:lime},
+        \ '@operator':              s:dict_operator,
+        \ '@parameter':             {'guifg':s:blue},
+        \ '@punctuation.delimiter': {'guifg':s:ivory},
+        \ '@punctuation.bracket':   {'guifg':s:ivory},
+        \ '@punctuation.special':   {'guifg':s:ivory},
+        \ '@property':              {'guifg':s:ivory},
+        \ '@repeat':                s:dict_repeat,
+        \ '@string':                s:dict_string,
+        \ '@tag':                   {'guifg':s:teal},
+        \ '@type':                  {'guifg':s:olive},
+        \ '@type.definition':       {'guifg':s:olive},
+        \ '@variable':              s:dict_variable,
         \ }
   call s:apply(s:treesitter)
 endif
