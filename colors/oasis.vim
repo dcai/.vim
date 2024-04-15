@@ -420,6 +420,7 @@ if has('nvim')
         \ '@lsp.type.interface': {'guifg':s:beige},
         \ '@lsp.type.namespace': {'guifg':s:niceblue},
         \ '@lsp.type.struct':    {'guifg':s:black},
+        \ '@lsp.type.enum':      {'guifg':s:olive},
         \ '@parameter':          {'guifg':s:blue},
         \ '@repeat':             s:repeat,
         \ '@string':             s:string,
