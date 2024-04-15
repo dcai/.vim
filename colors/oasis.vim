@@ -2,7 +2,6 @@
 " Oasis color scheme
 "
 """"""""""""""""""""""""""""""""""""""""""""
-
 set background=dark
 
 hi clear
@@ -101,16 +100,18 @@ if s:termguicolors
   let s:yellow      = 'lightyellow'
 endif
 
-let s:defaultbg     = s:none
-let s:defaultfg     = s:white
-
-
+let s:niceblack = '#0F0F0F'
+let s:nicewhite = '#F0F0F0'
+let s:niceyellow = '#F0D000'
 let s:nicedarkgreen = '#012619'
 let s:nicemidgreen =  '#295535'
 let s:nicelightgreen = '#A6CC57'
 
+let s:defaultctermbg = s:none
+let s:defaultctermfg = s:white
+let s:defaultguifg   = s:nicewhite
+let s:defaultguibg   = s:nicedarkgreen
 
-let s:defaultguibg  = s:nicedarkgreen
 let s:comment       = {'fg': s:gray, 'cterm': s:italic}
 let s:identifier    = {'fg': s:yellow, 'bg': s:none}
 let s:repeat        = {'fg': s:yellow}
@@ -136,20 +137,20 @@ function! s:get_or(value, key, default)
   return has_key(a:value, a:key) ? a:value[a:key] : a:default
 endfunction
 
-function! s:keyvalue(value, key, default)
+function! s:make_kv(value, key, default)
   return a:key . "=" . s:get_or(a:value, a:key, a:default)
 endfunction
 
 function! s:hi(group, value)
-  let l:fgcolor = s:get_or(a:value, 'fg', s:defaultfg)
-  let l:bgcolor = s:get_or(a:value, 'bg', s:defaultbg)
+  let l:fgcolor = s:get_or(a:value, 'fg', s:defaultctermfg)
+  let l:bgcolor = s:get_or(a:value, 'bg', s:defaultctermbg)
   let l:attrlist = s:get_or(a:value, 'cterm', s:none)
 
   let l:ctermbg = "ctermbg=" . l:bgcolor
   let l:ctermfg = "ctermfg=" . l:fgcolor
 
-  let l:guifg = s:keyvalue(a:value, 'guifg', l:fgcolor)
-  let l:guibg = s:keyvalue(a:value, 'guibg', l:bgcolor)
+  let l:guifg = s:make_kv(a:value, 'guifg', l:fgcolor)
+  let l:guibg = s:make_kv(a:value, 'guibg', l:bgcolor)
   let l:cterm = 'term=' . l:attrlist
   let l:gui = 'gui=' . l:attrlist
 
@@ -176,8 +177,9 @@ endfunction
 let s:normal = {
       \'cterm': s:none,
       \'gui': s:none,
-      \'fg': s:defaultfg,
-      \'guibg': s:defaultguibg
+      \'bg': s:defaultctermbg,
+      \'guifg': s:defaultguifg,
+      \'guibg': s:defaultguibg,
       \}
 let s:normal_v = {
       \'cterm': s:none,
@@ -240,8 +242,12 @@ let s:ui = {
       \ 'Visual':       s:visual,
       \ 'VisualNOS':    {'cterm': s:underline},
       \ 'WarningMsg':   {'fg': s:yellow},
+      \ 'User1':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User2':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User3':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User4':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
       \ 'User5':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
-      \ 'User6':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
+      \ 'User6':        {'guibg':s:niceyellow,'guifg':s:nicedarkgreen},
       \ }
 call s:apply(s:ui)
 
@@ -416,5 +422,5 @@ endfunction
 
 augroup ModeChangeGroup
   autocmd!
-  autocmd ModeChanged  * call s:ModeChanged()
+  autocmd ModeChanged * call s:ModeChanged()
 augroup END
