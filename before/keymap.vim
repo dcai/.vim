@@ -45,6 +45,8 @@ nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
 nnoremap <leader>sp :sp<cr>
 
+" M-p is setup in iterm to translate cmd+p to M+p
+" https://stackoverflow.com/a/73212046
 map <M-p> :lua require('fzf-lua').git_files()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
