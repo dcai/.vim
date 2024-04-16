@@ -1,7 +1,10 @@
-""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Oasis color scheme
 "
-""""""""""""""""""""""""""""""""""""""""""""
+" environment variables
+" - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
+"     This disables mode change
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 
 hi clear
@@ -428,6 +431,10 @@ call s:hi('statusline', s:statusline_n)
 call s:hi('statuslineNC', s:statuslineNC)
 
 function! s:ModeChanged()
+  let s:disable_mode_change = getenv('VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE')
+  if s:disable_mode_change == 'true'
+    return
+  endif
   if g:colors_name != s:name
     return
   endif
