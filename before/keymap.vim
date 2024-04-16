@@ -38,12 +38,14 @@ nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
 nnoremap <silent> <Up> gk
-" This unsets the 'last search pattern' register by hitting return
+" This unset the 'last search pattern' register by hitting return
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
 nnoremap <leader>sp :sp<cr>
+
+map <M-p> :lua require('fzf-lua').git_files()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" apply to all modes
