@@ -4,6 +4,11 @@ if not loaded then
   return
 end
 
+local web_devicons_loaded, web_devicons = pcall(require, 'nvim-web-devicons')
+if web_devicons_loaded then
+  web_devicons.setup({})
+end
+
 local actions = require('fzf-lua.actions')
 
 -- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
@@ -116,7 +121,7 @@ fzflua.setup({
     prompt = 'grep❯ ',
     multiprocess = true, -- run command in a separate process
     git_icons = true, -- show git icons?
-    file_icons = true, -- show file icons?
+    file_icons = web_devicons_loaded, -- show file icons?
     color_icons = true, -- colorize file|git icons
     -- executed command priority is 'cmd' (if exists)
     -- otherwise auto-detect prioritizes `rg` over `grep`
@@ -194,7 +199,7 @@ fzflua.setup({
   },
   buffers = {
     prompt = 'Buffers❯ ',
-    file_icons = false, -- show file icons?
+    file_icons = web_devicons_loaded, -- show file icons?
     color_icons = false, -- colorize file|git icons
     sort_lastused = true, -- sort buffers() by last used
     show_unloaded = true, -- show unloaded buffers
@@ -255,7 +260,7 @@ fzflua.setup({
       cmd = 'git ls-files --exclude-standard',
       multiprocess = true,
       git_icons = true, -- git status icon
-      file_icons = false, -- show file icons?
+      file_icons = web_devicons_loaded, -- show file icons?
       color_icons = true, -- colorize file|git icons
       -- force display the cwd header line regardless of your current working
       -- directory can also be used to hide the header when not wanted
