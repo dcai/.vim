@@ -99,8 +99,12 @@ local function common_on_attach(client, buffer)
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
   nmap('gr', vim.lsp.buf.references, 'go to references')
   nmap('II', function()
-    if organize_imports[client.name] then
-      organize_imports[client.name](client, buffer)
+    local clientname = client.name
+    if client.name == 'tailwindcss' then
+      clientname = 'tsserver'
+    end
+    if organize_imports[clientname] then
+      organize_imports[clientname](client, buffer)
     else
       print('No organize imports for ' .. client.name)
     end
@@ -165,6 +169,10 @@ nvim_lspconfig.pyright.setup({
 })
 
 nvim_lspconfig.csharp_ls.setup({
+  on_attach = common_on_attach,
+})
+
+nvim_lspconfig.tailwindcss.setup({
   on_attach = common_on_attach,
 })
 
