@@ -48,6 +48,7 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
+  Plug 'nvim-tree/nvim-web-devicons'
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   " Plug 'desdic/marlin.nvim'
   Plug 'dcai/marlin.nvim'
