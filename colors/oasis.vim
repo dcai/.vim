@@ -315,6 +315,7 @@ let s:custom = {
       \ 'ALEErrorSign':               {'bg': s:darkred},
       \ 'ALEWarning':                 {'fg': s:none, 'bg': s:yellow, 'cterm': s:underline},
       \ 'ALEWarningSign':             {'bg': s:yellow, 'fg': s:black},
+      \ 'CodeiumSuggestion':          {'fg': s:blue, 'guifg': s:slategray},
       \ 'CocErrorFloat':              {'fg': s:red},
       \ 'CocHighlightText':           {'bg': s:red, 'fg': s:white},
       \ 'CocHintFloat':               {'fg': s:black},
