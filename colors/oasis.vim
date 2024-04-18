@@ -3,6 +3,7 @@
 "
 " environment variables
 " - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
+" - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
 "     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
@@ -339,7 +340,7 @@ call s:apply(s:js)
 
 if has('nvim')
   let s:neovim_only = {
-        \ 'MsgArea': s:statuslineNC
+        \ 'MsgArea': {'bg':s:none,'fg':s:green,'guifg':s:nicelightgreen}
         \ }
   call s:apply(s:neovim_only)
   let s:cmp = {
@@ -393,11 +394,13 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
+let s:statusline_bg=getenv('VIM_OASIS_COLORSCHEME_STL_BG') == v:null ? s:nicemidgreen : getenv('VIM_OASIS_COLORSCHEME_STL_BG')
+
 let s:statusline_n = {
       \ 'fg': s:black,
       \ 'bg': s:green,
       \ 'guifg': s:nicelightgreen,
-      \ 'guibg': s:nicemidgreen,
+      \ 'guibg': s:statusline_bg,
       \ }
 let s:statuslineNC = {
       \ 'fg': s:white,
