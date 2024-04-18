@@ -3,6 +3,7 @@
 "
 " environment variables
 " - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
+" - VIM_OASIS_COLORSCHEME_STL_FG='#333333'
 " - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
 "     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -394,12 +395,13 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
+let s:statusline_fg=getenv('VIM_OASIS_COLORSCHEME_STL_FG') == v:null ? s:nicelightgreen : getenv('VIM_OASIS_COLORSCHEME_STL_FG')
 let s:statusline_bg=getenv('VIM_OASIS_COLORSCHEME_STL_BG') == v:null ? s:nicemidgreen : getenv('VIM_OASIS_COLORSCHEME_STL_BG')
 
 let s:statusline_n = {
       \ 'fg': s:black,
       \ 'bg': s:green,
-      \ 'guifg': s:nicelightgreen,
+      \ 'guifg': s:statusline_fg,
       \ 'guibg': s:statusline_bg,
       \ }
 let s:statuslineNC = {
