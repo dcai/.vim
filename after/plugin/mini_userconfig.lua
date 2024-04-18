@@ -66,9 +66,9 @@ require('mini.comment').setup({
   mappings = {
     -- Toggle comment on current line
     -- comment_line = '<leader>cc',
-    comment_line = '<c-_>',
+    comment_line = '<leader><space>',
     -- Toggle comment on visual selection
-    comment_visual = '<c-_>',
+    comment_visual = '<leader><space>',
 
     -- Toggle comment (like `gcip` - comment inner paragraph) for both
     -- Normal and Visual modes
