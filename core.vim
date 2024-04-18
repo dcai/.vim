@@ -31,7 +31,8 @@ set encoding=utf-8
 " else
 "   set signcolumn=yes
 " endif
-set signcolumn=auto
+" set signcolumn=auto
+set signcolumn=yes
 
 if has('multi_byte')
   if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
