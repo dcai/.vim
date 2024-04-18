@@ -194,27 +194,16 @@ function! s:apply(table)
   endfor
 endfunction
 
-let s:normal = {
-      \'cterm': s:none,
-      \'gui': s:none,
+let s:dict_normal_text_highlight = {
+      \'fg': s:white,
       \'guifg': s:defaultguifg,
       \}
+let s:dict_normal_text_highlight_visualmode = {'fg': s:red}
+let s:dict_normal_text_highlight_cmdmode = {'fg': s:darkgreen}
 
-let s:normal_v = {
-      \'cterm': s:none,
-      \'gui': s:none,
-      \}
-
-let s:normal_c = {
-      \'cterm': s:none,
-      \'gui': s:none,
-      \'fg': s:darkgreen
-      \}
-
-let s:visual = {
-      \'cterm': s:none,
-      \'gui': s:none,
-      \'bg': s:blue,
+let s:dict_visual_selection = {
+      \'bg': s:green,
+      \'guibg': s:nicelightgreen,
       \'fg': s:darkgreen
       \}
 
@@ -222,7 +211,7 @@ let s:ui = {
       \ 'Cursor':       {'fg': s:red, 'bg':s:none},
       \ 'CursorColumn': {'fg': s:red, 'bg':s:none},
       \ 'CursorLine':   {'fg': s:red, 'bg':s:none},
-      \ 'Normal':       s:normal,
+      \ 'Normal':       s:dict_normal_text_highlight,
       \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
       \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
       \ 'FloatBorder':  {'fg': s:green},
@@ -258,7 +247,7 @@ let s:ui = {
       \ 'Title':        {'fg': s:green, 'bg': s:darkgray},
       \ 'Underlined':   {'cterm': s:underline},
       \ 'VertSplit':    {'fg': s:green},
-      \ 'Visual':       s:visual,
+      \ 'Visual':       s:dict_visual_selection,
       \ 'VisualNOS':    {'cterm': s:underline},
       \ 'WarningMsg':   {'fg': s:yellow},
       \ 'User1':        {'guibg':s:nicelightgreen,'guifg':s:nicedarkgreen},
@@ -345,51 +334,6 @@ call s:apply(s:js)
 " hi CursorColumn cterm=none       ctermbg=green    ctermfg=white
 " hi CursorLine   cterm=none       ctermbg=red
 
-let s:statusline = {
-      \ 'fg': s:black,
-      \ 'bg': s:green,
-      \ 'guifg': s:nicelightgreen,
-      \ 'guibg': s:nicemidgreen,
-      \ 'cterm': s:none,
-      \ 'gui': s:none
-      \ }
-let s:statuslineNC = {
-      \ 'fg': s:white,
-      \ 'bg': s:darkgreen,
-      \ 'guibg': s:nicedarkgreen,
-      \ 'cterm': s:none,
-      \ 'gui': s:none
-      \ }
-let s:statusline_i = {
-      \ 'fg': s:white,
-      \ 'bg': s:darkgreen,
-      \ 'cterm': s:none,
-      \ 'gui': s:none
-      \ }
-let s:statusline_v = {
-      \ 'bg': s:magenta,
-      \ 'fg': s:black,
-      \ 'cterm': s:none,
-      \ 'gui': s:none
-      \ }
-
-let s:mode_statusline = {
-      \ 'n': s:statusline,
-      \ 'i': s:statusline_i,
-      \ 'V': s:statusline_v,
-      \ 'v': s:statusline_v,
-      \ }
-
-let s:mode_normal = {
-      \ 'n': s:normal,
-      \ 'V': s:normal_v,
-      \ 'v': s:normal_v,
-      \ 'c': s:normal_c,
-      \ }
-
-call s:hi('statusline', s:statusline)
-call s:hi('statuslineNC', s:statuslineNC)
-
 if has('nvim')
   let s:neovim_only = {
         \ 'MsgArea': s:statuslineNC
@@ -446,16 +390,53 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
+let s:statusline_n = {
+      \ 'fg': s:black,
+      \ 'bg': s:green,
+      \ 'guifg': s:nicelightgreen,
+      \ 'guibg': s:nicemidgreen,
+      \ }
+let s:statuslineNC = {
+      \ 'fg': s:white,
+      \ 'bg': s:darkgreen,
+      \ 'guibg': s:nicedarkgreen,
+      \ }
+let s:statusline_i = {
+      \ 'fg': s:white,
+      \ 'bg': s:darkgreen,
+      \ }
+let s:statusline_v = {
+      \ 'fg': s:black,
+      \ 'bg': s:green,
+      \ 'guibg': s:nicelightgreen,
+      \ }
+let s:mode_statusline = {
+      \ 'n': s:statusline_n,
+      \ 'i': s:statusline_i,
+      \ 'V': s:statusline_v,
+      \ 'v': s:statusline_v,
+      \ }
+
+" Apply to 'Normal' highlight group
+let s:default_text_highlight = {
+      \ 'n': s:dict_normal_text_highlight,
+      \ 'V': s:dict_normal_text_highlight_visualmode,
+      \ 'v': s:dict_normal_text_highlight_visualmode,
+      \ 'c': s:dict_normal_text_highlight_cmdmode,
+      \ }
+call s:hi('statusline', s:statusline_n)
+call s:hi('statuslineNC', s:statuslineNC)
+
 function! s:ModeChanged()
   if g:colors_name != s:name
     return
   endif
   let l:mode = mode()
 
-  let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : s:statusline
+  let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : s:statusline_n
   call s:hi('statusline', l:stlhl)
 
-  let l:normalhl  = has_key(s:mode_normal, l:mode) ? s:mode_normal[l:mode] : s:normal
+  let l:normalhl  = has_key(s:default_text_highlight, l:mode) ? s:default_text_highlight[l:mode] : s:dict_normal_text_highlight
   call s:hi('Normal', l:normalhl)
 endfunction
 
