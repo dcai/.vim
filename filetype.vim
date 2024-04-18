@@ -24,49 +24,6 @@ augroup defaultFiletypeGroup
   autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 augroup END
 
-""""""""""""""""""""""""""""""""""""
-" Set ale fix on save conditionally
-""""""""""""""""""""""""""""""""""""
-function! UpdateAleFixOnSave()
-  let l:dir = expand('%:p:h')
-  let l:file = expand('%:p')
-
-  let g:ale_fix_on_save = 0
-
-  if match(l:file, 'html\|twig\|jinja2') > -1
-    " disable auto fix for html
-    let g:ale_fix_on_save = 0
-  endif
-
-  if match(l:file, 'php\|phps') > -1
-    " disable auto fix for php
-    let g:ale_fix_on_save = 0
-  endif
-
-  " Install moodle coding style:
-  "   > phpcs --config-set installed_paths /home/vagrant/projects/moodle/local/codechecker/moodle
-  " Above command add moodle coding style to
-  "   /home/vagrant/.config/composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
-  " let s:php_coding_standard = 'moodle'
-  " let s:php_coding_standard = 'WordPress-Core'
-  let l:php_coding_standard = 'PSR12'
-  if l:dir =~ 'moodle'
-    let g:ale_fix_on_save = 0
-    let l:php_coding_standard = 'moodle'
-  endif
-  let g:ale_php_phpcs_standard = l:php_coding_standard
-  let g:ale_php_phpcbf_standard = l:php_coding_standard
-
-  unlet l:php_coding_standard
-  unlet l:file
-  unlet l:dir
-endfunction
-
-augroup aleGlobalOptionsGroup
-  autocmd!
-  autocmd BufEnter * call UpdateAleFixOnSave()
-augroup END
-
 """""""""""""""""""""""""""""""
 " helpfile
 """""""""""""""""""""""""""""""
