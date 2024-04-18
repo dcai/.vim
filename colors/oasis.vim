@@ -197,15 +197,14 @@ endfunction
 let s:normal = {
       \'cterm': s:none,
       \'gui': s:none,
-      \'bg': s:defaultctermbg,
       \'guifg': s:defaultguifg,
-      \'guibg': s:defaultguibg,
       \}
+
 let s:normal_v = {
       \'cterm': s:none,
       \'gui': s:none,
-      \'bg': s:black,
       \}
+
 let s:normal_c = {
       \'cterm': s:none,
       \'gui': s:none,
