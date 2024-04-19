@@ -98,7 +98,7 @@ function! UpdateAleFixOnSave()
   let l:dir = expand('%:p:h')
   let l:file = expand('%:p')
 
-  let g:ale_fix_on_save = 1
+  let g:ale_fix_on_save = 0
 
   if g:IsEnvVarFalse('VIM_ALE_FIX_ON_SAVE')
     let g:ale_fix_on_save = 0

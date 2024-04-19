@@ -53,9 +53,9 @@ map <M-p> :lua require('fzf-lua').git_files()<cr>
 "" apply to all modes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " next item in quickfix
-map <c-j> <ESC>:cn<CR>
+" map <c-j> <ESC>:cn<CR>
 " prev item in quickfix
-map <c-k> <ESC>:cp<CR>
+" map <c-k> <ESC>:cp<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" command"line mode

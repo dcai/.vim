@@ -10,17 +10,19 @@ autosave.setup({
   debounce_delay = 10000,
   execution_message = {
     message = function()
-      return ('auto-save: saved at ' .. vim.fn.strftime('%H:%M:%S'))
+      return string.format(
+        'auto-save: saved at %s',
+        vim.fn.strftime('%H:%M:%S')
+      )
     end,
     dim = 0.18, -- dim the color of `message`
     cleaning_interval = 1250, -- (milliseconds) automatically clean MsgArea after displaying `message`. See :h MsgArea
   },
   -- vim events that trigger auto-save. See :h events
   -- trigger_events = { 'InsertLeave', 'TextChanged' },
-  trigger_events = { 'InsertLeave' },
+  trigger_events = { 'BufLeave' },
   condition = function(buf)
     local filepath = vim.fn.expand('%:p')
-
     local modifiable = vim.fn.getbufvar(buf, '&modifiable') == 1
     local ft = vim.fn.getbufvar(buf, '&filetype')
     local blacklist_dirs = { '/hammerspoon/' }
