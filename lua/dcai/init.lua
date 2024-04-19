@@ -1,5 +1,6 @@
 require('dcai.globals')
 
+log = require('log')
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.python3_host_prog = find_executable({
@@ -20,3 +21,6 @@ end
 
 source('loader.vim')
 setup_colorscheme()
+
+local codestats = require('codestats')
+codestats.setup()

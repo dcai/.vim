@@ -1,6 +1,5 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
-log = require('log')
 
 function P(val)
   print(vim.inspect(val))
@@ -100,7 +99,7 @@ function setup_colorscheme()
   local termguicolors = get_user_config('colorscheme.termguicolors', true)
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
   apply_colorscheme(cs, termguicolors)
-  handle_vim_event_by_callback('ColorScheme', function(ev)
+  create_autocmd('ColorScheme', 'SaveColorScheme', function(ev)
     set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
   end)
 end
@@ -140,6 +139,10 @@ function touch(filepath)
     end
   end
   return nil
+end
+
+function isempty(s)
+  return s == nil or s == ''
 end
 
 function get_or(table, key, default)
@@ -211,11 +214,13 @@ function handle_vim_event_by_command(evt, command)
   })
 end
 
-function handle_vim_event_by_callback(evt, callback)
-  local group_name = 'On' .. evt .. 'Group'
+function create_autocmd(evt, group_name, callback)
   return vim.api.nvim_create_autocmd(evt, {
     pattern = '*',
-    group = vim.api.nvim_create_augroup(group_name, { clear = true }),
+    group = vim.api.nvim_create_augroup(
+      group_name or 'On' .. evt .. 'Group',
+      { clear = true }
+    ),
     callback = callback,
   })
 end
