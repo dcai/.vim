@@ -1,5 +1,6 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
+log = require('log')
 
 function P(val)
   print(vim.inspect(val))

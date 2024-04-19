@@ -80,6 +80,7 @@ globals = {
   'project_root',
   'purple',
   'readfile',
+  'log',
   'red',
   'set',
   'set_user_config',
