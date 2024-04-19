@@ -1,6 +1,16 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
+function is_env_var_true(name)
+  local v = os.getenv(name)
+  return v == 'true' or v == '1'
+end
+
+function is_env_var_false()
+  local v = os.getenv(name)
+  return v == 'false' or v == '0'
+end
+
 function P(val)
   print(vim.inspect(val))
   return val

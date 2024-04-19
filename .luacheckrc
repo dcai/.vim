@@ -73,6 +73,8 @@ globals = {
   'get_or',
   'get_user_config',
   'global_keymap',
+  'is_env_var_true',
+  'is_env_var_false',
   'green',
   'isempty',
   'create_autocmd',
