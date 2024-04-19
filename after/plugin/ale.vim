@@ -100,7 +100,7 @@ function! UpdateAleFixOnSave()
 
   let g:ale_fix_on_save = 1
 
-  if getenv('VIM_ALE_FIX_ON_SAVE') == 'false'
+  if g:IsEnvVarFalse('VIM_ALE_FIX_ON_SAVE')
     let g:ale_fix_on_save = 0
   endif
 

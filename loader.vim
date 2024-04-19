@@ -39,8 +39,22 @@ function! FindExecutable(paths)
   endfor
 endfunction
 
-function! IsEnvVarSet(name)
+function! g:IsEnvVarSet(name)
   return !empty(getenv(a:name))
+endfunction
+
+function! g:IsEnvVarTrue(name)
+  let l:v = getenv(a:name)
+  return or(l:v ==? 'true', l:v == '1')
+endfunction
+
+function! g:IsEnvVarFalse(name)
+  let l:v = getenv(a:name)
+  return  or(l:v ==? 'false', l:v == '0')
+endfunction
+
+function! g:EnvVar(name, default)
+  return !empty(getenv(a:name)) ? getenv(a:name) : a:default
 endfunction
 
 " this must load before others
