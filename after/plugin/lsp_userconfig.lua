@@ -9,6 +9,7 @@ local masonpath = require('mason-core.path')
 mason.setup({
   install_root_dir = masonpath.concat({ vim.fn.stdpath('data'), 'mason' }),
 })
+require('lspconfig.ui.windows').default_options.border = 'single'
 -------------------------------
 --- mason-lspconfig
 -------------------------------

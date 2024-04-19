@@ -128,7 +128,6 @@ let s:forestgreen = '#228B22'
 let s:teal = '#008080'
 
 let s:keywordfg     = s:cyan
-let s:keywordbg     = s:black
 let s:keywordguifg  = s:niceblue
 let s:keywordguibg  = s:none
 let s:exceptionfg   = s:red
@@ -219,9 +218,9 @@ let s:ui = {
       \ 'CursorColumn': {'fg': s:red, 'bg':s:none},
       \ 'CursorLine':   {'fg': s:red, 'bg':s:none},
       \ 'Normal':       s:dict_normal_text_highlight,
-      \ 'NormalFloat':  {'bg': s:darkgreen, 'fg': s:white},
-      \ 'FloatTitle':   {'bg': s:white, 'fg': s:darkgreen},
-      \ 'FloatBorder':  {'fg': s:green},
+      \ 'NormalFloat':  {'fg': s:white,'bg':s:none},
+      \ 'FloatTitle':   {'fg': s:white},
+      \ 'FloatBorder':  {'fg': s:white},
       \ 'NormalNC':     {'fg': s:gray},
       \ 'ColorColumn':  {'bg': s:none},
       \ 'DiffAdd':      {'bg': s:green, 'fg': s:black},
@@ -282,7 +281,7 @@ let s:syntax = {
       \ 'Exception':    {'fg': s:red, 'bg': s:none},
       \ 'Ignore':       {'fg': s:darkgray, 'cterm': 'bold'},
       \ 'Include':      {'fg': s:darkgray, 'bg': s:none},
-      \ 'Keyword':      {'fg': s:keywordfg,'guifg':s:keywordguifg,'bg': s:keywordbg},
+      \ 'Keyword':      {'fg': s:keywordfg,'guifg':s:keywordguifg,'bg': s:none},
       \ 'Label':        {'fg': s:green},
       \ 'Macro':        {'fg': s:red},
       \ 'Operator':     s:dict_operator,
