@@ -3,7 +3,7 @@
 "
 " environment variables
 " - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
-" - VIM_OASIS_COLORSCHEME_STL_FG='#333333'
+" - VIM_OASIS_COLORSCHEME_STL_FG='#FFFFFF'
 " - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
 "     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -397,8 +397,8 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
-let s:statusline_fg=getenv('VIM_OASIS_COLORSCHEME_STL_FG') == v:null ? s:nicelightgreen : getenv('VIM_OASIS_COLORSCHEME_STL_FG')
-let s:statusline_bg=getenv('VIM_OASIS_COLORSCHEME_STL_BG') == v:null ? s:nicemidgreen : getenv('VIM_OASIS_COLORSCHEME_STL_BG')
+let s:statusline_fg=g:EnvVar('VIM_OASIS_COLORSCHEME_STL_FG', s:nicelightgreen)
+let s:statusline_bg=g:EnvVar('VIM_OASIS_COLORSCHEME_STL_BG', s:nicemidgreen)
 
 let s:statusline_n = {
       \ 'fg': s:black,
@@ -434,12 +434,11 @@ let s:default_text_highlight = {
       \ 'v': s:dict_normal_text_highlight_visualmode,
       \ 'c': s:dict_normal_text_highlight_cmdmode,
       \ }
-call s:hi('statusline', s:statusline_n)
+call s:hi('StatusLine', s:statusline_n)
 call s:hi('statuslineNC', s:statuslineNC)
 
 function! s:ModeChanged()
-  let s:disable_mode_change = getenv('VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE')
-  if s:disable_mode_change == 'true'
+  if g:IsEnvVarTrue('VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE')
     return
   endif
   if g:colors_name != s:name
@@ -448,7 +447,7 @@ function! s:ModeChanged()
   let l:mode = mode()
 
   let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : s:statusline_n
-  call s:hi('statusline', l:stlhl)
+  call s:hi('StatusLine', l:stlhl)
 
   let l:normalhl  = has_key(s:default_text_highlight, l:mode) ? s:default_text_highlight[l:mode] : s:dict_normal_text_highlight
   call s:hi('Normal', l:normalhl)
