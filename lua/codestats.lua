@@ -32,11 +32,12 @@ local languages = {
   jade = 'Pug (Jade)',
   java = 'Java',
   javascript = 'JavaScript',
+  javascriptreact = 'JavaScript (JSX)',
   json = 'JSON',
   jsp = 'JSP',
-  lua = 'Lua',
   jsx = 'JavaScript (JSX)',
   kotlin = 'Kotlin',
+  lua = 'Lua',
   markdown = 'Markdown',
   netrw = 'Vim-fu',
   objc = 'Objective-C',
@@ -59,6 +60,7 @@ local languages = {
   scheme = 'Scheme',
   scss = 'SCSS',
   sh = 'Shell Script',
+  snippets = 'ultisnips snippet',
   sql = 'SQL',
   sqloracle = 'SQL (Oracle)',
   tcl = 'Tcl',
@@ -66,6 +68,7 @@ local languages = {
   tex = 'TeX',
   toml = 'TOML',
   typescript = 'TypeScript',
+  typescriptreact = 'TypeScript (JSX)',
   vb = 'Visual Basic',
   vbnet = 'Visual Basic .NET',
   vim = 'VimL',
@@ -84,7 +87,6 @@ local function gather_xp(filetype, xp_amount)
     filetype = 'plain_text'
   end
 
-  log.info('Gather XP', filetype, xp_amount)
   xp_table[filetype] = (xp_table[filetype] or 0) + xp_amount
 end
 
@@ -105,6 +107,7 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
+  log.info('Pulsing', vim.inspect(body))
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
