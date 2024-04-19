@@ -239,9 +239,9 @@ local vimrc_keymap = {
       local ft = vim.bo.filetype
       if ft == 'vim' or ft == 'lua' then
         vim.cmd('source %')
-        vim.notify('current buffer sourced', vim.log.levels.WARN)
+        vim.notify('Current buffer sourced', vim.log.levels.WARN)
       else
-        vim.notify('nothing')
+        vim.notify('Cannot reload non vim/lua files')
       end
     end,
     'reload current buffer',
