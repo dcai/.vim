@@ -89,10 +89,6 @@ local function gather_xp(filetype, xp_amount)
 end
 
 local function pulse()
-  if isempty(CODESTATS_API_KEY) then
-    log.error('CODESTATS_API_KEY not set')
-    return
-  end
   if next(xp_table) == nil then
     return
   end
@@ -127,6 +123,9 @@ end
 
 return {
   setup = function()
+    if isempty(CODESTATS_API_KEY) then
+      return
+    end
     vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
       callback = function()
         pulse()
