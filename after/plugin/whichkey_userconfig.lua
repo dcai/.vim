@@ -57,6 +57,7 @@ local vimux_keymap = {
   i = cmd('VimuxInspectRunner', 'inspect runner'),
   j = run_testfile('TestCurrentFileWithJestJsdom'),
   J = run_testfile('TestCurrentFileWithJestNode'),
+  h = cmd('HurlRun', 'run hurl file'),
   l = cmd('VimuxRunLastCommand', 'last command'),
   m = run_testfile('TestCurrentFileWithMocha'),
   p = cmd('VimuxPromptCommand', 'prompt command'),
