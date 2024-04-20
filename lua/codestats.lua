@@ -32,7 +32,7 @@ local languages = {
   jade = 'Pug (Jade)',
   java = 'Java',
   javascript = 'JavaScript',
-  javascriptreact = 'JavaScript (JSX)',
+  javascriptreact = 'JavaScript',
   json = 'JSON',
   jsp = 'JSP',
   jsx = 'JavaScript (JSX)',
@@ -68,7 +68,7 @@ local languages = {
   tex = 'TeX',
   toml = 'TOML',
   typescript = 'TypeScript',
-  typescriptreact = 'TypeScript (JSX)',
+  typescriptreact = 'TypeScript',
   vb = 'Visual Basic',
   vbnet = 'Visual Basic .NET',
   vim = 'VimL',
@@ -83,6 +83,7 @@ local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')
 local xp_table = {}
 
 local function gather_xp(filetype, xp_amount)
+  log.info(string.format('gather_xp: %s: %d', filetype, xp_amount))
   if filetype:gsub('%s+', '') == '' then
     filetype = 'plain_text'
   end
@@ -91,6 +92,7 @@ local function gather_xp(filetype, xp_amount)
 end
 
 local function pulse()
+  log.info('pulse():', vim.inspect(xp_table))
   if next(xp_table) == nil then
     return
   end
@@ -107,7 +109,7 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  log.info('Pulsing', vim.inspect(body))
+  log.info('Pulsing: body: ', vim.inspect(body))
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
@@ -121,11 +123,19 @@ local function pulse()
   if status == 200 or status == 201 then
     log.info('Pulsed', response.body)
     xp_table = {}
+  else
+    log.info('Pulsed failed', vim.inspect(response))
   end
 end
 
 return {
   setup = function()
+    vim.api.nvim_create_user_command('CodestatsInfo', function()
+      log.info('codestats: xp_table: ', vim.inspect(xp_table))
+    end, { nargs = 0, desc = 'log xp_table' })
+    vim.api.nvim_create_user_command('CodestatsPulse', function()
+      pulse()
+    end, { nargs = 0 })
     if isempty(CODESTATS_API_KEY) then
       return
     end
@@ -134,10 +144,13 @@ return {
         pulse()
       end,
     })
-    vim.api.nvim_create_autocmd({ 'TextChanged', 'InsertCharPre' }, {
-      callback = function()
-        gather_xp(vim.api.nvim_buf_get_option(0, 'filetype'), 1)
-      end,
-    })
+    vim.api.nvim_create_autocmd(
+      { 'TextChanged', 'InsertCharPre', 'InsertEnter' },
+      {
+        callback = function()
+          gather_xp(vim.api.nvim_buf_get_option(0, 'filetype'), 1)
+        end,
+      }
+    )
   end,
 }
