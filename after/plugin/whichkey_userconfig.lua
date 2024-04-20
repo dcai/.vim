@@ -52,13 +52,21 @@ local function run_testfile(vimscript_func)
   }
 end
 
-local vimux_keymap = {
-  name = 'vimux',
+local runtests_keymap = {
+  name = 'Test',
   i = cmd('VimuxInspectRunner', 'inspect runner'),
   j = run_testfile('TestCurrentFileWithJestJsdom'),
   J = run_testfile('TestCurrentFileWithJestNode'),
   h = cmd('HurlRun', 'run hurl file'),
-  l = cmd('VimuxRunLastCommand', 'last command'),
+  -- l = cmd('VimuxRunLastCommand', 'last command'),
+  l = {
+    function()
+      fzf.files({
+        cwd = vim.g.dropbox_home .. '/src/hurl_files',
+      })
+    end,
+    'list all hurl files',
+  },
   m = run_testfile('TestCurrentFileWithMocha'),
   p = cmd('VimuxPromptCommand', 'prompt command'),
   q = cmd('VimuxCloseRunner', 'close runner'),
@@ -325,7 +333,7 @@ local n_keymap = {
   n = notes_keymap,
   o = openthings_keymap,
   r = vimrc_keymap,
-  t = vimux_keymap,
+  t = runtests_keymap,
   y = yank_keymap,
 }
 
