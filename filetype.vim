@@ -56,6 +56,8 @@ augroup END
 
 augroup filetypeGroup
   autocmd!
+  autocmd BufRead,BufNewFile *.hurl setf hurl
+
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
   autocmd BufRead,BufNewFile *npmrc* setf dosini
 
