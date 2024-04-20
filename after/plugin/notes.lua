@@ -18,7 +18,7 @@ local note_insert_text = function(text)
   vim.cmd(string.format(str, text))
 end
 
-local note_run_cmd = function(cmd)
+local function note_run_cmd(cmd)
   local result = vim.fn.systemlist(cmd)[1]
   if vim.v.shell_error == 0 then
     return result
@@ -26,7 +26,7 @@ local note_run_cmd = function(cmd)
   return nil
 end
 
-local note_get_git_root = function()
+local function note_get_git_root()
   return note_run_cmd('git rev-parse --show-toplevel | xargs basename')
 end
 
@@ -41,7 +41,7 @@ local note_create_or_edit = function(name)
   vim.cmd('edit ' .. path)
 end
 
-local create_note_for_project = function(with_branch)
+local function create_note_for_project(with_branch)
   return function()
     local now = note_now()
     local git_root = slugify(note_get_git_root(), '-')

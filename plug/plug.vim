@@ -52,7 +52,7 @@ if has('nvim')
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
   " Plug 'desdic/marlin.nvim'
   Plug 'dcai/marlin.nvim'
-  Plug 'elihunter173/dirbuf.nvim'
+  " Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
   Plug 'Robitx/gp.nvim' , Cond(!IsEnvVarSet('NO_GPNVIM'), {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
