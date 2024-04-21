@@ -89,6 +89,17 @@ local function gather_xp(filetype, xp_amount)
   xp_table[filetype] = (xp_table[filetype] or 0) + xp_amount
 end
 
+local function myprofile(username)
+  local response = curl.get({
+    url = string.format('%s/users/%s', CODESTATS_API_URL, username),
+    headers = {
+      ['Content-Type'] = 'application/json',
+    },
+  })
+  local json = vim.json.decode(response.body)
+  log.info('codestats: profile: ', vim.inspect(json))
+end
+
 local function pulse()
   if next(xp_table) == nil then
     return
@@ -127,6 +138,14 @@ end
 
 return {
   setup = function()
+    vim.api.nvim_create_user_command('CodestatsProfile', function(opts)
+      local username = opts.fargs[1]
+      if isempty(username) then
+        log.warn('provide codestats public username')
+        return
+      end
+      myprofile(username)
+    end, { nargs = '*' })
     vim.api.nvim_create_user_command('CodestatsInfo', function()
       log.info('codestats: xp_table: ', vim.inspect(xp_table))
     end, { nargs = 0, desc = 'log xp_table' })
@@ -145,7 +164,9 @@ return {
       { 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
       {
         callback = function()
-          gather_xp(vim.api.nvim_buf_get_option(0, 'filetype'), 1)
+          local currentbuf = 0
+          local ft = vim.api.nvim_buf_get_option(currentbuf, 'filetype')
+          gather_xp(ft, 1)
         end,
       }
     )
