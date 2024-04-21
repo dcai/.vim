@@ -83,16 +83,13 @@ local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')
 local xp_table = {}
 
 local function gather_xp(filetype, xp_amount)
-  log.info(string.format('gather_xp: %s: %d', filetype, xp_amount))
   if filetype:gsub('%s+', '') == '' then
     filetype = 'plain_text'
   end
-
   xp_table[filetype] = (xp_table[filetype] or 0) + xp_amount
 end
 
 local function pulse()
-  log.info('pulse():', vim.inspect(xp_table))
   if next(xp_table) == nil then
     return
   end
@@ -109,7 +106,7 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  log.info('Pulsing: body: ', vim.inspect(body))
+  log.info('Pulsing: request body: ', vim.inspect(body))
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
@@ -124,7 +121,7 @@ local function pulse()
     log.info('Pulsed', response.body)
     xp_table = {}
   else
-    log.info('Pulsed failed', vim.inspect(response))
+    log.error('Pulsed failed', vim.inspect(response))
   end
 end
 
@@ -145,7 +142,7 @@ return {
       end,
     })
     vim.api.nvim_create_autocmd(
-      { 'TextChanged', 'InsertCharPre', 'InsertEnter' },
+      { 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
       {
         callback = function()
           gather_xp(vim.api.nvim_buf_get_option(0, 'filetype'), 1)
