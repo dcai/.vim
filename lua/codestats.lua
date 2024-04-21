@@ -138,7 +138,7 @@ end
 
 return {
   setup = function()
-    vim.api.nvim_create_user_command('CodestatsProfile', function(opts)
+    vim.api.nvim_create_user_command('CSProfile', function(opts)
       local username = opts.fargs[1]
       if isempty(username) then
         log.warn('provide codestats public username')
@@ -146,10 +146,10 @@ return {
       end
       myprofile(username)
     end, { nargs = '*' })
-    vim.api.nvim_create_user_command('CodestatsInfo', function()
+    vim.api.nvim_create_user_command('CSInfo', function()
       log.info('codestats: xp_table: ', vim.inspect(xp_table))
     end, { nargs = 0, desc = 'log xp_table' })
-    vim.api.nvim_create_user_command('CodestatsPulse', function()
+    vim.api.nvim_create_user_command('CSPulse', function()
       pulse()
     end, { nargs = 0 })
     if isempty(CODESTATS_API_KEY) then
