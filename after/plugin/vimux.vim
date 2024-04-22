@@ -3,10 +3,13 @@
 
 """""""""""""""""""""""""""""""""""""""
 
-let g:VimuxRunnerType = "pane"
-" let g:VimuxRunnerType = "window"
+let g:VimuxHeight = "40"
 let g:VimuxOrientation = "h"
 " let g:VimuxOrientation = "v"
+let g:VimuxRunnerType = "pane"
+" let g:VimuxRunnerName = "vimuxout"
+let g:VimuxUseNearest = 1
+" let g:VimuxRunnerType = "window"
 
 function! LastPath()
   " 1. select right pane
