@@ -5,11 +5,11 @@
 --
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
-
 -- User configuration section
 local default_config = {
   -- Name of the plugin. Prepended to log messages
-  plugin = 'vlog.nvim',
+  -- plugin = 'vlog.nvim',
+  plugin = 'nvim',
 
   -- Should print the output to neovim while running
   use_console = true,
@@ -45,8 +45,9 @@ local unpack = unpack or table.unpack
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend('force', default_config, config)
 
-  local outfile =
-    string.format('%s/%s.log', vim.fn.stdpath('data'), config.plugin)
+  -- local outfile =
+  --   string.format('%s/%s.log', vim.fn.stdpath('data'), config.plugin)
+  local outfile = string.format('/tmp/%s.log', config.plugin)
 
   local obj
   if standalone then
