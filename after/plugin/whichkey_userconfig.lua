@@ -301,7 +301,7 @@ local editing_keymap = {
         -- vim.notify('No file to alternate', vim.log.levels.WARN)
         vim.cmd('e ' .. vimrc_to_edit)
       else
-        vim.cmd('e #')
+        vim.cmd('e! #')
       end
     end,
     'toggle last used file',
