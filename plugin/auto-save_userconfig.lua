@@ -1,12 +1,10 @@
 local loaded, autosave = pcall(require, 'auto-save')
 if not loaded then
-  print('pocco81/auto-save.nvim not loaded!')
   return
 end
 -- https://github.com/pocco81/auto-save.nvim
 autosave.setup({
   enabled = true,
-  -- saves the file at most every `debounce_delay` milliseconds
   debounce_delay = 10000,
   execution_message = {
     message = function()
@@ -20,7 +18,7 @@ autosave.setup({
   },
   -- vim events that trigger auto-save. See :h events
   -- trigger_events = { 'InsertLeave', 'TextChanged' },
-  trigger_events = { 'BufLeave' },
+  trigger_events = { 'BufLeave' }, -- vim events that trigger auto-save. See :h events
   condition = function(buf)
     local filepath = vim.fn.expand('%:p')
     local modifiable = vim.fn.getbufvar(buf, '&modifiable') == 1
