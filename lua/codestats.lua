@@ -47,7 +47,7 @@ local languages = {
   perl6 = 'Perl 6',
   pgsql = 'SQL (PostgreSQL)',
   php = 'PHP',
-  plain_text = 'Plain text',
+  text = 'text',
   plsql = 'PL/SQL',
   pug = 'Pug (Jade)',
   puppet = 'Puppet',
@@ -76,15 +76,17 @@ local languages = {
   zsh = 'Shell Script (Zsh)',
 }
 
-local CODESTATS_API_URL = os.getenv('CODESTATS_API_URL')
-  or 'https://codestats.net/api'
+local CODESTATS_API_URL = 'https://codestats.net/api'
+if os.getenv('CODESTATS_API_URL') then
+  CODESTATS_API_URL = os.getenv('CODESTATS_API_URL')
+end
 local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')
 
 local xp_table = {}
 
 local function gather_xp(filetype, xp_amount)
   if filetype:gsub('%s+', '') == '' then
-    filetype = 'plain_text'
+    filetype = 'text'
   end
   xp_table[filetype] = (xp_table[filetype] or 0) + xp_amount
 end
