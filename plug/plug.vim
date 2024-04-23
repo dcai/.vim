@@ -45,6 +45,7 @@ call plug#begin(expand(s:plugged))
 """ neovim only
 """"""""""""""""""""""""""""""""""""""""""
 if has('nvim')
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
