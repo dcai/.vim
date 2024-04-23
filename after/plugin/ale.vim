@@ -38,6 +38,7 @@ let g:ale_javascript_prettier_use_global = 0
 " Ale linters settings
 let g:ale_linters = {
   \ 'c': ['clangd', 'ccls'],
+  \ 'cs': ['mcs'],
   \ 'go': ['gopls'],
   \ 'graphql': [],
   \ 'javascript': ['eslint', 'tsserver'],
@@ -57,8 +58,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'c': ['clang-format'],
-  \ 'cs': ['clang-format'],
   \ 'cpp': ['clang-format'],
+  \ 'cs': ['dotnet-format'],
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'fish': ['fish_indent'],
