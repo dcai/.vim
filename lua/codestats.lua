@@ -1,5 +1,5 @@
--- local languages = require('codestats.languages')
 local curl = require('plenary.curl')
+
 local languages = {
   ada = 'Ada',
   ansible = 'Ansible',
@@ -136,39 +136,41 @@ local function pulse()
   end
 end
 
-return {
-  setup = function()
-    vim.api.nvim_create_user_command('CSProfile', function(opts)
-      local username = opts.fargs[1]
-      if isempty(username) then
-        log.warn('provide codestats public username')
-        return
-      end
-      myprofile(username)
-    end, { nargs = '*' })
-    vim.api.nvim_create_user_command('CSInfo', function()
-      log.info('codestats: xp_table: ', vim.inspect(xp_table))
-    end, { nargs = 0, desc = 'log xp_table' })
-    vim.api.nvim_create_user_command('CSPulse', function()
-      pulse()
-    end, { nargs = 0 })
-    if isempty(CODESTATS_API_KEY) then
+local M = {}
+
+function M.setup()
+  vim.api.nvim_create_user_command('CSProfile', function(opts)
+    local username = opts.fargs[1]
+    if isempty(username) then
+      log.warn('provide codestats public username')
       return
     end
-    vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+    myprofile(username)
+  end, { nargs = '*' })
+  vim.api.nvim_create_user_command('CSInfo', function()
+    log.info('codestats: xp_table: ', vim.inspect(xp_table))
+  end, { nargs = 0, desc = 'log xp_table' })
+  vim.api.nvim_create_user_command('CSPulse', function()
+    pulse()
+  end, { nargs = 0 })
+  if isempty(CODESTATS_API_KEY) then
+    return
+  end
+  vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+    callback = function()
+      pulse()
+    end,
+  })
+  vim.api.nvim_create_autocmd(
+    { 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
+    {
       callback = function()
-        pulse()
+        local currentbuf = 0
+        local ft = vim.api.nvim_buf_get_option(currentbuf, 'filetype')
+        gather_xp(ft, 1)
       end,
-    })
-    vim.api.nvim_create_autocmd(
-      { 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
-      {
-        callback = function()
-          local currentbuf = 0
-          local ft = vim.api.nvim_buf_get_option(currentbuf, 'filetype')
-          gather_xp(ft, 1)
-        end,
-      }
-    )
-  end,
-}
+    }
+  )
+end
+
+return M
