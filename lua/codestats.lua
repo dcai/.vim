@@ -167,8 +167,9 @@ function M.setup()
     { 'CursorMoved', 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
     {
       callback = function()
-        local currentbuf = 0
-        local ft = vim.api.nvim_buf_get_option(currentbuf, 'filetype')
+        -- local currentbuf = 0
+        -- local ft = vim.api.nvim_buf_get_option(currentbuf, 'filetype')
+        local ft = vim.bo.filetype
         gather_xp(ft, 1)
       end,
     }
