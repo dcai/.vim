@@ -164,7 +164,7 @@ function M.setup()
     end,
   })
   vim.api.nvim_create_autocmd(
-    { 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
+    { 'CursorMoved', 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
     {
       callback = function()
         local currentbuf = 0
