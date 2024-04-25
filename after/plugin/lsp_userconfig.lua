@@ -165,22 +165,6 @@ nvim_lspconfig.tsserver.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.pyright.setup({
-  on_attach = common_on_attach,
-})
-
-nvim_lspconfig.csharp_ls.setup({
-  on_attach = common_on_attach,
-})
-
-nvim_lspconfig.tailwindcss.setup({
-  on_attach = common_on_attach,
-})
-
-nvim_lspconfig.mojo.setup({
-  on_attach = common_on_attach,
-})
-
 local lua_runtime_path = vim.split(package.path, ';')
 table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')
@@ -280,3 +264,29 @@ if fzfloaded then
 end
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
+
+nvim_lspconfig.pyright.setup({
+  on_attach = common_on_attach,
+})
+
+nvim_lspconfig.csharp_ls.setup({
+  on_attach = common_on_attach,
+})
+
+nvim_lspconfig.tailwindcss.setup({
+  on_attach = common_on_attach,
+})
+
+nvim_lspconfig.mojo.setup({
+  on_attach = common_on_attach,
+})
+
+nvim_lspconfig.svelte.setup({
+  on_attach = common_on_attach,
+})
+nvim_lspconfig.html.setup({
+  on_attach = common_on_attach,
+})
+nvim_lspconfig.templ.setup({
+  on_attach = common_on_attach,
+})

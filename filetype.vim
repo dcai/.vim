@@ -61,6 +61,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
   autocmd BufRead,BufNewFile *npmrc* setf dosini
 
+  autocmd BufRead,BufNewFile *.templ set filetype=templ
   " direnv
   autocmd BufRead,BufNewFile *.envrc setf sh
 
