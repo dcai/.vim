@@ -63,6 +63,7 @@ local languages = {
   sql = 'SQL',
   sqloracle = 'SQL (Oracle)',
   tcl = 'Tcl',
+  templ= 'Templ', -- https://templ.guide/
   tcsh = 'Shell Script (tcsh)',
   tex = 'TeX',
   toml = 'TOML',
