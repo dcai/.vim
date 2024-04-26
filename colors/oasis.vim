@@ -393,7 +393,7 @@ if has('nvim')
         \ '@lsp.type.enum'         : {'guifg':s:olive},
         \ '@lsp.type.interface'    : {'guifg':s:beige},
         \ '@lsp.type.namespace'    : {'guifg':s:niceblue},
-        \ '@lsp.type.struct'       : {'guifg':s:black},
+        \ '@lsp.type.struct'       : {'guifg':s:red},
         \ '@module'                : {'guifg':s:lime},
         \ '@number'                : {'guifg':s:lime},
         \ '@operator'              : s:dict_operator,

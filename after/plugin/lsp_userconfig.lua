@@ -290,3 +290,7 @@ nvim_lspconfig.html.setup({
 nvim_lspconfig.templ.setup({
   on_attach = common_on_attach,
 })
+
+nvim_lspconfig.rust_analyzer.setup({
+  on_attach = common_on_attach,
+})
