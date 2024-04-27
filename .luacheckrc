@@ -1,7 +1,9 @@
 stds.nvim = {
   read_globals = { 'jit' },
 }
-std = 'lua54'
+std = 'lua51+nvim'
+-- Rerun tests only if their modification time changed.
+cache = true
 
 ignore = {
   -- "011", -- A syntax error.
@@ -62,38 +64,16 @@ ignore = {
   '631', -- Line is too long.
 }
 
-globals = {
-  'P',
-  'R',
-  'apply_colorscheme',
-  'is_git_repo',
-  'blue',
-  'file_exists',
-  'find_executable',
-  'get_all_local_config',
-  'get_or',
-  'get_user_config',
-  'global_keymap',
-  'is_env_var_true',
-  'is_env_var_false',
-  'green',
-  'isempty',
-  'create_autocmd',
-  'handle_vim_event_by_command',
-  'parent_dir',
-  'project_root',
-  'purple',
-  'readfile',
-  'log',
-  'red',
-  'set',
-  'set_user_config',
-  'setup_colorscheme',
-  'slugify',
-  'source',
-  'touch',
-  'trim_right',
+read_globas = {
   'vim',
-  'writefile',
-  'yellow',
+}
+
+globals = {
+  'vim',
+  'G',
+  'LOG',
+}
+
+exclude_files = {
+  'lua/log.lua',
 }

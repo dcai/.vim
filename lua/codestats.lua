@@ -77,8 +77,12 @@ local languages = {
   zsh = 'Shell Script (Zsh)',
 }
 
+local function isempty(s)
+  return s == nil or s == ''
+end
+
 local CODESTATS_API_URL = 'https://codestats.net/api'
-if os.getenv('CODESTATS_API_URL') then
+if not isempty(os.getenv('CODESTATS_API_URL')) then
   CODESTATS_API_URL = os.getenv('CODESTATS_API_URL')
 end
 local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')
@@ -100,7 +104,7 @@ local function myprofile(username)
     },
   })
   local json = vim.json.decode(response.body)
-  log.info('codestats: profile: ', vim.inspect(json))
+  LOG.info('codestats: profile: ', vim.inspect(json))
 end
 
 local function pulse()
@@ -120,7 +124,7 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  log.info('Pulsing: request body: ', vim.inspect(body))
+  LOG.info('Pulsing: request body: ', vim.inspect(body))
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
@@ -132,10 +136,10 @@ local function pulse()
 
   local status = response.status
   if status == 200 or status == 201 then
-    log.info('Pulsed', response.body)
+    LOG.info('Pulsed', response.body)
     xp_table = {}
   else
-    log.error('Pulsed failed', vim.inspect(response))
+    LOG.error('Pulsed failed', vim.inspect(response))
   end
 end
 
@@ -145,13 +149,13 @@ function M.setup()
   vim.api.nvim_create_user_command('CSProfile', function(opts)
     local username = opts.fargs[1]
     if isempty(username) then
-      log.warn('provide codestats public username')
+      LOG.warn('provide codestats public username')
       return
     end
     myprofile(username)
   end, { nargs = '*' })
   vim.api.nvim_create_user_command('CSInfo', function()
-    log.info('codestats: xp_table: ', vim.inspect(xp_table))
+    LOG.info('codestats: xp_table: ', vim.inspect(xp_table))
   end, { nargs = 0, desc = 'log xp_table' })
   vim.api.nvim_create_user_command('CSPulse', function()
     pulse()
