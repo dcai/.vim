@@ -160,6 +160,10 @@ nvim_lspconfig.tsserver.setup({
     },
   },
   init_options = {
+    preferences = {
+      disableSuggestions = true,
+      includeCompletionsForModuleExports = true,
+    },
     hostInfo = 'neovim',
   },
   on_attach = common_on_attach,
@@ -263,7 +267,22 @@ if fzfloaded then
   handlers['textDocument/typeDefinition'] = fzf_location('typeDefinition')
 end
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = 'ERR',
+      [vim.diagnostic.severity.WARN] = 'WARN',
+    },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+    },
+    numhl = {
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    },
+  },
+})
+-- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 
 nvim_lspconfig.pyright.setup({
   on_attach = common_on_attach,
@@ -293,4 +312,7 @@ nvim_lspconfig.templ.setup({
 
 nvim_lspconfig.rust_analyzer.setup({
   on_attach = common_on_attach,
+})
+nvim_lspconfig.biome.setup({
+  cmd = { 'biome', 'lsp-proxy' },
 })
