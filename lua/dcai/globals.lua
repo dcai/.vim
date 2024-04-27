@@ -1,155 +1,39 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
-function is_git_repo()
-  local handle = io.popen('git rev-parse --is-inside-work-tree 2> /dev/null')
-  local result = handle:read('*a')
-  handle:close()
-  if result:match('true') then
-    return true
-  else
-    return false
-  end
-end
+G = {}
 
-function is_env_var_true(name)
-  local v = os.getenv(name)
-  return v == 'true' or v == '1'
-end
-
-function is_env_var_false()
-  local v = os.getenv(name)
-  return v == 'false' or v == '0'
-end
-
-function P(val)
+G.print = function(val)
   print(vim.inspect(val))
   return val
 end
 
-function R(module)
+G.reload = function(module)
   require('plenary.reload').reload_module(module)
   -- package.loaded[module] = nil
   return require(module)
 end
 
----return the first executable from given list
----@param files string[]
----@return string|nil
-function find_executable(files)
-  for _, file in ipairs(files) do
-    local resolved = vim.fn.expand(file)
-    if vim.fn.executable(resolved) == 1 then
-      return resolved
-    end
-  end
-  return nil
-end
-
----create keymap item
----@param mode string
----@param from string
----@param to string
-function global_keymap(mode, from, to)
-  -- local expr_opts = { noremap = true, expr = true, silent = true }
-  vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
-end
-
----copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
----@param string string
----@param replacement string
----@return string
-function slugify(string, replacement)
-  if replacement == nil then
-    replacement = '-'
-  end
-  local result = ''
-  -- loop through each word or number
-  for word in gmatch(string, '(%w+)') do
-    result = result .. word .. replacement
-  end
-  -- remove trailing separator
-  result = gsub(result, replacement .. '$', '')
-  return result:lower()
-end
-
-function trim_right(str, char)
-  local last_char = str:sub(-1)
-  if last_char == char then
-    return str:sub(1, -2)
-  end
-  return str
-end
-
-function parent_dir(input)
-  return trim_right(input, '/'):match('(.*/)')
-end
-
----find project root
----@return string|nil
-function project_root()
-  local current_file = vim.fn.expand('%:p:h')
-  local dir = parent_dir(current_file)
-
-  while dir do
-    local git_dir = dir .. '.git'
-    local is_git_dir = io.open(git_dir, 'r')
-
-    if is_git_dir then
-      io.close(is_git_dir)
-      return dir
-    else
-      dir = parent_dir(dir)
-    end
-  end
-
-  return nil
-end
-
-function apply_colorscheme(colorscheme, termguicolors)
-  vim.opt.termguicolors = termguicolors and true or false
-  xpcall(function()
-    vim.cmd.colorscheme(colorscheme)
-  end, function()
-    vim.cmd.colorscheme('default')
-  end)
-end
-
-function setup_colorscheme()
-  local defaulcolorscheme = 'oasis'
-  local termguicolors = get_user_config('colorscheme.termguicolors', true)
-  local cs = get_user_config('colorscheme.name', defaulcolorscheme)
-  apply_colorscheme(cs, termguicolors)
-  create_autocmd('ColorScheme', 'SaveColorScheme', function(ev)
-    set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
-  end)
-end
-
-function source(path)
-  -- local vim_home = vim.fn.expand('<sfile>:p:h')
-  vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
-end
-
-function file_exists(filepath)
+local function file_exists(filepath)
   local status = vim.fn.filereadable(filepath) == 1
 
   return status
 end
 
-function readfile(file)
+local function readfile(file)
   local f = assert(io.open(file, 'r'))
   local content = f:read('*all')
   f:close()
   return content
 end
 
-function writefile(file, contents)
+local function writefile(file, contents)
   local f = assert(io.open(file, 'w'))
   f:write(contents)
   f:close()
 end
 
-function touch(filepath)
+local function touch(filepath)
   if not file_exists(filepath) then
     local file, error_message = io.open(filepath, 'w')
     if file then
@@ -162,11 +46,23 @@ function touch(filepath)
   return nil
 end
 
-function isempty(s)
-  return s == nil or s == ''
+local function user_config_file_path()
+  return vim.fn.stdpath('data') .. '/user.json'
 end
 
-function get_or(table, key, default)
+local function get_all_local_config()
+  local userconfigfile = user_config_file_path()
+  touch(userconfigfile)
+  local json = readfile(userconfigfile)
+  local ok, config = pcall(vim.json.decode, json)
+  if ok then
+    return config
+  else
+    return {}
+  end
+end
+
+local function get_or(table, key, default)
   if vim.tbl_isempty(table) then
     return default
   end
@@ -184,28 +80,12 @@ function get_or(table, key, default)
   return v
 end
 
-local function user_config_file_path()
-  return vim.fn.stdpath('data') .. '/user.json'
-end
-
-function get_all_local_config()
-  local userconfigfile = user_config_file_path()
-  touch(userconfigfile)
-  local json = readfile(userconfigfile)
-  local ok, config = pcall(vim.json.decode, json)
-  if ok then
-    return config
-  else
-    return {}
-  end
-end
-
-function get_user_config(key, default)
+local function get_user_config(key, default)
   local config = get_or(get_all_local_config(), key, default)
   return config
 end
 
-function set(tbl, path, value)
+local function set(tbl, path, value)
   local keys = vim.split(path, '.', { plain = true })
   local current = tbl
   for i = 1, #keys - 1 do
@@ -219,14 +99,14 @@ function set(tbl, path, value)
   current[finalKey] = value
 end
 
-function set_user_config(path, value)
+local function set_user_config(path, value)
   local userconfigfile = user_config_file_path()
   local config = get_all_local_config()
   set(config, path, value)
   writefile(userconfigfile, vim.json.encode(config))
 end
 
-function handle_vim_event_by_command(evt, command)
+G.handle_vim_event_by_command = function(evt, command)
   local group_name = 'On' .. evt .. 'Group'
   return vim.api.nvim_create_autocmd(evt, {
     command = command,
@@ -235,15 +115,121 @@ function handle_vim_event_by_command(evt, command)
   })
 end
 
-function create_autocmd(evt, group_name, callback)
+local function create_autocmd(evt, group_name, callback)
   return vim.api.nvim_create_autocmd(evt, {
     pattern = '*',
     group = vim.api.nvim_create_augroup(
-      group_name or 'On' .. evt .. 'Group',
+      group_name or ('On' .. evt .. 'Group'),
       { clear = true }
     ),
     callback = callback,
   })
+end
+
+local function apply_colorscheme(colorscheme, termguicolors)
+  vim.opt.termguicolors = termguicolors and true or false
+  xpcall(function()
+    vim.cmd.colorscheme(colorscheme)
+  end, function()
+    vim.cmd.colorscheme('default')
+  end)
+end
+
+G.is_git_repo = function()
+  local handle = io.popen('git rev-parse --is-inside-work-tree 2> /dev/null')
+  if handle == nil then
+    return false
+  end
+  local result = handle:read('*a')
+  handle:close()
+  if result:match('true') then
+    return true
+  else
+    return false
+  end
+end
+
+G.isempty = function(s)
+  return s == nil or s == ''
+end
+
+local function is_env_var_true(name)
+  local v = os.getenv(name)
+  return v == 'true' or v == '1'
+end
+G.is_env_var_true = is_env_var_true
+
+local function is_env_var_false(name)
+  local v = os.getenv(name)
+  return v == 'false' or v == '0'
+end
+G.is_env_var_false = is_env_var_false
+
+---return the first executable from given list
+---@param files string[]
+---@return string|nil
+G.find_executable = function(files)
+  for _, file in ipairs(files) do
+    local resolved = vim.fn.expand(file)
+    if vim.fn.executable(resolved) == 1 then
+      return resolved
+    end
+  end
+  return nil
+end
+
+---create keymap item
+---@param mode string
+---@param from string
+---@param to string
+G.keymap = function(mode, from, to)
+  -- local expr_opts = { noremap = true, expr = true, silent = true }
+  vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
+end
+
+---copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
+---@param string string
+---@param replacement string
+---@return string
+G.slugify = function(string, replacement)
+  if replacement == nil then
+    replacement = '-'
+  end
+  local result = ''
+  -- loop through each word or number
+  for word in gmatch(string, '(%w+)') do
+    result = result .. word .. replacement
+  end
+  -- remove trailing separator
+  result = gsub(result, replacement .. '$', '')
+  return result:lower()
+end
+
+G.trim_right = function(str, char)
+  local last_char = str:sub(-1)
+  if last_char == char then
+    return str:sub(1, -2)
+  end
+  return str
+end
+
+G.parent_dir = function(input)
+  return G.trim_right(input, '/'):match('(.*/)')
+end
+
+G.setup_colorscheme = function()
+  local defaulcolorscheme = 'oasis'
+  local termguicolors = get_user_config('colorscheme.termguicolors', true)
+  local cs = get_user_config('colorscheme.name', defaulcolorscheme)
+  apply_colorscheme(cs, termguicolors)
+  create_autocmd('ColorScheme', 'SaveColorScheme', function(ev)
+    set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
+  end)
+end
+
+G.source = function(path)
+  -- local vim_home = vim.fn.expand('<sfile>:p:h')
+  vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
 end
 
 ---higher order function to color text
@@ -264,8 +250,8 @@ local function colortext(color)
   end
 end
 
-red = colortext('red')
-green = colortext('green')
-yellow = colortext('yellow')
-blue = colortext('blue')
-purple = colortext('purple')
+G.red = colortext('red')
+G.green = colortext('green')
+G.yellow = colortext('yellow')
+G.blue = colortext('blue')
+G.purple = colortext('purple')

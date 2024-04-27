@@ -35,7 +35,7 @@ local note_get_git_branch = function()
 end
 
 local note_create_or_edit = function(name)
-  local filename = slugify(name, '-')
+  local filename = G.slugify(name, '-')
   local dir = vim.g.notes_home
   local path = vim.fn.expand(string.format('%s/%s.md', dir, filename))
   vim.cmd('edit ' .. path)
@@ -44,10 +44,10 @@ end
 local function create_note_for_project(with_branch)
   return function()
     local now = note_now()
-    local git_root = slugify(note_get_git_root(), '-')
+    local git_root = G.slugify(note_get_git_root(), '-')
     local git_branch = 'index'
     if with_branch then
-      git_branch = slugify(note_get_git_branch(), '-')
+      git_branch = G.slugify(note_get_git_branch(), '-')
     end
 
     if git_root and git_branch then
@@ -86,7 +86,7 @@ vim.api.nvim_create_user_command(
 )
 vim.api.nvim_create_user_command('NoteGit', create_note_for_project(false), {})
 
--- global_keymap('n', '<leader>nc', ':NoteNew<cr>')
--- global_keymap('n', '<leader>nt', ':NoteToday<cr>')
--- global_keymap('n', '<leader>nb', ':NoteGitBranch<cr>')
--- global_keymap('n', '<leader>ng', ':NoteGit<cr>')
+-- G.keymap('n', '<leader>nc', ':NoteNew<cr>')
+-- G.keymap('n', '<leader>nt', ':NoteToday<cr>')
+-- G.keymap('n', '<leader>nb', ':NoteGitBranch<cr>')
+-- G.keymap('n', '<leader>ng', ':NoteGit<cr>')

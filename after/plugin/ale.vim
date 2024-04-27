@@ -99,8 +99,8 @@ let g:ale_fixers = {
 \}
 
 nnoremap <leader>, :ALEFix<cr>
-nnoremap <silent> [d :ALEPrevious<cr>
-nnoremap <silent> ]d :ALENext<cr>
+" nnoremap <silent> [d :ALEPrevious<cr>
+" nnoremap <silent> ]d :ALENext<cr>
 
 """"""""""""""""""""""""""""""""""""
 " Set ale fix on save conditionally

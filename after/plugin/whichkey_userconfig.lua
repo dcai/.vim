@@ -9,6 +9,32 @@ local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
 local _subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
 
+local function project_root()
+  local dir = vim.fn.expand('%:p:h')
+  local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
+  if not lspconfig_loaded then
+    return dir
+  end
+  local root_pattern = nvim_lspconfig.util.root_pattern
+  return root_pattern(
+    'package.json',
+    'readme.md',
+    'README.md',
+    'readme.txt',
+    'LICENSE.txt',
+    'LICENSE',
+    '.git'
+  )(dir)
+end
+
+vim.keymap.set('n', 'K', function()
+  fzf.grep_cword({ cwd = project_root() })
+end, { noremap = true, silent = true })
+
+local function live_grep()
+  fzf.live_grep({ cwd = project_root() })
+end
+
 local function cmd(vim_cmd, desc, notify_after)
   return {
     function()
@@ -99,24 +125,15 @@ local fzf_keymap = {
   ['c'] = { fzf.colorschemes, 'colorschemes' },
   ['f'] = {
     function()
-      if is_git_repo() then
+      if G.is_git_repo() then
         fzf.git_files()
       else
-        fzf.files()
+        fzf.files({ cwd = project_root() })
       end
     end,
     'project files',
   },
   ['g'] = { fzf.buffers, 'buffers' },
-  ['q'] = {
-    function()
-      vim.diagnostic.setqflist({
-        open = false,
-      })
-      fzf.quickfix()
-    end,
-    'quickfix list',
-  },
   ['m'] = { marlin_marks, 'marlin files' },
   ['r'] = { fzf.oldfiles, 'recent files' },
 }
@@ -169,6 +186,7 @@ local git_keymap = {
 local lsp_keymap = {
   name = 'lsp',
   a = { vim.lsp.buf.code_action, 'code action' },
+  d = { vim.diagnostic.open_float, 'diagnostic' },
   f = { vim.lsp.buf.format, 'format code' },
   I = cmd('LspInfo', 'lsp info'),
   p = {
@@ -178,7 +196,15 @@ local lsp_keymap = {
     'Peek type',
   },
   r = { vim.lsp.buf.rename, 'rename' },
-  q = { fzf.quickfix, 'linting' },
+  ['q'] = {
+    function()
+      vim.diagnostic.setqflist({
+        open = false,
+      })
+      fzf.quickfix()
+    end,
+    'quickfix list',
+  },
 }
 
 local yank_keymap = {
@@ -335,10 +361,6 @@ local editing_keymap = {
     '',
   },
 }
-
-local live_grep = function()
-  fzf.live_grep({ cwd = project_root() })
-end
 
 local n_keymap = {
   ['.'] = { live_grep, 'grep current repo' },

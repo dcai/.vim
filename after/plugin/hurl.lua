@@ -10,7 +10,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
   -- run current file
   local ft = vim.bo.filetype
   if not vim.tbl_contains({ 'hurl' }, ft) then
-    log.warn('Not a hurl file')
+    LOG.warn('Not a hurl file')
     return
   end
   local filepath = vim.fn.expand('%:p')

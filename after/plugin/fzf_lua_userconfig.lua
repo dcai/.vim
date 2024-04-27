@@ -271,7 +271,3 @@ fzflua.setup({
     },
   },
 })
-
-vim.keymap.set('n', 'K', function()
-  fzflua.grep_cword({ cwd = project_root() })
-end, { noremap = true, silent = true })

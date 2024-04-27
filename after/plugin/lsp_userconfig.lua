@@ -95,6 +95,8 @@ local function common_on_attach(client, buffer)
   else
     xmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   end
+  nmap('[d', vim.diagnostic.goto_prev, 'go to prev diagnostic')
+  nmap(']d', vim.diagnostic.goto_next, 'go to next diagnostic')
   nmap('D', vim.lsp.buf.hover, 'hover doc')
   nmap('R', vim.lsp.buf.rename, 'rename variable')
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
@@ -242,8 +244,8 @@ if fzfloaded then
     local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
     local fzf_trim = true
     local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
-    local path = purple(filename)
-    local lnum = green(item.lnum)
+    local path = G.purple(filename)
+    local lnum = G.green(item.lnum)
     local text = fzf_trim and vim.trim(item.text) or item.text
     return string.format('%s:%s:%s: %s', path, lnum, item.col, text)
   end
@@ -268,18 +270,19 @@ if fzfloaded then
 end
 
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = {
+    severity = { min = vim.diagnostic.severity.HINT },
+    source = true,
+    format = function(diagnostic)
+      if diagnostic.severity == vim.diagnostic.severity.ERROR then
+        return string.format('E: %s', diagnostic.message)
+      end
+      return diagnostic.message
+    end,
+  },
+  underline = true,
   signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = 'ERR',
-      [vim.diagnostic.severity.WARN] = 'WARN',
-    },
-    linehl = {
-      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-    },
-    numhl = {
-      [vim.diagnostic.severity.WARN] = 'WarningMsg',
-    },
+    severity = { min = vim.diagnostic.severity.HINT },
   },
 })
 -- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end

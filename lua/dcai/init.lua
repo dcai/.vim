@@ -1,15 +1,15 @@
 require('dcai.globals')
 
-log = require('log')
+LOG = require('log')
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-vim.g.python3_host_prog = find_executable({
+vim.g.python3_host_prog = G.find_executable({
   '~/.local/share/nvim/venv/bin/python3',
   '/opt/homebrew/bin/python3',
   '/usr/local/bin/python3',
   '/usr/bin/python3',
 })
-vim.g.node_host_prog = find_executable({
+vim.g.node_host_prog = G.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
@@ -19,8 +19,8 @@ if shadafile then
   vim.opt.shadafile = shadafile
 end
 
-source('loader.vim')
-setup_colorscheme()
+G.source('loader.vim')
+G.setup_colorscheme()
 
 local codestats = require('codestats')
 codestats.setup()
