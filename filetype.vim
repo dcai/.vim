@@ -94,12 +94,14 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile *.install set filetype=php
   autocmd BufRead,BufNewFile *.module set filetype=php
 
-  " Javascript
+  " json
   autocmd BufRead,BufNewFile .jscsrc set filetype=json
   autocmd BufRead,BufNewFile .babelrc set filetype=json
   autocmd BufRead,BufNewFile .jshintrc set filetype=json
   autocmd BufRead,BufNewFile .tern-config set filetype=json
   autocmd BufRead,BufNewFile tsconfig.json set filetype=json5
+  autocmd BufRead,BufNewFile biome.jsonc set filetype=json5
+  autocmd BufRead,BufNewFile turbo.json set filetype=json5
   autocmd BufRead,BufNewFile .eslintrc set filetype=json5
   autocmd BufRead,BufNewFile */mdk/config-dist.json set filetype=json5
 

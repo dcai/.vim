@@ -2,7 +2,7 @@
 """ Ale
 """""""""""""""""""""""""""""""""""""""
 let g:ale_completion_enabled = 0
-let g:ale_disable_lsp = 1
+let g:ale_disable_lsp = 'auto'
 let g:ale_hover_cursor = 0
 let g:ale_virtualtext_cursor = "disabled"
 let g:ale_set_highlights = 1
@@ -35,14 +35,21 @@ let g:ale_javascript_eslint_use_global = 0
 " use different version which generates different format
 let g:ale_javascript_prettier_use_global = 0
 
+let g:ale_biome_use_global = 1
+let g:ale_biome_executable = 'biome'
+
+let s:default_js_linter = []
+let s:jslinter = getenv('JSLINTER') ? [getenv('JSLINTER')] : s:default_js_linter
+let s:jsfixer = getenv('JSFIXER') ? [getenv('JSFIXER')] : ['biome']
+
 " Ale linters settings
 let g:ale_linters = {
   \ 'c': ['clangd', 'ccls'],
   \ 'cs': ['mcs'],
   \ 'go': ['gopls'],
   \ 'graphql': [],
-  \ 'javascript': ['eslint', 'tsserver'],
-  \ 'javascriptreact': ['eslint', 'tsserver'],
+  \ 'javascript': s:jslinter,
+  \ 'javascriptreact': s:jslinter,
   \ 'json': [],
   \ 'lua': ['luac', 'luacheck'],
   \ 'markdown': ['cspell'],
@@ -50,8 +57,8 @@ let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'rust': ['analyzer', 'cargo'],
   \ 'sh': ['shellcheck'],
-  \ 'typescript': ['eslint', 'tsserver'],
-  \ 'typescriptreact': ['eslint', 'tsserver'],
+  \ 'typescript': s:jslinter,
+  \ 'typescriptreact': s:jslinter,
   \ 'vim': ['vimls'],
 \}
 
@@ -70,10 +77,10 @@ let g:ale_fixers = {
   \ 'gotmpl': ['prettier'],
   \ 'templ': ['templ'],
   \ 'java': ['clang-format'],
-  \ 'javascript': ['prettier'],
-  \ 'javascriptreact': ['prettier'],
-  \ 'json': ['prettier'],
-  \ 'json5': ['prettier'],
+  \ 'javascript': s:jsfixer,
+  \ 'javascriptreact': s:jsfixer,
+  \ 'json': ['biome'],
+  \ 'json5': ['biome'],
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
@@ -84,8 +91,8 @@ let g:ale_fixers = {
   \ 'svelte': ['prettier'],
   \ 'sql': ['pgformatter'],
   \ 'terraform': ['terraform'],
-  \ 'typescript': ['prettier'],
-  \ 'typescriptreact': ['prettier'],
+  \ 'typescript': s:jsfixer,
+  \ 'typescriptreact': s:jsfixer,
   \ 'vue': ['prettier'],
   \ 'xml': ['xmllint'],
   \ 'yaml': ['prettier'],
