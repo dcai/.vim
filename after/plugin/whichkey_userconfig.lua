@@ -97,8 +97,26 @@ local fzf_keymap = {
   name = 'fzf',
   ['b'] = { fzf.buffers, 'buffers' },
   ['c'] = { fzf.colorschemes, 'colorschemes' },
-  ['f'] = { fzf.git_files, 'project files' },
+  ['f'] = {
+    function()
+      if is_git_repo() then
+        fzf.git_files()
+      else
+        fzf.files()
+      end
+    end,
+    'project files',
+  },
   ['g'] = { fzf.buffers, 'buffers' },
+  ['q'] = {
+    function()
+      vim.diagnostic.setqflist({
+        open = false,
+      })
+      fzf.quickfix()
+    end,
+    'quickfix list',
+  },
   ['m'] = { marlin_marks, 'marlin files' },
   ['r'] = { fzf.oldfiles, 'recent files' },
 }

@@ -66,6 +66,7 @@ globals = {
   'P',
   'R',
   'apply_colorscheme',
+  'is_git_repo',
   'blue',
   'file_exists',
   'find_executable',

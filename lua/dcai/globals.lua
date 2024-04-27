@@ -1,6 +1,17 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
+function is_git_repo()
+  local handle = io.popen('git rev-parse --is-inside-work-tree 2> /dev/null')
+  local result = handle:read('*a')
+  handle:close()
+  if result:match('true') then
+    return true
+  else
+    return false
+  end
+end
+
 function is_env_var_true(name)
   local v = os.getenv(name)
   return v == 'true' or v == '1'
