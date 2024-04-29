@@ -273,11 +273,22 @@ vim.diagnostic.config({
   virtual_text = {
     severity = { min = vim.diagnostic.severity.HINT },
     source = true,
-    format = function(diagnostic)
-      if diagnostic.severity == vim.diagnostic.severity.ERROR then
-        return string.format('E: %s', diagnostic.message)
+    format = function(report)
+      local strings = {
+        'ERR',
+        'WARN',
+        'INFO',
+        'HINT',
+      }
+      if strings[report.severity] then
+        return string.format(
+          '[%s] %s',
+          strings[report.severity],
+          report.message
+        )
+      else
+        return report.message
       end
-      return diagnostic.message
     end,
   },
   underline = true,
