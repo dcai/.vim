@@ -33,6 +33,7 @@ local languages = {
   javascript = 'JavaScript',
   javascriptreact = 'JavaScript',
   json = 'JSON',
+  json5 = 'JSON',
   jsp = 'JSP',
   jsx = 'JavaScript',
   kotlin = 'Kotlin',
