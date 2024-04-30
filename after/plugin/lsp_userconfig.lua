@@ -289,9 +289,10 @@ vim.diagnostic.config({
       }
       if strings[report.severity] then
         return string.format(
-          '[%s] %s',
+          '[%s] %s\n%s',
           strings[report.severity],
-          report.message
+          report.message,
+          report.code
         )
       else
         return report.message
@@ -299,6 +300,18 @@ vim.diagnostic.config({
     end,
   },
   underline = false,
+  float = {
+    show_header = false,
+    format = function(report)
+      -- LOG.info(report)
+      return string.format(
+        '[%s] %s %s',
+        report.source,
+        report.message,
+        report.code
+      )
+    end,
+  },
   signs = {
     severity = { min = vim.diagnostic.severity.HINT },
     linehl = {
