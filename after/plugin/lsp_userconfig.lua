@@ -291,9 +291,15 @@ vim.diagnostic.config({
       end
     end,
   },
-  underline = true,
+  underline = false,
   signs = {
     severity = { min = vim.diagnostic.severity.HINT },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+    },
+    numhl = {
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    },
   },
 })
 -- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
