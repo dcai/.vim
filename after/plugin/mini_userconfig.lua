@@ -4,6 +4,63 @@ if not loaded then
   return
 end
 
+-- local animate = require('mini.animate')
+-- animate.setup({
+--   -- Cursor path
+--   cursor = {
+--     -- Whether to enable this animation
+--     enable = false,
+--     -- -- Timing of animation (how steps will progress in time)
+--     -- timing = --<function: implements linear total 250ms animation duration>,
+--     -- -- Path generator for visualized cursor movement
+--     -- path = --<function: implements shortest line path>,
+--   },
+--
+--   -- Vertical scroll
+--   scroll = {
+--     -- Whether to enable this animation
+--     enable = true,
+--     timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
+--     -- for mouse scroll: set mousescroll=ver:25,hor:2
+--     subscroll = animate.gen_subscroll.equal({ max_output_steps = 120 }),
+--   },
+--
+--   -- Window resize
+--   resize = {
+--     -- Whether to enable this animation
+--     enable = false,
+--     -- -- Timing of animation (how steps will progress in time)
+--     -- timing = --<function: implements linear total 250ms animation duration>,
+--     -- -- Subresize generator for all steps of resize animations
+--     -- subresize = --<function: implements equal linear steps>,
+--   },
+--
+--   -- Window open
+--   open = {
+--     -- Whether to enable this animation
+--     enable = false,
+--     -- -- Timing of animation (how steps will progress in time)
+--     -- timing = --<function: implements linear total 250ms animation duration>,
+--     -- -- Floating window config generator visualizing specific window
+--     -- winconfig = --<function: implements static window for 25 steps>,
+--     -- -- 'winblend' (window transparency) generator for floating window
+--     -- winblend = --<function: implements equal linear steps from 80 to 100>,
+--   },
+--
+--   -- Window close
+--   close = {
+--     -- -- Whether to enable this animation
+--     enable = false,
+--     -- -- Timing of animation (how steps will progress in time)
+--     -- timing = --<function: implements linear total 250ms animation duration>,
+--     -- -- Floating window config generator visualizing specific window
+--     -- winconfig = --<function: implements static window for 25 steps>,
+--     -- -- 'winblend' (window transparency) generator for floating window
+--     -- winblend = --<function: implements equal linear steps from 80 to 100>,
+--   },
+-- })
+
+
 mini_surround.setup({
   -- Add custom surroundings to be used on top of builtin ones. For more
   -- information with examples, see `:h MiniSurround.config`.
@@ -189,62 +246,6 @@ require('mini.align').setup({
 
   -- Whether to disable showing non-error feedback
   silent = false,
-})
-
-local animate = require('mini.animate')
-animate.setup({
-  -- Cursor path
-  cursor = {
-    -- Whether to enable this animation
-    enable = false,
-    -- -- Timing of animation (how steps will progress in time)
-    -- timing = --<function: implements linear total 250ms animation duration>,
-    -- -- Path generator for visualized cursor movement
-    -- path = --<function: implements shortest line path>,
-  },
-
-  -- Vertical scroll
-  scroll = {
-    -- Whether to enable this animation
-    enable = true,
-    timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
-    -- for mouse scroll: set mousescroll=ver:25,hor:2
-    subscroll = animate.gen_subscroll.equal({ max_output_steps = 120 }),
-  },
-
-  -- Window resize
-  resize = {
-    -- Whether to enable this animation
-    enable = false,
-    -- -- Timing of animation (how steps will progress in time)
-    -- timing = --<function: implements linear total 250ms animation duration>,
-    -- -- Subresize generator for all steps of resize animations
-    -- subresize = --<function: implements equal linear steps>,
-  },
-
-  -- Window open
-  open = {
-    -- Whether to enable this animation
-    enable = false,
-    -- -- Timing of animation (how steps will progress in time)
-    -- timing = --<function: implements linear total 250ms animation duration>,
-    -- -- Floating window config generator visualizing specific window
-    -- winconfig = --<function: implements static window for 25 steps>,
-    -- -- 'winblend' (window transparency) generator for floating window
-    -- winblend = --<function: implements equal linear steps from 80 to 100>,
-  },
-
-  -- Window close
-  close = {
-    -- -- Whether to enable this animation
-    enable = false,
-    -- -- Timing of animation (how steps will progress in time)
-    -- timing = --<function: implements linear total 250ms animation duration>,
-    -- -- Floating window config generator visualizing specific window
-    -- winconfig = --<function: implements static window for 25 steps>,
-    -- -- 'winblend' (window transparency) generator for floating window
-    -- winblend = --<function: implements equal linear steps from 80 to 100>,
-  },
 })
 
 require('mini.notify').setup({
