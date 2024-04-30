@@ -39,6 +39,13 @@ local root_pattern = nvim_lspconfig.util.root_pattern
 
 local timeout_ms = 3000
 local organize_imports = {
+  pyright = function(_client, buf)
+    local params = {
+      command = 'pyright.organizeimports',
+      arguments = { vim.api.nvim_buf_get_name(buf) },
+    }
+    vim.lsp.buf.execute_command(params)
+  end,
   tsserver = function(_client, buffer)
     buffer = buffer or vim.api.nvim_get_current_buf()
     local params = {
