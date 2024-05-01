@@ -15,7 +15,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
   end
   local filepath = vim.fn.expand('%:p')
   local testrunner = string.format(
-    'cd %s; hurl --color --insecure -v %s',
+    'cd %s; hurl --color --insecure %s',
     project_root,
     filepath
   )
