@@ -21,18 +21,22 @@ local function shelljob(command)
         opts = opts or {}
         opts.cwd = opts.cwd or vim.fn.expand('%:p:h')
         vim.notify(string.format('[%s] start...', desc or command))
-        Job
-          :new({
-            command = command,
-            args = opts.args,
-            cwd = opts.cwd,
-            on_exit = function(job, ret)
+        Job:new({
+          command = command,
+          args = opts.args,
+          cwd = opts.cwd,
+          on_exit = function(job, ret)
+            if ret == 0 then
+              local result = vim.inspect(job:result())
               vim.notify(
-                string.format('[%s] done: status: %d', desc or command, ret)
+                string.format('[%s] done: %s', desc or command, result)
               )
-            end,
-          })
-          :start()
+            else
+              local stderr = vim.inspect(job:stderr_result())
+              vim.notify(stderr)
+            end
+          end,
+        }):start()
       end,
       desc or vim.inspect(opts.args),
     }
