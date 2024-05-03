@@ -3,7 +3,6 @@ if not loaded then
   print('which-key not loaded')
   return
 end
-local pjob = require('plenary.job')
 local fzf = require('fzf-lua')
 local marlin = require('marlin')
 local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
@@ -33,7 +32,9 @@ local function shelljob(command)
               )
             else
               local stderr = vim.inspect(job:stderr_result())
-              vim.notify(stderr)
+              vim.notify(
+                string.format('[%s] error: %s', desc or command, stderr)
+              )
             end
           end,
         }):start()
