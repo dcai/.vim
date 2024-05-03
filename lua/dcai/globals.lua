@@ -255,12 +255,11 @@ end
 --@see https://github.com/dharmx/nvim/blob/d39e0637607e214cedc8beb8c5fb88fd0ff0ccd2/after/compiler/leetcode.lua
 G.new_popup = function(opts)
   local Popup = require('plenary.popup')
-  vim.api.nvim_set_hl(0, 'PopupNormal', { background = '#151A1F' })
-  vim.api.nvim_set_hl(
-    0,
-    'PopupTitle',
-    { background = '#7AB0DF', foreground = '#151A1F' }
-  )
+  -- vim.api.nvim_set_hl(
+  --   0,
+  --   'PopupNormal',
+  --   { foreground = 'white', background = '#151A1F' }
+  -- )
   local height = opts.height or 10
   local width = opts.width or 80
   local buffer = vim.api.nvim_create_buf(false, false)
@@ -272,7 +271,8 @@ G.new_popup = function(opts)
     open = function()
       local winid, _ = Popup.create(buffer, {
         title = title,
-        highlight = 'PopupNormal,FloatTitle:PopupTitle',
+        -- highlight = 'PopupNormal',
+        padding = { 0, 0, 0, 0 },
         line = 3,
         col = math.floor((vim.o.columns - width) / 2),
         minwidth = width,
