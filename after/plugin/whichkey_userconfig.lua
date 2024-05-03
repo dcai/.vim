@@ -25,7 +25,11 @@ local function shell_cmd(command)
         local popup = nil
         local channel = nil
         if not disable_popup then
-          popup = G.new_popup({ title = desc, number = false, height = 10 })
+          popup = G.new_popup({
+            title = desc,
+            number = false,
+            height = opts.height or 10,
+          })
           popup.open()
           channel = vim.api.nvim_open_term(popup.buffer, {})
           vim.api.nvim_chan_send(
@@ -48,7 +52,6 @@ local function shell_cmd(command)
                 vim.notify(string.format('[%s] done', desc))
               end
             else
-              local stderr = table.concat(job:stderr_result(), G.nl)
               if not disable_popup then
                 pcall(vim.api.nvim_chan_send, channel, stderr)
               else
