@@ -19,7 +19,7 @@ local function shell_cmd(command)
         end
         local disable_popup = opts.disable_popup and true or false
         opts = opts or {}
-        opts.cwd = opts.cwd or vim.fn.expand('%:p:h')
+        local cwd = opts.cwd or vim.fn.expand('%:p:h')
         desc = desc or vim.inspect(opts.args)
         local popup = nil
         local channel = nil
@@ -40,7 +40,7 @@ local function shell_cmd(command)
         Job:new({
           command = command,
           args = args,
-          cwd = opts.cwd,
+          cwd = cwd,
           on_exit = vim.schedule_wrap(function(job, ret)
             local stderr = table.concat(job:stderr_result(), G.nl)
             local stdout = table.concat(job:result(), G.nl)
