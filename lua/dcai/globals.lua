@@ -280,6 +280,7 @@ G.new_popup = function(opts)
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       })
       vim.api.nvim_win_set_option(winid, 'number', opts.number or false)
+      vim.api.nvim_win_set_option(winid, 'spell', false)
       vim.keymap.set('n', 'q', function()
         vim.api.nvim_win_close(winid, true)
       end, { buffer = buffer })
