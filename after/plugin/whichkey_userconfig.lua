@@ -10,6 +10,36 @@ local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
 local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
 
+local function shelljob(command)
+  return function(opts, desc)
+    return {
+      function()
+        local plenary_loaded, Job = pcall(require, 'plenary.job')
+        if not plenary_loaded then
+          return
+        end
+        opts = opts or {}
+        opts.cwd = opts.cwd or vim.fn.expand('%:p:h')
+        vim.notify(string.format('[%s] start...', desc or command))
+        Job
+          :new({
+            command = command,
+            args = opts.args,
+            cwd = opts.cwd,
+            on_exit = function(job, ret)
+              vim.notify(
+                string.format('[%s] done: status: %d', desc or command, ret)
+              )
+            end,
+          })
+          :start()
+      end,
+      desc or vim.inspect(opts.args),
+    }
+  end
+end
+local git_cmd = shelljob('git')
+
 local function project_root()
   local dir = vim.fn.expand('%:p:h')
   local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
@@ -45,38 +75,6 @@ local function cmd(vim_cmd, desc, notify_after)
       end
     end,
     desc or vim_cmd,
-  }
-end
-
-local function shelljob(command, user_args, cwd, notify_after)
-  return {
-    function()
-      local args = {}
-      if type(user_args) == 'string' then
-        args = { user_args }
-      else
-        args = user_args
-      end
-      LOG.info({
-        command = command or 'no command',
-        args = args or {},
-        cwd = cwd or vim.fn.expand('%:p:h'),
-      })
-      pjob
-        :new({
-          command = command,
-          args = args,
-          cwd = cwd or vim.fn.expand('%:p:h'),
-          env = {},
-          on_exit = function(j, return_val)
-            LOG.info(return_val)
-            LOG.info(j:result())
-            vim.notify(notify_after)
-          end,
-        })
-        :sync() -- or start()
-    end,
-    notify_after or command,
   }
 end
 
@@ -184,10 +182,13 @@ local git_keymap = {
   b = cmd('FzfLua git_branches', 'checkout branch'),
   c = cmd('Git commit -a', 'commit all'),
   d = cmd('Git diff', 'diff'),
-  f = shelljob('git commit --no-verify --fixup HEAD -a', 'fixup'),
-  g = shelljob('git pull --tags --rebase', 'git pull'),
-  h = shelljob('git stash', 'git stash'),
-  H = shelljob('git stash pop', 'git stash pop'),
+  f = git_cmd(
+    { args = { 'commit', '--no-verify', '--fixup HEAD -a' } },
+    'git fixup'
+  ),
+  g = git_cmd({ args = { 'pull', '--tags', '--rebase' } }, 'git pull'),
+  h = git_cmd({ args = { 'stash' } }, 'git stash'),
+  H = git_cmd({ args = { 'stash', 'pop' } }, 'git stash pop'),
   -- l = cmd('Gllog', 'list commits'),
   l = { fzf.git_commits, 'git log' },
   L = {
@@ -200,11 +201,15 @@ local git_keymap = {
   },
   m = { require('gitsigns').blame_line, 'blame line' },
   M = cmd('Git blame', 'git blame'),
-  p = shelljob('git push -u --no-verify', 'git push'),
-  P = shelljob(
-    'git push -u --force-with-lease --no-verify',
-    'force push with lease'
-  ),
+  p = git_cmd({ args = { 'push', '-u', '--no-verify' } }, 'git push'),
+  P = git_cmd({
+    args = {
+      'push',
+      '-u',
+      '--force-with-lease',
+      '--no-verify',
+    },
+  }, 'force push with lease'),
   r = cmd(
     'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
     'rebase'
@@ -267,7 +272,7 @@ local openthings_keymap = {
     'open in folder',
   },
   f = {
-    shelljob(zed, vim.fn.expand('%:p'), nil, 'open file in zed'),
+    shelljob(zed)({ args = { vim.fn.expand('%:p') } }, 'open file in zed'),
     'open file in gui editor',
   },
   g = { open_git_hosting_web, 'open file in git web' },
