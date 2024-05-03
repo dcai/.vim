@@ -108,7 +108,7 @@ endif
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rose-pine/neovim'
-Plug 'sainnhe/everforest'
+" Plug 'sainnhe/everforest'
 let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
 let g:everforest_better_performance = 1
 """""""""""""""""""""""""""""""""""""""
