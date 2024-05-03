@@ -128,7 +128,6 @@ let g:VimuxOrientation = "h"
 """""""""""""""""""""""""""""""""""""""
 """ utils
 """""""""""""""""""""""""""""""""""""""
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-fugitive'
 Plug 'dstein64/vim-startuptime'
@@ -151,6 +150,7 @@ if s:oldvim
   """""""""""""""""""""""""""""""""""""""
   """ syntax
   """""""""""""""""""""""""""""""""""""""
+  Plug 'tpope/vim-dispatch'
   Plug 'chr4/nginx.vim'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }

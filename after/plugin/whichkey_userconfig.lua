@@ -3,10 +3,11 @@ if not loaded then
   print('which-key not loaded')
   return
 end
+local pjob = require('plenary.job')
 local fzf = require('fzf-lua')
 local marlin = require('marlin')
 local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
-local _subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
+local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
 
 local function project_root()
@@ -47,8 +48,36 @@ local function cmd(vim_cmd, desc, notify_after)
   }
 end
 
-local function dp(shell_cmd, desc, notify_after)
-  return cmd(string.format('Dispatch! %s', shell_cmd), desc, notify_after)
+local function shelljob(command, user_args, cwd, notify_after)
+  return {
+    function()
+      local args = {}
+      if type(user_args) == 'string' then
+        args = { user_args }
+      else
+        args = user_args
+      end
+      LOG.info({
+        command = command or 'no command',
+        args = args or {},
+        cwd = cwd or vim.fn.expand('%:p:h'),
+      })
+      pjob
+        :new({
+          command = command,
+          args = args,
+          cwd = cwd or vim.fn.expand('%:p:h'),
+          env = {},
+          on_exit = function(j, return_val)
+            LOG.info(return_val)
+            LOG.info(j:result())
+            vim.notify(notify_after)
+          end,
+        })
+        :sync() -- or start()
+    end,
+    notify_after or command,
+  }
 end
 
 local function open_git_hosting_web()
@@ -155,10 +184,10 @@ local git_keymap = {
   b = cmd('FzfLua git_branches', 'checkout branch'),
   c = cmd('Git commit -a', 'commit all'),
   d = cmd('Git diff', 'diff'),
-  f = dp('git commit --no-verify --fixup HEAD -a', 'fixup'),
-  g = dp('git pull --tags --rebase', 'git pull'),
-  h = dp('git stash', 'git stash'),
-  H = dp('git stash pop', 'git stash pop'),
+  f = shelljob('git commit --no-verify --fixup HEAD -a', 'fixup'),
+  g = shelljob('git pull --tags --rebase', 'git pull'),
+  h = shelljob('git stash', 'git stash'),
+  H = shelljob('git stash pop', 'git stash pop'),
   -- l = cmd('Gllog', 'list commits'),
   l = { fzf.git_commits, 'git log' },
   L = {
@@ -171,8 +200,11 @@ local git_keymap = {
   },
   m = { require('gitsigns').blame_line, 'blame line' },
   M = cmd('Git blame', 'git blame'),
-  p = dp('git push -u --no-verify', 'git push'),
-  P = dp('git push -u --force-with-lease --no-verify', 'force push with lease'),
+  p = shelljob('git push -u --no-verify', 'git push'),
+  P = shelljob(
+    'git push -u --force-with-lease --no-verify',
+    'force push with lease'
+  ),
   r = cmd(
     'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
     'rebase'
@@ -235,8 +267,7 @@ local openthings_keymap = {
     'open in folder',
   },
   f = {
-    -- dp(_subl .. ' %'),
-    dp(zed .. ' %'),
+    shelljob(zed, vim.fn.expand('%:p'), nil, 'open file in zed'),
     'open file in gui editor',
   },
   g = { open_git_hosting_web, 'open file in git web' },
