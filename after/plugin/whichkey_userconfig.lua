@@ -20,26 +20,35 @@ local function shelljob(command)
         opts = opts or {}
         opts.cwd = opts.cwd or vim.fn.expand('%:p:h')
         vim.notify(string.format('[%s] start...', desc or command))
+        local popup = G.new_popup({ title = desc, number = false, height = 10 })
+        popup.open()
+        desc = desc or vim.inspect(opts.args)
+        local channel = vim.api.nvim_open_term(popup.buffer, {})
+        vim.api.nvim_chan_send(
+          channel,
+          string.format('[%s] start...' .. G.nl, desc)
+        )
+
         Job:new({
           command = command,
           args = opts.args,
           cwd = opts.cwd,
-          on_exit = function(job, ret)
+          on_exit = vim.schedule_wrap(function(job, ret)
             if ret == 0 then
-              local result = vim.inspect(job:result())
-              vim.notify(
-                string.format('[%s] done: %s', desc or command, result)
-              )
+              local stderr = table.concat(job:stderr_result(), G.nl)
+              local stdout = table.concat(job:result(), G.nl)
+              vim.api.nvim_chan_send(channel, stderr .. G.nl .. stdout)
             else
-              local stderr = vim.inspect(job:stderr_result())
-              vim.notify(
-                string.format('[%s] error: %s', desc or command, stderr)
+              pcall(
+                vim.api.nvim_chan_send,
+                channel,
+                table.concat(job:stderr_result(), G.nl)
               )
             end
-          end,
+          end),
         }):start()
       end,
-      desc or vim.inspect(opts.args),
+      desc,
     }
   end
 end

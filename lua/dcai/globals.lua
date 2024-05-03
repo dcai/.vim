@@ -250,6 +250,46 @@ local function colortext(color)
   end
 end
 
+--@param opts table
+--@return table
+--@see https://github.com/dharmx/nvim/blob/d39e0637607e214cedc8beb8c5fb88fd0ff0ccd2/after/compiler/leetcode.lua
+G.new_popup = function(opts)
+  local Popup = require('plenary.popup')
+  vim.api.nvim_set_hl(0, 'PopupNormal', { background = '#151A1F' })
+  vim.api.nvim_set_hl(
+    0,
+    'PopupTitle',
+    { background = '#7AB0DF', foreground = '#151A1F' }
+  )
+  local height = opts.height or 10
+  local width = opts.width or 80
+  local buffer = vim.api.nvim_create_buf(false, false)
+  local title = opts.title or 'Job'
+  -- local channel = vim.api.nvim_open_term(buffer, {})
+  return {
+    -- channel = channel,
+    buffer = buffer,
+    open = function()
+      local winid, _ = Popup.create(buffer, {
+        title = title,
+        highlight = 'PopupNormal,FloatTitle:PopupTitle',
+        line = 3,
+        col = math.floor((vim.o.columns - width) / 2),
+        minwidth = width,
+        minheight = height,
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+      })
+      vim.api.nvim_win_set_option(winid, 'number', opts.number or false)
+      vim.keymap.set('n', 'q', function()
+        vim.api.nvim_win_close(winid, true)
+      end, { buffer = buffer })
+      return winid, _
+    end,
+  }
+end
+
+G.nl = '\r\n'
+
 G.red = colortext('red')
 G.green = colortext('green')
 G.yellow = colortext('yellow')
