@@ -225,7 +225,7 @@ let s:ui = {
       \ 'FloatBorder'     : {'fg': s:white},
       \ 'ColorColumn'     : {'bg': s:none},
       \ 'Directory'       : {'fg': s:darkcyan},
-      \ 'ErrorMsg'        : {'fg': s:gray,   'bg':    s:red, 'cterm': 'bold'},
+      \ 'ErrorMsg'        : {'fg': s:white,   'bg':    s:blue, 'cterm': 'bold'},
       \ 'FoldColumn'      : {'fg': s:darkgray},
       \ 'Folded'          : {'fg': s:darkgray},
       \ 'LineNr'          : {'fg': s:green,  'bg':    s:none},
