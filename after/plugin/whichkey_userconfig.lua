@@ -210,8 +210,8 @@ local git_keymap = {
   c = vim_cmd('Git commit -a', 'commit all'),
   d = vim_cmd('Git diff', 'diff'),
   f = git_cmd(
-    { args = { 'commit', '--no-verify', '--fixup HEAD -a' } },
-    'git fixup'
+    { args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' } },
+    'git fixup HEAD'
   ),
   g = git_cmd({ args = { 'pull', '--tags', '--rebase' } }, 'git pull'),
   h = git_cmd({ args = { 'stash' } }, 'git stash'),
@@ -239,7 +239,7 @@ local git_keymap = {
   }, 'force push with lease'),
   r = vim_cmd(
     'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
-    'rebase'
+    'rebase HEAD~5'
   ),
   s = vim_cmd('Git', 'git status'),
   S = vim_cmd('FzfLua git_status', 'changed files'),
