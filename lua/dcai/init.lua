@@ -24,3 +24,42 @@ G.setup_colorscheme()
 
 local codestats = require('codestats')
 codestats.setup()
+
+vim.api.nvim_create_user_command('Cc', function()
+  local popup = G.new_popup({ title = 'clang build and run', number = true })
+  local PJob = require('plenary.job')
+  local sourcefile = vim.fn.expand('%')
+  local bin_name = vim.fn.fnamemodify(sourcefile, ':t:r')
+  popup.open()
+  local channel = vim.api.nvim_open_term(popup.buffer, {})
+  local task = PJob:new({
+    command = string.format('./%s', bin_name),
+    skip_validation = true,
+    on_exit = vim.schedule_wrap(function(job, status)
+      if status ~= 0 then
+        pcall(
+          vim.api.nvim_chan_send,
+          channel,
+          table.concat(job:stderr_result(), G.nl)
+        )
+      else
+        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), G.nl))
+      end
+    end),
+  })
+  -- compile the source code
+  PJob:new({
+    command = 'cc',
+    args = { '-o', bin_name, sourcefile },
+    on_exit = function(_, code)
+      if code ~= 0 then
+        return
+      end
+      -- run the binary and display the output
+      task:start()
+    end,
+  }):start()
+  vim.keymap.set('n', '<C-q>', function()
+    task:shutdown()
+  end, { buffer = popup.buffer })
+end, { desc = 'Compile and run C file.' })
