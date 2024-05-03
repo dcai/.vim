@@ -21,7 +21,6 @@ local function shell_cmd(command)
         opts = opts or {}
         opts.cwd = opts.cwd or vim.fn.expand('%:p:h')
         desc = desc or vim.inspect(opts.args)
-        -- vim.notify(string.format('[%s] start...', desc or command))
         local popup = nil
         local channel = nil
         if not disable_popup then
@@ -37,10 +36,10 @@ local function shell_cmd(command)
             string.format('[%s] start...' .. G.nl, desc)
           )
         end
-
+        local args = opts.args or {}
         Job:new({
           command = command,
-          args = opts.args,
+          args = args,
           cwd = opts.cwd,
           on_exit = vim.schedule_wrap(function(job, ret)
             local stderr = table.concat(job:stderr_result(), G.nl)
