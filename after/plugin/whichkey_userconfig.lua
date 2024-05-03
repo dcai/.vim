@@ -54,7 +54,13 @@ local function shell_cmd(command)
               if not disable_popup then
                 pcall(vim.api.nvim_chan_send, channel, stderr)
               else
-                vim.notify(stderr)
+                vim.notify(
+                  command
+                    .. ''
+                    .. table.concat(args, ',')
+                    .. ' failed: '
+                    .. stderr
+                )
               end
             end
           end),
@@ -295,17 +301,25 @@ local openthings_keymap = {
     'search current word in browser',
   },
   d = {
-    shell_cmd('open')(
-      { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
-      'open folder'
-    ),
+    function()
+      -- has to be wrapped because dir must be lazily evaluated
+      local tbl = shell_cmd('open')(
+        { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
+        'open folder'
+      )
+      tbl[1]()
+    end,
     'open in folder',
   },
   f = {
-    shell_cmd(zed)(
-      { disable_popup = true, args = { vim.fn.expand('%:p') } },
-      'open file in zed'
-    ),
+    function()
+      -- has to be wrapped because filename must be lazily evaluated
+      local tbl = shell_cmd(zed)(
+        { disable_popup = true, args = { vim.fn.expand('%:p') } },
+        'open file in zed'
+      )
+      tbl[1]()
+    end,
     'open file in gui editor',
   },
   g = { open_git_hosting_web, 'open file in git web' },
