@@ -19,7 +19,8 @@ local function shell_cmd(command)
         end
         local disable_popup = opts.disable_popup and true or false
         opts = opts or {}
-        local cwd = opts.cwd or vim.fn.expand('%:p:h')
+        -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
+        local cwd = opts.cwd or vim.fn.getcwd()
         desc = desc or vim.inspect(opts.args)
         local popup = nil
         local channel = nil
