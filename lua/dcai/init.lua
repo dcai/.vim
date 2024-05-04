@@ -63,3 +63,8 @@ vim.api.nvim_create_user_command('Cc', function()
     task:shutdown()
   end, { buffer = popup.buffer })
 end, { desc = 'Compile and run C file.' })
+
+-- playground, test something
+vim.keymap.set('n', '<leader>tg', function()
+  print('test? yes.')
+end)
