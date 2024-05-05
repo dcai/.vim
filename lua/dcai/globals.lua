@@ -279,6 +279,7 @@ G.new_popup = function(opts)
         minheight = height,
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         -- borderchars = {  '+', '|', '+', '|', '|', '|', '|', '|'},
+        borderchars = {  '+', '|', '+', '|', '|', '|', '|', '|'},
       })
       vim.api.nvim_win_set_option(winid, 'number', opts.number or false)
       vim.api.nvim_win_set_option(winid, 'spell', false)
