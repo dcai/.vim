@@ -84,7 +84,7 @@ let g:ale_fixers = {
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
-  \ 'php': ['php_cs_fixer'],
+  \ 'php': ['phpcbf'],
   \ 'python': ['black', 'isort'],
   \ 'rust': ['rustfmt'],
   \ 'sh': ['shfmt'],
@@ -149,7 +149,7 @@ function! UpdateAleFixOnSave()
   unlet l:dir
 endfunction
 
-augroup aleGlobalOptionsGroup
-  autocmd!
-  autocmd BufEnter * call UpdateAleFixOnSave()
-augroup END
+" augroup aleGlobalOptionsGroup
+"   autocmd!
+"   autocmd BufEnter * call UpdateAleFixOnSave()
+" augroup END

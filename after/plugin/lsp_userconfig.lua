@@ -35,6 +35,7 @@ if not lspconfig_loaded then
   return
 end
 
+local util = nvim_lspconfig.util
 local root_pattern = nvim_lspconfig.util.root_pattern
 
 local timeout_ms = 3000
@@ -315,7 +316,8 @@ vim.diagnostic.config({
   signs = {
     severity = { min = vim.diagnostic.severity.HINT },
     linehl = {
-      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      -- -- line hl has background color, so disable
+      -- [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
     },
     numhl = {
       [vim.diagnostic.severity.WARN] = 'WarningMsg',
@@ -355,4 +357,15 @@ nvim_lspconfig.rust_analyzer.setup({
 })
 nvim_lspconfig.biome.setup({
   cmd = { 'biome', 'lsp-proxy' },
+})
+nvim_lspconfig.intelephense.setup({
+  root_dir = function(startpath)
+    local cwd = vim.loop.cwd()
+    -- local root = root_pattern('composer.json')(startpath)
+    local root = root_pattern('.editorconfig')(startpath)
+    -- prefer cwd if root is a descendant
+    local result = util.path.is_descendant(cwd, root) and cwd or root
+    LOG.info('root', result)
+    return result
+  end,
 })
