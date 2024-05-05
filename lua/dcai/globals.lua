@@ -277,9 +277,9 @@ G.new_popup = function(opts)
         col = math.floor((vim.o.columns - width) / 2),
         minwidth = width,
         minheight = height,
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-        -- borderchars = {  '+', '|', '+', '|', '|', '|', '|', '|'},
-        borderchars = {  '+', '|', '+', '|', '|', '|', '|', '|'},
+        -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+        -- borderchars = { '+', '|', '+', '|', '|', '|', '|', '|' },
       })
       vim.api.nvim_win_set_option(winid, 'number', opts.number or false)
       vim.api.nvim_win_set_option(winid, 'spell', false)
