@@ -146,7 +146,7 @@ let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-let g:mkdp_theme = 'dark'
+let g:mkdp_theme = 'light'
 
 " not for nvim
 if s:oldvim
