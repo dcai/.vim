@@ -49,7 +49,7 @@ local function lazy_shell_cmd(command, opts, desc)
     opts = opts or {}
     -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
     local cwd = opts.cwd or vim.fn.getcwd()
-    desc = desc or command .. vim.inspect(opts.args)
+    desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
     local channel = nil
     if not disable_popup then
       local popup_title = desc or command
