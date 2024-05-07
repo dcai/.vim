@@ -49,12 +49,12 @@ local function lazy_shell_cmd(command, opts, desc)
     opts = opts or {}
     -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
     local cwd = opts.cwd or vim.fn.getcwd()
-    desc = desc or vim.inspect(opts.args)
-    local popup = nil
+    desc = desc or command .. vim.inspect(opts.args)
     local channel = nil
     if not disable_popup then
-      popup = G.new_popup({
-        title = desc,
+      local popup_title = desc or command
+      local popup = G.new_popup({
+        title = popup_title,
         number = false,
         height = opts.height or 10,
       })
@@ -376,11 +376,15 @@ local notes_keymap = {
   t = vim_cmd('NoteToday', 'create new note for today'),
   p = {
     function()
-      -- args should be evaluated when the function is called
+      local ft = vim.bo.filetype
+      if not vim.tbl_contains({ 'markdown' }, ft) then
+        LOG.warn('must be markdown file')
+        return
+      end
       lazy_shell_cmd(
         'doku-publish.py',
-        { disable_popup = false, args = { vim.fn.expand('%:p') } },
-        'publish to dokuwiki'
+        -- args should be evaluated when the function is called
+        { disable_popup = false, args = { vim.fn.expand('%:p') } }
       )()
     end,
 
