@@ -46,7 +46,6 @@ call plug#begin(expand(s:plugged))
 """"""""""""""""""""""""""""""""""""""""""
 if has('nvim')
   Plug 'Wansmer/treesj'
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'echasnovski/mini.nvim'
   Plug 'pocco81/auto-save.nvim'
@@ -110,8 +109,8 @@ Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rose-pine/neovim'
 " Plug 'sainnhe/everforest'
-let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
-let g:everforest_better_performance = 1
+" let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
+" let g:everforest_better_performance = 1
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
@@ -146,8 +145,8 @@ let g:bufferize_command = 'new'
 let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
 
-
-Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+let g:mkdp_theme = 'dark'
 
 " not for nvim
 if s:oldvim
