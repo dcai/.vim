@@ -39,64 +39,70 @@ else
   return
 end
 
+local function lazy_shell_cmd(command, opts, desc)
+  return function()
+    local plenary_loaded, Job = pcall(require, 'plenary.job')
+    if not plenary_loaded then
+      return
+    end
+    local disable_popup = opts.disable_popup and true or false
+    opts = opts or {}
+    -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
+    local cwd = opts.cwd or vim.fn.getcwd()
+    desc = desc or vim.inspect(opts.args)
+    local popup = nil
+    local channel = nil
+    if not disable_popup then
+      popup = G.new_popup({
+        title = desc,
+        number = false,
+        height = opts.height or 10,
+      })
+      popup.open()
+      channel = vim.api.nvim_open_term(popup.buffer, {})
+      vim.api.nvim_chan_send(
+        channel,
+        string.format('[%s] start...' .. G.nl, desc)
+      )
+    end
+    local args = opts.args or {}
+    Job
+      :new({
+        command = command,
+        args = args,
+        cwd = cwd,
+        on_exit = vim.schedule_wrap(function(job, ret)
+          local stderr = table.concat(job:stderr_result(), G.nl)
+          local stdout = table.concat(job:result(), G.nl)
+          if ret == 0 then
+            if not disable_popup then
+              vim.api.nvim_chan_send(channel, stderr .. G.nl .. stdout)
+            else
+              vim.notify(string.format('[%s] done', desc))
+            end
+          else
+            if not disable_popup then
+              pcall(vim.api.nvim_chan_send, channel, stderr)
+            else
+              vim.notify(
+                command
+                  .. ''
+                  .. table.concat(args, ',')
+                  .. ' failed: '
+                  .. stderr
+              )
+            end
+          end
+        end),
+      })
+      :start()
+  end
+end
+
 local function shell_cmd(command)
   return function(opts, desc)
     return {
-      function()
-        local plenary_loaded, Job = pcall(require, 'plenary.job')
-        if not plenary_loaded then
-          return
-        end
-        local disable_popup = opts.disable_popup and true or false
-        opts = opts or {}
-        -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
-        local cwd = opts.cwd or vim.fn.getcwd()
-        desc = desc or vim.inspect(opts.args)
-        local popup = nil
-        local channel = nil
-        if not disable_popup then
-          popup = G.new_popup({
-            title = desc,
-            number = false,
-            height = opts.height or 10,
-          })
-          popup.open()
-          channel = vim.api.nvim_open_term(popup.buffer, {})
-          vim.api.nvim_chan_send(
-            channel,
-            string.format('[%s] start...' .. G.nl, desc)
-          )
-        end
-        local args = opts.args or {}
-        Job:new({
-          command = command,
-          args = args,
-          cwd = cwd,
-          on_exit = vim.schedule_wrap(function(job, ret)
-            local stderr = table.concat(job:stderr_result(), G.nl)
-            local stdout = table.concat(job:result(), G.nl)
-            if ret == 0 then
-              if not disable_popup then
-                vim.api.nvim_chan_send(channel, stderr .. G.nl .. stdout)
-              else
-                vim.notify(string.format('[%s] done', desc))
-              end
-            else
-              if not disable_popup then
-                pcall(vim.api.nvim_chan_send, channel, stderr)
-              else
-                vim.notify(
-                  command
-                    .. ''
-                    .. table.concat(args, ',')
-                    .. ' failed: '
-                    .. stderr
-                )
-              end
-            end
-          end),
-        }):start()
-      end,
+      lazy_shell_cmd(command, opts, desc),
       desc,
     }
   end
@@ -339,23 +345,23 @@ local openthings_keymap = {
   },
   d = {
     function()
-      -- has to be wrapped because dir must be lazily evaluated
-      local tbl = shell_cmd('open')(
+      -- has to be wrapped because dir must be lazy evaluated
+      lasy_shell_cmd(
+        'open',
         { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
         'open folder'
-      )
-      tbl[1]()
+      )()
     end,
     'open in folder',
   },
   f = {
     function()
-      -- has to be wrapped because filename must be lazily evaluated
-      local tbl = shell_cmd(zed)(
+      -- has to be wrapped because filename must be lazy evaluated
+      lazy_shell_cmd(
+        zed,
         { disable_popup = true, args = { vim.fn.expand('%:p') } },
         'open file in zed'
-      )
-      tbl[1]()
+      )()
     end,
     'open file in gui editor',
   },
@@ -368,6 +374,18 @@ local notes_keymap = {
   c = vim_cmd('NoteNew', 'create new note'),
   g = vim_cmd('NoteGit', 'create new note for current git repo'),
   t = vim_cmd('NoteToday', 'create new note for today'),
+  p = {
+    function()
+      -- args should be evaluated when the function is called
+      lazy_shell_cmd(
+        'doku-publish.py',
+        { disable_popup = false, args = { vim.fn.expand('%:p') } },
+        'publish to dokuwiki'
+      )()
+    end,
+
+    'publish to dokuwiki',
+  },
   l = {
     function()
       fzf.files({
