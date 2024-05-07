@@ -146,6 +146,9 @@ let g:bufferize_command = 'new'
 let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
 
+
+Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
+
 " not for nvim
 if s:oldvim
   """""""""""""""""""""""""""""""""""""""
@@ -154,7 +157,6 @@ if s:oldvim
   Plug 'tpope/vim-dispatch'
   Plug 'chr4/nginx.vim'
   Plug 'mustache/vim-mustache-handlebars'
-  Plug 'nblock/vim-dokuwiki', { 'for': 'dokuwiki' }
   """""""""""""""""""""""""""""""""""""""
   Plug 'neoclide/coc.nvim',
         \ { 'branch': 'release',
