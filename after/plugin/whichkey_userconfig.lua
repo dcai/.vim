@@ -52,7 +52,7 @@ local function lazy_shell_cmd(command, opts, desc)
     desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
     local channel = nil
     if not disable_popup then
-      local popup_title = desc or command
+      local popup_title = command
       local popup = G.new_popup({
         title = popup_title,
         number = false,
