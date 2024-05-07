@@ -365,7 +365,6 @@ nvim_lspconfig.intelephense.setup({
     local root = root_pattern('.editorconfig')(startpath)
     -- prefer cwd if root is a descendant
     local result = util.path.is_descendant(cwd, root) and cwd or root
-    LOG.info('root', result)
     return result
   end,
 })
