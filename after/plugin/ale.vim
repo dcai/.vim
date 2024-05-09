@@ -25,6 +25,8 @@ let g:ale_set_loclist = 1
 let g:ale_plaintext_pandoc_use_gfm = 1
 let g:ale_plaintext_pandoc_options = '--columns=120'
 let g:ale_xml_xmllint_indentsize = 4
+let g:ale_cspell_use_global = 1
+let g:ale_cspell_executable = 'cspell-cli'
 
 " javascript
 " let g:ale_javascript_eslint_executable = ''
@@ -52,7 +54,7 @@ let g:ale_linters = {
   \ 'javascriptreact': s:jslinter,
   \ 'json': [],
   \ 'lua': ['luac', 'luacheck'],
-  \ 'markdown': ['cspell'],
+  \ 'markdown': ['cspell', 'remark_lint'],
   \ 'php': [],
   \ 'python': ['flake8'],
   \ 'rust': ['analyzer', 'cargo'],
