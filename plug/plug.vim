@@ -101,6 +101,15 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ END code completion
   """"""""""""""""""""""""""""""""""""""""""
+  """ BEGIN markdown
+  """"""""""""""""""""""""""""""""""""""""""
+  Plug 'mzlogin/vim-markdown-toc'
+  let g:vmt_dont_insert_fence = 1
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+  let g:mkdp_theme = 'light'
+  """"""""""""""""""""""""""""""""""""""""""
+  """ END markdown
+  """"""""""""""""""""""""""""""""""""""""""
 endif
 """""""""""""""""""""""""""""""""""""""
 """ colorschemes
@@ -144,9 +153,6 @@ Plug 'AndrewRadev/bufferize.vim'
 let g:bufferize_command = 'new'
 let g:bufferize_keep_buffers = 1
 let g:bufferize_focus_output = 1
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-let g:mkdp_theme = 'light'
 
 " not for nvim
 if s:oldvim
