@@ -73,6 +73,8 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   """"""""""""""""""""""""""""""""""""""""""
   """ git
   """"""""""""""""""""""""""""""""""""""""""
