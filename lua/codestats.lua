@@ -105,7 +105,7 @@ local function myprofile(username)
     },
   })
   local json = vim.json.decode(response.body)
-  LOG.info('codestats: profile: ', vim.inspect(json))
+  print('codestats: profile: ', vim.inspect(json))
 end
 
 local function pulse()
@@ -125,7 +125,6 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  -- LOG.info('Pulsing: request body: ', body)
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
@@ -137,8 +136,7 @@ local function pulse()
       local status = response.status
       if status == 200 or status == 201 then
         xp_table = {}
-        LOG.info('Pulsed: xp_table', xp_table)
-        LOG.info('Pulsed: curl exit status', response.exit)
+        LOG.info('Pulsed: body sent:', body)
         LOG.info('Pulsed: response body', response.body)
       else
         LOG.error('Pulsed failed', response)
@@ -160,7 +158,7 @@ function M.setup()
     myprofile(username)
   end, { nargs = '*' })
   vim.api.nvim_create_user_command('CSInfo', function()
-    LOG.info('codestats: xp_table: ', vim.inspect(xp_table))
+    print('codestats: xp_table: ', vim.inspect(xp_table))
   end, { nargs = 0, desc = 'log xp_table' })
   vim.api.nvim_create_user_command('CSPulse', function()
     pulse()
