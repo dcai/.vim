@@ -76,9 +76,10 @@ local handle_enter = cmp.mapping({
   }),
 })
 local handle_up = cmp.mapping(function(fallback)
-  if vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
-    return feedkeys('<Plug>(ultisnips_jump_backward)')
-  elseif cmp.visible() then
+  -- if vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
+  --   return feedkeys('<Plug>(ultisnips_jump_backward)')
+  -- elseif cmp.visible() then
+  if cmp.visible() then
     cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
   else
     fallback()
@@ -86,9 +87,10 @@ local handle_up = cmp.mapping(function(fallback)
 end, { 'i', 's' })
 
 local handle_down = cmp.mapping(function(fallback)
-  if vim.fn['UltiSnips#CanJumpForwards']() == 1 then
-    return feedkeys('<Plug>(ultisnips_jump_forward)')
-  elseif cmp.visible() and has_words_before() then
+  -- if vim.fn['UltiSnips#CanJumpForwards']() == 1 then
+  --   return feedkeys('<Plug>(ultisnips_jump_forward)')
+  -- elseif cmp.visible() and has_words_before() then
+  if cmp.visible() and has_words_before() then
     cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
     -- below checks whether it is possible to jump forward to the next snippet placeholder
   elseif has_words_before() then
