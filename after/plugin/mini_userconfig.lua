@@ -102,16 +102,23 @@ mini_surround.setup({
   silent = false,
 })
 
-require('ts_context_commentstring').setup({
-  enable_autocmd = false,
-})
+local context_commentstring_loaded, context_commentstring =
+  pcall('require', 'ts_context_commentstring')
+if context_commentstring_loaded then
+  context_commentstring.setup({
+    enable_autocmd = false,
+  })
+end
 require('mini.comment').setup({
   -- Options which control module behavior
   options = {
     -- Function to compute custom 'commentstring' (optional)
     custom_commentstring = function()
-      return require('ts_context_commentstring').calculate_commentstring()
-        or vim.bo.commentstring
+      if context_commentstring_loaded then
+        return context_commentstring.calculate_commentstring()
+          or vim.bo.commentstring
+      end
+      return vim.bo.commentstring
     end,
 
     -- Whether to ignore blank lines

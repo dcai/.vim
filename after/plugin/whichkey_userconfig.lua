@@ -313,7 +313,9 @@ local lsp_keymap = {
   },
   t = {
     function()
-      tsj.toggle()
+      if tsj_loaded then
+        tsj.toggle()
+      end
     end,
     'split or join code',
   },
