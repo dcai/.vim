@@ -125,7 +125,7 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  LOG.info('Pulsing: request body: ', vim.inspect(body))
+  -- LOG.info('Pulsing: request body: ', body)
   local response = curl.post({
     url = CODESTATS_API_URL .. '/my/pulses',
     body = vim.fn.json_encode(body),
@@ -133,18 +133,22 @@ local function pulse()
       ['X-API-Token'] = CODESTATS_API_KEY,
       ['Content-Type'] = 'application/json',
     },
+    callback = vim.schedule_wrap(function(response)
+      local status = response.status
+      if status == 200 or status == 201 then
+        xp_table = {}
+        LOG.info('Pulsed: xp_table', xp_table)
+        LOG.info('Pulsed: curl exit status', response.exit)
+        LOG.info('Pulsed: response body', response.body)
+      else
+        LOG.error('Pulsed failed', response)
+      end
+    end),
   })
-
-  local status = response.status
-  if status == 200 or status == 201 then
-    LOG.info('Pulsed', response.body)
-    xp_table = {}
-  else
-    LOG.error('Pulsed failed', vim.inspect(response))
-  end
 end
 
 local M = {}
+local timer = vim.loop.new_timer()
 
 function M.setup()
   vim.api.nvim_create_user_command('CSProfile', function(opts)
@@ -164,13 +168,24 @@ function M.setup()
   if isempty(CODESTATS_API_KEY) then
     return
   end
+
+  local timer_waitfor = 1000 -- wait for 1 sec
+  local interval = 30000 -- every 30 sec
+  timer:start(
+    timer_waitfor,
+    interval,
+    vim.schedule_wrap(function()
+      pulse()
+    end)
+  )
+
   vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
     callback = function()
       pulse()
     end,
   })
   vim.api.nvim_create_autocmd(
-    { 'CursorMoved', 'BufEnter', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
+    { 'CursorMoved', 'TextChanged', 'InsertCharPre', 'InsertEnter' },
     {
       callback = function()
         -- local currentbuf = 0
