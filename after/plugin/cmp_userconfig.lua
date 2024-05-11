@@ -64,7 +64,7 @@ local handle_enter = cmp.mapping({
   i = function(fallback)
     if cmp.visible() and has_words_before() then
       cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
-      -- cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+      -- cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace })
     else
       fallback()
     end
@@ -80,7 +80,7 @@ local handle_up = cmp.mapping(function(fallback)
   --   return feedkeys('<Plug>(ultisnips_jump_backward)')
   -- elseif cmp.visible() then
   if cmp.visible() then
-    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
   else
     fallback()
   end
@@ -91,7 +91,7 @@ local handle_down = cmp.mapping(function(fallback)
   --   return feedkeys('<Plug>(ultisnips_jump_forward)')
   -- elseif cmp.visible() and has_words_before() then
   if cmp.visible() and has_words_before() then
-    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
     -- below checks whether it is possible to jump forward to the next snippet placeholder
   elseif has_words_before() then
     cmp.complete()
