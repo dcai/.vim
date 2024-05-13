@@ -55,7 +55,7 @@ if has('nvim')
   Plug 'dcai/marlin.nvim'
   " Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
-  Plug 'Robitx/gp.nvim' , Cond(!IsEnvVarSet('NO_GPNVIM'), {'branch': 'main'})
+  Plug 'Robitx/gp.nvim' , Cond(IsEnvVarSet('OPENAI_API_KEY'), {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
   """"""""""""""""""""""""""""""""""""""""""
