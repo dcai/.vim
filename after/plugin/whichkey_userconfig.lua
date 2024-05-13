@@ -348,7 +348,7 @@ local openthings_keymap = {
   d = {
     function()
       -- has to be wrapped because dir must be lazy evaluated
-      lasy_shell_cmd(
+      lazy_shell_cmd(
         'open',
         { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
         'open folder'
