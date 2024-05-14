@@ -167,6 +167,7 @@ local function formatter(entry, item)
     path = 'PATH',
     tmux = 'tmux',
     ultisnips = 'snip',
+    ['vim-dadbod-completion'] = '[DB]',
   }
   local icon = menu_icon[source_name]
   if icon then
@@ -218,6 +219,13 @@ cmp.setup({
     { name = 'codeium' },
     { name = 'ultisnips' },
     { name = 'buffer' },
+    source_path,
+  }),
+})
+
+cmp.setup.filetype('sql', {
+  sources = cmp.config.sources({
+    { name = 'vim-dadbod-completion' },
     source_path,
   }),
 })

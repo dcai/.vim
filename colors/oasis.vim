@@ -317,6 +317,9 @@ let s:syntax = {
 call s:apply(s:syntax)
 
 let s:custom = {
+      \ 'NotificationInfo'           : {'bg': s:blue,     'guibg': s:darkslategray},
+      \ 'NotificationWarning'        : {'bg': s:yellow,     'guibg': s:darkslategray},
+      \ 'NotificationError'          : {'bg': s:red,     'guibg': s:darkslategray},
       \ 'ALEError'                   : {'fg': s:none,     'bg':    s:red},
       \ 'ALEErrorSign'               : {'bg': s:darkred},
       \ 'ALEVirtualTextError'        : {'fg': s:darkgray, 'bg':    s:none},

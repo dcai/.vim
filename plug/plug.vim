@@ -141,6 +141,9 @@ let g:VimuxOrientation = "h"
 """""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-eunuch' " Vim sugar for the UNIX shell
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'kristijanhusak/vim-dadbod-completion'
 Plug 'dstein64/vim-startuptime'
 Plug 'junegunn/vader.vim', { 'for': 'vader' }
 Plug 'reedes/vim-lexical'
