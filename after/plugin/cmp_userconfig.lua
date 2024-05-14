@@ -6,8 +6,28 @@ end
 
 local codeium_loaded, codeium = pcall(require, 'codeium')
 if codeium_loaded then
+  local cachedir = vim.fn.stdpath('cache')
   -- for Exafunction/codeium.nvim
-  codeium.setup({})
+  codeium.setup({
+    manager_path = cachedir .. '/codeium/manager_path',
+    bin_path = cachedir .. '/codeium/bin',
+    config_path = cachedir .. '/codeium/config.json',
+    language_server_download_url = 'https://github.com',
+    -- api = {
+    --   host = 'server.codeium.com',
+    --   port = '443',
+    --   path = '/',
+    --   portal_url = 'codeium.com',
+    -- },
+    -- enterprise_mode = nil,
+    -- detect_proxy = nil,
+    -- tools = {},
+    -- wrapper = nil,
+    enable_chat = false,
+    enable_local_search = false,
+    enable_index_service = false,
+    search_max_workspace_file_count = 5000,
+  })
 end
 
 local function _check_back_space()
