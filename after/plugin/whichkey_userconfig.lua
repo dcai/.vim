@@ -229,6 +229,12 @@ local fzf_keymap = {
     end,
     'project files',
   },
+  ['l'] = {
+    function()
+      fzf.files({ cwd = vim.fn.stdpath('log') })
+    end,
+    'xdg log files',
+  },
   ['g'] = { fzf.buffers, 'buffers' },
   ['m'] = { marlin_marks, 'marlin files' },
   ['r'] = { fzf.oldfiles, 'recent files' },

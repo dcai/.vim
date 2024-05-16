@@ -43,9 +43,9 @@ local log = {}
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend('force', default_config, config)
 
-  -- local outfile =
-  --   string.format('%s/%s.log', vim.fn.stdpath('data'), config.plugin)
-  local outfile = string.format('/tmp/%s.log', config.plugin)
+  local outfile =
+    string.format('%s/%s.log', vim.fn.stdpath('log'), config.plugin)
+  -- local outfile = string.format('/tmp/%s.log', config.plugin)
 
   local obj
   if standalone then
