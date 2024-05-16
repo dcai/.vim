@@ -1,5 +1,9 @@
 local curl = require('plenary.curl')
 
+local logger = require('log').setup({
+  plugin = 'codestats',
+})
+
 local languages = {
   ada = 'Ada',
   ansible = 'Ansible',
@@ -136,10 +140,10 @@ local function pulse()
       local status = response.status
       if status == 200 or status == 201 then
         xp_table = {}
-        LOG.info('Pulsed: body sent:', body)
-        LOG.info('Pulsed: response body', response.body)
+        logger.info('Pulsed: body sent:', body)
+        logger.info('Pulsed: response body', response.body)
       else
-        LOG.error('Pulsed failed', response)
+        logger.error('Pulsed failed', response)
       end
     end),
   })
@@ -152,7 +156,7 @@ function M.setup()
   vim.api.nvim_create_user_command('CSProfile', function(opts)
     local username = opts.fargs[1]
     if isempty(username) then
-      LOG.warn('provide codestats public username')
+      logger.warn('provide codestats public username')
       return
     end
     myprofile(username)

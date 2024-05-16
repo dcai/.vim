@@ -1,6 +1,6 @@
 require('dcai.globals')
 
-LOG = require('log')
+LOG = require('log').setup()
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.python3_host_prog = G.find_executable({
