@@ -450,7 +450,8 @@ local chatgpt_keymap_n = {
   D = vim_cmd('GpChatDelete', 'delete chat'),
   c = vim_cmd('GpNew', 'Enter a prompt'),
   f = vim_cmd('GpChatFinder', 'chat Finder'),
-  n = vim_cmd('GpNextAgent', 'new chat'),
+  n = vim_cmd('GpNextAgent', 'next agent'),
+  N = vim_cmd('GpChatNew', 'new chat buffer'),
   t = vim_cmd('GpChatToggle', 'Toggle chat'),
   s = vim_cmd('GpWhisper', 'speech to text'),
 }

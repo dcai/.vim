@@ -40,6 +40,30 @@ local config = {
   cmd_prefix = 'Gp',
   curl_params = {},
   agents = {
+    {
+      name = 'ChatGPT4',
+      chat = true,
+      command = false,
+      model = nil,
+    },
+    {
+      name = 'CodeGPT4',
+      chat = true,
+      command = false,
+      model = nil,
+    },
+    {
+      name = 'CodeGPT3-5',
+      chat = true,
+      command = false,
+      model = nil,
+    },
+    {
+      name = 'ChatGPT3-5',
+      chat = true,
+      command = false,
+      model = nil,
+    },
     -- {
     --   name = 'ChatGPT3-5',
     --   chat = true,
@@ -57,9 +81,9 @@ local config = {
     --     .. "- Take a deep breath; You've got this!\n",
     -- },
     {
-      name = 'ChatGPT4o 😬',
+      name = 'ChatGPT4o 🐥',
       chat = true,
-      command = false,
+      command = true,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
       system_prompt = [[
         You are a general AI assistant.
@@ -85,7 +109,7 @@ local config = {
     --   ]],
     -- },
     {
-      name = 'Coder4o 😬',
+      name = 'Coder4o 📌',
       chat = false,
       command = true,
       model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
