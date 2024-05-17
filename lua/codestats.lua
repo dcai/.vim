@@ -60,6 +60,7 @@ local languages = {
   python = 'Python',
   ruby = 'Ruby',
   rust = 'Rust',
+  nu = 'Nushell',
   scala = 'Scala',
   scheme = 'Scheme',
   scss = 'SCSS',
