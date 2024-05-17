@@ -233,7 +233,7 @@ local fzf_keymap = {
     end,
     'xdg log files',
   },
-  ['g'] = { fzf.buffers, 'buffers' },
+  ['g'] = { fzf.builtin, 'fzf builtin' },
   ['m'] = { marlin_marks, 'marlin files' },
   ['r'] = { fzf.oldfiles, 'recent files' },
 }
@@ -520,7 +520,6 @@ local n_keymap = {
     end,
     'fzf grep <cword>',
   },
-  [';'] = { fzf.builtin, 'fzf builtin' },
   c = chatgpt_keymap_n,
   e = editing_keymap,
   f = fzf_keymap,
@@ -551,6 +550,12 @@ end
 which_key.register(n_keymap, make_mapping_opts('n'))
 
 local v_keymap = {
+  ['.'] = {
+    function()
+      fzf.grep_visual({ cwd = project_root() })
+    end,
+    'fzf selected',
+  },
   c = chatgpt_keymap_v,
   f = fzf_keymap,
   g = git_keymap,
