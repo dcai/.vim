@@ -138,8 +138,8 @@ if !has('nvim')
   nnoremap <silent> <leader>fd :FzfFiles<cr>
   nnoremap <silent> <leader>ff :FzfGFiles<cr>
   nnoremap <silent> <leader>fr :FzfHistory<CR>
-  nnoremap <silent> <leader>. :RgGitRoot<CR>
-  nnoremap <silent> <leader>/ :FzfCommands<cr>
+  nnoremap <silent> <leader>/ :RgGitRoot<CR>
+  nnoremap <silent> <leader>. :call RgSearchWordGit()<CR>
+  nnoremap <silent> <leader>; :FzfCommands<cr>
   nnoremap <silent> <leader>\ :RgInDir .<CR>
-  nnoremap <silent> K :call RgSearchWordGit()<CR>
 endif

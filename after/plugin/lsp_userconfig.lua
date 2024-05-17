@@ -105,11 +105,10 @@ local function common_on_attach(client, buffer)
   end
   nmap('[d', vim.diagnostic.goto_prev, 'go to prev diagnostic')
   nmap(']d', vim.diagnostic.goto_next, 'go to next diagnostic')
-  nmap('D', vim.lsp.buf.hover, 'hover doc')
-  nmap('R', vim.lsp.buf.rename, 'rename variable')
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
   nmap('gr', vim.lsp.buf.references, 'go to references')
-  nmap('II', function()
+  nmap('<leader>lh', vim.lsp.buf.hover, 'hover doc')
+  nmap('<leader>lo', function()
     local clientname = client.name
     if client.name == 'tailwindcss' then
       clientname = 'tsserver'

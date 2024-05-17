@@ -127,14 +127,12 @@ local function project_root()
   )(dir)
 end
 
-vim.keymap.set('n', 'K', function()
-  fzf.grep_cword({ cwd = project_root() })
-end, { noremap = true, silent = true })
-
 local function live_grep()
   fzf.live_grep({ cwd = project_root() })
 end
 
+---@param cmd string vim command
+---@param desc string
 local function vim_cmd(cmd, desc, notify_after)
   return {
     function()
@@ -298,7 +296,7 @@ local git_keymap = {
 local lsp_keymap = {
   name = 'lsp',
   a = { vim.lsp.buf.code_action, 'code action' },
-  d = { vim.diagnostic.open_float, 'diagnostic' },
+  D = { vim.diagnostic.open_float, 'diagnostic' },
   f = { vim.lsp.buf.format, 'format code' },
   I = vim_cmd('LspInfo', 'lsp info'),
   p = {
@@ -515,8 +513,14 @@ local editing_keymap = {
 }
 
 local n_keymap = {
-  ['.'] = { live_grep, 'grep current repo' },
-  ['/'] = { fzf.builtin, 'fzf-lua builtin' },
+  ['/'] = { live_grep, 'fzf grep repo' },
+  ['.'] = {
+    function()
+      fzf.grep_cword({ cwd = project_root() })
+    end,
+    'fzf grep <cword>',
+  },
+  [';'] = { fzf.builtin, 'fzf builtin' },
   c = chatgpt_keymap_n,
   e = editing_keymap,
   f = fzf_keymap,
