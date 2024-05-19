@@ -367,3 +367,4 @@ nvim_lspconfig.intelephense.setup({
     return result
   end,
 })
+nvim_lspconfig.elixirls.setup({})
