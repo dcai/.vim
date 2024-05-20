@@ -1,8 +1,9 @@
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
-  print('cmp not loaded!')
+  LOG.error('cmp not loaded!')
   return
 end
+LOG.trace('cmp loaded, setting up...')
 
 local codeium_loaded, codeium = pcall(require, 'codeium')
 if codeium_loaded then

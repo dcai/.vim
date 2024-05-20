@@ -1,8 +1,10 @@
 local loaded, which_key = pcall(require, 'which-key')
 if not loaded then
-  print('which-key not loaded')
+  LOG.error('which-key not loaded!')
   return
 end
+LOG.trace('which-key loaded, setting up...')
+
 local fzf = require('fzf-lua')
 local utils = require('keymaps.utils')
 local lsp_keymap = require('keymaps.lsp')
