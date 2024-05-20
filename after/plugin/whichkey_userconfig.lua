@@ -4,429 +4,17 @@ if not loaded then
   return
 end
 local fzf = require('fzf-lua')
-local marlin = require('marlin')
-local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
--- local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
-local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
+local utils = require('keymaps.utils')
+local lsp_keymap = require('keymaps.lsp')
+local notes_keymap = require('keymaps.notes')
+local git_keymap = require('keymaps.git')
+local chatgpt_keymap_n, chatgpt_keymap_v = require('keymaps.gpt')
+local openthings_keymap = require('keymaps.openthings')
+local testthings_keymap = require('keymaps.testthings')
+local editthings_keymap = require('keymaps.editthings')
+local fzf_keymap = require('keymaps.fzfthings')
+local yank_keymap = require('keymaps.yankthings')
 
-local tsj_loaded, tsj = pcall(require, 'treesj')
-if tsj_loaded then
-  tsj.setup({
-    ---@type boolean Use default keymaps (<space>m - toggle, <space>j - join, <space>s - split)
-    use_default_keymaps = false,
-    ---@type boolean Node with syntax error will not be formatted
-    check_syntax_error = true,
-    ---If line after join will be longer than max value,
-    ---@type number If line after join will be longer than max value, node will not be formatted
-    max_join_length = 1200,
-    ---Cursor behavior:
-    ---hold - cursor follows the node/place on which it was called
-    ---start - cursor jumps to the first symbol of the node being formatted
-    ---end - cursor jumps to the last symbol of the node being formatted
-    ---@type 'hold'|'start'|'end'
-    cursor_behavior = 'hold',
-    ---@type boolean Notify about possible problems or not
-    notify = true,
-    ---@type boolean Use `dot` for repeat action
-    dot_repeat = true,
-    ---@type nil|function Callback for treesj error handler. func (err_text, level, ...other_text)
-    on_error = nil,
-    ---@type table Presets for languages
-    -- langs = {}, -- See the default presets in lua/treesj/langs
-  })
-else
-  print('treesj not installed')
-  return
-end
-
-local function lazy_shell_cmd(command, opts, desc)
-  return function()
-    local plenary_loaded, Job = pcall(require, 'plenary.job')
-    if not plenary_loaded then
-      return
-    end
-    local disable_popup = opts.disable_popup and true or false
-    opts = opts or {}
-    -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
-    local cwd = opts.cwd or vim.fn.getcwd()
-    desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
-    local channel = nil
-    if not disable_popup then
-      local popup_title = command
-      local popup = G.new_popup({
-        title = popup_title,
-        number = false,
-        height = opts.height or 10,
-      })
-      popup.open()
-      channel = vim.api.nvim_open_term(popup.buffer, {})
-      vim.api.nvim_chan_send(
-        channel,
-        string.format('[%s] start...' .. G.nl, desc)
-      )
-    end
-    local args = opts.args or {}
-    Job
-      :new({
-        command = command,
-        args = args,
-        cwd = cwd,
-        on_exit = vim.schedule_wrap(function(job, ret)
-          local stderr = table.concat(job:stderr_result(), G.nl)
-          local stdout = table.concat(job:result(), G.nl)
-          if ret == 0 then
-            if not disable_popup then
-              vim.api.nvim_chan_send(channel, stderr .. G.nl .. stdout)
-            else
-              vim.notify(string.format('[%s] done', desc))
-            end
-          else
-            if not disable_popup then
-              pcall(vim.api.nvim_chan_send, channel, stderr)
-            else
-              vim.notify(
-                command
-                  .. ''
-                  .. table.concat(args, ',')
-                  .. ' failed: '
-                  .. stderr
-              )
-            end
-          end
-        end),
-      })
-      :start()
-  end
-end
-
-local function shell_cmd(command)
-  return function(opts, desc)
-    return {
-      lazy_shell_cmd(command, opts, desc),
-      desc,
-    }
-  end
-end
-local git_cmd = shell_cmd('git')
-
-local function project_root()
-  local dir = vim.fn.expand('%:p:h')
-  local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
-  if not lspconfig_loaded then
-    return dir
-  end
-  local root_pattern = nvim_lspconfig.util.root_pattern
-  return root_pattern(
-    'package.json',
-    'readme.md',
-    'README.md',
-    'readme.txt',
-    'LICENSE.txt',
-    'LICENSE',
-    '.git'
-  )(dir)
-end
-
-local function live_grep()
-  fzf.live_grep({ cwd = project_root() })
-end
-
----@param cmd string vim command
----@param desc string
-local function vim_cmd(cmd, desc, notify_after)
-  return {
-    function()
-      vim.cmd(cmd)
-      if notify_after then
-        vim.notify(notify_after)
-      end
-    end,
-    desc or cmd,
-  }
-end
-
-local function open_git_hosting_web()
-  local mode = vim.fn.mode()
-  if string.lower(mode) == 'v' then
-    mode = 'v'
-  else
-    mode = 'n'
-  end
-
-  require('gitlinker').get_buf_range_url(mode)
-end
-
----@param vimscript_func string custom function name in string
-local function run_testfile(vimscript_func)
-  return {
-    function()
-      local file = vim.fn.expand('%')
-      if string.find(file, 'spec.') or string.find(file, 'test.') then
-        vim.notify('start test runner for ' .. file)
-        vim.call(vimscript_func)
-      else
-        vim.notify('this is not a test file')
-      end
-    end,
-    vimscript_func,
-  }
-end
-
-local runtests_keymap = {
-  name = 'Test',
-  i = vim_cmd('VimuxInspectRunner', 'inspect runner'),
-  j = run_testfile('TestCurrentFileWithJestJsdom'),
-  J = run_testfile('TestCurrentFileWithJestNode'),
-  h = vim_cmd('HurlRun', 'run hurl file'),
-  -- l = cmd('VimuxRunLastCommand', 'last command'),
-  l = {
-    function()
-      fzf.files({
-        cwd = vim.g.dropbox_home .. '/src/hurl_files',
-      })
-    end,
-    'list all hurl files',
-  },
-  m = run_testfile('TestCurrentFileWithMocha'),
-  p = vim_cmd('VimuxPromptCommand', 'prompt command'),
-  q = vim_cmd('VimuxCloseRunner', 'close runner'),
-  x = vim_cmd('call VimuxZoomRunner()', 'zoom in'),
-  z = vim_cmd('call LastPath()', 'open last path in runner'),
-  t = {
-    function()
-      vim.call('EditMatchingTestFile')
-    end,
-    'alternate test file',
-  },
-}
-
-local function marlin_marks()
-  marlin.load_project_files()
-  local results = marlin.get_indexes()
-  local files = {}
-  for _, item in ipairs(results) do
-    table.insert(
-      files,
-      string.format('%s:%d:%d', item.filename, item.row, item.col)
-    )
-  end
-  fzf.fzf_exec(files, { actions = fzf.defaults.actions.files })
-end
-
-local fzf_keymap = {
-  name = 'fzf',
-  ['b'] = { fzf.buffers, 'buffers' },
-  ['c'] = { fzf.colorschemes, 'colorschemes' },
-  ['f'] = {
-    function()
-      if G.is_git_repo() then
-        fzf.git_files()
-      else
-        fzf.files({ cwd = project_root() })
-      end
-    end,
-    'project files',
-  },
-  ['l'] = {
-    function()
-      fzf.files({ cwd = vim.fn.stdpath('log') })
-    end,
-    'xdg log files',
-  },
-  ['g'] = { fzf.builtin, 'fzf builtin' },
-  ['m'] = { marlin_marks, 'marlin files' },
-  ['r'] = { fzf.oldfiles, 'recent files' },
-}
-
-local gitsigns = require('gitsigns')
-local git_keymap = {
-  name = 'git',
-  -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
-  -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
-  -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
-  -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
-  -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-  ['+'] = { gitsigns.stage_hunk, 'stage hunk' },
-  ['-'] = { gitsigns.undo_stage_hunk, 'unstage hunk' },
-  ['2'] = vim_cmd('diffget //2'),
-  ['3'] = vim_cmd('diffget //3'),
-  a = vim_cmd('Gwrite', 'git add'),
-  A = vim_cmd('Git add -A', 'git add untracked'),
-  b = vim_cmd('FzfLua git_branches', 'checkout branch'),
-  c = vim_cmd('Git commit -a', 'commit all'),
-  d = vim_cmd('Git diff', 'diff'),
-  f = git_cmd(
-    { args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' } },
-    'git fixup HEAD'
-  ),
-  g = git_cmd({ args = { 'pull', '--tags', '--rebase' } }, 'git pull'),
-  h = git_cmd({ args = { 'stash' } }, 'git stash'),
-  H = git_cmd({ args = { 'stash', 'pop' } }, 'git stash pop'),
-  -- l = cmd('Gllog', 'list commits'),
-  l = { fzf.git_commits, 'git log' },
-  L = {
-    function()
-      -- local current_file_path = vim.fn.expand('%:p')
-      local current_file_path = vim.api.nvim_buf_get_name(0)
-      vim.cmd('Git log ' .. current_file_path)
-    end,
-    "current buffer's git log",
-  },
-  m = { require('gitsigns').blame_line, 'blame line' },
-  M = vim_cmd('Git blame', 'git blame'),
-  p = git_cmd({ args = { 'push', '-u', '--no-verify' } }, 'git push'),
-  P = git_cmd({
-    args = {
-      'push',
-      '-u',
-      '--force-with-lease',
-      '--no-verify',
-    },
-  }, 'force push with lease'),
-  r = vim_cmd(
-    'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
-    'rebase HEAD~5'
-  ),
-  s = vim_cmd('Git', 'git status'),
-  S = vim_cmd('FzfLua git_status', 'changed files'),
-  y = { open_git_hosting_web, 'open the file in web' },
-  v = vim_cmd('Gvdiffsplit!', '3-way diff'),
-}
-
-local lsp_keymap = {
-  name = 'lsp',
-  a = { vim.lsp.buf.code_action, 'code action' },
-  D = { vim.diagnostic.open_float, 'diagnostic' },
-  f = { vim.lsp.buf.format, 'format code' },
-  I = vim_cmd('LspInfo', 'lsp info'),
-  p = {
-    function()
-      require('lspsaga.definition'):init(2, 1)
-    end,
-    'Peek type',
-  },
-  r = { vim.lsp.buf.rename, 'rename' },
-  ['q'] = {
-    function()
-      vim.diagnostic.setqflist({
-        open = false,
-      })
-      fzf.quickfix()
-    end,
-    'quickfix list',
-  },
-  t = {
-    function()
-      if tsj_loaded then
-        tsj.toggle()
-      end
-    end,
-    'split or join code',
-  },
-}
-
-local yank_keymap = {
-  name = 'yank things',
-  l = {
-    function()
-      local loaded_packages = vim.tbl_keys(package.loaded)
-      vim.fn.setreg('*', vim.inspect(loaded_packages))
-    end,
-    'yank loaded package names',
-  },
-  p = vim_cmd(
-    'let @*=expand("%:p")',
-    'yank file full path',
-    'file path yanked'
-  ),
-  f = vim_cmd('let @*=expand("%")', 'yank file name'),
-  m = vim_cmd('let @*=execute("messages")', 'yank messages'),
-}
-
-local openthings_keymap = {
-  name = 'open things',
-  b = {
-    '<Plug>(openbrowser-smart-search)',
-    'search current word in browser',
-  },
-  d = {
-    function()
-      -- has to be wrapped because dir must be lazy evaluated
-      lazy_shell_cmd(
-        'open',
-        { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
-        'open folder'
-      )()
-    end,
-    'open in folder',
-  },
-  f = {
-    function()
-      -- has to be wrapped because filename must be lazy evaluated
-      lazy_shell_cmd(
-        zed,
-        { disable_popup = true, args = { vim.fn.expand('%:p') } },
-        'open file in zed'
-      )()
-    end,
-    'open file in gui editor',
-  },
-  g = { open_git_hosting_web, 'open file in git web' },
-  t = {
-    function()
-      require('mini.files').open()
-    end,
-    'edit/view file tree',
-  },
-}
-
-local notes_keymap = {
-  name = 'notes',
-  b = vim_cmd('NoteGitBranch', 'create new note for current git branch'),
-  c = vim_cmd('NoteNew', 'create new note'),
-  g = vim_cmd('NoteGit', 'create new note for current git repo'),
-  t = vim_cmd('NoteToday', 'create new note for today'),
-  p = {
-    function()
-      local ft = vim.bo.filetype
-      if not vim.tbl_contains({ 'markdown' }, ft) then
-        LOG.warn('must be markdown file')
-        return
-      end
-      lazy_shell_cmd(
-        'doku-publish.py',
-        -- args should be evaluated when the function is called
-        { disable_popup = false, args = { vim.fn.expand('%:p') } }
-      )()
-    end,
-
-    'publish to dokuwiki',
-  },
-  l = {
-    function()
-      fzf.files({
-        cwd = vim.g.notes_home,
-      })
-    end,
-    'list all notes',
-  },
-  ['/'] = {
-    function()
-      fzf.live_grep({
-        cwd = vim.g.notes_home,
-        file_ignore_patterns = {
-          'node_modules',
-          '.png',
-          '.pdf',
-          '.jpg',
-          '.docx',
-          '.pptx',
-        },
-      })
-    end,
-    'full text search in notes',
-  },
-}
 local vimrc_keymap = {
   name = 'vimrc',
   e = {
@@ -436,7 +24,7 @@ local vimrc_keymap = {
     end,
     'edit root vimrc',
   },
-  R = vim_cmd(
+  R = utils.vim_cmd(
     'source $MYVIMRC',
     'reload vimrc and lua configs',
     'Config reloaded!'
@@ -455,86 +43,23 @@ local vimrc_keymap = {
   },
 }
 
-local chatgpt_keymap_n = {
-  name = 'chatgpt',
-  D = vim_cmd('GpChatDelete', 'delete chat'),
-  c = vim_cmd('GpNew', 'Enter a prompt'),
-  f = vim_cmd('GpChatFinder', 'chat Finder'),
-  n = vim_cmd('GpNextAgent', 'next agent'),
-  N = vim_cmd('GpChatNew', 'new chat buffer'),
-  t = vim_cmd('GpChatToggle', 'Toggle chat'),
-  s = vim_cmd('GpWhisper', 'speech to text'),
-}
-
-local function wrapGpCmd(str)
-  return ":<c-u>'<,'>" .. str .. '<cr>'
-end
-local chatgpt_keymap_v = {
-  name = 'chatgpt',
-  n = { wrapGpCmd('GpChatNew'), 'visual new chat' },
-  e = { wrapGpCmd('GpExplain'), 'explain selcted code' },
-}
-local editing_keymap = {
-  name = 'edit things',
-  a = {
-    function()
-      local f = vim.fn.expand('#')
-      marlin.add()
-      marlin.save()
-      vim.notify(f .. ' added to marlin')
-    end,
-    'add file to marlin collection',
-  },
-  D = {
-    function()
-      local f = vim.fn.expand('#')
-      marlin.remove()
-      marlin.save()
-      vim.notify(f .. ' removed from marlin')
-    end,
-    'remove file from marlin collection',
-  },
-  e = {
-    function()
-      local f = vim.fn.expand('#')
-      if f == '' then
-        -- vim.notify('No file to alternate', vim.log.levels.WARN)
-        vim.cmd('e ' .. vimrc_to_edit)
-      else
-        vim.cmd('e! #')
-      end
-    end,
-    'toggle last used file',
-  },
-  l = {
-    marlin_marks,
-    'list marlin collection',
-  },
-  s = vim_cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
-  v = vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc'),
-  X = {
-    marlin.remove_all,
-    '',
-  },
-}
-
 local n_keymap = {
-  ['/'] = { live_grep, 'fzf grep repo' },
+  ['/'] = { utils.live_grep, 'fzf grep repo' },
   ['.'] = {
     function()
-      fzf.grep_cword({ cwd = project_root() })
+      fzf.grep_cword({ cwd = utils.project_root() })
     end,
     'fzf grep <cword>',
   },
   c = chatgpt_keymap_n,
-  e = editing_keymap,
+  e = editthings_keymap,
   f = fzf_keymap,
   g = git_keymap,
   l = lsp_keymap,
   n = notes_keymap,
   o = openthings_keymap,
   r = vimrc_keymap,
-  t = runtests_keymap,
+  t = testthings_keymap,
   y = yank_keymap,
 }
 
@@ -558,7 +83,7 @@ which_key.register(n_keymap, make_mapping_opts('n'))
 local v_keymap = {
   ['.'] = {
     function()
-      fzf.grep_visual({ cwd = project_root() })
+      fzf.grep_visual({ cwd = utils.project_root() })
     end,
     'fzf selected',
   },
