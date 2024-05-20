@@ -358,3 +358,4 @@ require('mini.jump2d').setup({
   -- Whether to disable showing non-error feedback
   silent = false,
 })
+require('mini.files').setup()
