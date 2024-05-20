@@ -29,14 +29,14 @@ mason_lspconfig.setup({
 -------------------------------
 --- lspconfig
 -------------------------------
-local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
+local lspconfig_loaded, cfg = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
   return
 end
 
-local util = nvim_lspconfig.util
-local root_pattern = nvim_lspconfig.util.root_pattern
+local util = cfg.util
+local root_pattern = cfg.util.root_pattern
 
 local timeout_ms = 3000
 local organize_imports = {
@@ -124,23 +124,23 @@ local function common_on_attach(client, buffer)
   -- nmap('go', vim.lsp.buf.type_definition, '')
 end
 
-nvim_lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+cfg.util.default_config.capabilities = vim.tbl_deep_extend(
   'force', -- force: use value from the rightmost map
-  nvim_lspconfig.util.default_config.capabilities,
+  cfg.util.default_config.capabilities,
   require('cmp_nvim_lsp').default_capabilities() -- must use require here
 )
-nvim_lspconfig.vimls.setup({
+cfg.vimls.setup({
   on_attach = common_on_attach,
 })
 if vim.fn.executable('go') == 1 then
-  nvim_lspconfig.gopls.setup({
+  cfg.gopls.setup({
     on_attach = common_on_attach,
   })
 end
-nvim_lspconfig.bashls.setup({
+cfg.bashls.setup({
   on_attach = common_on_attach,
 })
-nvim_lspconfig.tsserver.setup({
+cfg.tsserver.setup({
   filetypes = {
     'javascript',
     'javascriptreact',
@@ -200,7 +200,7 @@ local workspace_libs = {
   },
 }
 
-nvim_lspconfig.lua_ls.setup({
+cfg.lua_ls.setup({
   single_file_support = true,
   flags = {
     debounce_text_changes = 150,
@@ -325,39 +325,39 @@ vim.diagnostic.config({
 })
 -- vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 
-nvim_lspconfig.pyright.setup({
+cfg.pyright.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.csharp_ls.setup({
+cfg.csharp_ls.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.tailwindcss.setup({
+cfg.tailwindcss.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.mojo.setup({
+cfg.mojo.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.svelte.setup({
+cfg.svelte.setup({
   on_attach = common_on_attach,
 })
-nvim_lspconfig.html.setup({
+cfg.html.setup({
   on_attach = common_on_attach,
 })
-nvim_lspconfig.templ.setup({
+cfg.templ.setup({
   on_attach = common_on_attach,
 })
 
-nvim_lspconfig.rust_analyzer.setup({
+cfg.rust_analyzer.setup({
   on_attach = common_on_attach,
 })
-nvim_lspconfig.biome.setup({
+cfg.biome.setup({
   cmd = { 'biome', 'lsp-proxy' },
 })
-nvim_lspconfig.intelephense.setup({
+cfg.intelephense.setup({
   root_dir = function(startpath)
     local cwd = vim.loop.cwd()
     -- local root = root_pattern('composer.json')(startpath)
@@ -367,4 +367,4 @@ nvim_lspconfig.intelephense.setup({
     return result
   end,
 })
-nvim_lspconfig.elixirls.setup({})
+cfg.elixirls.setup({})
