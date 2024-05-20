@@ -3,6 +3,7 @@ if not loaded then
   print('fzf-lua not loaded!')
   return
 end
+LOG.trace('fzf-lua loaded, setting up...')
 
 local web_devicons_loaded, web_devicons = pcall(require, 'nvim-web-devicons')
 if web_devicons_loaded then

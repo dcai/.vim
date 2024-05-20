@@ -1,6 +1,8 @@
 require('dcai.globals')
 
 LOG = require('log').setup()
+LOG.trace('Starting nvim')
+
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.python3_host_prog = G.find_executable({
@@ -9,6 +11,8 @@ vim.g.python3_host_prog = G.find_executable({
   '/usr/local/bin/python3',
   '/usr/bin/python3',
 })
+LOG.trace('python3_host_prog', vim.g.python3_host_prog)
+
 vim.g.node_host_prog = G.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
