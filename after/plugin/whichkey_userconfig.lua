@@ -372,6 +372,12 @@ local openthings_keymap = {
     'open file in gui editor',
   },
   g = { open_git_hosting_web, 'open file in git web' },
+  t = {
+    function()
+      require('mini.files').open()
+    end,
+    'edit/view file tree',
+  },
 }
 
 local notes_keymap = {
@@ -404,7 +410,7 @@ local notes_keymap = {
     end,
     'list all notes',
   },
-  ['.'] = {
+  ['/'] = {
     function()
       fzf.live_grep({
         cwd = vim.g.notes_home,
