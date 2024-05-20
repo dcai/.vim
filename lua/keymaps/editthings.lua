@@ -24,7 +24,7 @@ local editthings_keymap = {
       marlin.save()
       vim.notify(f .. ' added to marlin')
     end,
-    'add file to marlin collection',
+    'marlin: add to collection',
   },
   D = {
     function()
@@ -33,7 +33,7 @@ local editthings_keymap = {
       marlin.save()
       vim.notify(f .. ' removed from marlin')
     end,
-    'remove file from marlin collection',
+    'marlin: remove from collection',
   },
   e = {
     function()
@@ -49,13 +49,13 @@ local editthings_keymap = {
   },
   l = {
     marlin_marks,
-    'list marlin collection',
+    'marlin: list collection',
   },
   s = utils.vim_cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
   v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc'),
   X = {
     marlin.remove_all,
-    '',
+    'marlin: remove all collection items',
   },
 }
 return editthings_keymap
