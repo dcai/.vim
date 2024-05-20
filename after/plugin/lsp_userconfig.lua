@@ -3,13 +3,13 @@
 -------------------------------
 local mason_loaded, mason = pcall(require, 'mason')
 if not mason_loaded then
+  LOG.error('mason not loaded!')
   return
 end
 local masonpath = require('mason-core.path')
 mason.setup({
   install_root_dir = masonpath.concat({ vim.fn.stdpath('data'), 'mason' }),
 })
-require('lspconfig.ui.windows').default_options.border = 'single'
 -------------------------------
 --- mason-lspconfig
 -------------------------------
@@ -32,8 +32,10 @@ mason_lspconfig.setup({
 local lspconfig_loaded, cfg = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
+  LOG.error('lspconfig not loaded!')
   return
 end
+require('lspconfig.ui.windows').default_options.border = 'single'
 
 local util = cfg.util
 local root_pattern = cfg.util.root_pattern
@@ -359,7 +361,7 @@ cfg.biome.setup({
 })
 cfg.intelephense.setup({
   root_dir = function(startpath)
-    local cwd = vim.loop.cwd()
+    local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
     local root = root_pattern('.editorconfig')(startpath)
     -- prefer cwd if root is a descendant
