@@ -3,6 +3,8 @@ local gmatch = require('string').gmatch
 
 G = {}
 
+vim.uv = vim.uv or vim.loop
+
 G.print = function(val)
   print(vim.inspect(val))
   return val

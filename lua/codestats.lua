@@ -159,7 +159,7 @@ local function pulse()
 end
 
 local M = {}
-local timer = vim.loop.new_timer()
+local timer = vim.uv.new_timer()
 
 function M.setup()
   vim.api.nvim_create_user_command('CSProfile', function(opts)
