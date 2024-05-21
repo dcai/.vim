@@ -41,7 +41,12 @@ local function _check_back_space()
 end
 
 local function has_words_before()
-  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+  local buftype = vim.api.nvim_get_option_value(
+    'buftype',
+    { buf = vim.api.nvim_win_get_buf(0) }
+  )
+  LOG.debug('has words before: ' .. buftype)
+  if buftype == 'prompt' then
     return false
   end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -80,7 +85,6 @@ local compare = cmp.config.compare
 --   the selected item.
 -- If you didn't select any item and the option table contains `select = true`,
 -- nvim-cmp will automatically select the first item.
-
 local handle_enter = cmp.mapping({
   i = function(fallback)
     if cmp.visible() and has_words_before() then
@@ -159,15 +163,18 @@ local function formatter(entry, item)
     -- ultisnips = 'λ',
     -- path = '⋗',
     -- copilot = 'Copilot',
+    path = 'PATH',
+    -- path = '', -- devicons
     buffer = 'BUF',
     cmdline = 'CMD',
     cmdline_history = 'HIST',
-    codeium = 'λ',
+    codeium = '⚡️',
     git = 'GIT',
-    nvim_lsp = 'lsp',
-    path = 'PATH',
+    -- git = '',
+    nvim_lsp = '💡',
     tmux = 'tmux',
-    ultisnips = 'snip',
+    -- ultisnips = 'snip',
+    ultisnips = '🍪',
     ['vim-dadbod-completion'] = '[DB]',
   }
   local icon = menu_icon[source_name]
@@ -195,12 +202,16 @@ cmp.setup({
   snippet = {
     expand = function(args)
       vim.fn['UltiSnips#Anon'](args.body)
+      -- vim.snippet.expand(args.body) -- enabling this may cause lsp snippet echo twice
       -- require('luasnip').lsp_expand(args.body)
     end,
   },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
+  },
+  experimental = {
+    ghost_text = true,
   },
   mapping = {
     -- ['<C-e>'] = cmp.mapping.abort(),
@@ -210,6 +221,7 @@ cmp.setup({
     ['<S-Tab>'] = handle_up,
     ['<up>'] = handle_up,
     ['<CR>'] = handle_enter,
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   formatting = {
     fields = { 'menu', 'abbr', 'kind' },
