@@ -131,6 +131,7 @@ cfg.util.default_config.capabilities = vim.tbl_deep_extend(
   cfg.util.default_config.capabilities,
   require('cmp_nvim_lsp').default_capabilities() -- must use require here
 )
+-- LOG.info(cfg.util.default_config.capabilities)
 cfg.vimls.setup({
   on_attach = common_on_attach,
 })
@@ -369,4 +370,6 @@ cfg.intelephense.setup({
     return result
   end,
 })
-cfg.elixirls.setup({})
+cfg.elixirls.setup({
+  on_attach = common_on_attach,
+})
