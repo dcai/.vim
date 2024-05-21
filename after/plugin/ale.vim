@@ -72,6 +72,7 @@ let g:ale_fixers = {
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'elixir': ['mix_format'],
+  \ 'heex': ['mix_format'],
   \ 'fish': ['fish_indent'],
   \ 'go': ['goimports'],
   \ 'graphql': ['prettier'],
