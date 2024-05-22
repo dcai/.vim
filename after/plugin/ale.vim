@@ -11,7 +11,7 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_enter = 0
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_quickfix = 0
 let g:ale_open_list = 0
 " let g:ale_keep_list_window_open = 0
 let g:ale_php_cs_fixer_use_global = 1
@@ -21,7 +21,6 @@ let g:ale_lua_stylua_options = '--search-parent-directories'
 
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
-let g:ale_set_loclist = 1
 let g:ale_plaintext_pandoc_use_gfm = 1
 let g:ale_plaintext_pandoc_options = '--columns=120'
 let g:ale_xml_xmllint_indentsize = 4
@@ -88,7 +87,7 @@ let g:ale_fixers = {
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
-  \ 'php': ['phpcbf'],
+  \ 'php': ['pint'],
   \ 'python': ['black', 'isort'],
   \ 'rust': ['rustfmt'],
   \ 'sh': ['shfmt'],
