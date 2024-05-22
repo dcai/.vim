@@ -373,3 +373,21 @@ cfg.intelephense.setup({
 cfg.elixirls.setup({
   on_attach = common_on_attach,
 })
+cfg.emmet_language_server.setup({
+  filetypes = {
+    'elixir',
+    'heex',
+    'css',
+    'eruby',
+    'html',
+    'javascript',
+    'javascriptreact',
+    'less',
+    'sass',
+    'scss',
+    'pug',
+    'typescriptreact',
+  },
+
+  on_attach = common_on_attach,
+})
