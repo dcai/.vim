@@ -74,29 +74,9 @@ M.shell_cmd = shell_cmd
 
 M.git_cmd = shell_cmd('git')
 
-local function project_root()
-  local dir = vim.fn.expand('%:p:h')
-  local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
-  if not lspconfig_loaded then
-    return dir
-  end
-  local root_pattern = nvim_lspconfig.util.root_pattern
-  return root_pattern(
-    'package.json',
-    'readme.md',
-    'README.md',
-    'readme.txt',
-    'LICENSE.txt',
-    'LICENSE',
-    '.git'
-  )(dir)
-end
-
-M.project_root = project_root
-
 M.live_grep = function()
   local fzf = require('fzf-lua')
-  fzf.live_grep({ cwd = project_root() })
+  fzf.live_grep({ cwd = G.project_root() })
 end
 
 ---@param cmd string vim command

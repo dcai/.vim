@@ -49,7 +49,7 @@ local n_keymap = {
   ['/'] = { utils.live_grep, 'fzf grep repo' },
   ['.'] = {
     function()
-      fzf.grep_cword({ cwd = utils.project_root() })
+      fzf.grep_cword({ cwd = G.project_root() })
     end,
     'fzf grep <cword>',
   },
@@ -85,7 +85,7 @@ which_key.register(n_keymap, make_mapping_opts('n'))
 local v_keymap = {
   ['.'] = {
     function()
-      fzf.grep_visual({ cwd = utils.project_root() })
+      fzf.grep_visual({ cwd = G.project_root() })
     end,
     'fzf selected',
   },
