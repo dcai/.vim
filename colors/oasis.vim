@@ -244,7 +244,7 @@ let s:ui = {
       \ 'Search'          : s:dict_search,
       \ 'IncSearch'       : s:dict_search,
       \ 'SignColumn'      : {'bg': s:none},
-      \ 'Title'           : {'fg': s:green,  'bg':    s:darkgray},
+      \ 'Title'           : {'fg': s:green,  'bg':    s:none},
       \ 'Underlined'      : {'fg': s:blue,   'cterm': s:underline},
       \ 'VertSplit'       : {'fg': s:green},
       \ 'Visual'          : s:dict_visual_selection,
