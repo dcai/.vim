@@ -1,7 +1,11 @@
 local utils = require('keymaps.utils')
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
-  return
+  return {
+    name = 'chatgpt',
+  }, {
+    name = 'chatgpt',
+  }
 end
 
 local chatlogs_home = vim.g.dropbox_home
