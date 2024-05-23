@@ -51,6 +51,7 @@ if has('nvim')
   Plug 'pocco81/auto-save.nvim'
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'ibhagwan/fzf-lua', Cond(!exists('g:vscode'), {'branch': 'main'})
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
   " Plug 'desdic/marlin.nvim'
   Plug 'dcai/marlin.nvim'
   " Plug 'elihunter173/dirbuf.nvim'
@@ -85,6 +86,7 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   "" this is for inline code suggestions
   Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
+  Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
   "" this is nvim plugin for cmp
   Plug 'Exafunction/codeium.nvim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
   " Plug 'zbirenbaum/copilot.lua', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'master'})
