@@ -5,6 +5,22 @@ if not cmp_loaded then
 end
 LOG.trace('cmp loaded, setting up...')
 
+local cody_loaded, cody = pcall(require, 'sg')
+if cody_loaded then
+  -- Sourcegraph configuration. All keys are optional
+  cody.setup({
+    enable_cody = true,
+    accept_tos = true,
+    download_binaries = true,
+    -- Pass your own custom attach function
+    --    If you do not pass your own attach function, then the following maps are provide:
+    --        - gd -> goto definition
+    --        - gr -> goto references
+    on_attach = function()
+      -- do nothing
+    end,
+  })
+end
 local codeium_loaded, codeium = pcall(require, 'codeium')
 if codeium_loaded then
   local cachedir = vim.fn.stdpath('cache')
@@ -158,6 +174,7 @@ local source_path = {
 local function formatter(entry, item)
   local source_name = entry.source.name
   local menu_icon = {
+    cody = 'CODY',
     -- luasnip = 'ι',
     -- nvim_lsp = 'Ƒ',
     -- ultisnips = 'λ',
@@ -228,6 +245,7 @@ cmp.setup({
     format = formatter,
   },
   sources = cmp.config.sources({
+    -- { name = 'cody' },
     { name = 'nvim_lsp' },
     { name = 'codeium' },
     { name = 'ultisnips' },

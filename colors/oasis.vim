@@ -365,13 +365,15 @@ if has('nvim')
         \ 'MsgArea': {'bg':s:none,'fg':s:green,'guifg':s:nicelightgreen}
         \ }
   call s:apply(s:neovim_only)
+
   let s:cmp = {
         \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
         \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
         \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
         \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
+        \ 'CmpItemKindCodeium':    {'fg': s:yellow, 'bg': s:red},
         \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
-        \ 'CmpItemKindMethod':     {'fg': s:magenta, 'bg': s:none},
+        \ 'CmpItemKindMethod':     {'fg': s:white, 'bg': s:magenta},
         \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
         \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
         \ }
