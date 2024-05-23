@@ -1,12 +1,5 @@
-local lspconfig_loaded, nvim_lspconfig = pcall(require, 'lspconfig')
-if not lspconfig_loaded then
-  return
-end
-local root_pattern = nvim_lspconfig.util.root_pattern
-
 vim.api.nvim_create_user_command('HurlRun', function()
-  local current_dir = vim.fn.expand('%:p:h')
-  local project_root = root_pattern('.git')(current_dir)
+  local dir = G.project_root()
   -- run current file
   local ft = vim.bo.filetype
   if not vim.tbl_contains({ 'hurl' }, ft) then
@@ -25,9 +18,9 @@ vim.api.nvim_create_user_command('HurlRun', function()
       '--insecure',
       filepath,
       '--variables-file',
-      project_root .. '/vars.txt',
+      dir .. '/vars.txt',
     },
-    cwd = project_root,
+    cwd = dir,
     skip_validation = true,
     on_exit = vim.schedule_wrap(function(job, status)
       if status ~= 0 then

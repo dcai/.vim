@@ -293,6 +293,40 @@ G.new_popup = function(opts)
   }
 end
 
+local function shell_cmd(cmd)
+  local result = vim.fn.systemlist(cmd)[1]
+  if vim.v.shell_error == 0 then
+    return result
+  end
+  return nil
+end
+
+G.shell_cmd = shell_cmd
+
+G.project_root = function()
+  local current_dir = vim.fn.expand('%:p:h')
+  local dir = shell_cmd('git rev-parse --show-toplevel') or current_dir
+  local loaded, lspconfig = pcall(require, 'lspconfig')
+  if not loaded then
+    return dir
+  end
+
+  if lspconfig.util and lspconfig.util.root_pattern then
+    local root_pattern = lspconfig.util.root_pattern
+    return root_pattern(
+      'package.json',
+      'readme.md',
+      'README.md',
+      'readme.txt',
+      'LICENSE.txt',
+      'LICENSE',
+      '.git'
+    )(current_dir)
+  else
+    return dir
+  end
+end
+
 G.nl = '\r\n'
 
 G.red = colortext('red')
