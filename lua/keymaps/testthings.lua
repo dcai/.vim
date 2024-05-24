@@ -33,6 +33,14 @@ local testthings_keymap = {
     'list all hurl files',
   },
   m = run_testfile('TestCurrentFileWithMocha'),
+  n = {
+    function()
+      local root = G.project_root()
+      vim.api.nvim_command('cd ' .. root)
+      vim.cmd('TestNearest')
+    end,
+    'Test nearest',
+  },
   p = utils.vim_cmd('VimuxPromptCommand', 'prompt command'),
   q = utils.vim_cmd('VimuxCloseRunner', 'close runner'),
   x = utils.vim_cmd('call VimuxZoomRunner()', 'zoom in'),
