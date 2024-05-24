@@ -138,6 +138,17 @@ Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
 """""""""""""""""""""""""""""""""""""""
 Plug 'preservim/vimux'
 let g:VimuxOrientation = "h"
+Plug 'vim-test/vim-test'
+
+let g:test#javascript#runner = 'jest'
+let test#javascript#mocha#executable = 'npx mocha'
+let test#javascript#mocha#options = ' --full-trace '
+let test#javascript#jest#executable = 'npx jest'
+let test#javascript#jest#file_pattern = '\v(__tests__/.+|(spec|test))\.(js|jsx|coffee|ts|tsx)$'
+
+let g:test#runner_commands = ['Jest', 'Mocha']
+let test#strategy = 'neovim'
+let test#neovim#term_position = "vert"
 """""""""""""""""""""""""""""""""""""""
 """ utils
 """""""""""""""""""""""""""""""""""""""
