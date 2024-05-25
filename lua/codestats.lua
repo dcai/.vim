@@ -60,6 +60,7 @@ local languages = {
   perl6 = 'Perl 6',
   pgsql = 'SQL (PostgreSQL)',
   php = 'PHP',
+  blade = 'PHP',
   text = 'Plain text',
   help = 'Plain text',
   plsql = 'PL/SQL',
