@@ -43,6 +43,7 @@ local testthings_keymap = {
   },
   p = utils.vim_cmd('VimuxPromptCommand', 'prompt command'),
   q = utils.vim_cmd('VimuxCloseRunner', 'close runner'),
+  s = utils.vim_cmd('!%:p', 'run current buffer in shell'),
   x = utils.vim_cmd('call VimuxZoomRunner()', 'zoom in'),
   z = utils.vim_cmd('call LastPath()', 'open last path in runner'),
   t = {
