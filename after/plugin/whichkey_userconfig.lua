@@ -46,6 +46,17 @@ local vimrc_keymap = {
 }
 
 local n_keymap = {
+  [','] = {
+    function()
+      local ft = vim.bo.filetype
+      if ft == 'elixir' or ft == 'heex' then
+        vim.lsp.buf.format({ async = true })
+      else
+        vim.cmd('ALEFix')
+      end
+    end,
+    'code format',
+  },
   ['/'] = { utils.live_grep, 'fzf grep repo' },
   ['.'] = {
     function()

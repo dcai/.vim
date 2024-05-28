@@ -101,7 +101,7 @@ let g:ale_fixers = {
   \ 'yaml': ['prettier'],
 \}
 
-nnoremap <leader>, :ALEFix<cr>
+" nnoremap <leader>, :ALEFix<cr>
 " nnoremap <silent> [d :ALEPrevious<cr>
 " nnoremap <silent> ]d :ALENext<cr>
 
