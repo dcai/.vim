@@ -45,6 +45,7 @@ call plug#begin(expand(s:plugged))
 """ neovim only
 """"""""""""""""""""""""""""""""""""""""""
 if has('nvim')
+  Plug 'norcalli/nvim-colorizer.lua'
   Plug 'Wansmer/treesj'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'echasnovski/mini.nvim'
