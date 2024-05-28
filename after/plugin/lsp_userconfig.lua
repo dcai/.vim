@@ -110,7 +110,9 @@ local function common_on_attach(client, buffer)
   nmap('<leader>lh', vim.lsp.buf.hover, 'hover doc')
   nmap('<leader>lo', function()
     local clientname = client.name
-    if client.name == 'tailwindcss' then
+    if
+      client.name == 'tailwindcss' or client.name == 'emmet_language_server'
+    then
       clientname = 'tsserver'
     end
     if organize_imports[clientname] then
