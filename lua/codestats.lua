@@ -99,6 +99,7 @@ end
 
 local CODESTATS_API_URL = 'https://codestats.net/api'
 if not isempty(os.getenv('CODESTATS_API_URL')) then
+  ---@diagnostic disable-next-line: cast-local-type
   CODESTATS_API_URL = os.getenv('CODESTATS_API_URL')
 end
 local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')

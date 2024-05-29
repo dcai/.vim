@@ -125,11 +125,13 @@ M.setup = function(userconfig)
       -- Output to log file
       if config.use_file then
         local fp = io.open(outfile, 'a')
-        dateline = os.date('%d/%m/%Y %H:%M:%S')
+        local dateline = os.date('%d/%m/%Y %H:%M:%S')
         local str =
           string.format('[%-6s%s] %s: %s\n', nameupper, dateline, lineinfo, msg)
-        fp:write(str)
-        fp:close()
+        if fp then
+          fp:write(str)
+          fp:close()
+        end
       end
     end
 
