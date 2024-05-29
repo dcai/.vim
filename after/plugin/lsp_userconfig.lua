@@ -40,6 +40,7 @@ local root_pattern = cfg.util.root_pattern
 
 local timeout_ms = 3000
 local organize_imports = {
+  ---@diagnostic disable-next-line: unused-local
   pyright = function(_client, buf)
     local params = {
       command = 'pyright.organizeimports',
@@ -47,6 +48,7 @@ local organize_imports = {
     }
     vim.lsp.buf.execute_command(params)
   end,
+  ---@diagnostic disable-next-line: unused-local
   tsserver = function(_client, buffer)
     buffer = buffer or vim.api.nvim_get_current_buf()
     local params = {
@@ -92,11 +94,24 @@ local function map(mode, buffer)
   end
 end
 
-local function common_on_attach(client, buffer)
+local function common_on_attach(client, bufnr)
+  if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.codelens.refresh({ bufnr = bufnr })
+      end,
+    })
+  end
+  if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
+
   vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
   vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
-  local nmap = map('n', buffer)
-  local xmap = map('x', buffer)
+  local nmap = map('n', bufnr)
+  local xmap = map('x', bufnr)
   nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   if vim.lsp.buf.range_code_action then
     xmap('gA', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', 'Code action')
@@ -116,7 +131,7 @@ local function common_on_attach(client, buffer)
       clientname = 'tsserver'
     end
     if organize_imports[clientname] then
-      organize_imports[clientname](client, buffer)
+      organize_imports[clientname](client, bufnr)
     else
       print('No organize imports for ' .. client.name)
     end
@@ -214,6 +229,12 @@ cfg.lua_ls.setup({
         version = 'LuaJIT',
         path = lua_runtime_path,
       },
+      codeLens = {
+        enable = true,
+      },
+      hint = {
+        enable = true,
+      },
       telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim' },
@@ -261,8 +282,9 @@ if fzfloaded then
   end
 
   -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
+  ---@diagnostic disable-next-line: unused-local
   local fzf_location = wrap_handler(function(_label, result, _ctx, _config)
-    result = vim.tbl_islist(result) and result or { result }
+    result = vim.islist(result) and result or { result }
     if #result == 1 then
       return vim.lsp.util.jump_to_location(result[1], offset_encoding)
     end
