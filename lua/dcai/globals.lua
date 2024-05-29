@@ -307,7 +307,24 @@ end
 
 G.shell_cmd = shell_cmd
 
-G.project_root = function()
+---get project root
+---@param filepath string?
+---@return string?
+G.project_root = function(filepath)
+  local buf = filepath or vim.api.nvim_get_current_buf()
+  if vim.fs and vim.fs.root then
+    return vim.fs.root(buf, {
+      '.editorconfig',
+      'package.json',
+      'readme.md',
+      'README.md',
+      'readme.txt',
+      'LICENSE.txt',
+      'LICENSE',
+      '.git',
+    })
+  end
+
   local current_dir = vim.fn.expand('%:p:h')
   local dir = shell_cmd('git rev-parse --show-toplevel') or current_dir
   local loaded, lspconfig = pcall(require, 'lspconfig')

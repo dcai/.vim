@@ -32,12 +32,12 @@ local lsp_keymap = {
   D = { vim.diagnostic.open_float, 'diagnostic' },
   f = { vim.lsp.buf.format, 'format code' },
   I = utils.vim_cmd('LspInfo', 'lsp info'),
-  p = {
-    function()
-      require('lspsaga.definition'):init(2, 1)
-    end,
-    'Peek type',
-  },
+  -- p = {
+  --   function()
+  --     require('lspsaga.definition'):init(2, 1)
+  --   end,
+  --   'Peek type',
+  -- },
   r = { vim.lsp.buf.rename, 'rename' },
   ['q'] = {
     function()

@@ -55,9 +55,7 @@ if has('nvim')
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
   " Plug 'desdic/marlin.nvim'
   Plug 'dcai/marlin.nvim'
-  " Plug 'elihunter173/dirbuf.nvim'
   Plug 'folke/which-key.nvim'
-  Plug 'Robitx/gp.nvim' , Cond(IsEnvVarSet('OPENAI_API_KEY'), {'branch': 'main'})
   """"""""""""""""""""""""""""""""""""""""""
   """ ultisnips
   """"""""""""""""""""""""""""""""""""""""""
@@ -67,7 +65,6 @@ if has('nvim')
   """ LSP
   """"""""""""""""""""""""""""""""""""""""""
   Plug 'neovim/nvim-lspconfig'
-  Plug 'nvimdev/lspsaga.nvim'
   Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
   Plug 'williamboman/mason-lspconfig.nvim'
   """"""""""""""""""""""""""""""""""""""""""
@@ -75,7 +72,6 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
   """"""""""""""""""""""""""""""""""""""""""
   """ git
@@ -85,11 +81,10 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ coding assist
   """"""""""""""""""""""""""""""""""""""""""
-  "" this is for inline code suggestions
+  Plug 'Robitx/gp.nvim' , Cond(IsEnvVarSet('OPENAI_API_KEY'), {'branch': 'main'})
   Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
-  Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
-  "" this is nvim plugin for cmp
   Plug 'Exafunction/codeium.nvim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
+  Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
   " Plug 'zbirenbaum/copilot.lua', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'master'})
   " Plug 'github/copilot.vim', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'release'})
   """"""""""""""""""""""""""""""""""""""""""
@@ -108,9 +103,9 @@ if has('nvim')
   """"""""""""""""""""""""""""""""""""""""""
   """ BEGIN markdown
   """"""""""""""""""""""""""""""""""""""""""
-  Plug 'mzlogin/vim-markdown-toc'
+  Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
   let g:vmt_dont_insert_fence = 1
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install', 'for': 'markdown' }
   let g:mkdp_theme = 'light'
   """"""""""""""""""""""""""""""""""""""""""
   """ END markdown
