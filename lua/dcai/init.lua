@@ -30,13 +30,10 @@ local codestats = require('codestats')
 codestats.setup()
 
 -- Copy/Paste when using ssh on a remote server
--- Only works on Neovim >= 0.10.0
-if
-  vim.env.SSH_CONNECTION
-  and vim.env.SSH_TTY
-  and vim.clipboard
-  and vim.clipboard.osc52
-then
+-- Only works when neovim >= 0.10.0
+local is_ssh = vim.env.SSH_CONNECTION and vim.env.SSH_TTY
+local has_osc52 = vim.clipboard and vim.clipboard.osc52
+if is_ssh and has_osc52 then
   vim.api.nvim_create_autocmd('VimEnter', {
     group = vim.api.nvim_create_augroup('ssh_clipboard', { clear = true }),
     callback = function()
