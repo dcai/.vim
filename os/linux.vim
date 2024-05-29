@@ -1,7 +1,8 @@
 nmap <leader>c "+y
-"nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
-nmap <leader>p :r !xsel -p<CR>
+nmap <leader>p :set paste<CR>"+p :set nopaste<CR>
+" nmap <leader>p :r !xsel -p<CR>
 vmap <leader>c "+y
+
 if or(or(has("gui_qt"), has('gui_gtk2')), has('gui_gtk3'))
   "set guifont=Inconsolata\ 14
   "set guifont=DejaVu\ Sans\ Mono\ 12
