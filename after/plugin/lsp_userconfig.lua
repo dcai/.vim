@@ -96,7 +96,12 @@ end
 
 local function common_on_attach(client, bufnr)
   if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
-    vim.lsp.codelens.refresh({ bufnr = bufnr })
+    -- client.notify('workspace/didChangeConfiguration', {
+    --   settings = {
+    --     ['javascript.referencesCodeLens.enabled'] = true,
+    --     ['typescript.referencesCodeLens.enabled'] = true,
+    --   },
+    -- })
     vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
       buffer = bufnr,
       callback = function()
@@ -188,8 +193,19 @@ cfg.tsserver.setup({
   },
   init_options = {
     preferences = {
-      disableSuggestions = true,
+      -- includeInlayParameterNameHints = 'all',
+      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+      -- includeInlayFunctionParameterTypeHints = true,
+      -- includeInlayVariableTypeHints = true,
+      -- includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      -- includeInlayPropertyDeclarationTypeHints = true,
+      -- includeInlayFunctionLikeReturnTypeHints = true,
+      -- includeInlayEnumMemberValueHints = true,
+
       includeCompletionsForModuleExports = true,
+      importModuleSpecifierEnding = 'auto',
+      -- organizeImportsIgnoreCase = false,
+      -- organizeImportsCollation = 'unicode',
     },
     hostInfo = 'neovim',
   },
