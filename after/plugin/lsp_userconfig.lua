@@ -222,15 +222,16 @@ end
 
 local workspace_libs = {
   checkThirdParty = false,
+  maxPreload = 2000,
+  preloadFileSize = 1000,
   ---- it's slow to load all
   -- library = vim.api.nvim_get_runtime_file('', true),
-  --- Load selected libs
+  --- so only load selected libs
   library = {
     vim.fn.expand('$VIMRUNTIME/lua'),
-    vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
     vim.fn.stdpath('config') .. '/lua',
-    plugin_path('fzf-lua'),
-    plugin_path('plenary.nvim'),
+    -- plugin_path('fzf-lua'),
+    -- plugin_path('plenary.nvim'),
   },
 }
 
@@ -241,19 +242,24 @@ cfg.lua_ls.setup({
   },
   settings = {
     Lua = {
+      -- https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json
       runtime = {
         version = 'LuaJIT',
         path = lua_runtime_path,
       },
-      codeLens = {
+      hint = {
         enable = true,
       },
-      hint = {
+      codeLens = {
         enable = true,
       },
       telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim' },
+        neededFileStatus = {
+          ['codestyle-check'] = 'Any',
+        },
+        disable = { 'need-check-nil', 'missing-parameter', 'cast-local-type' },
       },
       workspace = workspace_libs,
     },
