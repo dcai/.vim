@@ -83,7 +83,8 @@ if has('nvim')
   """ coding assist
   """"""""""""""""""""""""""""""""""""""""""
   Plug 'Robitx/gp.nvim' , Cond(IsEnvVarSet('OPENAI_API_KEY'), {'branch': 'main'})
-  Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
+  " Plug 'Exafunction/codeium.vim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
+  Plug 'monkoose/neocodeium', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
   Plug 'Exafunction/codeium.nvim', Cond(!IsEnvVarSet('NO_CODEIUM'), {'branch': 'main'})
   Plug 'sourcegraph/sg.nvim', { 'do': 'nvim -l build/init.lua' }
   " Plug 'zbirenbaum/copilot.lua', Cond(!IsEnvVarSet('NO_COPILOT'), {'branch': 'master'})
