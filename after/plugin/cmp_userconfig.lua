@@ -5,48 +5,7 @@ if not cmp_loaded then
 end
 LOG.trace('cmp loaded, setting up...')
 
-local cody_loaded, cody = pcall(require, 'sg')
-if cody_loaded then
-  -- Sourcegraph configuration. All keys are optional
-  cody.setup({
-    enable_cody = true,
-    accept_tos = true,
-    download_binaries = true,
-    -- Pass your own custom attach function
-    --    If you do not pass your own attach function, then the following maps are provide:
-    --        - gd -> goto definition
-    --        - gr -> goto references
-    on_attach = function()
-      -- do nothing
-    end,
-  })
-end
-local codeium_loaded, codeium = pcall(require, 'codeium')
-if codeium_loaded then
-  local cachedir = vim.fn.stdpath('cache')
-  -- for Exafunction/codeium.nvim
-  codeium.setup({
-    manager_path = cachedir .. '/codeium/manager_path',
-    bin_path = cachedir .. '/codeium/bin',
-    config_path = cachedir .. '/codeium/config.json',
-    language_server_download_url = 'https://github.com',
-    -- api = {
-    --   host = 'server.codeium.com',
-    --   port = '443',
-    --   path = '/',
-    --   portal_url = 'codeium.com',
-    -- },
-    -- enterprise_mode = nil,
-    -- detect_proxy = nil,
-    -- tools = {},
-    -- wrapper = nil,
-    enable_chat = false,
-    enable_local_search = false,
-    enable_index_service = false,
-    search_max_workspace_file_count = 5000,
-  })
-end
-
+---@diagnostic disable-next-line: unused-function, unused-local
 local function _check_back_space()
   local col = vim.fn.col('.') - 1
   if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
@@ -73,6 +32,7 @@ local function has_words_before()
       == nil
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function feedkeys(key, mode)
   -- Replaces terminal codes and keycodes
   -- (<CR>, <Esc>, ...) in a string with the internal representation.
@@ -83,6 +43,7 @@ local function feedkeys(key, mode)
   vim.api.nvim_feedkeys(keys, mode, true)
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local _prioritizeSource = function(source)
   return function(entry1, entry2)
     if entry1[source] and not entry2[source] then
