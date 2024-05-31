@@ -6,4 +6,4 @@ function s:toggle(pattern, dict, ...)
   return view
 endfunction
 
-nnoremap <buffer> <silent> - :call winrestview(<SID>toggle('^\s*-\s*\[\zs.\ze\]', {' ': 'x', 'x': ' '}))<cr>
+nnoremap <buffer> <silent> = :call winrestview(<SID>toggle('^\s*-\s*\[\zs.\ze\]', {' ': 'x', 'x': ' '}))<cr>
