@@ -12,7 +12,6 @@ local loaded, neocodeium = pcall(require, 'neocodeium')
 if loaded then
   neocodeium.setup()
   vim.keymap.set('i', '<c-f>', neocodeium.accept)
-  vim.keymap.set('i', '<c-f>', '<Cmd>call codeium#Clear()<CR>')
 end
 
 local codeium_loaded, codeium = pcall(require, 'codeium')

@@ -242,6 +242,8 @@ let s:ui = {
       \ 'Question'        : {'fg': s:green},
       \ 'Quote'           : {'fg': s:yellow},
       \ 'Search'          : s:dict_search,
+      \ 'TabLine'         : {'bg': s:darkblue},
+      \ 'TabLineSel'      : {'bg': s:white, 'fg': s:black},
       \ 'IncSearch'       : s:dict_search,
       \ 'SignColumn'      : {'bg': s:none},
       \ 'Title'           : {'fg': s:green,  'bg':    s:none},
