@@ -9,7 +9,7 @@ if not loaded then
 end
 
 local chatlogs_home = vim.g.dropbox_home
-    and vim.g.dropbox_home .. '/Documents/txt/chatgpt_logs'
+    and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
   or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
 
 -- https://github.com/Robitx/gp.nvim/blob/d90816b2e9185202d72f7b1346b6d33b36350886/lua/gp/config.lua#L8-L355
@@ -23,7 +23,7 @@ local config = {
   -- first string has to be static, second string can contain template {{agent}}
   -- just a static string is legacy and the [{{agent}}] element is added automatically
   -- if you really want just a static string, make it a table with one element { "🤖:" }
-  chat_assistant_prefix = { '😒 ChatGPT: ', '[{{agent}}]' },
+  chat_assistant_prefix = { '🤖 Bot: ', '[{{agent}}]' },
   chat_shortcut_respond = {
     modes = { 'n', 'i', 'v', 'x' },
     shortcut = '<c-x><c-x>',
@@ -142,7 +142,7 @@ local config = {
   chat_free_cursor = false,
 
   -- how to display GpChatToggle or GpContext: popup / split / vsplit / tabnew
-  toggle_target = 'vsplit',
+  toggle_target = '',
   -- auto select command response (easier chaining of commands)
   -- if false it also frees up the buffer cursor for further editing elsewhere
   command_auto_select_response = true,
@@ -249,12 +249,72 @@ gpplugin.setup(config)
 local chatgpt_keymap_n = {
   name = 'chatgpt',
   D = utils.vim_cmd('GpChatDelete', 'delete chat'),
-  c = utils.vim_cmd('GpNew', 'Enter a prompt'),
-  f = utils.vim_cmd('GpChatFinder', 'chat Finder'),
+  -- c = utils.vim_cmd('GpNew', 'Enter a prompt'),
+  F = utils.vim_cmd('GpChatFinder', 'chat Finder'),
   n = utils.vim_cmd('GpNextAgent', 'next agent'),
   N = utils.vim_cmd('GpChatNew', 'new chat buffer'),
-  t = utils.vim_cmd('GpChatToggle', 'Toggle chat'),
-  s = utils.vim_cmd('GpWhisper', 'speech to text'),
+  c = utils.vim_cmd('GpChatToggle', 'Toggle chat'),
+  -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
+  p = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        [[
+          You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.
+          Add tailwind class to style the components.
+          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+          START AND END YOUR ANSWER WITH: ```
+        ]]
+      )
+    end,
+    'About php and laravel',
+  },
+  t = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        [[
+          You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.
+          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+          START AND END YOUR ANSWER WITH: ```
+        ]]
+      )
+    end,
+    'About neovim',
+  },
+  l = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        [[
+          You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.
+          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+          START AND END YOUR ANSWER WITH: ```
+        ]]
+      )
+    end,
+    'About neovim',
+  },
+  a = {
+    function()
+      local agents = {}
+      for key, value in pairs(gpplugin.agents) do
+        table.insert(agents, key)
+      end
+      require('fzf-lua').fzf_exec(agents, {
+        actions = {
+          default = function(selected, _opts)
+            local selected_agent = selected[1]
+            vim.cmd('GpAgent ' .. selected_agent)
+          end,
+        },
+      })
+    end,
+    'Select an agent',
+  },
 }
 
 local function wrapGpCmd(str)
