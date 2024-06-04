@@ -1,9 +1,26 @@
 local M = {}
 
-M.setup = function(opts)
-  local vim = vim
-  local Plug = vim.fn['plug#']
-  local dir = opts.dir or vim.fn.expand(vim.fn.stdpath('data') .. '/plug')
+---Install a plugin
+---@param plugin string
+---@param opts table|string|nil
+---@param setup function
+---@return nil
+local function Plug(plugin, opts, setup)
+  local fn = vim.fn['plug#']
+  if opts then
+    fn(plugin, opts)
+  else
+    fn(plugin)
+  end
+  if setup then
+    setup()
+  end
+end
+
+---setup vim-plug
+---@param plugOpts table
+M.setup = function(plugOpts)
+  local dir = plugOpts.dir or vim.fn.expand(vim.fn.stdpath('data') .. '/plug')
   vim.call('plug#begin', dir)
 
   if G.is_env_var_set('OPENAI_API_KEY') then
@@ -28,7 +45,7 @@ M.setup = function(opts)
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
   ----------------------------------------------------------------------------
-  --- nvim-cmp
+  --- treesitter
   ----------------------------------------------------------------------------
   Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
   Plug('nvim-treesitter/nvim-treesitter-textobjects')
@@ -45,37 +62,41 @@ M.setup = function(opts)
   Plug('hrsh7th/nvim-cmp')
   -- Plug('petertriho/cmp-git')
   -- Plug('dmitmel/cmp-cmdline-history')
-  -- ultisnips
   Plug('SirVer/ultisnips')
   Plug('quangnguyen30192/cmp-nvim-ultisnips')
   ----------------------------------------------------------------------------
   --- markdown
   ----------------------------------------------------------------------------
-  Plug('mzlogin/vim-markdown-toc', { ['for'] = 'markdown' })
-  vim.g.vmt_dont_insert_fence = 1
+  Plug('mzlogin/vim-markdown-toc', { ['for'] = 'markdown' }, function()
+    vim.g.vmt_dont_insert_fence = 1
+  end)
   Plug(
     'iamcco/markdown-preview.nvim',
-    { ['do'] = 'cd app && npx --yes yarn install', ['for'] = 'markdown' }
+    { ['do'] = 'cd app && npx --yes yarn install', ['for'] = 'markdown' },
+    function()
+      vim.g.mkdp_theme = 'light'
+      -- vim.g.mkdp_theme = 'dark'
+    end
   )
-  -- vim.g.mkdp_theme = 'light'
-  vim.g.mkdp_theme = 'dark'
   ----------------------------------------------------------------------------
   --- END of markdown
   ----------------------------------------------------------------------------
   --- vim-test
   ----------------------------------------------------------------------------
-  Plug('preservim/vimux')
-  vim.g.VimuxOrientation = 'h'
-  Plug('vim-test/vim-test')
-  vim.g['test#javascript#runner'] = 'jest'
-  vim.g['test#javascript#mocha#executable'] = 'npx mocha'
-  vim.g['test#javascript#mocha#options'] = ' --full-trace '
-  vim.g['test#javascript#jest#executable'] = 'npx jest'
-  vim.g['test#javascript#jest#file_pattern'] =
-    '\v(__tests__/.+|(spec|test)).(js|jsx|coffee|ts|tsx)$'
-  vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
-  vim.g['test#strategy'] = 'neovim'
-  vim.g['test#neovim#term_position'] = 'vert'
+  Plug('preservim/vimux', nil, function()
+    vim.g.VimuxOrientation = 'h'
+  end)
+  Plug('vim-test/vim-test', nil, function()
+    vim.g['test#javascript#runner'] = 'jest'
+    vim.g['test#javascript#mocha#executable'] = 'npx mocha'
+    vim.g['test#javascript#mocha#options'] = ' --full-trace '
+    vim.g['test#javascript#jest#executable'] = 'npx jest'
+    vim.g['test#javascript#jest#file_pattern'] =
+      '\v(__tests__/.+|(spec|test)).(js|jsx|coffee|ts|tsx)$'
+    vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
+    vim.g['test#strategy'] = 'neovim'
+    vim.g['test#neovim#term_position'] = 'vert'
+  end)
   ----------------------------------------------------------------------------
   --- END vim-test
   ----------------------------------------------------------------------------
@@ -103,10 +124,11 @@ M.setup = function(opts)
   Plug('ibhagwan/fzf-lua')
   Plug('nvim-telescope/telescope.nvim')
   Plug('andymass/vim-matchup')
-  Plug('AndrewRadev/bufferize.vim')
-  vim.g.bufferize_command = 'new'
-  vim.g.bufferize_keep_buffers = 1
-  vim.g.bufferize_focus_output = 1
+  Plug('AndrewRadev/bufferize.vim', nil, function()
+    vim.g.bufferize_command = 'new'
+    vim.g.bufferize_keep_buffers = 1
+    vim.g.bufferize_focus_output = 1
+  end)
   ----------------------------------------------------------------------------
   -- end of files
   ----------------------------------------------------------------------------
