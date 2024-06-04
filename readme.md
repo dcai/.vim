@@ -9,7 +9,7 @@
 
 [^1]
 
-```
+```sh
 git clone https://github.com/dcai/.vim.git ~/.config/nvim
 ln -s ~/.config/nvim .vim
 ```
