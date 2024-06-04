@@ -25,6 +25,7 @@ end
 
 G.source('loader.vim')
 G.setup_colorscheme()
+require('dcai.plug').setup({})
 
 local codestats = require('codestats')
 codestats.setup()
