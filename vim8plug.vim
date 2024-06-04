@@ -42,15 +42,6 @@ endif
 call plug#begin(expand(s:plugged))
 
 """""""""""""""""""""""""""""""""""""""
-""" colorschemes
-"""""""""""""""""""""""""""""""""""""""
-Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'rebelot/kanagawa.nvim'
-" Plug 'rose-pine/neovim'
-" Plug 'sainnhe/everforest'
-" let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
-" let g:everforest_better_performance = 1
-"""""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
 Plug 'dcai/ale', { 'do': function('InstallAle'), 'frozen': 1 }
@@ -183,6 +174,39 @@ Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 " case insensitive search
 let g:sneak#use_ic_scs = 1
+
+"""""""""""""""""""""""""""""""""""""""
+""" 16 color schemes
+"""""""""""""""""""""""""""""""""""""""
+Plug 'noahfrederick/vim-noctu' " 16 colors
+" Plug 'jeffkreeftmeijer/vim-dim' " 16 colors
+
+"""""""""""""""""""""""""""""""""""""""
+""" colorschemes
+"""""""""""""""""""""""""""""""""""""""
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'rebelot/kanagawa.nvim'
+" Plug 'rose-pine/neovim'
+" Plug 'sainnhe/everforest'
+" let g:everforest_background = 'hard' " 'hard', 'medium'(default), 'soft'
+" let g:everforest_better_performance = 1
+" Plug 'morhetz/gruvbox'
+" Plug 'jnurmine/Zenburn'
+" Plug 'jacoborus/tender.vim'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'romainl/Apprentice'
+" Plug 'jonathanfilip/vim-lucius'
+" Plug 'Lokaltog/vim-distinguished'
+" Plug 'junegunn/seoul256.vim'
+" Plug 'sjl/badwolf'
+" Plug 'whatyouhide/vim-gotham'
+" Plug 'toupeira/vim-desertink'
+" Plug 'chriskempson/base16-vim'
+" Plug 'vim-scripts/peaksea'
+" Plug 'sheerun/vim-wombat-scheme'
+" Plug 'ghifarit53/tokyonight-vim'
+" Plug 'ayu-theme/ayu-vim'
 
 if g:osuname ==? 'Windows'
   " only windows
