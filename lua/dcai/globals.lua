@@ -163,9 +163,13 @@ G.is_env_var_true = is_env_var_true
 
 local function is_env_var_false(name)
   local v = os.getenv(name)
-  return v == 'false' or v == '0'
+  return v == 'false' or v == '0' or v == '' or v == nil
 end
 G.is_env_var_false = is_env_var_false
+
+G.is_env_var_set = function(name)
+  return os.getenv(name) ~= nil
+end
 
 ---return the first executable from given list
 ---@param files string[]

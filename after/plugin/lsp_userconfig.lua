@@ -252,10 +252,10 @@ cfg.lua_ls.setup({
         path = lua_runtime_path,
       },
       hint = {
-        enable = true,
+        enable = false,
       },
       codeLens = {
-        enable = true,
+        enable = false,
       },
       telemetry = { enable = false },
       diagnostics = {
