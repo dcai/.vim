@@ -410,16 +410,33 @@ cfg.rust_analyzer.setup({
 cfg.biome.setup({
   cmd = { 'biome', 'lsp-proxy' },
 })
-cfg.intelephense.setup({
+
+cfg.phpactor.setup({
   root_dir = function(startpath)
     local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
-    local root = root_pattern('.editorconfig')(startpath)
+    local root = root_pattern(
+      '.editorconfig',
+      '.phpactor.json',
+      '.phpactor.yml'
+    )(startpath)
     -- prefer cwd if root is a descendant
     local result = util.path.is_descendant(cwd, root) and cwd or root
     return result
   end,
 })
+
+-- cfg.intelephense.setup({
+--   root_dir = function(startpath)
+--     local cwd = vim.uv.cwd()
+--     -- local root = root_pattern('composer.json')(startpath)
+--     local root = root_pattern('.editorconfig')(startpath)
+--     -- prefer cwd if root is a descendant
+--     local result = util.path.is_descendant(cwd, root) and cwd or root
+--     return result
+--   end,
+-- })
+
 cfg.elixirls.setup({
   on_attach = common_on_attach,
 })
