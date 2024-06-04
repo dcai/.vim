@@ -160,6 +160,9 @@ if vim.fn.executable('go') == 1 then
     on_attach = common_on_attach,
   })
 end
+-- cfg.fish_lsp.setup({
+--   on_attach = common_on_attach,
+-- })
 cfg.bashls.setup({
   on_attach = common_on_attach,
 })
@@ -415,11 +418,10 @@ cfg.phpactor.setup({
   root_dir = function(startpath)
     local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
-    local root = root_pattern(
-      '.editorconfig',
-      '.phpactor.json',
-      '.phpactor.yml'
-    )(startpath)
+    local root =
+      root_pattern('.editorconfig', '.phpactor.json', '.phpactor.yml')(
+        startpath
+      )
     -- prefer cwd if root is a descendant
     local result = util.path.is_descendant(cwd, root) and cwd or root
     return result
@@ -458,3 +460,4 @@ cfg.emmet_language_server.setup({
 
   on_attach = common_on_attach,
 })
+cfg.azure_pipelines_ls.setup({})
