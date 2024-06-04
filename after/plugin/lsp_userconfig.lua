@@ -383,6 +383,17 @@ vim.diagnostic.config({
 
 cfg.pyright.setup({
   on_attach = common_on_attach,
+  -- settings = {
+  --   pyright = {
+  --     disableOrganizeImports = true, -- if use Ruff
+  --   },
+  --   python = {
+  --     analysis = {
+  --       ignore = { '*' }, -- if use Ruff
+  --       typeCheckingMode = 'off', -- if use mypy
+  --     },
+  --   },
+  -- },
 })
 
 cfg.csharp_ls.setup({
