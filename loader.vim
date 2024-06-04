@@ -78,14 +78,6 @@ endif
 
 
 call IncludeDir(g:vim_home . '/before/*.vim')
-""""""""""""""""""""""""""""""""""""""""
-" load vim-plug
-" should load after config
-""""""""""""""""""""""""""""""""""""""""
-if !has('nvim')
-  " vim-plug config for vim
-  call IncludeScript('vim8/vimplug.vim')
-endif
 
 if !exists('g:lightline')
   call IncludeScript('statusline.vim')
