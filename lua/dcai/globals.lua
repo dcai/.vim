@@ -168,7 +168,7 @@ end
 G.is_env_var_false = is_env_var_false
 
 G.is_env_var_set = function(name)
-  return os.getenv(name) ~= nil
+  return os.getenv(name) ~= nil and os.getenv(name) ~= ''
 end
 
 ---return the first executable from given list
