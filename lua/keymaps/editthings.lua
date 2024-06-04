@@ -37,29 +37,29 @@ local editthings_keymap = {
   },
   e = {
     function()
-      require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
-      -- vim.cmd('e $MYVIMRC')
+      local f = vim.fn.expand('#')
+      if f == '' then
+        -- vim.notify('No file to alternate', vim.log.levels.WARN)
+        -- vim.cmd('e ' .. vimrc_to_edit)
+        require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+      else
+        vim.cmd('e! #')
+      end
     end,
-    'edit root vimrc',
+    'toggle last used file',
   },
-  -- e = {
-  --   function()
-  --     local f = vim.fn.expand('#')
-  --     if f == '' then
-  --       -- vim.notify('No file to alternate', vim.log.levels.WARN)
-  --       vim.cmd('e ' .. vimrc_to_edit)
-  --     else
-  --       vim.cmd('e! #')
-  --     end
-  --   end,
-  --   'toggle last used file',
-  -- },
   l = {
     marlin_marks,
     'marlin: list collection',
   },
   s = utils.vim_cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
-  v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc'),
+  v = {
+    function()
+      require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+      -- v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc')
+    end,
+    'toggle last used file',
+  },
   X = {
     marlin.remove_all,
     'marlin: remove all collection items',

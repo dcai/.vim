@@ -57,7 +57,8 @@ M.setup = function(opts)
     'iamcco/markdown-preview.nvim',
     { ['do'] = 'cd app && npx --yes yarn install', ['for'] = 'markdown' }
   )
-  vim.g.mkdp_theme = 'light'
+  -- vim.g.mkdp_theme = 'light'
+  vim.g.mkdp_theme = 'dark'
   ----------------------------------------------------------------------------
   --- END of markdown
   ----------------------------------------------------------------------------

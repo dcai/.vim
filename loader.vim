@@ -84,7 +84,7 @@ call IncludeDir(g:vim_home . '/before/*.vim')
 """"""""""""""""""""""""""""""""""""""""
 if !has('nvim')
   " vim-plug config for vim
-  call IncludeScript('vim8plug.vim')
+  call IncludeScript('vim8/vimplug.vim')
 endif
 
 if !exists('g:lightline')
