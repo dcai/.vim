@@ -37,16 +37,23 @@ local editthings_keymap = {
   },
   e = {
     function()
-      local f = vim.fn.expand('#')
-      if f == '' then
-        -- vim.notify('No file to alternate', vim.log.levels.WARN)
-        vim.cmd('e ' .. vimrc_to_edit)
-      else
-        vim.cmd('e! #')
-      end
+      require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+      -- vim.cmd('e $MYVIMRC')
     end,
-    'toggle last used file',
+    'edit root vimrc',
   },
+  -- e = {
+  --   function()
+  --     local f = vim.fn.expand('#')
+  --     if f == '' then
+  --       -- vim.notify('No file to alternate', vim.log.levels.WARN)
+  --       vim.cmd('e ' .. vimrc_to_edit)
+  --     else
+  --       vim.cmd('e! #')
+  --     end
+  --   end,
+  --   'toggle last used file',
+  -- },
   l = {
     marlin_marks,
     'marlin: list collection',
