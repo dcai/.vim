@@ -12,7 +12,7 @@ local function Plug(repo, opts, setup)
   else
     fn(repo)
   end
-  if setup then
+  if type(setup) == 'function' then
     setup()
   end
 end
