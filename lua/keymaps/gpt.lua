@@ -8,6 +8,10 @@ if not loaded then
   }
 end
 
+local function join(tbl, sep)
+  return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
+end
+
 local chatlogs_home = vim.g.dropbox_home
     and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
   or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
@@ -16,7 +20,7 @@ local chatlogs_home = vim.g.dropbox_home
 local config = {
   chat_dir = vim.fn.expand(chatlogs_home),
   -- chat user prompt prefix in chat buffer
-  chat_user_prefix = [[💬 ->]],
+  chat_user_prefix = '👇',
   -- prompt in command `:GpNew`
   command_prompt_prefix_template = '😒 ye? [{{agent}}] ~ ',
   -- chat assistant prompt prefix (static string or a table {static, template})
@@ -261,11 +265,11 @@ local chatgpt_keymap_n = {
       gpplugin.new_chat(
         {},
         'gpt-4o',
-        [[
-          You are an AI working as a code editor for a project using javascript, react and nodejs.
-          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-          START AND END YOUR ANSWER WITH: ```
-        ]]
+        join({
+          'You are an AI working as a code editor for a project using javascript, react and nodejs.',
+          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
+          'START AND END YOUR ANSWER WITH: ```',
+        })
       )
     end,
     'About javascript',
@@ -276,12 +280,12 @@ local chatgpt_keymap_n = {
       gpplugin.new_chat(
         {},
         'gpt-4o',
-        [[
-          You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.
-          Add tailwind class to style the components.
-          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-          START AND END YOUR ANSWER WITH: ```
-        ]]
+        join({
+          'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
+          'Add tailwind class to style the components.',
+          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
+          'START AND END YOUR ANSWER WITH: ```',
+        })
       )
     end,
     'About php and laravel',
@@ -292,11 +296,11 @@ local chatgpt_keymap_n = {
       gpplugin.new_chat(
         {},
         'gpt-4o',
-        [[
-          You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.
-          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-          START AND END YOUR ANSWER WITH: ```
-        ]]
+        join({
+          'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
+          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
+          'START AND END YOUR ANSWER WITH: ```',
+        })
       )
     end,
     'About tailwind',
@@ -307,11 +311,11 @@ local chatgpt_keymap_n = {
       gpplugin.new_chat(
         {},
         'gpt-4o',
-        [[
-          You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.
-          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-          START AND END YOUR ANSWER WITH: ```
-        ]]
+        join({
+          'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
+          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
+          'START AND END YOUR ANSWER WITH: ```',
+        })
       )
     end,
     'About neovim',
@@ -319,12 +323,12 @@ local chatgpt_keymap_n = {
   a = {
     function()
       local agents = {}
-      for key, value in pairs(gpplugin.agents) do
+      for key, _ in pairs(gpplugin.agents) do
         table.insert(agents, key)
       end
       require('fzf-lua').fzf_exec(agents, {
         actions = {
-          default = function(selected, _opts)
+          default = function(selected, _)
             local selected_agent = selected[1]
             vim.cmd('GpAgent ' .. selected_agent)
           end,
