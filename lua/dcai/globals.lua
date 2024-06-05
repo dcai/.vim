@@ -314,8 +314,15 @@ G.shell_cmd = shell_cmd
 ---get project root
 ---@param filepath string?
 ---@return string?
-G.project_root = function(filepath)
+local function root(filepath)
   local markers = {
+    '.github',
+    '.gitlab-ci.yml',
+    'Jenkinsfile_Build',
+    'Makefile',
+    '.lintstagedrc.js',
+    '.husky',
+    '.vscode',
     'biome.json',
     'biome.jsonc',
     '.editorconfig',
@@ -327,10 +334,6 @@ G.project_root = function(filepath)
     '.prettierrc.yml',
     '.prettierrc.yaml',
     '.prettierrc.json',
-    '.github',
-    '.vscode',
-    'Makefile',
-    'Jenkinsfile_Build',
     '.git',
     -- 'package.json',
     -- 'readme.md',
@@ -358,6 +361,9 @@ G.project_root = function(filepath)
     return dir
   end
 end
+
+G.project_root = root
+G.root = root
 
 G.nl = '\r\n'
 
