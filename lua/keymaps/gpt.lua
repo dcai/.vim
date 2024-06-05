@@ -255,6 +255,22 @@ local chatgpt_keymap_n = {
   N = utils.vim_cmd('GpChatNew', 'new chat buffer'),
   c = utils.vim_cmd('GpChatToggle', 'Toggle chat'),
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
+  ---javascript react and nodejs
+  j = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        [[
+          You are an AI working as a code editor for a project using javascript, react and nodejs.
+          Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+          START AND END YOUR ANSWER WITH: ```
+        ]]
+      )
+    end,
+    'About javascript',
+  },
+  ---php and laravel
   p = {
     function()
       gpplugin.new_chat(
@@ -270,6 +286,7 @@ local chatgpt_keymap_n = {
     end,
     'About php and laravel',
   },
+  ---tailwind
   t = {
     function()
       gpplugin.new_chat(
@@ -282,8 +299,9 @@ local chatgpt_keymap_n = {
         ]]
       )
     end,
-    'About neovim',
+    'About tailwind',
   },
+  ---neovim and lua
   l = {
     function()
       gpplugin.new_chat(
