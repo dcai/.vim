@@ -1,16 +1,16 @@
 local M = {}
 
 ---Install a plugin
----@param plugin string
+---@param repo string
 ---@param opts table|string|nil
 ---@param setup function
 ---@return nil
-local function Plug(plugin, opts, setup)
+local function Plug(repo, opts, setup)
   local fn = vim.fn['plug#']
   if opts then
-    fn(plugin, opts)
+    fn(repo, opts)
   else
-    fn(plugin)
+    fn(repo)
   end
   if setup then
     setup()
