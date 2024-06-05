@@ -94,5 +94,13 @@ end, { desc = 'Compile and run C file.' })
 
 -- playground, test something
 vim.keymap.set('n', '<leader>tg', function()
-  print('test? yes.')
+  local input = { 'a', 1, 2, 22 }
+  local function run(a, b, c, d)
+    print(a)
+    print(b)
+    print(c)
+    print(d)
+    print('test? yes.')
+  end
+  run(unpack(input))
 end)

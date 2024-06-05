@@ -315,18 +315,33 @@ G.shell_cmd = shell_cmd
 ---@param filepath string?
 ---@return string?
 G.project_root = function(filepath)
+  local markers = {
+    'biome.json',
+    'biome.jsonc',
+    '.editorconfig',
+    '.tool-versions',
+    '.mise.toml',
+    '.envrc',
+    '.prettierrc',
+    '.prettierrc.js',
+    '.prettierrc.yml',
+    '.prettierrc.yaml',
+    '.prettierrc.json',
+    '.github',
+    '.vscode',
+    'Makefile',
+    'Jenkinsfile_Build',
+    '.git',
+    -- 'package.json',
+    -- 'readme.md',
+    -- 'README.md',
+    -- 'readme.txt',
+    -- 'LICENSE.txt',
+    -- 'LICENSE',
+  }
   local buf = filepath or vim.api.nvim_get_current_buf()
   if vim.fs and vim.fs.root then
-    return vim.fs.root(buf, {
-      '.editorconfig',
-      'package.json',
-      'readme.md',
-      'README.md',
-      'readme.txt',
-      'LICENSE.txt',
-      'LICENSE',
-      '.git',
-    })
+    return vim.fs.root(buf, markers)
   end
 
   local current_dir = vim.fn.expand('%:p:h')
@@ -338,15 +353,7 @@ G.project_root = function(filepath)
 
   if lspconfig.util and lspconfig.util.root_pattern then
     local root_pattern = lspconfig.util.root_pattern
-    return root_pattern(
-      'package.json',
-      'readme.md',
-      'README.md',
-      'readme.txt',
-      'LICENSE.txt',
-      'LICENSE',
-      '.git'
-    )(current_dir)
+    return root_pattern(unpack(markers))(current_dir)
   else
     return dir
   end

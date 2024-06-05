@@ -60,6 +60,7 @@ local n_keymap = {
   ['/'] = { utils.live_grep, 'fzf grep repo' },
   ['.'] = {
     function()
+      LOG.info(G.project_root())
       fzf.grep_cword({ cwd = G.project_root() })
     end,
     'fzf grep <cword>',
