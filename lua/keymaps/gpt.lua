@@ -16,18 +16,21 @@ local chatlogs_home = vim.fn.expand(
   vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
     or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
 )
+local translator_prompt =
+  'You are a Translator, translate the given chinese input to english or given english input to chinese, and provide brief explanation.'
+
 -- https://github.com/Robitx/gp.nvim/blob/d90816b2e9185202d72f7b1346b6d33b36350886/lua/gp/config.lua#L8-L355
 local config = {
   chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
   chat_user_prefix = '👇',
   -- prompt in command `:GpNew`
-  command_prompt_prefix_template = '😒 ye? [{{agent}}] ~ ',
+  command_prompt_prefix_template = '👉 ye? [{{agent}}] ~ ',
   -- chat assistant prompt prefix (static string or a table {static, template})
   -- first string has to be static, second string can contain template {{agent}}
   -- just a static string is legacy and the [{{agent}}] element is added automatically
   -- if you really want just a static string, make it a table with one element { "🤖:" }
-  chat_assistant_prefix = { '🤖 Bot: ', '[{{agent}}]' },
+  chat_assistant_prefix = { '😒 Bot: ', '[{{agent}}]' },
   chat_shortcut_respond = {
     modes = { 'n', 'i', 'v', 'x' },
     shortcut = '<c-x><c-x>',
@@ -210,9 +213,7 @@ local config = {
     -- -- example of adding command which opens new chat dedicated for translation
     Translator = function(gp, params)
       local agent = gp.get_command_agent()
-      local chat_system_prompt =
-        'You are a Translator, please translate between English and Chinese.'
-      gp.cmd.ChatNew(params, agent.model, chat_system_prompt)
+      gp.cmd.ChatNew(params, agent.model, translator_prompt)
     end,
 
     -- -- example of adding command which writes unit tests for the selected code
@@ -328,6 +329,32 @@ local chatgpt_keymap_n = {
       )
     end,
     'About tailwind',
+  },
+  -- Translator
+  T = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        join({
+          translator_prompt,
+        })
+      )
+    end,
+    'Translator',
+  },
+  -- etymologist
+  E = {
+    function()
+      gpplugin.new_chat(
+        {},
+        'gpt-4o',
+        join({
+          'I want you to act as a etymologist. I will give you a word and you will research the origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable',
+        })
+      )
+    end,
+    'Etymologist',
   },
   ---neovim and lua
   l = {
