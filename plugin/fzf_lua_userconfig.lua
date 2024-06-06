@@ -53,7 +53,7 @@ fzflua.setup({
       scrollborder_f = 'FloatBorder', -- scrollbar "full" section highlight
     },
     preview = {
-      -- default = 'bat',
+      default = 'bat',
       border = 'noborder',
       hidden = 'hidden',
       title = false,
@@ -115,6 +115,9 @@ fzflua.setup({
     ['--border'] = 'none',
     ['--history'] = vim.fn.stdpath('data') .. '/fzf-history',
   },
+  defaults = {
+    formatter = 'path.filename_first',
+  },
   files = {
     cmd = 'rg --files --sortr=modified',
     fzf_opts = {
@@ -151,7 +154,7 @@ fzflua.setup({
     actions = {
       -- actions inherit from 'actions.files' and merge
       -- this action toggles between 'grep' and 'live_grep'
-      ['ctrl-g'] = { actions.grep_lgrep },
+      ['ctrl-t'] = { actions.grep_lgrep },
       -- uncomment to enable '.gitignore' toggle for grep
       -- ["ctrl-r"]   = { actions.toggle_ignore }
     },

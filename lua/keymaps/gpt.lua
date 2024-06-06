@@ -12,13 +12,13 @@ local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
 end
 
-local chatlogs_home = vim.g.dropbox_home
-    and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
-  or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
-
+local chatlogs_home = vim.fn.expand(
+  vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
+    or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
+)
 -- https://github.com/Robitx/gp.nvim/blob/d90816b2e9185202d72f7b1346b6d33b36350886/lua/gp/config.lua#L8-L355
 local config = {
-  chat_dir = vim.fn.expand(chatlogs_home),
+  chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
   chat_user_prefix = '👇',
   -- prompt in command `:GpNew`
@@ -254,7 +254,31 @@ local chatgpt_keymap_n = {
   name = 'chatgpt',
   D = utils.vim_cmd('GpChatDelete', 'delete chat'),
   -- c = utils.vim_cmd('GpNew', 'Enter a prompt'),
-  F = utils.vim_cmd('GpChatFinder', 'chat Finder'),
+  -- F = utils.vim_cmd('GpChatFinder', 'chat Finder'),
+  F = {
+    function()
+      local fzf = require('fzf-lua')
+      fzf.live_grep({
+        winopts = {
+          preview = {
+            hidden = 'nohidden',
+          },
+        },
+        multiprocess = true,
+        cwd = chatlogs_home,
+        query = '# topic',
+        file_ignore_patterns = {
+          'node_modules',
+          '.png',
+          '.pdf',
+          '.jpg',
+          '.docx',
+          '.pptx',
+        },
+      })
+    end,
+    'Chat Finder',
+  },
   n = utils.vim_cmd('GpNextAgent', 'next agent'),
   N = utils.vim_cmd('GpChatNew', 'new chat buffer'),
   c = utils.vim_cmd('GpChatToggle', 'Toggle chat'),
