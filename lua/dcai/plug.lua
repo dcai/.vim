@@ -28,7 +28,16 @@ M.setup = function(plugOpts)
     Plug('monkoose/neocodeium')
     Plug('Exafunction/codeium.nvim')
     -- Plug('sourcegraph/sg.nvim', { ['do'] = 'nvim -l build/init.lua' })
-    -- Plug('Exafunction/codeium.vim')
+    -- Plug('Exafunction/codeium.vim', nil, function()
+    --   vim.g.codeium_enabled = true
+    --   vim.g.codeium_disable_bindings = 1
+    --   vim.g.codeium_no_map_tab = true
+    --   -- vim.g.codeium_log_file = stdpath('log') . '/codeium.vim.log'
+    --   -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
+    --   -- " imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
+    --   -- " imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
+    --   -- " imap <C-x> <Cmd>call codeium#Clear()<CR>
+    -- end)
     -- Plug('zbirenbaum/copilot.lua')
     -- Plug('github/copilot.vim')
   end

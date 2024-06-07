@@ -1,13 +1,3 @@
--- "  for Exafunction/codeium.vim
-vim.g.codeium_enabled = true
-vim.g.codeium_disable_bindings = 1
-vim.g.codeium_no_map_tab = true
--- vim.g.codeium_log_file = stdpath('log') . '/codeium.vim.log'
--- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
--- " imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
--- " imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
--- " imap <C-x> <Cmd>call codeium#Clear()<CR>
-
 local loaded, neocodeium = pcall(require, 'neocodeium')
 if loaded then
   neocodeium.setup()
@@ -15,10 +5,10 @@ if loaded then
   vim.keymap.set('i', '<c-n>', neocodeium.cycle_or_complete)
 end
 
+-- for Exafunction/codeium.nvim
 local codeium_loaded, codeium = pcall(require, 'codeium')
 if codeium_loaded then
   local cachedir = vim.fn.stdpath('cache')
-  -- for Exafunction/codeium.nvim
   codeium.setup({
     manager_path = cachedir .. '/codeium/manager_path',
     bin_path = cachedir .. '/codeium/bin',
