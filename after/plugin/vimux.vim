@@ -8,6 +8,7 @@ let g:VimuxOrientation = "h" " h|v
 " let g:VimuxRunnerName = "vimuxout"
 let g:VimuxUseNearest = 0
 let g:VimuxRunnerType = "window" " pane|window
+" let g:VimuxCloseOnExit = 1
 
 function! LastPath()
   " 1. select right pane
