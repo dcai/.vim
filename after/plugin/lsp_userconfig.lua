@@ -95,26 +95,31 @@ local function map(mode, buffer)
 end
 
 local function common_on_attach(client, bufnr)
-  if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
-    -- client.notify('workspace/didChangeConfiguration', {
-    --   settings = {
-    --     ['javascript.referencesCodeLens.enabled'] = true,
-    --     ['typescript.referencesCodeLens.enabled'] = true,
-    --   },
-    -- })
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.codelens.refresh({ bufnr = bufnr })
-      end,
-    })
-  end
-  if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  end
-
-  vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
-  vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
+  -- if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
+  --   -- client.notify('workspace/didChangeConfiguration', {
+  --   --   settings = {
+  --   --     ['javascript.referencesCodeLens.enabled'] = true,
+  --   --     ['typescript.referencesCodeLens.enabled'] = true,
+  --   --   },
+  --   -- })
+  --   vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
+  --     buffer = bufnr,
+  --     callback = function()
+  --       vim.lsp.codelens.refresh({ bufnr = bufnr })
+  --     end,
+  --   })
+  -- end
+  -- if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
+  --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  -- end
+  -- vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
+  -- vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
+  vim.api.nvim_create_user_command('LspCodeAction', function()
+    vim.lsp.buf.code_action()
+  end, {})
+  vim.api.nvim_create_user_command('LspFormat', function()
+    vim.lsp.buf.format()
+  end, {})
   local nmap = map('n', bufnr)
   local xmap = map('x', bufnr)
   nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
@@ -135,6 +140,12 @@ local function common_on_attach(client, bufnr)
     then
       clientname = 'tsserver'
     end
+
+    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+    if filetype == 'php' then
+      clientname = 'phpactor'
+    end
+
     if organize_imports[clientname] then
       organize_imports[clientname](client, bufnr)
     else
@@ -430,6 +441,11 @@ cfg.biome.setup({
 })
 
 cfg.phpactor.setup({
+  on_attach = common_on_attach,
+  init_options = {
+    ['language_server_phpstan.enabled'] = false,
+    ['language_server_psalm.enabled'] = false,
+  },
   root_dir = function(startpath)
     local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
