@@ -312,58 +312,56 @@ end
 G.shell_cmd = shell_cmd
 
 ---get project root
----@param filepath string?
----@return string?
-local function root(filepath)
-  local markers = {
-    '.github',
-    '.gitlab-ci.yml',
-    'Jenkinsfile_Build',
-    'Makefile',
-    '.lintstagedrc.js',
-    '.husky',
-    '.vscode',
-    'biome.json',
-    'biome.jsonc',
-    '.editorconfig',
-    '.tool-versions',
-    '.mise.toml',
-    '.envrc',
-    '.prettierrc',
-    '.prettierrc.js',
-    '.prettierrc.yml',
-    '.prettierrc.yaml',
-    '.prettierrc.json',
-    '.git',
-    -- 'package.json',
-    -- 'readme.md',
-    -- 'README.md',
-    -- 'readme.txt',
-    -- 'LICENSE.txt',
-    -- 'LICENSE',
-  }
-  local buf = filepath or vim.api.nvim_get_current_buf()
-  if vim.fs and vim.fs.root then
-    return vim.fs.root(buf, markers)
-  end
+---@param markers table
+---@return function
+local function root(markers)
+  return function(filepath)
+    local buf = filepath or vim.api.nvim_get_current_buf()
+    if vim.fs and vim.fs.root then
+      return vim.fs.root(buf, markers)
+    end
 
-  local current_dir = vim.fn.expand('%:p:h')
-  local dir = shell_cmd('git rev-parse --show-toplevel') or current_dir
-  local loaded, lspconfig = pcall(require, 'lspconfig')
-  if not loaded then
-    return dir
-  end
+    local current_dir = vim.fn.expand('%:p:h')
+    local dir = shell_cmd('git rev-parse --show-toplevel') or current_dir
+    local loaded, lspconfig = pcall(require, 'lspconfig')
+    if not loaded then
+      return dir
+    end
 
-  if lspconfig.util and lspconfig.util.root_pattern then
-    local root_pattern = lspconfig.util.root_pattern
-    return root_pattern(unpack(markers))(current_dir)
-  else
-    return dir
+    if lspconfig.util and lspconfig.util.root_pattern then
+      local root_pattern = lspconfig.util.root_pattern
+      return root_pattern(unpack(markers))(current_dir)
+    else
+      return dir
+    end
   end
 end
 
-G.project_root = root
-G.root = root
+G.root = root({
+  '.github',
+  '.gitlab-ci.yml',
+  'Jenkinsfile_Build',
+  'Makefile',
+  '.lintstagedrc.js',
+  '.husky',
+  '.vscode',
+  'biome.json',
+  'biome.jsonc',
+  '.editorconfig',
+  '.tool-versions',
+  '.mise.toml',
+  '.envrc',
+  '.prettierrc',
+  '.prettierrc.js',
+  '.prettierrc.yml',
+  '.prettierrc.yaml',
+  '.prettierrc.json',
+  '.git',
+})
+
+G.unittests_root = root({
+  'package.json',
+})
 
 G.nl = '\r\n'
 

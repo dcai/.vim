@@ -11,7 +11,7 @@ local fzf_keymap = {
       if G.is_git_repo() then
         fzf.git_files()
       else
-        fzf.files({ cwd = G.project_root() })
+        fzf.files({ cwd = G.root() })
       end
     end,
     'project files',
