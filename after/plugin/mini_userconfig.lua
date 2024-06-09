@@ -330,9 +330,9 @@ require('mini.jump2d').setup({
 
   -- Which lines are used for computing spots
   allowed_lines = {
-    blank = true, -- Blank line (not sent to spotter even if `true`)
+    blank = false, -- Blank line (not sent to spotter even if `true`)
     cursor_before = true, -- Lines before cursor line
-    cursor_at = true, -- Cursor line
+    cursor_at = false, -- Cursor line
     cursor_after = true, -- Lines after cursor line
     fold = true, -- Start of fold (not sent to spotter even if `true`)
   },
@@ -340,7 +340,7 @@ require('mini.jump2d').setup({
   -- Which windows from current tabpage are used for visible lines
   allowed_windows = {
     current = true,
-    not_current = true,
+    not_current = false,
   },
 
   -- Functions to be executed at certain events
