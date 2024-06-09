@@ -28,7 +28,9 @@ G.setup_colorscheme()
 require('dcai.plug').setup({})
 
 local codestats = require('codestats')
-codestats.setup()
+if codestats then
+  codestats.setup()
+end
 
 -- Copy/Paste when using ssh on a remote server
 -- Only works when neovim >= 0.10.0

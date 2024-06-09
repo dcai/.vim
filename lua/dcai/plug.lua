@@ -53,6 +53,12 @@ M.setup = function(plugOpts)
   Plug('tpope/vim-fugitive')
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
+  -- Plug('akinsho/toggleterm.nvim', nil, function()
+  --   local loaded, toggleterm = pcall(require, 'toggleterm')
+  --   if loaded then
+  --     toggleterm.setup({})
+  --   end
+  -- end)
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------

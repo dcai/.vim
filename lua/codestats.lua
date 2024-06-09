@@ -1,4 +1,7 @@
-local curl = require('plenary.curl')
+local loaded, curl = pcall(require, 'plenary.curl')
+if not loaded then
+  return false
+end
 
 local logger = require('log').setup({
   plugin = 'codestats',
