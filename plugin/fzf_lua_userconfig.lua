@@ -116,7 +116,7 @@ fzflua.setup({
     ['--history'] = vim.fn.stdpath('data') .. '/fzf-history',
   },
   defaults = {
-    formatter = 'path.filename_first',
+    -- formatter = 'path.filename_first',
   },
   files = {
     cmd = 'rg --files --sortr=modified',
