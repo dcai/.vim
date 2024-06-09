@@ -251,6 +251,10 @@ cfg.lua_ls.setup({
         version = 'LuaJIT',
         path = lua_runtime_path,
       },
+      completion = {
+        enable = true,
+        callSnippet = 'Replace', -- 'Disable' | 'Both' | 'Replace'
+      },
       hint = {
         enable = false,
       },
