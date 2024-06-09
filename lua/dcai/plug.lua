@@ -53,12 +53,7 @@ M.setup = function(plugOpts)
   Plug('tpope/vim-fugitive')
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
-  -- Plug('akinsho/toggleterm.nvim', nil, function()
-  --   local loaded, toggleterm = pcall(require, 'toggleterm')
-  --   if loaded then
-  --     toggleterm.setup({})
-  --   end
-  -- end)
+  Plug('akinsho/toggleterm.nvim', nil, function() end)
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
@@ -106,10 +101,11 @@ M.setup = function(plugOpts)
     vim.g['test#javascript#mocha#executable'] = 'npx mocha'
     vim.g['test#javascript#mocha#options'] = ' --full-trace '
     vim.g['test#javascript#jest#executable'] = 'npx jest'
-    vim.g['test#javascript#jest#file_pattern'] =
-      '\v(__tests__/.+|(spec|test)).(js|jsx|coffee|ts|tsx)$'
+    -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
     vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
     vim.g['test#strategy'] = 'neovim'
+    -- vim.g['test#strategy'] = 'vimux'
+    -- vim.g['test#strategy'] = 'toggleterm'
     vim.g['test#neovim#term_position'] = 'vert'
   end)
   ----------------------------------------------------------------------------

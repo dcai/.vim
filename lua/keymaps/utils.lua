@@ -76,7 +76,7 @@ M.git_cmd = shell_cmd('git')
 
 M.live_grep = function()
   local fzf = require('fzf-lua')
-  fzf.live_grep({ cwd = G.project_root() })
+  fzf.live_grep({ cwd = G.root() })
 end
 
 ---@param cmd string vim command
