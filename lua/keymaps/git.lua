@@ -1,6 +1,4 @@
-local gitsigns = require('gitsigns')
 local utils = require('keymaps.utils')
-local fzf = require('fzf-lua')
 
 local git_keymap = {
   name = 'git',
@@ -9,8 +7,20 @@ local git_keymap = {
   -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
   -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-  ['+'] = { gitsigns.stage_hunk, 'stage hunk' },
-  ['-'] = { gitsigns.undo_stage_hunk, 'unstage hunk' },
+  ['+'] = {
+    function()
+      local gitsigns = require('gitsigns')
+      gitsigns.stage_hunk()
+    end,
+    'stage hunk',
+  },
+  ['-'] = {
+    function()
+      local gitsigns = require('gitsigns')
+      gitsigns.undo_stage_hunk()
+    end,
+    'unstage hunk',
+  },
   ['2'] = utils.vim_cmd('diffget //2'),
   ['3'] = utils.vim_cmd('diffget //3'),
   a = utils.vim_cmd('Gwrite', 'git add'),
@@ -26,7 +36,13 @@ local git_keymap = {
   h = utils.git_cmd({ args = { 'stash' } }, 'git stash'),
   H = utils.git_cmd({ args = { 'stash', 'pop' } }, 'git stash pop'),
   -- l = cmd('Gllog', 'list commits'),
-  l = { fzf.git_commits, 'git log' },
+  l = {
+    function()
+      local fzf = require('fzf-lua')
+      fzf.git_commits()
+    end,
+    'git log',
+  },
   L = {
     function()
       -- local current_file_path = vim.fn.expand('%:p')
@@ -35,7 +51,12 @@ local git_keymap = {
     end,
     "current buffer's git log",
   },
-  m = { require('gitsigns').blame_line, 'blame line' },
+  m = {
+    function()
+      require('gitsigns').blame_line()
+    end,
+    'blame line',
+  },
   M = utils.vim_cmd('Git blame', 'git blame'),
   p = utils.git_cmd({ args = { 'push', '-u', '--no-verify' } }, 'git push'),
   P = utils.git_cmd({

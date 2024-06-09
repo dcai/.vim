@@ -1,19 +1,36 @@
 local M = {}
 
+local setups = {
+  lazy = {},
+  afterEnd = {},
+}
+
+local function plugin_name(repo)
+  return repo:match('^[%w-]+/([%w-_.]+)$')
+end
+
+local function END()
+  vim.fn['plug#end']()
+
+  -- run setup scripts
+  for plugin, setup in pairs(setups.afterEnd) do
+    LOG.info('setting up ' .. plugin)
+    setup()
+  end
+end
+
 ---Install a plugin
 ---@param repo string
 ---@param opts table|string|nil
----@param setup function
 ---@return nil
-local function Plug(repo, opts, setup)
+local function Plug(repo, opts)
+  opts = opts or vim.empty_dict()
   local fn = vim.fn['plug#']
-  if opts then
-    fn(repo, opts)
-  else
-    fn(repo)
-  end
+  local plugin = plugin_name(repo)
+  local setup = opts.setup
+  fn(repo, opts)
   if type(setup) == 'function' then
-    setup()
+    setups.afterEnd[plugin] = setup
   end
 end
 
@@ -28,16 +45,18 @@ M.setup = function(plugOpts)
     Plug('monkoose/neocodeium')
     Plug('Exafunction/codeium.nvim')
     -- Plug('sourcegraph/sg.nvim', { ['do'] = 'nvim -l build/init.lua' })
-    -- Plug('Exafunction/codeium.vim', nil, function()
-    --   vim.g.codeium_enabled = true
-    --   vim.g.codeium_disable_bindings = 1
-    --   vim.g.codeium_no_map_tab = true
-    --   -- vim.g.codeium_log_file = stdpath('log') . '/codeium.vim.log'
-    --   -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-    --   -- " imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-    --   -- " imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
-    --   -- " imap <C-x> <Cmd>call codeium#Clear()<CR>
-    -- end)
+    -- Plug('Exafunction/codeium.vim', {
+    --   setup = function()
+    --     vim.g.codeium_enabled = true
+    --     vim.g.codeium_disable_bindings = 1
+    --     vim.g.codeium_no_map_tab = true
+    --     -- vim.g.codeium_log_file = stdpath('log') . '/codeium.vim.log'
+    --     -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
+    --     -- " imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
+    --     -- " imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
+    --     -- " imap <C-x> <Cmd>call codeium#Clear()<CR>
+    --   end,
+    -- })
     -- Plug('zbirenbaum/copilot.lua')
     -- Plug('github/copilot.vim')
   end
@@ -53,7 +72,14 @@ M.setup = function(plugOpts)
   Plug('tpope/vim-fugitive')
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
-  Plug('akinsho/toggleterm.nvim', nil, function() end)
+  Plug('akinsho/toggleterm.nvim', {
+    setup = function()
+      local loaded, toggleterm = pcall(require, 'toggleterm')
+      if loaded then
+        toggleterm.setup({})
+      end
+    end,
+  })
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
@@ -77,37 +103,44 @@ M.setup = function(plugOpts)
   ----------------------------------------------------------------------------
   --- markdown
   ----------------------------------------------------------------------------
-  Plug('mzlogin/vim-markdown-toc', { ['for'] = 'markdown' }, function()
-    vim.g.vmt_dont_insert_fence = 1
-  end)
-  Plug(
-    'iamcco/markdown-preview.nvim',
-    { ['do'] = 'cd app && npx --yes yarn install', ['for'] = 'markdown' },
-    function()
+  Plug('mzlogin/vim-markdown-toc', {
+    ['for'] = 'markdown',
+    setup = function()
+      vim.g.vmt_dont_insert_fence = 1
+    end,
+  })
+  Plug('iamcco/markdown-preview.nvim', {
+    ['do'] = 'cd app && npx --yes yarn install',
+    ['for'] = 'markdown',
+    setup = function()
       vim.g.mkdp_theme = 'light'
       -- vim.g.mkdp_theme = 'dark'
-    end
-  )
+    end,
+  })
   ----------------------------------------------------------------------------
   --- END of markdown
   ----------------------------------------------------------------------------
   --- vim-test
   ----------------------------------------------------------------------------
-  Plug('preservim/vimux', nil, function()
-    vim.g.VimuxOrientation = 'h'
-  end)
-  Plug('vim-test/vim-test', nil, function()
-    vim.g['test#javascript#runner'] = 'jest'
-    vim.g['test#javascript#mocha#executable'] = 'npx mocha'
-    vim.g['test#javascript#mocha#options'] = ' --full-trace '
-    vim.g['test#javascript#jest#executable'] = 'npx jest'
-    -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
-    vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
-    vim.g['test#strategy'] = 'neovim'
-    -- vim.g['test#strategy'] = 'vimux'
-    -- vim.g['test#strategy'] = 'toggleterm'
-    vim.g['test#neovim#term_position'] = 'vert'
-  end)
+  Plug('preservim/vimux', {
+    setup = function()
+      vim.g.VimuxOrientation = 'h'
+    end,
+  })
+  Plug('vim-test/vim-test', {
+    setup = function()
+      vim.g['test#javascript#runner'] = 'jest'
+      vim.g['test#javascript#mocha#executable'] = 'npx mocha'
+      vim.g['test#javascript#mocha#options'] = ' --full-trace '
+      vim.g['test#javascript#jest#executable'] = 'npx jest'
+      -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
+      vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
+      vim.g['test#strategy'] = 'neovim'
+      -- vim.g['test#strategy'] = 'vimux'
+      -- vim.g['test#strategy'] = 'toggleterm'
+      vim.g['test#neovim#term_position'] = 'vert'
+    end,
+  })
   ----------------------------------------------------------------------------
   --- END vim-test
   ----------------------------------------------------------------------------
@@ -135,11 +168,13 @@ M.setup = function(plugOpts)
   Plug('ibhagwan/fzf-lua')
   Plug('nvim-telescope/telescope.nvim')
   Plug('andymass/vim-matchup')
-  Plug('AndrewRadev/bufferize.vim', nil, function()
-    vim.g.bufferize_command = 'new'
-    vim.g.bufferize_keep_buffers = 1
-    vim.g.bufferize_focus_output = 1
-  end)
+  Plug('AndrewRadev/bufferize.vim', {
+    setup = function()
+      vim.g.bufferize_command = 'new'
+      vim.g.bufferize_keep_buffers = 1
+      vim.g.bufferize_focus_output = 1
+    end,
+  })
   ----------------------------------------------------------------------------
   -- end of files
   ----------------------------------------------------------------------------
@@ -150,7 +185,7 @@ M.setup = function(plugOpts)
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
 
-  vim.call('plug#end')
+  END()
 end
 
 return M

@@ -1,6 +1,7 @@
 local utils = require('keymaps.utils')
-local marlin = require('marlin')
+
 local function marlin_marks()
+  local marlin = require('marlin')
   marlin.load_project_files()
   local results = marlin.get_indexes()
   local files = {}
@@ -19,6 +20,7 @@ local editthings_keymap = {
   name = 'edit things',
   a = {
     function()
+      local marlin = require('marlin')
       local f = vim.fn.expand('#')
       marlin.add()
       marlin.save()
@@ -28,6 +30,7 @@ local editthings_keymap = {
   },
   D = {
     function()
+      local marlin = require('marlin')
       local f = vim.fn.expand('#')
       marlin.remove()
       marlin.save()
@@ -61,7 +64,11 @@ local editthings_keymap = {
     'toggle last used file',
   },
   X = {
-    marlin.remove_all,
+    function()
+      local marlin = require('marlin')
+
+      marlin.remove_all()
+    end,
     'marlin: remove all collection items',
   },
 }
