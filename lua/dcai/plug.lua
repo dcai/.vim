@@ -70,6 +70,15 @@ M.setup = function(plugOpts)
   --- git
   ----------------------------------------------------------------------------
   Plug('tpope/vim-fugitive')
+  Plug('NeogitOrg/neogit', {
+    setup = function()
+      local loaded, neogit = pcall(require, 'neogit')
+      if loaded then
+        neogit.setup({})
+      end
+    end,
+  })
+  Plug('sindrets/diffview.nvim')
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
   Plug('akinsho/toggleterm.nvim', {
