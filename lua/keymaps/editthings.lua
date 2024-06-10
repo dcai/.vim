@@ -58,7 +58,8 @@ local editthings_keymap = {
   s = utils.vim_cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
   v = {
     function()
-      require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+      -- require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+      require('fzf-lua').files({ cwd = '~/.config/nvim' })
       -- v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc')
     end,
     'toggle last used file',

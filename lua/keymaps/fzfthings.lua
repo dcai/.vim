@@ -6,7 +6,16 @@ local fzf_keymap = {
   name = 'fzf',
   ['b'] = { fzf.buffers, 'buffers' },
   ['c'] = { fzf.colorschemes, 'colorschemes' },
+  ['r'] = { fzf.oldfiles, 'recent files' },
+  ['s'] = { fzf.spell_suggest, 'spell suggest' },
+  ['/'] = { fzf.builtin, 'fzf builtin' },
   ['f'] = {
+    function()
+      fzf.files({ cwd = G.root() })
+    end,
+    'project files',
+  },
+  ['g'] = {
     function()
       if G.is_git_repo() then
         fzf.git_files()
@@ -14,7 +23,7 @@ local fzf_keymap = {
         fzf.files({ cwd = G.root() })
       end
     end,
-    'project files',
+    'git files',
   },
   ['l'] = {
     function()
@@ -22,8 +31,6 @@ local fzf_keymap = {
     end,
     'xdg log files',
   },
-  ['g'] = { fzf.builtin, 'fzf builtin' },
-  ['r'] = { fzf.oldfiles, 'recent files' },
 }
 
 return fzf_keymap

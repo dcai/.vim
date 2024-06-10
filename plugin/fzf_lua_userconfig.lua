@@ -3,17 +3,16 @@ if not loaded then
   print('fzf-lua not loaded!')
   return
 end
+local actions = require('fzf-lua.actions')
 LOG.trace('fzf-lua loaded, setting up...')
 
-local web_devicons_loaded, web_devicons = pcall(require, 'nvim-web-devicons')
-if web_devicons_loaded then
-  web_devicons.setup({})
+local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
+if icons_loaded then
+  devicons.setup({})
 end
 
-local enable_file_icons = os.getenv('VIM_FZF_ENABLE_FILE_ICONS') == 'true'
-  and web_devicons_loaded
-
-local actions = require('fzf-lua.actions')
+local use_icons = icons_loaded
+  and os.getenv('VIM_FZF_ENABLE_FILE_ICONS') == 'true'
 
 -- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
 -- fzf-native:	utilizes fzf's native previewing ability in the terminal where possible using bat for previews
@@ -23,6 +22,7 @@ local actions = require('fzf-lua.actions')
 -- telescope:	closest match to telescope defaults in look and feel and keybinds
 -- skim:	uses skim as an fzf alternative, (requires the sk binary)
 local fzf_profile = 'max-pref'
+local history_dir = vim.fn.stdpath('data') .. '/fzf-history'
 
 fzflua.setup({
   fzf_profile,
@@ -54,7 +54,8 @@ fzflua.setup({
     },
     preview = {
       default = 'bat',
-      border = 'noborder',
+      -- border = 'noborder',
+      border = 'border',
       hidden = 'hidden',
       title = false,
       winopts = {
@@ -104,31 +105,102 @@ fzflua.setup({
       ['ctrl-b'] = 'preview-page-up',
     },
   },
+  actions = {
+    -- These override the default tables completely
+    -- no need to set to `false` to disable an action
+    -- delete or modify is sufficient
+    files = {
+      -- providers that inherit these actions:
+      --   files, git_files, git_status, grep, lsp
+      --   oldfiles, quickfix, loclist, tags, btags
+      --   args
+      -- default action opens a single selection
+      -- or sends multiple selection to quickfix
+      -- replace the default action with the below
+      -- to open all files whether single or multiple
+      -- ["default"]     = actions.file_edit,
+      ['default'] = actions.file_edit_or_qf,
+      ['ctrl-s'] = actions.file_split,
+      ['ctrl-v'] = actions.file_vsplit,
+      -- ['ctrl-t'] = actions.file_tabedit,
+      ['ctrl-i'] = { actions.toggle_ignore },
+      ['alt-q'] = actions.file_sel_to_qf,
+      ['alt-l'] = actions.file_sel_to_ll,
+    },
+    buffers = {
+      -- providers that inherit these actions:
+      --   buffers, tabs, lines, blines
+      ['default'] = actions.buf_edit,
+      ['ctrl-s'] = actions.buf_split,
+      ['ctrl-v'] = actions.buf_vsplit,
+      ['ctrl-t'] = actions.buf_tabedit,
+    },
+  },
   fzf_opts = {
     -- set to `false` to remove a flag
     -- set to `true` for a no-value flag
     -- for raw args use `fzf_args` instead
+    ['--info'] = 'inline-right', -- fzf < v0.42 = "inline"
+    ['--highlight-line'] = true, -- fzf >= v0.53
     ['--ansi'] = true,
-    ['--info'] = 'inline',
     ['--height'] = '100%',
     ['--layout'] = 'reverse',
-    ['--border'] = 'none',
-    ['--history'] = vim.fn.stdpath('data') .. '/fzf-history',
+    ['--border'] = 'sharp',
+    ['--history'] = history_dir .. '-default.txt',
   },
   defaults = {
     -- formatter = 'path.filename_first',
   },
   files = {
+    -- previewer      = "bat",          -- uncomment to override previewer
+    -- (name from 'previewers' table)
+    -- set to 'false' to disable
+    prompt = 'Files❯ ',
+    multiprocess = true, -- run command in a separate process
+    git_icons = true, -- show git icons?
+    file_icons = true, -- show file icons?
+    color_icons = true, -- colorize file|git icons
+    -- path_shorten   = 1,              -- 'true' or number, shorten path?
+    -- Uncomment for custom vscode-like formatter where the filename is first:
+    -- e.g. "fzf-lua/previewer/fzf.lua" => "fzf.lua previewer/fzf-lua"
+    -- formatter      = "path.filename_first",
+    -- executed command priority is 'cmd' (if exists)
+    -- otherwise auto-detect prioritizes `fd`:`rg`:`find`
+    -- default options are controlled by 'fd|rg|find|_opts'
+    -- NOTE: 'find -printf' requires GNU find
+    -- cmd = "find . -type f -printf '%P\n'",
     cmd = 'rg --files --sortr=modified',
+    find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+    rg_opts = [[--color=never --files --hidden --follow -g "!.git"]],
+    fd_opts = [[--color=never --type f --hidden --follow --exclude .git]],
     fzf_opts = {
-      ['--history'] = vim.fn.stdpath('data') .. '/fzf-files-history',
+      ['--history'] = history_dir .. '-files.txt',
+    },
+    -- by default, cwd appears in the header only if {opts} contain a cwd
+    -- parameter to a different folder than the current working directory
+    -- uncomment if you wish to force display of the cwd as part of the
+    -- query prompt string (fzf.vim style), header line or both
+    -- cwd_header = true,
+    cwd_prompt = true,
+    cwd_prompt_shorten_len = 32, -- shorten prompt beyond this length
+    cwd_prompt_shorten_val = 1, -- shortened path parts length
+    toggle_ignore_flag = '--no-ignore', -- flag toggled in `actions.toggle_ignore`
+    actions = {
+      -- inherits from 'actions.files', here we can override
+      -- or set bind to 'false' to disable a default action
+      -- action to toggle `--no-ignore`, requires fd or rg installed
+      ['ctrl-i'] = { actions.toggle_ignore },
+      -- uncomment to override `actions.file_edit_or_qf`
+      --   ["default"]   = actions.file_edit,
+      -- custom actions are available too
+      --   ["ctrl-y"]    = function(selected) print(selected[1]) end,
     },
   },
   grep = {
     prompt = 'grep❯ ',
     multiprocess = true, -- run command in a separate process
     git_icons = true, -- show git icons?
-    file_icons = enable_file_icons, -- show file icons?
+    file_icons = use_icons, -- show file icons?
     color_icons = true, -- colorize file|git icons
     -- executed command priority is 'cmd' (if exists)
     -- otherwise auto-detect prioritizes `rg` over `grep`
@@ -154,14 +226,14 @@ fzflua.setup({
     actions = {
       -- actions inherit from 'actions.files' and merge
       -- this action toggles between 'grep' and 'live_grep'
-      ['ctrl-t'] = { actions.grep_lgrep },
+      ['ctrl-r'] = { actions.grep_lgrep },
       -- uncomment to enable '.gitignore' toggle for grep
-      -- ["ctrl-r"]   = { actions.toggle_ignore }
+      ['ctrl-i'] = { actions.toggle_ignore },
     },
     no_header = false, -- hide grep|cwd header?
     no_header_i = false, -- hide interactive header?
     fzf_opts = {
-      ['--history'] = vim.fn.stdpath('data') .. '/fzf-grep-history',
+      ['--history'] = history_dir .. '-grep.txt',
     },
   },
   colorschemes = {
@@ -206,7 +278,7 @@ fzflua.setup({
   },
   buffers = {
     prompt = 'Buffers❯ ',
-    file_icons = enable_file_icons, -- show file icons?
+    file_icons = use_icons, -- show file icons?
     color_icons = false, -- colorize file|git icons
     sort_lastused = true, -- sort buffers() by last used
     show_unloaded = true, -- show unloaded buffers
@@ -248,13 +320,12 @@ fzflua.setup({
       -- git-delta is automatically detected as pager, uncomment to disable
       -- preview_pager = false,
       actions = {
-
-        ['default'] = function(selected, _opts)
+        ['default'] = function(selected, _)
           local line = selected[1]
           local commit_hash = line:match('[^ ]+')
           vim.cmd('Git show --format=fuller ' .. commit_hash)
         end,
-        ['ctrl-u'] = function(selected, _opts)
+        ['ctrl-u'] = function(selected, _)
           local line = selected[1]
           vim.fn.setreg([[+]], line)
         end,
@@ -267,7 +338,7 @@ fzflua.setup({
       cmd = 'git ls-files --exclude-standard',
       multiprocess = true,
       git_icons = true, -- git status icon
-      file_icons = enable_file_icons, -- show file icons?
+      file_icons = use_icons, -- show file icons?
       color_icons = true, -- colorize file|git icons
       -- force display the cwd header line regardless of your current working
       -- directory can also be used to hide the header when not wanted
