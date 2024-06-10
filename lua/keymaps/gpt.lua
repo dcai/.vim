@@ -187,10 +187,12 @@ local config = {
 
     -- GpImplement rewrites the provided selection/range based on comments in it
     Implement = function(gp, params)
-      local template = 'Having following from {{filename}}:\n\n'
-        .. '```{{filetype}}\n{{selection}}\n```\n\n'
-        .. 'Please rewrite this according to the contained instructions.'
-        .. '\n\nRespond exclusively with the snippet that should replace the selection above.'
+      local template = join({
+        'Having following from {{filename}}: ',
+        '```{{filetype}} \n {{selection}} \n ```',
+        'Please rewrite this according to the contained instructions.',
+        'Respond exclusively with the snippet that should replace the selection above.',
+      })
 
       local agent = gp.get_command_agent()
       gp.info('Implementing selection with agent: ' .. agent.name)
@@ -218,9 +220,11 @@ local config = {
 
     -- -- example of adding command which writes unit tests for the selected code
     UnitTests = function(gp, params)
-      local template = 'I have the following code from {{filename}}:\n\n'
-        .. '```{{filetype}}\n{{selection}}\n```\n\n'
-        .. 'Please respond by writing table driven unit tests for the code above.'
+      local template = join({
+        'I have the following code from {{filename}}: ',
+        '```{{filetype}}\n{{selection}}\n``` ',
+        'Please respond by writing table driven unit tests for the code above.',
+      })
       local agent = gp.get_command_agent()
       gp.Prompt(
         params,
@@ -234,9 +238,11 @@ local config = {
 
     -- -- example of adding command which explains the selected code
     Explain = function(gp, params)
-      local template = 'I have the following code from {{filename}}:\n\n'
-        .. '```{{filetype}}\n{{selection}}\n```\n\n'
-        .. 'Please respond by explaining the code above.'
+      local template = join({
+        'I have the following code from {{filename}}:',
+        '```{{filetype}} \n {{selection}} \n```',
+        'Please respond by explaining the code above and keep the response concise and straightforward.',
+      })
       local agent = gp.get_chat_agent()
       gp.Prompt(
         params,
