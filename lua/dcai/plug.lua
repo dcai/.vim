@@ -5,6 +5,8 @@ local setups = {
   afterEnd = {},
 }
 
+---extract plugin name from `username/reponame` format
+---@param repo string
 local function plugin_name(repo)
   return repo:match('^[%w-]+/([%w-_.]+)$')
 end
@@ -96,6 +98,29 @@ M.setup = function(plugOpts)
   Plug('nvim-treesitter/nvim-treesitter-textobjects')
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag')
+  Plug('laytan/tailwind-sorter.nvim', {
+    ['do'] = 'cd formatter && npm ci && npm run build',
+    setup = function()
+      local loaded, tailwindsorter = pcall(require, 'tailwind-sorter')
+      if loaded then
+        tailwindsorter.setup({
+          on_save_enabled = false, -- If `true`, automatically enables on save sorting.
+          on_save_pattern = {
+            '*.html',
+            '*.js',
+            '*.jsx',
+            '*.tsx',
+            '*.twig',
+            '*.hbs',
+            '*.php',
+            '*.heex',
+            '*.astro',
+          },
+          node_path = 'node',
+        })
+      end
+    end,
+  })
   ----------------------------------------------------------------------------
   --- nvim-cmp
   ----------------------------------------------------------------------------
