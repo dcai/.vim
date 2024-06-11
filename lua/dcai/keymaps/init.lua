@@ -19,32 +19,50 @@ local yank_keymap = require('dcai.keymaps.yankthings')
 
 local vimrc_keymap = {
   name = 'vimrc',
+  M = {
+    function()
+      vim.cmd('Mason')
+    end,
+    'Mason',
+  },
+  I = {
+    function()
+      vim.cmd('PlugInstall')
+    end,
+    'PlugInstall',
+  },
+  H = {
+    function()
+      vim.cmd('checkhealth')
+    end,
+    'PlugUpdate',
+  },
+  U = {
+    function()
+      vim.cmd('PlugUpdate')
+    end,
+    'PlugUpdate',
+  },
   e = {
     function()
-      fzf.git_files({ cwd = '~/.config/nvim' })
       -- vim.cmd('e $MYVIMRC')
+      fzf.files({ cwd = '~/.config/nvim' })
     end,
     'edit root vimrc',
   },
   R = {
     function()
       G.reload('dcai')
-      G.reload('gp')
-
       dofile(vim.env.MYVIMRC)
     end,
-    'force reload everythign',
+    'force reload everything',
   },
-  -- R = utils.vim_cmd(
-  --   'source $MYVIMRC',
-  --   'reload vimrc and lua configs',
-  --   'Config reloaded!'
-  -- ),
   r = {
     function()
       local ft = vim.bo.filetype
       if ft == 'vim' or ft == 'lua' then
         vim.cmd('source %')
+        G.reload('dcai')
         vim.notify('Current buffer sourced', vim.log.levels.WARN)
       else
         vim.notify('Cannot reload non vim/lua files')
