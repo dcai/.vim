@@ -369,10 +369,10 @@ if has('nvim')
   call s:apply(s:neovim_only)
 
   let s:cmp = {
-        \ 'CmpItemAbbr':           {'fg': s:black,  'bg': s:red},
+        \ 'CmpItemAbbr':           {'fg': s:darkgray,  'bg': s:none},
         \ 'CmpItemAbbrDeprecated': {'fg': s:green,  'bg': s:none},
-        \ 'CmpItemAbbrMatch':      {'fg': s:black,  'bg': s:red},
-        \ 'CmpItemMenu':           {'fg': s:green,  'bg': s:none},
+        \ 'CmpItemAbbrMatch':      {'fg': s:blue,   'bg': s:none},
+        \ 'CmpItemMenu':           {'fg': s:black,  'bg': s:green, 'guibg':s:nicelightgreen},
         \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
         \ 'CmpItemKindCodeium':    {'fg': s:yellow, 'bg': s:red},
         \ 'CmpItemKindFunction':   {'fg': s:blue,   'bg': s:none},

@@ -185,7 +185,12 @@ cmp.setup({
     end,
   },
   window = {
-    completion = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered({
+      border = 'none',
+      winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+      zindex = 1001,
+      side_padding = 0,
+    }),
     documentation = cmp.config.window.bordered(),
   },
   experimental = {
