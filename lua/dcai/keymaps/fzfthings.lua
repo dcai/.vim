@@ -1,5 +1,5 @@
 local fzf = require('fzf-lua')
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 LOG.trace('fzf keymap setting up...')
 
 local fzf_keymap = {

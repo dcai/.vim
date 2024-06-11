@@ -3,7 +3,7 @@ if not loaded then
   return false
 end
 
-local logger = require('log').setup({
+local logger = require('dcai.log').setup({
   plugin = 'codestats',
 })
 

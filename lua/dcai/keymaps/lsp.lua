@@ -1,4 +1,4 @@
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 local tsj_loaded, tsj = pcall(require, 'treesj')
 if tsj_loaded then
   tsj.setup({

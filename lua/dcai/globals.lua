@@ -12,7 +12,6 @@ end
 
 G.reload = function(module)
   require('plenary.reload').reload_module(module)
-  -- package.loaded[module] = nil
   return require(module)
 end
 
