@@ -369,15 +369,16 @@ if has('nvim')
   call s:apply(s:neovim_only)
 
   let s:cmp = {
-        \ 'CmpItemAbbrDeprecated': {'fg': s:green, 'bg': s:none},
-        \ 'CmpItemAbbrMatch':      {'fg': s:black, 'bg': s:green},
-        \ 'CmpItemMenu':           {'fg': s:green, 'bg': s:none},
+        \ 'CmpItemAbbr':           {'fg': s:black,  'bg': s:red},
+        \ 'CmpItemAbbrDeprecated': {'fg': s:green,  'bg': s:none},
+        \ 'CmpItemAbbrMatch':      {'fg': s:black,  'bg': s:red},
+        \ 'CmpItemMenu':           {'fg': s:green,  'bg': s:none},
         \ 'CmpItemKind':           {'fg': s:yellow, 'bg': s:none},
         \ 'CmpItemKindCodeium':    {'fg': s:yellow, 'bg': s:red},
-        \ 'CmpItemKindFunction':   {'fg': s:blue, 'bg': s:none},
-        \ 'CmpItemKindMethod':     {'fg': s:white, 'bg': s:magenta},
-        \ 'CmpItemKindKeyword':    {'fg': s:red, 'bg': s:none},
-        \ 'CmpItemKindVariable':   {'fg': s:cyan, 'bg': s:none},
+        \ 'CmpItemKindFunction':   {'fg': s:blue,   'bg': s:none},
+        \ 'CmpItemKindMethod':     {'fg': s:white,  'bg': s:magenta},
+        \ 'CmpItemKindKeyword':    {'fg': s:red,    'bg': s:none},
+        \ 'CmpItemKindVariable':   {'fg': s:cyan,   'bg': s:none},
         \ }
   call s:apply(s:cmp)
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
