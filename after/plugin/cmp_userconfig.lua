@@ -146,13 +146,15 @@ local function formatter(entry, item)
     buffer = 'BUF',
     cmdline = 'CMD',
     cmdline_history = 'HIST',
-    codeium = '⚡️',
+    -- codeium = '⚡️',
+    codeium = 'AI',
     git = 'GIT',
     -- git = '',
-    nvim_lsp = '💡',
+    -- nvim_lsp = '💡',
+    nvim_lsp = 'LSP',
     tmux = 'tmux',
-    -- ultisnips = 'snip',
-    ultisnips = '🍪',
+    ultisnips = 'SNIP',
+    -- ultisnips = '🍪',
     ['vim-dadbod-completion'] = '[DB]',
   }
   local icon = menu_icon[source_name]
@@ -161,7 +163,32 @@ local function formatter(entry, item)
   end
   return item
 end
+
+local WIDE_HEIGHT = 40
 cmp.setup({
+  window = {
+    completion = {
+      border = 'none',
+      -- border = { '', '', '', '', '', '', '', '' },
+      winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+      winblend = vim.o.pumblend,
+      scrolloff = 0,
+      col_offset = 0,
+      side_padding = 0,
+      scrollbar = true,
+    },
+    documentation = {
+      side_padding = 1,
+      border = 'rounded',
+      -- border = { '', '', '', ' ', '', '', '', ' ' },
+      max_height = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
+      max_width = math.floor(
+        (WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))
+      ),
+      winhighlight = 'FloatBorder:NormalFloat',
+      winblend = vim.o.pumblend,
+    },
+  },
   preselect = cmp.PreselectMode.None,
   sorting = {
     priority_weight = 2,
@@ -184,15 +211,6 @@ cmp.setup({
       -- require('luasnip').lsp_expand(args.body)
     end,
   },
-  window = {
-    completion = cmp.config.window.bordered({
-      border = 'none',
-      winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
-      zindex = 1001,
-      side_padding = 0,
-    }),
-    documentation = cmp.config.window.bordered(),
-  },
   experimental = {
     ghost_text = true,
   },
@@ -207,7 +225,7 @@ cmp.setup({
     -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   formatting = {
-    fields = { 'menu', 'abbr', 'kind' },
+    fields = { 'abbr', 'menu', 'kind' },
     format = formatter,
   },
   sources = cmp.config.sources({
