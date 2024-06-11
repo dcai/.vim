@@ -214,16 +214,16 @@ let s:dict_visual_selection = {
       \'fg': s:darkgreen
       \}
 
-let s:floatnormalbg = 'black'
+let s:floatnormalbg = s:nicemidgreen
 let s:ui = {
       \ 'Cursor'          : {'fg': s:red,    'bg':s:none},
       \ 'CursorColumn'    : {'fg': s:red,    'bg':s:none},
       \ 'CursorLine'      : {'fg': s:red,    'bg':s:none},
       \ 'Normal'          : s:dict_normal_text_highlight,
       \ 'NormalNC'        : {'fg': s:gray},
-      \ 'NormalFloat'     : {'fg': s:green,  'guibg':s:floatnormalbg},
-      \ 'FloatTitle'      : {'fg': s:green,  'bg':s:none},
-      \ 'FloatBorder'     : {'fg': s:green,  'bg':s:none},
+      \ 'NormalFloat'     : {'fg': s:green,  'bg':s:black, 'guibg':s:floatnormalbg},
+      \ 'FloatTitle'      : {'fg': s:green,  'bg':s:black, 'guibg':s:floatnormalbg},
+      \ 'FloatBorder'     : {'fg': s:green,  'bg':s:black, 'guibg':s:floatnormalbg},
       \ 'ColorColumn'     : {'bg': s:none},
       \ 'Directory'       : {'fg': s:darkcyan},
       \ 'ErrorMsg'        : {'fg': s:red,  'bg':s:yellow},
