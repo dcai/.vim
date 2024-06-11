@@ -215,6 +215,7 @@ let s:dict_visual_selection = {
       \}
 
 let s:floatnormalbg = s:nicemidgreen
+let s:popupmenubg = s:darkslategray
 let s:ui = {
       \ 'Cursor'          : {'fg': s:red,    'bg':s:none},
       \ 'CursorColumn'    : {'fg': s:red,    'bg':s:none},
@@ -235,9 +236,9 @@ let s:ui = {
       \ 'MoreMsg'         : {'fg': s:darkgreen},
       \ 'Noise'           : {'fg': s:gray},
       \ 'NonText'         : {'fg': s:darkcyan},
-      \ 'Pmenu'           : {'bg': s:darkgreen,   'fg':    s:white},
+      \ 'Pmenu'           : {'bg': s:darkgreen,  'fg':    s:white, 'guibg': s:popupmenubg},
+      \ 'PmenuSel'        : {'bg': s:blue,       'fg':    s:black},
       \ 'PmenuSbar'       : {'bg': s:darkcyan},
-      \ 'PmenuSel'        : {'bg': s:blue,    'fg':    s:black},
       \ 'PmenuThumb'      : {'bg': s:yellow},
       \ 'Question'        : {'fg': s:green},
       \ 'Quote'           : {'fg': s:yellow},
