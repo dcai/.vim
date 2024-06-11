@@ -6,16 +6,16 @@ end
 LOG.trace('which-key loaded, setting up...')
 
 local fzf = require('fzf-lua')
-local utils = require('keymaps.utils')
-local lsp_keymap = require('keymaps.lsp')
-local notes_keymap = require('keymaps.notes')
-local git_keymap = require('keymaps.git')
-local chatgpt_keymap_n, chatgpt_keymap_v = require('keymaps.gpt')
-local openthings_keymap = require('keymaps.openthings')
-local testthings_keymap = require('keymaps.testthings')
-local editthings_keymap = require('keymaps.editthings')
-local fzf_keymap = require('keymaps.fzfthings')
-local yank_keymap = require('keymaps.yankthings')
+local utils = require('dcai.keymaps.utils')
+local lsp_keymap = require('dcai.keymaps.lsp')
+local notes_keymap = require('dcai.keymaps.notes')
+local git_keymap = require('dcai.keymaps.git')
+local chatgpt_keymap_n, chatgpt_keymap_v = require('dcai.keymaps.gpt')
+local openthings_keymap = require('dcai.keymaps.openthings')
+local testthings_keymap = require('dcai.keymaps.testthings')
+local editthings_keymap = require('dcai.keymaps.editthings')
+local fzf_keymap = require('dcai.keymaps.fzfthings')
+local yank_keymap = require('dcai.keymaps.yankthings')
 
 local vimrc_keymap = {
   name = 'vimrc',
@@ -26,11 +26,20 @@ local vimrc_keymap = {
     end,
     'edit root vimrc',
   },
-  R = utils.vim_cmd(
-    'source $MYVIMRC',
-    'reload vimrc and lua configs',
-    'Config reloaded!'
-  ),
+  R = {
+    function()
+      G.reload('dcai')
+      G.reload('gp')
+
+      dofile(vim.env.MYVIMRC)
+    end,
+    'force reload everythign',
+  },
+  -- R = utils.vim_cmd(
+  --   'source $MYVIMRC',
+  --   'reload vimrc and lua configs',
+  --   'Config reloaded!'
+  -- ),
   r = {
     function()
       local ft = vim.bo.filetype

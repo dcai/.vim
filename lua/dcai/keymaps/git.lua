@@ -1,4 +1,4 @@
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 
 local git_keymap = {
   name = 'git',

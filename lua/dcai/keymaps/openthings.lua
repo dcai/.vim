@@ -1,4 +1,4 @@
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 
 -- local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]

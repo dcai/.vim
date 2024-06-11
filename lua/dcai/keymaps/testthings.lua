@@ -1,4 +1,4 @@
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 
 ---@param vimscript_func string custom function name in string
 local function run_testfile(vimscript_func)

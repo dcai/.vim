@@ -1,6 +1,6 @@
 require('dcai.globals')
 
-LOG = require('log').setup()
+LOG = require('dcai.log').setup()
 LOG.trace('Starting nvim')
 
 vim.g.loaded_perl_provider = 0
@@ -26,8 +26,9 @@ end
 G.source('loader.vim')
 G.setup_colorscheme()
 require('dcai.plug').setup({})
+require('dcai.keymaps')
 
-local codestats = require('codestats')
+local codestats = require('dcai.codestats')
 if codestats then
   codestats.setup()
 end

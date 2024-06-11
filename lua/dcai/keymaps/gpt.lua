@@ -1,4 +1,4 @@
-local utils = require('keymaps.utils')
+local utils = require('dcai.keymaps.utils')
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
   return {
