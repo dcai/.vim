@@ -3,7 +3,6 @@ if not loaded then
   LOG.error('which-key not loaded!')
   return
 end
-LOG.trace('which-key loaded, setting up...')
 
 local fzf = require('fzf-lua')
 local utils = require('dcai.keymaps.utils')
@@ -18,7 +17,33 @@ local fzf_keymap = require('dcai.keymaps.fzfthings')
 local yank_keymap = require('dcai.keymaps.yankthings')
 local vim_keymap = require('dcai.keymaps.vim')
 
+local v_keymap = {
+  c = chatgpt_keymap_v,
+  f = fzf_keymap,
+  g = git_keymap,
+  l = lsp_keymap,
+  o = openthings_keymap,
+  y = yank_keymap,
+  ['.'] = {
+    function()
+      fzf.grep_visual({ cwd = G.root() })
+    end,
+    'fzf selected text',
+  },
+}
+
 local n_keymap = {
+  c = chatgpt_keymap_n,
+  e = editthings_keymap,
+  f = fzf_keymap,
+  g = git_keymap,
+  l = lsp_keymap,
+  n = notes_keymap,
+  o = openthings_keymap,
+  v = vim_keymap,
+  t = testthings_keymap,
+  y = yank_keymap,
+  ['/'] = { utils.live_grep, 'fzf grep repo' },
   [','] = {
     function()
       local ft = vim.bo.filetype
@@ -30,23 +55,12 @@ local n_keymap = {
     end,
     'code format',
   },
-  ['/'] = { utils.live_grep, 'fzf grep repo' },
   ['.'] = {
     function()
       fzf.grep_cword({ cwd = G.root() })
     end,
     'fzf grep <cword>',
   },
-  c = chatgpt_keymap_n,
-  e = editthings_keymap,
-  f = fzf_keymap,
-  g = git_keymap,
-  l = lsp_keymap,
-  n = notes_keymap,
-  o = openthings_keymap,
-  v = vim_keymap,
-  t = testthings_keymap,
-  y = yank_keymap,
 }
 
 ---generate opts for the plugin based on mode
@@ -65,22 +79,6 @@ local function make_mapping_opts(mode)
 end
 
 which_key.register(n_keymap, make_mapping_opts('n'))
-
-local v_keymap = {
-  ['.'] = {
-    function()
-      fzf.grep_visual({ cwd = G.root() })
-    end,
-    'fzf selected',
-  },
-  c = chatgpt_keymap_v,
-  f = fzf_keymap,
-  g = git_keymap,
-  l = lsp_keymap,
-  o = openthings_keymap,
-  y = yank_keymap,
-}
-
 which_key.register(v_keymap, make_mapping_opts('v'))
 
 which_key.setup({
