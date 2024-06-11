@@ -16,61 +16,7 @@ local testthings_keymap = require('dcai.keymaps.testthings')
 local editthings_keymap = require('dcai.keymaps.editthings')
 local fzf_keymap = require('dcai.keymaps.fzfthings')
 local yank_keymap = require('dcai.keymaps.yankthings')
-
-local vimrc_keymap = {
-  name = 'vimrc',
-  M = {
-    function()
-      vim.cmd('Mason')
-    end,
-    'Mason',
-  },
-  I = {
-    function()
-      vim.cmd('PlugInstall')
-    end,
-    'PlugInstall',
-  },
-  H = {
-    function()
-      vim.cmd('checkhealth')
-    end,
-    'PlugUpdate',
-  },
-  U = {
-    function()
-      vim.cmd('PlugUpdate')
-    end,
-    'PlugUpdate',
-  },
-  e = {
-    function()
-      -- vim.cmd('e $MYVIMRC')
-      fzf.files({ cwd = '~/.config/nvim' })
-    end,
-    'edit root vimrc',
-  },
-  R = {
-    function()
-      G.reload('dcai')
-      dofile(vim.env.MYVIMRC)
-    end,
-    'force reload everything',
-  },
-  r = {
-    function()
-      local ft = vim.bo.filetype
-      if ft == 'vim' or ft == 'lua' then
-        vim.cmd('source %')
-        G.reload('dcai')
-        vim.notify('Current buffer sourced', vim.log.levels.WARN)
-      else
-        vim.notify('Cannot reload non vim/lua files')
-      end
-    end,
-    'reload current buffer',
-  },
-}
+local vim_keymap = require('dcai.keymaps.vim')
 
 local n_keymap = {
   [','] = {
@@ -98,7 +44,7 @@ local n_keymap = {
   l = lsp_keymap,
   n = notes_keymap,
   o = openthings_keymap,
-  r = vimrc_keymap,
+  v = vim_keymap,
   t = testthings_keymap,
   y = yank_keymap,
 }
