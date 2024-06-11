@@ -14,7 +14,7 @@ local function marlin_marks()
   local fzf = require('fzf-lua')
   fzf.fzf_exec(files, { actions = fzf.defaults.actions.files })
 end
-local vimrc_to_edit = '~/.config/nvim/after/plugin/whichkey_userconfig.lua'
+local vimrc_to_edit = '~/.config/nvim/lua/dcai/keymaps/init.lua'
 
 local editthings_keymap = {
   name = 'edit things',
@@ -44,7 +44,7 @@ local editthings_keymap = {
       if f == '' then
         -- vim.notify('No file to alternate', vim.log.levels.WARN)
         -- vim.cmd('e ' .. vimrc_to_edit)
-        require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
+        require('fzf-lua').files({ cwd = '~/.config/nvim' })
       else
         vim.cmd('e! #')
       end
