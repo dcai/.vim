@@ -45,20 +45,28 @@ M.setup = function(plugOpts)
   if G.is_env_var_set('OPENAI_API_KEY') then
     Plug('Robitx/gp.nvim')
     Plug('monkoose/neocodeium')
-    Plug('Exafunction/codeium.nvim')
-    -- Plug('sourcegraph/sg.nvim', { ['do'] = 'nvim -l build/init.lua' })
-    -- Plug('Exafunction/codeium.vim', {
-    --   setup = function()
-    --     vim.g.codeium_enabled = true
-    --     vim.g.codeium_disable_bindings = 1
-    --     vim.g.codeium_no_map_tab = true
-    --     -- vim.g.codeium_log_file = stdpath('log') . '/codeium.vim.log'
-    --     -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-    --     -- " imap <C-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-    --     -- " imap <C-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
-    --     -- " imap <C-x> <Cmd>call codeium#Clear()<CR>
-    --   end,
-    -- })
+    -- Plug('Exafunction/codeium.nvim')
+    Plug('Exafunction/codeium.vim', {
+      setup = function()
+        -- vim.g.codeium_enabled = true
+        -- vim.g.codeium_disable_bindings = 1
+        -- vim.g.codeium_no_map_tab = true
+        -- vim.g.codeium_log_file = vim.fn.stdpath('log') .. '/codeium.vim.log'
+        -- -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
+        -- vim.keymap.set('i', '<c-f>', function()
+        --   vim.cmd('call codeium#Accept()')
+        -- end, {
+        --   silent = true,
+        --   nowait = true,
+        -- })
+        -- vim.keymap.set('i', '<c-n>', function()
+        --   vim.cmd('call codeium#CycleCompletions(1)')
+        -- end, {
+        --   silent = true,
+        --   nowait = true,
+        -- })
+      end,
+    })
     -- Plug('zbirenbaum/copilot.lua')
     -- Plug('github/copilot.vim')
   end
