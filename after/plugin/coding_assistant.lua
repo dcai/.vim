@@ -1,5 +1,5 @@
-local loaded, neocodeium = pcall(require, 'neocodeium')
-if loaded then
+local neocodeium_loaded, neocodeium = pcall(require, 'neocodeium')
+if neocodeium_loaded then
   neocodeium.setup()
   vim.keymap.set('i', '<c-f>', neocodeium.accept)
   vim.keymap.set('i', '<c-n>', neocodeium.cycle_or_complete)
