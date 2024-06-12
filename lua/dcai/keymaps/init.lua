@@ -47,7 +47,7 @@ local n_keymap = {
   [','] = {
     function()
       local ft = vim.bo.filetype
-      if ft == 'elixir' or ft == 'heex' then
+      if vim.list_contains({ 'elixir', 'heex' }, ft) then
         vim.lsp.buf.format({ async = true })
       else
         vim.cmd('ALEFix')
