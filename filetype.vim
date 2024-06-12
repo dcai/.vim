@@ -65,10 +65,6 @@ augroup filetypeGroup
   " direnv
   autocmd BufRead,BufNewFile *.envrc setf sh
 
-  " dotenv
-  autocmd BufRead,BufNewFile *.env setf dosini
-  autocmd BufRead,BufNewFile env.* setf dosini
-
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
 
