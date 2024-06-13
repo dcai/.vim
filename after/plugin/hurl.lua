@@ -1,5 +1,5 @@
 vim.api.nvim_create_user_command('HurlRun', function()
-  local dir = G.root()
+  local dir = G.git_root()
   -- run current file
   local ft = vim.bo.filetype
   if not vim.tbl_contains({ 'hurl' }, ft) then

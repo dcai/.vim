@@ -11,7 +11,7 @@ local fzf_keymap = {
   ['/'] = { fzf.builtin, 'fzf builtin' },
   ['f'] = {
     function()
-      fzf.files({ cwd = G.root() })
+      fzf.files({ cwd = G.smart_root() })
     end,
     'project files',
   },
@@ -20,7 +20,7 @@ local fzf_keymap = {
       if G.is_git_repo() then
         fzf.git_files()
       else
-        fzf.files({ cwd = G.root() })
+        fzf.files({ cwd = G.smart_root() })
       end
     end,
     'git files',
