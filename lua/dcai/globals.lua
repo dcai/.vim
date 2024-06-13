@@ -336,9 +336,13 @@ local function root(markers)
   end
 end
 
-G.root = root({
+G.git_root = root({
   '.github',
   '.gitlab-ci.yml',
+  '.git',
+})
+
+G.root = root({
   'Jenkinsfile_Build',
   'Makefile',
   '.lintstagedrc.js',
@@ -355,10 +359,9 @@ G.root = root({
   '.prettierrc.yml',
   '.prettierrc.yaml',
   '.prettierrc.json',
-  '.git',
 })
 
-G.unittests_root = root({
+G.node_project_root = root({
   'package.json',
 })
 
