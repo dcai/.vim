@@ -491,4 +491,3 @@ cfg.emmet_language_server.setup({
 
   on_attach = common_on_attach,
 })
-cfg.azure_pipelines_ls.setup({})
