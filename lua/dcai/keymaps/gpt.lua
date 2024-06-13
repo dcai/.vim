@@ -134,8 +134,8 @@ local config = {
   },
   -- chat topic generation prompt
   chat_topic_gen_prompt = [[
-    Summarize the topic of our conversation above
-    in two or three words. Respond only with those words
+    Summarize the topic of our conversation above in 3 or 4 words.
+    Respond only with those words.
   ]],
   -- chat topic model (string with model name or table with model name and parameters)
   chat_topic_gen_model = 'gpt-3.5-turbo-16k',
