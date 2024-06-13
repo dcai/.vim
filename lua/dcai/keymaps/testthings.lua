@@ -35,8 +35,7 @@ local testthings_keymap = {
   m = run_testfile('TestCurrentFileWithMocha'),
   n = {
     function()
-      local root = G.unittests_root()
-      LOG.info('cd to ' .. root)
+      local root = G.node_project_root()
       vim.api.nvim_command('cd ' .. root)
       vim.cmd('TestNearest')
     end,

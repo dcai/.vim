@@ -26,7 +26,7 @@ local v_keymap = {
   y = yank_keymap,
   ['.'] = {
     function()
-      fzf.grep_visual({ cwd = G.root() })
+      fzf.grep_visual({ cwd = G.git_root() })
     end,
     'fzf selected text',
   },
@@ -57,7 +57,7 @@ local n_keymap = {
   },
   ['.'] = {
     function()
-      fzf.grep_cword({ cwd = G.root() })
+      fzf.grep_cword({ cwd = G.git_root() })
     end,
     'fzf grep <cword>',
   },
