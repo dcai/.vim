@@ -342,7 +342,7 @@ G.git_root = root({
   '.git',
 })
 
-G.root = root({
+G.smart_root = root({
   'Jenkinsfile_Build',
   'Makefile',
   '.lintstagedrc.js',
