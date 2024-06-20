@@ -194,9 +194,9 @@ M.setup = function(plugOpts)
   Plug('dcai/ale', { frozen = 1 })
   Plug('Wansmer/treesj')
   Plug('nvim-tree/nvim-web-devicons')
-  Plug('tpope/vim-dadbod')
-  Plug('kristijanhusak/vim-dadbod-ui')
-  Plug('kristijanhusak/vim-dadbod-completion')
+  -- Plug('tpope/vim-dadbod')
+  -- Plug('kristijanhusak/vim-dadbod-ui')
+  -- Plug('kristijanhusak/vim-dadbod-completion')
   ----------------------------------------------------------------------------
   --- END coding, development, writing
   ----------------------------------------------------------------------------
