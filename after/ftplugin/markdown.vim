@@ -7,3 +7,4 @@ function s:toggle(pattern, dict, ...)
 endfunction
 
 nnoremap <buffer> <silent> = :call winrestview(<SID>toggle('^\s*-\s*\[\zs.\ze\]', {' ': 'x', 'x': ' '}))<cr>
+highlight Special ctermbg=none ctermfg=yellow guifg=yellow

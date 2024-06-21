@@ -156,6 +156,8 @@ M.setup = function(plugOpts)
     ['for'] = 'markdown',
     setup = function()
       vim.g.mkdp_theme = 'light'
+      vim.g.mkdp_auto_start = 0
+      vim.g.mkdp_auto_close = 0
       -- vim.g.mkdp_theme = 'dark'
     end,
   })
