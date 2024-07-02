@@ -454,6 +454,7 @@ cfg.phpactor.setup({
     ['language_server_psalm.enabled'] = false,
   },
   root_dir = function(startpath)
+    ---@diagnostic disable-next-line: undefined-field
     local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
     local root =
