@@ -29,7 +29,7 @@ end
 local lsp_keymap = {
   name = 'lsp',
   a = { vim.lsp.buf.code_action, 'code action' },
-  D = { vim.diagnostic.open_float, 'diagnostic' },
+  d = { vim.diagnostic.open_float, 'diagnostic' },
   f = { vim.lsp.buf.format, 'format code' },
   I = utils.vim_cmd('LspInfo', 'lsp info'),
   -- p = {
