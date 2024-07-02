@@ -193,6 +193,13 @@ cfg.tsserver.setup({
     '.git'
   ),
   cmd = { 'typescript-language-server', '--stdio' },
+  settings = {
+    diagnostics = {
+      ignoreCodes = {
+        80001,
+      },
+    },
+  },
   commands = {
     OrganizeImports = {
       function()
