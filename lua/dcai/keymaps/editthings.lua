@@ -17,8 +17,9 @@ end
 local vimrc_to_edit = '~/.config/nvim/lua/dcai/keymaps/init.lua'
 
 local editthings_keymap = {
-  name = 'edit things',
-  a = {
+  { '<leader>e', group = 'edit things' },
+  {
+    '<leader>ea',
     function()
       local marlin = require('marlin')
       local f = vim.fn.expand('#')
@@ -26,9 +27,10 @@ local editthings_keymap = {
       marlin.save()
       vim.notify(f .. ' added to marlin')
     end,
-    'marlin: add to collection',
+    desc = 'marlin: add to collection',
   },
-  D = {
+  {
+    '<leader>eD',
     function()
       local marlin = require('marlin')
       local f = vim.fn.expand('#')
@@ -36,9 +38,10 @@ local editthings_keymap = {
       marlin.save()
       vim.notify(f .. ' removed from marlin')
     end,
-    'marlin: remove from collection',
+    desc = 'marlin: remove from collection',
   },
-  e = {
+  {
+    '<leader>ee',
     function()
       local f = vim.fn.expand('#')
       if f == '' then
@@ -49,28 +52,37 @@ local editthings_keymap = {
         vim.cmd('e! #')
       end
     end,
-    'toggle last used file',
+    desc = 'toggle last used file',
   },
-  l = {
+  {
+    '<leader>el',
     marlin_marks,
-    'marlin: list collection',
+    desc = 'marlin: list collection',
   },
-  s = utils.vim_cmd('UltiSnipsEdit', 'edit snippet for current buffer'),
-  v = {
+  {
+    '<leader>es',
+    function()
+      vim.cmd('UltiSnipsEdit')
+    end,
+    desc = 'edit snippet for current buffer',
+  },
+  {
+    '<leader>ev',
     function()
       -- require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
       require('fzf-lua').files({ cwd = '~/.config/nvim' })
       -- v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc')
     end,
-    'toggle last used file',
+    desc = 'toggle last used file',
   },
-  X = {
+  {
+    '<leader>eX',
     function()
       local marlin = require('marlin')
 
       marlin.remove_all()
     end,
-    'marlin: remove all collection items',
+    desc = 'marlin: remove all collection items',
   },
 }
 return editthings_keymap

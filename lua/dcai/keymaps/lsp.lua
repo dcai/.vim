@@ -27,19 +27,20 @@ if tsj_loaded then
 end
 
 local lsp_keymap = {
-  name = 'lsp',
-  a = { vim.lsp.buf.code_action, 'code action' },
-  d = { vim.diagnostic.open_float, 'diagnostic' },
-  f = { vim.lsp.buf.format, 'format code' },
-  I = utils.vim_cmd('LspInfo', 'lsp info'),
+  { '<leader>l', group = 'lsp' },
+  { '<leader>la', vim.lsp.buf.code_action, desc = 'code action' },
+  { '<leader>ld', vim.diagnostic.open_float, desc = 'diagnostic' },
+  { '<leader>lf', vim.lsp.buf.format, desc = 'format code' },
+  { '<leader>lI', '<cmd>LspInfo<cr>', desc = 'lsp info' },
   -- p = {
   --   function()
   --     require('lspsaga.definition'):init(2, 1)
   --   end,
   --   'Peek type',
   -- },
-  r = { vim.lsp.buf.rename, 'rename' },
-  ['q'] = {
+  { '<leader>lr', vim.lsp.buf.rename, desc = 'rename' },
+  {
+    '<leader>lq',
     function()
       vim.diagnostic.setqflist({
         open = false,
@@ -47,15 +48,16 @@ local lsp_keymap = {
       local fzf = require('fzf-lua')
       fzf.quickfix()
     end,
-    'quickfix list',
+    desc = 'quickfix list',
   },
-  t = {
+  {
+    '<leader>lt',
     function()
       if tsj_loaded then
         tsj.toggle()
       end
     end,
-    'split or join code',
+    desc = 'split or join code',
   },
 }
 

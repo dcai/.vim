@@ -72,7 +72,9 @@ local function shell_cmd(command)
 end
 M.shell_cmd = shell_cmd
 
-M.git_cmd = shell_cmd('git')
+M.git_cmd = function(opts)
+  return lazy_shell_cmd('git', opts)
+end
 
 M.live_grep = function()
   local fzf = require('fzf-lua')
@@ -80,15 +82,16 @@ M.live_grep = function()
 end
 
 ---@param cmd string vim command
-M.vim_cmd = function(cmd, desc, notify_after)
+M.vim_cmd = function(key, cmd, desc, notify_after)
   return {
+    key,
     function()
       vim.cmd(cmd)
       if notify_after then
         vim.notify(notify_after)
       end
     end,
-    desc or cmd,
+    desc = desc or cmd,
   }
 end
 local function open_git_hosting_web()

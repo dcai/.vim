@@ -317,7 +317,10 @@ local function root(markers)
   return function(filepath)
     local buf = filepath or vim.api.nvim_get_current_buf()
     if vim.fs and vim.fs.root then
-      return vim.fs.root(buf, markers)
+      local fs_root = vim.fs.root(buf, markers)
+      if fs_root then
+        return fs_root
+      end
     end
 
     local current_dir = vim.fn.expand('%:p:h')
@@ -345,6 +348,7 @@ G.git_root = root({
 G.smart_root = root({
   'Jenkinsfile_Build',
   'Makefile',
+  'stylua.toml',
   '.lintstagedrc.js',
   '.husky',
   '.vscode',

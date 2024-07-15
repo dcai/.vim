@@ -1,12 +1,21 @@
 local utils = require('dcai.keymaps.utils')
 
 local notes_keymap = {
-  name = 'notes',
-  b = utils.vim_cmd('NoteGitBranch', 'create new note for current git branch'),
-  c = utils.vim_cmd('NoteNew', 'create new note'),
-  g = utils.vim_cmd('NoteGit', 'create new note for current git repo'),
-  t = utils.vim_cmd('NoteToday', 'create new note for today'),
-  p = {
+  { '<leader>n', group = 'notes' },
+  utils.vim_cmd(
+    '<leader>nb',
+    'NoteGitBranch',
+    'create new note for current git branch'
+  ),
+  utils.vim_cmd('<leader>nc', 'NoteNew', 'create new note'),
+  utils.vim_cmd(
+    '<leader>ng',
+    'NoteGit',
+    'create new note for current git repo'
+  ),
+  utils.vim_cmd('<leader>nt', 'NoteToday', 'create new note for today'),
+  {
+    '<leader>np',
     function()
       local ft = vim.bo.filetype
       if not vim.tbl_contains({ 'markdown' }, ft) then
@@ -20,18 +29,20 @@ local notes_keymap = {
       )()
     end,
 
-    'publish to dokuwiki',
+    desc = 'publish to dokuwiki',
   },
-  l = {
+  {
+    '<leader>nl',
     function()
       local fzf = require('fzf-lua')
       fzf.files({
         cwd = vim.g.notes_home,
       })
     end,
-    'list all notes',
+    desc = 'list all notes',
   },
-  ['/'] = {
+  {
+    '<leader>n/',
     function()
       local fzf = require('fzf-lua')
       fzf.live_grep({
@@ -46,7 +57,7 @@ local notes_keymap = {
         },
       })
     end,
-    'full text search in notes',
+    desc = 'full text search in notes',
   },
 }
 return notes_keymap

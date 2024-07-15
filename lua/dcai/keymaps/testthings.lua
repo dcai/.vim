@@ -1,8 +1,9 @@
 local utils = require('dcai.keymaps.utils')
 
 ---@param vimscript_func string custom function name in string
-local function run_testfile(vimscript_func)
+local function run_testfile(key, vimscript_func)
   return {
+    key,
     function()
       local file = vim.fn.expand('%')
       if string.find(file, 'spec.') or string.find(file, 'test.') then
@@ -12,46 +13,49 @@ local function run_testfile(vimscript_func)
         vim.notify('this is not a test file')
       end
     end,
-    vimscript_func,
+    desc = vimscript_func,
   }
 end
 
 local testthings_keymap = {
-  name = 'Test',
-  i = utils.vim_cmd('VimuxInspectRunner', 'inspect runner'),
-  j = run_testfile('TestCurrentFileWithJestJsdom'),
-  J = run_testfile('TestCurrentFileWithJestNode'),
-  h = utils.vim_cmd('HurlRun', 'run hurl file'),
+  { '<leader>t', group = 'test things' },
+  run_testfile('<leader>tj', 'TestCurrentFileWithJestJsdom'),
+  run_testfile('<leader>tJ', 'TestCurrentFileWithJestNode'),
+  run_testfile('<leader>tm', 'TestCurrentFileWithMocha'),
   -- l = cmd('VimuxRunLastCommand', 'last command'),
-  l = {
+  {
+    '<leader>tl',
     function()
       local fzf = require('fzf-lua')
       fzf.files({
         cwd = vim.g.dropbox_home .. '/src/hurl_files',
       })
     end,
-    'list all hurl files',
+    desc = 'list all hurl files',
   },
-  m = run_testfile('TestCurrentFileWithMocha'),
-  n = {
+  {
+    '<leader>tn',
     function()
       local root = G.node_project_root()
       vim.api.nvim_command('cd ' .. root)
       vim.cmd('TestNearest')
     end,
-    'Test nearest',
+    desc = 'Test nearest',
   },
-  p = utils.vim_cmd('VimuxPromptCommand', 'prompt command'),
-  q = utils.vim_cmd('VimuxCloseRunner', 'close runner'),
-  s = utils.vim_cmd('!%:p', 'run current buffer in shell'),
-  x = utils.vim_cmd('call VimuxZoomRunner()', 'zoom in'),
-  z = utils.vim_cmd('call LastPath()', 'open last path in runner'),
-  t = {
+  {
+    '<leader>tt',
     function()
       vim.call('EditMatchingTestFile')
     end,
-    'alternate test file',
+    desc = 'alternate test file',
   },
+  utils.vim_cmd('<leader>th', 'HurlRun', 'run hurl file'),
+  utils.vim_cmd('<leader>ti', 'VimuxInspectRunner', 'inspect runner'),
+  utils.vim_cmd('<leader>tp', 'VimuxPromptCommand', 'prompt command'),
+  utils.vim_cmd('<leader>tq', 'VimuxCloseRunner', 'close runner'),
+  utils.vim_cmd('<leader>ts', '!%:p', 'run current buffer in shell'),
+  utils.vim_cmd('<leader>tx', 'call VimuxZoomRunner()', 'zoom in'),
+  utils.vim_cmd('<leader>tz', 'call LastPath()', 'open last path in runner'),
 }
 
 return testthings_keymap
