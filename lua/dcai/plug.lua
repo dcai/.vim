@@ -226,7 +226,7 @@ M.setup = function(plugOpts)
   -- Plug('junegunn/vader.vim', { ['for'] = 'vader' })
   Plug('rafi/awesome-vim-colorschemes')
   Plug('echasnovski/mini.nvim')
-  Plug('folke/which-key.nvim', { ['tag'] = 'v2.1.0' })
+  Plug('folke/which-key.nvim')
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
 

@@ -12,6 +12,10 @@ local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
 end
 
+local function wrapGpCmd(str)
+  return ":<c-u>'<,'>" .. str .. '<cr>'
+end
+
 local chatlogs_home = vim.fn.expand(
   vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
     or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
@@ -257,12 +261,19 @@ local config = {
 }
 gpplugin.setup(config)
 
+local group = 'gpt'
 local chatgpt_keymap_n = {
-  name = 'chatgpt',
-  D = utils.vim_cmd('GpChatDelete', 'delete chat'),
-  -- c = utils.vim_cmd('GpNew', 'Enter a prompt'),
-  -- F = utils.vim_cmd('GpChatFinder', 'chat Finder'),
-  F = {
+  { '<leader>c', group = group },
+  {
+    '<leader>cD',
+    function()
+      vim.cmd('GpChatDelete')
+    end,
+    desc = 'delete chat',
+  },
+  -- utils.vim_cmd('<leader>cc', 'GpNew', 'Enter a prompt'),
+  {
+    '<leader>cF',
     function()
       local fzf = require('fzf-lua')
       fzf.live_grep({
@@ -284,14 +295,33 @@ local chatgpt_keymap_n = {
         },
       })
     end,
-    'Chat Finder',
+    desc = 'Chat Finder',
   },
-  n = utils.vim_cmd('GpNextAgent', 'next agent'),
-  N = utils.vim_cmd('GpChatNew', 'new chat buffer'),
-  c = utils.vim_cmd('GpChatToggle', 'Toggle chat'),
+  {
+    '<leader>cn',
+    function()
+      vim.cmd('GpNextAgent')
+    end,
+    desc = 'next agent',
+  },
+  {
+    '<leader>cN',
+    function()
+      vim.cmd('GpChatNew')
+    end,
+    desc = 'new chat buffer',
+  },
+  {
+    '<leader>cc',
+    function()
+      vim.cmd('GpChatToggle')
+    end,
+    desc = 'toggle chat',
+  },
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
   ---javascript react and nodejs
-  j = {
+  {
+    '<leader>cf',
     function()
       gpplugin.new_chat(
         {},
@@ -303,10 +333,11 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'About javascript',
+    desc = 'topic [javascript]',
   },
   ---php and laravel
-  p = {
+  {
+    '<leader>cp',
     function()
       gpplugin.new_chat(
         {},
@@ -319,10 +350,11 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'About php and laravel',
+    desc = 'topic [php]',
   },
   ---tailwind
-  t = {
+  {
+    '<leader>ct',
     function()
       gpplugin.new_chat(
         {},
@@ -334,10 +366,11 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'About tailwind',
+    desc = 'topic [tailwind]',
   },
   -- Translator
-  T = {
+  {
+    '<leader>cT',
     function()
       gpplugin.new_chat(
         {},
@@ -347,10 +380,11 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'Translator',
+    desc = 'Translator',
   },
   -- etymologist
-  E = {
+  {
+    '<leader>cE',
     function()
       gpplugin.new_chat(
         {},
@@ -360,10 +394,11 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'Etymologist',
+    desc = 'Etymologist',
   },
   ---neovim and lua
-  l = {
+  {
+    '<leader>cl',
     function()
       gpplugin.new_chat(
         {},
@@ -375,9 +410,10 @@ local chatgpt_keymap_n = {
         })
       )
     end,
-    'About neovim',
+    desc = 'topic [neovim]',
   },
-  a = {
+  {
+    '<leader>ca',
     function()
       local agents = {}
       for key, _ in pairs(gpplugin.agents) do
@@ -392,17 +428,21 @@ local chatgpt_keymap_n = {
         },
       })
     end,
-    'Select an agent',
+    desc = 'Select an agent',
+  },
+  { '<leader>c', group = group, mode = 'v' },
+  {
+    '<leader>cn',
+    wrapGpCmd('GpChatNew'),
+    desc = 'visual new chat',
+    mode = 'v',
+  },
+  {
+    '<leader>ce',
+    wrapGpCmd('GpExplain'),
+    desc = 'explain selcted code',
+    mode = 'v',
   },
 }
 
-local function wrapGpCmd(str)
-  return ":<c-u>'<,'>" .. str .. '<cr>'
-end
-local chatgpt_keymap_v = {
-  name = 'chatgpt',
-  n = { wrapGpCmd('GpChatNew'), 'visual new chat' },
-  e = { wrapGpCmd('GpExplain'), 'explain selcted code' },
-}
-
-return chatgpt_keymap_n, chatgpt_keymap_v
+return chatgpt_keymap_n

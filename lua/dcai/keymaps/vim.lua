@@ -1,45 +1,52 @@
 local vim_keymap = {
-  name = 'vimrc',
-  M = {
+  { '<leader>v', group = 'vimrc' },
+  {
+    '<leader>vM',
     function()
       vim.cmd('Mason')
     end,
-    'Mason',
+    desc = 'Mason',
   },
-  I = {
+  {
+    '<leader>vI',
     function()
       vim.cmd('PlugInstall')
     end,
-    'PlugInstall',
+    desc = 'PlugInstall',
   },
-  H = {
+  {
+    '<leader>vH',
     function()
       vim.cmd('checkhealth')
     end,
-    'PlugUpdate',
+    desc = 'PlugUpdate',
   },
-  U = {
+  {
+    '<leader>vU',
     function()
       vim.cmd('PlugUpdate')
     end,
-    'PlugUpdate',
+    desc = 'PlugUpdate',
   },
-  e = {
+  {
+    '<leader>ve',
     function()
       local fzf = require('fzf-lua')
       -- vim.cmd('e $MYVIMRC')
       fzf.files({ cwd = '~/.config/nvim' })
     end,
-    'edit root vimrc',
+    desc = 'edit root vimrc',
   },
-  R = {
+  {
+    '<leader>vR',
     function()
       G.reload('dcai')
       dofile(vim.env.MYVIMRC)
     end,
-    'force reload everything',
+    desc = 'force reload everything',
   },
-  r = {
+  {
+    '<leader>vr',
     function()
       local ft = vim.bo.filetype
       if ft == 'vim' or ft == 'lua' then
@@ -50,7 +57,7 @@ local vim_keymap = {
         vim.notify('Cannot reload non vim/lua files')
       end
     end,
-    'reload current buffer',
+    desc = 'reload current buffer',
   },
 }
 

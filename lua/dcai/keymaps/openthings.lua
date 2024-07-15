@@ -4,12 +4,14 @@ local utils = require('dcai.keymaps.utils')
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
 
 local openthings_keymap = {
-  name = 'open things',
-  b = {
+  { '<leader>o', group = 'open things' },
+  {
+    '<leader>ob',
     '<Plug>(openbrowser-smart-search)',
-    'search current word in browser',
+    desc = 'search current word in browser',
   },
-  d = {
+  {
+    '<leader>od',
     function()
       -- has to be wrapped because dir must be lazy evaluated
       utils.lazy_shell_cmd(
@@ -18,9 +20,10 @@ local openthings_keymap = {
         'open folder'
       )()
     end,
-    'open in folder',
+    desc = 'open in folder',
   },
-  f = {
+  {
+    '<leader>of',
     function()
       -- has to be wrapped because filename must be lazy evaluated
       utils.lazy_shell_cmd(
@@ -29,14 +32,19 @@ local openthings_keymap = {
         'open file in zed'
       )()
     end,
-    'open file in gui editor',
+    desc = 'open file in gui editor',
   },
-  g = { utils.open_git_hosting_web, 'open file in git web' },
-  t = {
+  {
+    '<leader>og',
+    utils.open_git_hosting_web,
+    desc = 'open file in git web',
+  },
+  {
+    '<leader>ot',
     function()
       require('mini.files').open()
     end,
-    'open file tree',
+    desc = 'open file tree',
   },
 }
 

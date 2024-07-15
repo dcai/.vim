@@ -3,19 +3,22 @@ local utils = require('dcai.keymaps.utils')
 LOG.trace('fzf keymap setting up...')
 
 local fzf_keymap = {
-  name = 'fzf',
-  ['b'] = { fzf.buffers, 'buffers' },
-  ['c'] = { fzf.colorschemes, 'colorschemes' },
-  ['r'] = { fzf.oldfiles, 'recent files' },
-  ['s'] = { fzf.spell_suggest, 'spell suggest' },
-  ['/'] = { fzf.builtin, 'fzf builtin' },
-  ['f'] = {
+  mode = { 'n', 'v' },
+  { '<leader>f', group = 'fzf' },
+  { '<leader>fb', fzf.buffers, desc = 'buffers' },
+  { '<leader>fc', fzf.colorschemes, desc = 'colorschemes' },
+  { '<leader>fr', fzf.oldfiles, desc = 'recent files' },
+  { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
+  { '<leader>f/', fzf.builtin, desc = 'fzf builtin' },
+  {
+    '<leader>ff',
     function()
       fzf.files({ cwd = G.smart_root() })
     end,
-    'project files',
+    desc = 'project files',
   },
-  ['g'] = {
+  {
+    '<leader>fg',
     function()
       if G.is_git_repo() then
         fzf.git_files()
@@ -23,13 +26,14 @@ local fzf_keymap = {
         fzf.files({ cwd = G.smart_root() })
       end
     end,
-    'git files',
+    desc = 'git files',
   },
-  ['l'] = {
+  {
+    '<leader>fl',
     function()
       fzf.files({ cwd = vim.fn.stdpath('log') })
     end,
-    'xdg log files',
+    desc = 'xdg log files',
   },
 }
 

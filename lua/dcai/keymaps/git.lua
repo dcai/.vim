@@ -1,79 +1,128 @@
 local utils = require('dcai.keymaps.utils')
 
 local git_keymap = {
-  name = 'git',
+  { '<leader>g', group = 'git' },
   -- R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", 'Reset Buffer' },
   -- j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", 'Next Hunk' },
   -- k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", 'Prev Hunk' },
   -- p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", 'Preview Hunk' },
   -- r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", 'Reset Hunk' },
-  ['+'] = {
+  {
+    '<leader>g+',
     function()
       local gitsigns = require('gitsigns')
       gitsigns.stage_hunk()
     end,
-    'stage hunk',
+    desc = 'stage hunk',
   },
-  ['-'] = {
+  {
+    '<leader>g-',
     function()
       local gitsigns = require('gitsigns')
       gitsigns.undo_stage_hunk()
     end,
-    'unstage hunk',
+    desc = 'unstage hunk',
   },
-  ['2'] = utils.vim_cmd('diffget //2'),
-  ['3'] = utils.vim_cmd('diffget //3'),
-  a = utils.vim_cmd('Gwrite', 'git add'),
-  A = utils.vim_cmd('Git add -A', 'git add untracked'),
-  b = utils.vim_cmd('FzfLua git_branches', 'checkout branch'),
-  c = utils.vim_cmd('Git commit -a', 'commit all'),
-  d = utils.vim_cmd('Git diff', 'diff'),
-  f = utils.git_cmd(
-    { args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' } },
-    'git fixup HEAD'
-  ),
-  g = utils.git_cmd({ args = { 'pull', '--tags', '--rebase' } }, 'git pull'),
-  h = utils.git_cmd({ args = { 'stash' } }, 'git stash'),
-  H = utils.git_cmd({ args = { 'stash', 'pop' } }, 'git stash pop'),
+  { '<leader>g2', '<cmd>diffget //2<cr>' },
+  { '<leader>g3', '<cmd>diffget //3<cr>' },
+  { '<leader>ga', '<cmd>Gwrite<cr>' },
+  { '<leader>gA', '<cmd>Git add -A<cr>' },
+  { '<leader>gA', '<cmd>FzfLua git_branches<cr>', desc = 'checkout branch' },
+  { '<leader>gc', '<cmd>Git commit -a<cr>', desc = 'commit all' },
+  { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
+  {
+    '<leader>gf',
+    utils.git_cmd({
+      args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' },
+    }),
+    desc = 'git fixup HEAD',
+  },
+  {
+    '<leader>gg',
+    utils.git_cmd({ args = { 'pull', '--tags', '--rebase' } }),
+    desc = 'git pull',
+  },
+  {
+    '<leader>gh',
+    utils.git_cmd({ args = { 'stash' } }),
+    desc = 'git stash',
+  },
+  {
+    '<leader>gH',
+    utils.git_cmd({ args = { 'stash', 'pop' } }),
+    desc = 'git stash pop',
+  },
   -- l = cmd('Gllog', 'list commits'),
-  l = {
+  {
+    '<leader>gl',
     function()
       local fzf = require('fzf-lua')
       fzf.git_commits()
     end,
-    'git log',
+    desc = 'git log',
   },
-  L = {
+  {
+    '<leader>gL',
     function()
       -- local current_file_path = vim.fn.expand('%:p')
       local current_file_path = vim.api.nvim_buf_get_name(0)
       vim.cmd('Git log ' .. current_file_path)
     end,
-    "current buffer's git log",
+    desc = "current buffer's git log",
   },
-  m = {
+  {
+    '<leader>gm',
     function()
       require('gitsigns').blame_line()
     end,
-    'blame line',
+    desc = 'blame line',
   },
-  M = utils.vim_cmd('Git blame', 'git blame'),
-  p = utils.git_cmd({ args = { 'push', '-u', '--no-verify' } }, 'git push'),
-  P = utils.git_cmd({
-    args = {
-      'push',
-      '-u',
-      '--force-with-lease',
-      '--no-verify',
-    },
-  }, 'force push with lease'),
-  r = utils.vim_cmd(
-    'Git rebase -i --committer-date-is-author-date origin/HEAD~5',
-    'rebase HEAD~5'
-  ),
-  s = utils.vim_cmd('Git', 'git status'),
-  S = utils.vim_cmd('FzfLua git_status', 'changed files'),
-  y = { utils.open_git_hosting_web, 'open the file in web' },
-  v = utils.vim_cmd('Gvdiffsplit!', '3-way diff'),
+  {
+    '<leader>gM',
+    '<cmd>Git blame<cr>',
+    desc = 'git blame',
+  },
+  {
+    '<leader>gp',
+    utils.git_cmd({ args = { 'push', '-u', '--no-verify' } }),
+    desc = 'git push',
+  },
+  {
+    '<leader>gP',
+    utils.git_cmd({
+      args = {
+        'push',
+        '-u',
+        '--force-with-lease',
+        '--no-verify',
+      },
+    }),
+    desc = 'force push with lease',
+  },
+  {
+    '<leader>gj',
+    '<cmd>Git rebase -i --committer-date-is-author-date origin/HEAD~5<cr>',
+    desc = 'rebase HEAD~5',
+  },
+  {
+    '<leader>gs',
+    '<cmd>Git<cr>',
+    desc = 'git status',
+  },
+  {
+    '<leader>gS',
+    '<cmd>FzfLua git_status<cr>',
+    desc = 'changed files',
+  },
+  {
+    '<leader>gy',
+    utils.open_git_hosting_web,
+    desc = 'open the file in web',
+  },
+  {
+    '<leader>gv',
+    '<cmd>Gvdiffsplit!<cr>',
+    desc = '3-way diff',
+  },
 }
 return git_keymap

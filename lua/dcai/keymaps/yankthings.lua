@@ -1,19 +1,21 @@
 local utils = require('dcai.keymaps.utils')
 local yank_keymap = {
-  name = 'yank things',
-  l = {
+  { '<leader>y', group = 'yank things' },
+  {
+    '<leader>yl',
     function()
       local loaded_packages = vim.tbl_keys(package.loaded)
       vim.fn.setreg('*', vim.inspect(loaded_packages))
     end,
-    'yank loaded package names',
+    desc = 'yank loaded package names',
   },
-  p = utils.vim_cmd(
+  utils.vim_cmd(
+    '<leader>yp',
     'let @*=expand("%:p")',
     'yank file full path',
     'file path yanked'
   ),
-  f = utils.vim_cmd('let @*=expand("%")', 'yank file name'),
-  m = utils.vim_cmd('let @*=execute("messages")', 'yank messages'),
+  utils.vim_cmd('<leader>yf', 'let @*=expand("%")', 'yank file name'),
+  utils.vim_cmd('<leader>ym', 'let @*=execute("messages")', 'yank messages'),
 }
 return yank_keymap
