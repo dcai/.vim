@@ -30,6 +30,11 @@ wk.add(notes_keymap)
 
 wk.add({
   {
+    '<leader>pp',
+    '<cmd>set paste<CR>:r !pbpaste<CR>:set nopaste<CR>',
+    desc = 'paste',
+  },
+  {
     '<leader>/',
     utils.live_grep,
     desc = 'fzf grep repo',
@@ -162,5 +167,24 @@ local user_config = {
   --   end,
   -- },
   debug = false, -- enable wk.log in the current directory
+  ---@type wk.Win
+  win = {
+    -- don't allow the popup to overlap with the cursor
+    no_overlap = true,
+    -- width = 1,
+    -- height = { min = 4, max = 25 },
+    -- col = 0,
+    -- row = math.huge,
+    -- border = "none",
+    padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+    title = true,
+    title_pos = 'center',
+    zindex = 1000,
+    -- Additional vim.wo and vim.bo options
+    bo = {},
+    wo = {
+      -- winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+    },
+  },
 }
 wk.setup(user_config)
