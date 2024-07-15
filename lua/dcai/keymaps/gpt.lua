@@ -25,37 +25,71 @@ local translator_prompt =
 
 -- https://github.com/Robitx/gp.nvim/blob/d90816b2e9185202d72f7b1346b6d33b36350886/lua/gp/config.lua#L8-L355
 local config = {
-  chat_dir = chatlogs_home,
-  -- chat user prompt prefix in chat buffer
-  chat_user_prefix = '👇',
-  -- prompt in command `:GpNew`
-  command_prompt_prefix_template = '👉 ye? [{{agent}}] ~ ',
-  -- chat assistant prompt prefix (static string or a table {static, template})
-  -- first string has to be static, second string can contain template {{agent}}
-  -- just a static string is legacy and the [{{agent}}] element is added automatically
-  -- if you really want just a static string, make it a table with one element { "🤖:" }
-  chat_assistant_prefix = { '😒 Bot: ', '[{{agent}}]' },
-  chat_shortcut_respond = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<c-x><c-x>',
+  providers = {
+    openai = {
+      endpoint = 'https://api.openai.com/v1/chat/completions',
+      secret = os.getenv('OPENAI_API_KEY'),
+    },
+    googleai = {
+      endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}',
+      secret = os.getenv('GOOGLEAI_API_KEY'),
+    },
+    anthropic = {
+      endpoint = 'https://api.anthropic.com/v1/messages',
+      secret = os.getenv('ANTHROPIC_API_KEY'),
+    },
   },
-  chat_shortcut_delete = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<c-x>D',
-  },
-  chat_shortcut_stop = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vs',
-  },
-  chat_shortcut_new = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vn',
-  },
-  openai_api_key = os.getenv('OPENAI_API_KEY'),
-  -- prefix for all commands
-  cmd_prefix = 'Gp',
-  curl_params = {},
   agents = {
+    {
+      name = 'Cloude ☁️',
+      provider = 'anthropic',
+      chat = true,
+      command = false,
+      model = {
+        model = 'claude-3-5-sonnet-20240620',
+        temperature = 0.8,
+        top_p = 1,
+      },
+      system_prompt = [[
+        You are a general AI assistant.
+        The user provided the additional info about how they would like you to respond:
+        - If you're unsure don't guess and say you don't know instead.
+        - Ask question if you need clarification to provide better answer.
+        - Think deeply and carefully from first principles step by step.
+        - Zoom out first to see the big picture and then zoom in to details.
+        - Use Socratic method to improve your thinking and coding skills.
+        - Don't elide any code from your output if the answer requires coding.
+        - Take a deep breath; You've got this!
+      ]],
+    },
+    {
+      name = 'ChatGPT4o 🐥',
+      chat = true,
+      command = true,
+      model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
+      system_prompt = [[
+        You are a general AI assistant.
+        The user provided the additional info about how they would like you to respond:
+        - If you're unsure don't guess and say you don't know instead.
+        - Ask question if you need clarification to provide better answer.
+        - Think deeply and carefully from first principles step by step.
+        - Zoom out first to see the big picture and then zoom in to details.
+        - Use Socratic method to improve your thinking and coding skills.
+        - Don't elide any code from your output if the answer requires coding.
+        - Take a deep breath; You've got this!
+      ]],
+    },
+    {
+      name = 'Coder4o 📌',
+      chat = false,
+      command = true,
+      model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
+      system_prompt = [[
+        You are an AI working as a code editor.
+        Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+        START AND END YOUR ANSWER WITH: ```
+      ]],
+    },
     {
       name = 'ChatGPT4',
       chat = true,
@@ -96,23 +130,6 @@ local config = {
     --     .. "- Don't elide any code from your output if the answer requires coding.\n"
     --     .. "- Take a deep breath; You've got this!\n",
     -- },
-    {
-      name = 'ChatGPT4o 🐥',
-      chat = true,
-      command = true,
-      model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-      system_prompt = [[
-        You are a general AI assistant.
-        The user provided the additional info about how they would like you to respond:
-        - If you're unsure don't guess and say you don't know instead.
-        - Ask question if you need clarification to provide better answer.
-        - Think deeply and carefully from first principles step by step.
-        - Zoom out first to see the big picture and then zoom in to details.
-        - Use Socratic method to improve your thinking and coding skills.
-        - Don't elide any code from your output if the answer requires coding.
-        - Take a deep breath; You've got this!
-      ]],
-    },
     -- {
     --   name = 'Coder3-5',
     --   chat = false,
@@ -124,18 +141,36 @@ local config = {
     --     START AND END YOUR ANSWER WITH: ```
     --   ]],
     -- },
-    {
-      name = 'Coder4o 📌',
-      chat = false,
-      command = true,
-      model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
-      system_prompt = [[
-        You are an AI working as a code editor.
-        Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-        START AND END YOUR ANSWER WITH: ```
-      ]],
-    },
   },
+  chat_dir = chatlogs_home,
+  -- chat user prompt prefix in chat buffer
+  chat_user_prefix = '👇',
+  -- prompt in command `:GpNew`
+  command_prompt_prefix_template = '👉 ye? [{{agent}}] ~ ',
+  -- chat assistant prompt prefix (static string or a table {static, template})
+  -- first string has to be static, second string can contain template {{agent}}
+  -- just a static string is legacy and the [{{agent}}] element is added automatically
+  -- if you really want just a static string, make it a table with one element { "🤖:" }
+  chat_assistant_prefix = { '😒 Bot: ', '[{{agent}}]' },
+  chat_shortcut_respond = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<c-x><c-x>',
+  },
+  chat_shortcut_delete = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<c-x>D',
+  },
+  chat_shortcut_stop = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<Plug>vs',
+  },
+  chat_shortcut_new = {
+    modes = { 'n', 'i', 'v', 'x' },
+    shortcut = '<Plug>vn',
+  },
+  -- prefix for all commands
+  cmd_prefix = 'Gp',
+  curl_params = {},
   -- chat topic generation prompt
   chat_topic_gen_prompt = [[
     Summarize the topic of our conversation above in 3 or 4 words.
