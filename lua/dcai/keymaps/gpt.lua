@@ -61,7 +61,7 @@ local config = {
   },
   agents = {
     {
-      name = 'CodeCloude',
+      name = 'CodeClaude',
       provider = 'anthropic',
       chat = false,
       command = true,
@@ -73,7 +73,7 @@ local config = {
       system_prompt = default_code_system_prompt,
     },
     {
-      name = 'Cloude',
+      name = 'Claude',
       provider = 'anthropic',
       chat = true,
       command = false,
