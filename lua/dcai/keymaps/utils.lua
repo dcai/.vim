@@ -62,16 +62,6 @@ end
 
 M.lazy_shell_cmd = lazy_shell_cmd
 
-local function shell_cmd(command)
-  return function(opts, desc)
-    return {
-      lazy_shell_cmd(command, opts, desc),
-      desc,
-    }
-  end
-end
-M.shell_cmd = shell_cmd
-
 M.git_cmd = function(opts)
   return lazy_shell_cmd('git', opts)
 end

@@ -1,4 +1,3 @@
-local utils = require('dcai.keymaps.utils')
 local group = 'chat'
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
@@ -15,23 +14,32 @@ local function wrapGpCmd(str)
   return ":<c-u>'<,'>" .. str .. '<cr>'
 end
 
-local chatlogs_home = vim.fn.expand(
-  vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
-    or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
-)
+local function dropbox_chat_dir()
+  return vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
+    or nil
+end
+local function std_chat_dir()
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
+end
 
-local default_code_model = 'claude-3-5-sonnet-20240620'
-local default_chat_model = 'gpt-4o'
+local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
-local translator_prompt =
-  'You are a Translator, translate the given chinese input to english or given english input to chinese, and provide brief explanation.'
+local claude_code_model = 'claude-3-5-sonnet-20240620'
+
+local translator_prompt = [[
+  Translate any provided text directly to Chinese or English,
+  based on the input language,
+  without adding any interpretation or additional commentary.
+]]
 
 local code_template = 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
   .. 'START AND END YOUR ANSWER WITH:\n\n```'
+
 local default_code_system_prompt = 'You are an AI working as a code editor.\n\n'
   .. code_template
 
-local default_prompt = [[
+local default_chat_prompt = [[
   You are a general AI assistant.
   The user provided the additional info about how they would like you to respond:
   - If you're unsure don't guess and say you don't know instead.
@@ -66,7 +74,7 @@ local config = {
       chat = false,
       command = true,
       model = {
-        model = 'claude-3-5-sonnet-20240620',
+        model = claude_code_model,
         temperature = 0.8,
         top_p = 1,
       },
@@ -78,18 +86,18 @@ local config = {
       chat = true,
       command = false,
       model = {
-        model = 'claude-3-5-sonnet-20240620',
+        model = claude_code_model,
         temperature = 0.8,
         top_p = 1,
       },
-      system_prompt = default_prompt,
+      system_prompt = default_chat_prompt,
     },
     {
       name = 'ChatGPT4o',
       chat = true,
       command = false,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-      system_prompt = default_prompt,
+      system_prompt = default_chat_prompt,
     },
     {
       name = 'CodeGPT4o',
@@ -336,7 +344,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_code_model,
+        nil,
         join({
           'You are an AI working as a code editor for a project using javascript, react and nodejs.',
           code_template,
@@ -351,7 +359,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_code_model,
+        nil,
         join({
           'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
           'Add tailwind class to style the components.',
@@ -367,7 +375,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_code_model,
+        nil,
         join({
           'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
           code_template,
@@ -380,13 +388,7 @@ local keymap = {
   {
     '<leader>cT',
     function()
-      gpplugin.new_chat(
-        {},
-        default_chat_model,
-        join({
-          translator_prompt,
-        })
-      )
+      gpplugin.new_chat({}, nil, translator_prompt)
     end,
     desc = 'Translator',
   },
@@ -396,7 +398,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_chat_model,
+        nil,
         join({
           'I want you to act as a etymologist. I will give you a word and you will research the origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable',
         })
@@ -409,7 +411,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_chat_model,
+        nil,
         join({
           'I want you to act as a historian and an archaeologist',
         })
@@ -423,7 +425,7 @@ local keymap = {
     function()
       gpplugin.new_chat(
         {},
-        default_code_model,
+        nil,
         join({
           'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
           code_template,
