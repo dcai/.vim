@@ -87,7 +87,7 @@ local config = {
     {
       name = 'ChatGPT4o',
       chat = true,
-      command = true,
+      command = false,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
       system_prompt = default_prompt,
     },
