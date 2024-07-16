@@ -1,10 +1,9 @@
 local utils = require('dcai.keymaps.utils')
+local group = 'LLM'
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
   return {
-    name = 'chatgpt',
-  }, {
-    name = 'chatgpt',
+    { '<leader>c', group = group },
   }
 end
 
@@ -20,10 +19,31 @@ local chatlogs_home = vim.fn.expand(
   vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
     or vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
 )
+
+local default_code_model = 'claude-3-5-sonnet-20240620'
+local default_chat_model = 'gpt-4o'
+
 local translator_prompt =
   'You are a Translator, translate the given chinese input to english or given english input to chinese, and provide brief explanation.'
 
--- https://github.com/Robitx/gp.nvim/blob/d90816b2e9185202d72f7b1346b6d33b36350886/lua/gp/config.lua#L8-L355
+local code_template = 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
+  .. 'START AND END YOUR ANSWER WITH:\n\n```'
+local default_code_system_prompt = 'You are an AI working as a code editor.\n\n'
+  .. code_template
+
+local default_prompt = [[
+  You are a general AI assistant.
+  The user provided the additional info about how they would like you to respond:
+  - If you're unsure don't guess and say you don't know instead.
+  - Ask question if you need clarification to provide better answer.
+  - Think deeply and carefully from first principles step by step.
+  - Zoom out first to see the big picture and then zoom in to details.
+  - Use Socratic method to improve your thinking and coding skills.
+  - Don't elide any code from your output if the answer requires coding.
+  - Take a deep breath; You've got this!
+]]
+
+-- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
 local config = {
   providers = {
     openai = {
@@ -41,7 +61,19 @@ local config = {
   },
   agents = {
     {
-      name = 'Cloude ☁️',
+      name = 'CodeCloude',
+      provider = 'anthropic',
+      chat = false,
+      command = true,
+      model = {
+        model = 'claude-3-5-sonnet-20240620',
+        temperature = 0.8,
+        top_p = 1,
+      },
+      system_prompt = default_code_system_prompt,
+    },
+    {
+      name = 'Cloude',
       provider = 'anthropic',
       chat = true,
       command = false,
@@ -50,57 +82,21 @@ local config = {
         temperature = 0.8,
         top_p = 1,
       },
-      system_prompt = [[
-        You are a general AI assistant.
-        The user provided the additional info about how they would like you to respond:
-        - If you're unsure don't guess and say you don't know instead.
-        - Ask question if you need clarification to provide better answer.
-        - Think deeply and carefully from first principles step by step.
-        - Zoom out first to see the big picture and then zoom in to details.
-        - Use Socratic method to improve your thinking and coding skills.
-        - Don't elide any code from your output if the answer requires coding.
-        - Take a deep breath; You've got this!
-      ]],
+      system_prompt = default_prompt,
     },
     {
-      name = 'ChatGPT4o 🐥',
+      name = 'ChatGPT4o',
       chat = true,
       command = true,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-      system_prompt = [[
-        You are a general AI assistant.
-        The user provided the additional info about how they would like you to respond:
-        - If you're unsure don't guess and say you don't know instead.
-        - Ask question if you need clarification to provide better answer.
-        - Think deeply and carefully from first principles step by step.
-        - Zoom out first to see the big picture and then zoom in to details.
-        - Use Socratic method to improve your thinking and coding skills.
-        - Don't elide any code from your output if the answer requires coding.
-        - Take a deep breath; You've got this!
-      ]],
+      system_prompt = default_prompt,
     },
     {
-      name = 'Coder4o 📌',
+      name = 'CodeGPT4o',
       chat = false,
       command = true,
       model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
-      system_prompt = [[
-        You are an AI working as a code editor.
-        Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-        START AND END YOUR ANSWER WITH: ```
-      ]],
-    },
-    {
-      name = 'ChatGPT4',
-      chat = true,
-      command = false,
-      disable = true,
-    },
-    {
-      name = 'CodeGPT4',
-      chat = true,
-      command = false,
-      disable = true,
+      system_prompt = default_code_system_prompt,
     },
     {
       name = 'CodeGPT3-5',
@@ -114,33 +110,14 @@ local config = {
       command = false,
       disable = true,
     },
-    -- {
-    --   name = 'ChatGPT3-5',
-    --   chat = true,
-    --   command = false,
-    --   model = { model = 'gpt-3.5-turbo', temperature = 1.1, top_p = 1 },
-    --   -- system prompt (use this to specify the persona/role of the AI)
-    --   system_prompt = 'You are a general AI assistant.\n\n'
-    --     .. 'The user provided the additional info about how they would like you to respond:\n\n'
-    --     .. "- If you're unsure don't guess and say you don't know instead.\n"
-    --     .. '- Ask question if you need clarification to provide better answer.\n'
-    --     .. '- Think deeply and carefully from first principles step by step.\n'
-    --     .. '- Zoom out first to see the big picture and then zoom in to details.\n'
-    --     .. '- Use Socratic method to improve your thinking and coding skills.\n'
-    --     .. "- Don't elide any code from your output if the answer requires coding.\n"
-    --     .. "- Take a deep breath; You've got this!\n",
-    -- },
-    -- {
-    --   name = 'Coder3-5',
-    --   chat = false,
-    --   command = true,
-    --   model = { model = 'gpt-3.5-turbo', temperature = 0.8, top_p = 1 },
-    --   system_prompt = [[
-    --     You are an AI working as a code editor.
-    --     Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-    --     START AND END YOUR ANSWER WITH: ```
-    --   ]],
-    -- },
+    {
+      name = 'ChatClaude-3-Haiku',
+      disable = true,
+    },
+    {
+      name = 'CodeClaude-3-Haiku',
+      disable = true,
+    },
   },
   chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
@@ -296,8 +273,7 @@ local config = {
 }
 gpplugin.setup(config)
 
-local group = 'gpt'
-local chatgpt_keymap_n = {
+local keymap = {
   { '<leader>c', group = group },
   {
     '<leader>cD',
@@ -360,15 +336,14 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_code_model,
         join({
           'You are an AI working as a code editor for a project using javascript, react and nodejs.',
-          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
-          'START AND END YOUR ANSWER WITH: ```',
+          code_template,
         })
       )
     end,
-    desc = 'topic [javascript]',
+    desc = '#topic: js',
   },
   ---php and laravel
   {
@@ -376,16 +351,15 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_code_model,
         join({
           'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
           'Add tailwind class to style the components.',
-          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
-          'START AND END YOUR ANSWER WITH: ```',
+          code_template,
         })
       )
     end,
-    desc = 'topic [php]',
+    desc = '#topic: laravel',
   },
   ---tailwind
   {
@@ -393,15 +367,14 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_code_model,
         join({
           'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
-          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
-          'START AND END YOUR ANSWER WITH: ```',
+          code_template,
         })
       )
     end,
-    desc = 'topic [tailwind]',
+    desc = '#topic: tailwind',
   },
   -- Translator
   {
@@ -409,7 +382,7 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_chat_model,
         join({
           translator_prompt,
         })
@@ -423,13 +396,26 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_chat_model,
         join({
           'I want you to act as a etymologist. I will give you a word and you will research the origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable',
         })
       )
     end,
-    desc = 'Etymologist',
+    desc = '#topic: Etymologist',
+  },
+  {
+    '<leader>cH',
+    function()
+      gpplugin.new_chat(
+        {},
+        default_chat_model,
+        join({
+          'I want you to act as a historian and an archaeologist',
+        })
+      )
+    end,
+    desc = '#topic: history',
   },
   ---neovim and lua
   {
@@ -437,15 +423,14 @@ local chatgpt_keymap_n = {
     function()
       gpplugin.new_chat(
         {},
-        'gpt-4o',
+        default_code_model,
         join({
           'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
-          'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.',
-          'START AND END YOUR ANSWER WITH: ```',
+          code_template,
         })
       )
     end,
-    desc = 'topic [neovim]',
+    desc = '#topic: neovim',
   },
   {
     '<leader>ca',
@@ -480,4 +465,4 @@ local chatgpt_keymap_n = {
   },
 }
 
-return chatgpt_keymap_n
+return keymap
