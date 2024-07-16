@@ -309,14 +309,14 @@ local keymap = {
     desc = 'Chat Finder',
   },
   {
-    '<leader>cn',
+    '<leader>cN',
     function()
       vim.cmd('GpNextAgent')
     end,
     desc = 'next agent',
   },
   {
-    '<leader>cN',
+    '<leader>cn',
     function()
       vim.cmd('GpChatNew')
     end,
@@ -332,7 +332,7 @@ local keymap = {
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
   ---javascript react and nodejs
   {
-    '<leader>cf',
+    '<leader>cJ',
     function()
       gpplugin.new_chat(
         {},
@@ -347,7 +347,7 @@ local keymap = {
   },
   ---php and laravel
   {
-    '<leader>cp',
+    '<leader>cP',
     function()
       gpplugin.new_chat(
         {},
@@ -363,7 +363,7 @@ local keymap = {
   },
   ---tailwind
   {
-    '<leader>ct',
+    '<leader>cT',
     function()
       gpplugin.new_chat(
         {},
@@ -419,7 +419,7 @@ local keymap = {
   },
   ---neovim and lua
   {
-    '<leader>cl',
+    '<leader>cL',
     function()
       gpplugin.new_chat(
         {},
