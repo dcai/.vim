@@ -1,5 +1,5 @@
 local utils = require('dcai.keymaps.utils')
-local group = 'LLM'
+local group = 'chat'
 local loaded, gpplugin = pcall(require, 'gp')
 if not loaded then
   return {
@@ -450,6 +450,9 @@ local keymap = {
     end,
     desc = 'Select an agent',
   },
+  ----------------------------------------------------------------------------
+  --- Visual mode below
+  ----------------------------------------------------------------------------
   { '<leader>c', group = group, mode = 'v' },
   {
     '<leader>cn',
