@@ -41,7 +41,7 @@ let g:ale_biome_executable = 'biome'
 
 let s:default_js_linter = []
 let s:jslinter = g:IsEnvVarSet('JSLINTER') ? [getenv('JSLINTER')] : s:default_js_linter
-let s:jsfixer = g:IsEnvVarSet('JSFIXER') ? [getenv('JSFIXER')] : ['biome']
+let s:jsfixer = g:IsEnvVarSet('JSFIXER') ? [getenv('JSFIXER')] : ['prettier']
 
 " Ale linters settings
 let g:ale_linters = {
@@ -82,8 +82,8 @@ let g:ale_fixers = {
   \ 'java': ['clang-format'],
   \ 'javascript': s:jsfixer,
   \ 'javascriptreact': s:jsfixer,
-  \ 'json': ['biome'],
-  \ 'json5': ['biome'],
+  \ 'json': ['prettier'],
+  \ 'json5': ['prettier'],
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
