@@ -46,27 +46,27 @@ M.setup = function(plugOpts)
     Plug('Robitx/gp.nvim')
     Plug('monkoose/neocodeium')
     -- Plug('Exafunction/codeium.nvim')
-    Plug('Exafunction/codeium.vim', {
-      setup = function()
-        -- vim.g.codeium_enabled = true
-        -- vim.g.codeium_disable_bindings = 1
-        -- vim.g.codeium_no_map_tab = true
-        -- vim.g.codeium_log_file = vim.fn.stdpath('log') .. '/codeium.vim.log'
-        -- -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-        -- vim.keymap.set('i', '<c-f>', function()
-        --   vim.cmd('call codeium#Accept()')
-        -- end, {
-        --   silent = true,
-        --   nowait = true,
-        -- })
-        -- vim.keymap.set('i', '<c-n>', function()
-        --   vim.cmd('call codeium#CycleCompletions(1)')
-        -- end, {
-        --   silent = true,
-        --   nowait = true,
-        -- })
-      end,
-    })
+    -- Plug('Exafunction/codeium.vim', {
+    --   setup = function()
+    --     -- vim.g.codeium_enabled = true
+    --     -- vim.g.codeium_disable_bindings = 1
+    --     -- vim.g.codeium_no_map_tab = true
+    --     -- vim.g.codeium_log_file = vim.fn.stdpath('log') .. '/codeium.vim.log'
+    --     -- -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
+    --     -- vim.keymap.set('i', '<c-f>', function()
+    --     --   vim.cmd('call codeium#Accept()')
+    --     -- end, {
+    --     --   silent = true,
+    --     --   nowait = true,
+    --     -- })
+    --     -- vim.keymap.set('i', '<c-n>', function()
+    --     --   vim.cmd('call codeium#CycleCompletions(1)')
+    --     -- end, {
+    --     --   silent = true,
+    --     --   nowait = true,
+    --     -- })
+    --   end,
+    -- })
     -- Plug('zbirenbaum/copilot.lua')
     -- Plug('github/copilot.vim')
   end
@@ -88,17 +88,8 @@ M.setup = function(plugOpts)
       end
     end,
   })
-  Plug('sindrets/diffview.nvim')
   Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
-  Plug('akinsho/toggleterm.nvim', {
-    setup = function()
-      local loaded, toggleterm = pcall(require, 'toggleterm')
-      if loaded then
-        toggleterm.setup({})
-      end
-    end,
-  })
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
