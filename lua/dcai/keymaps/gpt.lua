@@ -6,6 +6,9 @@ if not loaded then
   }
 end
 
+local claude_code_model = 'claude-3-5-sonnet-20240620'
+local chat_topic_gen_model = 'gpt-4o-mini'
+
 local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
 end
@@ -24,8 +27,6 @@ local function std_chat_dir()
 end
 
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
-
-local claude_code_model = 'claude-3-5-sonnet-20240620'
 
 local translator_prompt = [[
   Translate any provided text directly to Chinese or English,
@@ -90,6 +91,13 @@ local config = {
         temperature = 0.8,
         top_p = 1,
       },
+      system_prompt = default_chat_prompt,
+    },
+    {
+      name = 'GPT-4o mini',
+      chat = true,
+      command = true,
+      model = { model = 'gpt-4o-mini', temperature = 1.1, top_p = 1 },
       system_prompt = default_chat_prompt,
     },
     {
@@ -162,7 +170,7 @@ local config = {
     Respond only with those words.
   ]],
   -- chat topic model (string with model name or table with model name and parameters)
-  chat_topic_gen_model = 'gpt-3.5-turbo-16k',
+  chat_topic_gen_model = chat_topic_gen_model,
   -- explicitly confirm deletion of a chat file
   chat_confirm_delete = true,
   -- conceal model parameters in chat
@@ -238,8 +246,7 @@ local config = {
 
     -- -- example of adding command which opens new chat dedicated for translation
     Translator = function(gp, params)
-      local agent = gp.get_command_agent()
-      gp.cmd.ChatNew(params, agent.model, translator_prompt)
+      gp.cmd.ChatNew(params, nil, translator_prompt)
     end,
 
     -- -- example of adding command which writes unit tests for the selected code
@@ -418,6 +425,20 @@ local keymap = {
       )
     end,
     desc = '#topic: history',
+  },
+  {
+    '<leader>cT',
+    function()
+      gpplugin.new_chat(
+        {},
+        nil,
+        join({
+          translator_prompt,
+          code_template,
+        })
+      )
+    end,
+    desc = '#topic: translate',
   },
   ---neovim and lua
   {

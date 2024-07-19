@@ -67,6 +67,8 @@ M.git_cmd = function(opts)
 end
 
 M.live_grep = function()
+  -- local telescope = require('telescope.builtin')
+  -- telescope.live_grep({ cwd = G.git_root() })
   local fzf = require('fzf-lua')
   fzf.live_grep({ cwd = G.git_root() })
 end
