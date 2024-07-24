@@ -27,7 +27,7 @@ local git_keymap = {
   { '<leader>g3', '<cmd>diffget //3<cr>' },
   { '<leader>ga', '<cmd>Gwrite<cr>' },
   { '<leader>gA', '<cmd>Git add -A<cr>' },
-  { '<leader>gA', '<cmd>FzfLua git_branches<cr>', desc = 'checkout branch' },
+  { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'checkout branch' },
   { '<leader>gc', '<cmd>Git commit -a<cr>', desc = 'commit all' },
   { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
   {

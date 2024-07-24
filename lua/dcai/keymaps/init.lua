@@ -74,16 +74,6 @@ wk.add({
 
 local user_config = {
   preset = 'classic',
-  -- Enable/disable WhichKey for certain mapping modes
-  modes = {
-    n = true, -- Normal mode
-    i = true, -- Insert mode
-    x = true, -- Visual mode
-    s = true, -- Select mode
-    o = false, -- Operator pending mode
-    t = false, -- Terminal mode
-    c = true, -- Command mode
-  },
   -- show a warning when issues were detected with your mappings
   notify = true,
   plugins = {
@@ -155,7 +145,9 @@ local user_config = {
   },
   show_help = true, -- show help message on the command line when the popup is visible
   show_keys = true, -- show the currently pressed key and its label as a message in the command line
-  triggers = 'auto', -- automatically setup triggers
+  triggers = {
+    { '<auto>', mode = 'nxsot' },
+  },
   -- disable = {
   --   -- disable WhichKey for certain buf types and file types.
   --   ft = {},
