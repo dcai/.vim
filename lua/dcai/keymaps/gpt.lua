@@ -8,6 +8,7 @@ end
 
 local claude_code_model = 'claude-3-5-sonnet-20240620'
 local chat_topic_gen_model = 'gpt-4o-mini'
+local new_chat_params = {}
 
 local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
@@ -70,7 +71,7 @@ local config = {
   },
   agents = {
     {
-      name = 'CodeClaude',
+      name = 'CodeClaudeSonnet',
       provider = 'anthropic',
       chat = false,
       command = true,
@@ -82,7 +83,7 @@ local config = {
       system_prompt = default_code_system_prompt,
     },
     {
-      name = 'Claude',
+      name = 'ClaudeSonnet',
       provider = 'anthropic',
       chat = true,
       command = false,
@@ -132,6 +133,14 @@ local config = {
     },
     {
       name = 'CodeClaude-3-Haiku',
+      disable = true,
+    },
+    {
+      name = 'ChatClaude-3-5-Sonnet',
+      disable = true,
+    },
+    {
+      name = 'CodeClaude-3-5-Sonnet',
       disable = true,
     },
   },
@@ -244,12 +253,10 @@ local config = {
       vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
     end,
 
-    -- -- example of adding command which opens new chat dedicated for translation
     Translator = function(gp, params)
       gp.cmd.ChatNew(params, nil, translator_prompt)
     end,
 
-    -- -- example of adding command which writes unit tests for the selected code
     UnitTests = function(gp, params)
       local template = join({
         'I have the following code from {{filename}}: ',
@@ -267,7 +274,6 @@ local config = {
       )
     end,
 
-    -- -- example of adding command which explains the selected code
     Explain = function(gp, params)
       local template = join({
         'I have the following code from {{filename}}:',
@@ -350,8 +356,8 @@ local keymap = {
     '<leader>cJ',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'You are an AI working as a code editor for a project using javascript, react and nodejs.',
           code_template,
@@ -365,8 +371,8 @@ local keymap = {
     '<leader>cP',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
           'Add tailwind class to style the components.',
@@ -378,11 +384,11 @@ local keymap = {
   },
   ---tailwind
   {
-    '<leader>cT',
+    '<leader>cS',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
           code_template,
@@ -395,17 +401,17 @@ local keymap = {
   {
     '<leader>cT',
     function()
-      gpplugin.new_chat({}, nil, translator_prompt)
+      gpplugin.new_chat(new_chat_params, false, translator_prompt)
     end,
-    desc = 'Translator',
+    desc = '#topic: translate',
   },
   -- etymologist
   {
     '<leader>cE',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'I want you to act as a etymologist. I will give you a word and you will research the origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable',
         })
@@ -417,8 +423,8 @@ local keymap = {
     '<leader>cH',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'I want you to act as a historian and an archaeologist',
         })
@@ -426,27 +432,13 @@ local keymap = {
     end,
     desc = '#topic: history',
   },
-  {
-    '<leader>cT',
-    function()
-      gpplugin.new_chat(
-        {},
-        nil,
-        join({
-          translator_prompt,
-          code_template,
-        })
-      )
-    end,
-    desc = '#topic: translate',
-  },
   ---neovim and lua
   {
     '<leader>cL',
     function()
       gpplugin.new_chat(
-        {},
-        nil,
+        new_chat_params,
+        false,
         join({
           'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
           code_template,
