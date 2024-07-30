@@ -95,13 +95,6 @@ local config = {
       system_prompt = default_chat_prompt,
     },
     {
-      name = 'GPT-4o mini',
-      chat = true,
-      command = true,
-      model = { model = 'gpt-4o-mini', temperature = 1.1, top_p = 1 },
-      system_prompt = default_chat_prompt,
-    },
-    {
       name = 'ChatGPT4o',
       chat = true,
       command = false,
