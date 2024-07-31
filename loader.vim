@@ -3,8 +3,7 @@
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 
-" check if dropbox_home folder exists, if not, echo error message
-let g:dropbox_home = expand('$HOME/Dropbox')
+let g:dropbox_home = getenv('DROPBOX_HOME') || expand('$HOME/Dropbox')
 
 let g:vim_home = expand('<sfile>:p:h')
 
