@@ -19,7 +19,7 @@ local vim_keymap = {
     function()
       vim.cmd('checkhealth')
     end,
-    desc = 'PlugUpdate',
+    desc = 'checkhealth',
   },
   {
     '<leader>vU',
