@@ -290,6 +290,24 @@ gpplugin.setup(config)
 local keymap = {
   { '<leader>c', group = group },
   {
+    '<leader>ca',
+    function()
+      local agents = {}
+      for key, _ in pairs(gpplugin.agents) do
+        table.insert(agents, key)
+      end
+      require('fzf-lua').fzf_exec(agents, {
+        actions = {
+          default = function(selected, _)
+            local selected_agent = selected[1]
+            vim.cmd('GpAgent ' .. selected_agent)
+          end,
+        },
+      })
+    end,
+    desc = 'Select an agent',
+  },
+  {
     '<leader>cD',
     function()
       vim.cmd('GpChatDelete')
@@ -357,7 +375,7 @@ local keymap = {
         })
       )
     end,
-    desc = '#topic: js',
+    desc = '#topic: javascript',
   },
   ---php and laravel
   {
@@ -439,24 +457,6 @@ local keymap = {
       )
     end,
     desc = '#topic: neovim',
-  },
-  {
-    '<leader>ca',
-    function()
-      local agents = {}
-      for key, _ in pairs(gpplugin.agents) do
-        table.insert(agents, key)
-      end
-      require('fzf-lua').fzf_exec(agents, {
-        actions = {
-          default = function(selected, _)
-            local selected_agent = selected[1]
-            vim.cmd('GpAgent ' .. selected_agent)
-          end,
-        },
-      })
-    end,
-    desc = 'Select an agent',
   },
   ----------------------------------------------------------------------------
   --- Visual mode below
