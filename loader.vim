@@ -3,7 +3,11 @@
 " set shell=/bin/bash\ --norc\ --noprofile
 set shell=/bin/sh
 
-let g:dropbox_home = getenv('DROPBOX_HOME') || expand('$HOME/Dropbox')
+function! g:EnvVar(name, default)
+  return !empty(getenv(a:name)) ? getenv(a:name) : a:default
+endfunction
+
+let g:dropbox_home = g:EnvVar('DROPBOX_HOME', expand('$HOME/Dropbox'))
 
 let g:vim_home = expand('<sfile>:p:h')
 
@@ -52,10 +56,6 @@ endfunction
 function! g:IsEnvVarFalse(name)
   let l:v = getenv(a:name)
   return  or(l:v ==? 'false', l:v == '0')
-endfunction
-
-function! g:EnvVar(name, default)
-  return !empty(getenv(a:name)) ? getenv(a:name) : a:default
 endfunction
 
 " this must load before others
