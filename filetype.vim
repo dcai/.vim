@@ -66,7 +66,10 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile *.envrc setf sh
 
   " dotenv
-  autocmd BufRead,BufNewFile .env.* setf sh
+  autocmd BufRead,BufNewFile .env.*,.env setf sh
+  autocmd BufEnter PKGBUILD,.env,.env.*
+    \ let b:ale_sh_shellcheck_exclusions = 'SC2034,SC2154,SC2164'
+
 
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
