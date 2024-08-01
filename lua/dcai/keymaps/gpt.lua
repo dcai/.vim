@@ -35,10 +35,12 @@ local translator_prompt = [[
   without adding any interpretation or additional commentary.
 ]]
 
-local code_template = 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
-  .. 'START AND END YOUR ANSWER WITH:\n\n```'
+local code_template = [[
+  Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+  START AND END YOUR ANSWER WITH: ```
+]]
 
-local default_code_system_prompt = 'You are an AI working as a code editor.\n\n'
+local default_code_system_prompt = 'You are an AI working as a code editor.'
   .. code_template
 
 local default_chat_prompt = [[
@@ -103,6 +105,7 @@ local config = {
     },
     {
       name = 'CodeGPT4o',
+      disable = true,
       chat = false,
       command = true,
       model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
@@ -118,6 +121,18 @@ local config = {
       name = 'ChatGPT3-5',
       chat = true,
       command = false,
+      disable = true,
+    },
+    {
+      name = 'ChatGemini',
+      disable = true,
+    },
+    {
+      name = 'CodeGPT4o-mini',
+      disable = true,
+    },
+    {
+      name = 'CodeGemini',
       disable = true,
     },
     {
