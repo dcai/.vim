@@ -392,6 +392,21 @@ local keymap = {
     end,
     desc = '#topic: javascript',
   },
+  ---python
+  {
+    '<leader>cp',
+    function()
+      gpplugin.new_chat(
+        new_chat_params,
+        false,
+        join({
+          'You are an AI working as a code editor for python project.',
+          code_template,
+        })
+      )
+    end,
+    desc = '#topic: python',
+  },
   ---php and laravel
   {
     '<leader>cP',
