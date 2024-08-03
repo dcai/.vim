@@ -369,6 +369,13 @@ if has('nvim')
         \ }
   call s:apply(s:neovim_only)
 
+  let s:whichkey = {
+        \ 'WhichKeyTitle': {'fg': s:white,'bg': s:none},
+        \ 'WhichKeyBorder': {'fg': s:white,'bg': s:none},
+        \ 'WhichKeyNormal': {'fg': s:darkgray,'bg': s:none}
+        \ }
+  call s:apply(s:whichkey)
+
   let s:cmp = {
         \ 'CmpItemAbbr':           {'fg': s:darkgray,  'bg': s:none},
         \ 'CmpItemAbbrDeprecated': {'fg': s:green,  'bg': s:none},
