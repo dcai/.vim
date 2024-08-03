@@ -116,7 +116,8 @@ local user_config = {
   --- * mod: special modifier keys last
   --- * manual: the order the mappings were added
   --- * case: lower-case first
-  sort = { 'local', 'order', 'group', 'alphanum', 'mod', 'manual' },
+  -- sort = { 'local', 'order', 'group', 'alphanum', 'mod', 'manual' },
+  sort = { 'manual' },
   ---@type number|fun(node: wk.Node):boolean?
   expand = 1, -- expand groups when <= n mappings
   icons = {
@@ -175,7 +176,7 @@ local user_config = {
     -- height = { min = 4, max = 25 },
     -- col = 0,
     -- row = math.huge,
-    -- border = "none",
+    border = 'rounded',
     padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
     title = true,
     title_pos = 'center',
