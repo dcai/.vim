@@ -320,7 +320,7 @@ local keymap = {
         },
       })
     end,
-    desc = 'Select an agent',
+    desc = 'select an agent',
   },
   {
     '<leader>cD',
@@ -353,7 +353,7 @@ local keymap = {
         },
       })
     end,
-    desc = 'Chat Finder',
+    desc = 'chat finder',
   },
   {
     '<leader>cN',
@@ -394,7 +394,7 @@ local keymap = {
   },
   ---python
   {
-    '<leader>cp',
+    '<leader>cY',
     function()
       gpplugin.new_chat(
         new_chat_params,
@@ -458,7 +458,7 @@ local keymap = {
         })
       )
     end,
-    desc = '#topic: Etymologist',
+    desc = '#topic: etymologist',
   },
   {
     '<leader>cH',
