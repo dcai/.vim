@@ -305,22 +305,18 @@ gpplugin.setup(config)
 local keymap = {
   { '<leader>c', group = group },
   {
-    '<leader>ca',
+    '<leader>cc',
     function()
-      local agents = {}
-      for key, _ in pairs(gpplugin.agents) do
-        table.insert(agents, key)
-      end
-      require('fzf-lua').fzf_exec(agents, {
-        actions = {
-          default = function(selected, _)
-            local selected_agent = selected[1]
-            vim.cmd('GpAgent ' .. selected_agent)
-          end,
-        },
-      })
+      vim.cmd('GpChatToggle')
     end,
-    desc = 'select an agent',
+    desc = 'toggle chat',
+  },
+  {
+    '<leader>cn',
+    function()
+      vim.cmd('GpChatNew')
+    end,
+    desc = 'new chat buffer',
   },
   {
     '<leader>cD',
@@ -356,25 +352,29 @@ local keymap = {
     desc = 'chat finder',
   },
   {
+    '<leader>ca',
+    function()
+      local agents = {}
+      for key, _ in pairs(gpplugin.agents) do
+        table.insert(agents, key)
+      end
+      require('fzf-lua').fzf_exec(agents, {
+        actions = {
+          default = function(selected, _)
+            local selected_agent = selected[1]
+            vim.cmd('GpAgent ' .. selected_agent)
+          end,
+        },
+      })
+    end,
+    desc = 'select an agent',
+  },
+  {
     '<leader>cN',
     function()
       vim.cmd('GpNextAgent')
     end,
     desc = 'next agent',
-  },
-  {
-    '<leader>cn',
-    function()
-      vim.cmd('GpChatNew')
-    end,
-    desc = 'new chat buffer',
-  },
-  {
-    '<leader>cc',
-    function()
-      vim.cmd('GpChatToggle')
-    end,
-    desc = 'toggle chat',
   },
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
   ---javascript react and nodejs
