@@ -303,13 +303,7 @@ local config = {
         'Please respond by writing table driven unit tests for the code above.',
       })
       local agent = gp.get_command_agent()
-      gp.Prompt(
-        params,
-        gp.Target.enew,
-        agent.model,
-        template,
-        agent.system_prompt
-      )
+      gp.Prompt(params, gp.Target.enew, agent, template)
     end,
 
     Explain = function(gp, params)
@@ -319,14 +313,7 @@ local config = {
         'Please respond by explaining the code above and keep the response concise and straightforward.',
       })
       local agent = gp.get_chat_agent()
-      gp.Prompt(
-        params,
-        gp.Target.popup,
-        nil,
-        agent.model,
-        template,
-        agent.system_prompt
-      )
+      gp.Prompt(params, gp.Target.popup, agent, template)
     end,
   },
 }
@@ -486,9 +473,11 @@ local keymap = {
       gpplugin.new_chat(
         new_chat_params,
         false,
-        join({
-          'I want you to act as a etymologist. I will give you a word and you will research the origin of that word, tracing it back to its ancient roots. You should also provide information on how the meaning of the word has changed over time, if applicable',
-        })
+        [[
+          I want you to act as a etymologist. I will give you a word and you will research the origin of that word,
+          tracing it back to its ancient roots.
+          You should also provide information on how the meaning of the word has changed over time, if applicable
+        ]]
       )
     end,
     desc = '#topic: etymologist',
