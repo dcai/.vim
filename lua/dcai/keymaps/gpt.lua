@@ -8,6 +8,7 @@ end
 
 local claude_code_model = 'claude-3-5-sonnet-20240620'
 local chat_topic_gen_model = 'gpt-4o-mini'
+local translator_model = 'gpt-4o-mini'
 local new_chat_params = {}
 
 local function join(tbl, sep)
@@ -102,6 +103,17 @@ local config = {
       command = false,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
       system_prompt = default_chat_prompt,
+    },
+    {
+      name = 'TranslateAgent',
+      chat = false,
+      command = true,
+      model = { model = translator_model, temperature = 0.8, top_p = 1 },
+      system_prompt = [[
+        you are dictionary/translator,
+        response detailed translation in chinese in the format same as oxford dictionary,
+        then response essential usage examples in english.
+      ]],
     },
     {
       name = 'CodeGPT4o',
@@ -262,7 +274,26 @@ local config = {
     end,
 
     Translator = function(gp, params)
-      gp.cmd.ChatNew(params, nil, translator_prompt)
+      local agent = gp.get_chat_agent('ChatGPT4o-mini')
+      gp.cmd.ChatNew(params, translator_prompt, agent)
+    end,
+
+    Dict = function(gp, params)
+      local input = params.args
+      if input then
+        gp.Prompt(
+          params,
+          gp.Target.popup,
+          gp.get_chat_agent('TranslateAgent'),
+          join({
+            'translate this: ```',
+            input,
+            '```',
+          })
+        )
+      else
+        gp.cmd.ChatNew(params, translator_prompt)
+      end
     end,
 
     UnitTests = function(gp, params)
@@ -275,7 +306,6 @@ local config = {
       gp.Prompt(
         params,
         gp.Target.enew,
-        nil,
         agent.model,
         template,
         agent.system_prompt
@@ -314,7 +344,7 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      vim.cmd('GpChatNew')
+      gpplugin.new_chat(new_chat_params, false, default_chat_prompt)
     end,
     desc = 'new chat buffer',
   },
@@ -385,12 +415,15 @@ local keymap = {
         new_chat_params,
         false,
         join({
-          'You are an AI working as a code editor for a project using javascript, react and nodejs.',
+          [[
+          You are an AI working as a code editor for a project using react with javascript in frontend,
+          express and nodejs for api, the unit tests are written in mocha and sinon.
+          ]],
           code_template,
         })
       )
     end,
-    desc = '#topic: javascript',
+    desc = '#topic: JS/TS',
   },
   ---python
   {

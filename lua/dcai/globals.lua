@@ -354,6 +354,7 @@ G.smart_root = root({
   '.vscode',
   'biome.json',
   'biome.jsonc',
+  'tsconfig.json',
   '.editorconfig',
   '.tool-versions',
   '.mise.toml',
