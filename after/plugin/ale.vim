@@ -93,6 +93,7 @@ let g:ale_fixers = {
   \ 'sh': ['shfmt'],
   \ 'svelte': ['prettier'],
   \ 'sql': ['pgformatter'],
+  \ 'swift': ['swiftformat'],
   \ 'terraform': ['terraform'],
   \ 'typescript': s:jsfixer,
   \ 'typescriptreact': s:jsfixer,
