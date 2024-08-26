@@ -101,8 +101,8 @@ local git_keymap = {
   },
   {
     '<leader>gj',
-    '<cmd>Git rebase -i --committer-date-is-author-date origin/HEAD~5<cr>',
-    desc = 'rebase HEAD~5',
+    '<cmd>Git -c sequence.editor=: rebase --autosquash -i origin/HEAD<cr>',
+    desc = 'rebase origin/HEAD',
   },
   {
     '<leader>gs',
