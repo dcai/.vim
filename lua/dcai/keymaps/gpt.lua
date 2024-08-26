@@ -257,7 +257,21 @@ local config = {
 
       local agent = gp.get_command_agent()
 
-      gp.Prompt(params, gp.Target.rewrite, agent, template, nil, nil)
+      --- params table  # vim command parameters such as range, args, etc.
+      --- target number | function | table  # where to put the response
+      --- agent table  # obtained from get_command_agent or get_chat_agent
+      --- template string  # template with model instructions
+      --- prompt string | nil  # nil for non interactive commads
+      --- whisper string | nil  # predefined input (e.g. obtained from Whisper)
+      --- callback function | nil  # callback after completing the prompt
+      gp.Prompt(
+        params,
+        gp.Target.rewrite,
+        agent,
+        template,
+        nil, -- command will run directly without any prompting for user input
+        nil -- no predefined instructions (e.g. speech-to-text from Whisper)
+      )
     end,
 
     BufferChatNew = function(gp, _)
@@ -403,6 +417,21 @@ local keymap = {
       )
     end,
     desc = '#topic: JS/TS',
+  },
+  ---coding general
+  {
+    '<leader>cG',
+    function()
+      gpplugin.new_chat(
+        new_chat_params,
+        false,
+        join({
+          'You are an AI working as a code editor for software project.',
+          code_template,
+        })
+      )
+    end,
+    desc = '#topic: coding general',
   },
   ---python
   {
