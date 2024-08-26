@@ -256,16 +256,8 @@ local config = {
       })
 
       local agent = gp.get_command_agent()
-      gp.info('Implementing selection with agent: ' .. agent.name)
 
-      gp.Prompt(
-        params,
-        gp.Target.rewrite,
-        nil, -- command will run directly without any prompting for user input
-        agent.model,
-        template,
-        agent.system_prompt
-      )
+      gp.Prompt(params, gp.Target.rewrite, agent, template, nil, nil)
     end,
 
     BufferChatNew = function(gp, _)
