@@ -504,3 +504,14 @@ cfg.emmet_language_server.setup({
 
   on_attach = common_on_attach,
 })
+
+cfg.sourcekit.setup({
+  on_attach = common_on_attach,
+  capabilities = {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    },
+  },
+})
