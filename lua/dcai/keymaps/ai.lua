@@ -6,17 +6,24 @@ if not loaded then
   }
 end
 
+local cmd_prefix = 'Ai'
 local claude_code_model = 'claude-3-5-sonnet-20240620'
 local chat_topic_gen_model = 'gpt-4o-mini'
 local translator_model = 'gpt-4o-mini'
-local new_chat_params = {}
+
+local new_chat_params = {
+  -- params = {},      -- table  # vim command parameters such as range, args, etc.
+  -- toggle = false,   -- boolean # whether chat is toggled
+  -- system_prompt = nil,  -- string | nil # system prompt to use
+  -- agent = nil,  -- table | nil # obtained from get_command_agent or get_chat_agent
+}
 
 local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
 end
 
 local function wrapGpCmd(str)
-  return ":<c-u>'<,'>" .. str .. '<cr>'
+  return ":<c-u>'<,'>" .. cmd_prefix .. str .. '<cr>'
 end
 
 local function dropbox_chat_dir()
@@ -56,8 +63,11 @@ local default_chat_prompt = [[
   - Take a deep breath; You've got this!
 ]]
 
+local cmd_prefix = 'Ai'
 -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
 local config = {
+  -- prefix for all commands
+  cmd_prefix = cmd_prefix,
   providers = {
     openai = {
       endpoint = 'https://api.openai.com/v1/chat/completions',
@@ -167,7 +177,6 @@ local config = {
   chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
   chat_user_prefix = '👇',
-  -- prompt in command `:GpNew`
   command_prompt_prefix_template = '👉 ye? [{{agent}}] ~ ',
   -- chat assistant prompt prefix (static string or a table {static, template})
   -- first string has to be static, second string can contain template {{agent}}
@@ -190,8 +199,6 @@ local config = {
     modes = { 'n', 'i', 'v', 'x' },
     shortcut = '<Plug>vn',
   },
-  -- prefix for all commands
-  cmd_prefix = 'Gp',
   curl_params = {},
   -- chat topic generation prompt
   chat_topic_gen_prompt = [[
@@ -246,8 +253,8 @@ local config = {
       vim.api.nvim_win_set_buf(0, bufnr)
     end,
 
-    -- GpImplement rewrites the provided selection/range based on comments in it
-    Implement = function(gp, params)
+    -- AiDev rewrites the provided selection/range based on comments in it
+    Dev = function(gp, params)
       local template = join({
         'Having following from {{filename}}: ',
         '```{{filetype}} \n {{selection}} \n ```',
@@ -330,7 +337,7 @@ local keymap = {
   {
     '<leader>cc',
     function()
-      vim.cmd('GpChatToggle')
+      vim.cmd(cmd_prefix .. 'ChatToggle')
     end,
     desc = 'toggle chat',
   },
@@ -344,7 +351,7 @@ local keymap = {
   {
     '<leader>cD',
     function()
-      vim.cmd('GpChatDelete')
+      vim.cmd(cmd_prefix .. 'ChatDelete')
     end,
     desc = 'delete chat',
   },
@@ -385,7 +392,7 @@ local keymap = {
         actions = {
           default = function(selected, _)
             local selected_agent = selected[1]
-            vim.cmd('GpAgent ' .. selected_agent)
+            vim.cmd(cmd_prefix .. 'Agent ' .. selected_agent)
           end,
         },
       })
@@ -395,7 +402,7 @@ local keymap = {
   {
     '<leader>cN',
     function()
-      vim.cmd('GpNextAgent')
+      vim.cmd(cmd_prefix .. 'NextAgent')
     end,
     desc = 'next agent',
   },
@@ -537,13 +544,13 @@ local keymap = {
   { '<leader>c', group = group, mode = 'v' },
   {
     '<leader>cn',
-    wrapGpCmd('GpChatNew'),
+    wrapGpCmd('ChatNew'),
     desc = 'visual new chat',
     mode = 'v',
   },
   {
     '<leader>ce',
-    wrapGpCmd('GpExplain'),
+    wrapGpCmd('Explain'),
     desc = 'explain selcted code',
     mode = 'v',
   },
