@@ -25,13 +25,15 @@ if neocodeium_loaded then
     -- Set it to `-1` to parse all lines
     max_lines = 10000,
     -- Set to `true` to disable some non-important messages, like "NeoCodeium: server started..."
-    silent = false,
+    silent = true,
     -- Set to `false` to disable suggestions in buffers with specific filetypes
     filetypes = {
-      help = false,
+      ['.'] = false,
       gitcommit = false,
       gitrebase = false,
-      ['.'] = false,
+      help = false,
+      markdown = false,
+      text = false,
     },
   })
   vim.keymap.set('i', '<c-f>', neocodeium.accept)
@@ -64,72 +66,73 @@ if codeium_loaded then
   })
 end
 
-local cody_loaded, cody = pcall(require, 'sg')
-if cody_loaded then
-  -- Sourcegraph configuration. All keys are optional
-  cody.setup({
-    enable_cody = true,
-    accept_tos = true,
-    download_binaries = true,
-    -- Pass your own custom attach function
-    --    If you do not pass your own attach function, then the following maps are provide:
-    --        - gd -> goto definition
-    --        - gr -> goto references
-    on_attach = function()
-      -- do nothing
-    end,
-  })
-end
+-- https://sourcegraph.com/cody
+-- local cody_loaded, cody = pcall(require, 'sg')
+-- if cody_loaded then
+--   -- Sourcegraph configuration. All keys are optional
+--   cody.setup({
+--     enable_cody = true,
+--     accept_tos = true,
+--     download_binaries = true,
+--     -- Pass your own custom attach function
+--     --    If you do not pass your own attach function, then the following maps are provide:
+--     --        - gd -> goto definition
+--     --        - gr -> goto references
+--     on_attach = function()
+--       -- do nothing
+--     end,
+--   })
+-- end
 -- vim.cmd([[
 --   let g:copilot_no_tab_map = v:true
 --   imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
 -- ]])
 
 -- https://github.com/zbirenbaum/copilot.lua
-local copilot_loaded, copilot = pcall(require, 'copilot')
-if copilot_loaded then
-  copilot.setup({
-    panel = {
-      enabled = true,
-      auto_refresh = true,
-      keymap = {
-        jump_prev = '[[',
-        jump_next = ']]',
-        accept = '<CR>',
-        refresh = 'gr',
-        open = '<M-CR>',
-      },
-      layout = {
-        position = 'bottom', -- | top | left | right
-        ratio = 0.4,
-      },
-    },
-    suggestion = {
-      enabled = true,
-      auto_trigger = true,
-      debounce = 75,
-      keymap = {
-        accept = '<c-f>',
-        accept_word = false,
-        accept_line = false,
-        next = '<M-]>',
-        prev = '<M-[>',
-        dismiss = '<C-]>',
-      },
-    },
-    filetypes = {
-      yaml = false,
-      markdown = false,
-      help = false,
-      gitcommit = false,
-      gitrebase = false,
-      hgcommit = false,
-      svn = false,
-      cvs = false,
-      ['*'] = true,
-      ['.'] = false,
-    },
-    copilot_node_command = 'node', -- Node.js version must be > 18.x
-    server_opts_overrides = {},
-  })
-end
+-- local copilot_loaded, copilot = pcall(require, 'copilot')
+-- if copilot_loaded then
+--   copilot.setup({
+--     panel = {
+--       enabled = true,
+--       auto_refresh = true,
+--       keymap = {
+--         jump_prev = '[[',
+--         jump_next = ']]',
+--         accept = '<CR>',
+--         refresh = 'gr',
+--         open = '<M-CR>',
+--       },
+--       layout = {
+--         position = 'bottom', -- | top | left | right
+--         ratio = 0.4,
+--       },
+--     },
+--     suggestion = {
+--       enabled = true,
+--       auto_trigger = true,
+--       debounce = 75,
+--       keymap = {
+--         accept = '<c-f>',
+--         accept_word = false,
+--         accept_line = false,
+--         next = '<M-]>',
+--         prev = '<M-[>',
+--         dismiss = '<C-]>',
+--       },
+--     },
+--     filetypes = {
+--       yaml = false,
+--       markdown = false,
+--       help = false,
+--       gitcommit = false,
+--       gitrebase = false,
+--       hgcommit = false,
+--       svn = false,
+--       cvs = false,
+--       ['*'] = true,
+--       ['.'] = false,
+--     },
+--     copilot_node_command = 'node', -- Node.js version must be > 18.x
+--     server_opts_overrides = {},
+--   })
+-- end
