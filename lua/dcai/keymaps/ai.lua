@@ -7,6 +7,34 @@ if not loaded then
 end
 
 local cmd_prefix = 'Ai'
+local default_chat_prompt = [[
+  You are a general AI assistant.
+  The user provided the additional info about how they would like you to respond:
+  - If you're unsure don't guess and say you don't know instead.
+  - Ask question if you need clarification to provide better answer.
+  - Think deeply and carefully from first principles step by step.
+  - Zoom out first to see the big picture and then zoom in to details.
+  - Use Socratic method to improve your thinking and coding skills.
+  - Don't elide any code from your output if the answer requires coding.
+  - Keep the answer short and to the point unless being asked to answer more in deepth
+  - Take a deep breath; You've got this!
+]]
+
+local prompt_code_block_only = [[
+  Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+  START AND END YOUR ANSWER WITH: ```
+]]
+
+local default_code_system_prompt = [[
+ You are an AI working as a code editor.
+]] .. prompt_code_block_only
+
+local translator_prompt = [[
+  Translate any provided text directly to Chinese or English,
+  based on the input language,
+  without adding any interpretation or additional commentary.
+]]
+
 local claude_code_model = 'claude-3-5-sonnet-20240620'
 local chat_topic_gen_model = 'gpt-4o-mini'
 local translator_model = 'gpt-4o-mini'
@@ -37,33 +65,6 @@ end
 
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
-local translator_prompt = [[
-  Translate any provided text directly to Chinese or English,
-  based on the input language,
-  without adding any interpretation or additional commentary.
-]]
-
-local code_template = [[
-  Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-  START AND END YOUR ANSWER WITH: ```
-]]
-
-local default_code_system_prompt = 'You are an AI working as a code editor.'
-  .. code_template
-
-local default_chat_prompt = [[
-  You are a general AI assistant.
-  The user provided the additional info about how they would like you to respond:
-  - If you're unsure don't guess and say you don't know instead.
-  - Ask question if you need clarification to provide better answer.
-  - Think deeply and carefully from first principles step by step.
-  - Zoom out first to see the big picture and then zoom in to details.
-  - Use Socratic method to improve your thinking and coding skills.
-  - Don't elide any code from your output if the answer requires coding.
-  - Take a deep breath; You've got this!
-]]
-
-local cmd_prefix = 'Ai'
 -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
 local config = {
   -- prefix for all commands
@@ -419,7 +420,7 @@ local keymap = {
           You are an AI working as a code editor for a project using react with javascript in frontend,
           express and nodejs for api, the unit tests are written in mocha and sinon.
           ]],
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
@@ -434,7 +435,7 @@ local keymap = {
         false,
         join({
           'You are an AI working as a code editor for software project.',
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
@@ -449,7 +450,7 @@ local keymap = {
         false,
         join({
           'You are an AI working as a code editor for python project.',
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
@@ -465,7 +466,7 @@ local keymap = {
         join({
           'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
           'Add tailwind class to style the components.',
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
@@ -480,7 +481,7 @@ local keymap = {
         false,
         join({
           'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
@@ -532,7 +533,7 @@ local keymap = {
         false,
         join({
           'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
-          code_template,
+          prompt_code_block_only,
         })
       )
     end,
