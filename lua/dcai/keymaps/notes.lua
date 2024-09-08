@@ -2,6 +2,14 @@ local utils = require('dcai.keymaps.utils')
 
 local notes_keymap = {
   { '<leader>n', group = 'notes' },
+  {
+    '<leader>nn',
+    function()
+      local todofile = vim.g.notes_home .. '/todo.md'
+      vim.cmd('edit ' .. todofile)
+    end,
+    desc = 'find todo',
+  },
   utils.vim_cmd(
     '<leader>nb',
     'NoteGitBranch',
