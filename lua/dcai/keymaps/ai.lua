@@ -8,36 +8,194 @@ end
 
 local cmd_prefix = 'Ai'
 local default_chat_prompt = [[
-  You are a general AI assistant.
-  The user provided the additional info about how they would like you to respond:
-  - If you're unsure don't guess and say you don't know instead.
-  - Ask question if you need clarification to provide better answer.
-  - Think deeply and carefully from first principles step by step.
-  - Zoom out first to see the big picture and then zoom in to details.
-  - Use Socratic method to improve your thinking and coding skills.
-  - Don't elide any code from your output if the answer requires coding.
-  - Keep the answer short and to the point unless being asked to answer more in deepth
-  - Take a deep breath; You've got this!
+You are a general AI assistant.
+The user provided the additional info about how they would like you to respond:
+- If you're unsure don't guess and say you don't know instead.
+- Ask question if you need clarification to provide better answer.
+- Think deeply and carefully from first principles step by step.
+- Zoom out first to see the big picture and then zoom in to details.
+- Use Socratic method to improve your thinking and coding skills.
+- Don't elide any code from your output if the answer requires coding.
+- Keep the answer short and to the point unless being asked to answer more in deepth
+- Take a deep breath; You've got this!
 ]]
 
+local coding_rules = [[
+
+Other Rules need to follow:
+
+- Follow the user's requirements carefully & to the Letter.
+- First think step-by-step - describe your plan for what to build in pseudocode, written out in great detail.
+- Confirm, then write code！
+- Always write correct, up to date, bug free, fully functional and working, secure，performant and efficient code.
+- Focus on readability over being performant.
+- Fully implement all requested functionality.
+- Leave No todo's, placeholders or missing pieces.
+- Be sure to reference file names.
+- Be concise, minimize any other prose.
+- If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.
+
+Don't be lazy, write all the code to implement the features I ask for.
+
+]]
+
+local prompt_laravel = [[
+You are an expert AI working as a code editor for a fullstack project primarily focuses on producing clear, readable php in the backend with laravel and inertiajs for react in frontend.
+
+You always use the Latest stable version of Laravel, Javascript, React, TailwindCSS and you are familiar with the Latest features and best practices.
+
+You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning ai to chat, to generate
+
+Code Style and Structure
+
+- Write concise, technical code with accurate examples.
+
+UI and Styling
+
+- Add tailwind class to style the components
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+]] .. coding_rules
+
+local prompt_javascript = [[
+You are an expert Al programming assistant that primarily focuses on producing clear，readable React and JavaScript code.
+
+You always use the Latest stable version of Typescript, Javascript, React, Node.js, Next.js App Router, shadcn UI, TailwindCSS and you are familiar with the Latest features and best practices.
+
+You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning ai to chat, to generate
+
+Code Style and Structure
+
+- Write concise, technical Javascript code with accurate examples.
+    • Use functional and declarative programming patterns; avoid classes.
+    • Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs （e.g.， isLoading, hasError）.
+- Structure files: exported component, helpers, static content，types.
+
+Naming Conventions
+
+- Use Lowercase with dashes for directories （e.g.. components/auth-wizard）.
+- Favor named exports for components.
+
+UI and Styling
+
+- Use shadcn UI, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+]] .. coding_rules
+
 local prompt_code_block_only = [[
-  Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-  START AND END YOUR ANSWER WITH: ```
+Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+START AND END YOUR ANSWER WITH: ```
 ]]
 
 local default_code_system_prompt = [[
- You are an AI working as a code editor.
+You are an AI working as a code editor.
 ]] .. prompt_code_block_only
 
 local translator_prompt = [[
-  Translate any provided text directly to Chinese or English,
-  based on the input language,
-  without adding any interpretation or additional commentary.
+Translate any provided text directly to Chinese or English,
+based on the input language,
+without adding any interpretation or additional commentary.
 ]]
 
 local claude_code_model = 'claude-3-5-sonnet-20240620'
 local chat_topic_gen_model = 'gpt-4o-mini'
 local translator_model = 'gpt-4o-mini'
+
+local chat_template = [[
+# topic: ?
+
+- file: {{filename}}
+{{optional_headers}}
+Write your queries after {{user_prefix}}. Use `{{respond_shortcut}}` or :{{cmd_prefix}}ChatRespond to generate a response.
+Response generation can be terminated by using `{{stop_shortcut}}` or :{{cmd_prefix}}ChatStop command.
+Chats are saved automatically. To delete this chat, use `{{delete_shortcut}}` or :{{cmd_prefix}}ChatDelete.
+Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` or :{{cmd_prefix}}ChatNew.
+
+---
+
+{{user_prefix}}
+]]
+
+local short_chat_template = [[
+# topic: ?
+
+- file: {{filename}}
+
+---
+
+{{user_prefix}}
+]]
+
+---@param params table  # vim command parameters such as range, args, etc.
+---@param toggle boolean # whether chat is toggled
+---@param system_prompt string | nil # system prompt to use
+---@param agent table | nil # obtained from get_command_agent or get_chat_agent
+---@return number # buffer number
+local function new_chat(M, params, toggle, system_prompt, agent)
+  M._toggle_close(M._toggle_kind.popup)
+
+  local filename = M.config.chat_dir .. '/' .. M.logger.now() .. '.md'
+
+  if not agent then
+    agent = M.get_chat_agent()
+  end
+
+  -- encode as json if model is a table
+  local model = ''
+  local provider = ''
+  if agent and agent.model and agent.provider then
+    model = agent.model
+    provider = agent.provider
+    if type(model) == 'table' then
+      -- model = '- model: ' .. vim.json.encode(model) .. '\n'
+      model = '- model: ' .. model.model .. '\n'
+    else
+      model = '- model: ' .. model .. '\n'
+    end
+
+    provider = '- provider: ' .. provider:gsub('\n', '\\n') .. '\n'
+  end
+
+  -- display system prompt as single line with escaped newlines
+  if system_prompt then
+    system_prompt = '- role: ' .. system_prompt:gsub('\n', '\\n') .. '\n'
+  else
+    system_prompt = ''
+  end
+
+  local template = M.render.template(
+    M.config.chat_template or require('gp.defaults').chat_template,
+    {
+      ['{{filename}}'] = string.match(filename, '([^/]+)$'),
+      ['{{optional_headers}}'] = model .. provider .. system_prompt,
+      ['{{user_prefix}}'] = M.config.chat_user_prefix,
+      ['{{respond_shortcut}}'] = M.config.chat_shortcut_respond.shortcut,
+      ['{{cmd_prefix}}'] = M.config.cmd_prefix,
+      ['{{stop_shortcut}}'] = M.config.chat_shortcut_stop.shortcut,
+      ['{{delete_shortcut}}'] = M.config.chat_shortcut_delete.shortcut,
+      ['{{new_shortcut}}'] = M.config.chat_shortcut_new.shortcut,
+    }
+  )
+
+  -- escape underscores (for markdown)
+  template = template:gsub('_', '\\_')
+
+  local cbuf = vim.api.nvim_get_current_buf()
+
+  -- strip leading and trailing newlines
+  template = template:gsub('^%s*(.-)%s*$', '%1') .. '\n'
+
+  -- create chat file
+  vim.fn.writefile(vim.split(template, '\n'), filename)
+  local target = M.resolve_buf_target(params)
+  local buf = M.open_buf(filename, target, M._toggle_kind.chat, toggle)
+
+  if params.range == 2 then
+    M.render.append_selection(params, cbuf, buf, M.config.template_selection)
+  end
+  M.helpers.feedkeys('G', 'xn')
+  return buf
+end
 
 local new_chat_params = {
   -- params = {},      -- table  # vim command parameters such as range, args, etc.
@@ -85,7 +243,7 @@ local config = {
   },
   agents = {
     {
-      name = 'CodeClaudeSonnet',
+      name = 'CmdClaudeSonnet',
       provider = 'anthropic',
       chat = false,
       command = true,
@@ -97,7 +255,7 @@ local config = {
       system_prompt = default_code_system_prompt,
     },
     {
-      name = 'ClaudeSonnet',
+      name = 'ChatClaudeSonnet',
       provider = 'anthropic',
       chat = true,
       command = false,
@@ -177,13 +335,15 @@ local config = {
   },
   chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
-  chat_user_prefix = '👇',
-  command_prompt_prefix_template = '👉 ye? [{{agent}}] ~ ',
+  chat_user_prefix = 'Write question below 👇',
+  command_prompt_prefix_template = '👉 [CMD_PROMPT({{agent}})] > ',
   -- chat assistant prompt prefix (static string or a table {static, template})
   -- first string has to be static, second string can contain template {{agent}}
   -- just a static string is legacy and the [{{agent}}] element is added automatically
   -- if you really want just a static string, make it a table with one element { "🤖:" }
   chat_assistant_prefix = { '😒 Bot: ', '[{{agent}}]' },
+  chat_template = chat_template,
+  -- chat_template = short_chat_template,
   chat_shortcut_respond = {
     modes = { 'n', 'i', 'v', 'x' },
     shortcut = '<c-x><c-x>',
@@ -241,7 +401,7 @@ local config = {
     InspectPlugin = function(plugin, params)
       local bufnr = vim.api.nvim_create_buf(false, true)
       local copy = vim.deepcopy(plugin)
-      local key = copy.config.openai_api_key
+      local key = copy.config.openai_api_key or ''
       copy.config.openai_api_key = key:sub(1, 3)
         .. string.rep('*', #key - 6)
         .. key:sub(-3)
@@ -345,7 +505,7 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      gpplugin.new_chat(new_chat_params, false, default_chat_prompt)
+      new_chat(gpplugin, new_chat_params, false, default_chat_prompt)
     end,
     desc = 'new chat buffer',
   },
@@ -412,14 +572,12 @@ local keymap = {
   {
     '<leader>cJ',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
-          [[
-          You are an AI working as a code editor for a project using react with javascript in frontend,
-          express and nodejs for api, the unit tests are written in mocha and sinon.
-          ]],
+          prompt_javascript,
           prompt_code_block_only,
         })
       )
@@ -430,11 +588,13 @@ local keymap = {
   {
     '<leader>cG',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
           'You are an AI working as a code editor for software project.',
+          coding_rules,
           prompt_code_block_only,
         })
       )
@@ -445,11 +605,13 @@ local keymap = {
   {
     '<leader>cY',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
           'You are an AI working as a code editor for python project.',
+          coding_rules,
           prompt_code_block_only,
         })
       )
@@ -460,12 +622,12 @@ local keymap = {
   {
     '<leader>cP',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
-          'You are an AI working as a code editor for a fullstack project using php, laravel with inertiajs for react.',
-          'Add tailwind class to style the components.',
+          prompt_laravel,
           prompt_code_block_only,
         })
       )
@@ -476,7 +638,8 @@ local keymap = {
   {
     '<leader>cS',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
@@ -491,7 +654,7 @@ local keymap = {
   {
     '<leader>cT',
     function()
-      gpplugin.new_chat(new_chat_params, false, translator_prompt)
+      new_chat(gpplugin, new_chat_params, false, translator_prompt)
     end,
     desc = '#topic: translate',
   },
@@ -499,7 +662,8 @@ local keymap = {
   {
     '<leader>cE',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         [[
@@ -514,7 +678,8 @@ local keymap = {
   {
     '<leader>cH',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
@@ -528,7 +693,8 @@ local keymap = {
   {
     '<leader>cL',
     function()
-      gpplugin.new_chat(
+      new_chat(
+        gpplugin,
         new_chat_params,
         false,
         join({
@@ -550,9 +716,21 @@ local keymap = {
     mode = 'v',
   },
   {
+    '<leader>cr',
+    wrapGpCmd('Rewrite'),
+    desc = 'prompt to rewrite',
+    mode = 'v',
+  },
+  {
+    '<leader>cd',
+    wrapGpCmd('Dev'),
+    desc = 'select to dev',
+    mode = 'v',
+  },
+  {
     '<leader>ce',
     wrapGpCmd('Explain'),
-    desc = 'explain selcted code',
+    desc = 'explain selected',
     mode = 'v',
   },
 }
