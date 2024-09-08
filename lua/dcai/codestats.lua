@@ -122,6 +122,7 @@ local function myprofile(username)
     headers = {
       ['Content-Type'] = 'application/json',
     },
+    on_error = function() end,
   })
   local json = vim.json.decode(response.body)
   print('codestats: profile: ', vim.inspect(json))
@@ -161,6 +162,7 @@ local function pulse()
         logger.error('Pulsed failed', response)
       end
     end),
+    on_error = function() end,
   })
 end
 
