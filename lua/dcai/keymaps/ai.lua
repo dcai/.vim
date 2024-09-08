@@ -88,7 +88,7 @@ START AND END YOUR ANSWER WITH: ```
 ]]
 
 local default_code_system_prompt = [[
-You are an AI working as a code editor.
+You are an expert Al programming assistant that primarily focuses on producing clear，readable code.
 ]] .. prompt_code_block_only
 
 local translator_prompt = [[
@@ -496,6 +496,24 @@ gpplugin.setup(config)
 local keymap = {
   { '<leader>c', group = group },
   {
+    '<leader>ca',
+    function()
+      local agents = {}
+      for key, _ in pairs(gpplugin.agents) do
+        table.insert(agents, key)
+      end
+      require('fzf-lua').fzf_exec(agents, {
+        actions = {
+          default = function(selected, _)
+            local selected_agent = selected[1]
+            vim.cmd(cmd_prefix .. 'Agent ' .. selected_agent)
+          end,
+        },
+      })
+    end,
+    desc = 'select an agent',
+  },
+  {
     '<leader>cc',
     function()
       vim.cmd(cmd_prefix .. 'ChatToggle')
@@ -505,9 +523,16 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      new_chat(gpplugin, new_chat_params, false, default_chat_prompt)
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      new_chat(
+        gpplugin,
+        new_chat_params,
+        false,
+        default_code_system_prompt,
+        agent
+      )
     end,
-    desc = 'new chat buffer',
+    desc = 'new code chat',
   },
   {
     '<leader>cD',
@@ -516,7 +541,6 @@ local keymap = {
     end,
     desc = 'delete chat',
   },
-  -- utils.vim_cmd('<leader>cc', 'GpNew', 'Enter a prompt'),
   {
     '<leader>cF',
     function()
@@ -543,24 +567,6 @@ local keymap = {
     desc = 'chat finder',
   },
   {
-    '<leader>ca',
-    function()
-      local agents = {}
-      for key, _ in pairs(gpplugin.agents) do
-        table.insert(agents, key)
-      end
-      require('fzf-lua').fzf_exec(agents, {
-        actions = {
-          default = function(selected, _)
-            local selected_agent = selected[1]
-            vim.cmd(cmd_prefix .. 'Agent ' .. selected_agent)
-          end,
-        },
-      })
-    end,
-    desc = 'select an agent',
-  },
-  {
     '<leader>cN',
     function()
       vim.cmd(cmd_prefix .. 'NextAgent')
@@ -572,6 +578,7 @@ local keymap = {
   {
     '<leader>cJ',
     function()
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
       new_chat(
         gpplugin,
         new_chat_params,
@@ -579,7 +586,8 @@ local keymap = {
         join({
           prompt_javascript,
           prompt_code_block_only,
-        })
+        }),
+        agent
       )
     end,
     desc = '#topic: JS/TS',
@@ -605,6 +613,7 @@ local keymap = {
   {
     '<leader>cY',
     function()
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
       new_chat(
         gpplugin,
         new_chat_params,
@@ -613,7 +622,8 @@ local keymap = {
           'You are an AI working as a code editor for python project.',
           coding_rules,
           prompt_code_block_only,
-        })
+        }),
+        agent
       )
     end,
     desc = '#topic: python',
@@ -622,6 +632,7 @@ local keymap = {
   {
     '<leader>cP',
     function()
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
       new_chat(
         gpplugin,
         new_chat_params,
@@ -629,7 +640,8 @@ local keymap = {
         join({
           prompt_laravel,
           prompt_code_block_only,
-        })
+        }),
+        agent
       )
     end,
     desc = '#topic: laravel',
@@ -638,6 +650,7 @@ local keymap = {
   {
     '<leader>cS',
     function()
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
       new_chat(
         gpplugin,
         new_chat_params,
@@ -645,16 +658,36 @@ local keymap = {
         join({
           'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
           prompt_code_block_only,
-        })
+        }),
+        agent
       )
     end,
     desc = '#topic: tailwind',
+  },
+  ---neovim and lua
+  {
+    '<leader>cL',
+    function()
+      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      new_chat(
+        gpplugin,
+        new_chat_params,
+        false,
+        join({
+          'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
+          prompt_code_block_only,
+        }),
+        agent
+      )
+    end,
+    desc = '#topic: neovim',
   },
   -- Translator
   {
     '<leader>cT',
     function()
-      new_chat(gpplugin, new_chat_params, false, translator_prompt)
+      local agent = gpplugin.get_chat_agent('TranslateAgent')
+      new_chat(gpplugin, new_chat_params, false, translator_prompt, agent)
     end,
     desc = '#topic: translate',
   },
@@ -662,6 +695,7 @@ local keymap = {
   {
     '<leader>cE',
     function()
+      local agent = gpplugin.get_chat_agent('ChatGPT4o')
       new_chat(
         gpplugin,
         new_chat_params,
@@ -670,7 +704,8 @@ local keymap = {
           I want you to act as a etymologist. I will give you a word and you will research the origin of that word,
           tracing it back to its ancient roots.
           You should also provide information on how the meaning of the word has changed over time, if applicable
-        ]]
+        ]],
+        agent
       )
     end,
     desc = '#topic: etymologist',
@@ -678,32 +713,18 @@ local keymap = {
   {
     '<leader>cH',
     function()
+      local agent = gpplugin.get_chat_agent('ChatGPT4o')
       new_chat(
         gpplugin,
         new_chat_params,
         false,
         join({
           'I want you to act as a historian and an archaeologist',
-        })
+        }),
+        agent
       )
     end,
     desc = '#topic: history',
-  },
-  ---neovim and lua
-  {
-    '<leader>cL',
-    function()
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
-          prompt_code_block_only,
-        })
-      )
-    end,
-    desc = '#topic: neovim',
   },
   ----------------------------------------------------------------------------
   --- Visual mode below
