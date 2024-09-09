@@ -7,6 +7,7 @@ if not loaded then
 end
 
 local cmd_prefix = 'Ai'
+
 local default_chat_prompt = [[
 You are a general AI assistant.
 The user provided the additional info about how they would like you to respond:
@@ -20,7 +21,12 @@ The user provided the additional info about how they would like you to respond:
 - Take a deep breath; You've got this!
 ]]
 
-local coding_rules = [[
+local prompt_code_block_only = [[
+Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
+START AND END YOUR ANSWER WITH: ```
+]]
+
+local prompt_coding_rules = [[
 
 Other Rules need to follow:
 
@@ -36,8 +42,16 @@ Other Rules need to follow:
 - If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.
 
 Don't be lazy, write all the code to implement the features I ask for.
-
 ]]
+
+local prompt_coding = [[
+You are an expert Al programming assistant that primarily focuses on producing clear，readable code.
+Use javascript unless asked otherwise.
+]] .. prompt_code_block_only .. prompt_coding_rules
+
+local prompt_python = [[
+You are an AI working as a code editor for python project.
+]] .. prompt_code_block_only .. prompt_coding_rules
 
 local prompt_laravel = [[
 You are an expert AI working as a code editor for a fullstack project primarily focuses on producing clear, readable php in the backend with laravel and inertiajs for react in frontend.
@@ -54,7 +68,8 @@ UI and Styling
 
 - Add tailwind class to style the components
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
-]] .. coding_rules
+
+]] .. prompt_code_block_only .. prompt_coding_rules
 
 local prompt_javascript = [[
 You are an expert Al programming assistant that primarily focuses on producing clear，readable React and JavaScript code.
@@ -80,16 +95,7 @@ UI and Styling
 
 - Use shadcn UI, and Tailwind for components and styling.
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
-]] .. coding_rules
-
-local prompt_code_block_only = [[
-Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-START AND END YOUR ANSWER WITH: ```
-]]
-
-local default_code_system_prompt = [[
-You are an expert Al programming assistant that primarily focuses on producing clear，readable code.
-]] .. prompt_code_block_only
+]] .. prompt_code_block_only .. prompt_coding_rules
 
 local translator_prompt = [[
 Translate any provided text directly to Chinese or English,
@@ -136,10 +142,6 @@ local function new_chat(M, params, toggle, system_prompt, agent)
 
   local filename = M.config.chat_dir .. '/' .. M.logger.now() .. '.md'
 
-  if not agent then
-    agent = M.get_chat_agent()
-  end
-
   -- encode as json if model is a table
   local model = ''
   local provider = ''
@@ -147,8 +149,7 @@ local function new_chat(M, params, toggle, system_prompt, agent)
     model = agent.model
     provider = agent.provider
     if type(model) == 'table' then
-      -- model = '- model: ' .. vim.json.encode(model) .. '\n'
-      model = '- model: ' .. model.model .. '\n'
+      model = '- model: ' .. vim.json.encode(model) .. '\n'
     else
       model = '- model: ' .. model .. '\n'
     end
@@ -252,7 +253,7 @@ local config = {
         temperature = 0.8,
         top_p = 1,
       },
-      system_prompt = default_code_system_prompt,
+      system_prompt = prompt_coding,
     },
     {
       name = 'ChatClaudeSonnet',
@@ -290,7 +291,7 @@ local config = {
       chat = false,
       command = true,
       model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
-      system_prompt = default_code_system_prompt,
+      system_prompt = prompt_coding,
     },
     {
       name = 'CodeGPT3-5',
@@ -524,13 +525,7 @@ local keymap = {
     '<leader>cn',
     function()
       local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        default_code_system_prompt,
-        agent
-      )
+      new_chat(gpplugin, new_chat_params, false, prompt_coding, agent)
     end,
     desc = 'new code chat',
   },
@@ -579,52 +574,16 @@ local keymap = {
     '<leader>cJ',
     function()
       local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          prompt_javascript,
-          prompt_code_block_only,
-        }),
-        agent
-      )
+      new_chat(gpplugin, new_chat_params, false, prompt_javascript, agent)
     end,
     desc = '#topic: JS/TS',
-  },
-  ---coding general
-  {
-    '<leader>cG',
-    function()
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'You are an AI working as a code editor for software project.',
-          coding_rules,
-          prompt_code_block_only,
-        })
-      )
-    end,
-    desc = '#topic: coding general',
   },
   ---python
   {
     '<leader>cY',
     function()
       local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'You are an AI working as a code editor for python project.',
-          coding_rules,
-          prompt_code_block_only,
-        }),
-        agent
-      )
+      new_chat(gpplugin, new_chat_params, false, prompt_python, agent)
     end,
     desc = '#topic: python',
   },
@@ -633,16 +592,7 @@ local keymap = {
     '<leader>cP',
     function()
       local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          prompt_laravel,
-          prompt_code_block_only,
-        }),
-        agent
-      )
+      new_chat(gpplugin, new_chat_params, false, prompt_laravel, agent)
     end,
     desc = '#topic: laravel',
   },
