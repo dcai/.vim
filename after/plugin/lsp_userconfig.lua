@@ -10,15 +10,17 @@ local masonpath = require('mason-core.path')
 mason.setup({
   install_root_dir = masonpath.concat({ vim.fn.stdpath('data'), 'mason' }),
 })
+
 -------------------------------
 --- mason-lspconfig
 -------------------------------
 local mason_lspconfig = require('mason-lspconfig')
+local ts_ls_name = 'ts_ls'
 mason_lspconfig.setup({
   ensure_installed = {
     'lua_ls',
     'pyright',
-    'tsserver',
+    ts_ls_name,
     'vimls',
   },
   automatic_installation = false,
@@ -27,6 +29,14 @@ mason_lspconfig.setup({
 -------------------------------
 --- lspconfig
 -------------------------------
+local ts_ls_supported_filetypes = {
+  'javascript',
+  'javascriptreact',
+  'javascript.jsx',
+  'typescript',
+  'typescriptreact',
+  'typescript.tsx',
+}
 local lspconfig_loaded, cfg = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
@@ -41,7 +51,7 @@ local root_pattern = cfg.util.root_pattern
 local timeout_ms = 3000
 local organize_imports = {
   ---@diagnostic disable-next-line: unused-local
-  pyright = function(_client, buf)
+  pyright = function(buf)
     local params = {
       command = 'pyright.organizeimports',
       arguments = { vim.api.nvim_buf_get_name(buf) },
@@ -49,7 +59,7 @@ local organize_imports = {
     vim.lsp.buf.execute_command(params)
   end,
   ---@diagnostic disable-next-line: unused-local
-  tsserver = function(_client, buffer)
+  ts_ls = function(buffer)
     buffer = buffer or vim.api.nvim_get_current_buf()
     local params = {
       command = '_typescript.organizeImports',
@@ -138,22 +148,21 @@ local function common_on_attach(client, bufnr)
   nmap('gr', vim.lsp.buf.references, 'go to references')
   nmap('<leader>lh', vim.lsp.buf.hover, 'hover doc')
   nmap('<leader>lo', function()
-    local clientname = client.name
-    if
-      client.name == 'tailwindcss' or client.name == 'emmet_language_server'
-    then
-      clientname = 'tsserver'
+    local current_buf = vim.api.nvim_get_current_buf()
+    local filetype =
+      vim.api.nvim_get_option_value('filetype', { buf = current_buf })
+    local lstype = ''
+    if vim.list_contains(ts_ls_supported_filetypes, filetype) then
+      lstype = 'ts_ls'
     end
-
-    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
     if filetype == 'php' then
-      clientname = 'phpactor'
+      lstype = 'phpactor'
     end
 
-    if organize_imports[clientname] then
-      organize_imports[clientname](client, bufnr)
+    if organize_imports[lstype] then
+      organize_imports[lstype](current_buf)
     else
-      print('No organize imports for ' .. client.name)
+      print('No organize imports for ' .. filetype)
     end
   end, 'Organize Imports')
   -- nmap('gD', vim.lsp.buf.declaration, '')
@@ -181,15 +190,9 @@ end
 cfg.bashls.setup({
   on_attach = common_on_attach,
 })
-cfg.tsserver.setup({
-  filetypes = {
-    'javascript',
-    'javascriptreact',
-    'javascript.jsx',
-    'typescript',
-    'typescriptreact',
-    'typescript.tsx',
-  },
+
+cfg.ts_ls.setup({
+  filetypes = ts_ls_supported_filetypes,
   root_dir = root_pattern(
     'package.json',
     'tsconfig.json',
