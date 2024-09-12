@@ -212,7 +212,9 @@ cmp.setup({
     end,
   },
   experimental = {
-    ghost_text = true,
+    -- ghost_text = true,
+    -- ghost text is false as codeium uses that for completion
+    ghost_text = false,
   },
   mapping = {
     -- ['<C-e>'] = cmp.mapping.abort(),
