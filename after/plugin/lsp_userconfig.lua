@@ -94,6 +94,10 @@ local function map(mode, buffer)
   end
 end
 
+local IGNORE_DIAGNOSTIC_CODES = {
+  TSSERVER_COMMONJS_MODULE = 80001,
+}
+
 local function common_on_attach(client, bufnr)
   -- if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
   --   -- client.notify('workspace/didChangeConfiguration', {
@@ -196,7 +200,7 @@ cfg.tsserver.setup({
   settings = {
     diagnostics = {
       ignoreCodes = {
-        80001,
+        IGNORE_DIAGNOSTIC_CODES.TSSERVER_COMMONJS_MODULE,
       },
     },
   },
@@ -354,23 +358,24 @@ if fzfloaded then
   handlers['textDocument/typeDefinition'] = fzf_location('typeDefinition')
 end
 
+local DIAGNOSTIC_LEVELS = {
+  'ERR',
+  'WARN',
+  'INFO',
+  'HINT',
+}
 vim.diagnostic.config({
   virtual_text = {
+    -- severity = { min = vim.diagnostic.severity.WARN },
     severity = { min = vim.diagnostic.severity.HINT },
     source = true,
     format = function(report)
-      local strings = {
-        'ERR',
-        'WARN',
-        'INFO',
-        'HINT',
-      }
-      if strings[report.severity] then
+      if DIAGNOSTIC_LEVELS[report.severity] then
         return string.format(
-          '[%s] %s\n%s',
-          strings[report.severity],
+          '[%s] %s [%s]',
+          report.code, -- this is a number, for example 80000
           report.message,
-          report.code
+          DIAGNOSTIC_LEVELS[report.severity]
         )
       else
         return report.message
@@ -381,12 +386,12 @@ vim.diagnostic.config({
   float = {
     show_header = false,
     format = function(report)
-      -- LOG.info(report)
       return string.format(
-        '[%s] %s %s',
+        '[%s] %s\nCODE: [%s]\nMessage: %s',
+        DIAGNOSTIC_LEVELS[report.severity],
         report.source,
-        report.message,
-        report.code
+        report.code,
+        report.message
       )
     end,
   },
@@ -401,12 +406,31 @@ vim.diagnostic.config({
     },
   },
 })
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
+  err,
+  result,
+  ctx,
+  config
+)
+  for i, diagnostic in ipairs(result.diagnostics) do
+    if
+      vim.list_contains(
+        { IGNORE_DIAGNOSTIC_CODES.TSSERVER_COMMONJS_MODULE },
+        diagnostic.code
+      )
+    then
+      -- if diagnostic code is in the list remove it
+      table.remove(result.diagnostics, i)
+    end
+  end
+
+  return vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = true,
     virtual_text = true,
     loclist = true,
-  })
+  })(err, result, ctx, config)
+end
 
 cfg.pyright.setup({
   on_attach = common_on_attach,
