@@ -105,7 +105,7 @@ local function map(mode, buffer)
 end
 
 local IGNORE_DIAGNOSTIC_CODES = {
-  TSSERVER_COMMONJS_MODULE = 80001,
+  TS_LS_COMMONJS_MODULE = 80001,
 }
 
 local function common_on_attach(client, bufnr)
@@ -203,7 +203,7 @@ cfg.ts_ls.setup({
   settings = {
     diagnostics = {
       ignoreCodes = {
-        IGNORE_DIAGNOSTIC_CODES.TSSERVER_COMMONJS_MODULE,
+        IGNORE_DIAGNOSTIC_CODES.TS_LS_COMMONJS_MODULE,
       },
     },
   },
@@ -419,7 +419,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
   for i, diagnostic in ipairs(result.diagnostics) do
     if
       vim.list_contains(
-        { IGNORE_DIAGNOSTIC_CODES.TSSERVER_COMMONJS_MODULE },
+        { IGNORE_DIAGNOSTIC_CODES.TS_LS_COMMONJS_MODULE },
         diagnostic.code
       )
     then
