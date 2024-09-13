@@ -156,8 +156,8 @@ local function pulse()
       local status = response.status
       if status == 200 or status == 201 then
         xp_table = {}
-        logger.info('Pulsed: body sent:', body)
-        logger.info('Pulsed: response body', response.body)
+        -- logger.info('Pulsed: body sent:', body)
+        -- logger.info('Pulsed: response body', response.body)
       else
         logger.error('Pulsed failed', response)
       end
