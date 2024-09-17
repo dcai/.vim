@@ -23,6 +23,9 @@ local use_icons = icons_loaded
 -- skim:	uses skim as an fzf alternative, (requires the sk binary)
 local fzf_profile = 'max-pref'
 local history_dir = vim.fn.stdpath('data') .. '/fzf-history'
+-- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
+local rg_grep_opt =
+  '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --regexp'
 
 fzflua.setup({
   fzf_profile,
@@ -207,7 +210,7 @@ fzflua.setup({
     -- default options are controlled by 'rg|grep_opts'
     -- cmd            = "rg --vimgrep",
     grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
-    rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+    rg_opts = rg_grep_opt,
     -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
     -- search strings will be split using the 'glob_separator' and translated
     -- to '--iglob=' arguments, requires 'rg'
