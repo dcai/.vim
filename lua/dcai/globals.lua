@@ -346,6 +346,7 @@ G.git_root = root({
 })
 
 G.smart_root = root({
+  'appsettings.json',
   'Jenkinsfile_Build',
   'Makefile',
   'stylua.toml',
