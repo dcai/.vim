@@ -45,7 +45,7 @@ let s:jsfixer = [g:EnvVar('JSFIXER', 'prettier')]
 " Ale linters settings
 let g:ale_linters = {
   \ 'c': ['clangd', 'ccls'],
-  \ 'cs': ['mcs'],
+  \ 'cs': ['csc'],
   \ 'go': ['gopls'],
   \ 'graphql': [],
   \ 'javascript': s:jslinter,
@@ -66,7 +66,7 @@ let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'c': ['clang-format'],
   \ 'cpp': ['clang-format'],
-  \ 'cs': ['dotnet-format'],
+  \ 'cs': ['clang-format'],
   \ 'css': ['prettier'],
   \ 'dokuwiki': ['plaintext'],
   \ 'elixir': ['mix_format'],
