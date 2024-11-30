@@ -192,7 +192,11 @@ M.setup = function(plugOpts)
   ----------------------------------------------------------------------------
   -- coding, development, writing
   ----------------------------------------------------------------------------
-  Plug('norcalli/nvim-colorizer.lua')
+  Plug('norcalli/nvim-colorizer.lua', {
+    setup = function()
+      require('colorizer').setup()
+    end,
+  })
   Plug('reedes/vim-lexical')
   Plug('nvim-lua/plenary.nvim')
   Plug('dcai/ale', { frozen = 1 })
