@@ -8,6 +8,9 @@
 "     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
+let s:env_name_stl_fg='VIM_OASIS_COLORSCHEME_STL_FG'
+let s:env_name_stl_bg='VIM_OASIS_COLORSCHEME_STL_BG'
+let s:env_name_disable_mode_change='VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE'
 
 hi clear
 hi clear statusline
@@ -429,8 +432,8 @@ if has('nvim')
   call s:apply(s:treesitter)
 endif
 
-let s:statusline_fg=g:EnvVar('VIM_OASIS_COLORSCHEME_STL_FG', s:nicelightgreen)
-let s:statusline_bg=g:EnvVar('VIM_OASIS_COLORSCHEME_STL_BG', s:nicemidgreen)
+let s:statusline_fg=g:EnvVar(s:env_name_stl_fg, s:nicelightgreen)
+let s:statusline_bg=g:EnvVar(s:env_name_stl_bg, s:nicemidgreen)
 
 let s:statusline_n = {
       \ 'fg': s:black,
@@ -470,7 +473,7 @@ call s:hi('StatusLine', s:statusline_n)
 call s:hi('statuslineNC', s:statuslineNC)
 
 function! s:ModeChanged()
-  if g:IsEnvVarTrue('VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE')
+  if g:IsEnvVarTrue(s:env_name_disable_mode_change)
     return
   endif
   if g:colors_name != s:name
