@@ -84,6 +84,7 @@ M.setup = function(plugOpts)
   --- lsp
   ----------------------------------------------------------------------------
   Plug('neovim/nvim-lspconfig')
+  Plug('pmizio/typescript-tools.nvim')
   Plug('williamboman/mason.nvim', { ['do'] = ':MasonUpdate' })
   Plug('williamboman/mason-lspconfig.nvim')
   ----------------------------------------------------------------------------
