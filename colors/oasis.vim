@@ -5,11 +5,13 @@
 " - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
 " - VIM_OASIS_COLORSCHEME_STL_FG='#FFFFFF'
 " - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
+" - VIM_OASIS_COLORSCHEME_STL_BG_NC='#000000'
 "     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 let s:env_name_stl_fg='VIM_OASIS_COLORSCHEME_STL_FG'
 let s:env_name_stl_bg='VIM_OASIS_COLORSCHEME_STL_BG'
+let s:env_name_stl_bg_nc='VIM_OASIS_COLORSCHEME_STL_BG_NC'
 let s:env_name_disable_mode_change='VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE'
 
 hi clear
@@ -434,6 +436,7 @@ endif
 
 let s:statusline_fg=g:EnvVar(s:env_name_stl_fg, s:nicelightgreen)
 let s:statusline_bg=g:EnvVar(s:env_name_stl_bg, s:nicemidgreen)
+let s:statusline_bg_nc=g:EnvVar(s:env_name_stl_bg_nc, s:nicedarkgreen)
 
 let s:statusline_n = {
       \ 'fg': s:black,
@@ -444,7 +447,7 @@ let s:statusline_n = {
 let s:statuslineNC = {
       \ 'fg': s:white,
       \ 'bg': s:darkgreen,
-      \ 'guibg': s:nicedarkgreen,
+      \ 'guibg': s:statusline_bg_nc,
       \ }
 let s:statusline_i = {
       \ 'fg': s:white,
