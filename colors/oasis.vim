@@ -80,34 +80,42 @@ let s:reverse        = 'reverse'
 
 let s:termguicolors  = &termguicolors
 
+let s:lightblue      = 'LightBlue'
 let s:blue           = 'Blue'
 let s:darkblue       = 'DarkBlue'
 
+let s:lightgreen     = 'LightGreen'
 let s:green          = 'Green'
 let s:darkgreen      = 'DarkGreen'
 
+let s:lightred       = 'LightRed'
 let s:red            = 'Red'
 let s:darkred        = 'DarkRed'
 
+let s:lightcyan      = 'LightCyan'
 let s:cyan           = 'Cyan'
 let s:darkcyan       = 'DarkCyan'
 
+let s:lightmagenta   = 'LightMagenta'
 let s:magenta        = 'Magenta'
 let s:darkmagenta    = 'DarkMagenta'
 
-let s:darkgray       = 'DarkGray'
+let s:lightgray      = 'LightGray'
 let s:gray           = 'Gray'
+let s:darkgray       = 'DarkGray'
 
+let s:lightyellow    = 'LightYellow'
 let s:yellow         = 'Yellow'
 let s:darkyellow     = 'DarkYellow'
 
+let s:brown          = 'Brown'
 let s:black          = 'Black'
 let s:white          = 'White'
 
 if s:termguicolors
-  let s:blue         = 'LightBlue'
-  let s:green        = 'LightGreen'
-  let s:yellow       = 'LightYellow'
+  let s:blue         = s:lightblue
+  let s:green        = s:lightgreen
+  let s:yellow       = s:lightyellow
 endif
 
 let s:niceblack      = '#0F0F0F'
