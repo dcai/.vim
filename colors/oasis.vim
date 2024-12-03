@@ -278,9 +278,9 @@ call s:apply(s:spell)
 
 call s:apply(s:ui)
 let s:user = {
-      \ 'User1' : {'guibg': s:nicelightgreen, 'guifg':s:nicedarkgreen},
-      \ 'User2' : {'guibg': s:niceyellow,     'guifg':s:nicedarkgreen},
-      \ 'User3' : {'guibg': s:nicepurple,     'guifg':s:nicedarkgreen},
+      \ 'User1' : {'guibg': s:niceyellow,     'guifg':s:nicedarkgreen},
+      \ 'User2' : {'guibg': s:darkyellow,     'guifg':s:nicedarkgreen},
+      \ 'User3' : {'guibg': s:nicelightgreen, 'guifg':s:nicedarkgreen},
       \ 'User4' : {'guibg': s:niceblue,       'guifg':s:nicedarkgreen},
       \ 'User5' : {'guibg': s:niceblack,      'guifg':s:nicedarkgreen},
       \ 'User6' : {'guibg': s:nicegray,       'guifg':s:nicedarkgreen},
