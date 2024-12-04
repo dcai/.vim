@@ -359,6 +359,7 @@ G.smart_root = root({
   '.editorconfig',
   '.tool-versions',
   '.mise.toml',
+  'mise.toml',
   '.envrc',
   'prettier.config.js',
   'prettier.config.cjs',
