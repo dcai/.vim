@@ -230,6 +230,10 @@ local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 local config = {
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
+  chat_dir = chatlogs_home,
+  state_dir = vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/persisted',
+  log_file = vim.fn.stdpath('log'):gsub('/$', '') .. '/gp.nvim.log',
+  log_sensitive = false,
   providers = {
     openai = {
       endpoint = 'https://api.openai.com/v1/chat/completions',
@@ -343,7 +347,6 @@ local config = {
       disable = true,
     },
   },
-  chat_dir = chatlogs_home,
   -- chat user prompt prefix in chat buffer
   chat_user_prefix = 'Write question below 👇',
   command_prompt_prefix_template = '👉 [CMD_PROMPT({{agent}})] > ',
