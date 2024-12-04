@@ -4,7 +4,7 @@ if not loaded then
   return
 end
 local actions = require('fzf-lua.actions')
-LOG.trace('fzf-lua loaded, setting up...')
+-- LOG.trace('fzf-lua loaded, setting up...')
 
 local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
 if icons_loaded then
