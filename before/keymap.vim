@@ -68,7 +68,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 "" insert mode
 ""
 ""  Press Ctrl-O switches to normal mode for one command
-""  http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
+""  https://vim.fandom.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 inoremap jk <Esc>:w!<cr>
 inoremap jj <Esc>

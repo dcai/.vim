@@ -31,7 +31,7 @@ set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,
       \.ilg,.inx,.out,.toc,.class,.pyc
 
 set wildignore+=node_modules
-" http://vim.wikia.com/wiki/Single_tags_file_for_a_source_tree
+" https://vim.fandom.com/wiki/Single_tags_file_for_a_source_tree
 set tags=tags;
 
 if exists("syntax_on")
@@ -135,10 +135,10 @@ set smartindent
 
 """""""""""""""""""""""""""""""""""""""
 " Keep in current dir
-" http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
+" https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
 " or
 " Vim tip #64
-" http://vim.wikia.com/wiki/VimTip64
+" https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file
 """""""""""""""""""""""""""""""""""""""
 function! CHANGE_CURR_DIR()
   let _dir = expand("%:p:h")
@@ -275,7 +275,7 @@ vmap k gk
 vmap <Down> gj
 vmap <Up> gk
 " Press Ctrl-O switches to normal mode for one command
-" http://vim.wikia.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
+" https://vim.fandom.com/wiki/Use_Ctrl-O_instead_of_Esc_in_insert_mode_mappings
 imap <Down> <C-o>gj
 imap <Up> <C-o>gk
 
@@ -297,7 +297,7 @@ nnoremap <silent> <CR> :nohlsearch<CR><CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " Format entire buffer
-" credit: http://vim.wikia.com/wiki/Fix_indentation
+" credit: https://vim.fandom.com/wiki/Fix_indentation
 " how this works:
 "   mz: mark current location to `z`
 "   gg: go to file top
