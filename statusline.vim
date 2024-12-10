@@ -58,41 +58,60 @@ let g:currentmode={
             \  't'  : 'Term',
             \}
 
-set statusline=
-" use User1 highlight group
-set statusline+=%1*
-set statusline+=%{toupper(g:currentmode[mode()])}
-" reset highlight group
-set statusline+=%0*
-" a space
-" set statusline+=\ %f  " filepath relative to current dir
-" set statusline+=\ %F " full path
-set statusline+=\ %{CurrentBuffer()}
-" modified flag
-set statusline+=%m
-" set statusline+=[%{LinterStatus()}]
-" left/right separator
-set statusline+=%=   " Switch to the right side
-set statusline+=%1*  " start User1 highlight group
-" cursor line/total lines
-set statusline+=\ \[%l\]\ /\ %L
-set statusline+=\ \|\ Col:\ %c
-" reset highlight group
-set statusline+=\ %0*
-" filetype
-set statusline+=\ %y
-set statusline+=[
-" file encoding
-set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\|
-" file format
-set statusline+=%{&fileformat}
-" BOM
-set statusline+=%{&bomb?'\|BOM':''}
-set statusline+=]
-" help file flag
-set statusline+=%h
-" read only flag
-set statusline+=%r
-set statusline+=\ %3*  " start User3 highlight group
-set statusline+=\[%{GitBranch()}\]
-set statusline+=%0*
+function! RedrawStatusLine()
+  let l:lg = winwidth(0) > 100
+
+  set statusline=
+  " use User1 highlight group
+  set statusline+=%1*
+
+  if l:lg
+    set statusline+=%{toupper(g:currentmode[mode()])}
+  endif
+
+  " reset highlight group
+  set statusline+=%0*
+  " a space
+  " set statusline+=\ %f  " filepath relative to current dir
+  " set statusline+=\ %F " full path
+  set statusline+=\ %{CurrentBuffer()}
+  " modified flag
+  set statusline+=%m
+  " set statusline+=[%{LinterStatus()}]
+
+  set statusline+=%=   " Switch to the right side
+
+  " only show more when winwidth is bigger than 100
+  if l:lg
+    set statusline+=%1*  " start User1 highlight group
+    " cursor line/total lines
+    set statusline+=\ \[%l\]\ /\ %L
+    set statusline+=\ \|\ Col:\ %c
+    " reset highlight group
+    set statusline+=\ %0*
+    " filetype
+    set statusline+=\ %y
+    set statusline+=[
+    " file encoding
+    set statusline+=%{strlen(&fileencoding)?&fileencoding:'none'}\|
+    " file format
+    set statusline+=%{&fileformat}
+    " BOM
+    set statusline+=%{&bomb?'\|BOM':''}
+    set statusline+=]
+    " help file flag
+    set statusline+=%h
+    " read only flag
+    set statusline+=%r
+    set statusline+=\ %3*  " start User3 highlight group
+    set statusline+=\[%{GitBranch()}\]
+    set statusline+=%0*
+  endif
+endfunction
+
+call RedrawStatusLine()
+
+augroup AutoRedrawOnSplit
+  autocmd!
+  autocmd WinResized,WinNew,WinEnter,WinClosed * call RedrawStatusLine()
+augroup END
