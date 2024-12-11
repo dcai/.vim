@@ -40,7 +40,7 @@ local function current_buffer_name()
   local fullpath = vim.fn.expand('%:p')
   local filemodified = ' %m'
   local readonly = '%r'
-  local project_root_trimed = fullpath:gsub(G.smart_root(), '@')
+  local project_root_trimed = G.replace(fullpath, G.smart_root(), '@')
   return project_root_trimed .. filemodified .. readonly
 end
 

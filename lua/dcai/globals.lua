@@ -192,6 +192,13 @@ G.keymap = function(mode, from, to)
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
+-- https://stackoverflow.com/a/29379912
+G.replace = function(str, what, with)
+  what = string.gsub(what, '[%(%)%.%+%-%*%?%[%]%^%$%%]', '%%%1') -- escape pattern
+  with = string.gsub(with, '[%%]', '%%%%') -- escape replacement
+  return string.gsub(str, what, with)
+end
+
 ---copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
 ---@param string string
 ---@param replacement string
