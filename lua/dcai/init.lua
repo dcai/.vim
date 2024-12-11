@@ -33,6 +33,11 @@ if codestats then
   codestats.setup()
 end
 
+local statusline = require('dcai.statusline')
+if statusline then
+  statusline.setup()
+end
+
 -- Copy/Paste when using ssh on a remote server
 -- Only works when neovim >= 0.10.0
 local is_ssh = vim.env.SSH_CONNECTION and vim.env.SSH_TTY
