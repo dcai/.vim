@@ -42,7 +42,7 @@ local function current_buffer_name()
   local filemodified = ' %m'
   local readonly = '%r'
   local project_root = G.git_root()
-  local project_name = project_root:match('([^/]+)$')
+  local project_name = project_root and project_root:match('([^/]+)$') or nil
   local project_root_trimed = G.replace(fullpath, G.smart_root(), '@')
   return (project_name and color_accent(project_name) or '')
     .. SPC
