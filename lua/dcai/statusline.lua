@@ -41,8 +41,14 @@ local function current_buffer_name()
   local fullpath = vim.fn.expand('%:p')
   local filemodified = ' %m'
   local readonly = '%r'
+  local project_root = G.smart_root()
+  local project_name = project_root:match('([^/]+)$')
   local project_root_trimed = G.replace(fullpath, G.smart_root(), '@')
-  return project_root_trimed .. filemodified .. readonly
+  return (project_name and color_accent(project_name) or '')
+    .. SPC
+    .. project_root_trimed
+    .. filemodified
+    .. readonly
 end
 
 local modes = {
