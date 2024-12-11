@@ -334,6 +334,7 @@ call s:apply(s:syntax)
 
 let s:custom = {
       \ 'StatusLineAccent'           : {'guibg': s:niceyellow,     'guifg':s:nicedarkgreen},
+      \ 'StatusLineProjectAccent'    : {'guibg': s:nicelightgreen, 'guifg':s:nicedarkgreen},
       \ 'StatusLineHighlight'        : {'guibg': s:nicelightgreen, 'guifg':s:nicedarkgreen},
       \ 'NotificationInfo'           : {'bg': s:blue,     'guibg': s:darkslategray},
       \ 'NotificationWarning'        : {'bg': s:yellow,     'guibg': s:darkslategray},
