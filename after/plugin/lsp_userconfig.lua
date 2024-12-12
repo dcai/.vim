@@ -10,7 +10,7 @@ if not mason_loaded then
 end
 local masonpath = require('mason-core.path')
 mason.setup({
-  install_root_dir = masonpath.concat({ vim.fn.stdpath('data'), 'mason' }),
+  install_root_dir = masonpath.concat({ G.data_dir, 'mason' }),
 })
 
 -------------------------------
@@ -245,7 +245,7 @@ table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')
 
 local function plugin_path(plugin_name)
-  return string.format('%s/plug/%s/lua', vim.fn.stdpath('data'), plugin_name)
+  return string.format('%s/plug/%s/lua', G.data_dir, plugin_name)
 end
 
 local workspace_libs = {
@@ -257,7 +257,7 @@ local workspace_libs = {
   --- so only load selected libs
   library = {
     vim.fn.expand('$VIMRUNTIME/lua'),
-    vim.fn.stdpath('config') .. '/lua',
+    G.std_cfg_dir .. '/lua',
     plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
     plugin_path('plenary.nvim'),

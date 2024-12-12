@@ -22,7 +22,7 @@ local use_icons = icons_loaded
 -- telescope:	closest match to telescope defaults in look and feel and keybinds
 -- skim:	uses skim as an fzf alternative, (requires the sk binary)
 local fzf_profile = 'max-pref'
-local history_dir = vim.fn.stdpath('data') .. '/fzf-history'
+local history_dir = G.data_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
 local rg_grep_opt =
   '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --regexp'
