@@ -8,17 +8,18 @@ end
 
 local cmd_prefix = 'Ai'
 
-local default_chat_prompt = [[
-You are a general AI assistant.
-The user provided the additional info about how they would like you to respond:
-- If you're unsure don't guess and say you don't know instead.
-- Ask question if you need clarification to provide better answer.
-- Think deeply and carefully from first principles step by step.
-- Zoom out first to see the big picture and then zoom in to details.
-- Use Socratic method to improve your thinking and coding skills.
-- Don't elide any code from your output if the answer requires coding.
-- Keep the answer short and to the point unless being asked to answer more in deepth
-- Take a deep breath; You've got this!
+local prompt_chat_default = [[
+You are a versatile AI assistant. When responding, please adhere to the following guidelines:
+
+- **Accuracy**: If unsure about a topic, state that you don’t know rather than guessing.
+- **Clarification**: Ask clarifying questions to ensure you fully understand the user's request before answering.
+- **Analytical Approach**: Break down your thought process step-by-step, starting with a broader perspective (zooming out) before delving into specifics (zooming in).
+- **Socratic Method**: Utilize the Socratic method to stimulate deeper thinking and enhance coding skills.
+- **Complete Responses**: Include all relevant code in your responses when coding is necessary; do not omit any details.
+- **Conciseness**: Keep answers succinct, elaborating only when requested or necessary.
+- **Encouragement**: Approach each question with confidence and a positive mindset.
+
+With these guidelines, respond creatively and accurately to user queries while fostering a supportive environment for learning.
 ]]
 
 local prompt_code_block_only = [[
@@ -271,21 +272,21 @@ local config = {
         temperature = 0.8,
         top_p = 1,
       },
-      system_prompt = default_chat_prompt,
+      system_prompt = prompt_chat_default,
     },
     {
       name = 'ChatGPT4o-mini',
       chat = true,
       command = false,
       model = { model = openai_gpt4o_mini, temperature = 1.1, top_p = 1 },
-      system_prompt = default_chat_prompt,
+      system_prompt = prompt_chat_default,
     },
     {
       name = 'ChatGPT4o',
       chat = true,
       command = false,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-      system_prompt = default_chat_prompt,
+      system_prompt = prompt_chat_default,
     },
     {
       name = 'TranslateAgent',
@@ -319,16 +320,44 @@ local config = {
       disable = true,
     },
     {
-      name = 'ChatGemini',
-      disable = true,
-    },
-    {
       name = 'CodeGPT4o-mini',
       disable = true,
     },
     {
+      provider = 'googleai',
+      name = 'ChatGemini2',
+      disable = false,
+      chat = true,
+      command = false,
+      model = {
+        model = 'gemini-2.0-flash-exp',
+        temperature = 1.1,
+        top_p = 0.95,
+        top_k = 40,
+      },
+      -- system prompt (use this to specify the persona/role of the AI)
+      system_prompt = prompt_chat_default,
+    },
+    {
+      provider = 'googleai',
+      name = 'ChatGemini',
+      disable = false,
+      chat = true,
+      command = false,
+      -- string with model name or table with model name and parameters
+      model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
+      -- system prompt (use this to specify the persona/role of the AI)
+      system_prompt = prompt_chat_default,
+    },
+    {
+      provider = 'googleai',
       name = 'CodeGemini',
-      disable = true,
+      disable = false,
+      chat = false,
+      command = true,
+      -- string with model name or table with model name and parameters
+      model = { model = 'gemini-pro', temperature = 0.8, top_p = 1 },
+      system_prompt = prompt_coding,
     },
     {
       name = 'ChatClaude-3-Haiku',
@@ -541,8 +570,10 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      local agent = gpplugin.get_chat_agent('ChatGPT4o-mini')
-      new_chat(gpplugin, new_chat_params, false, default_chat_prompt, agent)
+      -- local agent = gpplugin.get_chat_agent('ChatGemini')
+      local agent = gpplugin.get_chat_agent('ChatGemini2')
+      -- local agent = gpplugin.get_chat_agent('ChatGPT4o-mini')
+      new_chat(gpplugin, new_chat_params, false, prompt_chat_default, agent)
     end,
     desc = 'new chat',
   },
