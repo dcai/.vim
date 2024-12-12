@@ -5,7 +5,7 @@ vim.lsp.set_log_level(vim.log.levels.ERROR)
 -------------------------------
 local mason_loaded, mason = pcall(require, 'mason')
 if not mason_loaded then
-  LOG.error('mason not loaded!')
+  vim.g.logger.error('mason not loaded!')
   return
 end
 local masonpath = require('mason-core.path')
@@ -41,7 +41,7 @@ local ts_ls_supported_filetypes = {
 local lspconfig_loaded, cfg = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
-  LOG.error('lspconfig not loaded!')
+  vim.g.logger.error('lspconfig not loaded!')
   return
 end
 require('lspconfig.ui.windows').default_options.border = 'single'

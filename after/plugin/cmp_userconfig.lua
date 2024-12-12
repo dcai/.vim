@@ -1,6 +1,6 @@
 local cmp_loaded, cmp = pcall(require, 'cmp')
 if not cmp_loaded then
-  LOG.error('cmp not loaded!')
+  vim.g.logger.error('cmp not loaded!')
   return
 end
 -- LOG.trace('cmp loaded, setting up...')

@@ -27,7 +27,7 @@ local notes_keymap = {
     function()
       local ft = vim.bo.filetype
       if not vim.tbl_contains({ 'markdown' }, ft) then
-        LOG.warn('must be markdown file')
+        vim.g.logger.warn('must be markdown file')
         return
       end
       utils.lazy_shell_cmd(
