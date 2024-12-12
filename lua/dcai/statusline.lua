@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-function, unused-local
 local SPC = ' '
 local SEP = '%='
 -- Restore normal highlight with %* or %0*.
