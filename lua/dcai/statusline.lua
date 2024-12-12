@@ -47,9 +47,9 @@ local function current_buffer_name()
   local fullpath = vim.fn.expand('%:p')
   local filemodified = ' %m'
   local readonly = '%r'
-  local project_root = G.git_root()
+  local project_root = vim.g.git_root()
   local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
-  local project_root_trimed = G.replace(fullpath, G.smart_root(), '')
+  local project_root_trimed = vim.g.replace(fullpath, vim.g.smart_root(), '')
   return color_project_accent('(' .. project_name .. ')')
     .. project_root_trimed
     .. filemodified
@@ -96,7 +96,7 @@ local function filencoding()
   return table.concat({
     '[',
     vim.bo.fileformat,
-    G.isempty(vim.bo.fileencoding) and '' or '|' .. vim.bo.fileencoding,
+    vim.g.isempty(vim.bo.fileencoding) and '' or '|' .. vim.bo.fileencoding,
     vim.bo.bomb and '|BOM' or '',
     ']',
   })

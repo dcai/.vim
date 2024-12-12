@@ -40,7 +40,7 @@ local vim_keymap = {
   {
     '<leader>vR',
     function()
-      G.reload('dcai')
+      vim.g.reload('dcai')
       dofile(vim.env.MYVIMRC)
     end,
     desc = 'force reload everything',
@@ -51,7 +51,7 @@ local vim_keymap = {
       local ft = vim.bo.filetype
       if ft == 'vim' or ft == 'lua' then
         vim.cmd('source %')
-        G.reload('dcai')
+        vim.g.reload('dcai')
         vim.notify('Current buffer sourced', vim.log.levels.WARN)
       else
         vim.notify('Cannot reload non vim/lua files')

@@ -5,7 +5,7 @@ LOG = require('dcai.log').setup()
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-vim.g.python3_host_prog = G.find_executable({
+vim.g.python3_host_prog = vim.g.find_executable({
   '~/.local/share/nvim/venv/bin/python3',
   '/opt/homebrew/bin/python3',
   '/usr/local/bin/python3',
@@ -13,7 +13,7 @@ vim.g.python3_host_prog = G.find_executable({
 })
 LOG.trace('python3_host_prog', vim.g.python3_host_prog)
 
-vim.g.node_host_prog = G.find_executable({
+vim.g.node_host_prog = vim.g.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
@@ -23,8 +23,8 @@ if shadafile then
   vim.opt.shadafile = shadafile
 end
 
-G.source('loader.vim')
-G.setup_colorscheme()
+vim.g.source('loader.vim')
+vim.g.setup_colorscheme()
 require('dcai.plug').setup({})
 require('dcai.keymaps')
 
@@ -62,7 +62,7 @@ if is_ssh and has_osc52 then
 end
 
 vim.api.nvim_create_user_command('Cc', function()
-  local popup = G.new_popup({ title = 'clang build and run', number = true })
+  local popup = vim.g.new_popup({ title = 'clang build and run', number = true })
   local PJob = require('plenary.job')
   local sourcefile = vim.fn.expand('%')
   local bin_name = vim.fn.fnamemodify(sourcefile, ':t:r')
@@ -76,10 +76,10 @@ vim.api.nvim_create_user_command('Cc', function()
         pcall(
           vim.api.nvim_chan_send,
           channel,
-          table.concat(job:stderr_result(), G.nl)
+          table.concat(job:stderr_result(), vim.g.nl)
         )
       else
-        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), G.nl))
+        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), vim.g.nl))
       end
     end),
   })

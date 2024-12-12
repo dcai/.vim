@@ -36,7 +36,7 @@ local testthings_keymap = {
   {
     '<leader>tn',
     function()
-      local root = G.node_project_root()
+      local root = vim.g.node_project_root()
       vim.api.nvim_command('cd ' .. root)
       vim.cmd('TestNearest')
     end,

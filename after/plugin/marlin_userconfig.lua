@@ -6,7 +6,7 @@ end
 
 marlin.setup({
   patterns = { '.git', 'package.json' },
-  datafile = G.data_dir .. '/marlin.json',
+  datafile = vim.g.data_dir .. '/marlin.json',
   open_callback = require('marlin.callbacks').change_buffer,
   sorter = require('marlin.sorters').by_name,
   save_cursor_location = false,

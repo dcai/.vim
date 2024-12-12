@@ -13,17 +13,17 @@ local fzf_keymap = {
   {
     '<leader>ff',
     function()
-      fzf.files({ cwd = G.smart_root() })
+      fzf.files({ cwd = vim.g.smart_root() })
     end,
     desc = 'project files',
   },
   {
     '<leader>fg',
     function()
-      if G.is_git_repo() then
+      if vim.g.is_git_repo() then
         fzf.git_files()
       else
-        fzf.files({ cwd = G.smart_root() })
+        fzf.files({ cwd = vim.g.smart_root() })
       end
     end,
     desc = 'git files',
@@ -31,7 +31,7 @@ local fzf_keymap = {
   {
     '<leader>fl',
     function()
-      fzf.files({ cwd = G.log_dir })
+      fzf.files({ cwd = vim.g.log_dir })
     end,
     desc = 'xdg log files',
   },

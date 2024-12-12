@@ -43,7 +43,7 @@ end
 -- for Exafunction/codeium.nvim
 local codeium_loaded, codeium = pcall(require, 'codeium')
 if codeium_loaded then
-  local cachedir = G.cache_dir
+  local cachedir = vim.g.cache_dir
   codeium.setup({
     manager_path = cachedir .. '/codeium/manager_path',
     bin_path = cachedir .. '/codeium/bin',

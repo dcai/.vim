@@ -35,7 +35,7 @@ local note_get_git_branch = function()
 end
 
 local note_create_or_edit = function(name)
-  local filename = G.slugify(name, '-')
+  local filename = vim.g.slugify(name, '-')
   local dir = vim.g.notes_home
   local path = vim.fn.expand(string.format('%s/%s.md', dir, filename))
   vim.cmd('edit ' .. path)
@@ -44,10 +44,10 @@ end
 local function create_note_for_project(with_branch)
   return function()
     local now = note_now()
-    local git_root = G.slugify(note_get_git_root(), '-')
+    local git_root = vim.g.slugify(note_get_git_root(), '-')
     local git_branch = 'index'
     if with_branch then
-      git_branch = G.slugify(note_get_git_branch(), '-')
+      git_branch = vim.g.slugify(note_get_git_branch(), '-')
     end
 
     if git_root and git_branch then

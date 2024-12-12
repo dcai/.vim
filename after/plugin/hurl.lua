@@ -1,5 +1,5 @@
 vim.api.nvim_create_user_command('HurlRun', function()
-  local dir = G.git_root()
+  local dir = vim.g.git_root()
   -- run current file
   local ft = vim.bo.filetype
   if not vim.tbl_contains({ 'hurl' }, ft) then
@@ -7,7 +7,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
     return
   end
   local filepath = vim.fn.expand('%:p')
-  local popup = G.new_popup({ title = 'hurl', number = false })
+  local popup = vim.g.new_popup({ title = 'hurl', number = false })
   local PJob = require('plenary.job')
   popup.open()
   local channel = vim.api.nvim_open_term(popup.buffer, {})
@@ -27,10 +27,10 @@ vim.api.nvim_create_user_command('HurlRun', function()
         pcall(
           vim.api.nvim_chan_send,
           channel,
-          table.concat(job:stderr_result(), G.nl)
+          table.concat(job:stderr_result(), vim.g.nl)
         )
       else
-        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), G.nl))
+        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), vim.g.nl))
       end
     end),
   }):start()
