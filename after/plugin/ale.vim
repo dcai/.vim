@@ -36,6 +36,9 @@ let g:ale_javascript_eslint_use_global = 0
 " use different version which generates different format
 let g:ale_javascript_prettier_use_global = 0
 
+let g:ale_python_ruff_use_global = 1
+let g:ale_python_ruff_format_use_global = 1
+
 let g:ale_biome_use_global = 1
 let g:ale_biome_executable = 'biome'
 
@@ -54,7 +57,7 @@ let g:ale_linters = {
   \ 'lua': [],
   \ 'markdown': ['cspell', 'remark_lint'],
   \ 'php': [],
-  \ 'python': ['flake8'],
+  \ 'python': ['ruff'],
   \ 'rust': ['analyzer', 'cargo'],
   \ 'sh': ['shellcheck'],
   \ 'typescript': s:jslinter,
@@ -87,7 +90,7 @@ let g:ale_fixers = {
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
   \ 'php': ['pint'],
-  \ 'python': ['black', 'isort'],
+  \ 'python': ['ruff', 'ruff_format'],
   \ 'rust': ['rustfmt'],
   \ 'sh': ['shfmt'],
   \ 'svelte': ['prettier'],
