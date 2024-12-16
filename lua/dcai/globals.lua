@@ -237,6 +237,7 @@ vim.g.log_dir = trim_trailing_slash(vim.fn.stdpath('log'))
 vim.g.std_cfg_dir = trim_trailing_slash(vim.fn.stdpath('config'))
 vim.g.cache_dir = trim_trailing_slash(vim.fn.stdpath('cache'))
 vim.g.state_dir = trim_trailing_slash(vim.fn.stdpath('state'))
+vim.g.run_dir = trim_trailing_slash(vim.fn.stdpath('run'))
 
 vim.g.parent_dir = function(input)
   return vim.g.trim_right(input, '/'):match('(.*/)')
