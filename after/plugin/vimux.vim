@@ -70,7 +70,7 @@ function s:and(...)
 endfunction
 
 function! s:jest(env, path)
-  return 'npx jest --maxWorkers 1 --env=' . a:env . ' --silent=false --coverage=false --watch --runTestsByPath ' . a:path
+  return 'npx jest --runInBand --silent=false --coverage=false --watch --env=' . a:env . ' --runTestsByPath ' . a:path
 endfunction
 
 function! s:mocha(path)
