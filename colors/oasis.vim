@@ -446,8 +446,8 @@ if has('nvim')
 endif
 
 let s:statusline_fg=g:EnvVar(s:env_name_stl_fg, s:nicelightgreen)
-let s:statusline_bg=g:EnvVar(s:env_name_stl_bg, s:nicemidgreen)
-let s:statusline_bg_nc=g:EnvVar(s:env_name_stl_bg_nc, s:nicedarkgreen)
+let s:statusline_bg=g:EnvVar(s:env_name_stl_bg, s:darkgreen)
+let s:statusline_bg_nc=g:EnvVar(s:env_name_stl_bg_nc, s:black)
 
 let s:statusline_n = {
       \ 'fg': s:black,
@@ -456,8 +456,7 @@ let s:statusline_n = {
       \ 'guibg': s:statusline_bg,
       \ }
 let s:statuslineNC = {
-      \ 'fg': s:white,
-      \ 'bg': s:darkgreen,
+      \ 'fg': s:gray,
       \ 'guibg': s:statusline_bg_nc,
       \ }
 let s:statusline_i = {

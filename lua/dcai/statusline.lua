@@ -44,16 +44,17 @@ local function git_branch()
 end
 
 local function current_buffer_name()
-  local fullpath = vim.fn.expand('%:p')
-  local filemodified = ' %m'
-  local readonly = '%r'
-  local project_root = vim.g.git_root()
-  local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
-  local project_root_trimed = vim.g.replace(fullpath, vim.g.smart_root(), '')
-  return color_project_accent('(' .. project_name .. ')')
-    .. project_root_trimed
-    .. filemodified
-    .. readonly
+  return '%t'
+  -- local fullpath = vim.fn.expand('%:p')
+  -- local filemodified = ' %m'
+  -- local readonly = '%r'
+  -- local project_root = vim.g.git_root()
+  -- local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
+  -- local project_root_trimed = vim.g.replace(fullpath, vim.g.smart_root(), '')
+  -- return color_project_accent('(' .. project_name .. ')')
+  --   .. project_root_trimed
+  --   .. filemodified
+  --   .. readonly
 end
 
 local modes = {
@@ -102,7 +103,12 @@ local function filencoding()
   })
 end
 
-function BuildStatusline()
+function winid()
+  --  vim.api.nvim_get_current_win()
+  return vim.fn.win_getid()
+end
+
+function StatuslineActive()
   local wide_enough = vim.fn.winwidth(0) > 100
   local sections = {}
   local function push(item)
@@ -127,11 +133,16 @@ function BuildStatusline()
   return table.concat(sections)
 end
 
+function StatuslineInactive(evt)
+  return '%t'
+end
+
 M.setup = function()
   vim.cmd([[
       augroup Statusline
         au!
-        autocmd BufEnter,BufLeave,WinResized,WinNew,WinEnter,WinClosed * setlocal statusline=%!v:lua.BuildStatusline()
+        autocmd BufEnter,BufLeave,WinResized,WinNew,WinEnter,WinClosed * setlocal statusline=%!v:lua.StatuslineActive()
+        autocmd BufLeave,WinLeave * setlocal statusline=%!v:lua.StatuslineInactive()
       augroup END
     ]])
 
