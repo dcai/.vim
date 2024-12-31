@@ -140,10 +140,19 @@ M.setup = function(plugOpts)
   Plug('hrsh7th/cmp-nvim-lsp')
   Plug('hrsh7th/cmp-path')
   Plug('hrsh7th/nvim-cmp')
+  Plug('dcai/nvim-snippets', {
+    setup = function()
+      require('snippets').setup({
+        -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
+        search_paths = { vim.fn.expand('~/src/vim-snippets/') },
+        create_cmp_source = true,
+      })
+    end,
+  })
   -- Plug('petertriho/cmp-git')
   -- Plug('dmitmel/cmp-cmdline-history')
-  Plug('SirVer/ultisnips')
-  Plug('quangnguyen30192/cmp-nvim-ultisnips')
+  -- Plug('SirVer/ultisnips')
+  -- Plug('quangnguyen30192/cmp-nvim-ultisnips')
   ----------------------------------------------------------------------------
   --- markdown
   ----------------------------------------------------------------------------

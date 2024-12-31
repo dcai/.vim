@@ -135,10 +135,6 @@ local source_path = {
 local function formatter(entry, item)
   local source_name = entry.source.name
   local menu_icon = {
-    cody = 'CODY',
-    -- luasnip = 'ι',
-    -- nvim_lsp = 'Ƒ',
-    -- ultisnips = 'λ',
     -- path = '⋗',
     -- copilot = 'Copilot',
     path = 'PATH',
@@ -153,8 +149,6 @@ local function formatter(entry, item)
     -- nvim_lsp = '💡',
     nvim_lsp = 'LSP',
     tmux = 'tmux',
-    ultisnips = 'SNIP',
-    -- ultisnips = '🍪',
     ['vim-dadbod-completion'] = '[DB]',
   }
   local icon = menu_icon[source_name]
@@ -206,9 +200,7 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      vim.fn['UltiSnips#Anon'](args.body)
-      -- vim.snippet.expand(args.body) -- enabling this may cause lsp snippet echo twice
-      -- require('luasnip').lsp_expand(args.body)
+      vim.snippet.expand(args.body)
     end,
   },
   experimental = {
@@ -231,10 +223,10 @@ cmp.setup({
     format = formatter,
   },
   sources = cmp.config.sources({
-    -- { name = 'cody' },
     { name = 'nvim_lsp' },
     { name = 'codeium' },
-    { name = 'ultisnips' },
+    { name = 'snippets' },
+    -- { name = 'ultisnips' },
     { name = 'buffer' },
     source_path,
   }),
