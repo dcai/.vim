@@ -25,7 +25,7 @@ local fzf_profile = 'max-pref'
 local history_dir = vim.g.data_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
 local rg_grep_opt =
-  '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --regexp'
+  '--column --line-number --no-heading --color=always --smart-case --max-columns=4096'
 
 fzflua.setup({
   fzf_profile,
