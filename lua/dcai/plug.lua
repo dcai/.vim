@@ -98,7 +98,7 @@ M.setup = function(plugOpts)
   --     end
   --   end,
   -- })
-  Plug('lewis6991/gitsigns.nvim')
+  -- Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
   ----------------------------------------------------------------------------
   --- treesitter
@@ -107,29 +107,29 @@ M.setup = function(plugOpts)
   Plug('nvim-treesitter/nvim-treesitter-textobjects')
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag')
-  Plug('laytan/tailwind-sorter.nvim', {
-    ['do'] = 'cd formatter && npm ci && npm run build',
-    setup = function()
-      local loaded, tailwindsorter = pcall(require, 'tailwind-sorter')
-      if loaded then
-        tailwindsorter.setup({
-          on_save_enabled = false, -- If `true`, automatically enables on save sorting.
-          on_save_pattern = {
-            '*.html',
-            '*.js',
-            '*.jsx',
-            '*.tsx',
-            '*.twig',
-            '*.hbs',
-            '*.php',
-            '*.heex',
-            '*.astro',
-          },
-          node_path = 'node',
-        })
-      end
-    end,
-  })
+  -- Plug('laytan/tailwind-sorter.nvim', {
+  --   ['do'] = 'cd formatter && npm ci && npm run build',
+  --   setup = function()
+  --     local loaded, tailwindsorter = pcall(require, 'tailwind-sorter')
+  --     if loaded then
+  --       tailwindsorter.setup({
+  --         on_save_enabled = false, -- If `true`, automatically enables on save sorting.
+  --         on_save_pattern = {
+  --           '*.html',
+  --           '*.js',
+  --           '*.jsx',
+  --           '*.tsx',
+  --           '*.twig',
+  --           '*.hbs',
+  --           '*.php',
+  --           '*.heex',
+  --           '*.astro',
+  --         },
+  --         node_path = 'node',
+  --       })
+  --     end
+  --   end,
+  -- })
   ----------------------------------------------------------------------------
   --- nvim-cmp
   ----------------------------------------------------------------------------
