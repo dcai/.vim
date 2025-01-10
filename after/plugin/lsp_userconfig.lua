@@ -289,7 +289,7 @@ cfg.lua_ls.setup({
       },
       telemetry = { enable = false },
       diagnostics = {
-        globals = { 'vim' },
+        globals = { 'vim', 'hs' },
         neededFileStatus = {
           ['codestyle-check'] = 'Any',
         },
