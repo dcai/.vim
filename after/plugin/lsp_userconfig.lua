@@ -17,12 +17,11 @@ mason.setup({
 --- mason-lspconfig
 -------------------------------
 local mason_lspconfig = require('mason-lspconfig')
-local ts_ls_name = 'ts_ls'
 mason_lspconfig.setup({
   ensure_installed = {
     'lua_ls',
     'pyright',
-    ts_ls_name,
+    'ts_ls',
     'vimls',
   },
   automatic_installation = false,
