@@ -1,5 +1,9 @@
 require('dcai.globals')
 
+if not vim.g.file_exists(vim.g.run_dir) then
+  vim.fn.mkdir(vim.g.run_dir, 'p')
+end
+
 LOG = require('dcai.log').setup()
 vim.g.logger = LOG
 
