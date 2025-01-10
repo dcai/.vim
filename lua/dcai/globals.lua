@@ -1,8 +1,6 @@
 local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
-G = {}
-
 vim.uv = vim.uv or vim.loop
 
 vim.g.print = function(val)
