@@ -5,18 +5,6 @@ G = {}
 
 vim.uv = vim.uv or vim.loop
 
-local function stripTrailingSlash(str)
-  return gsub(str, '/$', '')
-end
-
-vim.g.stripTrailingSlash = stripTrailingSlash
-
-vim.g.data_dir = stripTrailingSlash(vim.fn.stdpath('data'))
-vim.g.log_dir = stripTrailingSlash(vim.fn.stdpath('log'))
-vim.g.std_cfg_dir = stripTrailingSlash(vim.fn.stdpath('config'))
-vim.g.cache_dir = stripTrailingSlash(vim.fn.stdpath('cache'))
-vim.g.state_dir = stripTrailingSlash(vim.fn.stdpath('state'))
-
 vim.g.print = function(val)
   print(vim.inspect(val))
   return val
@@ -236,6 +224,19 @@ vim.g.trim_right = function(str, char)
   end
   return str
 end
+
+local function trim_trailing_slash(str)
+  -- return gsub(str, '/$', '')
+  return vim.g.trim_right(str, '/')
+end
+
+vim.g.trim_trailing_slash = trim_trailing_slash
+
+vim.g.data_dir = trim_trailing_slash(vim.fn.stdpath('data'))
+vim.g.log_dir = trim_trailing_slash(vim.fn.stdpath('log'))
+vim.g.std_cfg_dir = trim_trailing_slash(vim.fn.stdpath('config'))
+vim.g.cache_dir = trim_trailing_slash(vim.fn.stdpath('cache'))
+vim.g.state_dir = trim_trailing_slash(vim.fn.stdpath('state'))
 
 vim.g.parent_dir = function(input)
   return vim.g.trim_right(input, '/'):match('(.*/)')
