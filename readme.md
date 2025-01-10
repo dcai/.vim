@@ -12,10 +12,14 @@
 ```sh
 git clone https://github.com/dcai/.vim.git ~/.config/nvim
 ln -s ~/.config/nvim .vim
+# fish shell
+ln -s (which nvim) ~/.local/bin/vim
 ```
 
 - Extended `vimrc` since 2008[^2].
-- Moved to Neovim since early 2023.
+- Migrated to [Neovim](https://github.com/neovim/neovim) early 2023.
+- Plugins used: [plug.lua](./lua/dcai/plug.lua)
 
 [^1]: `figlet -f slant 'dcai vimrc'`
+
 [^2]: Pre-2014 history was tracked in git: `2f299642859b9efe0d5b1619ceeabcab16158a19`
