@@ -19,6 +19,8 @@ local function file_exists(filepath)
   return status
 end
 
+vim.g.file_exists = file_exists
+
 local function readfile(file)
   local f = assert(io.open(file, 'r'))
   local content = f:read('*all')

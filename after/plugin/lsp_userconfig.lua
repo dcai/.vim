@@ -44,6 +44,9 @@ if not lspconfig_loaded then
   vim.g.logger.error('lspconfig not loaded!')
   return
 end
+
+local lsputils = require('lspconfig/util')
+
 require('lspconfig.ui.windows').default_options.border = 'single'
 
 local util = cfg.util
@@ -435,19 +438,47 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
   })(err, result, ctx, config)
 end
 
+local function get_python_path(workspace)
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    return lsputils.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+
+  if vim.g.file_exists(workspace .. '/.venv') then
+    return lsputils.path.join(workspace, '.venv', 'bin', 'python')
+  end
+
+  local py_path =
+    lsputils.path.join(vim.g.smart_root(), '.venv', 'bin', 'python')
+
+  if vim.g.file_exists(py_path) then
+    return py_path
+  else
+    -- Fallback to system Python.
+    return vim.uv.exepath('python3') or vim.uv.exepath('python') or 'python'
+  end
+end
+
+-- https://github.com/microsoft/pyright/blob/main/docs/settings.md
 cfg.pyright.setup({
   on_attach = common_on_attach,
-  -- settings = {
-  --   pyright = {
-  --     disableOrganizeImports = true, -- if use Ruff
-  --   },
-  --   python = {
-  --     analysis = {
-  --       ignore = { '*' }, -- if use Ruff
-  --       typeCheckingMode = 'off', -- if use mypy
-  --     },
-  --   },
-  -- },
+  before_init = function(_, config)
+    config.settings.python.pythonPath = get_python_path(config.root_dir)
+  end,
+  settings = {
+    pyright = {
+      disableOrganizeImports = true, -- if use Ruff
+    },
+    python = {
+      analysis = {
+        ignore = { '*' }, -- if use Ruff
+        --       typeCheckingMode = 'off', -- if use mypy
+        autoSearchPaths = true,
+        diagnosticMode = 'openFilesOnly',
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
 })
 
 cfg.csharp_ls.setup({
