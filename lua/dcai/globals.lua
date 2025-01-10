@@ -28,6 +28,8 @@ local function readfile(file)
   return content
 end
 
+vim.g.readfile = readfile
+
 local function writefile(file, contents)
   local f = assert(io.open(file, 'w'))
   f:write(contents)
