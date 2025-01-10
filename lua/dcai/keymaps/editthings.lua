@@ -62,7 +62,7 @@ local editthings_keymap = {
   {
     '<leader>es',
     function()
-      vim.cmd('UltiSnipsEdit')
+      -- vim.cmd('UltiSnipsEdit')
     end,
     desc = 'edit snippet for current buffer',
   },
