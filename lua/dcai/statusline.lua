@@ -7,33 +7,23 @@ local COLOR_STL_ACCENT = '%#StatusLineAccent#'
 local COLOR_STL_HL = '%#StatusLineHighlight#'
 
 local M = {}
-local function linter_status()
-  if not vim.fn.exists(':ALEInfo') then
-    return
-  end
-  local counts = vim.fn['ale#statusline#Count'](vim.fn.bufnr(''))
-  local all_errors = counts.error + counts.style_error
-  local all_non_errors = counts.total - all_errors
-
-  return counts.total == 0 and 'OK'
-    or string.format('%dW %dE', all_non_errors, all_errors)
-end
 
 local function pad(s)
-  return s and ' ' .. s .. ' ' or SPC
+  return s and SPC .. s .. SPC or SPC
 end
 
 local function lpad(s)
-  return s and ' ' .. s or SPC
+  return s and SPC .. s or SPC
 end
 
 local function rpad(s)
-  return s and s .. ' ' or SPC
+  return s and s .. SPC or SPC
 end
 
 local function color_accent(s)
   return COLOR_STL_ACCENT .. s .. COLOR_RESET
 end
+
 local function color_highlight(s)
   return COLOR_STL_HL .. s .. COLOR_RESET
 end
@@ -46,22 +36,12 @@ local function git_branch()
   return lpad(color_highlight(ret))
 end
 
-local function extract_after(path, substrings)
-  for _, substring in ipairs(substrings) do
-    local result = path:gsub('.*' .. substring .. '/', '')
-    if result ~= path then
-      return '@/' .. result
-    end
-  end
-  return path
-end
-
-local function current_buffer()
-  local fullpath = vim.fn.expand('%:~')
-  local markers = { 'iris', 'packages', 'services' }
+local function current_buffer_name()
+  local fullpath = vim.fn.expand('%:p')
   local filemodified = ' %m'
   local readonly = '%r'
-  return extract_after(fullpath, markers) .. filemodified .. readonly
+  local project_root_trimed = fullpath:gsub(G.smart_root(), '@')
+  return project_root_trimed .. filemodified .. readonly
 end
 
 local modes = {
@@ -76,7 +56,7 @@ local modes = {
   t = 'Term',
 }
 
-local function currentmode()
+local function current_mode()
   return rpad(color_accent(modes[vim.fn.mode()]))
 end
 
@@ -93,9 +73,10 @@ end
 local function filencoding()
   return table.concat({
     '[',
-    '%{strlen(&fileencoding)?&fileencoding:"none"}|',
-    '%{&fileformat}',
-    '%{&bomb?"\\|BOM":""}',
+    vim.bo.fileencoding and vim.bo.fileencoding or 'none',
+    '|',
+    vim.bo.filetype,
+    vim.bo.bomb and '|BOM' or '',
     ']',
   })
 end
@@ -108,19 +89,18 @@ function BuildStatusline()
   end
 
   if wide_enough then
-    push(currentmode())
+    push(current_mode())
   end
 
-  push(current_buffer())
-  push(SEP)
+  push(current_buffer_name())
 
   if wide_enough then
+    push(SEP)
     push(lineinfo())
     push(fileinfo())
     push(filencoding())
     push(git_branch())
   end
-  -- vim.wo.statusline = table.concat(sections)
   return table.concat(sections)
 end
 
@@ -131,6 +111,18 @@ M.setup = function()
         autocmd BufEnter,BufLeave,WinResized,WinNew,WinEnter,WinClosed * setlocal statusline=%!v:lua.BuildStatusline()
       augroup END
     ]])
+
+  -- XXX: autocommand below doesnt update mode correctly, try to fix this later
+  -- vim.api.nvim_create_autocmd(
+  --   { 'BufEnter', 'BufLeave', 'WinResized', 'WinNew', 'WinEnter', 'WinClosed' },
+  --   {
+  --     group = vim.api.nvim_create_augroup('Statusline', { clear = true }),
+  --     pattern = '*',
+  --     callback = function()
+  --       vim.wo.statusline = BuildStatusline()
+  --     end,
+  --   }
+  -- )
 end
 
 return M
