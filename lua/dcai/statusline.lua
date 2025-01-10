@@ -24,15 +24,15 @@ local function rpad(s)
 end
 
 local function color_accent(s)
-  return COLOR_STL_ACCENT .. s .. COLOR_RESET
+  return s and COLOR_STL_ACCENT .. s .. COLOR_RESET or ''
 end
 
 local function color_project_accent(s)
-  return COLOR_STL_PRJ_ACCENT .. s .. COLOR_RESET
+  return s and COLOR_STL_PRJ_ACCENT .. s .. COLOR_RESET or ''
 end
 
 local function color_highlight(s)
-  return COLOR_STL_HL .. s .. COLOR_RESET
+  return s and COLOR_STL_HL .. s .. COLOR_RESET or ''
 end
 
 local function git_branch()
@@ -66,6 +66,8 @@ local modes = {
   Rv = 'V·Replace',
   c = 'Command',
   t = 'Term',
+  s = 'Select',
+  S = 'Select',
 }
 
 local function current_mode()
