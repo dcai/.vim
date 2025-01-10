@@ -16,7 +16,7 @@ local function END()
 
   -- run setup scripts
   for plugin, setup in pairs(setups.afterEnd) do
-    LOG.trace('setting up ' .. plugin)
+    vim.g.logger.trace('setting up ' .. plugin)
     setup()
   end
 end

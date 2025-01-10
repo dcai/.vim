@@ -1,7 +1,9 @@
 require('dcai.globals')
 
 LOG = require('dcai.log').setup()
--- LOG.trace('Starting nvim')
+vim.g.logger = LOG
+
+-- vim.g.logger.trace('Starting nvim')
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -11,7 +13,7 @@ vim.g.python3_host_prog = vim.g.find_executable({
   '/usr/local/bin/python3',
   '/usr/bin/python3',
 })
-LOG.trace('python3_host_prog', vim.g.python3_host_prog)
+-- vim.g.logger.trace('python3_host_prog', vim.g.python3_host_prog)
 
 vim.g.node_host_prog = vim.g.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
@@ -62,7 +64,8 @@ if is_ssh and has_osc52 then
 end
 
 vim.api.nvim_create_user_command('Cc', function()
-  local popup = vim.g.new_popup({ title = 'clang build and run', number = true })
+  local popup =
+    vim.g.new_popup({ title = 'clang build and run', number = true })
   local PJob = require('plenary.job')
   local sourcefile = vim.fn.expand('%')
   local bin_name = vim.fn.fnamemodify(sourcefile, ':t:r')
@@ -79,7 +82,11 @@ vim.api.nvim_create_user_command('Cc', function()
           table.concat(job:stderr_result(), vim.g.nl)
         )
       else
-        pcall(vim.api.nvim_chan_send, channel, table.concat(job:result(), vim.g.nl))
+        pcall(
+          vim.api.nvim_chan_send,
+          channel,
+          table.concat(job:result(), vim.g.nl)
+        )
       end
     end),
   })

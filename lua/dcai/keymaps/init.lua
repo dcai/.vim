@@ -1,6 +1,6 @@
 local loaded, wk = pcall(require, 'which-key')
 if not loaded then
-  LOG.error('which-key not loaded!')
+  vim.g.logger.error('which-key not loaded!')
   return
 end
 
