@@ -192,7 +192,7 @@ end
 
 -- https://stackoverflow.com/a/29379912
 vim.g.replace = function(str, what, with)
-  what = string.gsub(what, '[%(%)%.%+%-%*%?%[%]%^%$%%]', '%%%1') -- escape pattern
+  what = string.gsub(what and what or '', '[%(%)%.%+%-%*%?%[%]%^%$%%]', '%%%1') -- escape pattern
   with = string.gsub(with, '[%%]', '%%%%') -- escape replacement
   return string.gsub(str, what, with)
 end
@@ -367,18 +367,24 @@ vim.g.smart_root = root({
   'appsettings.json',
   'Jenkinsfile_Build',
   'Makefile',
-  'stylua.toml',
-  '.lintstagedrc.js',
   '.husky',
   '.vscode',
-  'biome.json',
-  'biome.jsonc',
-  'tsconfig.json',
   '.editorconfig',
   '.tool-versions',
   '.mise.toml',
   'mise.toml',
   '.envrc',
+  -- js or typescript
+  'package.json',
+  'tsconfig.json',
+  -- lua
+  'stylua.toml',
+  -- python
+  'pyproject.toml',
+  -- biome
+  'biome.json',
+  'biome.jsonc',
+  -- prettier
   'prettier.config.js',
   'prettier.config.cjs',
   '.prettierrc',
