@@ -105,7 +105,7 @@ without adding any interpretation or additional commentary.
 
 local openai_gpt4o_mini = 'gpt-4o-mini'
 
-local claude_code_model = 'claude-3-5-sonnet-20240620'
+local claude_code_model = 'claude-3-5-sonnet-20241022'
 local chat_topic_gen_model = openai_gpt4o_mini
 local translator_model = openai_gpt4o_mini
 
