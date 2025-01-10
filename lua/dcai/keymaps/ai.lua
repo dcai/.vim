@@ -387,15 +387,20 @@ local config = {
   -- templates
   template_selection = 'I have the following from {{filename}}:'
     .. '\n\n```{{filetype}}\n{{selection}}\n```\n\n{{command}}',
+
   template_rewrite = 'I have the following from {{filename}}:'
     .. '\n\n```{{filetype}}\n{{selection}}\n```\n\n{{command}}'
-    .. '\n\nRespond exclusively with the snippet that should replace the selection above.',
+    .. '\n\nRespond exclusively with the snippet that should replace the selection above.'
+    .. prompt_code_block_only,
+
   template_append = 'I have the following from {{filename}}:'
     .. '\n\n```{{filetype}}\n{{selection}}\n```\n\n{{command}}'
     .. '\n\nRespond exclusively with the snippet that should be appended after the selection above.',
+
   template_prepend = 'I have the following from {{filename}}:'
     .. '\n\n```{{filetype}}\n{{selection}}\n```\n\n{{command}}'
     .. '\n\nRespond exclusively with the snippet that should be prepended before the selection above.',
+
   template_command = '{{command}}',
 
   hooks = {
@@ -524,10 +529,10 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
-      new_chat(gpplugin, new_chat_params, false, prompt_coding, agent)
+      local agent = gpplugin.get_chat_agent('ChatGPT4o')
+      new_chat(gpplugin, new_chat_params, false, default_chat_prompt, agent)
     end,
-    desc = 'new code chat',
+    desc = 'new chat',
   },
   {
     '<leader>cD',
