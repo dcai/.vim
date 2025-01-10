@@ -103,9 +103,11 @@ based on the input language,
 without adding any interpretation or additional commentary.
 ]]
 
+local openai_gpt4o_mini = 'gpt-4o-mini'
+
 local claude_code_model = 'claude-3-5-sonnet-20240620'
-local chat_topic_gen_model = 'gpt-4o-mini'
-local translator_model = 'gpt-4o-mini'
+local chat_topic_gen_model = openai_gpt4o_mini
+local translator_model = openai_gpt4o_mini
 
 local chat_template = [[
 # topic: ?
@@ -265,6 +267,13 @@ local config = {
         temperature = 0.8,
         top_p = 1,
       },
+      system_prompt = default_chat_prompt,
+    },
+    {
+      name = 'ChatGPT4o-mini',
+      chat = true,
+      command = false,
+      model = { model = openai_gpt4o_mini, temperature = 1.1, top_p = 1 },
       system_prompt = default_chat_prompt,
     },
     {
@@ -529,7 +538,7 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      local agent = gpplugin.get_chat_agent('ChatGPT4o')
+      local agent = gpplugin.get_chat_agent('ChatGPT4o-mini')
       new_chat(gpplugin, new_chat_params, false, default_chat_prompt, agent)
     end,
     desc = 'new chat',
