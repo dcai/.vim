@@ -60,6 +60,7 @@ augroup filetypeGroup
 
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
   autocmd BufRead,BufNewFile *npmrc* setf dosini
+  autocmd BufRead,BufNewFile */ghostty/* set ft=toml
 
   autocmd BufRead,BufNewFile *.templ set filetype=templ
   " direnv
