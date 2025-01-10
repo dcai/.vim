@@ -17,7 +17,7 @@ let g:ale_open_list = 0
 let g:ale_php_cs_fixer_use_global = 1
 let g:ale_php_cs_fixer_options = ''
 
-let g:ale_lua_stylua_options = '--search-parent-directories --quote-style AutoPreferSingle --column-width 80'
+let g:ale_lua_stylua_options = '--search-parent-directories'
 
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
@@ -51,7 +51,7 @@ let g:ale_linters = {
   \ 'javascript': s:jslinter,
   \ 'javascriptreact': s:jslinter,
   \ 'json': [],
-  \ 'lua': ['luac', 'luacheck'],
+  \ 'lua': [],
   \ 'markdown': ['cspell', 'remark_lint'],
   \ 'php': [],
   \ 'python': ['flake8'],
