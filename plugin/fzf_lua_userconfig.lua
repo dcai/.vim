@@ -21,7 +21,8 @@ local use_icons = icons_loaded
 -- max-perf:	similar to fzf-native and disables icons globally for max performance
 -- telescope:	closest match to telescope defaults in look and feel and keybinds
 -- skim:	uses skim as an fzf alternative, (requires the sk binary)
-local fzf_profile = 'max-pref'
+-- local fzf_profile = 'max-perf'
+local fzf_profile = 'fzf-native'
 local history_dir = vim.g.data_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
 local rg_grep_opt =
@@ -37,7 +38,7 @@ fzflua.setup({
     fullscreen = false, -- start fullscreen?
     border = false,
     -- border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-    hl = {
+    hls = {
       normal = 'Normal', -- window normal color (fg+bg)
       border = 'FloatBorder', -- border color
       help_normal = 'Normal', -- <F1> window normal
