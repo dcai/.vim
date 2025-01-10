@@ -62,9 +62,10 @@ local editthings_keymap = {
   {
     '<leader>es',
     function()
+      require('fzf-lua').files({ cwd = '~/src/vim-snippets/src/' })
       -- vim.cmd('UltiSnipsEdit')
     end,
-    desc = 'edit snippet for current buffer',
+    desc = 'edit snippet',
   },
   {
     '<leader>ev',
