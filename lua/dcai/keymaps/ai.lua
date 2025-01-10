@@ -222,7 +222,7 @@ local function dropbox_chat_dir()
 end
 local function std_chat_dir()
   ---@diagnostic disable-next-line: param-type-mismatch
-  return vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/chats'
+  return G.data_dir .. '/gp/chats'
 end
 
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
@@ -232,8 +232,8 @@ local config = {
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
   chat_dir = chatlogs_home,
-  state_dir = vim.fn.stdpath('data'):gsub('/$', '') .. '/gp/persisted',
-  log_file = vim.fn.stdpath('log'):gsub('/$', '') .. '/gp.nvim.log',
+  state_dir = G.state_dir .. '/gp/persisted',
+  log_file = G.log_dir .. '/gp.nvim.log',
   log_sensitive = false,
   providers = {
     openai = {

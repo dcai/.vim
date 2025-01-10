@@ -39,7 +39,7 @@ end
 ---setup vim-plug
 ---@param plugOpts table
 M.setup = function(plugOpts)
-  local dir = plugOpts.dir or vim.fn.expand(vim.fn.stdpath('data') .. '/plug')
+  local dir = plugOpts.dir or vim.fn.expand(G.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   if G.is_env_var_true('NVIM_USE_COPILOT') then
     Plug('github/copilot.vim', {
@@ -59,7 +59,7 @@ M.setup = function(plugOpts)
     --     -- vim.g.codeium_enabled = true
     --     -- vim.g.codeium_disable_bindings = 1
     --     -- vim.g.codeium_no_map_tab = true
-    --     -- vim.g.codeium_log_file = vim.fn.stdpath('log') .. '/codeium.vim.log'
+    --     -- vim.g.codeium_log_file = G.log_dir .. '/codeium.vim.log'
     --     -- -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
     --     -- vim.keymap.set('i', '<c-f>', function()
     --     --   vim.cmd('call codeium#Accept()')

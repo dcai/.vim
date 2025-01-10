@@ -5,6 +5,18 @@ G = {}
 
 vim.uv = vim.uv or vim.loop
 
+function stripTrailingSlash(str)
+  return gsub(str, '/$', '')
+end
+
+G.stripTrailingSlash = stripTrailingSlash
+
+G.data_dir = stripTrailingSlash(vim.fn.stdpath('data'))
+G.log_dir = stripTrailingSlash(vim.fn.stdpath('log'))
+G.std_cfg_dir = stripTrailingSlash(vim.fn.stdpath('config'))
+G.cache_dir = stripTrailingSlash(vim.fn.stdpath('cache'))
+G.state_dir = stripTrailingSlash(vim.fn.stdpath('state'))
+
 G.print = function(val)
   print(vim.inspect(val))
   return val
@@ -48,7 +60,7 @@ local function touch(filepath)
 end
 
 local function user_config_file_path()
-  return vim.fn.stdpath('data') .. '/user.json'
+  return G.data_dir .. '/user.json'
 end
 
 local function get_all_local_config()
