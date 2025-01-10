@@ -5,6 +5,7 @@ local COLOR_RESET = '%0*'
 local COLOR_USER_1 = '%1*'
 local COLOR_USER_3 = '%3*'
 local COLOR_STL_ACCENT = '%#StatusLineAccent#'
+local COLOR_STL_PRJ_ACCENT = '%#StatusLineProjectAccent#'
 local COLOR_STL_HL = '%#StatusLineHighlight#'
 
 local M = {}
@@ -25,6 +26,10 @@ local function color_accent(s)
   return COLOR_STL_ACCENT .. s .. COLOR_RESET
 end
 
+local function color_project_accent(s)
+  return COLOR_STL_PRJ_ACCENT .. s .. COLOR_RESET
+end
+
 local function color_highlight(s)
   return COLOR_STL_HL .. s .. COLOR_RESET
 end
@@ -42,10 +47,9 @@ local function current_buffer_name()
   local filemodified = ' %m'
   local readonly = '%r'
   local project_root = G.git_root()
-  local project_name = project_root and project_root:match('([^/]+)$') or nil
-  local project_root_trimed = G.replace(fullpath, G.smart_root(), '@')
-  return (project_name and color_accent(project_name) or '')
-    .. SPC
+  local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
+  local project_root_trimed = G.replace(fullpath, G.smart_root(), '')
+  return color_project_accent('{' .. project_name .. '}')
     .. project_root_trimed
     .. filemodified
     .. readonly
@@ -64,7 +68,7 @@ local modes = {
 }
 
 local function current_mode()
-  return rpad(color_accent(modes[vim.fn.mode()]))
+  return color_accent(modes[vim.fn.mode()])
 end
 
 local function lineinfo()
