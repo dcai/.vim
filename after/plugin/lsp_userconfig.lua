@@ -50,6 +50,7 @@ local util = cfg.util
 local root_pattern = cfg.util.root_pattern
 
 local timeout_ms = 3000
+local ts_ls_cmd_orgimports = '_typescript.organizeImports'
 local organize_imports = {
   ---@diagnostic disable-next-line: unused-local
   pyright = function(buf)
@@ -63,9 +64,8 @@ local organize_imports = {
   ts_ls = function(buffer)
     buffer = buffer or vim.api.nvim_get_current_buf()
     local params = {
-      command = '_typescript.organizeImports',
+      command = ts_ls_cmd_orgimports,
       arguments = { vim.api.nvim_buf_get_name(buffer) },
-      title = 'Organize Imports',
     }
     vim.lsp.buf_request_sync(
       buffer,
@@ -212,9 +212,8 @@ cfg.ts_ls.setup({
     OrganizeImports = {
       function()
         vim.lsp.buf.execute_command({
-          command = '_typescript.organizeImports',
+          command = ts_ls_cmd_orgimports,
           arguments = { vim.api.nvim_buf_get_name(0) },
-          title = '',
         })
       end,
       description = 'Organize Imports',
