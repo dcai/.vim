@@ -29,6 +29,22 @@ function! GitBranch()
   return l:branch
 endfunction
 
+function! ExtractAfter(path, substrings)
+  for substring in a:substrings
+    let result = substitute(a:path, '.*' . substring . '/', '', '')
+    if result != a:path
+      return '@/' . result
+    endif
+  endfor
+  return a:path
+endfunction
+
+function! CurrentBuffer()
+  let l:fullpath = expand('%:~')
+  let l:markers = ["iris", "packages", "services"]
+  return ExtractAfter(l:fullpath, l:markers)
+endfunction
+
 " got from https://jdhao.github.io/2019/11/03/vim_custom_statusline/
 let g:currentmode={
             \  'n'  : 'NORMAL',
@@ -49,12 +65,14 @@ set statusline+=%{toupper(g:currentmode[mode()])}
 " reset highlight group
 set statusline+=%0*
 " a space
-set statusline+=\ %f
+" set statusline+=\ %f  " filepath relative to current dir
+" set statusline+=\ %F " full path
+set statusline+=\ %{CurrentBuffer()}
 " modified flag
 set statusline+=%m
 " set statusline+=[%{LinterStatus()}]
 " left/right separator
-set statusline+=%=
+set statusline+=%=   " Switch to the right side
 set statusline+=%1*  " start User1 highlight group
 " cursor line/total lines
 set statusline+=\ \[%l\]\ /\ %L
