@@ -14,7 +14,7 @@ local function lazy_shell_cmd(command, opts, desc)
     local channel = nil
     if not disable_popup then
       local popup_title = command
-      local popup = G.new_popup({
+      local popup = vim.g.new_popup({
         title = popup_title,
         number = false,
         height = opts.height or 10,
@@ -23,7 +23,7 @@ local function lazy_shell_cmd(command, opts, desc)
       channel = vim.api.nvim_open_term(popup.buffer, {})
       vim.api.nvim_chan_send(
         channel,
-        string.format('[%s] start...' .. G.nl, desc)
+        string.format('[%s] start...' .. vim.g.nl, desc)
       )
     end
     local args = opts.args or {}
@@ -33,11 +33,11 @@ local function lazy_shell_cmd(command, opts, desc)
         args = args,
         cwd = cwd,
         on_exit = vim.schedule_wrap(function(job, ret)
-          local stderr = table.concat(job:stderr_result(), G.nl)
-          local stdout = table.concat(job:result(), G.nl)
+          local stderr = table.concat(job:stderr_result(), vim.g.nl)
+          local stdout = table.concat(job:result(), vim.g.nl)
           if ret == 0 then
             if not disable_popup then
-              vim.api.nvim_chan_send(channel, stderr .. G.nl .. stdout)
+              vim.api.nvim_chan_send(channel, stderr .. vim.g.nl .. stdout)
             else
               vim.notify(string.format('[%s] done', desc))
             end
@@ -70,7 +70,7 @@ M.live_grep = function()
   -- local telescope = require('telescope.builtin')
   -- telescope.live_grep({ cwd = G.git_root() })
   local fzf = require('fzf-lua')
-  fzf.live_grep({ cwd = G.git_root() })
+  fzf.live_grep({ cwd = vim.g.git_root() })
 end
 
 ---@param cmd string vim command

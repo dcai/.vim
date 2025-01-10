@@ -8,6 +8,14 @@ end
 
 local cmd_prefix = 'Ai'
 
+local openai_gpt4o_mini = 'gpt-4o-mini'
+-- find claude models: https://docs.anthropic.com/en/docs/about-claude/models
+local claude_code_model = 'claude-3-5-sonnet-20241022'
+-- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
+local gemini2_model = 'gemini-2.0-flash-exp'
+local chat_topic_gen_model = openai_gpt4o_mini
+local translator_model = openai_gpt4o_mini
+
 local prompt_chat_default = [[
 You are a versatile AI assistant. When responding, please adhere to the following guidelines:
 
@@ -103,12 +111,6 @@ Translate any provided text directly to Chinese or English,
 based on the input language,
 without adding any interpretation or additional commentary.
 ]]
-
-local openai_gpt4o_mini = 'gpt-4o-mini'
-
-local claude_code_model = 'claude-3-5-sonnet-20241022'
-local chat_topic_gen_model = openai_gpt4o_mini
-local translator_model = openai_gpt4o_mini
 
 local chat_template = [[
 # topic: ?
@@ -222,7 +224,7 @@ local function dropbox_chat_dir()
 end
 local function std_chat_dir()
   ---@diagnostic disable-next-line: param-type-mismatch
-  return G.data_dir .. '/gp/chats'
+  return vim.g.data_dir .. '/gp/chats'
 end
 
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
@@ -232,8 +234,8 @@ local config = {
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
   chat_dir = chatlogs_home,
-  state_dir = G.state_dir .. '/gp/persisted',
-  log_file = G.log_dir .. '/gp.nvim.log',
+  state_dir = vim.g.state_dir .. '/gp/persisted',
+  log_file = vim.g.log_dir .. '/gp.nvim.log',
   log_sensitive = false,
   providers = {
     openai = {
@@ -330,7 +332,7 @@ local config = {
       chat = true,
       command = false,
       model = {
-        model = 'gemini-2.0-flash-exp',
+        model = gemini2_model,
         temperature = 1.1,
         top_p = 0.95,
         top_k = 40,

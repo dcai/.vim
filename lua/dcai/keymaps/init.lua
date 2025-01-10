@@ -57,7 +57,7 @@ wk.add({
   {
     '<leader>.',
     function()
-      fzf.grep_cword({ cwd = G.git_root() })
+      fzf.grep_cword({ cwd = vim.g.git_root() })
     end,
     desc = 'fzf grep <cword>',
     mode = 'n',
@@ -65,7 +65,7 @@ wk.add({
   {
     '<leader>.',
     function()
-      fzf.grep_visual({ cwd = G.git_root() })
+      fzf.grep_visual({ cwd = vim.g.git_root() })
     end,
     desc = 'fzf selected text',
     mode = 'v',

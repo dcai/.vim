@@ -5,24 +5,24 @@ G = {}
 
 vim.uv = vim.uv or vim.loop
 
-function stripTrailingSlash(str)
+local function stripTrailingSlash(str)
   return gsub(str, '/$', '')
 end
 
-G.stripTrailingSlash = stripTrailingSlash
+vim.g.stripTrailingSlash = stripTrailingSlash
 
-G.data_dir = stripTrailingSlash(vim.fn.stdpath('data'))
-G.log_dir = stripTrailingSlash(vim.fn.stdpath('log'))
-G.std_cfg_dir = stripTrailingSlash(vim.fn.stdpath('config'))
-G.cache_dir = stripTrailingSlash(vim.fn.stdpath('cache'))
-G.state_dir = stripTrailingSlash(vim.fn.stdpath('state'))
+vim.g.data_dir = stripTrailingSlash(vim.fn.stdpath('data'))
+vim.g.log_dir = stripTrailingSlash(vim.fn.stdpath('log'))
+vim.g.std_cfg_dir = stripTrailingSlash(vim.fn.stdpath('config'))
+vim.g.cache_dir = stripTrailingSlash(vim.fn.stdpath('cache'))
+vim.g.state_dir = stripTrailingSlash(vim.fn.stdpath('state'))
 
-G.print = function(val)
+vim.g.print = function(val)
   print(vim.inspect(val))
   return val
 end
 
-G.reload = function(module)
+vim.g.reload = function(module)
   require('plenary.reload').reload_module(module)
   return require(module)
 end
@@ -60,7 +60,7 @@ local function touch(filepath)
 end
 
 local function user_config_file_path()
-  return G.data_dir .. '/user.json'
+  return vim.g.data_dir .. '/user.json'
 end
 
 local function get_all_local_config()
@@ -119,7 +119,7 @@ local function set_user_config(path, value)
   writefile(userconfigfile, vim.json.encode(config))
 end
 
-G.handle_vim_event_by_command = function(evt, command)
+vim.g.handle_vim_event_by_command = function(evt, command)
   local group_name = 'On' .. evt .. 'Group'
   return vim.api.nvim_create_autocmd(evt, {
     command = command,
@@ -148,7 +148,7 @@ local function apply_colorscheme(colorscheme, termguicolors)
   end)
 end
 
-G.is_git_repo = function()
+vim.g.is_git_repo = function()
   local handle = io.popen('git rev-parse --is-inside-work-tree 2> /dev/null')
   if handle == nil then
     return false
@@ -162,7 +162,7 @@ G.is_git_repo = function()
   end
 end
 
-G.isempty = function(s)
+vim.g.isempty = function(s)
   return s == nil or s == ''
 end
 
@@ -170,22 +170,22 @@ local function is_env_var_true(name)
   local v = os.getenv(name)
   return v == 'true' or v == '1'
 end
-G.is_env_var_true = is_env_var_true
+vim.g.is_env_var_true = is_env_var_true
 
 local function is_env_var_false(name)
   local v = os.getenv(name)
   return v == 'false' or v == '0' or v == '' or v == nil
 end
-G.is_env_var_false = is_env_var_false
+vim.g.is_env_var_false = is_env_var_false
 
-G.is_env_var_set = function(name)
+vim.g.is_env_var_set = function(name)
   return os.getenv(name) ~= nil and os.getenv(name) ~= ''
 end
 
 ---return the first executable from given list
 ---@param files string[]
 ---@return string|nil
-G.find_executable = function(files)
+vim.g.find_executable = function(files)
   for _, file in ipairs(files) do
     local resolved = vim.fn.expand(file)
     if vim.fn.executable(resolved) == 1 then
@@ -199,13 +199,13 @@ end
 ---@param mode string
 ---@param from string
 ---@param to string
-G.keymap = function(mode, from, to)
+vim.g.keymap = function(mode, from, to)
   -- local expr_opts = { noremap = true, expr = true, silent = true }
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
 -- https://stackoverflow.com/a/29379912
-G.replace = function(str, what, with)
+vim.g.replace = function(str, what, with)
   what = string.gsub(what, '[%(%)%.%+%-%*%?%[%]%^%$%%]', '%%%1') -- escape pattern
   with = string.gsub(with, '[%%]', '%%%%') -- escape replacement
   return string.gsub(str, what, with)
@@ -215,7 +215,7 @@ end
 ---@param string string
 ---@param replacement string
 ---@return string
-G.slugify = function(string, replacement)
+vim.g.slugify = function(string, replacement)
   if replacement == nil then
     replacement = '-'
   end
@@ -229,7 +229,7 @@ G.slugify = function(string, replacement)
   return result:lower()
 end
 
-G.trim_right = function(str, char)
+vim.g.trim_right = function(str, char)
   local last_char = str:sub(-1)
   if last_char == char then
     return str:sub(1, -2)
@@ -237,11 +237,11 @@ G.trim_right = function(str, char)
   return str
 end
 
-G.parent_dir = function(input)
-  return G.trim_right(input, '/'):match('(.*/)')
+vim.g.parent_dir = function(input)
+  return vim.g.trim_right(input, '/'):match('(.*/)')
 end
 
-G.setup_colorscheme = function()
+vim.g.setup_colorscheme = function()
   local defaulcolorscheme = 'oasis'
   local termguicolors = get_user_config('colorscheme.termguicolors', true)
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
@@ -251,7 +251,7 @@ G.setup_colorscheme = function()
   end)
 end
 
-G.source = function(path)
+vim.g.source = function(path)
   -- local vim_home = vim.fn.expand('<sfile>:p:h')
   vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
 end
@@ -277,7 +277,7 @@ end
 --@param opts table
 --@return table
 --@see https://github.com/dharmx/nvim/blob/d39e0637607e214cedc8beb8c5fb88fd0ff0ccd2/after/compiler/leetcode.lua
-G.new_popup = function(opts)
+vim.g.new_popup = function(opts)
   local Popup = require('plenary.popup')
   -- vim.api.nvim_set_hl(
   --   0,
@@ -327,7 +327,7 @@ local function shell_cmd(cmd)
   return nil
 end
 
-G.shell_cmd = shell_cmd
+vim.g.shell_cmd = shell_cmd
 
 ---get project root
 ---@param markers table
@@ -358,13 +358,13 @@ local function root(markers)
   end
 end
 
-G.git_root = root({
+vim.g.git_root = root({
   '.github',
   '.gitlab-ci.yml',
   '.git',
 })
 
-G.smart_root = root({
+vim.g.smart_root = root({
   'appsettings.json',
   'Jenkinsfile_Build',
   'Makefile',
@@ -389,14 +389,14 @@ G.smart_root = root({
   '.prettierrc.json',
 })
 
-G.node_project_root = root({
+vim.g.node_project_root = root({
   'package.json',
 })
 
-G.nl = '\r\n'
+vim.g.nl = '\r\n'
 
-G.red = colortext('red')
-G.green = colortext('green')
-G.yellow = colortext('yellow')
-G.blue = colortext('blue')
-G.purple = colortext('purple')
+vim.g.red = colortext('red')
+vim.g.green = colortext('green')
+vim.g.yellow = colortext('yellow')
+vim.g.blue = colortext('blue')
+vim.g.purple = colortext('purple')

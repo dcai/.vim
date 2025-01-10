@@ -35,7 +35,7 @@ local default_config = {
 
   -- Can limit the number of decimals displayed for floats
   float_precision = 0.01,
-  logdir = G.log_dir,
+  logdir = vim.g.log_dir,
 }
 
 M = {}
@@ -47,7 +47,7 @@ M.setup = function(userconfig)
     config = vim.tbl_deep_extend('force', default_config, config)
 
     local outfile =
-      string.format('%s/%s.log', config.logdir or G.log_dir, config.plugin)
+      string.format('%s/%s.log', config.logdir or vim.g.log_dir, config.plugin)
 
     local levels = {}
     for i, v in ipairs(config.modes) do

@@ -39,9 +39,9 @@ end
 ---setup vim-plug
 ---@param plugOpts table
 M.setup = function(plugOpts)
-  local dir = plugOpts.dir or vim.fn.expand(G.data_dir .. '/plug')
+  local dir = plugOpts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
-  if G.is_env_var_true('NVIM_USE_COPILOT') then
+  if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
     Plug('github/copilot.vim', {
       setup = function()
         vim.cmd([[
@@ -51,7 +51,7 @@ M.setup = function(plugOpts)
       end,
     })
   end
-  if G.is_env_var_true('NVIM_USE_CODEIUM') then
+  if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
     Plug('monkoose/neocodeium')
     -- Plug('Exafunction/codeium.nvim')
     -- Plug('Exafunction/codeium.vim', {
@@ -77,7 +77,7 @@ M.setup = function(plugOpts)
     -- })
   end
 
-  if G.is_env_var_set('OPENAI_API_KEY') then
+  if vim.g.is_env_var_set('OPENAI_API_KEY') then
     Plug('Robitx/gp.nvim')
   end
   ----------------------------------------------------------------------------

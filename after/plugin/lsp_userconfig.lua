@@ -10,7 +10,7 @@ if not mason_loaded then
 end
 local masonpath = require('mason-core.path')
 mason.setup({
-  install_root_dir = masonpath.concat({ G.data_dir, 'mason' }),
+  install_root_dir = masonpath.concat({ vim.g.data_dir, 'mason' }),
 })
 
 -------------------------------
@@ -245,7 +245,7 @@ table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')
 
 local function plugin_path(plugin_name)
-  return string.format('%s/plug/%s/lua', G.data_dir, plugin_name)
+  return string.format('%s/plug/%s/lua', vim.g.data_dir, plugin_name)
 end
 
 local workspace_libs = {
@@ -257,7 +257,7 @@ local workspace_libs = {
   --- so only load selected libs
   library = {
     vim.fn.expand('$VIMRUNTIME/lua'),
-    G.std_cfg_dir .. '/lua',
+    vim.g.std_cfg_dir .. '/lua',
     plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
     plugin_path('plenary.nvim'),
@@ -335,8 +335,8 @@ if fzfloaded then
     local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
     local fzf_trim = true
     local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
-    local path = G.purple(filename)
-    local lnum = G.green(item.lnum)
+    local path = vim.g.purple(filename)
+    local lnum = vim.g.green(item.lnum)
     local text = fzf_trim and vim.trim(item.text) or item.text
     return string.format('%s:%s:%s: %s', path, lnum, item.col, text)
   end
