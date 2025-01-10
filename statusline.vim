@@ -43,8 +43,8 @@ let g:currentmode={
             \}
 
 set statusline=
-" use User5 highlight group
-set statusline+=%2*
+" use User1 highlight group
+set statusline+=%1*
 set statusline+=%{toupper(g:currentmode[mode()])}
 " reset highlight group
 set statusline+=%0*
@@ -55,7 +55,7 @@ set statusline+=%m
 " set statusline+=[%{LinterStatus()}]
 " left/right separator
 set statusline+=%=
-set statusline+=%2*  " start User2 highlight group
+set statusline+=%1*  " start User1 highlight group
 " cursor line/total lines
 set statusline+=\ \[%l\]\ /\ %L
 set statusline+=\ \|\ Col:\ %c
@@ -75,6 +75,6 @@ set statusline+=]
 set statusline+=%h
 " read only flag
 set statusline+=%r
-set statusline+=\ %1*  " start User1 highlight group
+set statusline+=\ %3*  " start User3 highlight group
 set statusline+=\[%{GitBranch()}\]
 set statusline+=%0*
