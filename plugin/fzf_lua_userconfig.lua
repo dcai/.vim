@@ -4,6 +4,7 @@ if not loaded then
   return
 end
 local actions = require('fzf-lua.actions')
+local path_helper = require('fzf-lua.path')
 -- LOG.trace('fzf-lua loaded, setting up...')
 
 local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
@@ -11,9 +12,11 @@ if icons_loaded then
   devicons.setup({})
 end
 
+-- local use_icons = icons_loaded
+--   and os.getenv('VIM_FZF_ENABLE_FILE_ICONS') == 'true'
 local use_icons = icons_loaded
-  and os.getenv('VIM_FZF_ENABLE_FILE_ICONS') == 'true'
-
+local git_icons = true
+local color_icons = true
 -- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
 -- fzf-native:	utilizes fzf's native previewing ability in the terminal where possible using bat for previews
 -- fzf-tmux:	similar to fzf-native and opens in a tmux popup (requires tmux > 3.2)
@@ -25,9 +28,8 @@ local use_icons = icons_loaded
 local fzf_profile = 'fzf-native'
 local history_dir = vim.g.data_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
-local rg_grep_opt =
-  '--column --line-number --no-heading --color=always --smart-case --max-columns=4096'
 
+local do_not_reset_defaults = false
 fzflua.setup({
   fzf_profile,
   winopts = {
@@ -109,37 +111,6 @@ fzflua.setup({
       ['ctrl-b'] = 'preview-page-up',
     },
   },
-  actions = {
-    -- These override the default tables completely
-    -- no need to set to `false` to disable an action
-    -- delete or modify is sufficient
-    files = {
-      -- providers that inherit these actions:
-      --   files, git_files, git_status, grep, lsp
-      --   oldfiles, quickfix, loclist, tags, btags
-      --   args
-      -- default action opens a single selection
-      -- or sends multiple selection to quickfix
-      -- replace the default action with the below
-      -- to open all files whether single or multiple
-      -- ["default"]     = actions.file_edit,
-      ['default'] = actions.file_edit_or_qf,
-      ['ctrl-s'] = actions.file_split,
-      ['ctrl-v'] = actions.file_vsplit,
-      -- ['ctrl-t'] = actions.file_tabedit,
-      ['ctrl-i'] = { actions.toggle_ignore },
-      ['alt-q'] = actions.file_sel_to_qf,
-      ['alt-l'] = actions.file_sel_to_ll,
-    },
-    buffers = {
-      -- providers that inherit these actions:
-      --   buffers, tabs, lines, blines
-      ['default'] = actions.buf_edit,
-      ['ctrl-s'] = actions.buf_split,
-      ['ctrl-v'] = actions.buf_vsplit,
-      ['ctrl-t'] = actions.buf_tabedit,
-    },
-  },
   fzf_opts = {
     -- set to `false` to remove a flag
     -- set to `true` for a no-value flag
@@ -156,14 +127,26 @@ fzflua.setup({
     -- formatter = 'path.filename_first',
   },
   files = {
+    actions = {
+      ['default'] = actions.file_edit,
+      -- inherits from 'actions.files', here we can override
+      -- or set bind to 'false' to disable a default action
+      -- action to toggle `--no-ignore`, requires fd or rg installed
+      ['ctrl-i'] = { actions.toggle_ignore },
+      ['ctrl-h'] = { actions.toggle_hidden },
+      ['ctrl-g'] = false,
+      ['ctrl-y'] = function(selected)
+        vim.fn.setreg([[*]], path_helper.entry_to_file(selected[1]).path)
+      end,
+    },
     -- previewer      = "bat",          -- uncomment to override previewer
     -- (name from 'previewers' table)
     -- set to 'false' to disable
     prompt = 'Files❯ ',
     multiprocess = true, -- run command in a separate process
-    git_icons = true, -- show git icons?
-    file_icons = true, -- show file icons?
-    color_icons = true, -- colorize file|git icons
+    git_icons = git_icons, -- show git icons?
+    file_icons = use_icons, -- show file icons?
+    color_icons = color_icons, -- colorize file|git icons
     -- path_shorten   = 1,              -- 'true' or number, shorten path?
     -- Uncomment for custom vscode-like formatter where the filename is first:
     -- e.g. "fzf-lua/previewer/fzf.lua" => "fzf.lua previewer/fzf-lua"
@@ -173,9 +156,9 @@ fzflua.setup({
     -- default options are controlled by 'fd|rg|find|_opts'
     -- NOTE: 'find -printf' requires GNU find
     -- cmd = "find . -type f -printf '%P\n'",
-    cmd = 'rg --files --sortr=modified',
+    cmd = 'rg --files --sortr=modified --hidden',
     find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
-    rg_opts = [[--color=never --files --hidden --follow -g "!.git"]],
+    rg_opts = [[--color=never --files --hidden --follow --glob "!.git"]],
     fd_opts = [[--color=never --type f --hidden --follow --exclude .git]],
     fzf_opts = {
       ['--history'] = history_dir .. '-files.txt',
@@ -189,29 +172,19 @@ fzflua.setup({
     cwd_prompt_shorten_len = 32, -- shorten prompt beyond this length
     cwd_prompt_shorten_val = 1, -- shortened path parts length
     toggle_ignore_flag = '--no-ignore', -- flag toggled in `actions.toggle_ignore`
-    actions = {
-      -- inherits from 'actions.files', here we can override
-      -- or set bind to 'false' to disable a default action
-      -- action to toggle `--no-ignore`, requires fd or rg installed
-      ['ctrl-i'] = { actions.toggle_ignore },
-      -- uncomment to override `actions.file_edit_or_qf`
-      --   ["default"]   = actions.file_edit,
-      -- custom actions are available too
-      --   ["ctrl-y"]    = function(selected) print(selected[1]) end,
-    },
   },
   grep = {
     prompt = 'grep❯ ',
     multiprocess = true, -- run command in a separate process
-    git_icons = true, -- show git icons?
+    git_icons = git_icons, -- show git icons?
     file_icons = use_icons, -- show file icons?
-    color_icons = true, -- colorize file|git icons
+    color_icons = color_icons, -- colorize file|git icons
     -- executed command priority is 'cmd' (if exists)
     -- otherwise auto-detect prioritizes `rg` over `grep`
     -- default options are controlled by 'rg|grep_opts'
     -- cmd            = "rg --vimgrep",
     grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
-    rg_opts = rg_grep_opt,
+    rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096',
     -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
     -- search strings will be split using the 'glob_separator' and translated
     -- to '--iglob=' arguments, requires 'rg'
@@ -233,6 +206,7 @@ fzflua.setup({
       ['ctrl-r'] = { actions.grep_lgrep },
       -- uncomment to enable '.gitignore' toggle for grep
       ['ctrl-i'] = { actions.toggle_ignore },
+      ['ctrl-g'] = false,
     },
     no_header = false, -- hide grep|cwd header?
     no_header_i = false, -- hide interactive header?
@@ -267,7 +241,8 @@ fzflua.setup({
     actions = {
       ['default'] = actions.colorscheme,
       ['ctrl-/'] = { fn = actions.cs_update, reload = true },
-      ['ctrl-g'] = { fn = actions.toggle_bg, exec_silent = true },
+      ['ctrl-b'] = { fn = actions.toggle_bg, exec_silent = true },
+      ['ctrl-g'] = false,
       ['ctrl-x'] = { fn = actions.cs_delete, reload = true },
     },
     -- uncomment to execute a callback on preview|close
@@ -283,7 +258,7 @@ fzflua.setup({
   buffers = {
     prompt = 'Buffers❯ ',
     file_icons = use_icons, -- show file icons?
-    color_icons = false, -- colorize file|git icons
+    color_icons = color_icons, -- colorize file|git icons
     sort_lastused = true, -- sort buffers() by last used
     show_unloaded = true, -- show unloaded buffers
     cwd_only = false, -- buffers for the cwd only
@@ -341,12 +316,12 @@ fzflua.setup({
       prompt = 'GitFiles❯ ',
       cmd = 'git ls-files --exclude-standard',
       multiprocess = true,
-      git_icons = true, -- git status icon
+      git_icons = git_icons, -- git status icon
       file_icons = use_icons, -- show file icons?
-      color_icons = true, -- colorize file|git icons
+      color_icons = color_icons, -- colorize file|git icons
       -- force display the cwd header line regardless of your current working
       -- directory can also be used to hide the header when not wanted
       -- cwd_header = true
     },
   },
-})
+}, do_not_reset_defaults)
