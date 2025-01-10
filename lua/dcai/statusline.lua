@@ -73,9 +73,9 @@ end
 local function filencoding()
   return table.concat({
     '[',
-    vim.bo.fileencoding and vim.bo.fileencoding or 'none',
+    vim.bo.fileformat,
     '|',
-    vim.bo.filetype,
+    vim.bo.fileencoding and vim.bo.fileencoding or 'none',
     vim.bo.bomb and '|BOM' or '',
     ']',
   })
