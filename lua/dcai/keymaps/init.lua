@@ -4,18 +4,18 @@ if not loaded then
   return
 end
 
+local ai_keymap = require('dcai.keymaps.ai')
+local editthings_keymap = require('dcai.keymaps.editthings')
 local fzf = require('fzf-lua')
-local utils = require('dcai.keymaps.utils')
+local fzf_keymap = require('dcai.keymaps.fzfthings')
+local git_keymap = require('dcai.keymaps.git')
 local lsp_keymap = require('dcai.keymaps.lsp')
 local notes_keymap = require('dcai.keymaps.notes')
-local git_keymap = require('dcai.keymaps.git')
-local ai_keymap = require('dcai.keymaps.ai')
 local openthings_keymap = require('dcai.keymaps.openthings')
 local testthings_keymap = require('dcai.keymaps.testthings')
-local editthings_keymap = require('dcai.keymaps.editthings')
-local fzf_keymap = require('dcai.keymaps.fzfthings')
-local yank_keymap = require('dcai.keymaps.yankthings')
+local utils = require('dcai.keymaps.utils')
 local vim_keymap = require('dcai.keymaps.vim')
+local yank_keymap = require('dcai.keymaps.yankthings')
 
 wk.add(fzf_keymap)
 wk.add(ai_keymap)
@@ -44,7 +44,7 @@ wk.add({
     '<leader>,',
     function()
       local ft = vim.bo.filetype
-      if vim.list_contains({ 'elixir', 'heex' }, ft) then
+      if vim.list_contains({ 'elixir', 'heex', 'swift' }, ft) then
         vim.lsp.buf.format({ async = true })
       else
         vim.cmd('ALEFix')
