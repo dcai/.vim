@@ -1,5 +1,6 @@
 local SPC = ' '
 local SEP = '%='
+-- Restore normal highlight with %* or %0*.
 local COLOR_RESET = '%0*'
 local COLOR_USER_1 = '%1*'
 local COLOR_USER_3 = '%3*'
