@@ -3,7 +3,7 @@ if not cmp_loaded then
   LOG.error('cmp not loaded!')
   return
 end
-LOG.trace('cmp loaded, setting up...')
+-- LOG.trace('cmp loaded, setting up...')
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function _check_back_space()
@@ -20,7 +20,7 @@ local function has_words_before()
     'buftype',
     { buf = vim.api.nvim_win_get_buf(0) }
   )
-  LOG.debug('has words before: ' .. buftype)
+  -- LOG.debug('has words before: ' .. buftype)
   if buftype == 'prompt' then
     return false
   end

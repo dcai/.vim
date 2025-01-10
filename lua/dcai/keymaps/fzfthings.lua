@@ -1,6 +1,6 @@
 local fzf = require('fzf-lua')
 local utils = require('dcai.keymaps.utils')
-LOG.trace('fzf keymap setting up...')
+-- LOG.trace('fzf keymap setting up...')
 
 local fzf_keymap = {
   mode = { 'n', 'v' },
