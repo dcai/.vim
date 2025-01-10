@@ -50,7 +50,7 @@ local function current_buffer_name()
   local project_root = G.git_root()
   local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
   local project_root_trimed = G.replace(fullpath, G.smart_root(), '')
-  return color_project_accent('{' .. project_name .. '}')
+  return color_project_accent('(' .. project_name .. ')')
     .. project_root_trimed
     .. filemodified
     .. readonly
@@ -73,7 +73,15 @@ local function current_mode()
 end
 
 local function lineinfo()
-  return color_accent('[%l] / %L | Col: %c')
+  return color_accent('%l/%L')
+end
+
+local function percentage()
+  return color_highlight('%3p%%')
+end
+
+local function column()
+  return color_accent('%3v')
 end
 
 local function fileinfo()
@@ -86,8 +94,7 @@ local function filencoding()
   return table.concat({
     '[',
     vim.bo.fileformat,
-    '|',
-    vim.bo.fileencoding and vim.bo.fileencoding or 'none',
+    G.isempty(vim.bo.fileencoding) and '' or '|' .. vim.bo.fileencoding,
     vim.bo.bomb and '|BOM' or '',
     ']',
   })
@@ -109,6 +116,8 @@ function BuildStatusline()
   if wide_enough then
     push(SEP)
     push(lineinfo())
+    push(percentage())
+    push(column())
     push(fileinfo())
     push(filencoding())
     push(git_branch())
