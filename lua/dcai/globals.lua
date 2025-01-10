@@ -369,24 +369,17 @@ vim.g.git_root = root({
 })
 
 vim.g.smart_root = root({
-  'appsettings.json',
-  'Jenkinsfile_Build',
+  'package.json',
   'Makefile',
   '.husky',
-  '.vscode',
   '.editorconfig',
   '.tool-versions',
   '.mise.toml',
   'mise.toml',
   '.envrc',
-  -- js or typescript
-  'package.json',
   'tsconfig.json',
-  -- lua
   'stylua.toml',
-  -- python
   'pyproject.toml',
-  -- biome
   'biome.json',
   'biome.jsonc',
   -- prettier
@@ -397,6 +390,10 @@ vim.g.smart_root = root({
   '.prettierrc.yml',
   '.prettierrc.yaml',
   '.prettierrc.json',
+  'appsettings.json',
+  'Jenkinsfile_Build',
+  '.vscode',
+  '.git',
 })
 
 vim.g.node_project_root = root({
