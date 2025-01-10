@@ -110,6 +110,7 @@ end
 
 local IGNORE_DIAGNOSTIC_CODES = {
   TS_LS_COMMONJS_MODULE = 80001,
+  TS_LS_UNUSED_VAR = 6133,
 }
 
 local function common_on_attach(client, bufnr)
@@ -208,6 +209,7 @@ cfg.ts_ls.setup({
     diagnostics = {
       ignoreCodes = {
         IGNORE_DIAGNOSTIC_CODES.TS_LS_COMMONJS_MODULE,
+        IGNORE_DIAGNOSTIC_CODES.TS_LS_UNUSED_VAR,
       },
     },
   },
@@ -262,6 +264,7 @@ local workspace_libs = {
     vim.fn.expand('$VIMRUNTIME/lua'),
     vim.g.std_cfg_dir .. '/lua',
     plugin_path('gp.nvim'),
+    plugin_path('nvim-snippets'),
     plugin_path('fzf-lua'),
     plugin_path('plenary.nvim'),
   },
