@@ -34,6 +34,8 @@ vim.g.setup_colorscheme()
 require('dcai.plug').setup({})
 require('dcai.keymaps')
 
+require('dcai.mycmp').setup()
+
 local codestats = require('dcai.codestats')
 if codestats then
   codestats.setup()

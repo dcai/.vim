@@ -104,7 +104,7 @@ local handle_down = cmp.mapping(function(fallback)
   end
 end, { 'i', 's' })
 
-local _source_tmux = {
+local source_tmux = {
   name = 'tmux',
   -- priority = 1,
   group_index = 10,
@@ -122,13 +122,6 @@ local _source_tmux = {
     -- `true`: show completion suggestion from text starting from the beginning of the pane history.
     --         This works by passing `-S -` flag to `tmux capture-pane` command. See `man tmux` for details.
     capture_history = true,
-  },
-}
-
-local source_path = {
-  name = 'path',
-  option = {
-    trailing_slash = true,
   },
 }
 
@@ -158,6 +151,12 @@ local function formatter(entry, item)
   return item
 end
 
+local path_source_options = {
+  name = 'path',
+  option = {
+    trailing_slash = true,
+  },
+}
 local WIDE_HEIGHT = 40
 cmp.setup({
   window = {
@@ -223,26 +222,27 @@ cmp.setup({
     format = formatter,
   },
   sources = cmp.config.sources({
+    { name = 'month' },
     { name = 'nvim_lsp' },
     { name = 'codeium' },
     { name = 'snippets' },
     -- { name = 'ultisnips' },
     { name = 'buffer' },
-    source_path,
+    path_source_options,
   }),
 })
 
 cmp.setup.filetype('sql', {
   sources = cmp.config.sources({
     { name = 'vim-dadbod-completion' },
-    source_path,
+    path_source_options,
   }),
 })
 
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
     { name = 'buffer' },
-    source_path,
+    path_source_options,
   }),
 })
 
@@ -257,7 +257,7 @@ cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
     { name = 'cmdline' },
     -- { name = 'cmdline_history' },
-    -- source_path,
+    -- path_source_options,
     -- source_tmux,
   }),
 })

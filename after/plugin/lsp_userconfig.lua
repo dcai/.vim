@@ -264,6 +264,7 @@ local workspace_libs = {
     vim.fn.expand('$VIMRUNTIME/lua'),
     vim.g.std_cfg_dir .. '/lua',
     plugin_path('gp.nvim'),
+    plugin_path('nvim-cmp'),
     plugin_path('nvim-snippets'),
     plugin_path('fzf-lua'),
     plugin_path('plenary.nvim'),
@@ -299,6 +300,7 @@ cfg.lua_ls.setup({
           ['codestyle-check'] = 'Any',
         },
         disable = {
+          'unused-local',
           'need-check-nil',
           'missing-parameter',
           'cast-local-type',
