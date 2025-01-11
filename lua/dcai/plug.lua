@@ -37,9 +37,9 @@ local function Plug(repo, opts)
 end
 
 ---setup vim-plug
----@param plugOpts table
-M.setup = function(plugOpts)
-  local dir = plugOpts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
+---@param plug_opts table
+M.setup = function(plug_opts)
+  local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
     Plug('github/copilot.vim', {
@@ -183,23 +183,23 @@ M.setup = function(plugOpts)
       vim.g.VimuxOrientation = 'h'
     end,
   })
-  Plug('vim-test/vim-test', {
-    setup = function()
-      vim.g['test#javascript#runner'] = 'jest'
-      vim.g['test#javascript#mocha#executable'] = 'npx mocha'
-      vim.g['test#javascript#mocha#options'] = ' --full-trace '
-      vim.g['test#javascript#jest#executable'] = 'npx jest'
-      -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
-      vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
-      vim.g['test#strategy'] = {}
-      vim.g['test#strategy']['nearest'] = 'neovim'
-      vim.g['test#strategy']['file'] = 'neovim'
-      vim.g['test#strategy']['suite'] = 'neovim'
-      -- vim.g['test#strategy'] = 'vimux'
-      -- vim.g['test#strategy'] = 'toggleterm'
-      vim.g['test#neovim#term_position'] = 'vert'
-    end,
-  })
+  -- Plug('vim-test/vim-test', {
+  --   setup = function()
+  --     vim.g['test#javascript#runner'] = 'jest'
+  --     vim.g['test#javascript#mocha#executable'] = 'npx mocha'
+  --     vim.g['test#javascript#mocha#options'] = ' --full-trace '
+  --     vim.g['test#javascript#jest#executable'] = 'npx jest'
+  --     -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
+  --     vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
+  --     vim.g['test#strategy'] = {}
+  --     vim.g['test#strategy']['nearest'] = 'neovim'
+  --     vim.g['test#strategy']['file'] = 'neovim'
+  --     vim.g['test#strategy']['suite'] = 'neovim'
+  --     -- vim.g['test#strategy'] = 'vimux'
+  --     -- vim.g['test#strategy'] = 'toggleterm'
+  --     vim.g['test#neovim#term_position'] = 'vert'
+  --   end,
+  -- })
   ----------------------------------------------------------------------------
   --- END vim-test
   ----------------------------------------------------------------------------
@@ -238,9 +238,6 @@ M.setup = function(plugOpts)
       vim.g.bufferize_focus_output = 1
     end,
   })
-  ----------------------------------------------------------------------------
-  -- end of files
-  ----------------------------------------------------------------------------
   -- Plug('junegunn/vader.vim', { ['for'] = 'vader' })
   Plug('rafi/awesome-vim-colorschemes')
   Plug('echasnovski/mini.nvim')
