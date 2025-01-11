@@ -494,23 +494,10 @@ cfg.tailwindcss.setup({
   on_attach = common_on_attach,
 })
 
-cfg.mojo.setup({
-  on_attach = common_on_attach,
-})
-
-cfg.svelte.setup({
-  on_attach = common_on_attach,
-})
 cfg.html.setup({
   on_attach = common_on_attach,
 })
-cfg.templ.setup({
-  on_attach = common_on_attach,
-})
 
-cfg.rust_analyzer.setup({
-  on_attach = common_on_attach,
-})
 cfg.biome.setup({
   cmd = { 'biome', 'lsp-proxy' },
 })
@@ -535,6 +522,14 @@ cfg.phpactor.setup({
   end,
 })
 
+-- cfg.templ.setup({
+--   on_attach = common_on_attach,
+-- })
+--
+-- cfg.rust_analyzer.setup({
+--   on_attach = common_on_attach,
+-- })
+--
 -- cfg.intelephense.setup({
 --   root_dir = function(startpath)
 --     local cwd = vim.uv.cwd()
@@ -545,27 +540,8 @@ cfg.phpactor.setup({
 --     return result
 --   end,
 -- })
-
-cfg.elixirls.setup({
-  on_attach = common_on_attach,
-})
-
--- cfg.emmet_language_server.setup({
---   filetypes = {
---     'elixir',
---     'heex',
---     'css',
---     'eruby',
---     'html',
---     'javascript',
---     'javascriptreact',
---     'less',
---     'sass',
---     'scss',
---     'pug',
---     'typescriptreact',
---   },
 --
+-- cfg.elixirls.setup({
 --   on_attach = common_on_attach,
 -- })
 
