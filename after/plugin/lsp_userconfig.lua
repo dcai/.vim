@@ -108,10 +108,25 @@ local function map(mode, buffer)
   end
 end
 
-local IGNORE_DIAGNOSTIC_CODES = {
-  TS_LS_COMMONJS_MODULE = 80001,
-  TS_LS_UNUSED_VAR = 6133,
+local IGNORE_LUA_DIAGNOSTIC_CODES = {
+  'unused-local',
+  'need-check-nil',
+  'missing-parameter',
+  'cast-local-type',
+  'codestyle-check',
+  'undefined-doc-name',
 }
+local IGNORE_TS_DIAGNOSTICS_CODES = {
+  80001, -- commonjs module
+  6133, -- unused var
+  7016, -- missing declaration file
+}
+
+local IGNORE_DIAGNOSTIC_CODES = vim.tbl_deep_extend(
+  'force',
+  IGNORE_LUA_DIAGNOSTIC_CODES,
+  IGNORE_TS_DIAGNOSTICS_CODES
+)
 
 local function common_on_attach(client, bufnr)
   -- if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
@@ -205,14 +220,6 @@ cfg.ts_ls.setup({
     '.git'
   ),
   cmd = { 'typescript-language-server', '--stdio' },
-  settings = {
-    diagnostics = {
-      ignoreCodes = {
-        IGNORE_DIAGNOSTIC_CODES.TS_LS_COMMONJS_MODULE,
-        IGNORE_DIAGNOSTIC_CODES.TS_LS_UNUSED_VAR,
-      },
-    },
-  },
   commands = {
     OrganizeImports = {
       function()
@@ -299,13 +306,7 @@ cfg.lua_ls.setup({
         neededFileStatus = {
           ['codestyle-check'] = 'Any',
         },
-        disable = {
-          'unused-local',
-          'need-check-nil',
-          'missing-parameter',
-          'cast-local-type',
-          'codestyle-check',
-        },
+        disable = IGNORE_LUA_DIAGNOSTIC_CODES,
       },
       workspace = workspace_libs,
     },
@@ -424,17 +425,15 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
   ctx,
   config
 )
+  local filtered_diagnostic = {}
   for i, diagnostic in ipairs(result.diagnostics) do
-    if
-      vim.list_contains(
-        { IGNORE_DIAGNOSTIC_CODES.TS_LS_COMMONJS_MODULE },
-        diagnostic.code
-      )
-    then
-      -- if diagnostic code is in the list remove it
-      table.remove(result.diagnostics, i)
+    -- vim.g.logger.info('code: ' .. vim.inspect(diagnostic.code))
+    if not vim.tbl_contains(IGNORE_DIAGNOSTIC_CODES, diagnostic.code) then
+      table.insert(filtered_diagnostic, diagnostic)
     end
   end
+
+  result.diagnostics = filtered_diagnostic
 
   return vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = true,

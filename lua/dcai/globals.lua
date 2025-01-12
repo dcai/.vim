@@ -2,6 +2,7 @@ local gsub = require('string').gsub
 local gmatch = require('string').gmatch
 
 vim.uv = vim.uv or vim.loop
+vim.g.uv = vim.uv
 
 vim.g.print = function(val)
   print(vim.inspect(val))
