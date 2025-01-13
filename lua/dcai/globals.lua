@@ -340,6 +340,7 @@ vim.g.shell_cmd = shell_cmd
 local function root(markers)
   return function(filepath)
     local buf = filepath or vim.api.nvim_get_current_buf()
+
     if vim.fs and vim.fs.root then
       local fs_root = vim.fs.root(buf, markers)
       if fs_root then
@@ -347,8 +348,9 @@ local function root(markers)
       end
     end
 
-    local current_dir = vim.fn.expand('%:p:h')
-    local dir = shell_cmd('git rev-parse --show-toplevel') or current_dir
+    local current_buf_dir = vim.fn.expand('%:p:h')
+    local git_repo = shell_cmd('git rev-parse --show-toplevel')
+    local dir = git_repo or current_buf_dir
     local loaded, lspconfig = pcall(require, 'lspconfig')
     if not loaded then
       return dir
@@ -356,7 +358,7 @@ local function root(markers)
 
     if lspconfig.util and lspconfig.util.root_pattern then
       local root_pattern = lspconfig.util.root_pattern
-      return root_pattern(unpack(markers))(current_dir)
+      return root_pattern(unpack(markers))(current_buf_dir)
     else
       return dir
     end

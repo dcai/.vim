@@ -453,7 +453,7 @@ local function get_python_path(workspace)
   end
 
   local py_path =
-    lsputils.path.join(vim.g.smart_root(), '.venv', 'bin', 'python')
+    lsputils.path.join(vim.g.smart_root() or '', '.venv', 'bin', 'python')
 
   if vim.g.file_exists(py_path) then
     return py_path
