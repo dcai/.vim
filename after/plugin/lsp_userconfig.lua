@@ -260,7 +260,7 @@ local function plugin_path(plugin_name)
   return string.format('%s/plug/%s/lua', vim.g.data_dir, plugin_name)
 end
 
-local workspace_libs = {
+local lua_workspace_libs = {
   checkThirdParty = false,
   maxPreload = 2000,
   preloadFileSize = 1000,
@@ -285,7 +285,7 @@ cfg.lua_ls.setup({
   },
   settings = {
     Lua = {
-      -- https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json
+      -- https://github.com/LuaLS/vscode-lua/blob/master/setting/schema.json
       runtime = {
         version = 'LuaJIT',
         path = lua_runtime_path,
@@ -308,7 +308,7 @@ cfg.lua_ls.setup({
         },
         disable = IGNORE_LUA_DIAGNOSTIC_CODES,
       },
-      workspace = workspace_libs,
+      workspace = lua_workspace_libs,
     },
   },
   on_attach = common_on_attach,
@@ -448,7 +448,7 @@ local function get_python_path(workspace)
     return lsputils.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
   end
 
-  if vim.g.file_exists(workspace .. '/.venv') then
+  if workspace and vim.g.file_exists(workspace .. '/.venv') then
     return lsputils.path.join(workspace, '.venv', 'bin', 'python')
   end
 
@@ -459,7 +459,7 @@ local function get_python_path(workspace)
     return py_path
   else
     -- Fallback to system Python.
-    return vim.uv.exepath('python3') or vim.uv.exepath('python') or 'python'
+    return vim.g.python3_host_prog
   end
 end
 
@@ -467,7 +467,9 @@ end
 cfg.pyright.setup({
   on_attach = common_on_attach,
   before_init = function(_, config)
-    config.settings.python.pythonPath = get_python_path(config.root_dir)
+    local py_path = get_python_path(config.root_dir)
+    vim.g.logger.info('python binary: ' .. vim.inspect(py_path))
+    config.settings.python.pythonPath = py_path
   end,
   settings = {
     pyright = {
