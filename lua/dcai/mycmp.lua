@@ -39,18 +39,18 @@ function source:complete(params, callback)
   local types = require('cmp.types')
 
   local months = {
-    { label = 'January' },
-    { label = 'February' },
-    { label = 'March' },
-    { label = 'April' },
-    { label = 'May' },
-    { label = 'June' },
-    { label = 'July' },
-    { label = 'August' },
-    { label = 'September' },
-    { label = 'October' },
-    { label = 'November' },
-    { label = 'December' },
+    -- { label = 'January' },
+    -- { label = 'February' },
+    -- { label = 'March' },
+    -- { label = 'April' },
+    -- { label = 'May' },
+    -- { label = 'June' },
+    -- { label = 'July' },
+    -- { label = 'August' },
+    -- { label = 'September' },
+    -- { label = 'October' },
+    -- { label = 'November' },
+    -- { label = 'December' },
   }
   local list = {}
   for _, item in ipairs(months) do
