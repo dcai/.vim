@@ -403,6 +403,11 @@ vim.g.node_project_root = root({
   'package.json',
 })
 
+vim.g.python_project_root = root({
+  'requirements.txt',
+  'pyproject.toml',
+})
+
 vim.g.nl = '\r\n'
 
 vim.g.red = colortext('red')

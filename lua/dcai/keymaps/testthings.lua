@@ -21,6 +21,34 @@ local function with_dir(dir, cmd)
   return 'cd ' .. dir .. ' && ' .. cmd
 end
 
+local function run_nodejs_test(file, noderoot)
+  local packagejson = vim.g.readfile(noderoot .. '/package.json')
+  if not packagejson then
+    return
+  end
+  local cmd = ''
+  if string.find(packagejson, 'jest') then
+    local env = 'node'
+    if string.find(packagejson, 'jsdom') then
+      env = 'jsdom'
+    end
+    cmd = 'npx jest --runInBand --silent=false --coverage=false --watch --env='
+      .. env
+      .. ' --runTestsByPath '
+      .. file
+  end
+  if string.find(packagejson, 'mocha') then
+    cmd = 'npx mocha --full-trace --watch ' .. file
+  end
+  if string.find(packagejson, 'bun') then
+    cmd = 'bun test --watch ' .. file
+  end
+  if string.find(packagejson, 'vitest') then
+    cmd = 'npx vitest --silent=false --watch ' .. file
+  end
+  vim.fn['VimuxRunCommand'](with_dir(noderoot, cmd))
+end
+
 local testthings_keymap = {
   { '<leader>t', group = 'test things' },
   {
@@ -28,34 +56,10 @@ local testthings_keymap = {
     function()
       local file = vim.fn.expand('%:p')
       local noderoot = vim.g.node_project_root()
-      if not noderoot then
+      if noderoot then
+        run_nodejs_test(file, noderoot)
         return
       end
-      local packagejson = vim.g.readfile(noderoot .. '/package.json')
-      if not packagejson then
-        return
-      end
-      local cmd = ''
-      if string.find(packagejson, 'jest') then
-        local env = 'node'
-        if string.find(packagejson, 'jsdom') then
-          env = 'jsdom'
-        end
-        cmd = 'npx jest --runInBand --silent=false --coverage=false --watch --env='
-          .. env
-          .. ' --runTestsByPath '
-          .. file
-      end
-      if string.find(packagejson, 'mocha') then
-        cmd = 'npx mocha --full-trace --watch ' .. file
-      end
-      if string.find(packagejson, 'bun') then
-        cmd = 'bun test --watch ' .. file
-      end
-      if string.find(packagejson, 'vitest') then
-        cmd = 'npx vitest --silent=false --watch ' .. file
-      end
-      vim.fn['VimuxRunCommand'](with_dir(noderoot, cmd))
     end,
     desc = 'test javascript project',
   },
