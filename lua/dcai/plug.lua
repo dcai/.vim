@@ -228,7 +228,6 @@ M.setup = function(plug_opts)
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('ibhagwan/fzf-lua')
   Plug('nvim-telescope/telescope.nvim')
-  Plug('andymass/vim-matchup')
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()
       vim.g.bufferize_command = 'new'

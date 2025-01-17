@@ -14,7 +14,7 @@ treesitter_config.setup({
   sync_install = false,
   incremental_selection = { enable = true },
   matchup = {
-    enable = true, -- enabled matchup plugin: https://github.com/andymass/vim-matchup
+    enable = false, -- enabled matchup plugin: https://github.com/andymass/vim-matchup
   },
   highlight = {
     -- `false` will disable the whole extension
