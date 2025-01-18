@@ -190,7 +190,8 @@ require('mini.pairs').setup({
       register = { cr = false },
     },
     ['`'] = {
-      action = 'closeopen',
+      -- action = 'closeopen',
+      action = 'close',
       pair = '``',
       neigh_pattern = '[^\\].',
       register = { cr = false },
