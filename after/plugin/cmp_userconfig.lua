@@ -77,7 +77,8 @@ local handle_enter = cmp.mapping({
     select = false,
   }),
 })
-local handle_up = cmp.mapping(function(fallback)
+
+local function select_prev_menu_item(fallback)
   -- if vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
   --   return feedkeys('<Plug>(ultisnips_jump_backward)')
   -- elseif cmp.visible() then
@@ -86,23 +87,47 @@ local handle_up = cmp.mapping(function(fallback)
   else
     fallback()
   end
+end
+
+local handle_up = cmp.mapping(select_prev_menu_item, { 'i', 's' })
+local handle_s_tab = cmp.mapping(function(fallback)
+  if vim.snippet.active({ direction = -1 }) then
+    vim.schedule(function()
+      vim.snippet.jump(-1)
+    end)
+  else
+    select_prev_menu_item(fallback)
+  end
 end, { 'i', 's' })
 
-local handle_down = cmp.mapping(function(fallback)
-  -- if vim.fn['UltiSnips#CanJumpForwards']() == 1 then
-  --   return feedkeys('<Plug>(ultisnips_jump_forward)')
-  -- elseif cmp.visible() and has_words_before() then
+local function select_next_menu_item(fallback)
   if cmp.visible() and has_words_before() then
     cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
     -- below checks whether it is possible to jump forward to the next snippet placeholder
   elseif has_words_before() then
+    -- cmp.complete(): populates the UI of complete
     cmp.complete()
   else
-    -- cmp.complete(): populates the UI of complete
     -- fallback(): pass through, insert <tab>
     fallback()
   end
+end
+
+local handle_tab = cmp.mapping(function(fallback)
+  -- if vim.fn['UltiSnips#CanJumpForwards']() == 1 then
+  --   return feedkeys('<Plug>(ultisnips_jump_forward)')
+  --   -- elseif cmp.visible() and has_words_before() then
+  -- end
+  if vim.snippet.active({ direction = 1 }) then
+    vim.schedule(function()
+      vim.snippet.jump(1)
+    end)
+  else
+    select_next_menu_item(fallback)
+  end
 end, { 'i', 's' })
+
+local handle_down = cmp.mapping(select_next_menu_item, { 'i', 's' })
 
 local source_tmux = {
   name = 'tmux',
@@ -210,9 +235,9 @@ cmp.setup({
   mapping = {
     -- ['<C-e>'] = cmp.mapping.abort(),
     -- ['<C-Space>'] = cmp.mapping.complete(),
-    ['<tab>'] = handle_down,
+    ['<tab>'] = handle_tab,
     ['<down>'] = handle_down,
-    ['<S-Tab>'] = handle_up,
+    ['<S-Tab>'] = handle_s_tab,
     ['<up>'] = handle_up,
     ['<CR>'] = handle_enter,
     -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
