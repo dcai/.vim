@@ -16,9 +16,8 @@ mini_surround.setup({
   mappings = {
     replace = 'cs', -- Replace surrounding
     delete = 'ds', -- Delete surrounding
-    --- don't use ys as it slows down the yank action
+    --- NOTE don't use `ys` as it slows down the yank action
     add = 'sa', -- Add surrounding in Normal and Visual modes
-
     find = '', -- Find surrounding (to the right)
     find_left = '', -- Find surrounding (to the left)
     highlight = '', -- Highlight surrounding
@@ -454,5 +453,19 @@ require('mini.splitjoin').setup({
   join = {
     hooks_pre = {},
     hooks_post = {},
+  },
+})
+
+local hipatterns = require('mini.hipatterns')
+hipatterns.setup({
+  highlighters = {
+    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    xxx = { pattern = '%f[%w]()XXX()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+    todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+    note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+    -- Highlight hex color strings (`#rrggbb`) using that color
+    hex_color = hipatterns.gen_highlighter.hex_color(),
   },
 })
