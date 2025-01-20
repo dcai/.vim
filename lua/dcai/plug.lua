@@ -141,7 +141,11 @@ M.setup = function(plug_opts)
   Plug('hrsh7th/nvim-cmp')
   Plug('dcai/nvim-snippets', {
     setup = function()
-      require('snippets').setup({
+      local ok, snippets = pcall(require, 'snippets')
+      if ok then
+        return
+      end
+      snippets.setup({
         -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
         search_paths = { vim.fn.expand('~/src/vim-snippets/') },
         create_cmp_source = true,
@@ -206,7 +210,11 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   Plug('norcalli/nvim-colorizer.lua', {
     setup = function()
-      require('colorizer').setup()
+      local ok, colorizer = pcall(require, 'colorizer')
+      if not ok then
+        return
+      end
+      colorizer.setup()
     end,
   })
   Plug('reedes/vim-lexical')
