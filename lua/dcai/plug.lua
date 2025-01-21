@@ -90,15 +90,6 @@ M.setup = function(plug_opts)
   --- git
   ----------------------------------------------------------------------------
   Plug('tpope/vim-fugitive')
-  -- Plug('NeogitOrg/neogit', {
-  --   setup = function()
-  --     local loaded, neogit = pcall(require, 'neogit')
-  --     if loaded then
-  --       neogit.setup({})
-  --     end
-  --   end,
-  -- })
-  -- Plug('lewis6991/gitsigns.nvim')
   Plug('ruifm/gitlinker.nvim')
   ----------------------------------------------------------------------------
   --- treesitter
@@ -107,29 +98,6 @@ M.setup = function(plug_opts)
   Plug('nvim-treesitter/nvim-treesitter-textobjects')
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag')
-  -- Plug('laytan/tailwind-sorter.nvim', {
-  --   ['do'] = 'cd formatter && npm ci && npm run build',
-  --   setup = function()
-  --     local loaded, tailwindsorter = pcall(require, 'tailwind-sorter')
-  --     if loaded then
-  --       tailwindsorter.setup({
-  --         on_save_enabled = false, -- If `true`, automatically enables on save sorting.
-  --         on_save_pattern = {
-  --           '*.html',
-  --           '*.js',
-  --           '*.jsx',
-  --           '*.tsx',
-  --           '*.twig',
-  --           '*.hbs',
-  --           '*.php',
-  --           '*.heex',
-  --           '*.astro',
-  --         },
-  --         node_path = 'node',
-  --       })
-  --     end
-  --   end,
-  -- })
   ----------------------------------------------------------------------------
   --- nvim-cmp
   ----------------------------------------------------------------------------
@@ -152,8 +120,6 @@ M.setup = function(plug_opts)
       })
     end,
   })
-  -- Plug('petertriho/cmp-git')
-  -- Plug('dmitmel/cmp-cmdline-history')
   -- Plug('SirVer/ultisnips')
   -- Plug('quangnguyen30192/cmp-nvim-ultisnips')
   ----------------------------------------------------------------------------
@@ -179,32 +145,11 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- END of markdown
   ----------------------------------------------------------------------------
-  --- vim-test
-  ----------------------------------------------------------------------------
   Plug('preservim/vimux', {
     setup = function()
       vim.g.VimuxOrientation = 'h'
     end,
   })
-  -- Plug('vim-test/vim-test', {
-  --   setup = function()
-  --     vim.g['test#javascript#runner'] = 'jest'
-  --     vim.g['test#javascript#mocha#executable'] = 'npx mocha'
-  --     vim.g['test#javascript#mocha#options'] = ' --full-trace '
-  --     vim.g['test#javascript#jest#executable'] = 'npx jest'
-  --     -- vim.g['test#javascript#jest#file_pattern'] = '(spec|test).(js|jsx|ts|tsx)$'
-  --     vim.g['test#runner_commands'] = { 'Jest', 'Mocha' }
-  --     vim.g['test#strategy'] = {}
-  --     vim.g['test#strategy']['nearest'] = 'neovim'
-  --     vim.g['test#strategy']['file'] = 'neovim'
-  --     vim.g['test#strategy']['suite'] = 'neovim'
-  --     -- vim.g['test#strategy'] = 'vimux'
-  --     -- vim.g['test#strategy'] = 'toggleterm'
-  --     vim.g['test#neovim#term_position'] = 'vert'
-  --   end,
-  -- })
-  ----------------------------------------------------------------------------
-  --- END vim-test
   ----------------------------------------------------------------------------
   -- coding, development, writing
   ----------------------------------------------------------------------------
@@ -249,7 +194,6 @@ M.setup = function(plug_opts)
   Plug('folke/which-key.nvim')
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
-
   END()
 end
 
