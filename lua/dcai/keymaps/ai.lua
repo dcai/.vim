@@ -238,6 +238,10 @@ local config = {
   log_file = vim.g.log_dir .. '/gp.nvim.log',
   log_sensitive = false,
   providers = {
+    deepseek = {
+      endpoint = 'https://api.deepseek.com/chat/completions',
+      secret = os.getenv('DEEPSEEK_API_KEY'),
+    },
     openai = {
       endpoint = 'https://api.openai.com/v1/chat/completions',
       secret = os.getenv('OPENAI_API_KEY'),
@@ -252,6 +256,15 @@ local config = {
     },
   },
   agents = {
+    {
+      name = 'ChatDeepSeek',
+      chat = true,
+      command = true,
+      model = { model = 'deepseek-chat' },
+      -- model = { model = 'deepseek-reasoner' },
+      provider = 'deepseek',
+      system_prompt = prompt_chat_default,
+    },
     {
       name = 'CmdClaudeSonnet',
       provider = 'anthropic',
@@ -574,8 +587,15 @@ local keymap = {
     function()
       -- local agent = gpplugin.get_chat_agent('ChatGemini')
       local agent = gpplugin.get_chat_agent('ChatGemini2')
+      -- local agent = gpplugin.get_chat_agent('ChatDeepSeek')
       -- local agent = gpplugin.get_chat_agent('ChatGPT4o-mini')
-      new_chat(gpplugin, new_chat_params, false, prompt_chat_default, agent)
+      new_chat(
+        gpplugin,
+        new_chat_params,
+        false,
+        'You are a helpful assistant.',
+        agent
+      )
     end,
     desc = 'new chat',
   },
