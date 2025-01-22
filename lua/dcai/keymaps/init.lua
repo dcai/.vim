@@ -4,7 +4,7 @@ if not loaded then
   return
 end
 
-local ai_keymap = require('dcai.keymaps.ai')
+local chat_keymap = require('dcai.keymaps.chat')
 local editthings_keymap = require('dcai.keymaps.editthings')
 local fzf = require('fzf-lua')
 local fzf_keymap = require('dcai.keymaps.fzfthings')
@@ -18,7 +18,7 @@ local vim_keymap = require('dcai.keymaps.vim')
 local yank_keymap = require('dcai.keymaps.yankthings')
 
 wk.add(fzf_keymap)
-wk.add(ai_keymap)
+wk.add(chat_keymap)
 wk.add(editthings_keymap)
 wk.add(git_keymap)
 wk.add(lsp_keymap)
