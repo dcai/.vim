@@ -110,7 +110,7 @@ M.setup = function(plug_opts)
   Plug('dcai/nvim-snippets', {
     setup = function()
       local ok, snippets = pcall(require, 'snippets')
-      if ok then
+      if not ok then
         return
       end
       snippets.setup({

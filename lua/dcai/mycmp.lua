@@ -1,4 +1,5 @@
-local cmp = require('cmp')
+local ok, cmp = pcall(require, 'cmp')
+
 local source = {}
 
 ---Return whether this source is available in the current context or not (optional).
@@ -77,7 +78,9 @@ end
 
 local M = {}
 M.setup = function()
-  cmp.register_source('month', source)
+  if ok then
+    cmp.register_source('month', source)
+  end
 end
 
 return M
