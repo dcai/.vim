@@ -360,6 +360,19 @@ let s:custom = {
       \ 'SignifySignChange'          : {'fg': s:yellow},
       \ 'SignifySignDelete'          : {'fg': s:darkred},
       \ 'SignifySignDeleteFirstLine' : {'fg': s:darkred},
+      \ 'MasonNormal'                : {'guibg':s:teal,'guifg':s:white},
+      \ 'MasonHeader'                : {'guibg':s:white,'guifg':s:black},
+      \ 'MasonHeading'               : {'guifg':s:yellow},
+      \ 'MasonError'                 : {'guifg':s:yellow},
+      \ 'MasonWarning'               : {'guifg':s:black},
+      \ 'MasonHighlight'             : {'guifg':s:green},
+      \ 'MasonHighlightBlock'        : {'guifg':s:green},
+      \ 'MasonHighlightBlockBold'    : {'guifg':s:green},
+      \ 'MasonHighlightSecondary'    : {'guifg':s:blue},
+      \ 'MasonLink'                  : {'guifg':s:black},
+      \ 'MasonMuted'                 : {'guifg':s:yellow},
+      \ 'MasonMutedBlock'            : {'guifg':s:yellow},
+      \ 'MasonMutedBlockBold'        : {'guifg':s:black},
       \ }
 call s:apply(s:custom)
 
