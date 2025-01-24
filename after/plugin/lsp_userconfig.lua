@@ -493,10 +493,6 @@ cfg.csharp_ls.setup({
   on_attach = common_on_attach,
 })
 
-cfg.tailwindcss.setup({
-  on_attach = common_on_attach,
-})
-
 cfg.html.setup({
   on_attach = common_on_attach,
 })

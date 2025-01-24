@@ -237,6 +237,7 @@ local config = {
   state_dir = vim.g.state_dir .. '/gp/persisted',
   log_file = vim.g.log_dir .. '/gp.nvim.log',
   log_sensitive = false,
+  log_level = vim.log.levels.WARN,
   providers = {
     deepseek = {
       endpoint = 'https://api.deepseek.com/chat/completions',
