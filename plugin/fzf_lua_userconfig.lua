@@ -17,21 +17,12 @@ end
 local use_icons = icons_loaded
 local git_icons = true
 local color_icons = true
--- default:	fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers
--- fzf-native:	utilizes fzf's native previewing ability in the terminal where possible using bat for previews
--- fzf-tmux:	similar to fzf-native and opens in a tmux popup (requires tmux > 3.2)
--- fzf-vim:	closest to fzf.vim's defaults (+icons), also sets up user commands (:Files, :Rg, etc)
--- max-perf:	similar to fzf-native and disables icons globally for max performance
--- telescope:	closest match to telescope defaults in look and feel and keybinds
--- skim:	uses skim as an fzf alternative, (requires the sk binary)
--- local fzf_profile = 'max-perf'
-local fzf_profile = 'fzf-native'
 local history_dir = vim.g.data_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
 
 local do_not_reset_defaults = false
 fzflua.setup({
-  fzf_profile,
+  'fzf-native', -- profile
   winopts = {
     width = 1,
     row = 1, -- window row position (0=top, 1=bottom)
