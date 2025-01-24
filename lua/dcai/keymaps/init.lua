@@ -73,7 +73,7 @@ wk.add({
 })
 
 local user_config = {
-  preset = 'classic',
+  preset = 'modern',
   -- show a warning when issues were detected with your mappings
   notify = true,
   plugins = {
@@ -143,7 +143,8 @@ local user_config = {
       M = '󰘵 ',
       S = '󰘶 ',
       CR = '󰌑 ',
-      Esc = '󱊷 ',
+      -- Esc = '󱊷 ',
+      Esc = 'Esc',
       ScrollWheelDown = '󱕐 ',
       ScrollWheelUp = '󱕑 ',
       NL = '󰌑 ',
