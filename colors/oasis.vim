@@ -360,7 +360,7 @@ let s:custom = {
       \ 'SignifySignChange'          : {'fg': s:yellow},
       \ 'SignifySignDelete'          : {'fg': s:darkred},
       \ 'SignifySignDeleteFirstLine' : {'fg': s:darkred},
-      \ 'FzfLuaNormal'               : {'guibg':s:niceblack,'guifg':s:white},
+      \ 'FzfLuaNormal'               : {'guibg':s:darkslategray,'guifg':s:white},
       \ 'MasonNormal'                : {'guibg':s:teal,'guifg':s:white},
       \ 'MasonHeader'                : {'guibg':s:white,'guifg':s:black},
       \ 'MasonHeading'               : {'guifg':s:yellow},
@@ -399,10 +399,11 @@ if has('nvim')
         \ }
   call s:apply(s:neovim_only)
 
+  let s:whichkeybg=s:darkslategray
   let s:whichkey = {
-        \ 'WhichKeyTitle': {'fg': s:white,'bg': s:none},
-        \ 'WhichKeyBorder': {'fg': s:white,'bg': s:none},
-        \ 'WhichKeyNormal': {'fg': s:darkgray,'bg': s:none}
+        \ 'WhichKeyTitle': {'fg': s:white,'guibg': s:whichkeybg},
+        \ 'WhichKeyBorder': {'fg': s:white,'guibg': s:whichkeybg},
+        \ 'WhichKeyNormal': {'fg': s:darkgray,'guibg': s:whichkeybg}
         \ }
   call s:apply(s:whichkey)
 
