@@ -360,6 +360,7 @@ let s:custom = {
       \ 'SignifySignChange'          : {'fg': s:yellow},
       \ 'SignifySignDelete'          : {'fg': s:darkred},
       \ 'SignifySignDeleteFirstLine' : {'fg': s:darkred},
+      \ 'FzfLuaNormal'               : {'guibg':s:niceblack,'guifg':s:white},
       \ 'MasonNormal'                : {'guibg':s:teal,'guifg':s:white},
       \ 'MasonHeader'                : {'guibg':s:white,'guifg':s:black},
       \ 'MasonHeading'               : {'guifg':s:yellow},

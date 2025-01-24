@@ -40,24 +40,6 @@ fzflua.setup({
     fullscreen = false, -- start fullscreen?
     border = false,
     -- border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-    hls = {
-      normal = 'Normal', -- window normal color (fg+bg)
-      border = 'FloatBorder', -- border color
-      help_normal = 'Normal', -- <F1> window normal
-      help_border = 'FloatBorder', -- <F1> window border
-      -- Only used with the builtin previewer:
-      cursor = 'Cursor', -- cursor highlight (grep/LSP matches)
-      cursorline = 'CursorLine', -- cursor line
-      cursorlinenr = 'CursorLineNr', -- cursor line number
-      search = 'IncSearch', -- search matches (ctags|help)
-      title = 'Title', -- preview border title (file/buffer)
-      -- Only used with 'winopts.preview.scrollbar = 'float'
-      scrollfloat_e = 'PmenuSbar', -- scrollbar "empty" section highlight
-      scrollfloat_f = 'PmenuThumb', -- scrollbar "full" section highlight
-      -- Only used with 'winopts.preview.scrollbar = 'border'
-      scrollborder_e = 'FloatBorder', -- scrollbar "empty" section highlight
-      scrollborder_f = 'FloatBorder', -- scrollbar "full" section highlight
-    },
     preview = {
       default = 'bat',
       -- border = 'noborder',
@@ -76,6 +58,14 @@ fzflua.setup({
         foldmethod = 'manual',
       },
     },
+  },
+  fzf_colors = {
+    -- First existing highlight group will be used
+    -- values in 3rd+ index will be passed raw
+    -- i.e:  `--color fg+:#010101:bold:underline`
+    ['fg+'] = { 'fg', { 'Normal' } },
+    -- It is also possible to pass raw values directly
+    ['gutter'] = '-1',
   },
   keymap = {
     -- These override the default tables completely
