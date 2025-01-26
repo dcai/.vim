@@ -97,7 +97,31 @@ M.setup = function(plug_opts)
   Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
   Plug('nvim-treesitter/nvim-treesitter-textobjects')
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
-  Plug('windwp/nvim-ts-autotag')
+  Plug('windwp/nvim-ts-autotag', {
+    setup = function()
+      local loaded, autotag = pcall(require, 'nvim-ts-autotag')
+
+      if not loaded then
+        return
+      end
+      autotag.setup({
+        opts = {
+          -- Defaults
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
+        },
+        -- Also override individual filetype configs, these take priority.
+        -- Empty by default, useful if one of the "opts" global settings
+        -- doesn't work well in a specific filetype
+        per_filetype = {
+          ['html'] = {
+            enable_close = true,
+          },
+        },
+      })
+    end,
+  })
   ----------------------------------------------------------------------------
   --- nvim-cmp
   ----------------------------------------------------------------------------
