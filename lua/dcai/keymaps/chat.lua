@@ -54,7 +54,7 @@ Don't be lazy, write all the code to implement the features I ask for.
 ]]
 
 local prompt_coding = [[
-You are an expert Al programming assistant that primarily focuses on producing clear，readable code.
+You are an expert Al programming assistant that primarily focuses on producing clear, readable code.
 Use javascript unless asked otherwise.
 ]] .. prompt_code_block_only .. prompt_coding_rules
 
