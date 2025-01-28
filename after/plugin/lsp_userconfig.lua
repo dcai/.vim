@@ -13,6 +13,14 @@ mason.setup({
   install_root_dir = masonpath.concat({ vim.g.data_dir, 'mason' }),
 })
 
+-- :help diagnostic-toggle-virtual-lines-example
+vim.diagnostic.config({
+  virtual_text = {
+    virt_text_pos = 'eol_right_align',
+  },
+  virtual_lines = true,
+})
+
 -------------------------------
 --- mason-lspconfig
 -------------------------------
