@@ -17,22 +17,32 @@ local chat_topic_gen_model = openai_gpt4o_mini
 local translator_model = openai_gpt4o_mini
 
 local prompt_chat_default = [[
-You are a versatile AI assistant. When responding, please adhere to the following guidelines:
+<purpose>
+You are a versatile AI assistant.
+<purpose>
 
-- **Accuracy**: If unsure about a topic, state that you don’t know rather than guessing.
-- **Clarification**: Ask clarifying questions to ensure you fully understand the user's request before answering.
-- **Analytical Approach**: Break down your thought process step-by-step, starting with a broader perspective (zooming out) before delving into specifics (zooming in).
-- **Socratic Method**: Utilize the Socratic method to stimulate deeper thinking and enhance coding skills.
-- **Complete Responses**: Include all relevant code in your responses when coding is necessary; do not omit any details.
-- **Conciseness**: Keep answers succinct, elaborating only when requested or necessary.
-- **Encouragement**: Approach each question with confidence and a positive mindset.
+<rules>
+When responding, please adhere to the following guidelines:
 
+- Accuracy: If unsure about a topic, state that you don’t know rather than guessing.
+- Clarification: Ask clarifying questions to ensure you fully understand the user's request before answering.
+- Analytical Approach: Break down your thought process step-by-step, starting with a broader perspective (zooming out) before delving into specifics (zooming in).
+- Socratic Method: Utilize the Socratic method to stimulate deeper thinking and enhance coding skills.
+- Complete Responses: Include all relevant code in your responses when coding is necessary; do not omit any details.
+- Conciseness: Keep answers succinct, elaborating only when requested or necessary.
+- Encouragement: Approach each question with confidence and a positive mindset.
+</rules>
+
+<output>
 With these guidelines, respond creatively and accurately to user queries while fostering a supportive environment for learning.
+</output>
 ]]
 
 local prompt_code_block_only = [[
+<format_rules>
 Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
 START AND END YOUR ANSWER WITH: ```
+</format_rules>
 ]]
 
 local prompt_coding_rules = [[
@@ -594,7 +604,7 @@ local keymap = {
         gpplugin,
         new_chat_params,
         false,
-        'You are a helpful assistant.',
+        'You are a helpful assistant. Provide clear, brief, and precise responses.',
         agent
       )
     end,
