@@ -163,9 +163,10 @@ fzflua.setup({
     -- executed command priority is 'cmd' (if exists)
     -- otherwise auto-detect prioritizes `rg` over `grep`
     -- default options are controlled by 'rg|grep_opts'
-    -- cmd            = "rg --vimgrep",
+    cmd = nil,
     grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
-    rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096',
+    rg_opts = '--column --line-number --no-heading --color=always --smart-case '
+      .. '--max-columns=4096 -e',
     -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
     -- search strings will be split using the 'glob_separator' and translated
     -- to '--iglob=' arguments, requires 'rg'
