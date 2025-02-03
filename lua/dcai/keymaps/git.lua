@@ -4,9 +4,9 @@ local git_keymap = {
   { '<leader>g', group = 'git' },
   { '<leader>g2', '<cmd>diffget //2<cr>' },
   { '<leader>g3', '<cmd>diffget //3<cr>' },
-  { '<leader>ga', '<cmd>Gwrite<cr>' },
-  { '<leader>gA', '<cmd>Git add -A<cr>' },
-  { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'checkout branch' },
+  { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
+  { '<leader>gA', '<cmd>!git reset %<cr>', desc = 'git unstage' },
+  { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
   -- { '<leader>gC', '<cmd>Git commit -a<cr>', desc = 'commit all' },
   {
     '<leader>gC',
@@ -25,7 +25,7 @@ local git_keymap = {
   },
   {
     '<leader>gg',
-    '<cmd>Git<cr>',
+    '<cmd>FzfLua git_status<cr>',
     desc = 'git status',
   },
   {
