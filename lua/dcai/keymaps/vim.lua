@@ -1,6 +1,13 @@
 local vim_keymap = {
   { '<leader>v', group = 'vimrc' },
   {
+    '<leader>vA',
+    function()
+      vim.cmd('ALEInfo')
+    end,
+    desc = 'ALEInfo',
+  },
+  {
     '<leader>vM',
     function()
       vim.cmd('Mason')
