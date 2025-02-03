@@ -76,11 +76,11 @@ local git_keymap = {
       args = {
         'push',
         '-u',
-        '--force-with-lease',
+        -- '--force-with-lease',
         '--no-verify',
       },
     }),
-    desc = 'force push with lease',
+    desc = 'git push',
   },
   {
     '<leader>gy',
