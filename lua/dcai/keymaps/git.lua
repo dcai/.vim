@@ -28,8 +28,15 @@ local git_keymap = {
   { '<leader>ga', '<cmd>Gwrite<cr>' },
   { '<leader>gA', '<cmd>Git add -A<cr>' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'checkout branch' },
-  { '<leader>gC', '<cmd>Git commit -a<cr>', desc = 'commit all' },
+  -- { '<leader>gC', '<cmd>Git commit -a<cr>', desc = 'commit all' },
   { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
+  {
+    '<leader>gC',
+    utils.git_cmd({
+      args = { 'ci-unstaged' },
+    }),
+    desc = 'git ci-unstaged',
+  },
   {
     '<leader>gf',
     utils.git_cmd({
