@@ -8,7 +8,12 @@ local fzf_keymap = {
   { '<leader>fb', fzf.buffers, desc = 'buffers' },
   { '<leader>fc', fzf.colorschemes, desc = 'colorschemes' },
   { '<leader>fr', fzf.oldfiles, desc = 'recent files' },
-  { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
+  -- { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
+  {
+    '<leader>fs',
+    '<cmd>FzfLua git_status<cr>',
+    desc = 'changed files',
+  },
   { '<leader>f/', fzf.builtin, desc = 'fzf builtin' },
   {
     '<leader>ff',
