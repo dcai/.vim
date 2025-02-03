@@ -70,7 +70,7 @@ let g:ale_fixers = {
   \ 'c': ['clang-format'],
   \ 'cpp': ['clang-format'],
   \ 'cs': ['clang-format'],
-  \ 'css': ['prettier'],
+  \ 'css': ['biome'],
   \ 'dokuwiki': ['plaintext'],
   \ 'elixir': ['mix_format'],
   \ 'heex': ['mix_format'],
