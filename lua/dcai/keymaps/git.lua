@@ -7,14 +7,14 @@ local git_keymap = {
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
   { '<leader>gc', group = 'git commit' },
   {
-    '<leader>gcu',
+    '<leader>gcU',
     utils.git_cmd({
       args = { 'ci-unstaged' },
     }),
     desc = 'git ci-unstaged',
   },
   {
-    '<leader>gcs',
+    '<leader>gcS',
     utils.git_cmd({
       args = { 'ci-staged' },
     }),
