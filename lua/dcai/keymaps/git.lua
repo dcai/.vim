@@ -90,13 +90,7 @@ local git_keymap = {
   },
   {
     '<leader>gpf',
-    utils.git_cmd({
-      args = {
-        'fetch',
-        '--tags',
-        '--all',
-      },
-    }),
+    utils.git_cmd({ args = { 'fetch', '--tags', '--all', '--verbose' } }),
     desc = 'git fetch',
   },
   {

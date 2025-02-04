@@ -17,7 +17,7 @@ local function lazy_shell_cmd(command, opts, desc)
       local popup = vim.g.new_popup({
         title = popup_title,
         number = false,
-        width= opts.width or 50,
+        width = opts.width or 50,
         height = opts.height or 10,
       })
       popup.open()
@@ -38,7 +38,16 @@ local function lazy_shell_cmd(command, opts, desc)
           local stdout = table.concat(job:result(), vim.g.nl)
           if ret == 0 then
             if not disable_popup then
-              vim.api.nvim_chan_send(channel, stderr .. vim.g.nl .. stdout)
+              vim.api.nvim_chan_send(
+                channel,
+                stderr
+                  .. vim.g.nl
+                  .. stdout
+                  .. vim.g.nl
+                  .. desc
+                  .. ' [done]'
+                  .. vim.g.nl
+              )
             else
               vim.notify(string.format('[%s] done', desc))
             end
