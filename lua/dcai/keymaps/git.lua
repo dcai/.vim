@@ -2,8 +2,6 @@ local utils = require('dcai.keymaps.utils')
 
 local git_keymap = {
   { '<leader>g', group = 'git' },
-  { '<leader>g2', '<cmd>diffget //2<cr>' },
-  { '<leader>g3', '<cmd>diffget //3<cr>' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gA', '<cmd>!git reset %<cr>', desc = 'git unstage' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
@@ -52,7 +50,7 @@ local git_keymap = {
   {
     '<leader>gj',
     '<cmd>Git -c sequence.editor=: rebase --autosquash -i origin/HEAD<cr>',
-    desc = 'rebase origin/HEAD',
+    desc = 'rebase autosquash',
   },
   {
     '<leader>gl',
@@ -108,12 +106,7 @@ local git_keymap = {
   {
     '<leader>gy',
     utils.open_git_hosting_web,
-    desc = 'open the file in web',
-  },
-  {
-    '<leader>gv',
-    '<cmd>Gvdiffsplit!<cr>',
-    desc = '3-way diff',
+    desc = 'open in browser',
   },
 }
 return git_keymap
