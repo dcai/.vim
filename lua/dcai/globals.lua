@@ -316,9 +316,12 @@ vim.g.new_popup = function(opts)
         { win = winid }
       )
       vim.api.nvim_set_option_value('spell', false, { win = winid })
-      vim.keymap.set('n', 'q', function()
+      local close = function()
         vim.api.nvim_win_close(winid, true)
-      end, { buffer = buffer })
+      end
+      local winopt = { buffer = buffer, noremap = true, silent = true }
+      vim.keymap.set('n', 'q', close, winopt)
+      vim.keymap.set('n', '<esc>', close, winopt)
       return winid, _
     end,
   }
