@@ -66,11 +66,7 @@ local git_keymap = {
   },
   {
     '<leader>glb',
-    function()
-      -- local current_file_path = vim.fn.expand('%:p')
-      local current_file_path = vim.api.nvim_buf_get_name(0)
-      vim.cmd('Git log ' .. current_file_path)
-    end,
+    '<cmd>FzfLua git_bcommits<cr>',
     desc = 'current buffer',
   },
   {
