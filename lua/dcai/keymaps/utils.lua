@@ -17,6 +17,7 @@ local function lazy_shell_cmd(command, opts, desc)
       local popup = vim.g.new_popup({
         title = popup_title,
         number = false,
+        width= opts.width or 50,
         height = opts.height or 10,
       })
       popup.open()
