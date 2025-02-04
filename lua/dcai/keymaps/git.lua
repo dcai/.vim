@@ -7,22 +7,29 @@ local git_keymap = {
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gA', '<cmd>!git reset %<cr>', desc = 'git unstage' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
-  -- { '<leader>gC', '<cmd>Git commit -a<cr>', desc = 'commit all' },
+  { '<leader>gc', group = 'git commit' },
   {
-    '<leader>gC',
+    '<leader>gcu',
     utils.git_cmd({
       args = { 'ci-unstaged' },
     }),
     desc = 'git ci-unstaged',
   },
-  -- { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
   {
-    '<leader>gf',
+    '<leader>gcs',
+    utils.git_cmd({
+      args = { 'ci-staged' },
+    }),
+    desc = 'git ci-staged',
+  },
+  {
+    '<leader>gcf',
     utils.git_cmd({
       args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' },
     }),
-    desc = 'git fixup HEAD',
+    desc = 'fixup HEAD',
   },
+  -- { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
   {
     '<leader>gg',
     '<cmd>FzfLua git_status<cr>',
@@ -30,11 +37,15 @@ local git_keymap = {
   },
   {
     '<leader>gh',
+    group = 'git stash',
+  },
+  {
+    '<leader>ghs',
     utils.git_cmd({ args = { 'stash' } }),
     desc = 'git stash',
   },
   {
-    '<leader>gH',
+    '<leader>ghp',
     utils.git_cmd({ args = { 'stash', 'pop' } }),
     desc = 'git stash pop',
   },
@@ -45,6 +56,10 @@ local git_keymap = {
   },
   {
     '<leader>gl',
+    group = 'logs',
+  },
+  {
+    '<leader>gll',
     function()
       local fzf = require('fzf-lua')
       fzf.git_commits()
@@ -52,13 +67,13 @@ local git_keymap = {
     desc = 'git log',
   },
   {
-    '<leader>gL',
+    '<leader>glb',
     function()
       -- local current_file_path = vim.fn.expand('%:p')
       local current_file_path = vim.api.nvim_buf_get_name(0)
       vim.cmd('Git log ' .. current_file_path)
     end,
-    desc = "current buffer's git log",
+    desc = 'current buffer',
   },
   {
     '<leader>gM',
@@ -67,20 +82,28 @@ local git_keymap = {
   },
   {
     '<leader>gp',
+    group = 'pull and push',
+  },
+  {
+    '<leader>gpp',
     utils.git_cmd({ args = { 'pull', '--tags', '--rebase' } }),
     desc = 'git pull',
   },
   {
-    '<leader>gP',
+    '<leader>gpP',
+    utils.git_cmd({ args = { 'push', '-u', '--force-with-lease' } }),
+    desc = 'git push',
+  },
+  {
+    '<leader>gpf',
     utils.git_cmd({
       args = {
-        'push',
-        '-u',
-        -- '--force-with-lease',
-        '--no-verify',
+        'fetch',
+        '--tags',
+        '--all',
       },
     }),
-    desc = 'git push',
+    desc = 'git fetch',
   },
   {
     '<leader>gy',
