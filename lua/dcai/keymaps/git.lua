@@ -49,7 +49,16 @@ local git_keymap = {
   },
   {
     '<leader>gj',
-    '<cmd>Git -c sequence.editor=: rebase --autosquash -i origin/HEAD<cr>',
+    utils.git_cmd({
+      args = {
+        '-c',
+        'sequence.editor=:',
+        'rebase',
+        '--autosquash',
+        '-i',
+        'origin/HEAD',
+      },
+    }),
     desc = 'rebase autosquash',
   },
   {
