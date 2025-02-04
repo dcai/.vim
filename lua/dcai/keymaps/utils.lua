@@ -72,8 +72,8 @@ end
 
 M.lazy_shell_cmd = lazy_shell_cmd
 
-M.git_cmd = function(opts)
-  return lazy_shell_cmd('git', opts)
+M.git_cmd = function(opts, desc)
+  return lazy_shell_cmd('git', opts, desc)
 end
 
 M.live_grep = function()

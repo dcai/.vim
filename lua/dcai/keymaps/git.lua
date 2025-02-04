@@ -58,7 +58,7 @@ local git_keymap = {
         '-i',
         'origin/HEAD',
       },
-    }),
+    }, 'rebase HEAD'),
     desc = 'rebase autosquash',
   },
   {
