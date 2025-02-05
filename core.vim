@@ -177,7 +177,7 @@ function EditMatchingTestFile()
     call TryFileWithExts(join(l:parts[0:-2], '.'), ['js', 'ts', 'jsx', 'tsx'])
     return
   endif
-  let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx']
+  let l:exts = ['spec.js', 'spec.jsx', 'test.js', 'test.jsx', 'test.ts', 'test.tsx', 'spec.tsx']
   call TryFileWithExts(l:filename, l:exts)
 endfunction
 
