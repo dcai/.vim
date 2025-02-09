@@ -160,7 +160,7 @@ let s:dict_number        = {'fg': s:darkyellow}
 let s:dict_function      = {'fg': s:green, 'bg': s:none}
 let s:dict_variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
 let s:dict_special       = {'fg': s:red, 'bg': s:none}
-let s:dict_search        = {'fg': s:black, 'bg': s:darkyellow, 'cterm': 'bold'}
+let s:dict_search        = {'fg': s:white, 'bg': s:darkmagenta, 'cterm': 'bold'}
 let s:dict_string        = {'fg': s:darkgray,'guifg':s:slategray}
 let s:dict_field         = {'fg': s:yellow, 'bg': s:none}
 let s:dict_badspell      = {'fg': s:darkgray, 'cterm': s:underline}
@@ -256,9 +256,10 @@ let s:ui = {
       \ 'Question'        : {'fg': s:green},
       \ 'Quote'           : {'fg': s:yellow},
       \ 'Search'          : s:dict_search,
+      \ 'IncSearch'       : s:dict_search,
+      \ 'CurSearch'       : s:dict_search,
       \ 'TabLine'         : {'bg': s:darkblue},
       \ 'TabLineSel'      : {'bg': s:white, 'fg': s:black},
-      \ 'IncSearch'       : s:dict_search,
       \ 'SignColumn'      : {'bg': s:none},
       \ 'Title'           : {'fg': s:green,  'bg':    s:none},
       \ 'Underlined'      : {'fg': s:blue,   'cterm': s:underline},
