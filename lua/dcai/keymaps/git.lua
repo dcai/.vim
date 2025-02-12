@@ -9,16 +9,16 @@ local git_keymap = {
   {
     '<leader>gcU',
     utils.git_cmd({
-      args = { 'ci-unstaged' },
+      args = { 'ciu' },
     }),
-    desc = 'git ci-unstaged',
+    desc = 'commit all',
   },
   {
     '<leader>gcS',
     utils.git_cmd({
-      args = { 'ci-staged' },
+      args = { 'cis' },
     }),
-    desc = 'git ci-staged',
+    desc = 'commit staged',
   },
   {
     '<leader>gcf',
