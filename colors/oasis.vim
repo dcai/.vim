@@ -150,27 +150,27 @@ let s:defaultctermfg = s:white
 let s:defaultguifg   = s:beige
 let s:defaultguibg   = s:nicedarkgreen
 
-let s:dict_comment       = {'fg': s:gray,'guifg':s:darkslategray,'cterm': s:italic}
+let s:comment_hl       = {'guifg':s:darkslategray,'cterm': s:italic}
 " let s:identifier    = {'fg': s:magenta, 'guifg': s:nicepurple, 'bg': s:none}
-let s:dict_identifier    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
-let s:dict_repeat        = {'fg': s:yellow}
-let s:dict_conditional   = {'fg': s:cyan, 'bg': s:darkgray}
-let s:dict_boolean       = {'fg': s:blue}
-let s:dict_number        = {'fg': s:darkyellow}
-let s:dict_function      = {'fg': s:green, 'bg': s:none}
-let s:dict_variable      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
-let s:dict_special       = {'fg': s:red, 'bg': s:none}
-let s:dict_search        = {'fg': s:white, 'bg': s:darkmagenta, 'cterm': 'bold'}
-let s:dict_string        = {'fg': s:darkgray,'guifg':s:slategray}
-let s:dict_field         = {'fg': s:yellow, 'bg': s:none}
-let s:dict_badspell      = {'fg': s:darkgray, 'cterm': s:underline}
+let s:identifier_hl    = {'fg': s:green, 'guifg': s:nicelightgreen, 'bg': s:none}
+let s:repeat_hl        = {'fg': s:yellow}
+let s:conditional_hl   = {'fg': s:cyan, 'bg': s:darkgray}
+let s:boolean_hl       = {'fg': s:blue}
+let s:number_hl        = {'fg': s:darkyellow, 'guifg': s:lime}
+let s:function_hl      = {'fg': s:green, 'bg': s:none}
+let s:variable_hl      = {'fg': s:darkyellow, 'guifg':s:niceyellow, 'bg': s:none}
+let s:special_hl       = {'fg': s:red, 'bg': s:none}
+let s:search_hl        = {'fg': s:white, 'bg': s:darkmagenta, 'cterm': 'bold'}
+let s:string_hl        = {'fg': s:white,'guifg':s:ivory}
+let s:field_hl         = {'fg': s:green, 'bg': s:none}
+let s:badspell_hl      = {'fg': s:darkgray, 'cterm': s:underline}
 " = > semicolon brackets
-let s:dict_delimiter     = {'fg': s:yellow, 'bg': s:none}
+let s:delimiter_hl     = {'fg': s:yellow, 'bg': s:none}
 " + - / * =
-let s:dict_operator      = {'fg': s:magenta,'guifg':s:nicepurple}
+let s:operator_hl      = {'fg': s:magenta,'guifg':s:nicepurple}
 " public, protected, private, abstract
-let s:dict_modifier      = {'fg': s:gray}
-let s:dict_type          = {'fg': s:darkyellow, 'bg': s:none}
+let s:modifier_hl      = {'fg': s:gray}
+let s:type_hl          = {'fg': s:darkyellow, 'bg': s:none}
 
 function! s:get_or(value, key, default)
   return has_key(a:value, a:key) ? a:value[a:key] : a:default
@@ -213,13 +213,13 @@ function! s:apply(table)
   endfor
 endfunction
 
-let s:dict_normal_text_highlight = {
+let s:normal_text_highlight = {
       \'bg': s:none,
       \'fg': s:white,
       \'guifg': s:defaultguifg,
       \}
-let s:dict_normal_text_highlight_visualmode = {'fg': s:red}
-let s:dict_normal_text_highlight_cmdmode = {'fg': s:darkgreen}
+let s:normal_text_highlight_visualmode = {'fg': s:red}
+let s:normal_text_highlight_cmdmode = {'fg': s:darkgreen}
 
 let s:dict_visual_selection = {
       \'bg': s:green,
@@ -233,7 +233,7 @@ let s:ui = {
       \ 'Cursor'          : {'fg': s:red,    'bg':s:none},
       \ 'CursorColumn'    : {'fg': s:red,    'bg':s:none},
       \ 'CursorLine'      : {'fg': s:red,    'bg':s:none},
-      \ 'Normal'          : s:dict_normal_text_highlight,
+      \ 'Normal'          : s:normal_text_highlight,
       \ 'NormalNC'        : {'fg': s:gray},
       \ 'NormalFloat'     : {'fg': s:green,  'bg':s:black, 'guibg':s:floatnormalbg},
       \ 'FloatTitle'      : {'fg': s:green,  'bg':s:black, 'guibg':s:floatnormalbg},
@@ -255,9 +255,9 @@ let s:ui = {
       \ 'PmenuThumb'      : {'bg': s:yellow},
       \ 'Question'        : {'fg': s:green},
       \ 'Quote'           : {'fg': s:yellow},
-      \ 'Search'          : s:dict_search,
-      \ 'IncSearch'       : s:dict_search,
-      \ 'CurSearch'       : s:dict_search,
+      \ 'Search'          : s:search_hl,
+      \ 'IncSearch'       : s:search_hl,
+      \ 'CurSearch'       : s:search_hl,
       \ 'TabLine'         : {'bg': s:darkblue},
       \ 'TabLineSel'      : {'bg': s:white, 'fg': s:black},
       \ 'SignColumn'      : {'bg': s:none},
@@ -270,10 +270,10 @@ let s:ui = {
       \ }
 
 let s:spell = {
-      \ 'SpellBad'   : s:dict_badspell,
-      \ 'SpellCap'   : s:dict_badspell,
-      \ 'SpellLocal' : s:dict_badspell,
-      \ 'SpellRare'  : s:dict_badspell,
+      \ 'SpellBad'   : s:badspell_hl,
+      \ 'SpellCap'   : s:badspell_hl,
+      \ 'SpellLocal' : s:badspell_hl,
+      \ 'SpellRare'  : s:badspell_hl,
       \}
 call s:apply(s:spell)
 
@@ -289,14 +289,14 @@ let s:user = {
 call s:apply(s:user)
 
 let s:syntax = {
-      \ 'Boolean'         : s:dict_boolean,
+      \ 'Boolean'         : s:boolean_hl,
       \ 'Character'       : {'fg': s:red},
-      \ 'Comment'         : s:dict_comment,
-      \ 'Conditional'     : s:dict_conditional,
+      \ 'Comment'         : s:comment_hl,
+      \ 'Conditional'     : s:conditional_hl,
       \ 'Constant'        : {'fg': s:darkgreen},
       \ 'Debug'           : {'fg': s:gray},
       \ 'Define'          : {'bg': s:red},
-      \ 'Delimiter'       : s:dict_delimiter,
+      \ 'Delimiter'       : s:delimiter_hl,
       \ 'DiagnosticError' : {'bg': s:none,      'fg':    s:red},
       \ 'DiagnosticHint'  : {'bg': s:none,      'fg':    s:blue},
       \ 'DiagnosticInfo'  : {'bg': s:none,      'fg':    s:blue},
@@ -308,27 +308,27 @@ let s:syntax = {
       \ 'DiffText'        : {'bg': s:blue,      'fg':    s:black},
       \ 'Error'           : {'fg': s:gray,      'bg':    s:red,          'cterm': 'bold'},
       \ 'Exception'       : {'fg': s:red,       'bg':    s:none},
-      \ 'Function'        : s:dict_function,
-      \ 'Identifier'      : s:dict_identifier,
+      \ 'Function'        : s:function_hl,
+      \ 'Identifier'      : s:identifier_hl,
       \ 'Ignore'          : {'fg': s:darkgray},
       \ 'Include'         : {'fg': s:darkgray,  'bg':    s:none},
       \ 'Keyword'         : {'fg': s:keywordfg, 'guifg': s:keywordguifg, 'bg':    s:none},
       \ 'Label'           : {'fg': s:green},
       \ 'Macro'           : {'fg': s:red},
-      \ 'Number'          : s:dict_number,
-      \ 'Operator'        : s:dict_operator,
+      \ 'Number'          : s:number_hl,
+      \ 'Operator'        : s:operator_hl,
       \ 'PreCondit'       : {'fg': s:keywordfg},
       \ 'PreProc'         : {'fg': s:keywordfg},
-      \ 'Repeat'          : s:dict_repeat,
-      \ 'Special'         : s:dict_special,
-      \ 'SpecialKey'      : s:dict_special,
+      \ 'Repeat'          : s:repeat_hl,
+      \ 'Special'         : s:special_hl,
+      \ 'SpecialKey'      : s:special_hl,
       \ 'Statement'       : {'fg': s:darkyellow},
       \ 'StorageClass'    : {'fg': s:darkred},
-      \ 'String'          : s:dict_string,
+      \ 'String'          : s:string_hl,
       \ 'Structure'       : {'fg': s:red},
       \ 'Tag'             : {'fg': s:red},
       \ 'Todo'            : {'bg': s:red,       'guibg': s:red},
-      \ 'Type'            : s:dict_type,
+      \ 'Type'            : s:type_hl,
       \ 'Typedef'         : {'fg': s:magenta},
       \ }
 call s:apply(s:syntax)
@@ -424,39 +424,43 @@ if has('nvim')
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
         \ '@attribute'             : {'guifg':s:nicered},
-        \ '@boolean'               : s:dict_boolean,
+        \ '@boolean'               : s:boolean_hl,
         \ '@comment.error'         : {'guifg':s:red},
         \ '@comment.todo'          : {'guifg':s:white},
+        \ '@comment.note'          : {'guifg':s:white},
         \ '@comment.warning'       : {'guifg':s:yellow},
-        \ '@conditional'           : s:dict_conditional,
+        \ '@conditional'           : s:conditional_hl,
         \ '@constant'              : {'guifg':s:darkgreen},
         \ '@character'             : {'guifg':s:darkgreen},
         \ '@exception'             : {'guifg':s:exceptionfg},
-        \ '@function'              : s:dict_function,
+        \ '@function'              : s:function_hl,
         \ '@keyword'               : {'guifg':s:keywordguifg},
         \ '@keyword.function'      : {'guifg':s:yellow},
-        \ '@keyword.modifier'      : s:dict_modifier,
-        \ '@keyword.operator'      : s:dict_operator,
+        \ '@keyword.modifier'      : s:modifier_hl,
+        \ '@keyword.operator'      : s:operator_hl,
         \ '@keyword.return'        : {'guifg':s:blue},
         \ '@lsp.type.class'        : {'guifg':s:nicepurple},
+        \ '@lsp.type.property'     : s:field_hl,
+        \ '@lsp.type.comment'      : s:comment_hl,
+        \ '@lsp.type.string'       : s:string_hl,
         \ '@lsp.type.enum'         : {'guifg':s:olive},
         \ '@lsp.type.interface'    : {'guifg':s:beige},
         \ '@lsp.type.namespace'    : {'guifg':s:niceblue},
         \ '@lsp.type.struct'       : {'guifg':s:red},
         \ '@module'                : {'guifg':s:lime},
-        \ '@number'                : {'guifg':s:lime},
-        \ '@operator'              : s:dict_operator,
+        \ '@number'                : s:number_hl,
+        \ '@operator'              : s:operator_hl,
         \ '@parameter'             : {'guifg':s:blue},
         \ '@punctuation.delimiter' : {'guifg':s:ivory},
         \ '@punctuation.bracket'   : {'guifg':s:ivory},
         \ '@punctuation.special'   : {'guifg':s:ivory},
-        \ '@property'              : {'guifg':s:ivory},
-        \ '@repeat'                : s:dict_repeat,
-        \ '@string'                : s:dict_string,
+        \ '@property'              : s:field_hl,
+        \ '@repeat'                : s:repeat_hl,
+        \ '@string'                : s:string_hl,
         \ '@tag'                   : {'guifg':s:teal},
-        \ '@type'                  : {'guifg':s:olive},
-        \ '@type.definition'       : {'guifg':s:olive},
-        \ '@variable'              : s:dict_variable,
+        \ '@type'                  : s:type_hl,
+        \ '@type.definition'       : s:type_hl,
+        \ '@variable'              : s:variable_hl,
         \ }
   call s:apply(s:treesitter)
 endif
@@ -493,10 +497,10 @@ let s:mode_statusline = {
 
 " Apply to 'Normal' highlight group
 let s:default_text_highlight = {
-      \ 'n': s:dict_normal_text_highlight,
-      \ 'V': s:dict_normal_text_highlight_visualmode,
-      \ 'v': s:dict_normal_text_highlight_visualmode,
-      \ 'c': s:dict_normal_text_highlight_cmdmode,
+      \ 'n': s:normal_text_highlight,
+      \ 'V': s:normal_text_highlight_visualmode,
+      \ 'v': s:normal_text_highlight_visualmode,
+      \ 'c': s:normal_text_highlight_cmdmode,
       \ }
 call s:hi('StatusLine', s:statusline_n)
 call s:hi('statuslineNC', s:statuslineNC)
@@ -513,7 +517,7 @@ function! s:ModeChanged()
   let l:stlhl  = has_key(s:mode_statusline, l:mode) ? s:mode_statusline[l:mode] : s:statusline_n
   call s:hi('StatusLine', l:stlhl)
 
-  let l:normalhl  = has_key(s:default_text_highlight, l:mode) ? s:default_text_highlight[l:mode] : s:dict_normal_text_highlight
+  let l:normalhl  = has_key(s:default_text_highlight, l:mode) ? s:default_text_highlight[l:mode] : s:normal_text_highlight
   call s:hi('Normal', l:normalhl)
 endfunction
 
