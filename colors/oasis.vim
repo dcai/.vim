@@ -423,7 +423,7 @@ if has('nvim')
   call s:apply(s:cmp)
   " https://neovim.io/doc/user/treesitter.html#treesitter-highlight
   let s:treesitter = {
-        \ '@attribute'             : {'guifg':s:nicered},
+        \ '@attribute'             : s:field_hl,
         \ '@boolean'               : s:boolean_hl,
         \ '@comment.error'         : {'guifg':s:red},
         \ '@comment.todo'          : {'guifg':s:white},
