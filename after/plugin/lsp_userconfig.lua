@@ -16,7 +16,7 @@ mason.setup({
 -- :help diagnostic-toggle-virtual-lines-example
 vim.diagnostic.config({
   virtual_text = {
-    virt_text_pos = 'eol_right_align',
+    -- virt_text_pos = 'eol_right_align',
   },
   virtual_lines = true,
 })
@@ -48,7 +48,7 @@ local ts_ls_supported_filetypes = {
   'typescriptreact',
   'typescript.tsx',
 }
-local lspconfig_loaded, cfg = pcall(require, 'lspconfig')
+local lspconfig_loaded, lspconfig = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
   vim.g.logger.error('lspconfig not loaded!')
@@ -59,8 +59,8 @@ local lsputils = require('lspconfig/util')
 
 require('lspconfig.ui.windows').default_options.border = 'single'
 
-local util = cfg.util
-local root_pattern = cfg.util.root_pattern
+local util = lspconfig.util
+local root_pattern = lspconfig.util.root_pattern
 
 local timeout_ms = 3000
 local ts_ls_cmd_orgimports = '_typescript.organizeImports'
@@ -200,28 +200,28 @@ local function common_on_attach(client, bufnr)
   -- nmap('go', vim.lsp.buf.type_definition, '')
 end
 
-cfg.util.default_config.capabilities = vim.tbl_deep_extend(
+lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
   'force', -- force: use value from the rightmost map
-  cfg.util.default_config.capabilities,
+  lspconfig.util.default_config.capabilities,
   require('cmp_nvim_lsp').default_capabilities() -- must use require here
 )
 -- LOG.info(cfg.util.default_config.capabilities)
-cfg.vimls.setup({
+lspconfig.vimls.setup({
   on_attach = common_on_attach,
 })
 if vim.fn.executable('go') == 1 then
-  cfg.gopls.setup({
+  lspconfig.gopls.setup({
     on_attach = common_on_attach,
   })
 end
 -- cfg.fish_lsp.setup({
 --   on_attach = common_on_attach,
 -- })
-cfg.bashls.setup({
+lspconfig.bashls.setup({
   on_attach = common_on_attach,
 })
 
-cfg.ts_ls.setup({
+lspconfig.ts_ls.setup({
   filetypes = ts_ls_supported_filetypes,
   root_dir = root_pattern(
     'package.json',
@@ -288,7 +288,7 @@ local lua_workspace_libs = {
   },
 }
 
-cfg.lua_ls.setup({
+lspconfig.lua_ls.setup({
   single_file_support = true,
   flags = {
     debounce_text_changes = 150,
@@ -474,7 +474,7 @@ local function get_python_path(workspace)
 end
 
 -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-cfg.pyright.setup({
+lspconfig.pyright.setup({
   on_attach = common_on_attach,
   before_init = function(_, config)
     local py_path = get_python_path(config.root_dir)
@@ -497,15 +497,15 @@ cfg.pyright.setup({
   },
 })
 
-cfg.csharp_ls.setup({
+lspconfig.csharp_ls.setup({
   on_attach = common_on_attach,
 })
 
-cfg.biome.setup({
+lspconfig.biome.setup({
   cmd = { 'biome', 'lsp-proxy' },
 })
 
-cfg.phpactor.setup({
+lspconfig.phpactor.setup({
   on_attach = common_on_attach,
   init_options = {
     ['language_server_phpstan.enabled'] = false,
@@ -548,7 +548,7 @@ cfg.phpactor.setup({
 --   on_attach = common_on_attach,
 -- })
 
-cfg.sourcekit.setup({
+lspconfig.sourcekit.setup({
   on_attach = common_on_attach,
   capabilities = {
     workspace = {
@@ -559,32 +559,4 @@ cfg.sourcekit.setup({
   },
 })
 
-cfg.tailwindcss.setup({
-  settings = {
-    tailwindCSS = {
-      classAttributes = {
-        'class',
-        'className',
-        'class:list',
-        'classList',
-        'ngClass',
-      },
-      includeLanguages = {
-        eelixir = 'html-eex',
-        eruby = 'erb',
-        htmlangular = 'html',
-        templ = 'html',
-      },
-      lint = {
-        cssConflict = 'warning',
-        invalidApply = 'error',
-        invalidConfigPath = 'error',
-        invalidScreen = 'error',
-        invalidTailwindDirective = 'error',
-        invalidVariant = 'error',
-        recommendedVariantOrder = 'warning',
-      },
-      validate = true,
-    },
-  },
-})
+lspconfig.tailwindcss.setup({})
