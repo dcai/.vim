@@ -368,6 +368,21 @@ local function root(markers)
   end
 end
 
+vim.g.merge_list = function (...)
+    local result = {}
+    local arrays = {...}
+
+    for _, arr in ipairs(arrays) do
+        if type(arr) == "table" then
+            for _, value in ipairs(arr) do
+                table.insert(result, value)
+            end
+        end
+    end
+
+    return result
+end
+
 vim.g.git_root = root({
   '.github',
   '.gitlab-ci.yml',

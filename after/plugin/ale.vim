@@ -89,7 +89,7 @@ let g:ale_fixers = {
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
-  \ 'php': ['pint'],
+  \ 'php': ['php_cs_fixer'],
   \ 'python': ['ruff', 'ruff_format'],
   \ 'rust': ['rustfmt'],
   \ 'sh': ['shfmt'],
