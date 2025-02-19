@@ -16,9 +16,10 @@ mason.setup({
 -- :help diagnostic-toggle-virtual-lines-example
 vim.diagnostic.config({
   virtual_text = {
-    -- virt_text_pos = 'eol_right_align',
+    -- virt_text_pos = 'eol',
+    virt_text_pos = 'eol_right_align',
   },
-  virtual_lines = true,
+  virtual_lines = false,
 })
 
 -------------------------------
