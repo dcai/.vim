@@ -515,10 +515,12 @@ lspconfig.phpactor.setup({
     ---@diagnostic disable-next-line: undefined-field
     local cwd = vim.uv.cwd()
     -- local root = root_pattern('composer.json')(startpath)
-    local root =
-      root_pattern('.editorconfig', '.phpactor.json', '.phpactor.yml')(
-        startpath
-      )
+    local root = root_pattern(
+      'composer.lock',
+      '.editorconfig',
+      '.phpactor.json',
+      '.phpactor.yml'
+    )(startpath)
     -- prefer cwd if root is a descendant
     local result = util.path.is_descendant(cwd, root) and cwd or root
     return result
