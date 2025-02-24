@@ -71,6 +71,7 @@ let g:ale_fixers = {
   \ 'cpp': ['clang-format'],
   \ 'cs': ['clang-format'],
   \ 'css': ['biome'],
+  \ 'caddyfile': ['caddy'],
   \ 'dokuwiki': ['plaintext'],
   \ 'elixir': ['mix_format'],
   \ 'heex': ['mix_format'],

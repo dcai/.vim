@@ -10,7 +10,7 @@ local cmd_prefix = 'Ai'
 
 local openai_gpt4o_mini = 'gpt-4o-mini'
 -- find claude models: https://docs.anthropic.com/en/docs/about-claude/models
-local claude_code_model = 'claude-3-5-sonnet-latest'
+local claude_code_model = 'claude-3-7-sonnet-latest'
 -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
 local gemini2_model = 'gemini-2.0-flash'
 local chat_topic_gen_model = openai_gpt4o_mini

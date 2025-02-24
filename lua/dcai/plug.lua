@@ -218,6 +218,7 @@ M.setup = function(plug_opts)
   Plug('folke/which-key.nvim')
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
+  Plug('isobit/vim-caddyfile')
   END()
 end
 
