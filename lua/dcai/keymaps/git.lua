@@ -21,6 +21,13 @@ local git_keymap = {
     desc = 'commit staged',
   },
   {
+    '<leader>gG',
+    utils.git_cmd({
+      args = { 'auto-commit-and-push' },
+    }),
+    desc = 'git ai commit and push',
+  },
+  {
     '<leader>gcf',
     utils.git_cmd({
       args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' },
