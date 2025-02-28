@@ -4,3 +4,5 @@ thesaurus/
 *.spl
 autoload/plug.vim.old
 out.txt
+.aider*
+repomix-output.txt
