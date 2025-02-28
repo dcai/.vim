@@ -276,7 +276,7 @@ fzflua.setup({
         preview = { hidden = 'nohidden' },
       },
       cmd = [[git log --color --pretty=format:"%C(yellow)%h%Creset ]]
-        .. [[%Cgreen(%><(12)%ch%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
+        .. [[%Cgreen(%><(10)%cs%><|(12))%Creset %s %C(blue)<%an>%Creset"]],
       preview = 'git show --format=fuller --color {1}',
       -- git-delta is automatically detected as pager, uncomment to disable
       -- preview_pager = false,
