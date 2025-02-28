@@ -9,12 +9,20 @@
 
 [^1]
 
+A personalized Neovim setup evolved from a vimrc first crafted in 2008, now migrated and optimized for Neovim as of early 2023.
+
+### Installation
+
+Clone this repository into your Neovim configuration directory and create a symlink for compatibility with traditional Vim setups:
+
 ```sh
 git clone https://github.com/dcai/.vim.git ~/.config/nvim
 ln -s ~/.config/nvim .vim
 # fish shell
 ln -s (which nvim) ~/.local/bin/vim
 ```
+
+### Notes
 
 - Extended `vimrc` since 2008[^2].
 - Migrated to [Neovim](https://github.com/neovim/neovim) early 2023.
