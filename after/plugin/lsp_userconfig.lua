@@ -566,4 +566,6 @@ lspconfig.sourcekit.setup({
   },
 })
 
+lspconfig.nushell.setup({})
+
 lspconfig.tailwindcss.setup({})
