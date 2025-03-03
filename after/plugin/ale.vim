@@ -87,6 +87,7 @@ let g:ale_fixers = {
   \ 'javascriptreact': s:jsfixer,
   \ 'json': s:jsfixer,
   \ 'json5': s:jsfixer,
+  \ 'jsonc': s:jsfixer,
   \ 'less': ['prettier'],
   \ 'lua': ['stylua'],
   \ 'markdown': ['prettier'],
