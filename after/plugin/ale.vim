@@ -43,7 +43,7 @@ let g:ale_biome_use_global = 1
 let g:ale_biome_executable = 'biome'
 
 let s:jslinter = [g:EnvVar('JSLINTER', 'biome')]
-let s:jsfixer = [g:EnvVar('JSFIXER', 'prettier')]
+let s:jsfixer = [g:EnvVar('JSFIXER', 'biome')]
 
 " Ale linters settings
 let g:ale_linters = {
