@@ -221,7 +221,11 @@ M.setup = function(plug_opts)
   Plug('isobit/vim-caddyfile')
   Plug('akinsho/toggleterm.nvim', {
     setup = function()
-      require('toggleterm').setup({
+      local loaded, toggleterm = pcall(require, 'toggleterm')
+      if not loaded then
+        return
+      end
+      toggleterm.setup({
         -- shell = vim.o.shell,
         shell = 'fish',
       })
