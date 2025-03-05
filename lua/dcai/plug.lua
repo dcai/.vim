@@ -219,6 +219,24 @@ M.setup = function(plug_opts)
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
   Plug('isobit/vim-caddyfile')
+  Plug('akinsho/toggleterm.nvim', {
+    setup = function()
+      require('toggleterm').setup({
+        -- shell = vim.o.shell,
+        shell = 'fish',
+      })
+
+      function _G.set_terminal_keymaps()
+        local opts = { buffer = 0 }
+        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+        vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+        vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+      end
+
+      -- if you only want these mappings for toggle term use term://*toggleterm#* instead
+      vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+    end,
+  })
   END()
 end
 

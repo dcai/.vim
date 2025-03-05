@@ -3,6 +3,7 @@ local utils = require('dcai.keymaps.utils')
 -- local subl = '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl'
 local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
 
+local shell = nil
 local openthings_keymap = {
   { '<leader>o', group = 'open things' },
   {
@@ -16,6 +17,22 @@ local openthings_keymap = {
     '<Plug>(openbrowser-smart-search)',
     desc = 'search selected',
     mode = 'v',
+  },
+  {
+    '<leader>oo',
+    function()
+      local Term = require('toggleterm.terminal').Terminal
+
+      if not shell then
+        shell = Term:new({
+          cmd = 'fish',
+          dir = 'git_dir',
+          -- direction = 'float',
+        })
+      end
+      shell:toggle()
+    end,
+    desc = 'terminal',
   },
   {
     '<leader>od',
