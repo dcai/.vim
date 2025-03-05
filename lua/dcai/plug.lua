@@ -41,16 +41,16 @@ end
 M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
-  if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
-    Plug('github/copilot.vim', {
-      setup = function()
-        vim.cmd([[
-          let g:copilot_no_tab_map = v:true
-          imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
-        ]])
-      end,
-    })
-  end
+  -- if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
+  --   Plug('github/copilot.vim', {
+  --     setup = function()
+  --       vim.cmd([[
+  --         let g:copilot_no_tab_map = v:true
+  --         imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
+  --       ]])
+  --     end,
+  --   })
+  -- end
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
     Plug('monkoose/neocodeium')
     -- Plug('Exafunction/codeium.nvim')
