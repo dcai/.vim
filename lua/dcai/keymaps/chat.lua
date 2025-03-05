@@ -15,6 +15,7 @@ local claude_code_model = 'claude-3-7-sonnet-latest'
 local gemini2_model = 'gemini-2.0-flash'
 local chat_topic_gen_model = openai_gpt4o_mini
 local translator_model = openai_gpt4o_mini
+local default_chat_agent = 'ChatGemini2'
 
 local prompt_chat_default = [[
 <purpose>
@@ -267,19 +268,19 @@ local config = {
     },
   },
   agents = {
+    -- {
+    --   name = 'ChatDeepSeek',
+    --   chat = true,
+    --   command = true,
+    --   model = { model = 'deepseek-chat' },
+    --   -- model = { model = 'deepseek-reasoner' },
+    --   provider = 'deepseek',
+    --   system_prompt = prompt_chat_default,
+    -- },
     {
-      name = 'ChatDeepSeek',
-      chat = true,
-      command = true,
-      model = { model = 'deepseek-chat' },
-      -- model = { model = 'deepseek-reasoner' },
-      provider = 'deepseek',
-      system_prompt = prompt_chat_default,
-    },
-    {
-      name = 'CmdClaudeSonnet',
+      name = 'CodeClaudeSonnet',
       provider = 'anthropic',
-      chat = false,
+      chat = true,
       command = true,
       model = {
         model = claude_code_model,
@@ -290,6 +291,7 @@ local config = {
     },
     {
       name = 'ChatClaudeSonnet',
+      disable = true,
       provider = 'anthropic',
       chat = true,
       command = false,
@@ -311,6 +313,7 @@ local config = {
       name = 'ChatGPT4o',
       chat = true,
       command = false,
+      disable = true,
       model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
       system_prompt = prompt_chat_default,
     },
@@ -328,7 +331,7 @@ local config = {
     {
       name = 'CodeGPT4o',
       disable = true,
-      chat = false,
+      chat = true,
       command = true,
       model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
       system_prompt = prompt_coding,
@@ -366,8 +369,17 @@ local config = {
     },
     {
       provider = 'googleai',
-      name = 'ChatGemini',
+      name = 'CodeGemini2',
       disable = false,
+      chat = false,
+      command = true,
+      model = { model = gemini2_model, temperature = 0.8, top_p = 1 },
+      system_prompt = prompt_coding,
+    },
+    {
+      provider = 'googleai',
+      name = 'ChatGemini',
+      disable = true,
       chat = true,
       command = false,
       -- string with model name or table with model name and parameters
@@ -378,7 +390,7 @@ local config = {
     {
       provider = 'googleai',
       name = 'CodeGemini',
-      disable = false,
+      disable = true,
       chat = false,
       command = true,
       -- string with model name or table with model name and parameters
@@ -597,7 +609,7 @@ local keymap = {
     '<leader>cn',
     function()
       -- local agent = gpplugin.get_chat_agent('ChatGemini')
-      local agent = gpplugin.get_chat_agent('ChatGemini2')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       -- local agent = gpplugin.get_chat_agent('ChatDeepSeek')
       -- local agent = gpplugin.get_chat_agent('ChatGPT4o-mini')
       new_chat(
@@ -654,7 +666,7 @@ local keymap = {
   {
     '<leader>cJ',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(gpplugin, new_chat_params, false, prompt_javascript, agent)
     end,
     desc = '#topic: JS/TS',
@@ -663,7 +675,7 @@ local keymap = {
   {
     '<leader>cY',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(gpplugin, new_chat_params, false, prompt_python, agent)
     end,
     desc = '#topic: python',
@@ -672,7 +684,7 @@ local keymap = {
   {
     '<leader>cP',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(gpplugin, new_chat_params, false, prompt_laravel, agent)
     end,
     desc = '#topic: laravel',
@@ -681,7 +693,7 @@ local keymap = {
   {
     '<leader>cS',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(
         gpplugin,
         new_chat_params,
@@ -699,7 +711,7 @@ local keymap = {
   {
     '<leader>cL',
     function()
-      local agent = gpplugin.get_chat_agent('ChatClaudeSonnet')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(
         gpplugin,
         new_chat_params,
@@ -726,7 +738,7 @@ local keymap = {
   {
     '<leader>cE',
     function()
-      local agent = gpplugin.get_chat_agent('ChatGPT4o')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(
         gpplugin,
         new_chat_params,
@@ -744,7 +756,7 @@ local keymap = {
   {
     '<leader>cH',
     function()
-      local agent = gpplugin.get_chat_agent('ChatGPT4o')
+      local agent = gpplugin.get_chat_agent(default_chat_agent)
       new_chat(
         gpplugin,
         new_chat_params,
