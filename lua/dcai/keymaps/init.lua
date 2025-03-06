@@ -28,6 +28,8 @@ wk.add(yank_keymap)
 wk.add(vim_keymap)
 wk.add(notes_keymap)
 
+local shell = nil
+
 wk.add({
   {
     '<leader>pp',

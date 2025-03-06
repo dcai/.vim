@@ -483,7 +483,7 @@ lspconfig.pyright.setup({
   on_attach = common_on_attach,
   before_init = function(_, config)
     local py_path = get_python_path(config.root_dir)
-    vim.g.logger.info('python binary: ' .. vim.inspect(py_path))
+    -- vim.g.logger.info('python binary: ' .. vim.inspect(py_path))
     config.settings.python.pythonPath = py_path
   end,
   settings = {
