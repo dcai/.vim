@@ -35,6 +35,29 @@ wk.add({
     desc = 'paste',
   },
   {
+    '<leader>;',
+    function()
+      local Term = require('toggleterm.terminal').Terminal
+      if not shell then
+        shell = Term:new({
+          cmd = 'fish',
+          dir = 'git_dir',
+          -- direction = 'float',
+        })
+      end
+      shell:toggle()
+    end,
+    desc = 'terminal',
+  },
+  {
+    '<leader>.',
+    function()
+      fzf.grep_cword({ cwd = vim.g.git_root() })
+    end,
+    desc = 'fzf grep <cword>',
+    mode = 'n',
+  },
+  {
     '<leader>/',
     utils.live_grep,
     desc = 'fzf grep repo',
@@ -51,15 +74,6 @@ wk.add({
       end
     end,
     desc = 'code format',
-    mode = 'n',
-  },
-
-  {
-    '<leader>.',
-    function()
-      fzf.grep_cword({ cwd = vim.g.git_root() })
-    end,
-    desc = 'fzf grep <cword>',
     mode = 'n',
   },
   {

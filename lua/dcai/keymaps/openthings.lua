@@ -19,22 +19,6 @@ local openthings_keymap = {
     mode = 'v',
   },
   {
-    '<leader>oo',
-    function()
-      local Term = require('toggleterm.terminal').Terminal
-
-      if not shell then
-        shell = Term:new({
-          cmd = 'fish',
-          dir = 'git_dir',
-          -- direction = 'float',
-        })
-      end
-      shell:toggle()
-    end,
-    desc = 'terminal',
-  },
-  {
     '<leader>od',
     function()
       -- has to be wrapped because dir must be lazy evaluated
