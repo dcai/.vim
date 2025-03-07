@@ -40,7 +40,7 @@ local function run_nodejs_test(file, noderoot)
   if string.find(packagejson, 'mocha') then
     cmd = 'npx mocha --full-trace --watch ' .. file
   end
-  if string.find(packagejson, 'bun') then
+  if string.find(packagejson, 'bun test') then
     cmd = 'bun test --watch ' .. file
   end
   if string.find(packagejson, 'vitest') then

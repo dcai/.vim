@@ -17,7 +17,8 @@ mason.setup({
 vim.diagnostic.config({
   virtual_text = {
     -- virt_text_pos = 'eol',
-    virt_text_pos = 'eol_right_align',
+    -- virt_text_pos = 'eol_right_align',
+    virt_text_pos = 'overlay',
   },
   virtual_lines = false,
 })
