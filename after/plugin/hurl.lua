@@ -21,7 +21,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
   })
 
   local args = {
-    '--color',
+    '--no-color',
     '--insecure',
     filepath,
   }
