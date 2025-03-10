@@ -36,11 +36,12 @@ local function replace_between_markers(str)
       replacement_text
     )
   end
+  vim.cmd('write')
 end
 
 local function append_to_buffer(bufnr, text)
   if not vim.api.nvim_buf_is_valid(bufnr) then
-    print('Invalid buffer')
+    vim.notify('Error: invalid buffer', vim.log.levels.ERROR)
     return
   end
   local line_count = vim.api.nvim_buf_line_count(bufnr)
@@ -54,15 +55,17 @@ local function append_to_buffer(bufnr, text)
     false,
     lines
   )
+  vim.cmd('write')
 end
 vim.api.nvim_create_user_command('HurlRun', function()
-  local dir = vim.g.git_root()
   -- run current file
   local ft = vim.bo.filetype
   if not vim.tbl_contains({ 'hurl' }, ft) then
-    vim.g.logger.warn('Not a hurl file')
+    vim.notify('Error: this is not hurl file', vim.log.levels.ERROR)
     return
   end
+
+  local dir = vim.g.git_root()
 
   replace_between_markers()
 
@@ -108,6 +111,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
         -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
         -- vim.api.nvim_set_option_value('filetype', 'json', { buf = bufnr })
         if status ~= 0 then
+          vim.notify('job failed', vim.log.levels.ERROR)
           -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:stderr_result())
           append_to_buffer(bufnr, job:stderr_result())
         else
