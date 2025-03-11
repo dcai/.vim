@@ -413,7 +413,6 @@ vim.diagnostic.config({
   float = {
     show_header = false,
     format = function(report)
-      vim.g.logger.info(vim.inspect(report))
       return string.format(
         'RULE_CODE: %s\n[%s] from [%s]\nMessage: %s',
         report.code,
