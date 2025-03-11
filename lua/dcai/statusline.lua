@@ -103,11 +103,6 @@ local function filencoding()
   })
 end
 
-function winid()
-  --  vim.api.nvim_get_current_win()
-  return vim.fn.win_getid()
-end
-
 function StatuslineActive()
   local wide_enough = vim.fn.winwidth(0) > 100
   local sections = {}

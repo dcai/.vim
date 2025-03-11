@@ -72,7 +72,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
   local filepath = vim.fn.expand('%:p')
   -- local popup = vim.g.new_popup({ title = 'hurl', number = false })
   -- popup.open()
-  local job = require('plenary.job')
+  local PJob = require('plenary.job')
 
   -- local bufnr = vim.api.nvim_create_buf(false, true)
   local bufnr = vim.api.nvim_get_current_buf()
@@ -97,29 +97,27 @@ vim.api.nvim_create_user_command('HurlRun', function()
     table.insert(args, dir .. '/vars.txt')
   end
 
-  job
-    :new({
-      command = 'hurl',
-      args = args,
-      cwd = dir,
-      skip_validation = true,
-      on_exit = vim.schedule_wrap(function(job, status)
-        append_to_buffer(
-          bufnr,
-          '# Done, see response below ' .. get_current_datetime()
-        )
-        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
-        -- vim.api.nvim_set_option_value('filetype', 'json', { buf = bufnr })
-        if status ~= 0 then
-          vim.notify('job failed', vim.log.levels.ERROR)
-          -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:stderr_result())
-          append_to_buffer(bufnr, job:stderr_result())
-        else
-          -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:result())
-          append_to_buffer(bufnr, job:result())
-        end
-        append_to_buffer(bufnr, marker)
-      end),
-    })
-    :start()
+  PJob:new({
+    command = 'hurl',
+    args = args,
+    cwd = dir,
+    skip_validation = true,
+    on_exit = vim.schedule_wrap(function(job, status)
+      append_to_buffer(
+        bufnr,
+        '# Done, see response below ' .. get_current_datetime()
+      )
+      -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
+      -- vim.api.nvim_set_option_value('filetype', 'json', { buf = bufnr })
+      if status ~= 0 then
+        vim.notify('job failed', vim.log.levels.ERROR)
+        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:stderr_result())
+        append_to_buffer(bufnr, job:stderr_result())
+      else
+        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:result())
+        append_to_buffer(bufnr, job:result())
+      end
+      append_to_buffer(bufnr, marker)
+    end),
+  }):start()
 end, {})
