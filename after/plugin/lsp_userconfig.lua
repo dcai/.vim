@@ -413,11 +413,12 @@ vim.diagnostic.config({
   float = {
     show_header = false,
     format = function(report)
+      vim.g.logger.info(vim.inspect(report))
       return string.format(
-        '[%s] %s\nCODE: [%s]\nMessage: %s',
+        'RULE_CODE: %s\n[%s] from [%s]\nMessage: %s',
+        report.code,
         DIAGNOSTIC_LEVELS[report.severity],
         report.source,
-        report.code,
         report.message
       )
     end,

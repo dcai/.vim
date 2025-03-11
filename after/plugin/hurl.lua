@@ -102,7 +102,7 @@ vim.api.nvim_create_user_command('HurlRun', function()
     args = args,
     cwd = dir,
     skip_validation = true,
-    on_exit = vim.schedule_wrap(function(job, status)
+    on_exit = vim.schedule_wrap(function(jobinstance, status)
       append_to_buffer(
         bufnr,
         '# Done, see response below ' .. get_current_datetime()
@@ -111,11 +111,11 @@ vim.api.nvim_create_user_command('HurlRun', function()
       -- vim.api.nvim_set_option_value('filetype', 'json', { buf = bufnr })
       if status ~= 0 then
         vim.notify('job failed', vim.log.levels.ERROR)
-        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:stderr_result())
-        append_to_buffer(bufnr, job:stderr_result())
+        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, jobinstance:stderr_result())
+        append_to_buffer(bufnr, jobinstance:stderr_result())
       else
-        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, job:result())
-        append_to_buffer(bufnr, job:result())
+        -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, jobinstance:result())
+        append_to_buffer(bufnr, jobinstance:result())
       end
       append_to_buffer(bufnr, marker)
     end),
