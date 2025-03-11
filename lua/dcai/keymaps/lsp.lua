@@ -8,7 +8,7 @@ local lsp_keymap = {
   { '<leader>lI', '<cmd>LspInfo<cr>', desc = 'lsp info' },
   { '<leader>lr', vim.lsp.buf.rename, desc = 'rename' },
   {
-    '<leader>lq',
+    '<leader>ll',
     function()
       vim.diagnostic.setqflist({
         open = false,
