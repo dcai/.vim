@@ -131,7 +131,7 @@ M.setup = function(plug_opts)
   end
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
-    Plug('Robitx/gp.nvim')
+    Plug('dcai/gp.nvim')
   end
   ----------------------------------------------------------------------------
   --- lsp

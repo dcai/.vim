@@ -69,54 +69,6 @@ You are an expert Al programming assistant that primarily focuses on producing c
 Use javascript unless asked otherwise.
 ]] .. prompt_code_block_only .. prompt_coding_rules
 
-local prompt_python = [[
-You are an AI working as a code editor for python project.
-]] .. prompt_code_block_only .. prompt_coding_rules
-
-local prompt_laravel = [[
-You are an expert AI working as a code editor for a fullstack project primarily focuses on producing clear, readable php in the backend with laravel and inertiajs for react in frontend.
-
-You always use the Latest stable version of Laravel, Javascript, React, TailwindCSS and you are familiar with the Latest features and best practices.
-
-You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning ai to chat, to generate
-
-Code Style and Structure
-
-- Write concise, technical code with accurate examples.
-
-UI and Styling
-
-- Add tailwind class to style the components
-- Implement responsive design with Tailwind CSS; use a mobile-first approach.
-
-]] .. prompt_code_block_only .. prompt_coding_rules
-
-local prompt_javascript = [[
-You are an expert Al programming assistant that primarily focuses on producing clear，readable React and JavaScript code.
-
-You always use the Latest stable version of Typescript, Javascript, React, Node.js, Next.js App Router, shadcn UI, TailwindCSS and you are familiar with the Latest features and best practices.
-
-You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning ai to chat, to generate
-
-Code Style and Structure
-
-- Write concise, technical Javascript code with accurate examples.
-    • Use functional and declarative programming patterns; avoid classes.
-    • Prefer iteration and modularization over code duplication.
-- Use descriptive variable names with auxiliary verbs （e.g.， isLoading, hasError）.
-- Structure files: exported component, helpers, static content，types.
-
-Naming Conventions
-
-- Use Lowercase with dashes for directories （e.g.. components/auth-wizard）.
-- Favor named exports for components.
-
-UI and Styling
-
-- Use shadcn UI, and Tailwind for components and styling.
-- Implement responsive design with Tailwind CSS; use a mobile-first approach.
-]] .. prompt_code_block_only .. prompt_coding_rules
-
 local translator_prompt = [[
 Translate any provided text directly to Chinese or English,
 based on the input language,
@@ -598,12 +550,19 @@ local keymap = {
         },
       })
     end,
-    -- vim.cmd(cmd_prefix .. 'ChatToggle')
     desc = 'select an agent',
   },
   {
     '<leader>cc',
     function()
+      vim.cmd(cmd_prefix .. 'ChatToggle')
+    end,
+    desc = 'chat toggle',
+  },
+  {
+    '<leader>cd',
+    function()
+      vim.notify('AI working', vim.log.levels.INFO)
       vim.api.nvim_feedkeys(
         vim.api.nvim_replace_termcodes('<esc>V', true, false, true),
         'n',
@@ -611,7 +570,7 @@ local keymap = {
       )
       vim.cmd('AiDev')
     end,
-    desc = 'toggle chat',
+    desc = 'AiDev',
   },
   {
     '<leader>cn',
@@ -670,113 +629,6 @@ local keymap = {
     desc = 'next agent',
   },
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
-  ---javascript react and nodejs
-  {
-    '<leader>cJ',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(gpplugin, new_chat_params, false, prompt_javascript, agent)
-    end,
-    desc = '#topic: JS/TS',
-  },
-  ---python
-  {
-    '<leader>cY',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(gpplugin, new_chat_params, false, prompt_python, agent)
-    end,
-    desc = '#topic: python',
-  },
-  ---php and laravel
-  {
-    '<leader>cP',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(gpplugin, new_chat_params, false, prompt_laravel, agent)
-    end,
-    desc = '#topic: laravel',
-  },
-  ---tailwind
-  {
-    '<leader>cS',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'You are an AI working as a code editor for frontend development with tailwind, no need to setup tailwind, just response with the code.',
-          prompt_code_block_only,
-        }),
-        agent
-      )
-    end,
-    desc = '#topic: tailwind',
-  },
-  ---neovim and lua
-  {
-    '<leader>cL',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'You are an AI working as a code editor for neovim, use lua instead of vimscript when possible.',
-          prompt_code_block_only,
-        }),
-        agent
-      )
-    end,
-    desc = '#topic: neovim',
-  },
-  -- Translator
-  {
-    '<leader>cT',
-    function()
-      local agent = gpplugin.get_chat_agent('TranslateAgent')
-      new_chat(gpplugin, new_chat_params, false, translator_prompt, agent)
-    end,
-    desc = '#topic: translate',
-  },
-  -- etymologist
-  {
-    '<leader>cE',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        [[
-          I want you to act as a etymologist. I will give you a word and you will research the origin of that word,
-          tracing it back to its ancient roots.
-          You should also provide information on how the meaning of the word has changed over time, if applicable
-        ]],
-        agent
-      )
-    end,
-    desc = '#topic: etymologist',
-  },
-  {
-    '<leader>cH',
-    function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      new_chat(
-        gpplugin,
-        new_chat_params,
-        false,
-        join({
-          'I want you to act as a historian and an archaeologist',
-        }),
-        agent
-      )
-    end,
-    desc = '#topic: history',
-  },
   ----------------------------------------------------------------------------
   --- Visual mode below
   ----------------------------------------------------------------------------
