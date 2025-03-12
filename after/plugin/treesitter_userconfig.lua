@@ -29,9 +29,11 @@ treesitter_config.setup({
   -- these are always installed, otherwise install on demand (when particular file type opens)
   ensure_installed = {
     'go',
-    'lua',
-    'python',
     'javascript',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'python',
     'typescript',
     'vim',
   },
