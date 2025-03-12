@@ -5,6 +5,7 @@ local lsp_keymap = {
   { '<leader>la', vim.lsp.buf.code_action, desc = 'code action' },
   { '<leader>ld', vim.diagnostic.open_float, desc = 'diagnostic' },
   { '<leader>lf', vim.lsp.buf.format, desc = 'format code' },
+  { '<leader>lh', vim.lsp.buf.hover, desc = 'lsp hover' },
   { '<leader>lI', '<cmd>LspInfo<cr>', desc = 'lsp info' },
   { '<leader>lr', vim.lsp.buf.rename, desc = 'rename' },
   {

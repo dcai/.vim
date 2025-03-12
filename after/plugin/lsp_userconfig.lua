@@ -181,7 +181,6 @@ local function common_on_attach(client, bufnr)
   nmap(']d', vim.diagnostic.goto_next, 'go to next diagnostic')
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
   nmap('gr', vim.lsp.buf.references, 'go to references')
-  nmap('<leader>lh', vim.lsp.buf.hover, 'hover doc')
   nmap('<leader>lo', function()
     local current_buf = vim.api.nvim_get_current_buf()
     local filetype =
