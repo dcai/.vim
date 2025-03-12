@@ -1,11 +1,11 @@
 local group = 'chat'
-local loaded, gpplugin = pcall(require, 'gp')
+local loaded = pcall(require, 'gp')
 if not loaded then
   return {
     { '<leader>c', group = group },
   }
 end
-
+local gpplugin = require('gp')
 local cmd_prefix = 'Ai'
 
 local openai_gpt4o_mini = 'gpt-4o-mini'
@@ -241,6 +241,7 @@ end
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
 -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
+
 local config = {
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
@@ -500,7 +501,9 @@ local config = {
     end,
 
     -- AiDev rewrites the provided selection/range based on comments in it
-    Dev = function(gp, params)
+    ---@param _gp table -- its the instance of gpplugin
+    ---@param params table
+    Dev = function(_gp, params)
       local template = join({
         'Having following from {{filename}}: ',
         '```{{filetype}} \n {{selection}} \n ```',
@@ -508,8 +511,7 @@ local config = {
         'Respond exclusively with the snippet that should replace the selection above.',
       })
 
-      local agent = gp.get_command_agent()
-
+      local agent = gpplugin.get_command_agent('CodeClaudeSonnet')
       --- params table  # vim command parameters such as range, args, etc.
       --- target number | function | table  # where to put the response
       --- agent table  # obtained from get_command_agent or get_chat_agent
@@ -517,9 +519,9 @@ local config = {
       --- prompt string | nil  # nil for non interactive commads
       --- whisper string | nil  # predefined input (e.g. obtained from Whisper)
       --- callback function | nil  # callback after completing the prompt
-      gp.Prompt(
+      gpplugin.Prompt(
         params,
-        gp.Target.rewrite,
+        gpplugin.Target.rewrite,
         agent,
         template,
         nil, -- command will run directly without any prompting for user input
@@ -576,6 +578,7 @@ local config = {
     end,
   },
 }
+---@param opts GpConfig? # table with options
 gpplugin.setup(config)
 
 local keymap = {
