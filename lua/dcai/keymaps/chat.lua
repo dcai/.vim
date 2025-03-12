@@ -580,7 +580,6 @@ local config = {
 }
 ---@param opts GpConfig? # table with options
 gpplugin.setup(config)
-
 local keymap = {
   { '<leader>c', group = group },
   {
@@ -599,12 +598,18 @@ local keymap = {
         },
       })
     end,
+    -- vim.cmd(cmd_prefix .. 'ChatToggle')
     desc = 'select an agent',
   },
   {
     '<leader>cc',
     function()
-      vim.cmd(cmd_prefix .. 'ChatToggle')
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes('<esc>V', true, false, true),
+        'n',
+        true
+      )
+      vim.cmd('AiDev')
     end,
     desc = 'toggle chat',
   },
