@@ -1,10 +1,38 @@
 local group = 'chat'
+
+local codecompanionloaded, codecompanion = pcall(require, 'codecompanion')
 local loaded = pcall(require, 'gp')
 if not loaded then
   return {
     { '<leader>c', group = group },
   }
 end
+
+if codecompanionloaded then
+  codecompanion.setup({
+    display = {
+      action_palette = {
+        width = 95,
+        height = 10,
+        prompt = 'Prompt ', -- Prompt used for interactive LLM calls
+        provider = 'default', -- default|telescope|mini_pick
+        opts = {
+          show_default_actions = true, -- Show the default actions in the action palette?
+          show_default_prompt_library = true, -- Show the default prompt library in the action palette?
+        },
+      },
+    },
+    strategies = {
+      chat = {
+        adapter = 'anthropic',
+      },
+      inline = {
+        adapter = 'anthropic',
+      },
+    },
+  })
+end
+
 local gpplugin = require('gp')
 local cmd_prefix = 'Ai'
 
@@ -513,7 +541,8 @@ local config = {
       local template = join({
         'I have the following code from {{filename}}: ',
         '```{{filetype}}\n{{selection}}\n``` ',
-        'Please respond by writing table driven unit tests for the code above.',
+        'Please respond by writing unit tests for the code above.',
+        -- 'Please respond by writing table driven unit tests for the code above.',
       })
       local agent = gp.get_command_agent()
       gp.Prompt(params, gp.Target.enew, agent, template)
