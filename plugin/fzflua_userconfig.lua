@@ -1,9 +1,10 @@
-local loaded, fzflua = pcall(require, 'fzf-lua')
+local loaded = pcall(require, 'fzf-lua')
 if not loaded then
   print('fzf-lua not loaded!')
   return
 end
 local actions = require('fzf-lua.actions')
+local fzflua = require('fzf-lua')
 local path_helper = require('fzf-lua.path')
 -- LOG.trace('fzf-lua loaded, setting up...')
 

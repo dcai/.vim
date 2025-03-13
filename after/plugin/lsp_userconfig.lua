@@ -50,18 +50,18 @@ local ts_ls_supported_filetypes = {
   'typescriptreact',
   'typescript.tsx',
 }
-local lspconfig_loaded, lspconfig = pcall(require, 'lspconfig')
+local lspconfig_loaded = pcall(require, 'lspconfig')
 
 if not lspconfig_loaded then
   vim.g.logger.error('lspconfig not loaded!')
   return
 end
 
+local lspconfig = require('lspconfig')
 local lsputils = require('lspconfig/util')
 
 require('lspconfig.ui.windows').default_options.border = 'single'
 
-local util = lspconfig.util
 local root_pattern = lspconfig.util.root_pattern
 
 local timeout_ms = 3000
@@ -285,10 +285,11 @@ local lua_workspace_libs = {
     vim.fn.expand('$VIMRUNTIME/lua'),
     vim.g.std_cfg_dir .. '/lua',
     plugin_path('gp.nvim'),
-    plugin_path('nvim-cmp'),
-    plugin_path('nvim-snippets'),
     plugin_path('fzf-lua'),
-    plugin_path('plenary.nvim'),
+    -- plugin_path('nvim-lspconfig'),
+    -- plugin_path('nvim-cmp'),
+    -- plugin_path('nvim-snippets'),
+    -- plugin_path('plenary.nvim'),
   },
 }
 
@@ -567,5 +568,4 @@ lspconfig.sourcekit.setup({
 })
 
 lspconfig.nushell.setup({})
-
 lspconfig.tailwindcss.setup({})
