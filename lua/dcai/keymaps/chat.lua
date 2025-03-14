@@ -231,8 +231,94 @@ end
 local chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
 -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
+--
+local disabled_agents = vim.tbl_map(function(agent)
+  return {
+    name = agent,
+    disable = true,
+  }
+end, {
+  'ChatClaude-3-5-Sonnet',
+  'ChatClaude-3-Haiku',
+  'ChatGPT4o',
+  'ChatGemini',
+  'CodeClaude-3-5-Sonnet',
+  'CodeClaude-3-Haiku',
+  'CodeGPT4o',
+  'CodeGPT4o-mini',
+  'CodeGemini',
+})
+
+local enabled_agents = {
+  -- {
+  --   name = 'ChatDeepSeek',
+  --   chat = true,
+  --   command = true,
+  --   model = { model = 'deepseek-chat' },
+  --   -- model = { model = 'deepseek-reasoner' },
+  --   provider = 'deepseek',
+  --   system_prompt = prompt_chat_default,
+  -- },
+  {
+    name = 'CodeClaudeSonnet',
+    provider = 'anthropic',
+    chat = true,
+    command = true,
+    model = {
+      model = claude_code_model,
+      temperature = 0.8,
+      top_p = 1,
+    },
+    system_prompt = prompt_coding,
+  },
+  {
+    name = 'ChatGPT4o-mini',
+    chat = true,
+    command = false,
+    model = { model = openai_gpt4o_mini, temperature = 1.1, top_p = 1 },
+    system_prompt = prompt_chat_default,
+  },
+  {
+    name = 'TranslateAgent',
+    chat = false,
+    command = true,
+    model = { model = translator_model, temperature = 0.8, top_p = 1 },
+    system_prompt = [[
+        you are dictionary/translator,
+        response detailed translation in chinese in the format same as oxford dictionary,
+        then response essential usage examples in english.
+      ]],
+  },
+  {
+    provider = 'googleai',
+    name = 'ChatGemini2',
+    disable = false,
+    chat = true,
+    command = false,
+    model = {
+      model = gemini2_model,
+      temperature = 1.1,
+      top_p = 0.95,
+      top_k = 40,
+    },
+    -- system prompt (use this to specify the persona/role of the AI)
+    system_prompt = prompt_chat_default,
+  },
+  {
+    provider = 'googleai',
+    name = 'CodeGemini2',
+    disable = false,
+    chat = false,
+    command = true,
+    model = { model = gemini2_model, temperature = 0.8, top_p = 1 },
+    system_prompt = prompt_coding,
+  },
+}
+
+local agents = vim.list_extend(disabled_agents, enabled_agents)
 
 local config = {
+  agents = agents,
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
   chat_dir = chatlogs_home,
@@ -258,153 +344,6 @@ local config = {
       secret = os.getenv('ANTHROPIC_API_KEY'),
     },
   },
-  agents = {
-    -- {
-    --   name = 'ChatDeepSeek',
-    --   chat = true,
-    --   command = true,
-    --   model = { model = 'deepseek-chat' },
-    --   -- model = { model = 'deepseek-reasoner' },
-    --   provider = 'deepseek',
-    --   system_prompt = prompt_chat_default,
-    -- },
-    {
-      name = 'CodeClaudeSonnet',
-      provider = 'anthropic',
-      chat = true,
-      command = true,
-      model = {
-        model = claude_code_model,
-        temperature = 0.8,
-        top_p = 1,
-      },
-      system_prompt = prompt_coding,
-    },
-    {
-      name = 'ChatClaudeSonnet',
-      disable = true,
-      provider = 'anthropic',
-      chat = true,
-      command = false,
-      model = {
-        model = claude_code_model,
-        temperature = 0.8,
-        top_p = 1,
-      },
-      system_prompt = prompt_chat_default,
-    },
-    {
-      name = 'ChatGPT4o-mini',
-      chat = true,
-      command = false,
-      model = { model = openai_gpt4o_mini, temperature = 1.1, top_p = 1 },
-      system_prompt = prompt_chat_default,
-    },
-    {
-      name = 'ChatGPT4o',
-      chat = true,
-      command = false,
-      disable = true,
-      model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-      system_prompt = prompt_chat_default,
-    },
-    {
-      name = 'TranslateAgent',
-      chat = false,
-      command = true,
-      model = { model = translator_model, temperature = 0.8, top_p = 1 },
-      system_prompt = [[
-        you are dictionary/translator,
-        response detailed translation in chinese in the format same as oxford dictionary,
-        then response essential usage examples in english.
-      ]],
-    },
-    {
-      name = 'CodeGPT4o',
-      disable = true,
-      chat = true,
-      command = true,
-      model = { model = 'gpt-4o', temperature = 0.8, top_p = 1 },
-      system_prompt = prompt_coding,
-    },
-    {
-      name = 'CodeGPT3-5',
-      chat = true,
-      command = false,
-      disable = true,
-    },
-    {
-      name = 'ChatGPT3-5',
-      chat = true,
-      command = false,
-      disable = true,
-    },
-    {
-      name = 'CodeGPT4o-mini',
-      disable = true,
-    },
-    {
-      provider = 'googleai',
-      name = 'ChatGemini2',
-      disable = false,
-      chat = true,
-      command = false,
-      model = {
-        model = gemini2_model,
-        temperature = 1.1,
-        top_p = 0.95,
-        top_k = 40,
-      },
-      -- system prompt (use this to specify the persona/role of the AI)
-      system_prompt = prompt_chat_default,
-    },
-    {
-      provider = 'googleai',
-      name = 'CodeGemini2',
-      disable = false,
-      chat = false,
-      command = true,
-      model = { model = gemini2_model, temperature = 0.8, top_p = 1 },
-      system_prompt = prompt_coding,
-    },
-    {
-      provider = 'googleai',
-      name = 'ChatGemini',
-      disable = true,
-      chat = true,
-      command = false,
-      -- string with model name or table with model name and parameters
-      model = { model = 'gemini-pro', temperature = 1.1, top_p = 1 },
-      -- system prompt (use this to specify the persona/role of the AI)
-      system_prompt = prompt_chat_default,
-    },
-    {
-      provider = 'googleai',
-      name = 'CodeGemini',
-      disable = true,
-      chat = false,
-      command = true,
-      -- string with model name or table with model name and parameters
-      model = { model = 'gemini-pro', temperature = 0.8, top_p = 1 },
-      system_prompt = prompt_coding,
-    },
-    {
-      name = 'ChatClaude-3-Haiku',
-      disable = true,
-    },
-    {
-      name = 'CodeClaude-3-Haiku',
-      disable = true,
-    },
-    {
-      name = 'ChatClaude-3-5-Sonnet',
-      disable = true,
-    },
-    {
-      name = 'CodeClaude-3-5-Sonnet',
-      disable = true,
-    },
-  },
   -- chat user prompt prefix in chat buffer
   chat_user_prefix = 'Write question below 👇',
   command_prompt_prefix_template = '👉 [CMD_PROMPT({{agent}})] > ',
@@ -416,16 +355,18 @@ local config = {
   chat_template = chat_template,
   -- chat_template = short_chat_template,
   chat_shortcut_respond = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<c-x><c-x>',
+    -- modes = { 'n', 'i', 'v', 'x' },
+    modes = { 'n', 'x' },
+    -- shortcut = '<c-x><c-x>',
+    shortcut = '<cr>',
   },
   chat_shortcut_delete = {
     modes = { 'n', 'i', 'v', 'x' },
     shortcut = '<c-x>D',
   },
   chat_shortcut_stop = {
-    modes = { 'n', 'i', 'v', 'x' },
-    shortcut = '<Plug>vs',
+    modes = { 'n', 'v', 'x' },
+    shortcut = '<bs>',
   },
   chat_shortcut_new = {
     modes = { 'n', 'i', 'v', 'x' },
@@ -434,8 +375,8 @@ local config = {
   curl_params = {},
   -- chat topic generation prompt
   chat_topic_gen_prompt = [[
-    Summarize the topic of our conversation above in 3 or 4 words.
-    Respond only with those words.
+    Summarize the topic of our conversation above within 4 words.
+    Respond only with the topic.
   ]],
   -- chat topic model (string with model name or table with model name and parameters)
   chat_topic_gen_model = chat_topic_gen_model,
