@@ -325,7 +325,7 @@ local config = {
   state_dir = vim.g.state_dir .. '/gp/persisted',
   log_file = vim.g.log_dir .. '/gp.nvim.log',
   log_sensitive = false,
-  log_level = vim.log.levels.WARN,
+  log_level = vim.log.levels.INFO,
   providers = {
     deepseek = {
       endpoint = 'https://api.deepseek.com/chat/completions',
@@ -634,6 +634,12 @@ local keymap = {
     '<leader>cd',
     wrapGpCmd('Dev'),
     desc = 'select to dev',
+    mode = 'v',
+  },
+  {
+    '<leader>cu',
+    wrapGpCmd('UnitTests'),
+    desc = 'create unit tests',
     mode = 'v',
   },
   {
