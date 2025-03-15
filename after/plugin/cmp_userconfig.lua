@@ -91,9 +91,10 @@ end
 
 local handle_up = cmp.mapping(select_prev_menu_item, { 'i', 's' })
 local handle_s_tab = cmp.mapping(function(fallback)
-  if vim.snippet.active({ direction = -1 }) then
+  local direction = -1
+  if vim.snippet.active({ direction = direction }) then
     vim.schedule(function()
-      vim.snippet.jump(-1)
+      vim.snippet.jump(direction)
     end)
   else
     select_prev_menu_item(fallback)
@@ -118,9 +119,10 @@ local handle_tab = cmp.mapping(function(fallback)
   --   return feedkeys('<Plug>(ultisnips_jump_forward)')
   --   -- elseif cmp.visible() and has_words_before() then
   -- end
-  if vim.snippet.active({ direction = 1 }) then
+  local direction = 1
+  if vim.snippet.active({ direction = direction }) then
     vim.schedule(function()
-      vim.snippet.jump(1)
+      vim.snippet.jump(direction)
     end)
   else
     select_next_menu_item(fallback)

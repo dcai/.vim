@@ -317,7 +317,7 @@ local enabled_agents = {
 
 local agents = vim.list_extend(disabled_agents, enabled_agents)
 
-local config = {
+local opts = {
   agents = agents,
   -- prefix for all commands
   cmd_prefix = cmd_prefix,
@@ -511,17 +511,17 @@ local config = {
   },
 }
 ---@param opts GpConfig? # table with options
-gpplugin.setup(config)
+gpplugin.setup(opts)
 local keymap = {
   { '<leader>c', group = group },
   {
     '<leader>ca',
     function()
-      local agents = {}
+      local enabled = {}
       for key, _ in pairs(gpplugin.agents) do
-        table.insert(agents, key)
+        table.insert(enabled, key)
       end
-      require('fzf-lua').fzf_exec(agents, {
+      require('fzf-lua').fzf_exec(enabled, {
         actions = {
           default = function(selected, _)
             local selected_agent = selected[1]
@@ -605,13 +605,6 @@ local keymap = {
       })
     end,
     desc = 'chat finder',
-  },
-  {
-    '<leader>cN',
-    function()
-      vim.cmd(cmd_prefix .. 'NextAgent')
-    end,
-    desc = 'next agent',
   },
   -- s = utils.vim_cmd('GpWhisper', 'speech to text'),
   ----------------------------------------------------------------------------
