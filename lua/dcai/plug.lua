@@ -132,7 +132,6 @@ M.setup = function(plug_opts)
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
     Plug('dcai/gp.nvim')
-    Plug('olimorris/codecompanion.nvim')
     Plug('aweis89/aider.nvim')
   end
   ----------------------------------------------------------------------------
