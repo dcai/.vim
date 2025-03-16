@@ -1,6 +1,9 @@
 local ok, aider = pcall(require, 'aider')
+local group = 'Aider'
 if not ok then
-  return
+  return {
+    { '<leader>a', group = group },
+  }
 end
 
 aider.setup({
@@ -14,7 +17,7 @@ aider.setup({
 })
 
 local aider_keymap = {
-  { '<leader>a', group = 'aider' },
+  { '<leader>a', group = group },
   {
     '<leader>aa',
     function()

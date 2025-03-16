@@ -18,17 +18,17 @@ local utils = require('dcai.keymaps.utils')
 local vim_keymap = require('dcai.keymaps.vim')
 local yank_keymap = require('dcai.keymaps.yankthings')
 
-wk.add(fzf_keymap)
 wk.add(aider_keymap)
 wk.add(chat_keymap)
 wk.add(editthings_keymap)
+wk.add(fzf_keymap)
 wk.add(git_keymap)
 wk.add(lsp_keymap)
+wk.add(notes_keymap)
 wk.add(openthings_keymap)
 wk.add(testthings_keymap)
-wk.add(yank_keymap)
 wk.add(vim_keymap)
-wk.add(notes_keymap)
+wk.add(yank_keymap)
 
 local shell = nil
 
