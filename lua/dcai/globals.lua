@@ -368,19 +368,38 @@ local function root(markers)
   end
 end
 
-vim.g.merge_list = function (...)
-    local result = {}
-    local arrays = {...}
+vim.g.close_all_popups = function()
+  -- Get all windows
+  local windows = vim.api.nvim_list_wins()
 
-    for _, arr in ipairs(arrays) do
-        if type(arr) == "table" then
-            for _, value in ipairs(arr) do
-                table.insert(result, value)
-            end
-        end
+  for _, win_id in ipairs(windows) do
+    -- Check if window is valid
+    if vim.api.nvim_win_is_valid(win_id) then
+      -- Get window config
+      local config = vim.api.nvim_win_get_config(win_id)
+
+      -- Check if it's a floating window (popup)
+      if config.relative ~= '' then
+        -- Close the popup window
+        vim.api.nvim_win_close(win_id, false)
+      end
     end
+  end
+end
 
-    return result
+vim.g.merge_list = function(...)
+  local result = {}
+  local arrays = { ... }
+
+  for _, arr in ipairs(arrays) do
+    if type(arr) == 'table' then
+      for _, value in ipairs(arr) do
+        table.insert(result, value)
+      end
+    end
+  end
+
+  return result
 end
 
 vim.g.git_root = root({

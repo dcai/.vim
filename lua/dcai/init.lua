@@ -125,3 +125,11 @@ vim.keymap.set('n', '<leader>tg', function()
   end
   run(unpack(input))
 end)
+
+vim.keymap.set('n', 'XX', function()
+  vim.cmd(':cclose')
+  vim.cmd(':lclose')
+  vim.cmd(':pclose')
+  vim.cmd(':helpclose')
+  vim.g.close_all_popups()
+end)
