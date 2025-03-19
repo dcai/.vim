@@ -2,11 +2,20 @@ local fzf = require('fzf-lua')
 local utils = require('dcai.keymaps.utils')
 -- LOG.trace('fzf keymap setting up...')
 
+local function git_files()
+  if vim.g.is_git_repo() then
+    fzf.git_files()
+  else
+    fzf.files({ cwd = vim.g.smart_root() })
+  end
+end
+
 local fzf_keymap = {
   mode = { 'n', 'v' },
   { '<leader>f', group = 'fzf' },
   { '<leader>fb', fzf.buffers, desc = 'buffers' },
   { '<leader>fc', fzf.colorschemes, desc = 'colorschemes' },
+  { '<leader>fd', fzf.diagnostics_document, desc = 'diagnostics' },
   { '<leader>fr', fzf.oldfiles, desc = 'recent files' },
   -- { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
   {
@@ -24,13 +33,12 @@ local fzf_keymap = {
   },
   {
     '<leader>fg',
-    function()
-      if vim.g.is_git_repo() then
-        fzf.git_files()
-      else
-        fzf.files({ cwd = vim.g.smart_root() })
-      end
-    end,
+    git_files,
+    desc = 'git files',
+  },
+  {
+    '<leader>fj',
+    git_files,
     desc = 'git files',
   },
   {
