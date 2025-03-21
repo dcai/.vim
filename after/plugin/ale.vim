@@ -55,7 +55,7 @@ let g:ale_linters = {
   \ 'javascriptreact': s:jslinter,
   \ 'json': [],
   \ 'lua': [],
-  \ 'markdown': ['cspell', 'remark_lint'],
+  \ 'markdown': ['cspell'],
   \ 'php': [],
   \ 'python': ['ruff'],
   \ 'rust': ['analyzer', 'cargo'],
