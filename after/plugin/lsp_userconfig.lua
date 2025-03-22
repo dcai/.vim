@@ -559,9 +559,10 @@ lspconfig.phpactor.setup({
 lspconfig.sourcekit.setup({
   on_attach = common_on_attach,
   capabilities = {
-    workspace = {
-      didChangeWatchedFiles = {
+    textDocument = {
+      diagnostic = {
         dynamicRegistration = true,
+        relatedDocumentSupport = true,
       },
     },
   },
