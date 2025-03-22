@@ -94,7 +94,8 @@ local handle_s_tab = cmp.mapping(function(fallback)
   local direction = -1
   if vim.snippet.active({ direction = direction }) then
     vim.schedule(function()
-      vim.snippet.jump(direction)
+      vim.snippet.stop()
+      -- vim.snippet.jump(direction)
     end)
   else
     select_prev_menu_item(fallback)
@@ -122,7 +123,8 @@ local handle_tab = cmp.mapping(function(fallback)
   local direction = 1
   if vim.snippet.active({ direction = direction }) then
     vim.schedule(function()
-      vim.snippet.jump(direction)
+      vim.snippet.stop()
+      -- vim.snippet.jump(direction)
     end)
   else
     select_next_menu_item(fallback)
@@ -237,9 +239,9 @@ cmp.setup({
   mapping = {
     -- ['<C-e>'] = cmp.mapping.abort(),
     -- ['<C-Space>'] = cmp.mapping.complete(),
-    ['<tab>'] = handle_tab,
+    -- ['<tab>'] = handle_tab,
     ['<down>'] = handle_down,
-    ['<S-Tab>'] = handle_s_tab,
+    -- ['<S-Tab>'] = handle_s_tab,
     ['<up>'] = handle_up,
     ['<CR>'] = handle_enter,
     -- ['<CR>'] = cmp.mapping.confirm({ select = true }),

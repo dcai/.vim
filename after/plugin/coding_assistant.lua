@@ -1,4 +1,28 @@
 local neocodeium_loaded, neocodeium = pcall(require, 'neocodeium')
+
+vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+  if vim.snippet.active({ direction = 1 }) then
+    return '<cmd>lua vim.snippet.jump(1)<cr>'
+  else
+    return '<Tab>'
+  end
+end, { expr = true })
+
+-- vim.keymap.set('i', '<c-f>', neocodeium.accept)
+vim.keymap.set({ 'i', 's' }, '<Tab>', function(...)
+  local args = { ... }
+  local active = vim.snippet.active({ direction = 1 })
+  vim.g.logger.info('insert mode tab ' .. vim.inspect({ active = active }))
+  if active then
+    return '<cmd>lua vim.snippet.jump(1)<cr>'
+  end
+  if neocodeium_loaded then
+    neocodeium.accept()
+  end
+end, { expr = true })
+
+vim.keymap.set('i', '<c-n>', neocodeium.cycle_or_complete)
+
 if neocodeium_loaded then
   neocodeium.setup({
     -- Enable NeoCodeium on startup
@@ -36,8 +60,6 @@ if neocodeium_loaded then
       text = false,
     },
   })
-  vim.keymap.set('i', '<c-f>', neocodeium.accept)
-  vim.keymap.set('i', '<c-n>', neocodeium.cycle_or_complete)
 end
 
 -- for Exafunction/codeium.nvim
