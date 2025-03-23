@@ -127,4 +127,6 @@ augroup filetypeGroup
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
   autocmd BufRead,BufNewFile *.tf set filetype=terraform
+  " ruby
+  autocmd BufRead,BufNewFile Podfile set filetype=ruby
 augroup END

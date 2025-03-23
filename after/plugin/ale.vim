@@ -94,6 +94,7 @@ let g:ale_fixers = {
   \ 'php': ['php_cs_fixer'],
   \ 'python': ['ruff', 'ruff_format'],
   \ 'rust': ['rustfmt'],
+  \ 'ruby': ['rubyfmt'],
   \ 'sh': ['shfmt'],
   \ 'svelte': ['prettier'],
   \ 'sql': ['pgformatter'],
