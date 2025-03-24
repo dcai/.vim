@@ -6,7 +6,6 @@
 " - VIM_OASIS_COLORSCHEME_STL_FG='#FFFFFF'
 " - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
 " - VIM_OASIS_COLORSCHEME_STL_BG_NC='#000000'
-"     This disables mode change
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 let s:env_name_stl_fg='VIM_OASIS_COLORSCHEME_STL_FG'
