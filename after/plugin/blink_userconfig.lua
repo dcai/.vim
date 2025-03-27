@@ -18,7 +18,8 @@ require('blink.cmp').setup({
   --
   -- See :h blink-cmp-config-keymap for defining your own keymap
   keymap = {
-    preset = 'super-tab',
+    -- preset = 'super-tab',
+    preset = 'none',
     -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
     ['<C-y>'] = { 'show', 'show_documentation', 'hide_documentation' },
     ['<C-e>'] = { 'hide', 'fallback' },
