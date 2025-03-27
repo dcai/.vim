@@ -204,12 +204,14 @@ local function common_on_attach(client, bufnr)
   -- nmap('go', vim.lsp.buf.type_definition, '')
 end
 
+local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
+-- local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
   'force', -- force: use value from the rightmost map
   lspconfig.util.default_config.capabilities,
-  require('cmp_nvim_lsp').default_capabilities() -- must use require here
+  cmp_capabilities
 )
--- LOG.info(cfg.util.default_config.capabilities)
+vim.g.logger.debug(cmp_capabilities)
 lspconfig.vimls.setup({
   on_attach = common_on_attach,
 })

@@ -176,28 +176,30 @@ M.setup = function(plug_opts)
       })
     end,
   })
+
+  Plug('saghen/blink.cmp')
   ----------------------------------------------------------------------------
   --- nvim-cmp
   ----------------------------------------------------------------------------
-  Plug('andersevenrud/cmp-tmux')
-  Plug('hrsh7th/cmp-buffer')
-  Plug('hrsh7th/cmp-cmdline')
-  Plug('hrsh7th/cmp-nvim-lsp')
-  Plug('hrsh7th/cmp-path')
-  Plug('hrsh7th/nvim-cmp')
-  Plug('dcai/nvim-snippets', {
-    setup = function()
-      local ok, snippets = pcall(require, 'snippets')
-      if not ok then
-        return
-      end
-      snippets.setup({
-        -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
-        search_paths = { vim.fn.expand('~/src/vim-snippets/') },
-        create_cmp_source = true,
-      })
-    end,
-  })
+  -- Plug('andersevenrud/cmp-tmux')
+  -- Plug('hrsh7th/cmp-buffer')
+  -- Plug('hrsh7th/cmp-cmdline')
+  -- Plug('hrsh7th/cmp-nvim-lsp')
+  -- Plug('hrsh7th/cmp-path')
+  -- Plug('hrsh7th/nvim-cmp')
+  -- Plug('dcai/nvim-snippets', {
+  --  setup = function()
+  --  local ok, snippets = pcall(require, 'snippets')
+  --     if not ok then
+  --     return
+  --      end
+  --   snippets.setup({
+  --    -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
+  --   search_paths = { vim.fn.expand('~/src/vim-snippets/') },
+  --     create_cmp_source = true,
+  --  })
+  --   end,
+  --  })
   -- Plug('SirVer/ultisnips')
   -- Plug('quangnguyen30192/cmp-nvim-ultisnips')
   ----------------------------------------------------------------------------
@@ -266,7 +268,7 @@ M.setup = function(plug_opts)
       vim.g.bufferize_focus_output = 1
     end,
   })
-  -- Plug('junegunn/vader.vim', { ['for'] = 'vader' })
+  Plug('junegunn/vader.vim', { ['for'] = 'vader' })
   Plug('rafi/awesome-vim-colorschemes')
   Plug('echasnovski/mini.nvim')
   Plug('folke/which-key.nvim')
