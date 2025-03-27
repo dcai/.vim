@@ -96,6 +96,8 @@ require('blink.cmp').setup({
     keymap = {
       -- recommended, as the default keymap will only show and select the next item
       ['<Tab>'] = { 'show', 'accept' },
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
     },
     completion = { menu = { auto_show = true } },
   },
