@@ -41,6 +41,7 @@ end
 M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
+  Plug('nvim-lua/plenary.nvim')
   if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
     -- Plug('github/copilot.vim', {
     --   setup = function()
@@ -177,10 +178,10 @@ M.setup = function(plug_opts)
     end,
   })
 
+  ----------------------------------------------------------------------------
+  --- cmp
+  ----------------------------------------------------------------------------
   Plug('saghen/blink.cmp')
-  ----------------------------------------------------------------------------
-  --- nvim-cmp
-  ----------------------------------------------------------------------------
   -- Plug('andersevenrud/cmp-tmux')
   -- Plug('hrsh7th/cmp-buffer')
   -- Plug('hrsh7th/cmp-cmdline')
@@ -243,7 +244,6 @@ M.setup = function(plug_opts)
     end,
   })
   Plug('reedes/vim-lexical')
-  Plug('nvim-lua/plenary.nvim')
   Plug('dcai/ale', { frozen = 1 })
   Plug('nvim-tree/nvim-web-devicons')
   -- Plug('tpope/vim-dadbod')
@@ -260,7 +260,7 @@ M.setup = function(plug_opts)
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('ibhagwan/fzf-lua')
-  Plug('nvim-telescope/telescope.nvim')
+  -- Plug('nvim-telescope/telescope.nvim')
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()
       vim.g.bufferize_command = 'new'
