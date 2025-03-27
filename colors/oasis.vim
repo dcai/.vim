@@ -226,6 +226,9 @@ let s:dict_visual_selection = {
       \'fg': s:darkgreen
       \}
 
+let s:linenr_bg=s:niceblack
+let s:linenr_fg=s:nicelightgreen
+
 let s:floatnormalbg = s:nicemidgreen
 let s:popupmenubg = s:darkslategray
 let s:ui = {
@@ -242,7 +245,8 @@ let s:ui = {
       \ 'ErrorMsg'        : {'fg': s:red,  'bg':s:yellow},
       \ 'FoldColumn'      : {'fg': s:darkgray},
       \ 'Folded'          : {'fg': s:darkgray},
-      \ 'LineNr'          : {'fg': s:green,  'bg':    s:none},
+      \ 'LineNr'          : {'guifg': s:linenr_fg, 'guibg': s:linenr_bg},
+      \ 'SignColumn'      : {'bg': s:none},
       \ 'MatchParen'      : {'bg': s:none,   'fg':    s:red},
       \ 'ModeMsg'         : {'fg': s:yellow},
       \ 'MoreMsg'         : {'fg': s:darkgreen},
@@ -259,7 +263,6 @@ let s:ui = {
       \ 'CurSearch'       : s:search_hl,
       \ 'TabLine'         : {'bg': s:darkblue},
       \ 'TabLineSel'      : {'bg': s:white, 'fg': s:black},
-      \ 'SignColumn'      : {'bg': s:none},
       \ 'Title'           : {'fg': s:green,  'bg':    s:none},
       \ 'Underlined'      : {'fg': s:blue,   'cterm': s:underline},
       \ 'VertSplit'       : {'fg': s:green},
