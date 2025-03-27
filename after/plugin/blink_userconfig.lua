@@ -82,8 +82,8 @@ require('blink.cmp').setup({
   -- See the fuzzy documentation for more information
   fuzzy = {
     -- implementation = 'prefer_rust_with_warning'
-    implementation = 'lua',
-    -- implementation = 'prefer_rust',
+    -- implementation = 'lua',
+    implementation = 'prefer_rust',
 
     sorts = {
       'exact',
