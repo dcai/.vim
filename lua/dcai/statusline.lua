@@ -75,6 +75,15 @@ local function current_mode()
   return color_accent(modes[vim.fn.mode()])
 end
 
+local function get_dir_name(path)
+  path = path:gsub('/+$', '')
+  return path:match('.*/(.+)$') or path
+end
+local function project()
+  local dir = get_dir_name(vim.g.smart_root())
+  return color_highlight('/' .. dir .. '/')
+end
+
 local function lineinfo()
   return color_accent('%l/%L')
 end
@@ -112,6 +121,7 @@ function StatuslineActive()
 
   if wide_enough then
     push(current_mode())
+    push(project())
   end
 
   push(current_buffer_name())

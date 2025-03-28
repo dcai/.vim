@@ -4,6 +4,7 @@ local git_keymap = {
   { '<leader>g', group = 'git' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gA', '<cmd>!git reset %<cr>', desc = 'git unstage' },
+  { '<leader>gb', '<cmd>Git blame<cr>', desc = 'git blame' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
   { '<leader>gc', group = 'git commit' },
   {
