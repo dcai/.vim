@@ -95,6 +95,10 @@ require('blink.cmp').setup({
       'score',
       'sort_text',
     },
+    prebuilt_binaries = {
+      download = true,
+      ignore_version_mismatch = true,
+    },
   },
   cmdline = {
     keymap = {
