@@ -77,7 +77,7 @@ end
 
 local function get_dir_name(path)
   if not path then
-    return ''
+    return nil
   end
   path = path:gsub('/+$', '')
   return path:match('.*/(.+)$') or path
