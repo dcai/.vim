@@ -107,8 +107,8 @@ M.setup = function(plug_opts)
   end
 
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
-    Plug('monkoose/neocodeium')
-    -- Plug('Exafunction/codeium.nvim')
+    -- Plug('monkoose/neocodeium')
+    Plug('Exafunction/codeium.nvim')
     -- Plug('Exafunction/codeium.vim', {
     --   setup = function()
     --     -- vim.g.codeium_enabled = true
