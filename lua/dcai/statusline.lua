@@ -76,12 +76,19 @@ local function current_mode()
 end
 
 local function get_dir_name(path)
+  if not path then
+    return ''
+  end
   path = path:gsub('/+$', '')
   return path:match('.*/(.+)$') or path
 end
 local function project()
   local dir = get_dir_name(vim.g.smart_root())
-  return color_highlight('/' .. dir .. '/')
+  if dir then
+    return color_highlight('/' .. dir .. '/')
+  else
+    return ''
+  end
 end
 
 local function lineinfo()
