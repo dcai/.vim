@@ -35,6 +35,8 @@ nnoremap XC :cexpr []<cr>:lexpr []<cr>
 " nnoremap QA :qall!<cr>
 nnoremap BD :bd!<cr>
 nnoremap ON :on<cr>
+nnoremap VS :vs<cr>
+nnoremap SP :sp<cr>
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 nnoremap <silent> <Down> gj
