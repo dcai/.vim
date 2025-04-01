@@ -42,94 +42,9 @@ M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
-  -- Plug('folke/snacks.nvim')
-  if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
-    -- Plug('github/copilot.vim', {
-    --   setup = function()
-    --     vim.cmd([[
-    --       let g:copilot_no_tab_map = v:true
-    --       imap <silent><script><expr> <c-f> copilot#Accept("\<CR>")
-    --     ]])
-    --   end,
-    -- })
-    Plug('zbirenbaum/copilot.lua', {
-      setup = function()
-        local ok, copilot = pcall(require, 'copilot')
-        if not ok then
-          return
-        end
-        copilot.setup({
-          panel = {
-            enabled = true,
-            auto_refresh = false,
-            keymap = {
-              jump_prev = '[[',
-              jump_next = ']]',
-              accept = '<CR>',
-              refresh = 'gr',
-              open = '<M-CR>',
-            },
-            layout = {
-              position = 'bottom', -- | top | left | right | horizontal | vertical
-              ratio = 0.4,
-            },
-          },
-          suggestion = {
-            enabled = true,
-            auto_trigger = true,
-            hide_during_completion = true,
-            debounce = 75,
-            keymap = {
-              accept = '<c-f>',
-              accept_word = false,
-              accept_line = false,
-              next = '<M-]>',
-              prev = '<M-[>',
-              dismiss = '<C-]>',
-            },
-          },
-          filetypes = {
-            yaml = false,
-            markdown = false,
-            help = false,
-            gitcommit = false,
-            gitrebase = false,
-            hgcommit = false,
-            svn = false,
-            cvs = false,
-            ['.'] = false,
-          },
-          copilot_node_command = 'node', -- Node.js version must be > 18.x
-          server_opts_overrides = {},
-        })
-      end,
-    })
-  end
-
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
     -- Plug('monkoose/neocodeium')
     Plug('Exafunction/codeium.nvim')
-    -- Plug('Exafunction/codeium.vim', {
-    --   setup = function()
-    --     -- vim.g.codeium_enabled = true
-    --     -- vim.g.codeium_disable_bindings = 1
-    --     -- vim.g.codeium_no_map_tab = true
-    --     -- vim.g.codeium_log_file = G.log_dir .. '/codeium.vim.log'
-    --     -- -- imap <script><silent><nowait><expr> <C-f> codeium#Accept()
-    --     -- vim.keymap.set('i', '<c-f>', function()
-    --     --   vim.cmd('call codeium#Accept()')
-    --     -- end, {
-    --     --   silent = true,
-    --     --   nowait = true,
-    --     -- })
-    --     -- vim.keymap.set('i', '<c-n>', function()
-    --     --   vim.cmd('call codeium#CycleCompletions(1)')
-    --     -- end, {
-    --     --   silent = true,
-    --     --   nowait = true,
-    --     -- })
-    --   end,
-    -- })
   end
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
@@ -255,13 +170,19 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   -- files and editing
   ----------------------------------------------------------------------------
+  Plug('junegunn/vader.vim', { ['for'] = 'vader' })
+  Plug('dcai/marlin.nvim') -- forked 'desdic/marlin.nvim'
   Plug('djoshea/vim-autoread')
   Plug('pocco81/auto-save.nvim')
-  Plug('dcai/marlin.nvim') -- forked 'desdic/marlin.nvim'
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('ibhagwan/fzf-lua')
-  -- Plug('nvim-telescope/telescope.nvim')
+  Plug('rafi/awesome-vim-colorschemes')
+  Plug('echasnovski/mini.nvim')
+  Plug('folke/which-key.nvim')
+  Plug('dstein64/vim-startuptime')
+  Plug('tyru/open-browser.vim')
+  Plug('isobit/vim-caddyfile')
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()
       vim.g.bufferize_command = 'new'
@@ -269,13 +190,6 @@ M.setup = function(plug_opts)
       vim.g.bufferize_focus_output = 1
     end,
   })
-  Plug('junegunn/vader.vim', { ['for'] = 'vader' })
-  Plug('rafi/awesome-vim-colorschemes')
-  Plug('echasnovski/mini.nvim')
-  Plug('folke/which-key.nvim')
-  Plug('dstein64/vim-startuptime')
-  Plug('tyru/open-browser.vim')
-  Plug('isobit/vim-caddyfile')
   Plug('akinsho/toggleterm.nvim', {
     setup = function()
       local loaded, toggleterm = pcall(require, 'toggleterm')
