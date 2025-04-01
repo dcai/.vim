@@ -42,6 +42,7 @@ M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
+  Plug('echasnovski/mini.nvim')
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
     -- Plug('monkoose/neocodeium')
     Plug('Exafunction/codeium.nvim')
@@ -70,27 +71,25 @@ M.setup = function(plug_opts)
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag', {
     setup = function()
-      local loaded, autotag = pcall(require, 'nvim-ts-autotag')
-
-      if not loaded then
-        return
-      end
-      autotag.setup({
-        opts = {
-          -- Defaults
-          enable_close = true, -- Auto close tags
-          enable_rename = true, -- Auto rename pairs of tags
-          enable_close_on_slash = false, -- Auto close on trailing </
-        },
-        -- Also override individual filetype configs, these take priority.
-        -- Empty by default, useful if one of the "opts" global settings
-        -- doesn't work well in a specific filetype
-        per_filetype = {
-          ['html'] = {
-            enable_close = true,
+      local ok, autotag = pcall(require, 'nvim-ts-autotag')
+      if ok then
+        autotag.setup({
+          opts = {
+            -- Defaults
+            enable_close = true, -- Auto close tags
+            enable_rename = true, -- Auto rename pairs of tags
+            enable_close_on_slash = false, -- Auto close on trailing </
           },
-        },
-      })
+          -- Also override individual filetype configs, these take priority.
+          -- Empty by default, useful if one of the "opts" global settings
+          -- doesn't work well in a specific filetype
+          per_filetype = {
+            ['html'] = {
+              enable_close = true,
+            },
+          },
+        })
+      end
     end,
   })
 
@@ -153,10 +152,9 @@ M.setup = function(plug_opts)
   Plug('norcalli/nvim-colorizer.lua', {
     setup = function()
       local ok, colorizer = pcall(require, 'colorizer')
-      if not ok then
-        return
+      if ok then
+        colorizer.setup()
       end
-      colorizer.setup()
     end,
   })
   Plug('reedes/vim-lexical')
@@ -178,11 +176,10 @@ M.setup = function(plug_opts)
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('ibhagwan/fzf-lua')
   Plug('rafi/awesome-vim-colorschemes')
-  Plug('echasnovski/mini.nvim')
   Plug('folke/which-key.nvim')
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
-  Plug('isobit/vim-caddyfile')
+  Plug('isobit/vim-caddyfile', { ['for'] = 'caddyfile' })
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()
       vim.g.bufferize_command = 'new'
