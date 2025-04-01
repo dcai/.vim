@@ -25,7 +25,19 @@ local fzf_keymap = {
   },
   { '<leader>f/', fzf.builtin, desc = 'fzf builtin' },
   -- file tree
-  { '<leader>ft', require('mini.files').open, desc = 'mini files' },
+  {
+    '<leader>ft',
+    function()
+      local ok, minifiles = pcall(require, 'mini.files')
+      if not ok then
+        return
+      end
+      if not minifiles.close() then
+        minifiles.open()
+      end
+    end,
+    desc = 'mini files',
+  },
   {
     '<leader>ff',
     function()
