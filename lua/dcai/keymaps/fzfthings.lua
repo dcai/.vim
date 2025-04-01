@@ -24,6 +24,8 @@ local fzf_keymap = {
     desc = 'changed files',
   },
   { '<leader>f/', fzf.builtin, desc = 'fzf builtin' },
+  -- file tree
+  { '<leader>ft', require('mini.files').open, desc = 'mini files' },
   {
     '<leader>ff',
     function()
