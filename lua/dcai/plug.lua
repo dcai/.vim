@@ -42,7 +42,7 @@ M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
-  Plug('folke/snacks.nvim')
+  -- Plug('folke/snacks.nvim')
   if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
     -- Plug('github/copilot.vim', {
     --   setup = function()
