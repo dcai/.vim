@@ -511,6 +511,9 @@ function! s:ModeChanged()
   if g:IsEnvVarTrue(s:env_name_disable_mode_change)
     return
   endif
+  if !exists('g:colors_name')
+    return
+  endif
   if g:colors_name != s:name
     return
   endif
@@ -523,7 +526,7 @@ function! s:ModeChanged()
   call s:hi('Normal', l:normalhl)
 endfunction
 
-augroup ModeChangeGroup
+augroup OasisModeChangeGroup
   autocmd!
   autocmd ModeChanged * call s:ModeChanged()
 augroup END

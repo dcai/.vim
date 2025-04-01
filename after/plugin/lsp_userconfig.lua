@@ -211,7 +211,7 @@ lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
   lspconfig.util.default_config.capabilities,
   cmp_capabilities
 )
-vim.g.logger.debug(cmp_capabilities)
+-- vim.g.logger.debug(cmp_capabilities)
 lspconfig.vimls.setup({
   on_attach = common_on_attach,
 })
