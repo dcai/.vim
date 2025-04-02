@@ -9,6 +9,22 @@
 vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
+-- vim.hl.priorities                                          *vim.hl.priorities*
+--     Table with default priorities used for highlighting:
+--     • `syntax`: `50`, used for standard syntax highlighting
+--     • `treesitter`: `100`, used for treesitter-based highlighting
+--     • `semantic_tokens`: `125`, used for LSP semantic token highlighting
+--     • `diagnostics`: `150`, used for code analysis such as diagnostics
+--     • `user`: `200`, used for user-triggered highlights such as LSP document
+--       symbols or `on_yank` autocommands
+vim.hl.priorities = {
+  syntax = 50,
+  treesitter = 100,
+  semantic_tokens = 90,
+  diagnostics = 150,
+  user = 200,
+}
+
 -- Environment variable names
 local env_stl_fg = 'VIM_PINE_COLORSCHEME_STL_FG'
 local env_stl_bg = 'VIM_PINE_COLORSCHEME_STL_BG'
@@ -93,8 +109,8 @@ local nicered = '#B30000'
 local niceblue = '#87ceeb'
 local nicegray = '#8F8F8F'
 local nicepurple = '#ca5cdd'
--- local deeppurple = '#36013f'
--- local russianviolet = '#32174d'
+local deeppurple = '#36013f'
+local russianviolet = '#32174d'
 local slategray = '#708090'
 local darkslategray = '#2F4F4F'
 local seagreen = '#2E8B57'
@@ -122,8 +138,8 @@ local conditional_hl = { fg = cyan, bg = nil }
 local boolean_hl = { fg = blue }
 local number_hl = { fg = lime }
 local function_definition = { fg = nicelightgreen, bg = nil }
-local function_call = { cterm = bold }
-local function_params = { fg = blue, cterm = nil }
+local function_call = { fg = niceyellow, bg = nil }
+local function_params = { fg = lime, cterm = nil }
 local variable_hl = { fg = pine_color_scheme.moss, bg = nil }
 local special_hl = { fg = red, bg = nil }
 local search_hl = { fg = white, bg = darkmagenta, cterm = bold }
@@ -524,26 +540,25 @@ if vim.fn.has('nvim') == 1 then
     ['@keyword.return'] = { fg = niceblue }, -- return
     ['@keyword.storage'] = { link = 'StorageClass' }, -- static, extern, const, let, var
     ['@label'] = { link = 'Label' },
-    ['@lsp.type.class'] = { link = 'Structure' }, -- LSP semantic token for classes
-    ['@lsp.type.comment'] = { link = '@comment' }, -- LSP semantic token for comments
-    ['@lsp.type.decorator'] = { link = '@attribute' }, -- LSP semantic token for decorators
-    ['@lsp.type.enum'] = { fg = olive }, -- LSP semantic token for enums
-    ['@lsp.type.enumMember'] = { link = '@constant' }, -- LSP semantic token for enum members
-    ['@lsp.type.function'] = { link = 'Function' }, -- LSP semantic token for functions
-    ['@lsp.type.interface'] = { fg = beige }, -- LSP semantic token for interfaces
-    ['@lsp.type.macro'] = { link = '@function.macro' }, -- LSP semantic token for macros
-    ['@lsp.type.method'] = { link = '@method' }, -- LSP semantic token for methods
-    ['@lsp.type.namespace'] = { fg = niceblue }, -- LSP semantic token for namespaces
-    ['@lsp.type.parameter'] = { link = '@parameter' }, -- LSP semantic token for parameters
-    ['@lsp.type.property'] = field_hl, -- LSP semantic token for properties
-    ['@lsp.type.struct'] = { link = '@structure' }, -- LSP semantic token for structs
-    ['@lsp.type.type'] = { link = '@type' }, -- LSP semantic token for types
-    ['@lsp.type.typeParameter'] = { link = '@type.definition' }, -- LSP semantic token for type parameters
-    ['@lsp.type.variable'] = { link = '@variable' }, -- LSP semantic token for variables
-    -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
-    ['@lsp.mod.readonly'] = { cterm = nil },
-    ['@lsp.mod.static'] = { cterm = nil },
-    ['@lsp.mod.declaration'] = { link = '@variable' },
+    -- ['@lsp.type.class'] = { link = 'Structure' }, -- LSP semantic token for classes
+    -- ['@lsp.type.comment'] = { link = '@comment' }, -- LSP semantic token for comments
+    -- ['@lsp.type.decorator'] = { link = '@attribute' }, -- LSP semantic token for decorators
+    -- ['@lsp.type.enum'] = { fg = olive }, -- LSP semantic token for enums
+    -- ['@lsp.type.enumMember'] = { link = '@constant' }, -- LSP semantic token for enum members
+    -- ['@lsp.type.function'] = { link = 'Function' }, -- LSP semantic token for functions
+    -- ['@lsp.type.interface'] = { fg = beige }, -- LSP semantic token for interfaces
+    -- ['@lsp.type.macro'] = { link = '@function.macro' }, -- LSP semantic token for macros
+    -- ['@lsp.type.method'] = { link = '@method' }, -- LSP semantic token for methods
+    -- ['@lsp.type.namespace'] = { fg = niceblue }, -- LSP semantic token for namespaces
+    -- ['@lsp.type.parameter'] = { link = '@parameter' }, -- LSP semantic token for parameters
+    -- ['@lsp.type.property'] = field_hl, -- LSP semantic token for properties
+    -- ['@lsp.type.struct'] = { link = '@structure' }, -- LSP semantic token for structs
+    -- ['@lsp.type.type'] = { link = '@type' }, -- LSP semantic token for types
+    -- ['@lsp.type.typeParameter'] = { link = '@type.definition' }, -- LSP semantic token for type parameters
+    -- ['@lsp.type.variable'] = { link = '@variable' }, -- LSP semantic token for variables
+    -- ['@lsp.mod.readonly'] = { cterm = nil }, -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
+    -- ['@lsp.mod.static'] = { cterm = nil },
+    -- ['@lsp.mod.declaration'] = { link = '@variable' },
     ['@method'] = function_definition, -- Method definitions
     ['@method.call'] = function_call, -- Method calls
     ['@module'] = { fg = lime }, -- Modules or namespaces
