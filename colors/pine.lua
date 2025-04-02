@@ -193,7 +193,7 @@ local dict_visual_selection = {
 local linenr_bg = get_env_or(env_stl_bg, pine_color_scheme.kombu_green)
 local linenr_fg = pine_color_scheme.moss
 
-local floatnormalbg = nicemidgreen
+local floatbg = pine_color_scheme.black_leather_jacket
 local popupmenubg = darkslategray
 
 local ui = {
@@ -202,9 +202,10 @@ local ui = {
   CursorLine = { bg = niceblack }, -- Background for the cursor line
   Normal = normal_text_highlight,
   NormalNC = { fg = gray, bg = defaultbg }, -- Non-current window Normal
-  NormalFloat = { fg = green, bg = floatnormalbg },
-  FloatTitle = { fg = green, bg = floatnormalbg },
-  FloatBorder = { fg = green, bg = floatnormalbg },
+  NormalFloat = { fg = white, bg = floatbg },
+  FloatTitle = { fg = green, bg = floatbg },
+  FloatBorder = { bg = floatbg },
+  FloatFooter = { bg = floatbg },
   ColorColumn = { bg = '#505050' }, -- Example subtle color for colorcolumn
   Directory = { fg = darkcyan },
   ErrorMsg = { fg = red, bg = yellow },
@@ -322,9 +323,9 @@ local custom = {
   StatusLineAccent = { bg = niceyellow, fg = nicedarkgreen },
   StatusLineProjectAccent = { bg = nicelightgreen, fg = nicedarkgreen },
   StatusLineHighlight = { bg = nicelightgreen, fg = nicedarkgreen },
-  NotificationInfo = { bg = darkslategray, fg = white },
-  NotificationWarning = { bg = darkslategray, fg = black },
-  NotificationError = { bg = darkslategray, fg = white },
+  NotificationInfo = { fg = white },
+  NotificationWarning = { fg = black },
+  NotificationError = { fg = white },
 
   -- ALE (Example - may need adjustment based on ALE config)
   ALEError = { link = 'ErrorMsg' },
@@ -349,8 +350,9 @@ local custom = {
   CopilotSuggestion = { fg = slategray }, -- Often same as Codeium
 
   -- Mini Notify
-  MiniNotifyBorder = { fg = darkslategray },
-  MiniNotifyNormal = { fg = white, bg = darkslategray },
+  MiniNotifyBorder = { link = 'NormalFloat' },
+  MiniNotifyNormal = { link = 'NormalFloat' },
+  MiniNotifyTitle = { link = 'FloatTitle' },
 
   -- GitSigns / Signify
   SignifySignAdd = { fg = green },
