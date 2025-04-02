@@ -113,8 +113,8 @@ local repeat_hl = { fg = yellow }
 local conditional_hl = { fg = cyan, bg = nil }
 local boolean_hl = { fg = blue }
 local number_hl = { fg = lime }
-local function_definition = { fg = green, bg = nil }
-local function_call = { fg = red, bg = nil }
+local function_definition = { fg = nicelightgreen, bg = nil }
+local function_call = { cterm = bold }
 local function_params = { fg = blue, cterm = nil }
 local variable_hl = { fg = niceyellow, bg = nil }
 local special_hl = { fg = red, bg = nil }
@@ -497,7 +497,7 @@ if vim.fn.has('nvim') == 1 then
     ['@field'] = field_hl, -- Object/struct fields
     ['@float'] = { link = 'Number' }, -- Floating point numbers
     ['@function'] = { link = 'Function' }, -- Function definitions
-    ['@function.builtin'] = { fg = niceblue, cterm = bold }, -- Built-in functions
+    ['@function.builtin'] = { cterm = bold }, -- Built-in functions
     ['@function.call'] = function_call, -- Function calls
     ['@function.macro'] = { link = 'Macro' }, -- Macro definitions
     ['@include'] = { link = 'Include' },
@@ -506,7 +506,7 @@ if vim.fn.has('nvim') == 1 then
     ['@keyword.debug'] = { link = 'Debug' }, -- Debug related keywords
     ['@keyword.directive'] = { link = 'PreProc' }, -- Preprocessor directives
     ['@keyword.exception'] = { fg = exceptionfg }, -- try, catch, throw
-    ['@keyword.function'] = { fg = yellow }, -- `function` keyword
+    ['@keyword.function'] = { link = 'Function' }, -- `function` keyword
     ['@keyword.import'] = { link = 'Include' }, -- import, require, use
     ['@keyword.modifier'] = { fg = teal }, -- public, private, static (Added from original script)
     ['@keyword.operator'] = { link = 'Operator' }, -- `operator` keyword (e.g. in C++)
@@ -519,7 +519,7 @@ if vim.fn.has('nvim') == 1 then
     ['@lsp.type.decorator'] = { link = '@attribute' }, -- LSP semantic token for decorators
     ['@lsp.type.enum'] = { fg = olive }, -- LSP semantic token for enums
     ['@lsp.type.enumMember'] = { link = '@constant' }, -- LSP semantic token for enum members
-    ['@lsp.type.function'] = { link = '@function' }, -- LSP semantic token for functions
+    ['@lsp.type.function'] = { link = 'Function' }, -- LSP semantic token for functions
     ['@lsp.type.interface'] = { fg = beige }, -- LSP semantic token for interfaces
     ['@lsp.type.macro'] = { link = '@function.macro' }, -- LSP semantic token for macros
     ['@lsp.type.method'] = { link = '@method' }, -- LSP semantic token for methods
@@ -533,7 +533,7 @@ if vim.fn.has('nvim') == 1 then
     -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
     ['@lsp.mod.readonly'] = { cterm = nil },
     ['@lsp.mod.static'] = { cterm = nil },
-    ['@lsp.mod.declaration'] = { fg = teal },
+    ['@lsp.mod.declaration'] = { link = '@variable' },
     ['@method'] = function_definition, -- Method definitions
     ['@method.call'] = function_call, -- Method calls
     ['@module'] = { fg = lime }, -- Modules or namespaces
