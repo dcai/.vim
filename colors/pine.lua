@@ -1,19 +1,19 @@
 -- Pine color scheme (Lua version)
 --
 -- environment variables
--- - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
--- - VIM_OASIS_COLORSCHEME_STL_FG='#FFFFFF'
--- - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
--- - VIM_OASIS_COLORSCHEME_STL_BG_NC='#000000'
+-- - VIM_DISABLE_MODE_CHANGE=true
+-- - VIM_PINE_COLORSCHEME_STL_FG='#FFFFFF'
+-- - VIM_PINE_COLORSCHEME_STL_BG='#333333'
+-- - VIM_PINE_COLORSCHEME_STL_BG_NC='#000000'
 
 vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
 -- Environment variable names
-local env_name_stl_fg = 'VIM_OASIS_COLORSCHEME_STL_FG'
-local env_name_stl_bg = 'VIM_OASIS_COLORSCHEME_STL_BG'
-local env_name_stl_bg_nc = 'VIM_OASIS_COLORSCHEME_STL_BG_NC'
-local env_name_disable_mode_change = 'VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE'
+local env_name_stl_fg = 'VIM_PINE_COLORSCHEME_STL_FG'
+local env_name_stl_bg = 'VIM_PINE_COLORSCHEME_STL_BG'
+local env_name_stl_bg_nc = 'VIM_PINE_COLORSCHEME_STL_BG_NC'
+local env_name_disable_mode_change = 'VIM_DISABLE_MODE_CHANGE'
 
 -- Helper functions for environment variables
 local function get_env_or(var_name, default)
@@ -585,14 +585,14 @@ end
 -- Statusline Mode Highlighting
 local statusline_fg = get_env_or(env_name_stl_fg, nicelightgreen)
 local statusline_bg = get_env_or(env_name_stl_bg, darkgreen) -- Used nicemidgreen before, darkgreen is original
-local statusline_bg_nc = get_env_or(env_name_stl_bg_nc, black)
+local statusline_bg_nc = get_env_or(env_name_stl_bg_nc, darkgray)
 
 local statusline_n = { -- Normal mode
   fg = statusline_fg,
   bg = statusline_bg,
 }
 local statusline_nc = { -- Inactive window statusline
-  fg = nicegray,
+  fg = ivory,
   bg = statusline_bg_nc,
 }
 local statusline_i = { -- Insert mode

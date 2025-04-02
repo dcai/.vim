@@ -2,7 +2,7 @@
 " Oasis color scheme
 "
 " environment variables
-" - VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE=true
+" - VIM_DISABLE_MODE_CHANGE=true
 " - VIM_OASIS_COLORSCHEME_STL_FG='#FFFFFF'
 " - VIM_OASIS_COLORSCHEME_STL_BG='#333333'
 " - VIM_OASIS_COLORSCHEME_STL_BG_NC='#000000'
@@ -11,7 +11,7 @@ set background=dark
 let s:env_name_stl_fg='VIM_OASIS_COLORSCHEME_STL_FG'
 let s:env_name_stl_bg='VIM_OASIS_COLORSCHEME_STL_BG'
 let s:env_name_stl_bg_nc='VIM_OASIS_COLORSCHEME_STL_BG_NC'
-let s:env_name_disable_mode_change='VIM_OASIS_COLORSCHEME_DISABLE_MODE_CHANGE'
+let s:env_name_disable_mode_change='VIM_DISABLE_MODE_CHANGE'
 
 hi clear
 hi clear statusline
