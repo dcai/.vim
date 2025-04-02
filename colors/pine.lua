@@ -106,7 +106,7 @@ local defaultfg = beige
 local defaultbg = nil
 
 -- Highlight Definitions (Lua tables)
-local comment_hl = { fg = darkslategray, italic = true }
+local comment_hl = { fg = darkslategray }
 local identifier_hl = { fg = nicelightgreen, bg = nil }
 local repeat_hl = { fg = yellow }
 local conditional_hl = { fg = cyan, bg = nil }
@@ -482,7 +482,7 @@ if vim.fn.has('nvim') == 1 then
     ['@comment'] = comment_hl,
     ['@comment.error'] = { fg = red, cterm = bold },
     ['@comment.todo'] = { link = 'Todo' }, -- Link to existing Todo group
-    ['@comment.note'] = { fg = blue, cterm = bold },
+    ['@comment.note'] = { fg = blue },
     ['@comment.warning'] = { fg = yellow, cterm = bold },
     ['@conditional'] = conditional_hl,
     ['@constant'] = { fg = darkgreen }, -- General constants
@@ -528,9 +528,9 @@ if vim.fn.has('nvim') == 1 then
     ['@lsp.type.typeParameter'] = { link = '@type.definition' }, -- LSP semantic token for type parameters
     ['@lsp.type.variable'] = { link = '@variable' }, -- LSP semantic token for variables
     -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
-    ['@lsp.mod.readonly'] = { cterm = italic },
-    ['@lsp.mod.static'] = { cterm = italic },
-    ['@lsp.mod.declaration'] = { cterm = bold },
+    ['@lsp.mod.readonly'] = { cterm = nil },
+    ['@lsp.mod.static'] = { cterm = nil },
+    ['@lsp.mod.declaration'] = { cterm = italic },
     ['@method'] = function_hl, -- Method definitions
     ['@method.call'] = function_hl, -- Method calls
     ['@module'] = { fg = lime }, -- Modules or namespaces
@@ -590,7 +590,6 @@ local statusline_bg_nc = get_env_or(env_name_stl_bg_nc, black)
 local statusline_n = { -- Normal mode
   fg = statusline_fg,
   bg = statusline_bg,
-  cterm = bold, -- Make it stand out
 }
 local statusline_nc = { -- Inactive window statusline
   fg = nicegray,
@@ -599,27 +598,22 @@ local statusline_nc = { -- Inactive window statusline
 local statusline_i = { -- Insert mode
   fg = white,
   bg = seagreen, -- A different green for insert
-  cterm = bold,
 }
 local statusline_v = { -- Visual mode
   fg = black,
   bg = nicelightgreen, -- Light green for visual
-  cterm = bold,
 }
 local statusline_r = { -- Replace mode
   fg = white,
   bg = nicered, -- Red for replace
-  cterm = bold,
 }
 local statusline_c = { -- Command mode
   fg = black,
   bg = niceyellow, -- Yellow for command
-  cterm = bold,
 }
 local statusline_t = { -- Terminal mode
   fg = white,
   bg = niceblue, -- Blue for terminal
-  cterm = bold,
 }
 
 local mode_statusline_map = {
