@@ -94,6 +94,7 @@ local limegreen = '#32CD32'
 local lime = '#00FF00'
 local forestgreen = '#228B22'
 local teal = '#008080'
+local nicebrown = '#664147'
 
 -- Default Palette
 local keywordfg = niceblue
@@ -106,13 +107,15 @@ local defaultfg = beige
 local defaultbg = nil
 
 -- Highlight Definitions (Lua tables)
-local comment_hl = { fg = darkslategray }
+local comment_hl = { fg = darkslategray, cterm = italic }
 local identifier_hl = { fg = nicelightgreen, bg = nil }
 local repeat_hl = { fg = yellow }
 local conditional_hl = { fg = cyan, bg = nil }
 local boolean_hl = { fg = blue }
 local number_hl = { fg = lime }
-local function_hl = { fg = green, bg = nil }
+local function_definition = { fg = green, bg = nil }
+local function_call = { fg = red, bg = nil }
+local function_params = { fg = blue, cterm = nil }
 local variable_hl = { fg = niceyellow, bg = nil }
 local special_hl = { fg = red, bg = nil }
 local search_hl = { fg = white, bg = darkmagenta, cterm = bold }
@@ -122,7 +125,7 @@ local badspell_hl = { fg = darkgray, cterm = underline }
 local delimiter_hl = { fg = yellow, bg = nil }
 local operator_hl = { fg = nicepurple }
 local modifier_hl = { fg = gray }
-local type_hl = { fg = darkyellow, bg = nil }
+local type_hl = { fg = lightgreen, cterm = italic }
 
 -- Helper function to apply highlights
 local function set_hl(group, value)
@@ -281,7 +284,7 @@ local syntax = {
 
   Error = { fg = gray, bg = red, cterm = bold },
   Exception = { fg = red, bg = nil },
-  Function = function_hl,
+  Function = function_definition,
   Identifier = identifier_hl, -- Variable names, etc. (often overridden by plugins/treesitter)
   Ignore = { fg = darkgray },
   Include = { fg = darkgray, bg = nil },
@@ -296,9 +299,9 @@ local syntax = {
   Special = special_hl, -- Special characters in strings, etc.
   SpecialKey = special_hl, -- Unprintable characters in Normal text
   Statement = { fg = darkyellow }, -- if, else, try, catch (often same as Keyword or Conditional)
-  StorageClass = { fg = darkred }, -- static, extern, auto
+  StorageClass = { fg = nicered }, -- static, extern, auto
   String = string_hl,
-  Structure = { fg = red }, -- struct, union, enum
+  Structure = { fg = nicelightgreen }, -- struct, union, enum, class
   Tag = { fg = red }, -- HTML tags, etc.
   Todo = { bg = red, fg = white, cterm = bold },
   Type = type_hl, -- int, char, void
@@ -476,43 +479,43 @@ if vim.fn.has('nvim') == 1 then
   -- Treesitter Highlighting Groups (https://github.com/nvim-treesitter/nvim-treesitter#highlight-groups)
   local treesitter = {
     ['@attribute'] = field_hl, -- @field / @property ?
-    ['@boolean'] = boolean_hl,
-    ['@character'] = { fg = darkgreen },
-    ['@character.special'] = special_hl, -- Special characters like escape sequences \n
-    ['@comment'] = comment_hl,
+    ['@boolean'] = { link = 'Boolean' },
+    ['@character'] = { link = 'Character' },
+    ['@character.special'] = { link = 'Special' }, -- Special characters like escape sequences \n
+    ['@comment'] = { link = 'Comment' },
     ['@comment.error'] = { fg = red, cterm = bold },
     ['@comment.todo'] = { link = 'Todo' }, -- Link to existing Todo group
     ['@comment.note'] = { fg = blue },
     ['@comment.warning'] = { fg = yellow, cterm = bold },
-    ['@conditional'] = conditional_hl,
-    ['@constant'] = { fg = darkgreen }, -- General constants
-    ['@constant.builtin'] = { fg = magenta, cterm = italic }, -- Built-in constants like true, false, nil
+    ['@conditional'] = { link = 'Conditional' },
+    ['@constant'] = { link = 'Constant' }, -- General constants
+    ['@constant.builtin'] = { fg = magenta, cterm = nil }, -- Built-in constants like true, false, nil
     ['@constant.macro'] = { link = 'Macro' }, -- Constants defined by macros
-    ['@constructor'] = { fg = nicepurple }, -- Class constructors
+    ['@constructor'] = { link = 'Function' }, -- Class constructors
     ['@error'] = { link = 'Error' },
-    ['@exception'] = { fg = exceptionfg },
+    ['@exception'] = { link = 'Exception' },
     ['@field'] = field_hl, -- Object/struct fields
-    ['@float'] = number_hl, -- Floating point numbers
-    ['@function'] = function_hl, -- Function definitions
-    ['@function.builtin'] = { fg = niceblue, cterm = italic }, -- Built-in functions
-    ['@function.call'] = function_hl, -- Function calls
+    ['@float'] = { link = 'Number' }, -- Floating point numbers
+    ['@function'] = { link = 'Function' }, -- Function definitions
+    ['@function.builtin'] = { fg = niceblue, cterm = bold }, -- Built-in functions
+    ['@function.call'] = function_call, -- Function calls
     ['@function.macro'] = { link = 'Macro' }, -- Macro definitions
     ['@include'] = { link = 'Include' },
-    ['@keyword'] = { fg = keywordfg }, -- General keywords
+    ['@keyword'] = { link = 'Keyword' }, -- General keywords
     ['@keyword.conditional'] = conditional_hl, -- if, else, switch, case
     ['@keyword.debug'] = { link = 'Debug' }, -- Debug related keywords
     ['@keyword.directive'] = { link = 'PreProc' }, -- Preprocessor directives
     ['@keyword.exception'] = { fg = exceptionfg }, -- try, catch, throw
     ['@keyword.function'] = { fg = yellow }, -- `function` keyword
     ['@keyword.import'] = { link = 'Include' }, -- import, require, use
-    ['@keyword.modifier'] = modifier_hl, -- public, private, static (Added from original script)
-    ['@keyword.operator'] = operator_hl, -- `operator` keyword (e.g. in C++)
-    ['@keyword.repeat'] = repeat_hl, -- for, while, loop
+    ['@keyword.modifier'] = { fg = teal }, -- public, private, static (Added from original script)
+    ['@keyword.operator'] = { link = 'Operator' }, -- `operator` keyword (e.g. in C++)
+    ['@keyword.repeat'] = { link = 'Repeat' }, -- for, while, loop
     ['@keyword.return'] = { fg = niceblue }, -- return
     ['@keyword.storage'] = { link = 'StorageClass' }, -- static, extern, const, let, var
     ['@label'] = { link = 'Label' },
-    ['@lsp.type.class'] = { fg = nicepurple }, -- LSP semantic token for classes
-    ['@lsp.type.comment'] = comment_hl, -- LSP semantic token for comments
+    ['@lsp.type.class'] = { link = 'Structure' }, -- LSP semantic token for classes
+    ['@lsp.type.comment'] = { link = '@comment' }, -- LSP semantic token for comments
     ['@lsp.type.decorator'] = { link = '@attribute' }, -- LSP semantic token for decorators
     ['@lsp.type.enum'] = { fg = olive }, -- LSP semantic token for enums
     ['@lsp.type.enumMember'] = { link = '@constant' }, -- LSP semantic token for enum members
@@ -523,28 +526,28 @@ if vim.fn.has('nvim') == 1 then
     ['@lsp.type.namespace'] = { fg = niceblue }, -- LSP semantic token for namespaces
     ['@lsp.type.parameter'] = { link = '@parameter' }, -- LSP semantic token for parameters
     ['@lsp.type.property'] = field_hl, -- LSP semantic token for properties
-    ['@lsp.type.struct'] = { fg = red }, -- LSP semantic token for structs
+    ['@lsp.type.struct'] = { link = '@structure' }, -- LSP semantic token for structs
     ['@lsp.type.type'] = { link = '@type' }, -- LSP semantic token for types
     ['@lsp.type.typeParameter'] = { link = '@type.definition' }, -- LSP semantic token for type parameters
     ['@lsp.type.variable'] = { link = '@variable' }, -- LSP semantic token for variables
     -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
     ['@lsp.mod.readonly'] = { cterm = nil },
     ['@lsp.mod.static'] = { cterm = nil },
-    ['@lsp.mod.declaration'] = { cterm = italic },
-    ['@method'] = function_hl, -- Method definitions
-    ['@method.call'] = function_hl, -- Method calls
+    ['@lsp.mod.declaration'] = { fg = teal },
+    ['@method'] = function_definition, -- Method definitions
+    ['@method.call'] = function_call, -- Method calls
     ['@module'] = { fg = lime }, -- Modules or namespaces
     ['@namespace'] = { link = '@module' },
     ['@none'] = {}, -- Fallback group
     ['@number'] = number_hl,
     ['@operator'] = operator_hl,
-    ['@parameter'] = { fg = lightblue, cterm = italic }, -- Function parameters
+    ['@parameter'] = function_params, -- Function parameters
     ['@property'] = field_hl, -- Same as @field
     ['@punctuation.bracket'] = { fg = ivory }, -- Brackets [], {}
     ['@punctuation.delimiter'] = { fg = ivory }, -- Delimiters like ;, ,, .
     ['@punctuation.special'] = { fg = ivory }, -- Special punctuation like string interpolation ${}
-    ['@repeat'] = repeat_hl,
-    ['@string'] = string_hl,
+    ['@repeat'] = { link = 'Repeat' },
+    ['@string'] = { link = 'String' },
     ['@string.escape'] = { link = '@character.special' }, -- Escape sequences within strings
     ['@string.regex'] = { fg = limegreen }, -- Regular expressions
     ['@string.special'] = { fg = nicepurple }, -- Strings with special meaning (e.g. symbols)
@@ -571,11 +574,11 @@ if vim.fn.has('nvim') == 1 then
     ['@text.uri'] = { fg = niceblue, cterm = underline }, -- URIs/URLs
     ['@text.warning'] = { link = '@comment.warning' },
     ['@type'] = type_hl, -- Type definitions
-    ['@type.builtin'] = { fg = magenta, cterm = italic }, -- Built-in types
+    ['@type.builtin'] = { fg = magenta, cterm = italic }, -- Built-in types, boolean/string/number
     ['@type.definition'] = type_hl, -- Type definitions (typedefs, aliases)
     ['@type.qualifier'] = { link = '@keyword.storage' }, -- Type qualifiers (const, volatile)
     ['@variable'] = variable_hl, -- Variable names
-    ['@variable.builtin'] = { fg = nicepurple, cterm = italic }, -- Super, self, this
+    ['@variable.builtin'] = { fg = nicebrown, cterm = italic }, -- Super, self, this
     ['@variable.member'] = field_hl, -- Class/struct member variables
     ['@variable.parameter'] = { link = '@parameter' }, -- Variables used as parameters
   }
