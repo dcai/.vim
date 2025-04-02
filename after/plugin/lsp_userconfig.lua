@@ -65,49 +65,35 @@ require('lspconfig.ui.windows').default_options.border = 'single'
 local root_pattern = lspconfig.util.root_pattern
 
 local timeout_ms = 3000
-local ts_ls_cmd_orgimports = '_typescript.organizeImports'
+
+--- get client instance
+---@param client_name string
+---@param bufnr? number
+---@return vim.lsp.Client | nil
+local function get_client(client_name, bufnr)
+  local clients = vim.lsp.get_clients({ name = client_name, bufnr = bufnr })
+  return clients[1] or nil
+end
+
+local function ts_ls_organize_imports(bufnr)
+  local params = {
+    command = '_typescript.organizeImports',
+    arguments = { vim.api.nvim_buf_get_name(bufnr) },
+  }
+  get_client('ts_ls', bufnr):exec_cmd(params, { bufnr = bufnr })
+end
+
 local organize_imports = {
   ---@diagnostic disable-next-line: unused-local
-  pyright = function(buf)
-    local params = {
+  pyright = function(bufnr)
+    vim.g.logger.info({ msg = 'pyright.organizeimports', bufnr = bufnr })
+    local command = {
       command = 'pyright.organizeimports',
-      arguments = { vim.api.nvim_buf_get_name(buf) },
+      arguments = { vim.api.nvim_buf_get_name(bufnr) },
     }
-    vim.lsp.buf.execute_command(params)
+    get_client('pyright', bufnr):exec_cmd(command, { bufnr = bufnr })
   end,
-  ---@diagnostic disable-next-line: unused-local
-  ts_ls = function(buffer)
-    buffer = buffer or vim.api.nvim_get_current_buf()
-    local params = {
-      command = ts_ls_cmd_orgimports,
-      arguments = { vim.api.nvim_buf_get_name(buffer) },
-    }
-    vim.lsp.buf_request_sync(
-      buffer,
-      'workspace/executeCommand',
-      params,
-      timeout_ms
-    )
-  end,
-  gopls = function(client, buffer)
-    local params = vim.lsp.util.make_range_params()
-    params.context = { only = { 'source.organizeImports' } }
-    local result = vim.lsp.buf_request_sync(
-      buffer,
-      'textDocument/codeAction',
-      params,
-      timeout_ms
-    )
-    for _, res in pairs(result or {}) do
-      for _, r in pairs(res.result or {}) do
-        if r.edit then
-          vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
-        else
-          vim.lsp.buf.execute_command(r.command)
-        end
-      end
-    end
-  end,
+  ts_ls = ts_ls_organize_imports,
 }
 
 local function map(mode, buffer)
@@ -177,24 +163,33 @@ local function common_on_attach(client, bufnr)
   else
     xmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   end
-  nmap('[d', vim.diagnostic.goto_prev, 'go to prev diagnostic')
-  nmap(']d', vim.diagnostic.goto_next, 'go to next diagnostic')
+  nmap('[d', function()
+    vim.diagnostic.jump({
+      count = -1,
+      float = true,
+    })
+  end, 'go to prev diagnostic')
+  nmap(']d', function()
+    vim.diagnostic.jump({
+      count = 1,
+      float = true,
+    })
+  end, 'go to next diagnostic')
   nmap('gd', vim.lsp.buf.definition, 'go to definition')
   nmap('gr', vim.lsp.buf.references, 'go to references')
   nmap('<leader>lo', function()
-    local current_buf = vim.api.nvim_get_current_buf()
-    local filetype =
-      vim.api.nvim_get_option_value('filetype', { buf = current_buf })
-    local lstype = ''
+    local buf = vim.api.nvim_get_current_buf()
+    local filetype = vim.api.nvim_get_option_value('filetype', { buf = buf })
+    local lsp_type = ''
     if vim.list_contains(ts_ls_supported_filetypes, filetype) then
-      lstype = 'ts_ls'
+      lsp_type = 'ts_ls'
     end
     if filetype == 'php' then
-      lstype = 'phpactor'
+      lsp_type = 'phpactor'
     end
 
-    if organize_imports[lstype] then
-      organize_imports[lstype](current_buf)
+    if lsp_type and organize_imports[lsp_type] then
+      organize_imports[lsp_type](buf)
     else
       print('No organize imports for ' .. filetype)
     end
@@ -238,10 +233,8 @@ lspconfig.ts_ls.setup({
   commands = {
     OrganizeImports = {
       function()
-        vim.lsp.buf.execute_command({
-          command = ts_ls_cmd_orgimports,
-          arguments = { vim.api.nvim_buf_get_name(0) },
-        })
+        local buf = vim.api.nvim_get_current_buf()
+        ts_ls_organize_imports(buf)
       end,
       description = 'Organize Imports',
     },
@@ -371,7 +364,8 @@ if fzfloaded then
   local fzf_location = wrap_handler(function(_label, result, _ctx, _config)
     result = vim.islist(result) and result or { result }
     if #result == 1 then
-      return vim.lsp.util.jump_to_location(result[1], offset_encoding)
+      -- return vim.lsp.util.jump_to_location(result[1], offset_encoding)
+      return vim.lsp.util.show_document(result[1], offset_encoding)
     end
     local items = vim.lsp.util.locations_to_items(result, offset_encoding)
     local source = vim.tbl_map(lsp_to_fzf, items)
@@ -451,12 +445,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
   end
 
   result.diagnostics = filtered_diagnostic
-
-  return vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    signs = true,
-    virtual_text = true,
-    loclist = true,
-  })(err, result, ctx, config)
+  return vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
 end
 
 local function get_python_path(workspace)
@@ -529,7 +518,7 @@ lspconfig.phpactor.setup({
       '.phpactor.yml'
     )(startpath)
     -- prefer cwd if root is a descendant
-    local result = util.path.is_descendant(cwd, root) and cwd or root
+    local result = lsputils.path.is_descendant(cwd, root) and cwd or root
     return result
   end,
 })

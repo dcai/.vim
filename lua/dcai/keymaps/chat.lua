@@ -474,7 +474,6 @@ local opts = {
     end,
   },
 }
----@param opts GpConfig? # table with options
 gpplugin.setup(opts)
 local keymap = {
   { '<leader>c', group = group },
