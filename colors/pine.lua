@@ -682,7 +682,6 @@ local function handleModeChange()
   end
 
   local current_mode = vim.fn.mode()
-  vim.g.logger.info(vim.inspect({ mode = current_mode }))
   -- print("Mode changed to: " .. current_mode) -- Debugging
 
   -- Update StatusLine highlight
