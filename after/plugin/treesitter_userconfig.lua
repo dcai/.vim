@@ -1,6 +1,5 @@
 local loaded, treesitter_config = pcall(require, 'nvim-treesitter.configs')
 if not loaded then
-  print('treesitter not loaded!')
   return
 end
 
@@ -12,9 +11,17 @@ end
 treesitter_config.setup({
   auto_install = true,
   sync_install = false,
-  incremental_selection = { enable = true },
-  matchup = {
-    enable = false, -- enabled matchup plugin: https://github.com/andymass/vim-matchup
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = 'gnn', -- set to `false` to disable one of the mappings
+      -- node_incremental = 'grn',
+      -- scope_incremental = 'grc',
+      -- node_decremental = 'grm',
+      node_incremental = false,
+      scope_incremental = false,
+      node_decremental = false,
+    },
   },
   highlight = {
     -- `false` will disable the whole extension
