@@ -115,7 +115,7 @@ local defaultfg = beige
 local defaultbg = nil
 
 -- Highlight Definitions (Lua tables)
-local comment_hl = { fg = darkslategray, cterm = italic }
+local comment_hl = { fg = gray, cterm = italic }
 local identifier_hl = { fg = nicelightgreen, bg = nil }
 local repeat_hl = { fg = yellow }
 local conditional_hl = { fg = cyan, bg = nil }
