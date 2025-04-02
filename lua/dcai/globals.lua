@@ -247,7 +247,7 @@ vim.g.parent_dir = function(input)
 end
 
 vim.g.setup_colorscheme = function()
-  local defaulcolorscheme = 'oasis'
+  local defaulcolorscheme = 'pine'
   local termguicolors = get_user_config('colorscheme.termguicolors', true)
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
   apply_colorscheme(cs, termguicolors)
