@@ -116,7 +116,7 @@ local function_hl = { fg = green, bg = nil }
 local variable_hl = { fg = niceyellow, bg = nil }
 local special_hl = { fg = red, bg = nil }
 local search_hl = { fg = white, bg = darkmagenta, cterm = bold }
-local string_hl = { fg = ivory }
+local string_hl = { fg = gray }
 local field_hl = { fg = green, bg = nil }
 local badspell_hl = { fg = darkgray, cterm = underline }
 local delimiter_hl = { fg = yellow, bg = nil }
@@ -690,14 +690,13 @@ local function handleModeChange()
 
   set_hl('StatusLine', stl_hl)
 
-  -- Update Normal text highlight (Optional - subtle changes)
-  --[[
-  local normal_hl = default_text_highlight_map[current_mode] or normal_text_highlight
-  -- Need to merge with base Normal to keep background etc.
-  local final_normal_hl = vim.tbl_deep_extend("force", {}, normal_text_highlight, normal_hl)
-  highlight('Normal', final_normal_hl)
-  ]]
-  --
+  -- -- Update Normal text highlight (Optional - subtle changes)
+  -- local normal_hl = default_text_highlight_map[current_mode]
+  --   or normal_text_highlight
+  -- -- Need to merge with base Normal to keep background etc.
+  -- local final_normal_hl =
+  --   vim.tbl_deep_extend('force', {}, normal_text_highlight, normal_hl)
+  -- set_hl('Normal', final_normal_hl)
 end
 
 vim.api.nvim_create_autocmd('ModeChanged', {
