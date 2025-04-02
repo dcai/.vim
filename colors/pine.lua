@@ -44,9 +44,10 @@ end
 
 vim.api.nvim_command('hi clear')
 
-if vim.fn.exists('syntax_on') then
-  vim.api.nvim_command('syntax reset')
-end
+-- -- depends on treesitter, so don't depends on `syntax on`
+-- if vim.fn.exists('syntax_on') then
+--   vim.api.nvim_command('syntax reset')
+-- end
 -- https://www.schemecolor.com/pine-tree-forest-color-combination.php
 local pine_color_scheme = {
   black_leather_jacket = '#263e31',

@@ -1,3 +1,5 @@
+-- disable traditional Vim syntax highlighting to avoid conflicts with Tree-sitter’s highlighting.
+vim.cmd('syntax off')
 vim.loader.enable()
 require('dcai')
 
