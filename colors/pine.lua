@@ -190,7 +190,7 @@ local dict_visual_selection = {
   fg = darkgreen,
 }
 
-local linenr_bg = pine_color_scheme.black_leather_jacket
+local linenr_bg = get_env_or(env_stl_bg, pine_color_scheme.kombu_green)
 local linenr_fg = pine_color_scheme.moss
 
 local floatnormalbg = nicemidgreen
