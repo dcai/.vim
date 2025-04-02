@@ -10,10 +10,10 @@ vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
 -- Environment variable names
-local env_name_stl_fg = 'VIM_PINE_COLORSCHEME_STL_FG'
-local env_name_stl_bg = 'VIM_PINE_COLORSCHEME_STL_BG'
-local env_name_stl_bg_nc = 'VIM_PINE_COLORSCHEME_STL_BG_NC'
-local env_name_disable_mode_change = 'VIM_DISABLE_MODE_CHANGE'
+local env_stl_fg = 'VIM_PINE_COLORSCHEME_STL_FG'
+local env_stl_bg = 'VIM_PINE_COLORSCHEME_STL_BG'
+local env_stl_bg_nc = 'VIM_PINE_COLORSCHEME_STL_BG_NC'
+local env_disable_mode_change = 'VIM_DISABLE_MODE_CHANGE'
 
 -- Helper functions for environment variables
 local function get_env_or(var_name, default)
@@ -31,6 +31,14 @@ vim.api.nvim_command('hi clear')
 if vim.fn.exists('syntax_on') then
   vim.api.nvim_command('syntax reset')
 end
+-- https://www.schemecolor.com/pine-tree-forest-color-combination.php
+local pine_color_scheme = {
+  black_leather_jacket = '#263e31',
+  kombu_green = '#334a36',
+  gray_asparagus = '#4c5e46',
+  axolotl = '#697a50',
+  moss = '#8d9967',
+}
 
 -- Attributes
 local strikethrough = { strikethrough = true }
@@ -116,7 +124,7 @@ local number_hl = { fg = lime }
 local function_definition = { fg = nicelightgreen, bg = nil }
 local function_call = { cterm = bold }
 local function_params = { fg = blue, cterm = nil }
-local variable_hl = { fg = niceyellow, bg = nil }
+local variable_hl = { fg = pine_color_scheme.moss, bg = nil }
 local special_hl = { fg = red, bg = nil }
 local search_hl = { fg = white, bg = darkmagenta, cterm = bold }
 local string_hl = { fg = gray }
@@ -182,8 +190,8 @@ local dict_visual_selection = {
   fg = darkgreen,
 }
 
-local linenr_bg = niceblack
-local linenr_fg = nicelightgreen
+local linenr_bg = pine_color_scheme.black_leather_jacket
+local linenr_fg = pine_color_scheme.moss
 
 local floatnormalbg = nicemidgreen
 local popupmenubg = darkslategray
@@ -586,9 +594,9 @@ if vim.fn.has('nvim') == 1 then
 end
 
 -- Statusline Mode Highlighting
-local statusline_fg = get_env_or(env_name_stl_fg, nicelightgreen)
-local statusline_bg = get_env_or(env_name_stl_bg, darkgreen) -- Used nicemidgreen before, darkgreen is original
-local statusline_bg_nc = get_env_or(env_name_stl_bg_nc, darkgray)
+local statusline_fg = get_env_or(env_stl_fg, pine_color_scheme.moss)
+local statusline_bg = get_env_or(env_stl_bg, pine_color_scheme.kombu_green) -- Used nicemidgreen before, darkgreen is original
+local statusline_bg_nc = get_env_or(env_stl_bg_nc, pine_color_scheme.axolotl)
 
 local statusline_n = { -- Normal mode
   fg = statusline_fg,
@@ -675,7 +683,7 @@ local au_cmd_group = 'PineModeChangedGroup'
 vim.api.nvim_create_augroup(au_cmd_group, { clear = true })
 
 local function handleModeChange()
-  if is_env_true(env_name_disable_mode_change) then
+  if is_env_true(env_disable_mode_change) then
     return
   end
   if vim.g.colors_name ~= colorscheme_name then
