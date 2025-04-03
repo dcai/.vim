@@ -331,9 +331,8 @@ vim.diagnostic.config({
       end
     end,
   },
-  underline = false,
+  underline = false, -- use underline for diagnostics
   float = {
-    show_header = false,
     format = function(report)
       return string.format(
         'RULE_CODE: %s\n[%s] from [%s]\nMessage: %s',
@@ -372,7 +371,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
   end
 
   result.diagnostics = filtered_diagnostic
-  return vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+  return vim.lsp.diagnostic.on_publish_diagnostics(nil, result, ctx)
 end
 
 local function get_python_path(workspace)
