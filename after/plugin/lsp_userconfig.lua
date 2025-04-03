@@ -145,14 +145,14 @@ local IGNORE_DIAGNOSTIC_CODES = vim.g.merge_list(
 )
 
 local function common_on_attach(client, bufnr)
+  local nmap = key_map('n', bufnr)
+  local xmap = key_map('x', bufnr)
   vim.api.nvim_create_user_command('LspCodeAction', function()
     vim.lsp.buf.code_action()
   end, {})
   vim.api.nvim_create_user_command('LspFormat', function()
     vim.lsp.buf.format()
   end, {})
-  local nmap = key_map('n', bufnr)
-  local xmap = key_map('x', bufnr)
   nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   if vim.lsp.buf.range_code_action then
     xmap('gA', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', 'Code action')
