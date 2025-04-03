@@ -1,32 +1,22 @@
 vim.lsp.set_log_level(vim.log.levels.ERROR)
 
--------------------------------
---- mason
--------------------------------
-local mason_loaded, mason = pcall(require, 'mason')
-if not mason_loaded then
-  vim.g.logger.error('mason not loaded!')
+local lspconfig_loaded = pcall(require, 'lspconfig')
+if not lspconfig_loaded then
+  vim.g.logger.error('lspconfig not loaded!')
   return
 end
+
+local fzflua = require('fzf-lua')
+local lspconfig = require('lspconfig')
+local lsputils = require('lspconfig/util')
+local mason = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
 local masonpath = require('mason-core.path')
+
 mason.setup({
   install_root_dir = masonpath.concat({ vim.g.data_dir, 'mason' }),
 })
 
--- :help diagnostic-toggle-virtual-lines-example
-vim.diagnostic.config({
-  virtual_text = {
-    -- virt_text_pos = 'eol',
-    -- virt_text_pos = 'eol_right_align',
-    virt_text_pos = 'overlay',
-  },
-  virtual_lines = false,
-})
-
--------------------------------
---- mason-lspconfig
--------------------------------
-local mason_lspconfig = require('mason-lspconfig')
 mason_lspconfig.setup({
   ensure_installed = {
     'biome',
@@ -50,14 +40,6 @@ local ts_ls_supported_filetypes = {
   'typescriptreact',
   'typescript.tsx',
 }
-local lspconfig_loaded = pcall(require, 'lspconfig')
-
-if not lspconfig_loaded then
-  vim.g.logger.error('lspconfig not loaded!')
-  return
-end
-
-local fzflua = require('fzf-lua')
 
 ---location to fzf params
 ---@param options vim.lsp.LocationOpts.OnList
@@ -81,9 +63,8 @@ local function locations_to_fzf(options)
   return fzf_items
 end
 
----handle lsp list
+---handle lsp location list, use fzf when multiple locations found
 ---@param options vim.lsp.LocationOpts.OnList
----@return unknown
 local function lsp_on_list_handler(options)
   local result = options.items
   if #result == 1 then
@@ -91,17 +72,16 @@ local function lsp_on_list_handler(options)
     return vim.cmd('cfirst')
   end
   local fzf_items = locations_to_fzf(options)
-  fzflua.fzf_exec(fzf_items, { actions = fzflua.defaults.actions.files })
+  if #fzf_items > 0 then
+    fzflua.fzf_exec(fzf_items, { actions = fzflua.defaults.actions.files })
+  end
 end
-
-local lspconfig = require('lspconfig')
-local lsputils = require('lspconfig/util')
 
 require('lspconfig.ui.windows').default_options.border = 'single'
 
 local root_pattern = lspconfig.util.root_pattern
 
---- get client instance
+---get client instance
 ---@param client_name string
 ---@param bufnr? number
 ---@return vim.lsp.Client | nil
@@ -131,7 +111,7 @@ local organize_imports = {
   ts_ls = ts_ls_organize_imports,
 }
 
-local function map(mode, buffer)
+local function key_map(mode, buffer)
   local opts = { noremap = true, silent = true, buffer = buffer }
   return function(lhs, rhs, desc)
     if desc then
@@ -171,8 +151,8 @@ local function common_on_attach(client, bufnr)
   vim.api.nvim_create_user_command('LspFormat', function()
     vim.lsp.buf.format()
   end, {})
-  local nmap = map('n', bufnr)
-  local xmap = map('x', bufnr)
+  local nmap = key_map('n', bufnr)
+  local xmap = key_map('x', bufnr)
   nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   if vim.lsp.buf.range_code_action then
     xmap('gA', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', 'Code action')
@@ -256,24 +236,6 @@ lspconfig.ts_ls.setup({
       description = 'Organize Imports',
     },
   },
-  init_options = {
-    preferences = {
-      -- includeInlayParameterNameHints = 'all',
-      -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      -- includeInlayFunctionParameterTypeHints = true,
-      -- includeInlayVariableTypeHints = true,
-      -- includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-      -- includeInlayPropertyDeclarationTypeHints = true,
-      -- includeInlayFunctionLikeReturnTypeHints = true,
-      -- includeInlayEnumMemberValueHints = true,
-
-      includeCompletionsForModuleExports = true,
-      importModuleSpecifierEnding = 'auto',
-      -- organizeImportsIgnoreCase = false,
-      -- organizeImportsCollation = 'unicode',
-    },
-    hostInfo = 'neovim',
-  },
   on_attach = common_on_attach,
 })
 
@@ -347,7 +309,12 @@ local DIAGNOSTIC_LEVELS = {
   'HINT',
 }
 vim.diagnostic.config({
+  -- :help diagnostic-toggle-virtual-lines-example
+  virtual_lines = false,
   virtual_text = {
+    -- virt_text_pos = 'eol',
+    -- virt_text_pos = 'eol_right_align',
+    virt_text_pos = 'overlay',
     -- severity = { min = vim.diagnostic.severity.WARN },
     severity = { min = vim.diagnostic.severity.HINT },
     source = true,
