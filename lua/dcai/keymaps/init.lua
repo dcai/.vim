@@ -69,7 +69,7 @@ wk.add({
     '<leader>,',
     function()
       local ft = vim.bo.filetype
-      if vim.list_contains({ 'elixir', 'heex', 'swift' }, ft) then
+      if vim.list_contains({ 'elixir', 'heex', 'swift', 'lua' }, ft) then
         vim.lsp.buf.format({ async = true })
       else
         vim.cmd('ALEFix')

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "ignoreDir": ["test", "_vim9script.lua"],
+    "checkThirdParty": "Disable"
+  },
+  "format": {
+    "enable": true,
+    "defaultConfig": {
+      "indent_style": "space",
+      "indent_size": "2"
+    }
+  },
+  "diagnostics": {
+    "groupFileStatus": {
+      "strict": "Opened",
+      "strong": "Opened"
+    },
+    "groupSeverity": {
+      "strong": "Warning",
+      "strict": "Warning"
+    },
+    "unusedLocalExclude": ["_*"],
+    "disable": ["no-unknown", "luadoc-miss-see-name", "undefined-doc-name"]
+  }
+}

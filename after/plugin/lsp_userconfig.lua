@@ -47,7 +47,7 @@ local ts_ls_supported_filetypes = {
 local function locations_to_fzf(options)
   local items = options.items
   local fzf_items = {}
-  for index, item in ipairs(items) do
+  for _index, item in ipairs(items) do
     local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
     local fzf_trim = true
     local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
@@ -129,28 +129,17 @@ vim.api.nvim_create_user_command('LspFormat', function()
   vim.lsp.buf.format()
 end, {})
 
-local IGNORE_LUA_DIAGNOSTIC_CODES = {
-  'unused-local',
-  'need-check-nil',
-  'missing-parameter',
-  'cast-local-type',
-  'codestyle-check',
-  'undefined-doc-name',
-}
 local IGNORE_TS_DIAGNOSTICS_CODES = {
   80001, -- commonjs module
-  6133, -- unused var
-  7016, -- missing declaration file
+  6133,  -- unused var
+  7016,  -- missing declaration file
 }
 local IGNORE_PHP_DIAGNOSTIC_CODES = {
   'worse.undefined_variable',
 }
 
-local IGNORE_DIAGNOSTIC_CODES = vim.g.merge_list(
-  IGNORE_PHP_DIAGNOSTIC_CODES,
-  IGNORE_LUA_DIAGNOSTIC_CODES,
-  IGNORE_TS_DIAGNOSTICS_CODES
-)
+local IGNORE_DIAGNOSTIC_CODES =
+    vim.g.merge_list(IGNORE_PHP_DIAGNOSTIC_CODES, IGNORE_TS_DIAGNOSTICS_CODES)
 
 ---return a function
 ---@param direction number
@@ -291,7 +280,6 @@ lspconfig.lua_ls.setup({
         neededFileStatus = {
           ['codestyle-check'] = 'Any',
         },
-        disable = IGNORE_LUA_DIAGNOSTIC_CODES,
       },
       workspace = lua_workspace_libs,
     },
@@ -353,13 +341,13 @@ vim.diagnostic.config({
 })
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
-  err,
-  result,
-  ctx,
-  config
+    _err,
+    result,
+    ctx,
+    _config
 )
   local filtered_diagnostic = {}
-  for i, diagnostic in ipairs(result.diagnostics) do
+  for _i, diagnostic in ipairs(result.diagnostics) do
     -- vim.g.logger.info('all codes: ' .. vim.inspect(IGNORE_DIAGNOSTIC_CODES))
     -- vim.g.logger.info('code: ' .. vim.inspect(diagnostic.code))
     if not vim.tbl_contains(IGNORE_DIAGNOSTIC_CODES, diagnostic.code) then
@@ -382,7 +370,7 @@ local function get_python_path(workspace)
   end
 
   local py_path =
-    table.concat({ vim.g.smart_root() or '', '.venv', 'bin', 'python' }, '/')
+      table.concat({ vim.g.smart_root() or '', '.venv', 'bin', 'python' }, '/')
 
   if vim.g.file_exists(py_path) then
     return py_path
