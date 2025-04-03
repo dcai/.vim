@@ -52,100 +52,89 @@ local pine_color_scheme = {
   moss = '#8d9967',
 }
 
+local colors = {
+  -- Base Colors (using names for cterm compatibility)
+  lightblue = 'LightBlue',
+  blue = 'Blue',
+  darkblue = 'DarkBlue',
+  lightgreen = 'LightGreen',
+  green = 'Green',
+  darkgreen = 'DarkGreen',
+  lightred = 'LightRed',
+  red = 'Red',
+  darkred = 'DarkRed',
+  lightcyan = 'LightCyan',
+  cyan = 'Cyan',
+  darkcyan = 'DarkCyan',
+  lightmagenta = 'LightMagenta',
+  magenta = 'Magenta',
+  darkmagenta = 'DarkMagenta',
+  lightgray = 'LightGray',
+  gray = 'Gray',
+  darkgray = 'DarkGray',
+  lightyellow = 'LightYellow',
+  yellow = 'Yellow',
+  darkyellow = 'DarkYellow',
+  brown = 'Brown',
+  black = 'Black',
+  white = 'White',
+  -- GUI Colors (Hex)
+  niceblack = '#0F0F0F',
+  beige = '#f5f5dc',
+  ivory = '#fffff0',
+  olive = '#808000',
+  niceyellow = '#F0D000',
+  nicedarkgreen = '#012619',
+  nicemidgreen = '#295535',
+  nicelightgreen = '#A6CC57',
+  nicered = '#B30000',
+  niceblue = '#87ceeb',
+  nicegray = '#8F8F8F',
+  nicepurple = '#ca5cdd',
+  deeppurple = '#36013f',
+  russianviolet = '#32174d',
+  slategray = '#708090',
+  darkslategray = '#2F4F4F',
+  seagreen = '#2E8B57',
+  limegreen = '#32CD32',
+  lime = '#00FF00',
+  forestgreen = '#228B22',
+  teal = '#008080',
+  nicebrown = '#664147',
+}
+
 -- Attributes
-local strikethrough = { strikethrough = true }
-local bold = { bold = true }
-local italic = { italic = true }
-local underline = { underline = true }
-local reverse = { reverse = true }
+local styles = {
+  strikethrough = { strikethrough = true },
+  bold = { bold = true },
+  italic = { italic = true },
+  underline = { underline = true },
+  reverse = { reverse = true }
+}
 
--- Base Colors (using names for cterm compatibility)
-local lightblue = 'LightBlue'
-local blue = 'Blue'
-local darkblue = 'DarkBlue'
-local lightgreen = 'LightGreen'
-local green = 'Green'
-local darkgreen = 'DarkGreen'
-local lightred = 'LightRed'
-local red = 'Red'
-local darkred = 'DarkRed'
-local lightcyan = 'LightCyan'
-local cyan = 'Cyan'
-local darkcyan = 'DarkCyan'
-local lightmagenta = 'LightMagenta'
-local magenta = 'Magenta'
-local darkmagenta = 'DarkMagenta'
-local lightgray = 'LightGray'
-local gray = 'Gray'
-local darkgray = 'DarkGray'
-local lightyellow = 'LightYellow'
-local yellow = 'Yellow'
-local darkyellow = 'DarkYellow'
-local brown = 'Brown'
-local black = 'Black'
-local white = 'White'
+local keywordfg = colors.niceblue
+local exceptionfg = colors.red
 
--- Adjust base colors if termguicolors is set (matches original logic)
-if vim.o.termguicolors then
-  blue = lightblue
-  green = lightgreen
-  yellow = lightyellow
-end
-
--- GUI Colors (Hex)
-local niceblack = '#0F0F0F'
-local beige = '#f5f5dc'
-local ivory = '#fffff0'
-local olive = '#808000'
-local niceyellow = '#F0D000'
-local nicedarkgreen = '#012619'
-local nicemidgreen = '#295535'
-local nicelightgreen = '#A6CC57'
-local nicered = '#B30000'
-local niceblue = '#87ceeb'
-local nicegray = '#8F8F8F'
-local nicepurple = '#ca5cdd'
-local deeppurple = '#36013f'
-local russianviolet = '#32174d'
-local slategray = '#708090'
-local darkslategray = '#2F4F4F'
-local seagreen = '#2E8B57'
-local limegreen = '#32CD32'
-local lime = '#00FF00'
-local forestgreen = '#228B22'
-local teal = '#008080'
-local nicebrown = '#664147'
-
--- Default Palette
-local keywordfg = niceblue
-local exceptionfg = red
-
-local defaultctermbg = nil
-local defaultctermfg = white
-local defaultfg = beige
--- local defaultbg = nicedarkgreen -- Default background for Normal
+local defaultfg = colors.beige
+-- local defaultbg = colors.nicedarkgreen -- Default background for Normal
 local defaultbg = nil
 
 -- Highlight Definitions (Lua tables)
-local comment_hl = { fg = gray, cterm = italic }
-local identifier_hl = { fg = nicelightgreen, bg = nil }
-local repeat_hl = { fg = yellow }
-local conditional_hl = { fg = cyan, bg = nil }
-local boolean_hl = { fg = blue }
-local number_hl = { fg = lime }
-local function_definition = { fg = nicelightgreen, bg = nil }
-local function_call = { fg = niceyellow, bg = nil }
-local function_params = { fg = lime, cterm = nil }
+local comment_hl = { fg = colors.gray, cterm = styles.italic }
+local repeat_hl = { fg = colors.yellow }
+local conditional_hl = { fg = colors.cyan, bg = nil }
+local number_hl = { fg = colors.lime }
+local function_definition = { fg = colors.nicelightgreen, bg = nil }
+local function_call = { fg = colors.niceyellow, bg = nil }
+local function_params = { fg = colors.lime, cterm = nil }
 local variable_hl = { fg = pine_color_scheme.moss, bg = nil }
-local special_hl = { fg = red, bg = nil }
-local search_hl = { fg = white, bg = darkmagenta, cterm = bold }
-local string_hl = { fg = gray }
-local field_hl = { fg = green, bg = nil }
-local badspell_hl = { fg = darkgray, cterm = underline }
-local delimiter_hl = { fg = yellow, bg = nil }
-local operator_hl = { fg = nicepurple }
-local modifier_hl = { fg = gray }
-local type_hl = { fg = lightgreen, cterm = italic }
+local special_hl = { fg = colors.red, bg = nil }
+local search_hl = { fg = colors.white, bg = colors.darkmagenta, cterm = styles.bold }
+local string_hl = { fg = colors.gray }
+local field_hl = { fg = colors.green, bg = nil }
+local badspell_hl = { fg = colors.darkgray, cterm = styles.underline }
+local delimiter_hl = { fg = colors.yellow, bg = nil }
+local type_hl = { fg = colors.lightgreen, cterm = styles.italic }
 
 ---Helper function to apply highlights
 ---@class HighlightSpec
@@ -200,59 +189,59 @@ local normal_text_highlight = {
   bg = defaultbg, -- Set the default background here
   fg = defaultfg,
 }
-local normal_text_highlight_visualmode = { fg = red }
-local normal_text_highlight_cmdmode = { fg = darkgreen }
+local _normal_text_highlight_visualmode = { fg = colors.red }
+local _normal_text_highlight_cmdmode = { fg = colors.darkgreen }
 
 local dict_visual_selection = {
-  bg = nicelightgreen,
-  fg = darkgreen,
+  bg = colors.nicelightgreen,
+  fg = colors.darkgreen,
 }
 
 local linenr_bg = get_env_or(env_stl_bg, pine_color_scheme.kombu_green)
 local linenr_fg = pine_color_scheme.moss
 
 local floatbg = pine_color_scheme.black_leather_jacket
-local popupmenubg = darkslategray
+local popupmenubg = colors.darkslategray
 
 local ui = {
-  Cursor = { fg = red, bg = nil },          -- Cursor color is often controlled by terminal
-  CursorColumn = { bg = nil },              -- Often set to a subtle background
-  CursorLine = { bg = niceblack },          -- Background for the cursor line
+  Cursor = { fg = colors.red, bg = nil },          -- Cursor color is often controlled by terminal
+  CursorColumn = { bg = nil },                     -- Often set to a subtle background
+  CursorLine = { bg = colors.niceblack },          -- Background for the cursor line
   Normal = normal_text_highlight,
-  NormalNC = { fg = gray, bg = defaultbg }, -- Non-current window Normal
-  NormalFloat = { fg = white, bg = floatbg },
-  FloatTitle = { fg = green, bg = floatbg },
+  NormalNC = { fg = colors.gray, bg = defaultbg }, -- Non-current window Normal
+  NormalFloat = { fg = colors.white, bg = floatbg },
+  FloatTitle = { fg = colors.green, bg = floatbg },
   FloatBorder = { bg = floatbg },
   FloatFooter = { bg = floatbg },
   ColorColumn = { bg = '#505050' }, -- Example subtle color for colorcolumn
-  Directory = { fg = darkcyan },
-  ErrorMsg = { fg = red, bg = yellow },
-  FoldColumn = { fg = darkgray },
-  Folded = { fg = darkgray, bg = niceblack },
+  Directory = { fg = colors.darkcyan },
+  ErrorMsg = { fg = colors.red, bg = colors.yellow },
+  FoldColumn = { fg = colors.darkgray },
+  Folded = { fg = colors.darkgray, bg = colors.niceblack },
   LineNr = { fg = linenr_fg, bg = linenr_bg },
   SignColumn = { bg = defaultbg }, -- Match Normal background
-  MatchParen = { fg = red, bg = nicegray, cterm = bold },
-  ModeMsg = { fg = yellow },
-  MoreMsg = { fg = darkgreen },
-  Noise = { fg = gray },       -- Punctuation, delimiters in syntax
-  NonText = { fg = darkcyan }, -- Characters like trailing spaces, listchars
-  Pmenu = { fg = white, bg = popupmenubg },
-  PmenuSel = { bg = blue, fg = black },
-  PmenuSbar = { bg = darkcyan },
-  PmenuThumb = { bg = yellow },
-  Question = { fg = green },
-  Quote = { fg = yellow }, -- ??? Original had this, might be unused by default
+  MatchParen = { fg = colors.red, bg = colors.nicegray, cterm = styles.bold },
+  ModeMsg = { fg = colors.yellow },
+  MoreMsg = { fg = colors.darkgreen },
+  Noise = { fg = colors.gray },       -- Punctuation, delimiters in syntax
+  NonText = { fg = colors.darkcyan }, -- Characters like trailing spaces, listchars
+  Pmenu = { fg = colors.white, bg = popupmenubg },
+  PmenuSel = { bg = colors.lightblue, fg = colors.black },
+  PmenuSbar = { bg = colors.darkcyan },
+  PmenuThumb = { bg = colors.yellow },
+  Question = { fg = colors.green },
+  Quote = { fg = colors.yellow }, -- ??? Original had this, might be unused by default
   Search = search_hl,
   IncSearch = search_hl,
-  CurSearch = search_hl,                   -- Neovim specific? Often same as IncSearch
-  TabLine = { bg = darkblue, fg = gray },  -- Inactive tabs
-  TabLineSel = { bg = white, fg = black }, -- Active tab
-  Title = { fg = green, bg = nil, cterm = bold },
-  Underlined = { fg = blue, cterm = underline },
-  VertSplit = { fg = green },                   -- Separator line
+  CurSearch = search_hl,                                 -- Neovim specific? Often same as IncSearch
+  TabLine = { bg = colors.darkblue, fg = colors.gray },  -- Inactive tabs
+  TabLineSel = { bg = colors.white, fg = colors.black }, -- Active tab
+  Title = { fg = colors.green, bg = nil, cterm = styles.bold },
+  Underlined = { fg = colors.blue, cterm = styles.underline },
+  VertSplit = { fg = colors.green },                          -- Separator line
   Visual = dict_visual_selection,
-  VisualNOS = { fg = gray, cterm = underline }, -- Visual selection when vim loses focus
-  WarningMsg = { fg = yellow },
+  VisualNOS = { fg = colors.gray, cterm = styles.underline }, -- Visual selection when vim loses focus
+  WarningMsg = { fg = colors.yellow },
 }
 apply_highlights(ui)
 
@@ -267,105 +256,96 @@ apply_highlights(spell)
 
 -- User Highlights (for statusline etc.)
 local user = {
-  User1 = { bg = niceyellow, fg = nicedarkgreen },
-  User2 = { bg = darkyellow, fg = nicedarkgreen },
-  User3 = { bg = nicelightgreen, fg = nicedarkgreen },
-  User4 = { bg = niceblue, fg = nicedarkgreen },
-  User5 = { bg = niceblack, fg = nicedarkgreen },
-  User6 = { bg = nicegray, fg = nicedarkgreen },
+  User1 = { bg = colors.niceyellow, fg = colors.nicedarkgreen },
+  User2 = { bg = colors.darkyellow, fg = colors.nicedarkgreen },
+  User3 = { bg = colors.nicelightgreen, fg = colors.nicedarkgreen },
+  User4 = { bg = colors.niceblue, fg = colors.nicedarkgreen },
+  User5 = { bg = colors.niceblack, fg = colors.nicedarkgreen },
+  User6 = { bg = colors.nicegray, fg = colors.nicedarkgreen },
 }
 apply_highlights(user)
 
 -- Syntax Highlighting
 local syntax = {
-  Boolean = boolean_hl,
-  Character = { fg = red },
+  Boolean = { fg = colors.blue },
+  Character = { fg = colors.red },
   Comment = comment_hl,
   Conditional = conditional_hl,
-  Constant = { fg = darkgreen },
-  Debug = { fg = gray },
-  Define = { bg = red }, -- Often used for #define
+  Constant = { fg = colors.darkgreen },
+  Debug = { fg = colors.gray },
+  Define = { bg = colors.red }, -- Often used for #define
   Delimiter = delimiter_hl,
   -- Diagnostics (LSP)
-  DiagnosticError = { fg = red },   -- Error text
-  DiagnosticWarn = { fg = yellow }, -- Warning text
-  DiagnosticInfo = { fg = blue },   -- Info text
-  DiagnosticHint = { fg = cyan },   -- Hint text
-  DiagnosticOk = { fg = green },    -- OK text (e.g., from null-ls)
+  DiagnosticError = { fg = colors.red },   -- Error text
+  DiagnosticWarn = { fg = colors.yellow }, -- Warning text
+  DiagnosticInfo = { fg = colors.blue },   -- Info text
+  DiagnosticHint = { fg = colors.cyan },   -- Hint text
+  DiagnosticOk = { fg = colors.green },    -- OK text (e.g., from null-ls)
   -- Diagnostic Virtual Text/Signs (adjust bg as needed)
-  DiagnosticVirtualTextError = { fg = red, bg = nicedarkgreen },
-  DiagnosticVirtualTextWarn = { fg = yellow, bg = nicedarkgreen },
-  DiagnosticVirtualTextInfo = { fg = blue, bg = nicedarkgreen },
-  DiagnosticVirtualTextHint = { fg = cyan, bg = nicedarkgreen },
+  DiagnosticVirtualTextError = { fg = colors.red, bg = colors.nicedarkgreen },
+  DiagnosticVirtualTextWarn = { fg = colors.yellow, bg = colors.nicedarkgreen },
+  DiagnosticVirtualTextInfo = { fg = colors.blue, bg = colors.nicedarkgreen },
+  DiagnosticVirtualTextHint = { fg = colors.cyan, bg = colors.nicedarkgreen },
   -- Use these for diagnostic signs if not using separate plugins
-  DiagnosticSignError = { fg = red, bg = defaultbg },
-  DiagnosticSignWarn = { fg = yellow, bg = defaultbg },
-  DiagnosticSignInfo = { fg = blue, bg = defaultbg },
-  DiagnosticSignHint = { fg = cyan, bg = defaultbg },
+  DiagnosticSignError = { fg = colors.red, bg = defaultbg },
+  DiagnosticSignWarn = { fg = colors.yellow, bg = defaultbg },
+  DiagnosticSignInfo = { fg = colors.blue, bg = defaultbg },
+  DiagnosticSignHint = { fg = colors.cyan, bg = defaultbg },
 
   -- Diff highlighting
-  DiffAdd = { fg = white, bg = '#004000' },    -- Darker green bg
-  DiffChange = { fg = white, bg = '#000040' }, -- Darker blue bg
-  DiffDelete = { fg = white, bg = '#400000' }, -- Darker red bg
-  DiffText = { fg = black, bg = '#707070' },   -- Changed text within a line
+  DiffAdd = { fg = colors.white, bg = '#004000' },    -- Darker green bg
+  DiffChange = { fg = colors.white, bg = '#000040' }, -- Darker blue bg
+  DiffDelete = { fg = colors.white, bg = '#400000' }, -- Darker red bg
+  DiffText = { fg = colors.black, bg = '#707070' },   -- Changed text within a line
 
-  Error = { fg = gray, bg = red, cterm = bold },
-  Exception = { fg = red, bg = nil },
+  Error = { fg = colors.gray, bg = colors.red, cterm = styles.bold },
+  Exception = { fg = colors.red, bg = nil },
   Function = function_definition,
-  Identifier = identifier_hl, -- Variable names, etc. (often overridden by plugins/treesitter)
-  Ignore = { fg = darkgray },
-  Include = { fg = darkgray, bg = nil },
+  Identifier = variable_hl, -- Variable names, etc. (often overridden by plugins/treesitter)
+  Ignore = { fg = colors.darkgray },
+  Include = { fg = colors.darkgray, bg = nil },
   Keyword = { fg = keywordfg, bg = nil },
-  Label = { fg = green }, -- case, default labels
-  Macro = { fg = red },   -- #define
+  Label = { fg = colors.green }, -- case, default labels
+  Macro = { fg = colors.red },   -- #define
   Number = number_hl,
-  Operator = operator_hl,
-  PreCondit = { fg = keywordfg },      -- #if, #ifdef
-  PreProc = { fg = keywordfg },        -- #include
-  Repeat = repeat_hl,                  -- for, while
-  Special = special_hl,                -- Special characters in strings, etc.
-  SpecialKey = special_hl,             -- Unprintable characters in Normal text
-  Statement = { fg = darkyellow },     -- if, else, try, catch (often same as Keyword or Conditional)
-  StorageClass = { fg = nicered },     -- static, extern, auto
+  Operator = { fg = colors.nicepurple },
+  PreCondit = { fg = keywordfg },             -- #if, #ifdef
+  PreProc = { fg = keywordfg },               -- #include
+  Repeat = repeat_hl,                         -- for, while
+  Special = special_hl,                       -- Special characters in strings, etc.
+  SpecialKey = special_hl,                    -- Unprintable characters in Normal text
+  Statement = { fg = colors.darkyellow },     -- if, else, try, catch (often same as Keyword or Conditional)
+  StorageClass = { fg = colors.nicered },     -- static, extern, auto
   String = string_hl,
-  Structure = { fg = nicelightgreen }, -- struct, union, enum, class
-  Tag = { fg = red },                  -- HTML tags, etc.
-  Todo = { bg = red, fg = white, cterm = bold },
-  Type = type_hl,                      -- int, char, void
-  Typedef = { fg = magenta },          -- typedef
+  Structure = { fg = colors.nicelightgreen }, -- struct, union, enum, class
+  Tag = { fg = colors.red },                  -- HTML tags, etc.
+  Todo = { bg = colors.red, fg = colors.white, cterm = styles.bold },
+  Type = type_hl,                             -- int, char, void
+  Typedef = { fg = colors.magenta },          -- typedef
 }
 apply_highlights(syntax)
 
 -- Custom Plugin Highlighting
 local custom = {
-  StatusLineAccent = { bg = niceyellow, fg = nicedarkgreen },
-  StatusLineProjectAccent = { bg = nicelightgreen, fg = nicedarkgreen },
-  StatusLineHighlight = { bg = nicelightgreen, fg = nicedarkgreen },
-  NotificationInfo = { fg = white },
-  NotificationWarning = { fg = black },
-  NotificationError = { fg = white },
+  StatusLineAccent = { bg = colors.niceyellow, fg = colors.nicedarkgreen },
+  StatusLineProjectAccent = { bg = colors.nicelightgreen, fg = colors.nicedarkgreen },
+  StatusLineHighlight = { bg = colors.nicelightgreen, fg = colors.nicedarkgreen },
+  NotificationInfo = { fg = colors.white },
+  NotificationWarning = { fg = colors.black },
+  NotificationError = { fg = colors.white },
 
   -- ALE (Example - may need adjustment based on ALE config)
   ALEError = { link = 'ErrorMsg' },
-  ALEErrorSign = { fg = red, bg = defaultbg },
+  ALEErrorSign = { fg = colors.red, bg = defaultbg },
   ALEWarning = { link = 'WarningMsg' },
-  ALEWarningSign = { fg = yellow, bg = defaultbg },
-  ALEVirtualTextError = { fg = darkgray, bg = nil }, -- Or match DiagnosticVirtualText
-  ALEVirtualTextInfo = { fg = darkgray, bg = nil },
-  ALEVirtualTextWarning = { fg = darkgray, bg = nil },
-
-  -- Coc (Example - may need adjustment)
-  CocErrorFloat = { fg = red },
-  CocHighlightText = { bg = red, fg = white },
-  CocHintFloat = { fg = black }, -- Check appearance
-  CocInfoFloat = { fg = blue },
-  CocMenuSel = { bg = red },     -- Check appearance
-  CocSearch = { fg = darkblue },
-  CocWarningFloat = { fg = red },
+  ALEWarningSign = { fg = colors.yellow, bg = defaultbg },
+  ALEVirtualTextError = { fg = colors.darkgray, bg = nil }, -- Or match DiagnosticVirtualText
+  ALEVirtualTextInfo = { fg = colors.darkgray, bg = nil },
+  ALEVirtualTextWarning = { fg = colors.darkgray, bg = nil },
 
   -- Codeium / Copilot
-  CodeiumSuggestion = { fg = slategray },
-  CopilotSuggestion = { fg = slategray }, -- Often same as Codeium
+  CodeiumSuggestion = { fg = colors.slategray },
+  CopilotSuggestion = { fg = colors.slategray }, -- Often same as Codeium
 
   -- Mini Notify
   MiniNotifyBorder = { link = 'NormalFloat' },
@@ -373,54 +353,54 @@ local custom = {
   MiniNotifyTitle = { link = 'FloatTitle' },
 
   -- GitSigns / Signify
-  SignifySignAdd = { fg = green },
-  SignifySignChange = { fg = yellow },
-  SignifySignDelete = { fg = darkred },
-  SignifySignDeleteFirstLine = { fg = darkred },
-  GitSignsAdd = { fg = green, bg = defaultbg },
-  GitSignsChange = { fg = yellow, bg = defaultbg },
-  GitSignsDelete = { fg = red, bg = defaultbg },
+  SignifySignAdd = { fg = colors.green },
+  SignifySignChange = { fg = colors.yellow },
+  SignifySignDelete = { fg = colors.darkred },
+  SignifySignDeleteFirstLine = { fg = colors.darkred },
+  GitSignsAdd = { fg = colors.green, bg = defaultbg },
+  GitSignsChange = { fg = colors.yellow, bg = defaultbg },
+  GitSignsDelete = { fg = colors.red, bg = defaultbg },
 
   -- FzfLua
   FzfLuaNormal = {
-    bg = darkslategray,
-    fg = white,
+    bg = colors.darkslategray,
+    fg = colors.white,
   },
 
   -- Mason
-  MasonBackdrop = { bg = black },
+  MasonBackdrop = { bg = colors.black },
   MasonNormal = { link = 'NormalFloat' },
   MasonHeader = { link = 'FloatTitle' },
-  MasonHeaderSecondary = { bg = red },
+  MasonHeaderSecondary = { bg = colors.red },
 
   MasonHighlight = {},
   MasonHighlightBlock = {
-    fg = green,
-    bg = niceblack,
+    fg = colors.green,
+    bg = colors.niceblack,
   },
   MasonHighlightBlockBold = {
     -- this is the selected menu item on top
-    fg = green,
-    bg = niceblack,
-    cterm = italic,
+    fg = colors.green,
+    bg = colors.niceblack,
+    cterm = styles.italic,
   },
 
-  MasonHighlightSecondary = { bg = red },
-  MasonHighlightBlockSecondary = { bg = red },
-  MasonHighlightBlockBoldSecondary = { bg = red },
+  MasonHighlightSecondary = { bg = colors.red },
+  MasonHighlightBlockSecondary = { bg = colors.red },
+  MasonHighlightBlockBoldSecondary = { bg = colors.red },
 
-  MasonLink = { fg = black, cterm = underline },
+  MasonLink = { fg = colors.black, cterm = styles.underline },
 
-  MasonMuted = { fg = nicegray },
+  MasonMuted = { fg = colors.nicegray },
   MasonMutedBlock = {
     -- this is the inactive menu items
-    fg = white,
-    bg = niceblack,
+    fg = colors.white,
+    bg = colors.niceblack,
   },
   MasonMutedBlockBold = {
-    fg = nicegray,
-    bg = niceblack,
-    cterm = bold,
+    fg = colors.nicegray,
+    bg = colors.niceblack,
+    cterm = styles.bold,
   },
 
   MasonError = { link = 'ErrorMsg' },
@@ -432,69 +412,27 @@ apply_highlights(custom)
 -- Neovim Specific Highlighting
 if vim.fn.has('nvim') == 1 then
   local neovim_only = {
-    MsgArea = { bg = nil, fg = nicelightgreen }, -- Command line area
-    TermCursor = { bg = red, fg = white },       -- Terminal mode cursor
-    TermCursorNC = { bg = gray, fg = black },    -- Terminal mode cursor in inactive window
+    MsgArea = { bg = nil, fg = colors.nicelightgreen },     -- Command line area
+    TermCursor = { bg = colors.red, fg = colors.white },    -- Terminal mode cursor
+    TermCursorNC = { bg = colors.gray, fg = colors.black }, -- Terminal mode cursor in inactive window
   }
   apply_highlights(neovim_only)
 
   -- WhichKey
-  local whichkeybg = darkslategray
+  local whichkeybg = colors.darkslategray
   local whichkey = {
-    WhichKey = { fg = niceblue },           -- Key bindings
-    WhichKeyGroup = { fg = nicepurple },    -- Group titles
-    WhichKeyDesc = { fg = nicelightgreen }, -- Descriptions
-    WhichKeySeparator = { fg = nicegray },  -- Separators
+    WhichKey = { fg = colors.niceblue },           -- Key bindings
+    WhichKeyGroup = { fg = colors.nicepurple },    -- Group titles
+    WhichKeyDesc = { fg = colors.nicelightgreen }, -- Descriptions
+    WhichKeySeparator = { fg = colors.nicegray },  -- Separators
     -- Floating window style
     WhichKeyFloat = { bg = whichkeybg },
     WhichKeyBorder = { bg = whichkeybg },
     -- Legacy names? (Included from original script)
-    WhichKeyTitle = { fg = white, bg = whichkeybg, cterm = bold },
-    WhichKeyNormal = { fg = darkgray, bg = whichkeybg }, -- Unused?
+    WhichKeyTitle = { fg = colors.white, bg = whichkeybg, cterm = styles.bold },
+    WhichKeyNormal = { fg = colors.darkgray, bg = whichkeybg }, -- Unused?
   }
   apply_highlights(whichkey)
-
-  -- Nvim-Cmp (Completion Menu)
-  local cmp = {
-    CmpItemAbbr = { bg = nil, fg = nicegray },                     -- Abbreviation Text
-    CmpItemAbbrDeprecated = { fg = green, bg = nil, cterm = strikethrough },
-    CmpItemAbbrMatch = { fg = blue, bg = nil, cterm = bold },      -- Matched characters
-    CmpItemAbbrMatchFuzzy = { fg = blue, bg = nil, cterm = bold }, -- Fuzzy matched characters
-    CmpItemKind = { fg = yellow, bg = nil },                       -- Default Kind Icon/Text
-    CmpItemMenu = { fg = black, bg = nicelightgreen },             -- Source Name (LSP, Buffer, etc.)
-
-    -- Specific Kind Highlighting (Examples - customize based on icons/prefs)
-    CmpItemKindText = { fg = white, bg = nil },
-    CmpItemKindMethod = { bg = nil, fg = niceblue },
-    CmpItemKindFunction = { bg = nil, fg = niceblue },
-    CmpItemKindConstructor = { bg = nil, fg = nicepurple },
-    CmpItemKindField = { bg = nil, fg = nicelightgreen },
-    CmpItemKindVariable = { bg = nil, fg = ivory }, -- Light color for variables
-    CmpItemKindClass = { bg = nil, fg = niceyellow },
-    CmpItemKindInterface = { bg = nil, fg = niceyellow },
-    CmpItemKindModule = { fg = darkgreen, bg = nil },
-    CmpItemKindProperty = { bg = nil, fg = nicelightgreen },
-    CmpItemKindUnit = { fg = darkcyan, bg = nil },
-    CmpItemKindValue = { fg = lightmagenta, bg = nil },
-    CmpItemKindEnum = { fg = darkcyan, bg = nil },
-    CmpItemKindKeyword = { fg = red, bg = nil },
-    CmpItemKindSnippet = { fg = gray, bg = nil },
-    CmpItemKindColor = { fg = magenta, bg = nil },
-    CmpItemKindFile = { fg = darkcyan, bg = nil },
-    CmpItemKindReference = { fg = magenta, bg = nil },
-    CmpItemKindFolder = { fg = darkcyan, bg = nil },
-    CmpItemKindEnumMember = { bg = nil, fg = nicelightgreen },
-    CmpItemKindConstant = { bg = nil, fg = niceyellow },
-    CmpItemKindStruct = { fg = red, bg = nil },
-    CmpItemKindEvent = { fg = magenta, bg = nil },
-    CmpItemKindOperator = { bg = nil, fg = nicepurple },
-    CmpItemKindTypeParameter = { fg = red, bg = nil },
-
-    -- Plugin specific Kinds
-    CmpItemKindCodeium = { fg = yellow, bg = red },       -- Original style
-    CmpItemKindCopilot = { fg = cyan, bg = darkmagenta }, -- Example style
-  }
-  apply_highlights(cmp)
 
   -- Treesitter Highlighting Groups (https://github.com/nvim-treesitter/nvim-treesitter#highlight-groups)
   local treesitter = {
@@ -503,21 +441,21 @@ if vim.fn.has('nvim') == 1 then
     ['@character'] = { link = 'Character' },
     ['@character.special'] = { link = 'Special' }, -- Special characters like escape sequences \n
     ['@comment'] = { link = 'Comment' },
-    ['@comment.error'] = { fg = red, cterm = bold },
+    ['@comment.error'] = { fg = colors.red, cterm = styles.bold },
     ['@comment.todo'] = { link = 'Todo' }, -- Link to existing Todo group
-    ['@comment.note'] = { fg = blue },
-    ['@comment.warning'] = { fg = yellow, cterm = bold },
+    ['@comment.note'] = { fg = colors.blue },
+    ['@comment.warning'] = { fg = colors.yellow, cterm = styles.bold },
     ['@conditional'] = { link = 'Conditional' },
-    ['@constant'] = { link = 'Constant' },                 -- General constants
-    ['@constant.builtin'] = { fg = magenta, cterm = nil }, -- Built-in constants like true, false, nil
-    ['@constant.macro'] = { link = 'Macro' },              -- Constants defined by macros
-    ['@constructor'] = { link = 'Function' },              -- Class constructors
+    ['@constant'] = { link = 'Constant' },                        -- General constants
+    ['@constant.builtin'] = { fg = colors.magenta, cterm = nil }, -- Built-in constants like true, false, nil
+    ['@constant.macro'] = { link = 'Macro' },                     -- Constants defined by macros
+    ['@constructor'] = { link = 'Function' },                     -- Class constructors
     ['@error'] = { link = 'Error' },
     ['@exception'] = { link = 'Exception' },
     ['@field'] = field_hl,                            -- Object/struct fields
     ['@float'] = { link = 'Number' },                 -- Floating point numbers
     ['@function'] = { link = 'Function' },            -- Function definitions
-    ['@function.builtin'] = { cterm = bold },         -- Built-in functions
+    ['@function.builtin'] = { cterm = styles.bold },  -- Built-in functions
     ['@function.call'] = function_call,               -- Function calls
     ['@function.macro'] = { link = 'Macro' },         -- Macro definitions
     ['@include'] = { link = 'Include' },
@@ -528,10 +466,10 @@ if vim.fn.has('nvim') == 1 then
     ['@keyword.exception'] = { fg = exceptionfg },    -- try, catch, throw
     ['@keyword.function'] = { link = 'Function' },    -- `function` keyword
     ['@keyword.import'] = { link = 'Include' },       -- import, require, use
-    ['@keyword.modifier'] = { fg = teal },            -- public, private, static (Added from original script)
+    ['@keyword.modifier'] = { fg = colors.teal },     -- public, private, static (Added from original script)
     ['@keyword.operator'] = { link = 'Operator' },    -- `operator` keyword (e.g. in C++)
     ['@keyword.repeat'] = { link = 'Repeat' },        -- for, while, loop
-    ['@keyword.return'] = { fg = niceblue },          -- return
+    ['@keyword.return'] = { fg = colors.niceblue },   -- return
     ['@keyword.storage'] = { link = 'StorageClass' }, -- static, extern, const, let, var
     ['@label'] = { link = 'Label' },
     -- ['@lsp.type.class'] = { link = 'Structure' }, -- LSP semantic token for classes
@@ -543,7 +481,7 @@ if vim.fn.has('nvim') == 1 then
     -- ['@lsp.type.interface'] = { fg = beige }, -- LSP semantic token for interfaces
     -- ['@lsp.type.macro'] = { link = '@function.macro' }, -- LSP semantic token for macros
     -- ['@lsp.type.method'] = { link = '@method' }, -- LSP semantic token for methods
-    -- ['@lsp.type.namespace'] = { fg = niceblue }, -- LSP semantic token for namespaces
+    -- ['@lsp.type.namespace'] = { fg =colors.niceblue }, -- LSP semantic token for namespaces
     -- ['@lsp.type.parameter'] = { link = '@parameter' }, -- LSP semantic token for parameters
     -- ['@lsp.type.property'] = field_hl, -- LSP semantic token for properties
     -- ['@lsp.type.struct'] = { link = '@structure' }, -- LSP semantic token for structs
@@ -553,53 +491,53 @@ if vim.fn.has('nvim') == 1 then
     -- ['@lsp.mod.readonly'] = { cterm = nil }, -- Modifiers for LSP semantic tokens (e.g., @lsp.mod.readonly) - typically don't need color, maybe italic/bold
     -- ['@lsp.mod.static'] = { cterm = nil },
     -- ['@lsp.mod.declaration'] = { link = '@variable' },
-    ['@method'] = function_definition, -- Method definitions
-    ['@method.call'] = function_call,  -- Method calls
-    ['@module'] = { fg = lime },       -- Modules or namespaces
+    ['@method'] = function_definition,  -- Method definitions
+    ['@method.call'] = function_call,   -- Method calls
+    ['@module'] = { fg = colors.lime }, -- Modules or namespaces
     ['@namespace'] = { link = '@module' },
-    ['@none'] = {},                    -- Fallback group
+    ['@none'] = {},                     -- Fallback group
     ['@number'] = number_hl,
-    ['@operator'] = operator_hl,
-    ['@parameter'] = function_params,            -- Function parameters
-    ['@property'] = field_hl,                    -- Same as @field
-    ['@punctuation.bracket'] = { fg = ivory },   -- Brackets [], {}
-    ['@punctuation.delimiter'] = { fg = ivory }, -- Delimiters like ;, ,, .
-    ['@punctuation.special'] = { fg = ivory },   -- Special punctuation like string interpolation ${}
+    ['@operator'] = { link = 'Operator' },
+    ['@parameter'] = function_params,                   -- Function parameters
+    ['@property'] = field_hl,                           -- Same as @field
+    ['@punctuation.bracket'] = { fg = colors.ivory },   -- Brackets [], {}
+    ['@punctuation.delimiter'] = { fg = colors.ivory }, -- Delimiters like ;, ,, .
+    ['@punctuation.special'] = { fg = colors.ivory },   -- Special punctuation like string interpolation ${}
     ['@repeat'] = { link = 'Repeat' },
     ['@string'] = { link = 'String' },
-    ['@string.escape'] = { link = '@character.special' },         -- Escape sequences within strings
-    ['@string.regex'] = { fg = limegreen },                       -- Regular expressions
-    ['@string.special'] = { fg = nicepurple },                    -- Strings with special meaning (e.g. symbols)
-    ['@symbol'] = { link = '@constant' },                         -- Symbols (e.g. in Ruby)
-    ['@tag'] = { fg = teal },                                     -- XML/HTML tags
-    ['@tag.attribute'] = { fg = nicelightgreen, cterm = italic }, -- XML/HTML tag attributes
-    ['@tag.delimiter'] = { fg = gray },                           -- XML/HTML tag delimiters <> /
-    ['@text'] = { link = 'Normal' },                              -- Base text
+    ['@string.escape'] = { link = '@character.special' },                       -- Escape sequences within strings
+    ['@string.regex'] = { fg = colors.limegreen },                              -- Regular expressions
+    ['@string.special'] = { fg = colors.nicepurple },                           -- Strings with special meaning (e.g. symbols)
+    ['@symbol'] = { link = '@constant' },                                       -- Symbols (e.g. in Ruby)
+    ['@tag'] = { fg = colors.teal },                                            -- XML/HTML tags
+    ['@tag.attribute'] = { fg = colors.nicelightgreen, cterm = styles.italic }, -- XML/HTML tag attributes
+    ['@tag.delimiter'] = { fg = colors.gray },                                  -- XML/HTML tag delimiters <> /
+    ['@text'] = { link = 'Normal' },                                            -- Base text
     ['@text.danger'] = { link = '@error' },
     ['@text.diff.add'] = { link = 'DiffAdd' },
     ['@text.diff.delete'] = { link = 'DiffDelete' },
-    ['@text.emphasis'] = { cterm = italic },                    -- Italic text in markup
-    ['@text.environment'] = { link = '@module' },               -- Environment variable in Makefiles etc.
-    ['@text.literal'] = { link = '@string' },                   -- Literal text in markup
-    ['@text.math'] = { link = '@operator' },                    -- Math environments in markup
+    ['@text.emphasis'] = { cterm = styles.italic },                           -- Italic text in markup
+    ['@text.environment'] = { link = '@module' },                             -- Environment variable in Makefiles etc.
+    ['@text.literal'] = { link = '@string' },                                 -- Literal text in markup
+    ['@text.math'] = { link = '@operator' },                                  -- Math environments in markup
     ['@text.note'] = { link = '@comment.note' },
-    ['@text.quote'] = { link = '@string.special' },             -- Block quotes in markup
-    ['@text.reference'] = { link = '@identifier' },             -- Links, references in markup
-    ['@text.strike'] = { cterm = strikethrough },               -- Strikethrough text in markup
-    ['@text.strong'] = { cterm = bold },                        -- Bold text in markup
-    ['@text.title'] = { link = 'Title' },                       -- Titles in markup
+    ['@text.quote'] = { link = '@string.special' },                           -- Block quotes in markup
+    ['@text.reference'] = { link = '@identifier' },                           -- Links, references in markup
+    ['@text.strike'] = { cterm = styles.strikethrough },                      -- Strikethrough text in markup
+    ['@text.strong'] = { cterm = styles.bold },                               -- Bold text in markup
+    ['@text.title'] = { link = 'Title' },                                     -- Titles in markup
     ['@text.todo'] = { link = 'Todo' },
-    ['@text.underline'] = { cterm = underline },                -- Underlined text in markup
-    ['@text.uri'] = { fg = niceblue, cterm = underline },       -- URIs/URLs
+    ['@text.underline'] = { cterm = styles.underline },                       -- Underlined text in markup
+    ['@text.uri'] = { fg = colors.niceblue, cterm = styles.underline },       -- URIs/URLs
     ['@text.warning'] = { link = '@comment.warning' },
-    ['@type'] = type_hl,                                        -- Type definitions
-    ['@type.builtin'] = { fg = magenta, cterm = italic },       -- Built-in types, boolean/string/number
-    ['@type.definition'] = type_hl,                             -- Type definitions (typedefs, aliases)
-    ['@type.qualifier'] = { link = '@keyword.storage' },        -- Type qualifiers (const, volatile)
-    ['@variable'] = variable_hl,                                -- Variable names
-    ['@variable.builtin'] = { fg = nicebrown, cterm = italic }, -- Super, self, this
-    ['@variable.member'] = field_hl,                            -- Class/struct member variables
-    ['@variable.parameter'] = { link = '@parameter' },          -- Variables used as parameters
+    ['@type'] = type_hl,                                                      -- Type definitions
+    ['@type.builtin'] = { fg = colors.magenta, cterm = styles.italic },       -- Built-in types, boolean/string/number
+    ['@type.definition'] = { link = 'Typedef' },                              -- Type definitions (typedefs, aliases)
+    ['@type.qualifier'] = { link = '@keyword.storage' },                      -- Type qualifiers (const, volatile)
+    ['@variable'] = { link = 'identifier' },                                  -- Variable names
+    ['@variable.builtin'] = { fg = colors.nicebrown, cterm = styles.italic }, -- Super, self, this
+    ['@variable.member'] = field_hl,                                          -- Class/struct member variables
+    ['@variable.parameter'] = { link = '@parameter' },                        -- Variables used as parameters
   }
   apply_highlights(treesitter)
 end
@@ -614,28 +552,28 @@ local statusline_n = { -- Normal mode
   bg = statusline_bg,
 }
 local statusline_nc = { -- Inactive window statusline
-  fg = ivory,
+  fg = colors.ivory,
   bg = statusline_bg_nc,
 }
-local statusline_i = { -- Insert mode
-  fg = white,
-  bg = seagreen,       -- A different green for insert
+local statusline_i = {        -- Insert mode
+  fg = colors.white,
+  bg = colors.seagreen,       -- A different green for insert
 }
-local statusline_v = { -- Visual mode
-  fg = black,
-  bg = nicelightgreen, -- Light green for visual
+local statusline_v = {        -- Visual mode
+  fg = colors.black,
+  bg = colors.nicelightgreen, -- Light green for visual
 }
-local statusline_r = { -- Replace mode
-  fg = white,
-  bg = nicered,        -- Red for replace
+local statusline_r = {        -- Replace mode
+  fg = colors.white,
+  bg = colors.nicered,        -- Red for replace
 }
-local statusline_c = { -- Command mode
-  fg = black,
-  bg = niceyellow,     -- Yellow for command
+local statusline_c = {        -- Command mode
+  fg = colors.black,
+  bg = colors.niceyellow,     -- Yellow for command
 }
-local statusline_t = { -- Terminal mode
-  fg = white,
-  bg = niceblue,       -- Blue for terminal
+local statusline_t = {        -- Terminal mode
+  fg = colors.white,
+  bg = colors.niceblue,       -- Blue for terminal
 }
 
 local mode_statusline_map = {
@@ -673,14 +611,14 @@ local mode_statusline_map = {
   ['t'] = statusline_t,     -- Terminal mode
 }
 
--- Default Text Highlighting Per Mode (Subtle changes)
+---@diagnostic disable-next-line: unused-local
 local default_text_highlight_map = {
   ['n'] = normal_text_highlight,
   ['v'] = normal_text_highlight, -- Keep normal text colors in visual mode
   ['V'] = normal_text_highlight,
   ['\22'] = normal_text_highlight,
-  ['i'] = normal_text_highlight, -- Keep normal text colors in insert mode
-  ['c'] = { fg = darkgreen },    -- Maybe change command mode text slightly? Optional.
+  ['i'] = normal_text_highlight,     -- Keep normal text colors in insert mode
+  ['c'] = { fg = colors.darkgreen }, -- Maybe change command mode text slightly? Optional.
   -- Add other modes if desired
 }
 
@@ -722,7 +660,7 @@ end
 
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = au_cmd_group,
-  pattern = '*', -- Trigger on all mode changes
+  pattern = '*',
   callback = handleModeChange,
 })
 
