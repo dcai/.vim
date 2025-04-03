@@ -312,9 +312,9 @@ vim.diagnostic.config({
   -- :help diagnostic-toggle-virtual-lines-example
   virtual_lines = false,
   virtual_text = {
-    -- virt_text_pos = 'eol',
+    virt_text_pos = 'eol',
     -- virt_text_pos = 'eol_right_align',
-    virt_text_pos = 'overlay',
+    -- virt_text_pos = 'overlay',
     -- severity = { min = vim.diagnostic.severity.WARN },
     severity = { min = vim.diagnostic.severity.HINT },
     source = true,
