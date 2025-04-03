@@ -57,14 +57,49 @@ if not lspconfig_loaded then
   return
 end
 
+local fzflua = require('fzf-lua')
+
+---location to fzf params
+---@param options vim.lsp.LocationOpts.OnList
+---@return string[]
+local function locations_to_fzf(options)
+  local items = options.items
+  local fzf_items = {}
+  for index, item in ipairs(items) do
+    local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
+    local fzf_trim = true
+    local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
+    local path = vim.g.purple(filename)
+    local lnum = vim.g.green(item.lnum)
+    local text = fzf_trim and vim.trim(item.text) or item.text
+    table.insert(
+      fzf_items,
+      string.format('%s:%s:%s: %s', path, lnum, item.col, text)
+    )
+  end
+
+  return fzf_items
+end
+
+---handle lsp list
+---@param options vim.lsp.LocationOpts.OnList
+---@return unknown
+local function lsp_on_list_handler(options)
+  local result = options.items
+  if #result == 1 then
+    vim.fn.setqflist(result, 'r')
+    return vim.cmd('cfirst')
+  end
+  local fzf_items = locations_to_fzf(options)
+  fzflua.fzf_exec(fzf_items, { actions = fzflua.defaults.actions.files })
+end
+
 local lspconfig = require('lspconfig')
 local lsputils = require('lspconfig/util')
 
 require('lspconfig.ui.windows').default_options.border = 'single'
 
 local root_pattern = lspconfig.util.root_pattern
-
-local timeout_ms = 3000
 
 --- get client instance
 ---@param client_name string
@@ -130,25 +165,6 @@ local IGNORE_DIAGNOSTIC_CODES = vim.g.merge_list(
 )
 
 local function common_on_attach(client, bufnr)
-  -- if client.supports_method('textDocument/codeLens', { bufnr = bufnr }) then
-  --   -- client.notify('workspace/didChangeConfiguration', {
-  --   --   settings = {
-  --   --     ['javascript.referencesCodeLens.enabled'] = true,
-  --   --     ['typescript.referencesCodeLens.enabled'] = true,
-  --   --   },
-  --   -- })
-  --   vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
-  --     buffer = bufnr,
-  --     callback = function()
-  --       vim.lsp.codelens.refresh({ bufnr = bufnr })
-  --     end,
-  --   })
-  -- end
-  -- if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-  --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-  -- end
-  -- vim.cmd([[command! LspFormat execute 'lua vim.lsp.buf.format()']])
-  -- vim.cmd([[command! LspCodeAction execute 'lua vim.lsp.buf.code_action()']])
   vim.api.nvim_create_user_command('LspCodeAction', function()
     vim.lsp.buf.code_action()
   end, {})
@@ -175,8 +191,12 @@ local function common_on_attach(client, bufnr)
       float = true,
     })
   end, 'go to next diagnostic')
-  nmap('gd', vim.lsp.buf.definition, 'go to definition')
-  nmap('gr', vim.lsp.buf.references, 'go to references')
+  nmap('gd', function()
+    vim.lsp.buf.definition({ on_list = lsp_on_list_handler })
+  end, 'go to definition')
+  nmap('gr', function()
+    vim.lsp.buf.references(nil, { on_list = lsp_on_list_handler })
+  end, 'go to references')
   nmap('<leader>lo', function()
     local buf = vim.api.nvim_get_current_buf()
     local filetype = vim.api.nvim_get_option_value('filetype', { buf = buf })
@@ -194,9 +214,6 @@ local function common_on_attach(client, bufnr)
       print('No organize imports for ' .. filetype)
     end
   end, 'Organize Imports')
-  -- nmap('gD', vim.lsp.buf.declaration, '')
-  -- nmap('gi', vim.lsp.buf.implementation, '')
-  -- nmap('go', vim.lsp.buf.type_definition, '')
 end
 
 local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
@@ -322,63 +339,6 @@ lspconfig.lua_ls.setup({
   },
   on_attach = common_on_attach,
 })
-
-local fzfloaded, fzflua = pcall(require, 'fzf-lua')
-if fzfloaded then
-  local offset_encoding
-  ---wrap function for error handling and encoding setting
-  ---@param handler function
-  ---@return function
-  local function wrap_handler(handler)
-    return function(label)
-      return function(err, result, ctx, config)
-        if err then
-          return print(
-            string.format('%s: %s', 'wrap_handler() error', err.message)
-          )
-        end
-        -- Print message if no result
-        if not result or vim.tbl_isempty(result) then
-          return print(string.format('No %s found', string.lower(label)))
-        end
-
-        -- Save offset encoding
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        offset_encoding = client and client.offset_encoding or 'utf-16'
-        return handler(label, result, ctx, config)
-      end
-    end
-  end
-  local function lsp_to_fzf(item)
-    local fzf_modifier = ':~:.' -- format FZF entries, see |filename-modifiers|
-    local fzf_trim = true
-    local filename = vim.fn.fnamemodify(item.filename, fzf_modifier)
-    local path = vim.g.purple(filename)
-    local lnum = vim.g.green(item.lnum)
-    local text = fzf_trim and vim.trim(item.text) or item.text
-    return string.format('%s:%s:%s: %s', path, lnum, item.col, text)
-  end
-
-  -- https://github.com/ojroques/nvim-lspfuzzy/blob/main/lua/lspfuzzy.lua
-  ---@diagnostic disable-next-line: unused-local
-  local fzf_location = wrap_handler(function(_label, result, _ctx, _config)
-    result = vim.islist(result) and result or { result }
-    if #result == 1 then
-      -- return vim.lsp.util.jump_to_location(result[1], offset_encoding)
-      return vim.lsp.util.show_document(result[1], offset_encoding)
-    end
-    local items = vim.lsp.util.locations_to_items(result, offset_encoding)
-    local source = vim.tbl_map(lsp_to_fzf, items)
-    fzflua.fzf_exec(source, { actions = fzflua.defaults.actions.files })
-  end)
-
-  local handlers = vim.lsp.handlers
-  handlers['textDocument/declaration'] = fzf_location('declaration')
-  handlers['textDocument/definition'] = fzf_location('definition')
-  handlers['textDocument/implementation'] = fzf_location('implementation')
-  handlers['textDocument/references'] = fzf_location('references')
-  handlers['textDocument/typeDefinition'] = fzf_location('typeDefinition')
-end
 
 local DIAGNOSTIC_LEVELS = {
   'ERR',
