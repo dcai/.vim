@@ -121,6 +121,14 @@ local function key_map(mode, buffer)
   end
 end
 
+vim.api.nvim_create_user_command('LspCodeAction', function()
+  vim.lsp.buf.code_action()
+end, {})
+
+vim.api.nvim_create_user_command('LspFormat', function()
+  vim.lsp.buf.format()
+end, {})
+
 local IGNORE_LUA_DIAGNOSTIC_CODES = {
   'unused-local',
   'need-check-nil',
@@ -144,33 +152,26 @@ local IGNORE_DIAGNOSTIC_CODES = vim.g.merge_list(
   IGNORE_TS_DIAGNOSTICS_CODES
 )
 
+---return a function
+---@param direction number
+---@return function
+local function diagnostic_jump(direction)
+  return function()
+    vim.diagnostic.jump({ count = direction, float = true })
+  end
+end
+
 local function common_on_attach(client, bufnr)
   local nmap = key_map('n', bufnr)
   local xmap = key_map('x', bufnr)
-  vim.api.nvim_create_user_command('LspCodeAction', function()
-    vim.lsp.buf.code_action()
-  end, {})
-  vim.api.nvim_create_user_command('LspFormat', function()
-    vim.lsp.buf.format()
-  end, {})
   nmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   if vim.lsp.buf.range_code_action then
     xmap('gA', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', 'Code action')
   else
     xmap('gA', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action')
   end
-  nmap('[d', function()
-    vim.diagnostic.jump({
-      count = -1,
-      float = true,
-    })
-  end, 'go to prev diagnostic')
-  nmap(']d', function()
-    vim.diagnostic.jump({
-      count = 1,
-      float = true,
-    })
-  end, 'go to next diagnostic')
+  nmap('[d', diagnostic_jump(-1), 'go to prev diagnostic')
+  nmap(']d', diagnostic_jump(1), 'go to next diagnostic')
   nmap('gd', function()
     vim.lsp.buf.definition({ on_list = lsp_on_list_handler })
   end, 'go to definition')
@@ -258,6 +259,7 @@ local lua_workspace_libs = {
     vim.g.std_cfg_dir .. '/lua',
     -- plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
+    plugin_path('nvim-lspconfig'),
   },
 }
 
@@ -275,7 +277,7 @@ lspconfig.lua_ls.setup({
       },
       completion = {
         enable = true,
-        callSnippet = 'Replace', -- 'Disable' | 'Both' | 'Replace'
+        callSnippet = 'Both', -- 'Disable' | 'Both' | 'Replace'
       },
       hint = {
         enable = false,
@@ -372,15 +374,15 @@ end
 local function get_python_path(workspace)
   -- Use activated virtualenv.
   if vim.env.VIRTUAL_ENV then
-    return lsputils.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+    return table.concat({ vim.env.VIRTUAL_ENV, 'bin', 'python' }, '/')
   end
 
   if workspace and vim.g.file_exists(workspace .. '/.venv') then
-    return lsputils.path.join(workspace, '.venv', 'bin', 'python')
+    return table.concat({ workspace, '.venv', 'bin', 'python' }, '/')
   end
 
   local py_path =
-    lsputils.path.join(vim.g.smart_root() or '', '.venv', 'bin', 'python')
+    table.concat({ vim.g.smart_root() or '', '.venv', 'bin', 'python' }, '/')
 
   if vim.g.file_exists(py_path) then
     return py_path
