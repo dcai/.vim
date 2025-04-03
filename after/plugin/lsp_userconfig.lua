@@ -256,12 +256,8 @@ local lua_workspace_libs = {
   library = {
     vim.fn.expand('$VIMRUNTIME/lua'),
     vim.g.std_cfg_dir .. '/lua',
-    plugin_path('gp.nvim'),
+    -- plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
-    -- plugin_path('nvim-lspconfig'),
-    -- plugin_path('nvim-cmp'),
-    -- plugin_path('nvim-snippets'),
-    -- plugin_path('plenary.nvim'),
   },
 }
 
