@@ -103,6 +103,7 @@ fzflua.setup({
     ['--height'] = '100%',
     ['--layout'] = 'reverse',
     ['--border'] = 'sharp',
+    ['--bind'] = 'esc:abort',
     ['--history'] = history_dir .. '-default.txt',
   },
   defaults = {
