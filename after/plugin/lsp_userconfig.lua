@@ -90,18 +90,18 @@ local function get_client(client_name, bufnr)
   return clients[1] or nil
 end
 
-local function ts_ls_organize_imports(bufnr)
+local function ts_ls_organize_imports(client, bufnr)
   local params = {
     command = '_typescript.organizeImports',
     arguments = { vim.api.nvim_buf_get_name(bufnr) },
   }
-  get_client('ts_ls', bufnr):exec_cmd(params, { bufnr = bufnr })
+  client = client or get_client('ts_ls', bufnr)
+  client:exec_cmd(params, { bufnr = bufnr })
 end
 
 local organize_imports = {
   ---@diagnostic disable-next-line: unused-local
-  pyright = function(bufnr)
-    vim.g.logger.info({ msg = 'pyright.organizeimports', bufnr = bufnr })
+  pyright = function(client, bufnr)
     local command = {
       command = 'pyright.organizeimports',
       arguments = { vim.api.nvim_buf_get_name(bufnr) },
@@ -178,8 +178,7 @@ local function common_on_attach(client, bufnr)
     vim.lsp.buf.references(nil, { on_list = lsp_on_list_handler })
   end, 'go to references')
   nmap('<leader>lo', function()
-    local buf = vim.api.nvim_get_current_buf()
-    local filetype = vim.api.nvim_get_option_value('filetype', { buf = buf })
+    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
     local lsp_type = ''
     if vim.list_contains(ts_ls_supported_filetypes, filetype) then
       lsp_type = 'ts_ls'
@@ -189,7 +188,7 @@ local function common_on_attach(client, bufnr)
     end
 
     if lsp_type and organize_imports[lsp_type] then
-      organize_imports[lsp_type](buf)
+      organize_imports[lsp_type](client, bufnr)
     else
       print('No organize imports for ' .. filetype)
     end
