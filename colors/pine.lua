@@ -1,4 +1,4 @@
--- Pine color scheme (Lua version)
+-- Pine color scheme
 --
 -- environment variables
 -- - VIM_DISABLE_MODE_CHANGE=true
@@ -9,14 +9,6 @@
 vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
--- vim.hl.priorities                                          *vim.hl.priorities*
---     Table with default priorities used for highlighting:
---     • `syntax`: `50`, used for standard syntax highlighting
---     • `treesitter`: `100`, used for treesitter-based highlighting
---     • `semantic_tokens`: `125`, used for LSP semantic token highlighting
---     • `diagnostics`: `150`, used for code analysis such as diagnostics
---     • `user`: `200`, used for user-triggered highlights such as LSP document
---       symbols or `on_yank` autocommands
 vim.hl.priorities = {
   syntax = 50,
   treesitter = 100,
@@ -152,7 +144,9 @@ local operator_hl = { fg = nicepurple }
 local modifier_hl = { fg = gray }
 local type_hl = { fg = lightgreen, cterm = italic }
 
--- Helper function to apply highlights
+---Helper function to apply highlights
+---@param group string
+---@param value table
 local function set_hl(group, value)
   if not value then
     return
