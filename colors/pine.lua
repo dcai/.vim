@@ -387,30 +387,33 @@ local custom = {
   },
 
   -- Mason
-  MasonNormal = { bg = teal, fg = white },
-  MasonHeader = {
-    bg = white,
-    fg = black,
-    cterm = bold,
-  },
-  MasonHeading = { fg = yellow, cterm = bold },
-  MasonError = { fg = nicered },
-  MasonWarning = { fg = yellow },
-  MasonHighlight = { fg = green },
+  MasonBackdrop = { bg = black },
+  MasonNormal = { link = 'NormalFloat' },
+  MasonHeader = { link = 'FloatTitle' },
+  MasonHeaderSecondary = { bg = red },
+
+  MasonHighlight = {},
   MasonHighlightBlock = {
     fg = green,
     bg = niceblack,
   },
   MasonHighlightBlockBold = {
+    -- this is the selected menu item on top
     fg = green,
     bg = niceblack,
-    cterm = bold,
+    cterm = italic,
   },
-  MasonHighlightSecondary = { fg = blue },
+
+  MasonHighlightSecondary = { bg = red },
+  MasonHighlightBlockSecondary = { bg = red },
+  MasonHighlightBlockBoldSecondary = { bg = red },
+
   MasonLink = { fg = black, cterm = underline },
+
   MasonMuted = { fg = nicegray },
   MasonMutedBlock = {
-    fg = nicegray,
+    -- this is the inactive menu items
+    fg = white,
     bg = niceblack,
   },
   MasonMutedBlockBold = {
@@ -418,6 +421,10 @@ local custom = {
     bg = niceblack,
     cterm = bold,
   },
+
+  MasonError = { link = 'ErrorMsg' },
+  MasonWarning = { link = 'WarningMsg' },
+  MasonHeading = { link = 'FloatTitle' },
 }
 apply_highlights(custom)
 
