@@ -145,8 +145,16 @@ local modifier_hl = { fg = gray }
 local type_hl = { fg = lightgreen, cterm = italic }
 
 ---Helper function to apply highlights
+---@class HighlightSpec
+---@inlinedoc
+---@field fg? string
+---@field bg? string
+---@field sp? string
+---@field link? string
+---@field cterm? string[] see `highlight-args`
+---
 ---@param group string
----@param value table
+---@param value HighlightSpec
 local function set_hl(group, value)
   if not value then
     return
@@ -159,10 +167,6 @@ local function set_hl(group, value)
   hl_spec.fg = value.fg
   hl_spec.bg = value.bg
   hl_spec.sp = value.sp
-
-  -- cterm colors (fall back to generic fg/bg if ctermfg/bg not specified)
-  hl_spec.ctermfg = value.ctermfg or nil
-  hl_spec.ctermbg = value.ctermbg or nil
 
   if value.cterm and value.cterm ~= nil then
     hl_spec.cterm = value.cterm
@@ -421,21 +425,6 @@ local custom = {
   MasonHeading = { link = 'FloatTitle' },
 }
 apply_highlights(custom)
-
--- Language Specific (Example: Javascript/JSX/TSX)
-local js = {
-  -- Legacy vim-javascript syntax groups
-  jsxTagName = { fg = green },
-  tsxTagName = { fg = green },
-  jsxElement = { fg = red },
-  jsFuncArgs = { fg = yellow },
-  jsObjectKey = {
-    fg = nicered,
-    bg = nicedarkgreen,
-  },
-  -- Treesitter groups often preferred (see below)
-}
-apply_highlights(js)
 
 -- Neovim Specific Highlighting
 if vim.fn.has('nvim') == 1 then
