@@ -9,13 +9,16 @@
 vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
-vim.hl.priorities = {
-  syntax = 50,
-  treesitter = 100,
-  semantic_tokens = 90,
-  diagnostics = 150,
-  user = 200,
-}
+local vim_version = vim.version()
+if vim_version.major >= 0 and vim_version.minor >= 11 then
+  vim.hl.priorities = {
+    syntax = 50,
+    treesitter = 100,
+    semantic_tokens = 90,
+    diagnostics = 150,
+    user = 200,
+  }
+end
 
 -- Environment variable names
 local env_stl_fg = 'VIM_PINE_COLORSCHEME_STL_FG'
