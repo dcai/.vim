@@ -420,18 +420,17 @@ if vim.fn.has('nvim') == 1 then
   apply_highlights(neovim_only)
 
   -- WhichKey
-  local whichkeybg = colors.darkslategray
   local whichkey = {
-    WhichKey = { fg = colors.niceblue },           -- Key bindings
-    WhichKeyGroup = { fg = colors.nicepurple },    -- Group titles
-    WhichKeyDesc = { fg = colors.nicelightgreen }, -- Descriptions
-    WhichKeySeparator = { fg = colors.nicegray },  -- Separators
+    WhichKey = { fg = colors.niceyellow },          -- Key bindings
+    WhichKeyGroup = { fg = colors.nicelightgreen }, -- Group titles
+    WhichKeyDesc = { fg = colors.nicelightgreen },  -- Descriptions
+    WhichKeySeparator = { fg = colors.nicegray },   -- Separators
     -- Floating window style
-    WhichKeyFloat = { bg = whichkeybg },
-    WhichKeyBorder = { bg = whichkeybg },
+    WhichKeyBorder = { link = 'FloatBorder' },
     -- Legacy names? (Included from original script)
-    WhichKeyTitle = { fg = colors.white, bg = whichkeybg, cterm = styles.bold },
-    WhichKeyNormal = { fg = colors.darkgray, bg = whichkeybg }, -- Unused?
+    WhichKeyTitle = { link = 'FloatTitle' },
+    WhichKeyFloat = { link = 'NormalFloat' },
+    WhichKeyNormal = { link = 'NormalFloat' }, -- Unused?
   }
   apply_highlights(whichkey)
 
