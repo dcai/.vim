@@ -1,0 +1,9 @@
+[tools]
+node = "22"
+
+[env]
+NVIM_USE_COPILOT=true
+NVIM_USE_CODEIUM=false
+
+[tasks.lint]
+run = 'selene **/*.lua --display-style quiet'
