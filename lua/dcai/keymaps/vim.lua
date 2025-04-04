@@ -8,6 +8,11 @@ local vim_keymap = {
     desc = 'ALEInfo',
   },
   {
+    '<leader>vC',
+    '<cmd>Copilot status<cr>',
+    desc = 'copilot status',
+  },
+  {
     '<leader>vM',
     function()
       vim.cmd('Mason')
