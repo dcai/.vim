@@ -9,8 +9,9 @@
 vim.opt.background = 'dark'
 local colorscheme_name = 'pine'
 
-local vim_version = vim.version()
-if vim_version.major >= 0 and vim_version.minor >= 11 then
+-- local vim_version = vim.version()
+-- if vim_version.major >= 0 and vim_version.minor >= 11 then
+if vim.fn.has('nvim-0.11') == 1 then
   vim.hl.priorities = {
     syntax = 50,
     treesitter = 100,
@@ -237,7 +238,7 @@ local ui = {
   TabLine = { bg = colors.darkblue, fg = colors.gray },  -- Inactive tabs
   TabLineSel = { bg = colors.white, fg = colors.black }, -- Active tab
   Title = { fg = colors.green, bg = nil, cterm = styles.bold },
-  Underlined = { fg = colors.blue, cterm = styles.underline },
+  Underlined = { fg = colors.lightblue, cterm = styles.underline },
   VertSplit = { fg = colors.green },                          -- Separator line
   Visual = dict_visual_selection,
   VisualNOS = { fg = colors.gray, cterm = styles.underline }, -- Visual selection when vim loses focus
@@ -267,7 +268,7 @@ apply_highlights(user)
 
 -- Syntax Highlighting
 local syntax = {
-  Boolean = { fg = colors.blue },
+  Boolean = { fg = colors.lightblue },
   Character = { fg = colors.red },
   Comment = comment_hl,
   Conditional = conditional_hl,
@@ -276,20 +277,20 @@ local syntax = {
   Define = { bg = colors.red }, -- Often used for #define
   Delimiter = delimiter_hl,
   -- Diagnostics (LSP)
-  DiagnosticError = { fg = colors.red },   -- Error text
-  DiagnosticWarn = { fg = colors.yellow }, -- Warning text
-  DiagnosticInfo = { fg = colors.blue },   -- Info text
-  DiagnosticHint = { fg = colors.cyan },   -- Hint text
-  DiagnosticOk = { fg = colors.green },    -- OK text (e.g., from null-ls)
+  DiagnosticError = { fg = colors.red },      -- Error text
+  DiagnosticWarn = { fg = colors.yellow },    -- Warning text
+  DiagnosticInfo = { fg = colors.lightblue }, -- Info text
+  DiagnosticHint = { fg = colors.cyan },      -- Hint text
+  DiagnosticOk = { fg = colors.green },       -- OK text (e.g., from null-ls)
   -- Diagnostic Virtual Text/Signs (adjust bg as needed)
   DiagnosticVirtualTextError = { fg = colors.red, bg = colors.nicedarkgreen },
   DiagnosticVirtualTextWarn = { fg = colors.yellow, bg = colors.nicedarkgreen },
-  DiagnosticVirtualTextInfo = { fg = colors.blue, bg = colors.nicedarkgreen },
+  DiagnosticVirtualTextInfo = { fg = colors.lightblue, bg = colors.nicedarkgreen },
   DiagnosticVirtualTextHint = { fg = colors.cyan, bg = colors.nicedarkgreen },
   -- Use these for diagnostic signs if not using separate plugins
   DiagnosticSignError = { fg = colors.red, bg = defaultbg },
   DiagnosticSignWarn = { fg = colors.yellow, bg = defaultbg },
-  DiagnosticSignInfo = { fg = colors.blue, bg = defaultbg },
+  DiagnosticSignInfo = { fg = colors.lightblue, bg = defaultbg },
   DiagnosticSignHint = { fg = colors.cyan, bg = defaultbg },
 
   -- Diff highlighting
@@ -443,7 +444,7 @@ if vim.fn.has('nvim') == 1 then
     ['@comment'] = { link = 'Comment' },
     ['@comment.error'] = { fg = colors.red, cterm = styles.bold },
     ['@comment.todo'] = { link = 'Todo' }, -- Link to existing Todo group
-    ['@comment.note'] = { fg = colors.blue },
+    ['@comment.note'] = { fg = colors.lightblue },
     ['@comment.warning'] = { fg = colors.yellow, cterm = styles.bold },
     ['@conditional'] = { link = 'Conditional' },
     ['@constant'] = { link = 'Constant' },                        -- General constants
