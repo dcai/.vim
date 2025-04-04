@@ -44,9 +44,11 @@ M.setup = function(plug_opts)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
-    -- Plug('dcai/neocodeium')
-    Plug('zbirenbaum/copilot.lua')
+    Plug('dcai/neocodeium')
     -- Plug('Exafunction/codeium.nvim')
+  end
+  if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
+    Plug('zbirenbaum/copilot.lua')
   end
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
