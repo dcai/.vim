@@ -274,6 +274,13 @@ lspconfig.lua_ls.setup({
       codeLens = {
         enable = false,
       },
+      format = {
+        enable = true,
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "2"
+        }
+      },
       telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim', 'hs' },
