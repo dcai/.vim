@@ -225,6 +225,21 @@ lspconfig.ts_ls.setup({
       description = 'Organize Imports',
     },
   },
+
+  init_options = {
+    hostInfo = 'neovim',
+    tsserver = {
+      logDirectory = vim.fn.stdpath('log') .. '/tsserver',
+      logVerbosity = 'verbose',
+    },
+    -- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
+    preferences = {
+      importModuleSpecifierPreference = 'shortest',
+      includePackageJsonAutoImports = 'auto',
+      quotePreference = 'auto', -- single or double or auto
+    },
+  },
+
   on_attach = common_on_attach,
 })
 
@@ -269,7 +284,7 @@ lspconfig.lua_ls.setup({
         callSnippet = 'Both', -- 'Disable' | 'Both' | 'Replace'
       },
       hint = {
-        enable = false,
+        enable = true,
       },
       codeLens = {
         enable = false,

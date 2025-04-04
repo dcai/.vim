@@ -61,12 +61,14 @@ local vim_keymap = {
     '<leader>vr',
     function()
       local ft = vim.bo.filetype
+      local filepath = vim.api.nvim_buf_get_name(0)
+      local filename_only = vim.fn.fnamemodify(filepath, ':t')
       if ft == 'vim' or ft == 'lua' then
         vim.cmd('source %')
         vim.g.reload('dcai')
-        vim.notify('Current buffer sourced', vim.log.levels.WARN)
+        vim.notify(filename_only .. ' sourced', vim.log.levels.WARN)
       else
-        vim.notify('Cannot reload non vim/lua files')
+        vim.notify(filepath .. ' cannot source non vim/lua files')
       end
     end,
     desc = 'reload current buffer',

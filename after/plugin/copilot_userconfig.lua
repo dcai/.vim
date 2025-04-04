@@ -61,17 +61,12 @@ copilot.setup({
   end,
   should_attach = function(_, _)
     if not vim.bo.buflisted then
-      vim.g.logger.debug("not attaching, buffer is not 'buflisted'")
       return false
     end
 
     if vim.bo.buftype ~= '' then
-      vim.g.logger.debug(
-        "not attaching, buffer 'buftype' is " .. vim.bo.buftype
-      )
       return false
     end
-    -- vim.g.logger.debug('should attach')
 
     return true
   end,
