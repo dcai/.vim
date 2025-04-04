@@ -131,15 +131,15 @@ end, {})
 
 local IGNORE_TS_DIAGNOSTICS_CODES = {
   80001, -- commonjs module
-  6133,  -- unused var
-  7016,  -- missing declaration file
+  6133, -- unused var
+  7016, -- missing declaration file
 }
 local IGNORE_PHP_DIAGNOSTIC_CODES = {
   'worse.undefined_variable',
 }
 
 local IGNORE_DIAGNOSTIC_CODES =
-    vim.g.merge_list(IGNORE_PHP_DIAGNOSTIC_CODES, IGNORE_TS_DIAGNOSTICS_CODES)
+  vim.g.merge_list(IGNORE_PHP_DIAGNOSTIC_CODES, IGNORE_TS_DIAGNOSTICS_CODES)
 
 ---return a function
 ---@param direction number
@@ -277,16 +277,13 @@ lspconfig.lua_ls.setup({
       format = {
         enable = true,
         defaultConfig = {
-          indent_style = "space",
-          indent_size = "2"
-        }
+          indent_style = 'space',
+          indent_size = '2',
+        },
       },
       telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim', 'hs' },
-        neededFileStatus = {
-          ['codestyle-check'] = 'Any',
-        },
       },
       workspace = lua_workspace_libs,
     },
@@ -348,10 +345,10 @@ vim.diagnostic.config({
 })
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
-    _err,
-    result,
-    ctx,
-    _config
+  __err,
+  result,
+  ctx,
+  _config
 )
   local filtered_diagnostic = {}
   for _i, diagnostic in ipairs(result.diagnostics) do
@@ -377,7 +374,7 @@ local function get_python_path(workspace)
   end
 
   local py_path =
-      table.concat({ vim.g.smart_root() or '', '.venv', 'bin', 'python' }, '/')
+    table.concat({ vim.g.smart_root() or '', '.venv', 'bin', 'python' }, '/')
 
   if vim.g.file_exists(py_path) then
     return py_path
