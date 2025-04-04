@@ -4,21 +4,21 @@ if not neocodeium_loaded then
   return
 end
 
-vim.keymap.set({ 'i', 's' }, '<Tab>', function()
-  local active = vim.snippet.active({ direction = 1 })
-  if active then
-    return '<cmd>lua vim.snippet.jump(1)<cr>'
-  end
-  if neocodeium_loaded then
-    neocodeium.accept()
-  end
-end, { expr = true })
-vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
-  local active = vim.snippet.active({ direction = -1 })
-  if active then
-    return '<cmd>lua vim.snippet.jump(-1)<cr>'
-  end
-end, { expr = true })
+-- vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+--   local active = vim.snippet.active({ direction = 1 })
+--   if active then
+--     return '<cmd>lua vim.snippet.jump(1)<cr>'
+--   end
+--   if neocodeium_loaded then
+--     neocodeium.accept()
+--   end
+-- end, { expr = true })
+-- vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
+--   local active = vim.snippet.active({ direction = -1 })
+--   if active then
+--     return '<cmd>lua vim.snippet.jump(-1)<cr>'
+--   end
+-- end, { expr = true })
 
 vim.keymap.set('i', '<c-n>', neocodeium.cycle_or_complete)
 vim.keymap.set('i', '<c-f>', neocodeium.accept)

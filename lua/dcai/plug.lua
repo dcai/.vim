@@ -44,13 +44,12 @@ M.setup = function(plug_opts)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
   if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
-    -- Plug('monkoose/neocodeium')
-    Plug('Exafunction/codeium.nvim')
+    Plug('monkoose/neocodeium')
+    -- Plug('Exafunction/codeium.nvim')
   end
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
     Plug('dcai/gp.nvim')
-    --Plug('aweis89/aider.nvim')
   end
   ----------------------------------------------------------------------------
   --- lsp
