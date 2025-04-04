@@ -8,6 +8,7 @@
 ```
 
 [^1]
+[![Selene Lint](https://github.com/dcai/.vim/actions/workflows/selene.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/selene.yml)
 
 A personalized Neovim setup evolved from a vimrc first crafted in 2008, now migrated and optimized for Neovim as of early 2023.
 
