@@ -7,6 +7,19 @@ end
 LOG = require('dcai.log').setup()
 vim.g.logger = LOG
 
+local original_notify = vim.notify
+
+---@diagnostic disable-next-line
+vim.notify = function(msg, level, opts)
+  local log = vim.g.logger[level]
+  if log then
+    log(msg)
+  else
+    vim.g.logger.info(msg)
+  end
+  original_notify(msg, level, opts)
+end
+
 -- vim.g.logger.trace('Starting nvim')
 
 vim.g.loaded_perl_provider = 0
