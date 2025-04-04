@@ -1,0 +1,11 @@
+{
+  "name": "nvim-config",
+  "license": "BSD-2-Claus",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": " selene **/*.lua --display-style quiet"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}

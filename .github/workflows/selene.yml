@@ -1,0 +1,29 @@
+name: Selene Lint
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "**.lua"
+      - "selene.toml"
+      - "luajit.yml"
+  pull_request:
+    paths:
+      - "**.lua"
+      - "selene.toml"
+      - "luajit.yml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Selene
+        run: |
+          curl -Ls https://github.com/Kampfkarren/selene/releases/download/0.28.0/selene-0.28.0-linux.zip -o selene.zip
+          unzip selene.zip
+          chmod +x selene
+          ./selene **/*.lua --display-style quiet

@@ -152,14 +152,14 @@ local function pulse()
       ['X-API-Token'] = CODESTATS_API_KEY,
       ['Content-Type'] = 'application/json',
     },
-    callback = vim.schedule_wrap(function(response)
-      local status = response.status
+    callback = vim.schedule_wrap(function(resp)
+      local status = resp.status
       if status == 200 or status == 201 then
         xp_table = {}
         -- logger.info('Pulsed: body sent:', body)
-        -- logger.info('Pulsed: response body', response.body)
+        -- logger.info('Pulsed: response body', resp.body)
       else
-        logger.error('Pulsed failed', response)
+        logger.error('Pulsed failed', resp)
       end
     end),
     on_error = function() end,

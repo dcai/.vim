@@ -2,7 +2,7 @@ local loaded, autosave = pcall(require, 'auto-save')
 if not loaded then
   return
 end
--- LOG.trace('auto-save loaded')
+-- vim.g.logger.trace('auto-save loaded')
 -- https://github.com/pocco81/auto-save.nvim
 autosave.setup({
   enabled = true,

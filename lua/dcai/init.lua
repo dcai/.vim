@@ -4,8 +4,7 @@ if not vim.g.file_exists(vim.g.run_dir) then
   vim.fn.mkdir(vim.g.run_dir, 'p')
 end
 
-LOG = require('dcai.log').setup()
-vim.g.logger = LOG
+vim.g.logger = require('dcai.log').setup()
 
 local original_notify = vim.notify
 

@@ -283,6 +283,7 @@ lspconfig.lua_ls.setup({
       },
       telemetry = { enable = false },
       diagnostics = {
+        enable = false,
         globals = { 'vim', 'hs' },
       },
       workspace = lua_workspace_libs,

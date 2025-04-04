@@ -38,7 +38,7 @@ local default_config = {
   logdir = vim.g.log_dir,
 }
 
-M = {}
+local M = {}
 M.setup = function(userconfig)
   -- {{{ NO NEED TO CHANGE
   local log_instance = {}

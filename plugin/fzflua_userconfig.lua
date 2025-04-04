@@ -6,7 +6,7 @@ end
 local actions = require('fzf-lua.actions')
 local fzflua = require('fzf-lua')
 local path_helper = require('fzf-lua.path')
--- LOG.trace('fzf-lua loaded, setting up...')
+-- vim.g.logger.trace('fzf-lua loaded, setting up...')
 
 local icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
 if icons_loaded then

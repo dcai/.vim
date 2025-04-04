@@ -1,6 +1,6 @@
 local fzf = require('fzf-lua')
 local utils = require('dcai.keymaps.utils')
--- LOG.trace('fzf keymap setting up...')
+-- vim.g.logger.trace('fzf keymap setting up...')
 
 local function git_files()
   if vim.g.is_git_repo() then
