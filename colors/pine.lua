@@ -113,7 +113,7 @@ local styles = {
   reverse = { reverse = true },
 }
 
-local keywordfg = colors.niceblue
+local keyword_hl = { fg = colors.niceblue, bg = nil }
 local exceptionfg = colors.red
 
 local defaultfg = colors.beige
@@ -308,14 +308,14 @@ local syntax = {
   Function = function_definition,
   Identifier = variable_hl, -- Variable names, etc. (often overridden by plugins/treesitter)
   Ignore = { fg = colors.darkgray },
-  Include = { fg = colors.darkgray, bg = nil },
-  Keyword = { fg = keywordfg, bg = nil },
+  Include = { fg = pine_color_scheme.gray_asparagus, bg = nil },
+  Keyword = keyword_hl,
   Label = { fg = colors.green }, -- case, default labels
   Macro = { fg = colors.red }, -- #define
   Number = number_hl,
   Operator = { fg = colors.nicepurple },
-  PreCondit = { fg = keywordfg }, -- #if, #ifdef
-  PreProc = { fg = keywordfg }, -- #include
+  PreCondit = { fg = colors.darkblue }, -- #if, #ifdef
+  PreProc = { fg = colors.darkgray }, -- #include
   Repeat = repeat_hl, -- for, while
   Special = special_hl, -- Special characters in strings, etc.
   SpecialKey = special_hl, -- Unprintable characters in Normal text
@@ -544,7 +544,7 @@ if vim.fn.has('nvim') == 1 then
     ['@type.builtin'] = { fg = colors.magenta, cterm = styles.italic }, -- Built-in types, boolean/string/number
     ['@type.definition'] = { link = 'Typedef' }, -- Type definitions (typedefs, aliases)
     ['@type.qualifier'] = { link = '@keyword.storage' }, -- Type qualifiers (const, volatile)
-    ['@variable'] = { link = 'identifier' }, -- Variable names
+    ['@variable'] = variable_hl, -- Variable names
     ['@variable.builtin'] = { fg = colors.nicebrown, cterm = styles.italic }, -- Super, self, this
     ['@variable.member'] = field_hl, -- Class/struct member variables
     ['@variable.parameter'] = { link = '@parameter' }, -- Variables used as parameters
