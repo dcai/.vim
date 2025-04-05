@@ -36,6 +36,8 @@ local function Plug(repo, opts)
   end
 end
 
+local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE') or 'copilot'
+
 ---setup vim-plug
 ---@param plug_opts table
 M.setup = function(plug_opts)
@@ -43,12 +45,14 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
-  if vim.g.is_env_var_true('NVIM_USE_CODEIUM') then
-    Plug('dcai/neocodeium')
-    -- Plug('Exafunction/codeium.nvim')
-  end
-  if vim.g.is_env_var_true('NVIM_USE_COPILOT') then
+
+  if completion_engine == 'copilot' then
     Plug('zbirenbaum/copilot.lua')
+  elseif completion_engine == 'codeium' then
+    -- Plug('Exafunction/codeium.nvim')
+    Plug('dcai/neocodeium')
+  elseif completion_engine == 'cody' then
+    Plug('sourcegraph/sg.nvim')
   end
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
