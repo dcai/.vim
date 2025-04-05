@@ -55,9 +55,11 @@ fzflua.setup({
     -- First existing highlight group will be used
     -- values in 3rd+ index will be passed raw
     -- i.e:  `--color fg+:#010101:bold:underline`
-    ['fg+'] = { 'fg', { 'Normal' } },
+    ['fg+'] = { 'fg', { 'NormalFloat' } },
     -- It is also possible to pass raw values directly
     ['gutter'] = '-1',
+    ['bg'] = { 'bg', 'NormalFloat' },
+    ['bg+'] = { 'bg', { 'CursorLine', 'Normal' } },
   },
   keymap = {
     -- These override the default tables completely

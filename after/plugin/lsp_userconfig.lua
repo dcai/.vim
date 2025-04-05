@@ -73,7 +73,26 @@ local function lsp_on_list_handler(options)
   end
   local fzf_items = locations_to_fzf(options)
   if #fzf_items > 0 then
-    fzflua.fzf_exec(fzf_items, { actions = fzflua.defaults.actions.files })
+    fzflua.fzf_exec(fzf_items, {
+      actions = fzflua.defaults.actions.files,
+      fzf_opts = {
+        ['--preview-window'] = 'nohidden,right,50%',
+      },
+      preview = {
+        type = 'cmd',
+        hidden = 'nohidden',
+        fn = function(items)
+          local file = fzflua.path.entry_to_file(items[1])
+          vim.g.logger.info('file: ' .. vim.inspect(file))
+          return string.format(
+            'bat --color always %s --highlight-line=%s --line-range %s:',
+            file.path,
+            file.line,
+            file.line - 5 < 1 and 1 or file.line - 5
+          )
+        end,
+      },
+    })
   end
 end
 
@@ -243,29 +262,27 @@ lspconfig.ts_ls.setup({
   on_attach = common_on_attach,
 })
 
-local lua_runtime_path = vim.split(package.path, ';')
-table.insert(lua_runtime_path, 'lua/?.lua')
-table.insert(lua_runtime_path, 'lua/?/init.lua')
-
 local function plugin_path(plugin_name)
-  return string.format('%s/plug/%s/lua', vim.g.data_dir, plugin_name)
+  local path =
+    string.format('%s/plug/%s/lua', vim.fn.stdpath('data'), plugin_name)
+  return path
 end
 
 local lua_workspace_libs = {
   checkThirdParty = false,
-  maxPreload = 2000,
-  preloadFileSize = 1000,
   ---- it's slow to load all
   -- library = vim.api.nvim_get_runtime_file('', true),
   --- so only load selected libs
   library = {
-    vim.fn.expand('$VIMRUNTIME/lua'),
-    vim.g.std_cfg_dir .. '/lua',
+    vim.env.VIMRUNTIME .. '/lua',
+    vim.fn.stdpath('config') .. '/lua',
     -- plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
     plugin_path('nvim-lspconfig'),
   },
 }
+
+vim.g.logger.debug('lua workspace libs: ' .. vim.inspect(lua_workspace_libs))
 
 lspconfig.lua_ls.setup({
   single_file_support = true,
@@ -274,36 +291,46 @@ lspconfig.lua_ls.setup({
   },
   settings = {
     Lua = {
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+  on_init = function(client, _)
+    -- client.server_capabilities.document_formatting = false
+    -- client.server_capabilities.document_range_formatting = false
+    local nvim_settings = {
       -- https://github.com/LuaLS/vscode-lua/blob/master/setting/schema.json
       runtime = {
         version = 'LuaJIT',
-        path = lua_runtime_path,
+        path = {
+          'lua/?.lua',
+          'lua/?/init.lua',
+        },
       },
       completion = {
-        enable = true,
+        enable = false,
         callSnippet = 'Both', -- 'Disable' | 'Both' | 'Replace'
       },
       hint = {
-        enable = true,
+        enable = false,
       },
       codeLens = {
         enable = false,
       },
       format = {
-        enable = true,
-        defaultConfig = {
-          indent_style = 'space',
-          indent_size = '2',
-        },
+        enable = false,
       },
       telemetry = { enable = false },
       diagnostics = {
-        enable = false,
         globals = { 'vim', 'hs' },
+        enable = false,
       },
       workspace = lua_workspace_libs,
-    },
-  },
+    }
+    client.config.settings.Lua =
+      vim.tbl_deep_extend('force', client.config.settings.Lua, nvim_settings)
+  end,
   on_attach = common_on_attach,
 })
 
