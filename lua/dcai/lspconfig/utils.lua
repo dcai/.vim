@@ -33,6 +33,7 @@ local function key_map(mode, buffer)
 end
 
 M.ts_ls_organize_imports = function(client, bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
   local params = {
     command = '_typescript.organizeImports',
     arguments = { vim.api.nvim_buf_get_name(bufnr) },
