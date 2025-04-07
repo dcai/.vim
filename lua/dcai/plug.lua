@@ -45,6 +45,7 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
+  Plug('j-hui/fidget.nvim')
   -- Plug('folke/snacks.nvim')
 
   if completion_engine == 'copilot' then
@@ -59,6 +60,7 @@ M.setup = function(plug_opts)
 
   if vim.g.is_env_var_set('OPENAI_API_KEY') then
     Plug('dcai/gp.nvim')
+    Plug('olimorris/codecompanion.nvim')
   end
   ----------------------------------------------------------------------------
   --- lsp

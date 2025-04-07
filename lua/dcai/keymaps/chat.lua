@@ -7,6 +7,8 @@ if not loaded then
   }
 end
 
+require('dcai.llm.codecompanion').setup()
+
 local gpconfig = require('dcai.llm.gpconfig')
 local gpinstance = gpconfig.setup()
 local gp_cmd_prefix = gpconfig.prefix
@@ -39,7 +41,8 @@ local keymap = {
       if completion_engine == 'copilot' then
         vim.cmd('CopilotChatToggle')
       else
-        vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
+        -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
+        vim.cmd('CodeCompanionActions')
       end
     end,
     desc = 'chat toggle',
