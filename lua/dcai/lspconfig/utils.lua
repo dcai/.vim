@@ -144,8 +144,6 @@ M.common_on_attach = function(client, bufnr)
       lsp_type = 'phpactor'
     end
 
-    vim.g.logger.info('lsp_type: ' .. lsp_type)
-    vim.g.logger.info('organize: ' .. vim.inspect(M.organize_imports[lsp_type]))
     if lsp_type and M.organize_imports[lsp_type] then
       M.organize_imports[lsp_type](client, bufnr)
     else
