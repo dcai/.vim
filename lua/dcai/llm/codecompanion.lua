@@ -138,6 +138,7 @@ M.setup = function()
         -- adapter = 'anthropic',
         -- adapter = 'gemini',
         adapter = 'deepseek',
+        show_settings = true, -- Show LLM settings at the top of the chat buffer?
         slash_commands = {
           ['help'] = {
             opts = {
