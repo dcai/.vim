@@ -222,7 +222,7 @@ local ui = {
   Folded = { fg = colors.darkgray, bg = colors.niceblack },
   LineNr = { fg = linenr_fg, bg = linenr_bg },
   SignColumn = { bg = linenr_bg },
-  MatchParen = { fg = colors.red, bg = colors.nicegray, cterm = styles.bold },
+  MatchParen = { fg = colors.red },
   ModeMsg = { fg = colors.yellow },
   MoreMsg = { fg = colors.darkgreen },
   Noise = { fg = colors.gray }, -- Punctuation, delimiters in syntax
