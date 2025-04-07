@@ -14,8 +14,7 @@ lspconfig.ts_ls.setup({
   commands = {
     OrganizeImports = {
       function()
-        local buf = vim.api.nvim_get_current_buf()
-        mylsputils.ts_ls_organize_imports(buf)
+        mylsputils.ts_ls_organize_imports()
       end,
       description = 'Organize Imports',
     },

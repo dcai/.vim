@@ -34,6 +34,7 @@ end
 
 M.ts_ls_organize_imports = function(client, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
+  client = client or get_client('ts_ls', bufnr)
   local params = {
     command = '_typescript.organizeImports',
     arguments = { vim.api.nvim_buf_get_name(bufnr) },
