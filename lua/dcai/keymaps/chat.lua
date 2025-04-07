@@ -498,7 +498,12 @@ local keymap = {
   {
     '<leader>cc',
     function()
-      vim.cmd(cmd_prefix .. 'ChatToggle')
+      local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE')
+      if completion_engine == 'copilot' then
+        vim.cmd('CopilotChatToggle')
+      else
+        vim.cmd(cmd_prefix .. 'ChatToggle')
+      end
     end,
     desc = 'chat toggle',
   },
