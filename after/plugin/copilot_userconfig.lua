@@ -99,9 +99,9 @@ if chat_loaded then
 
     -- default selection
     -- see select.lua for implementation
-    selection = function(source)
-      return select.visual(source) or select.buffer(source)
-    end,
+    -- selection = function(source)
+    --   return select.visual(source) or select.buffer(source)
+    -- end,
 
     -- default window options
     window = {
