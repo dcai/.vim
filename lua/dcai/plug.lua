@@ -49,6 +49,7 @@ M.setup = function(plug_opts)
 
   if completion_engine == 'copilot' then
     Plug('zbirenbaum/copilot.lua')
+    Plug('CopilotC-Nvim/CopilotChat.nvim')
   elseif completion_engine == 'codeium' then
     -- Plug('Exafunction/codeium.nvim')
     Plug('dcai/neocodeium')
