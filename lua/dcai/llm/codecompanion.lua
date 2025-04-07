@@ -22,8 +22,9 @@ function M:pop_progress_handle(id)
 end
 
 function M:create_progress_handle(request)
+  local strategy = request.data.strategy or ''
   return progress.handle.create({
-    title = ' Requesting assistance (' .. request.data.strategy .. ')',
+    title = ' Requesting assistance (' .. strategy .. ')',
     message = 'In progress...',
     lsp_client = {
       name = M:llm_role_title(request.data.adapter),
@@ -33,7 +34,7 @@ end
 
 function M:llm_role_title(adapter)
   local parts = {}
-  table.insert(parts, adapter.formatted_name)
+  table.insert(parts, adapter.formatted_name or '')
   if adapter.model and adapter.model ~= '' then
     table.insert(parts, '(' .. adapter.model .. ')')
   end
@@ -80,31 +81,72 @@ M.setup = function()
 
   local instance = require('codecompanion')
   instance.setup({
+    display = {
+      action_palette = {
+        provider = 'default',
+      },
+    },
+    adapters = {
+      deepseek = function()
+        return require('codecompanion.adapters').extend('deepseek', {
+          name = 'deepseek',
+          schema = {
+            model = {
+              default = 'deepseek-chat',
+            },
+          },
+        })
+      end,
+    },
     strategies = {
       chat = {
         -- adapter = 'anthropic',
-        adapter = 'gemini',
+        -- adapter = 'gemini',
+        adapter = 'deepseek',
+        slash_commands = {
+          ['help'] = {
+            opts = {
+              provider = 'fzf_lua', -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
+            },
+          },
+        },
+        tools = {
+          ['cmd_runner'] = {
+            opts = {
+              requires_approval = false,
+            },
+          },
+        },
         keymaps = {
           send = {
             modes = {
               -- n = '<C-s>',
-              n = '<cr>',
+              n = { '<cr>' },
               i = '<C-s>',
             },
           },
           close = {
             modes = {
               -- n = '<C-c>',
-              n = 'q',
+              n = { 'q', '<C-c>' },
               i = '<C-c>',
             },
           },
-          -- Add further custom keymaps here
+          clear = {
+            modes = {
+              n = { 'gx', '<C-l>' },
+            },
+          },
+          stop = {
+            modes = {
+              n = 'c-s',
+            },
+          },
         },
       },
       inline = {
         -- adapter = 'anthropic',
-        adapter = 'gemini',
+        -- adapter = 'gemini',
         keymaps = {
           accept_change = {
             modes = { n = 'ga' },
