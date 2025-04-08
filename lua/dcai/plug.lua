@@ -45,15 +45,6 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
-  Plug('j-hui/fidget.nvim', {
-    setup = function()
-      local ok, fidget = pcall(require, 'fidget')
-      if ok then
-        fidget.setup({})
-      end
-    end,
-  })
-  -- Plug('folke/snacks.nvim')
 
   if completion_engine == 'copilot' then
     Plug('zbirenbaum/copilot.lua')
@@ -81,6 +72,46 @@ M.setup = function(plug_opts)
   Plug('tpope/vim-fugitive')
   Plug('ruifm/gitlinker.nvim')
   ----------------------------------------------------------------------------
+  --- UI and usability
+  ----------------------------------------------------------------------------
+  Plug('j-hui/fidget.nvim', {
+    setup = function()
+      local ok, fidget = pcall(require, 'fidget')
+      if not ok then
+        return
+      end
+      fidget.setup({})
+    end,
+  })
+  Plug('nvim-tree/nvim-web-devicons')
+  Plug('norcalli/nvim-colorizer.lua', {
+    setup = function()
+      local ok, colorizer = pcall(require, 'colorizer')
+      if not ok then
+        return
+      end
+      colorizer.setup()
+    end,
+  })
+  Plug('ibhagwan/fzf-lua')
+  Plug('rafi/awesome-vim-colorschemes')
+  Plug('folke/which-key.nvim')
+  Plug('dstein64/vim-startuptime')
+  Plug('tyru/open-browser.vim')
+  Plug('AndrewRadev/bufferize.vim', {
+    setup = function()
+      vim.g.bufferize_command = 'new'
+      vim.g.bufferize_keep_buffers = 1
+      vim.g.bufferize_focus_output = 1
+    end,
+  })
+  Plug('preservim/vimux', {
+    setup = function()
+      vim.g.VimuxOrientation = 'h'
+    end,
+  })
+  -- Plug('folke/snacks.nvim')
+  ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
   Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
@@ -89,24 +120,17 @@ M.setup = function(plug_opts)
   Plug('windwp/nvim-ts-autotag', {
     setup = function()
       local ok, autotag = pcall(require, 'nvim-ts-autotag')
-      if ok then
-        autotag.setup({
-          opts = {
-            -- Defaults
-            enable_close = true, -- Auto close tags
-            enable_rename = true, -- Auto rename pairs of tags
-            enable_close_on_slash = false, -- Auto close on trailing </
-          },
-          -- Also override individual filetype configs, these take priority.
-          -- Empty by default, useful if one of the "opts" global settings
-          -- doesn't work well in a specific filetype
-          per_filetype = {
-            ['html'] = {
-              enable_close = true,
-            },
-          },
-        })
+      if not ok then
+        return
       end
+      autotag.setup({
+        opts = {
+          enable_close = true,
+          enable_rename = true,
+          enable_close_on_slash = false,
+        },
+        per_filetype = { ['html'] = { enable_close = true } },
+      })
     end,
   })
 
@@ -156,32 +180,13 @@ M.setup = function(plug_opts)
     end,
   })
   ----------------------------------------------------------------------------
-  --- END of markdown
-  ----------------------------------------------------------------------------
-  Plug('preservim/vimux', {
-    setup = function()
-      vim.g.VimuxOrientation = 'h'
-    end,
-  })
-  ----------------------------------------------------------------------------
   -- coding, development, writing
   ----------------------------------------------------------------------------
-  Plug('norcalli/nvim-colorizer.lua', {
-    setup = function()
-      local ok, colorizer = pcall(require, 'colorizer')
-      if ok then
-        colorizer.setup()
-      end
-    end,
-  })
   Plug('reedes/vim-lexical')
   Plug('dcai/ale', { frozen = 1 })
-  Plug('nvim-tree/nvim-web-devicons')
   -- Plug('tpope/vim-dadbod')
   -- Plug('kristijanhusak/vim-dadbod-ui')
   -- Plug('kristijanhusak/vim-dadbod-completion')
-  ----------------------------------------------------------------------------
-  --- END coding, development, writing
   ----------------------------------------------------------------------------
   -- files and editing
   ----------------------------------------------------------------------------
@@ -191,19 +196,7 @@ M.setup = function(plug_opts)
   Plug('pocco81/auto-save.nvim')
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
-  Plug('ibhagwan/fzf-lua')
-  Plug('rafi/awesome-vim-colorschemes')
-  Plug('folke/which-key.nvim')
-  Plug('dstein64/vim-startuptime')
-  Plug('tyru/open-browser.vim')
   Plug('isobit/vim-caddyfile', { ['for'] = 'caddyfile' })
-  Plug('AndrewRadev/bufferize.vim', {
-    setup = function()
-      vim.g.bufferize_command = 'new'
-      vim.g.bufferize_keep_buffers = 1
-      vim.g.bufferize_focus_output = 1
-    end,
-  })
   Plug('akinsho/toggleterm.nvim', {
     setup = function()
       local loaded, toggleterm = pcall(require, 'toggleterm')
