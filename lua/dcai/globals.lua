@@ -408,6 +408,17 @@ vim.g.git_root = root({
   '.git',
 })
 
+--- get ai provider and model
+---@return string, string
+vim.g.get_ai_model = function()
+  local input = vim.env.DEFAULT_LLM or 'openai/gpt-4o-mini'
+  local provider, model = string.match(input, '([^/]+)/?(.*)')
+  if model == '' then
+    model = nil
+  end
+  return provider, model
+end
+
 vim.g.smart_root = root({
   'package.json',
   'Makefile',

@@ -114,6 +114,8 @@ end
 M.setup = function()
   vim.env['CODECOMPANION_TOKEN_PATH'] = vim.fn.expand(vim.env.XDG_CONFIG_HOME)
 
+  local provider, model = vim.g.get_ai_model()
+
   local instance = require('codecompanion')
   instance.setup({
     display = {
@@ -137,7 +139,7 @@ M.setup = function()
       chat = {
         -- adapter = 'anthropic',
         -- adapter = 'gemini',
-        adapter = 'deepseek',
+        adapter = provider,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         slash_commands = {
           ['help'] = {
@@ -183,6 +185,7 @@ M.setup = function()
       inline = {
         -- adapter = 'anthropic',
         -- adapter = 'gemini',
+        adapter = provider,
         keymaps = {
           accept_change = {
             modes = { n = 'ga' },

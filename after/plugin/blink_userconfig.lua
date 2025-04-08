@@ -3,6 +3,12 @@ if not ok then
   vim.g.logger.error('blink.cmp not loaded!')
   return
 end
+local sources = { 'lsp', 'path', 'snippets', 'buffer' }
+
+local codecompanion_ok = pcall(require, 'codecompanion')
+if codecompanion_ok then
+  table.insert(sources, 'codecompanion')
+end
 
 require('blink.cmp').setup({
   -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -70,7 +76,7 @@ require('blink.cmp').setup({
   -- Default list of enabled providers defined so that you can extend it
   -- elsewhere in your config, without redefining it, due to `opts_extend`
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer', 'codecompanion' },
+    default = sources,
     providers = {
       snippets = {
         opts = {
