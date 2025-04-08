@@ -23,7 +23,6 @@ local lua_workspace_libs = {
   },
 }
 
-vim.g.logger.debug('lua workspace libs: ' .. vim.inspect(lua_workspace_libs))
 lspconfig.lua_ls.setup({
   single_file_support = true,
   flags = {
