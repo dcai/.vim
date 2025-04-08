@@ -289,7 +289,7 @@ require('mini.notify').setup({
   -- Notifications about LSP progress
   lsp_progress = {
     -- Whether to enable showing
-    enable = true,
+    enable = false,
 
     -- Duration (in ms) of how long last message should be shown
     duration_last = 1000,

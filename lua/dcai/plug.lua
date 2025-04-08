@@ -45,7 +45,14 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
-  Plug('j-hui/fidget.nvim')
+  Plug('j-hui/fidget.nvim', {
+    setup = function()
+      local ok, fidget = pcall(require, 'fidget')
+      if ok then
+        fidget.setup({})
+      end
+    end,
+  })
   -- Plug('folke/snacks.nvim')
 
   if completion_engine == 'copilot' then
