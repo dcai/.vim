@@ -71,8 +71,8 @@ copilot.setup({
     return true
   end,
   server = {
-    -- type = 'nodejs', -- "nodejs" | "binary"
-    type = 'binary', -- "nodejs" | "binary"
+    type = 'nodejs', -- "nodejs" | "binary"
+    -- type = 'binary', -- "nodejs" | "binary"
     custom_server_filepath = nil,
   },
   server_opts_overrides = {},
