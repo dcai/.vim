@@ -12,7 +12,6 @@ require('dcai.llm.codecompanion').setup()
 local gpconfig = require('dcai.llm.gpconfig')
 local gpinstance = gpconfig.setup()
 local gp_cmd_prefix = gpconfig.prefix
-local default_chat_agent = gpconfig.default_llm
 
 local keymap = {
   { '<leader>c', group = group },
@@ -69,6 +68,7 @@ local keymap = {
     '<leader>cn',
     function()
       vim.cmd('CodeCompanionActions')
+      -- local default_chat_agent = gpconfig.default_llm
       -- local agent = gpplugin.get_chat_agent(default_chat_agent)
       -- gpinstance.new_chat(
       --   {},
