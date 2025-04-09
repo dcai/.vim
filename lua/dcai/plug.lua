@@ -60,7 +60,7 @@ M.setup = function(plug_opts)
     vim.g.is_env_var_set('OPENAI_API_KEY')
     or vim.g.is_env_var_set('GEMINI_API_KEY')
   then
-    -- Plug('dcai/gp.nvim')
+    Plug('dcai/gp.nvim')
     Plug('olimorris/codecompanion.nvim')
   end
   ----------------------------------------------------------------------------
