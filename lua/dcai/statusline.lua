@@ -44,17 +44,13 @@ local function git_branch()
 end
 
 local function current_buffer_name()
-  return '%t'
-  -- local fullpath = vim.fn.expand('%:p')
-  -- local filemodified = ' %m'
-  -- local readonly = '%r'
-  -- local project_root = vim.g.git_root()
-  -- local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
-  -- local project_root_trimed = vim.g.replace(fullpath, vim.g.smart_root(), '')
-  -- return color_project_accent('(' .. project_name .. ')')
-  --   .. project_root_trimed
-  --   .. filemodified
-  --   .. readonly
+  -- return '%t'
+  local fullpath = vim.fn.expand('%:p')
+  local project_root = vim.g.git_root()
+  local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
+  local project_root_trimed =
+    vim.g.replace(fullpath, vim.g.smart_root() .. '/', '')
+  return color_project_accent(project_name) .. ' ' .. project_root_trimed
 end
 
 local modes = {
@@ -128,7 +124,7 @@ function StatuslineActive()
 
   if wide_enough then
     push(current_mode())
-    push(project())
+    -- push(project())
   end
 
   push(current_buffer_name())

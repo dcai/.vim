@@ -68,13 +68,14 @@ local keymap = {
   {
     '<leader>cn',
     function()
-      local agent = gpplugin.get_chat_agent(default_chat_agent)
-      gpinstance.new_chat(
-        {},
-        false,
-        'You are a helpful assistant. Provide clear, brief, and precise responses.',
-        agent
-      )
+      vim.cmd('CodeCompanionActions')
+      -- local agent = gpplugin.get_chat_agent(default_chat_agent)
+      -- gpinstance.new_chat(
+      --   {},
+      --   false,
+      --   'You are a helpful assistant. Provide clear, brief, and precise responses.',
+      --   agent
+      -- )
     end,
     desc = 'new chat',
   },
