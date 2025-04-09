@@ -199,7 +199,7 @@ M.setup = function()
       },
     },
     opts = {
-      log_level = 'TRACE', -- TRACE|DEBUG|ERROR|INFO
+      log_level = 'ERROR', -- TRACE|DEBUG|ERROR|INFO
       language = 'English',
       system_prompt = function(opts)
         local language = opts.language or 'English'
