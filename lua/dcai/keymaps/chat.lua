@@ -1,7 +1,8 @@
 local group = 'chat'
 
-local loaded, gpplugin = pcall(require, 'gp')
-if not loaded then
+local loaded_gpplugin, gpplugin = pcall(require, 'gp')
+local loaded_cc = pcall(require, 'codecompanion')
+if (not loaded_gpplugin) and not loaded_cc then
   return {
     { '<leader>c', group = group },
   }
@@ -62,7 +63,7 @@ local keymap = {
         true
       )
     end,
-    desc = 'AiDev',
+    desc = 'AI Implement',
   },
   {
     '<leader>cn',
