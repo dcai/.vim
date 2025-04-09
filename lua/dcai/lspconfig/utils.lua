@@ -106,7 +106,7 @@ M.lsp_on_list_handler = function(options)
         hidden = 'nohidden',
         fn = function(items)
           local file = fzflua.path.entry_to_file(items[1])
-          vim.g.logger.info('file: ' .. vim.inspect(file))
+          -- vim.g.logger.info('file: ' .. vim.inspect(file))
           return string.format(
             'bat --color always %s --highlight-line=%s --line-range %s:',
             file.path,
