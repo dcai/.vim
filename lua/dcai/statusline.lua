@@ -49,7 +49,7 @@ local function current_buffer_name()
   local project_root = vim.g.git_root()
   local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
   local project_root_trimed =
-    vim.g.replace(fullpath, vim.g.smart_root() .. '/', '')
+    vim.g.replace(fullpath, (vim.g.smart_root() or '') .. '/', '')
   return color_project_accent(project_name) .. ' ' .. project_root_trimed
 end
 

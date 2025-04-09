@@ -341,6 +341,8 @@ vim.g.shell_cmd = shell_cmd
 ---@param markers table
 ---@return function
 local function root(markers)
+  ---@param filepath string
+  ---@return string
   return function(filepath)
     local buf = filepath or vim.api.nvim_get_current_buf()
 
