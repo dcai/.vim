@@ -87,6 +87,10 @@ M.setup = function()
     display = {
       action_palette = {
         provider = 'default',
+        opts = {
+          show_default_actions = true,
+          show_default_prompt_library = true,
+        },
       },
     },
     adapters = {
@@ -100,6 +104,15 @@ M.setup = function()
           },
         })
       end,
+      openai = function()
+        return require('codecompanion.adapters').extend('openai', {
+          schema = {
+            model = {
+              default = 'gpt-4o-mini',
+            },
+          },
+        })
+      end,
     },
     strategies = {
       chat = {
@@ -107,6 +120,28 @@ M.setup = function()
         -- adapter = 'gemini',
         adapter = provider,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
+
+        roles = {
+          ---The header name for the LLM's messages
+          ---@type string|fun(adapter: CodeCompanion.Adapter): string
+          llm = function(adapter)
+            ---@diagnostic disable-next-line
+            return adapter.formatted_name
+            -- return 'CodeCompanion (' .. adapter.formatted_name .. ')'
+          end,
+
+          ---The header name for your messages
+          ---@type string
+          user = 'Me',
+          intro_message = 'Welcome to CodeCompanion ✨! Press ? for options',
+          show_header_separator = true,
+          separator = '─',
+          auto_scroll = false,
+          show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
+          show_settings = true, -- Show LLM settings at the top of the chat buffer?
+          show_token_count = true, -- Show the token count for each response?
+          start_in_insert_mode = false, -- Open the chat buffer in insert mode?
+        },
         slash_commands = {
           ['help'] = {
             opts = {
