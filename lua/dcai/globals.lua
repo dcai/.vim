@@ -4,6 +4,15 @@ local gmatch = require('string').gmatch
 vim.uv = vim.uv or vim.loop
 vim.g.uv = vim.uv
 
+vim.g.human_readable_osname = function()
+  ---@diagnostic disable: undefined-field
+  local osname = vim.uv.os_uname().sysname
+  if osname == 'Darwin' then
+    osname = 'macos'
+  end
+  return osname
+end
+
 vim.g.print = function(val)
   print(vim.inspect(val))
   return val

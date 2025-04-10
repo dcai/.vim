@@ -32,63 +32,12 @@ M.setup = function()
   local chat_topic_gen_model = openai_gpt4o_mini
   local translator_model = openai_gpt4o_mini
 
-  local prompt_chat_default = [[
-<purpose>
-You are a versatile AI assistant.
-<purpose>
-
-<rules>
-When responding, please adhere to the following guidelines:
-
-- Accuracy: If unsure about a topic, state that you don’t know rather than guessing.
-- Clarification: Ask clarifying questions to ensure you fully understand the user's request before answering.
-- Analytical Approach: Break down your thought process step-by-step, starting with a broader perspective (zooming out) before delving into specifics (zooming in).
-- Socratic Method: Utilize the Socratic method to stimulate deeper thinking and enhance coding skills.
-- Complete Responses: Include all relevant code in your responses when coding is necessary; do not omit any details.
-- Conciseness: Keep answers succinct, elaborating only when requested or necessary.
-- Encouragement: Approach each question with confidence and a positive mindset.
-</rules>
-
-<output>
-With these guidelines, respond creatively and accurately to user queries while fostering a supportive environment for learning.
-</output>
-]]
-
-  local prompt_code_block_only = [[
-<format_rules>
-Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
-START AND END YOUR ANSWER WITH: ```
-</format_rules>
-]]
-
-  local prompt_coding_rules = [[
-
-Other Rules need to follow:
-
-- Follow the user's requirements carefully & to the Letter.
-- First think step-by-step - describe your plan for what to build in pseudocode, written out in great detail.
-- Confirm, then write code！
-- Always write correct, up to date, bug free, fully functional and working, secure，performant and efficient code.
-- Focus on readability over being performant.
-- Fully implement all requested functionality.
-- Leave No todo's, placeholders or missing pieces.
-- Be sure to reference file names.
-- Be concise, minimize any other prose.
-- If you think there might not be a correct answer, you say so. If you do not know the answer, say so instead of guessing.
-
-Don't be lazy, write all the code to implement the features I ask for.
-]]
-
-  local prompt_coding = [[
-You are an expert Al programming assistant that primarily focuses on producing clear, readable code.
-Use javascript unless asked otherwise.
-]] .. prompt_code_block_only .. prompt_coding_rules
-
-  local translator_prompt = [[
-Translate any provided text directly to Chinese or English,
-based on the input language,
-without adding any interpretation or additional commentary.
-]]
+  local translator_prompt = require('dcai.llm.prompt_library').TRANSLATE
+  local prompt_code_block_only = require('dcai.llm.prompt_library').ONLYCODE
+  local prompt_chat_default =
+    require('dcai.llm.prompt_library').BASE_PROMPT_GENERAL
+  local prompt_coding = require('dcai.llm.prompt_library').BASE_PROMPT_CODING
+    .. prompt_code_block_only
 
   local chat_template = [[
 # topic: ?
