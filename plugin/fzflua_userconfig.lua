@@ -51,22 +51,12 @@ fzflua.setup({
       },
     },
   },
-  fzf_colors = {
-    false, -- inherit fzf colors that aren't specified below from
-    -- the auto-generated theme similar to `fzf_colors=true`
-    ['hl'] = { 'fg', 'Error' },
-    ['hl+'] = { 'fg', 'Statement' },
-    ['info'] = { 'fg', 'PreProc' },
-    ['prompt'] = { 'fg', 'Conditional' },
-    ['pointer'] = { 'fg', 'Exception' },
-    ['marker'] = { 'fg', 'Keyword' },
-    ['spinner'] = { 'fg', 'Label' },
-    ['header'] = { 'fg', 'Comment' },
-    ['fg'] = { 'fg', 'NormalFloat' },
-    ['fg+'] = { 'fg', 'Normal' },
-    ['bg'] = { 'bg', 'NormalFloat' },
-    ['bg+'] = { 'bg', 'CursorLine' },
-    ['gutter'] = { 'bg', 'LineNr' },
+  hls = {
+    normal = 'NormalFloat',
+    border = 'FloatBorder',
+    title = 'FloatTitle',
+    cursorline = 'CursorLine',
+    gutter = 'LineNr',
   },
   keymap = {
     -- These override the default tables completely
