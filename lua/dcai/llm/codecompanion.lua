@@ -113,6 +113,21 @@ M.setup = function()
               provider = 'fzf_lua', -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
             },
           },
+          ['buffer'] = {
+            opts = {
+              provider = 'fzf_lua',
+            },
+          },
+          ['symbols'] = {
+            opts = {
+              provider = 'fzf_lua',
+            },
+          },
+          ['file'] = {
+            opts = {
+              provider = 'fzf_lua',
+            },
+          },
         },
         tools = {
           ['cmd_runner'] = {
