@@ -52,14 +52,21 @@ fzflua.setup({
     },
   },
   fzf_colors = {
-    -- First existing highlight group will be used
-    -- values in 3rd+ index will be passed raw
-    -- i.e:  `--color fg+:#010101:bold:underline`
-    ['fg+'] = { 'fg', { 'NormalFloat' } },
-    -- It is also possible to pass raw values directly
-    ['gutter'] = '-1',
+    false, -- inherit fzf colors that aren't specified below from
+    -- the auto-generated theme similar to `fzf_colors=true`
+    ['hl'] = { 'fg', 'Error' },
+    ['hl+'] = { 'fg', 'Statement' },
+    ['info'] = { 'fg', 'PreProc' },
+    ['prompt'] = { 'fg', 'Conditional' },
+    ['pointer'] = { 'fg', 'Exception' },
+    ['marker'] = { 'fg', 'Keyword' },
+    ['spinner'] = { 'fg', 'Label' },
+    ['header'] = { 'fg', 'Comment' },
+    ['fg'] = { 'fg', 'NormalFloat' },
+    ['fg+'] = { 'fg', 'Normal' },
     ['bg'] = { 'bg', 'NormalFloat' },
-    ['bg+'] = { 'bg', { 'CursorLine', 'Normal' } },
+    ['bg+'] = { 'bg', 'CursorLine' },
+    ['gutter'] = { 'bg', 'LineNr' },
   },
   keymap = {
     -- These override the default tables completely
@@ -120,6 +127,7 @@ fzflua.setup({
       ['ctrl-i'] = { actions.toggle_ignore },
       ['ctrl-h'] = { actions.toggle_hidden },
       ['ctrl-g'] = false,
+      ['tab'] = false,
       ['ctrl-y'] = function(selected)
         vim.fn.setreg([[*]], path_helper.entry_to_file(selected[1]).path)
       end,
