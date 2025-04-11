@@ -32,7 +32,7 @@ local function run_nodejs_test(file, noderoot)
     if string.find(packagejson, 'jsdom') then
       env = 'jsdom'
     end
-    cmd = 'npx jest --runInBand --silent=false --coverage=false --watch --env='
+    cmd = 'npx jest --runInBand --verbose=false --silent=false --coverage=false --watch --env='
       .. env
       .. ' --runTestsByPath '
       .. file
