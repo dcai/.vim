@@ -183,7 +183,8 @@ M.setup = function()
             modes = {
               -- n = '<C-c>',
               n = { 'q', '<C-c>' },
-              i = '<C-c>',
+              -- i = '<C-c>',
+              i = nil,
             },
           },
           clear = {

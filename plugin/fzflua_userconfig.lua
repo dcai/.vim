@@ -18,7 +18,8 @@ end
 local use_icons = icons_loaded
 local git_icons = true
 local color_icons = true
-local history_dir = vim.g.data_dir .. '/fzf-history'
+---@diagnostic disable-next-line
+local history_dir = vim.g.log_dir .. '/fzf-history'
 -- local rg_ignore_file = vim.fn.expand('~') .. '/.rgignore'
 
 local do_not_reset_defaults = false
@@ -92,19 +93,19 @@ fzflua.setup({
       ['ctrl-b'] = 'preview-page-up',
     },
   },
-  fzf_opts = {
-    -- set to `false` to remove a flag
-    -- set to `true` for a no-value flag
-    -- for raw args use `fzf_args` instead
-    ['--info'] = 'inline-right', -- fzf < v0.42 = "inline"
-    ['--highlight-line'] = true, -- fzf >= v0.53
-    ['--ansi'] = true,
-    ['--height'] = '100%',
-    ['--layout'] = 'reverse',
-    ['--border'] = 'sharp',
-    ['--bind'] = 'esc:abort',
-    ['--history'] = history_dir .. '-default.txt',
-  },
+  -- fzf_opts = {
+  --   -- set to `false` to remove a flag
+  --   -- set to `true` for a no-value flag
+  --   -- for raw args use `fzf_args` instead
+  --   ['--info'] = 'inline-right', -- fzf < v0.42 = "inline"
+  --   ['--highlight-line'] = true, -- fzf >= v0.53
+  --   ['--ansi'] = true,
+  --   ['--height'] = '100%',
+  --   ['--layout'] = 'reverse',
+  --   ['--border'] = 'sharp',
+  --   ['--bind'] = 'esc:abort',
+  --   ['--history'] = history_dir .. '-default.txt',
+  -- },
   defaults = {
     -- formatter = 'path.filename_first',
   },
@@ -143,9 +144,9 @@ fzflua.setup({
     find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
     rg_opts = [[--color=never --files --hidden --follow --glob "!.git"]],
     fd_opts = [[--color=never --type f --hidden --follow --exclude .git]],
-    fzf_opts = {
-      ['--history'] = history_dir .. '-files.txt',
-    },
+    -- fzf_opts = {
+    --   ['--history'] = history_dir .. '-files.txt',
+    -- },
     -- by default, cwd appears in the header only if {opts} contain a cwd
     -- parameter to a different folder than the current working directory
     -- uncomment if you wish to force display of the cwd as part of the
@@ -194,9 +195,9 @@ fzflua.setup({
     },
     no_header = false, -- hide grep|cwd header?
     no_header_i = false, -- hide interactive header?
-    fzf_opts = {
-      ['--history'] = history_dir .. '-grep.txt',
-    },
+    -- fzf_opts = {
+    --   ['--history'] = history_dir .. '-grep.txt',
+    -- },
   },
   colorschemes = {
     prompt = 'Colorschemes❯ ',
