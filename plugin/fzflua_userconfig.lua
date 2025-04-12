@@ -128,7 +128,7 @@ fzflua.setup({
     color_icons = color_icons,
     cmd = nil,
     grep_opts = '--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e',
-    rg_opts = '--column --line-number --no-heading --color=always --smart-case '
+    rg_opts = '--sortr=modified --column --line-number --no-heading --color=always --smart-case '
       .. '--max-columns=4096 -e',
     rg_glob = false,
     glob_flag = '--iglob',
