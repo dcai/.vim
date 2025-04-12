@@ -51,7 +51,7 @@ M.setup = function(plug_opts)
     Plug('CopilotC-Nvim/CopilotChat.nvim')
   elseif completion_engine == 'codeium' then
     -- Plug('Exafunction/codeium.nvim')
-    Plug('dcai/neocodeium')
+    Plug('dcai/neocodeium', { frozen = 1 })
   elseif completion_engine == 'cody' then
     Plug('sourcegraph/sg.nvim')
   end
@@ -60,7 +60,7 @@ M.setup = function(plug_opts)
     vim.g.is_env_var_set('OPENAI_API_KEY')
     or vim.g.is_env_var_set('GEMINI_API_KEY')
   then
-    Plug('dcai/gp.nvim')
+    Plug('dcai/gp.nvim', { frozen = 1 })
     Plug('olimorris/codecompanion.nvim')
   end
   ----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ M.setup = function(plug_opts)
   -- files and editing
   ----------------------------------------------------------------------------
   Plug('junegunn/vader.vim', { ['for'] = 'vader' })
-  Plug('dcai/marlin.nvim') -- forked 'desdic/marlin.nvim'
+  Plug('dcai/marlin.nvim', { frozen = 1 }) -- forked 'desdic/marlin.nvim'
   Plug('djoshea/vim-autoread')
   Plug('pocco81/auto-save.nvim')
   Plug('mbbill/undotree')
