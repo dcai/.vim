@@ -128,14 +128,14 @@ vim.g.handle_vim_event_by_command = function(evt, command)
   })
 end
 
-local function create_autocmd(evt, group_name, callback)
-  return vim.api.nvim_create_autocmd(evt, {
-    pattern = '*',
-    group = vim.api.nvim_create_augroup(
-      group_name or ('On' .. evt .. 'Group'),
-      { clear = true }
-    ),
+vim.g.handle_autocmd = function(event_name, pattern, callback, desc)
+  local group_id =
+    vim.api.nvim_create_augroup('On' .. event_name .. 'Group', { clear = true })
+  return vim.api.nvim_create_autocmd(event_name, {
+    pattern = pattern or '*',
+    group = group_id,
     callback = callback,
+    desc = desc or ('On' .. event_name),
   })
 end
 
@@ -260,9 +260,10 @@ vim.g.setup_colorscheme = function()
   local termguicolors = get_user_config('colorscheme.termguicolors', true)
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
   apply_colorscheme(cs, termguicolors)
-  create_autocmd('ColorScheme', 'SaveColorScheme', function(ev)
+  vim.g.handle_autocmd('ColorScheme', '*', function(ev)
+    vim.g.logger.debug('ColorScheme: ' .. vim.inspect(ev))
     set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
-  end)
+  end, 'save new colorscheme')
 end
 
 vim.g.source = function(path)
