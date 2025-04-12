@@ -128,12 +128,10 @@ vim.g.handle_vim_event_by_command = function(evt, command)
   })
 end
 
-vim.g.handle_autocmd = function(event_name, pattern, callback, desc)
-  local group_id =
-    vim.api.nvim_create_augroup('On' .. event_name .. 'Group', { clear = true })
+vim.g.handle_autocmd = function(event_name, pattern, callback, desc, group_id)
   return vim.api.nvim_create_autocmd(event_name, {
     pattern = pattern or '*',
-    group = group_id,
+    group = group_id or nil,
     callback = callback,
     desc = desc or ('On' .. event_name),
   })
