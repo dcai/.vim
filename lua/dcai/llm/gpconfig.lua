@@ -27,12 +27,12 @@ M.setup = function()
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
     vim.g.logger.debug('handle GpQueryStarted: ' .. vim.inspect(ev))
     local qid = ev.data.qid
-    vim.g.update_notification(qid, 'started ' .. qid, false)
+    vim.g.update_notification(qid, 'started ' .. qid, 'gp.nvim', false)
   end, 'handle gp started')
 
   vim.g.handle_autocmd('User', 'GpDone', function(ev)
     local qid = ev.data.qid
-    vim.g.update_notification(qid, 'all done ' .. qid, true)
+    vim.g.update_notification(qid, 'all done ' .. qid, 'gp.nvim', true)
   end, 'handle gp query end')
 
   local openai_gpt4o_mini = 'gpt-4o-mini'
@@ -241,7 +241,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     chat_free_cursor = false,
 
     -- how to display GpChatToggle or GpContext: popup / split / vsplit / tabnew
-    toggle_target = '',
+    toggle_target = 'vsplit',
     -- auto select command response (easier chaining of commands)
     -- if false it also frees up the buffer cursor for further editing elsewhere
     command_auto_select_response = true,
