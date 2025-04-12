@@ -50,7 +50,7 @@ local vim_keymap = {
     desc = 'edit root vimrc',
   },
   {
-    '<leader>vR',
+    '<leader>vV',
     function()
       vim.g.reload('dcai')
       dofile(vim.env.MYVIMRC)
@@ -58,7 +58,7 @@ local vim_keymap = {
     desc = 'force reload everything',
   },
   {
-    '<leader>vr',
+    '<leader>vv',
     function()
       local ft = vim.bo.filetype
       local filepath = vim.api.nvim_buf_get_name(0)

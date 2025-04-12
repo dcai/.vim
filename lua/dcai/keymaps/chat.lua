@@ -66,6 +66,21 @@ local keymap = {
     desc = 'AI Implement',
   },
   {
+    '<leader>cv',
+    function()
+      -- local default_chat_agent = gpconfig.default_llm
+      -- local agent = gpplugin.get_chat_agent('grok-3-latest')
+      local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
+      gpinstance.new_chat(
+        {},
+        false,
+        'Act as neovim power user, use lua api when possible, answer in code only',
+        agent
+      )
+    end,
+    desc = 'ask neovim question',
+  },
+  {
     '<leader>cn',
     function()
       vim.cmd('CodeCompanionActions')

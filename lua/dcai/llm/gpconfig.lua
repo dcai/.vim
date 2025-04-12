@@ -24,12 +24,22 @@ M.chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 M.setup = function()
   local gpplugin = require('gp')
 
+  vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
+    vim.g.logger.debug('handle GpQueryStarted: ' .. vim.inspect(ev))
+    local qid = ev.data.qid
+    vim.g.update_notification(qid, 'started ' .. qid, false)
+  end, 'handle gp started')
+
+  vim.g.handle_autocmd('User', 'GpDone', function(ev)
+    local qid = ev.data.qid
+    vim.g.update_notification(qid, 'all done ' .. qid, true)
+  end, 'handle gp query end')
+
   local openai_gpt4o_mini = 'gpt-4o-mini'
   -- find claude models: https://docs.anthropic.com/en/docs/about-claude/models
   local claude_code_model = 'claude-3-7-sonnet-latest'
   -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
   local gemini2_model = 'gemini-2.0-flash'
-  local chat_topic_gen_model = openai_gpt4o_mini
   local translator_model = openai_gpt4o_mini
 
   local translator_prompt = require('dcai.llm.prompt_library').TRANSLATE
@@ -87,6 +97,14 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     --   provider = 'deepseek',
     --   system_prompt = prompt_chat_default,
     -- },
+    {
+      name = 'grok-3-mini-beta',
+      chat = true,
+      command = true,
+      model = { model = 'grok-3-mini-beta' },
+      provider = 'xai',
+      system_prompt = prompt_chat_default,
+    },
     {
       name = 'CodeClaudeSonnet',
       provider = 'anthropic',
@@ -155,6 +173,10 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     log_sensitive = false,
     log_level = vim.log.levels.INFO,
     providers = {
+      xai = {
+        endpoint = 'https://api.x.ai/v1/chat/completions',
+        secret = os.getenv('XAI_API_KEY'),
+      },
       deepseek = {
         endpoint = 'https://api.deepseek.com/chat/completions',
         secret = os.getenv('DEEPSEEK_API_KEY'),
@@ -206,8 +228,9 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     Summarize the topic of our conversation above within 4 words.
     Respond only with the topic.
   ]],
+    chat_topic_gen_provider = 'openai',
     -- chat topic model (string with model name or table with model name and parameters)
-    chat_topic_gen_model = chat_topic_gen_model,
+    chat_topic_gen_model = 'gpt-4o-mini',
     -- explicitly confirm deletion of a chat file
     chat_confirm_delete = true,
     -- conceal model parameters in chat
