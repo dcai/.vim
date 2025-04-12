@@ -108,7 +108,7 @@ local keymap = {
     '<leader>cF',
     function()
       local fzf = require('fzf-lua')
-      fzf.live_grep({
+      fzf.grep({
         winopts = {
           preview = {
             hidden = 'nohidden',
@@ -116,7 +116,8 @@ local keymap = {
         },
         multiprocess = true,
         cwd = gpconfig.chatlogs_home,
-        query = '# topic',
+        -- query = '# topic',
+        search = '# topic',
         file_ignore_patterns = {
           'node_modules',
           '.png',
