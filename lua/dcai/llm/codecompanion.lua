@@ -8,7 +8,7 @@ if not ok then
   return M
 end
 
-local progress = require('fidget.progress')
+local fidget_progress = require('fidget.progress')
 
 M.handles = {}
 
@@ -24,7 +24,7 @@ end
 
 function M:create_progress_handle(request)
   local strategy = request.data.strategy or ''
-  return progress.handle.create({
+  return fidget_progress.handle.create({
     title = ' Requesting assistance (' .. strategy .. ')',
     message = 'In progress...',
     lsp_client = {
@@ -59,6 +59,7 @@ function M:init_fidget()
     pattern = 'CodeCompanionRequestStarted',
     group = group,
     callback = function(request)
+      vim.g.logger.info(vim.inspect(request))
       local handle = M:create_progress_handle(request)
       M:store_progress_handle(request.data.id, handle)
     end,
