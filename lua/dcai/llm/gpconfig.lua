@@ -29,14 +29,27 @@ M.setup = function()
   local gpplugin = require('gp')
 
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
-    vim.g.logger.debug('handle GpQueryStarted: ' .. vim.inspect(ev))
+    vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
+    if not ev.data then
+      return
+    end
     local qid = ev.data.qid
-    vim.g.update_notification(qid, 'started ' .. qid, 'gp.nvim', false)
+    vim.g.update_notification(qid, 'Started request: ' .. qid, 'gp.nvim', false)
   end, 'handle gp started')
 
   vim.g.handle_autocmd('User', 'GpDone', function(ev)
+    vim.g.logger.debug('Handle GpDone: ' .. vim.inspect(ev))
+    if not ev.data then
+      return
+    end
     local qid = ev.data.qid
-    vim.g.update_notification(qid, 'all done ' .. qid, 'gp.nvim', true)
+    local reason = ev.data.reason or 'Unknown'
+    vim.g.update_notification(
+      qid,
+      'Done[' .. reason .. ']: ' .. qid,
+      'gp.nvim',
+      true
+    )
   end, 'handle gp query end')
 
   local openai_gpt4o_mini = 'gpt-4o-mini'
