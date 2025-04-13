@@ -50,7 +50,6 @@ local keymap = {
   {
     '<leader>cd',
     function()
-      vim.notify('AI working', vim.log.levels.INFO)
       vim.api.nvim_feedkeys(
         vim.api.nvim_replace_termcodes('<esc>V', true, false, true),
         'n',
@@ -63,20 +62,21 @@ local keymap = {
         true
       )
     end,
-    desc = 'AI Implement',
+    desc = 'GpImplement',
   },
   {
     '<leader>cv',
     function()
       -- local default_chat_agent = gpconfig.default_llm
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
-      local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
+      -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
+      local agent = gpplugin.get_chat_agent('Coder')
       gpinstance.new_chat(
         {
           args = 'vsplit',
         },
         false,
-        'Act as neovim power user, use lua api when possible, answer in code only',
+        'Act as neovim power user, answer in code only, use lua and builtin neovim api when possible',
         agent
       )
     end,
@@ -149,8 +149,8 @@ local keymap = {
   },
   {
     '<leader>cd',
-    gpconfig.wrapGpCmd('Dev'),
-    desc = 'select to dev',
+    gpconfig.wrapGpCmd('Implement'),
+    desc = 'Implement',
     mode = 'v',
   },
   {

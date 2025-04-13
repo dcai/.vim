@@ -90,13 +90,13 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
   local enabled_agents = {
     {
       name = 'Coder',
-      provider = 'googleai',
+      provider = 'xai',
+      model = {
+        model = 'grok-3-mini-beta',
+      },
       chat = true,
       -- command runs without user instructions
       command = true,
-      model = {
-        model = 'gemini-2.5-pro-preview-03-25',
-      },
       system_prompt = code_system_prompt,
     },
     {
