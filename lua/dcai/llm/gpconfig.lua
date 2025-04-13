@@ -88,15 +88,15 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
   })
 
   local enabled_agents = {
-    -- {
-    --   name = 'ChatDeepSeek',
-    --   chat = true,
-    --   command = true,
-    --   model = { model = 'deepseek-chat' },
-    --   -- model = { model = 'deepseek-reasoner' },
-    --   provider = 'deepseek',
-    --   system_prompt = prompt_chat_default,
-    -- },
+    {
+      name = 'ChatDeepSeek',
+      chat = true,
+      command = true,
+      model = { model = 'deepseek-chat' },
+      -- model = { model = 'deepseek-reasoner' },
+      provider = 'deepseek',
+      system_prompt = prompt_chat_default,
+    },
     {
       name = 'grok-3-mini-beta',
       chat = true,
