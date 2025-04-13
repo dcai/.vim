@@ -13,6 +13,11 @@ require('dcai.llm.codecompanion').setup()
 local gpconfig = require('dcai.llm.gpconfig')
 local gpinstance = gpconfig.setup()
 local gp_cmd_prefix = gpconfig.prefix
+local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE')
+local use_copilot = false
+if completion_engine == 'copilot' then
+  use_copilot = true
+end
 
 local keymap = {
   { '<leader>c', group = group },
@@ -37,8 +42,7 @@ local keymap = {
   {
     '<leader>cc',
     function()
-      local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE')
-      if completion_engine == 'copilot' then
+      if use_copilot then
         vim.cmd('CopilotChatToggle')
       else
         -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
@@ -70,7 +74,8 @@ local keymap = {
       -- local default_chat_agent = gpconfig.default_llm
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
       -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
-      local agent = gpplugin.get_chat_agent('Coder')
+      local agent =
+        gpplugin.get_chat_agent(use_copilot and 'Copilot' or 'Coder')
       gpinstance.new_chat(
         {
           args = 'vsplit',

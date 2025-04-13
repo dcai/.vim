@@ -89,6 +89,20 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
   local enabled_agents = {
     {
+      provider = 'copilot',
+      name = 'Copilot',
+      chat = true,
+      command = true,
+      model = {
+        ---@type string DeepSeek-V3-0324|gpt-4o|o1-mini|o3-mini
+        -- model = 'o3-mini',
+        model = 'o3-mini',
+        temperature = 1.1,
+        top_p = 1,
+      },
+      system_prompt = code_system_prompt,
+    },
+    {
       name = 'Coder',
       provider = 'xai',
       model = {
@@ -187,6 +201,15 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       xai = {
         endpoint = 'https://api.x.ai/v1/chat/completions',
         secret = os.getenv('XAI_API_KEY'),
+      },
+      copilot = {
+        disable = false,
+        endpoint = 'https://api.githubcopilot.com/chat/completions',
+        secret = {
+          'bash',
+          '-c',
+          "jq -r '.[ ].oauth_token' ~/.config/github-copilot/apps.json",
+        },
       },
       deepseek = {
         endpoint = 'https://api.deepseek.com/chat/completions',
