@@ -21,6 +21,10 @@ end
 
 M.chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
+local code_system_prompt = 'You are an AI working as a code editor.\n\n'
+  .. 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
+  .. 'START AND END YOUR ANSWER WITH:\n\n```'
+
 M.setup = function()
   local gpplugin = require('gp')
 
@@ -36,8 +40,6 @@ M.setup = function()
   end, 'handle gp query end')
 
   local openai_gpt4o_mini = 'gpt-4o-mini'
-  -- find claude models: https://docs.anthropic.com/en/docs/about-claude/models
-  local claude_code_model = 'claude-3-7-sonnet-latest'
   -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
   local gemini2_model = 'gemini-2.0-flash'
   local translator_model = openai_gpt4o_mini
@@ -46,8 +48,6 @@ M.setup = function()
   local prompt_code_block_only = require('dcai.llm.prompt_library').ONLYCODE
   local prompt_chat_default =
     require('dcai.llm.prompt_library').BASE_PROMPT_GENERAL
-  local prompt_coding = require('dcai.llm.prompt_library').BASE_PROMPT_CODING
-    .. prompt_code_block_only
 
   local chat_template = [[
 # topic: ?
@@ -89,6 +89,17 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
   local enabled_agents = {
     {
+      name = 'Coder',
+      provider = 'googleai',
+      chat = true,
+      -- command runs without user instructions
+      command = true,
+      model = {
+        model = 'gemini-2.5-pro-preview-03-25',
+      },
+      system_prompt = code_system_prompt,
+    },
+    {
       name = 'ChatDeepSeek',
       chat = true,
       command = true,
@@ -111,11 +122,11 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       chat = true,
       command = true,
       model = {
-        model = claude_code_model,
+        model = 'claude-3-7-sonnet-latest',
         temperature = 0.8,
         top_p = 1,
       },
-      system_prompt = prompt_coding,
+      system_prompt = code_system_prompt,
     },
     {
       name = 'ChatGPT4o-mini',
@@ -157,7 +168,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       chat = false,
       command = true,
       model = { model = gemini2_model, temperature = 0.8, top_p = 1 },
-      system_prompt = prompt_coding,
+      system_prompt = code_system_prompt,
     },
   }
 
@@ -285,7 +296,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       -- AiDev rewrites the provided selection/range based on comments in it
       ---@param _gp table -- its the instance of gpplugin
       ---@param params table
-      Dev = function(_gp, params)
+      Implement = function(_gp, params)
         local template = join({
           'Having following from {{filename}}: ',
           '```{{filetype}} \n {{selection}} \n ```',
@@ -293,7 +304,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           'Respond exclusively with the snippet that should replace the selection above.',
         })
 
-        local agent = gpplugin.get_command_agent('CodeClaudeSonnet')
+        local agent = gpplugin.get_command_agent('Coder')
         --- params table  # vim command parameters such as range, args, etc.
         --- target number | function | table  # where to put the response
         --- agent table  # obtained from get_command_agent or get_chat_agent
@@ -346,8 +357,18 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           'Please respond by writing unit tests for the code above.',
           -- 'Please respond by writing table driven unit tests for the code above.',
         })
-        local agent = gp.get_command_agent()
-        gp.Prompt(params, gp.Target.enew, agent, template)
+        local agent = gp.get_command_agent('Coder')
+        gp.Prompt(
+          params,
+          gp.Target.enew,
+          agent,
+          [[
+            I have the following code from {{filename}}:
+            ```{{filetype}}\n{{selection}}\n```
+            Please respond by writing unit tests for the code above and code only.
+            Please respond by writing table driven unit tests for the code above.
+          ]]
+        )
       end,
 
       Explain = function(gp, params)
@@ -356,7 +377,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           '```{{filetype}} \n {{selection}} \n```',
           'Please respond by explaining the code above and keep the response concise and straightforward.',
         })
-        local agent = gp.get_chat_agent()
+        local agent = gp.get_chat_agent('Coder')
         gp.Prompt(params, gp.Target.popup, agent, template)
       end,
     },
