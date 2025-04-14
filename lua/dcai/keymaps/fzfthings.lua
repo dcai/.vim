@@ -40,20 +40,15 @@ local fzf_keymap = {
   },
   {
     '<leader>ff',
-    function()
-      fzf.files({ cwd = vim.g.smart_root() })
-    end,
-    desc = 'project files',
-  },
-  {
-    '<leader>fg',
     git_files,
     desc = 'git files',
   },
   {
     '<leader>fj',
-    git_files,
-    desc = 'git files',
+    function()
+      fzf.files({ cwd = vim.g.smart_root() })
+    end,
+    desc = 'project files',
   },
   {
     '<leader>fl',
