@@ -124,14 +124,26 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       system_prompt = code_system_prompt,
     },
     {
-      name = 'Coder',
+      name = 'CodeEditor',
+      provider = 'copilot',
+      model = {
+        model = 'o3-mini',
+      },
+      chat = false,
+      command = true,
+      system_prompt = code_system_prompt,
+    },
+    {
+      -- Grok is not great at **editing** code
+      -- so this is chat only
+      name = 'CoderChat',
       provider = 'xai',
       model = {
         model = 'grok-3-mini-beta',
       },
       chat = true,
       -- command runs without user instructions
-      command = true,
+      command = false,
       system_prompt = code_system_prompt,
     },
     {
@@ -325,35 +337,6 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
         vim.api.nvim_win_set_buf(0, bufnr)
       end,
 
-      -- AiDev rewrites the provided selection/range based on comments in it
-      ---@param _gp table -- its the instance of gpplugin
-      ---@param params table
-      Implement = function(_gp, params)
-        local template = join({
-          'Having following from {{filename}}: ',
-          '```{{filetype}} \n {{selection}} \n ```',
-          'Please rewrite this according to the contained instructions.',
-          'Respond exclusively with the snippet that should replace the selection above.',
-        })
-
-        local agent = gpplugin.get_command_agent('Coder')
-        --- params table  # vim command parameters such as range, args, etc.
-        --- target number | function | table  # where to put the response
-        --- agent table  # obtained from get_command_agent or get_chat_agent
-        --- template string  # template with model instructions
-        --- prompt string | nil  # nil for non interactive commads
-        --- whisper string | nil  # predefined input (e.g. obtained from Whisper)
-        --- callback function | nil  # callback after completing the prompt
-        gpplugin.Prompt(
-          params,
-          gpplugin.Target.rewrite,
-          agent,
-          template,
-          nil, -- command will run directly without any prompting for user input
-          nil -- no predefined instructions (e.g. speech-to-text from Whisper)
-        )
-      end,
-
       BufferChatNew = function(gp, _)
         -- call GpChatNew command in range mode on whole buffer
         vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
@@ -382,6 +365,35 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
         end
       end,
 
+      ---rewrites the provided selection/range based on comments in it
+      ---@param _gp table -- its the instance of gpplugin
+      ---@param params table
+      Implement = function(_gp, params)
+        local template = join({
+          'Having following from {{filename}}: ',
+          '```{{filetype}} \n {{selection}} \n ```',
+          'Please rewrite this according to the contained instructions.',
+          'Respond exclusively with the snippet that should replace the selection above.',
+        })
+
+        local agent = gpplugin.get_command_agent('CodeEditor')
+        --- params table  # vim command parameters such as range, args, etc.
+        --- target number | function | table  # where to put the response
+        --- agent table  # obtained from get_command_agent or get_chat_agent
+        --- template string  # template with model instructions
+        --- prompt string | nil  # nil for non interactive commads
+        --- whisper string | nil  # predefined input (e.g. obtained from Whisper)
+        --- callback function | nil  # callback after completing the prompt
+        gpplugin.Prompt(
+          params,
+          gpplugin.Target.vnew,
+          agent,
+          template,
+          nil, -- command will run directly without any prompting for user input
+          nil -- no predefined instructions (e.g. speech-to-text from Whisper)
+        )
+      end,
+
       UnitTests = function(gp, params)
         local template = join({
           'I have the following code from {{filename}}: ',
@@ -389,8 +401,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           'Please respond by writing unit tests for the code above.',
           -- 'Please respond by writing table driven unit tests for the code above.',
         })
-        local agent = gp.get_command_agent('Coder')
-        gp.Prompt(params, gp.Target.enew, agent, template)
+        local agent = gp.get_command_agent('CodeEditor')
+        gp.Prompt(params, gp.Target.vnew, agent, template)
       end,
 
       Explain = function(gp, params)
@@ -399,7 +411,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           '```{{filetype}} \n {{selection}} \n```',
           'Please respond by explaining the code above and keep the response concise and straightforward.',
         })
-        local agent = gp.get_chat_agent('Coder')
+        local agent = gp.get_command_agent('CodeEditor')
         gp.Prompt(params, gp.Target.popup, agent, template)
       end,
     },

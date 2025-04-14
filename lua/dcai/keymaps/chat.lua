@@ -59,7 +59,7 @@ local keymap = {
         'n',
         true
       )
-      vim.cmd('AiDev')
+      vim.cmd('GpImplement')
       vim.api.nvim_feedkeys(
         vim.api.nvim_replace_termcodes('<esc>', true, false, true),
         'n',
