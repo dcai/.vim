@@ -262,9 +262,9 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     curl_params = {},
     -- chat topic generation prompt
     chat_topic_gen_prompt = [[
-    Summarize the topic of our conversation above within 4 words.
-    Respond only with the topic.
-  ]],
+      Summarize the topic of our conversation no more than five words.
+      Respond only with the topic.
+    ]],
     chat_topic_gen_provider = 'openai',
     -- chat topic model (string with model name or table with model name and parameters)
     chat_topic_gen_model = 'gpt-4o-mini',
