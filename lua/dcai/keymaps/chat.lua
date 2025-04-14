@@ -73,8 +73,9 @@ local keymap = {
     function()
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
       -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
-      local agent =
-        gpplugin.get_chat_agent(use_copilot and 'Copilot' or 'Coder')
+      local agent = gpplugin.get_chat_agent(
+        use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
+      )
       gpinstance.new_chat(
         {
           args = 'vsplit',

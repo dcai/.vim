@@ -2,6 +2,12 @@ local M = {}
 
 M.prefix = 'Gp'
 
+M.agents = {
+  coder_chat = 'CoderChat',
+  code_editor = 'CodeEditor',
+  copilot = 'Copilot',
+}
+
 local cmd_prefix = M.prefix
 
 M.wrapGpCmd = function(str)
@@ -124,7 +130,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       system_prompt = code_system_prompt,
     },
     {
-      name = 'CodeEditor',
+      name = M.agents.code_editor,
       provider = 'copilot',
       model = {
         model = 'claude-3.5-sonnet',
@@ -136,7 +142,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     {
       -- Grok is not great at **editing** code
       -- so this is chat only
-      name = 'CoderChat',
+      name = M.agents.coder_chat,
       provider = 'xai',
       model = {
         model = 'grok-3-mini-beta',
@@ -376,7 +382,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           'Respond exclusively with the snippet that should replace the selection above.',
         })
 
-        local agent = gpplugin.get_command_agent('CodeEditor')
+        local agent = gpplugin.get_command_agent(M.agents.code_editor)
         --- params table  # vim command parameters such as range, args, etc.
         --- target number | function | table  # where to put the response
         --- agent table  # obtained from get_command_agent or get_chat_agent
@@ -401,7 +407,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           'Please respond by writing unit tests for the code above.',
           -- 'Please respond by writing table driven unit tests for the code above.',
         })
-        local agent = gp.get_command_agent('CodeEditor')
+        local agent = gp.get_command_agent(M.agents.code_editor)
         gp.Prompt(params, gp.Target.vnew, agent, template)
       end,
 
@@ -411,7 +417,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
           '```{{filetype}} \n {{selection}} \n```',
           'Please respond by explaining the code above and keep the response concise and straightforward.',
         })
-        local agent = gp.get_command_agent('CodeEditor')
+        local agent = gp.get_command_agent(M.agents.code_editor)
         gp.Prompt(params, gp.Target.popup, agent, template)
       end,
     },
