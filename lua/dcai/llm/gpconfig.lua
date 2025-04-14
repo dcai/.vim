@@ -117,10 +117,10 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
   local enabled_agents = {
     {
-      name = 'Copilot',
+      name = M.agents.copilot,
       provider = 'copilot',
       model = {
-        ---@type "DeepSeek-V3-0324"|"gpt-4o"|"o1-mini"|"o3-mini"|"claude-3.5-sonnet"
+        ---@type 'gpt-4.5-preview'|"gpt-4o"|"o1"|"o3-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
         model = 'o3-mini',
         temperature = 1.1,
         top_p = 1,
@@ -153,7 +153,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       system_prompt = code_system_prompt,
     },
     {
-      name = 'Chat',
+      name = 'Gemini',
       provider = 'googleai',
       model = {
         -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
@@ -175,14 +175,6 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
         ---@type "deepseek-reasoner"|"deepseek-chat"
         model = 'deepseek-chat',
       },
-      chat = true,
-      command = true,
-      system_prompt = prompt_chat_default,
-    },
-    {
-      name = 'grok-3-mini-beta',
-      provider = 'xai',
-      model = { model = 'grok-3-mini-beta' },
       chat = true,
       command = true,
       system_prompt = prompt_chat_default,
