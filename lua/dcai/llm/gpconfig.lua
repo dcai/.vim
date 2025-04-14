@@ -114,7 +114,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = 'Copilot',
       provider = 'copilot',
       model = {
-        ---@type "DeepSeek-V3-0324"|"gpt-4o"|"o1-mini"|"o3-mini"
+        ---@type "DeepSeek-V3-0324"|"gpt-4o"|"o1-mini"|"o3-mini"|"claude-3.5-sonnet"
         model = 'o3-mini',
         temperature = 1.1,
         top_p = 1,
@@ -127,7 +127,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = 'CodeEditor',
       provider = 'copilot',
       model = {
-        model = 'o3-mini',
+        model = 'claude-3.5-sonnet',
       },
       chat = false,
       command = true,
