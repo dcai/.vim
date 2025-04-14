@@ -46,7 +46,7 @@ copilot.setup({
     ['.'] = false,
   },
   logger = {
-    file = vim.fn.stdpath('log') .. '/copilot-lua.log',
+    file = vim.g.log_dir .. '/copilot-lua.log',
     file_log_level = vim.log.levels.OFF,
     print_log_level = vim.log.levels.WARN,
     trace_lsp = 'verbose', -- "off" | "messages" | "verbose"
@@ -140,8 +140,8 @@ if chat_loaded then
 
     chat_autocomplete = true, -- Enable chat autocompletion (when disabled, requires manual `mappings.complete` trigger)
 
-    log_path = vim.fn.stdpath('state') .. '/copilotchat/log',
-    history_path = vim.fn.stdpath('state') .. '/copilotchat/history',
+    log_path = vim.g.log_dir .. '/copilotchat/log',
+    history_path = vim.g.state_dir .. '/copilotchat/history',
 
     question_header = '# User ', -- Header to use for user questions
     answer_header = '# Copilot ', -- Header to use for AI answers

@@ -154,7 +154,6 @@ M.setup = function(plug_opts)
   --     return
   --      end
   --   snippets.setup({
-  --    -- search_paths = { vim.fn.stdpath('config') .. '/snippets' },
   --   search_paths = { vim.fn.expand('~/src/vim-snippets/') },
   --     create_cmp_source = true,
   --  })

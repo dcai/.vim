@@ -23,8 +23,9 @@ lspconfig.ts_ls.setup({
   init_options = {
     hostInfo = 'neovim',
     tsserver = {
-      logDirectory = vim.fn.stdpath('log') .. '/tsserver',
-      logVerbosity = 'normal', -- 'off', 'terse', 'normal', 'requestTime', 'verbose'
+      logDirectory = vim.g.log_dir .. '/tsserver',
+      ---@type string 'off'|'terse'|'normal'|'requestTime'|'verbose'
+      logVerbosity = 'terse',
     },
     -- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
     preferences = {

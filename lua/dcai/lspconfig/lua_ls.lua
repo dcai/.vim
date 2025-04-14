@@ -2,8 +2,7 @@ local lspconfig = require('lspconfig')
 local common_on_attach = require('dcai.lspconfig.utils').common_on_attach
 
 local function plugin_path(plugin_name)
-  local path =
-    string.format('%s/plug/%s/lua', vim.fn.stdpath('data'), plugin_name)
+  local path = string.format('%s/plug/%s/lua', vim.g.data_dir, plugin_name)
   return path
 end
 
@@ -16,7 +15,7 @@ local lua_workspace_libs = {
   --- so only load selected libs
   library = {
     vim.env.VIMRUNTIME .. '/lua',
-    vim.fn.stdpath('config') .. '/lua',
+    vim.g.config_dir .. '/lua',
     -- plugin_path('gp.nvim'),
     plugin_path('fzf-lua'),
     plugin_path('nvim-lspconfig'),
