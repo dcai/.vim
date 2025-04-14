@@ -8,7 +8,7 @@ local notes_keymap = {
       local todofile = vim.g.notes_home .. '/todo.md'
       vim.cmd('edit ' .. todofile)
     end,
-    desc = 'find todo',
+    desc = 'todo',
   },
   utils.vim_cmd(
     '<leader>nb',

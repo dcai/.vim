@@ -210,10 +210,13 @@ vim.g.replace = function(str, what, with)
 end
 
 ---copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
----@param string string
+---@param string string|nil
 ---@param replacement string
 ---@return string
 vim.g.slugify = function(string, replacement)
+  if not string or string == '' then
+    return ''
+  end
   if replacement == nil then
     replacement = '-'
   end

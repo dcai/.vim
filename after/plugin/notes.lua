@@ -73,8 +73,8 @@ end, {})
 
 vim.api.nvim_create_user_command('NoteNew', function(opt)
   local note = opt.args
-  if not note then
-    note = vim.fn.input("What's note name? ")
+  if vim.g.isempty(note) then
+    note = vim.fn.input("What's note name? ", 'new_note_filename')
   end
   note_create_or_edit(note)
 end, { nargs = '?' })
