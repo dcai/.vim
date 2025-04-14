@@ -65,4 +65,8 @@ When presenting code changes:
   vim.g.human_readable_osname()
 )
 
+M.NEOVIM_PROMPT = [[
+Act as neovim power user, answer in code only, use lua and builtin neovim api when possible
+]]
+
 return M

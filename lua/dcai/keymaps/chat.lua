@@ -10,6 +10,8 @@ end
 
 require('dcai.llm.codecompanion').setup()
 
+local prompt_library = require('dcai.llm.prompt_library')
+
 local gpconfig = require('dcai.llm.gpconfig')
 local gpinstance = gpconfig.setup()
 local gp_cmd_prefix = gpconfig.prefix
@@ -42,12 +44,18 @@ local keymap = {
   {
     '<leader>cc',
     function()
-      if use_copilot then
-        vim.cmd('CopilotChatToggle')
-      else
-        -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
-        vim.cmd('CodeCompanionActions')
-      end
+      -- if use_copilot then
+      --   vim.cmd('CopilotChatToggle')
+      -- else
+      --   -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
+      --   vim.cmd('CodeCompanionActions')
+      -- end
+      local agent = gpplugin.get_chat_agent(
+        use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
+      )
+      gpinstance.new_chat({
+        args = 'vsplit',
+      }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
     end,
     desc = 'chat toggle',
   },
@@ -76,14 +84,9 @@ local keymap = {
       local agent = gpplugin.get_chat_agent(
         use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
       )
-      gpinstance.new_chat(
-        {
-          args = 'vsplit',
-        },
-        false,
-        'Act as neovim power user, answer in code only, use lua and builtin neovim api when possible',
-        agent
-      )
+      gpinstance.new_chat({
+        args = 'vsplit',
+      }, false, prompt_library.NEOVIM_PROMPT, agent)
     end,
     desc = 'ask neovim question',
   },
