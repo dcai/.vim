@@ -59,7 +59,7 @@ function M:init_fidget()
     pattern = 'CodeCompanionRequestStarted',
     group = group,
     callback = function(request)
-      vim.g.logger.info(vim.inspect(request))
+      -- vim.g.logger.info(vim.inspect(request))
       local handle = M:create_progress_handle(request)
       M:store_progress_handle(request.data.id, handle)
     end,

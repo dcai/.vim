@@ -58,7 +58,7 @@ local fzf_keymap = {
   {
     '<leader>fl',
     function()
-      fzf.files({ cwd = vim.g.log_dir })
+      fzf.files({ cwd = vim.g.state_dir })
     end,
     desc = 'xdg log files',
   },

@@ -33,7 +33,13 @@ M.setup = function()
       return
     end
     local qid = ev.data.qid
-    vim.g.update_notification(qid, 'Started request: ' .. qid, 'gp.nvim', false)
+    local model = 'AI'
+    if ev.data.payload and ev.data.payload.model then
+      model = ev.data.payload.model
+    end
+    local title = ' Request from ' .. model
+    local msg = 'In progress... \nqid: ' .. qid
+    vim.g.update_notification(qid, msg, title, false)
   end, 'handle gp started')
 
   vim.g.handle_autocmd('User', 'GpDone', function(ev)
@@ -45,8 +51,8 @@ M.setup = function()
     local reason = ev.data.reason or 'Unknown'
     vim.g.update_notification(
       qid,
-      'Done[' .. reason .. ']: ' .. qid,
-      'gp.nvim',
+      'Done[' .. reason .. ']\n qid: ' .. qid,
+      '',
       true
     )
   end, 'handle gp query end')
