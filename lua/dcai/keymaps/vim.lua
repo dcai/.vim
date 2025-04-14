@@ -1,3 +1,9 @@
+local function config_files()
+  local fzf = require('fzf-lua')
+  -- vim.cmd('e $MYVIMRC')
+  fzf.files({ cwd = '~/.config/nvim' })
+end
+
 local vim_keymap = {
   { '<leader>k', group = 'Neovim' },
   {
@@ -34,6 +40,13 @@ local vim_keymap = {
     desc = 'checkhealth',
   },
   {
+    '<leader>kL',
+    function()
+      vim.cmd('checkhealth lsp')
+    end,
+    desc = 'lsp status',
+  },
+  {
     '<leader>kU',
     function()
       vim.cmd('PlugUpdate')
@@ -42,11 +55,12 @@ local vim_keymap = {
   },
   {
     '<leader>kf',
-    function()
-      local fzf = require('fzf-lua')
-      -- vim.cmd('e $MYVIMRC')
-      fzf.files({ cwd = '~/.config/nvim' })
-    end,
+    config_files,
+    desc = 'edit root vimrc',
+  },
+  {
+    '<leader>kl',
+    config_files,
     desc = 'edit root vimrc',
   },
   {
