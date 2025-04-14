@@ -32,6 +32,7 @@ local code_system_prompt = 'You are an AI working as a code editor.\n\n'
 
 M.setup = function()
   local gpplugin = require('gp')
+  local prompt_library = require('dcai.llm.prompt_library')
 
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
     vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
@@ -63,10 +64,9 @@ M.setup = function()
     )
   end, 'handle gp query end')
 
-  local translator_prompt = require('dcai.llm.prompt_library').TRANSLATE
-  local prompt_code_block_only = require('dcai.llm.prompt_library').ONLYCODE
-  local prompt_chat_default =
-    require('dcai.llm.prompt_library').BASE_PROMPT_GENERAL
+  local translator_prompt = prompt_library.TRANSLATE
+  local prompt_code_block_only = prompt_library.ONLYCODE
+  local prompt_chat_default = prompt_library.BASE_PROMPT_GENERAL
 
   local chat_template = [[
 # topic: ?
@@ -277,10 +277,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     },
     curl_params = {},
     -- chat topic generation prompt
-    chat_topic_gen_prompt = [[
-      Summarize the topic of our conversation no more than five words.
-      Respond only with the topic.
-    ]],
+    chat_topic_gen_prompt = prompt_library.TOPIC_GEN,
     chat_topic_gen_provider = 'openai',
     -- chat topic model (string with model name or table with model name and parameters)
     chat_topic_gen_model = 'gpt-4o-mini',

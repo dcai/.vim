@@ -69,4 +69,9 @@ M.NEOVIM_PROMPT = [[
 Act as neovim power user, answer in code only, use lua and builtin neovim api when possible
 ]]
 
+M.TOPIC_GEN = [[
+Summarize the topic of our conversation in a few words.
+Respond only with the topic.
+]]
+
 return M
