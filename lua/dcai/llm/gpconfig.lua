@@ -1,7 +1,6 @@
 local M = {}
 
 M.prefix = 'Gp'
-M.default_llm = 'ChatGemini2'
 
 local cmd_prefix = M.prefix
 
@@ -52,11 +51,6 @@ M.setup = function()
     )
   end, 'handle gp query end')
 
-  local openai_gpt4o_mini = 'gpt-4o-mini'
-  -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
-  local gemini2_model = 'gemini-2.0-flash'
-  local translator_model = openai_gpt4o_mini
-
   local translator_prompt = require('dcai.llm.prompt_library').TRANSLATE
   local prompt_code_block_only = require('dcai.llm.prompt_library').ONLYCODE
   local prompt_chat_default =
@@ -89,12 +83,21 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       disable = true,
     }
   end, {
+    'ChatClaude-3-5-Haiku',
     'ChatClaude-3-5-Sonnet',
+    'ChatClaude-3-7-Sonnet',
     'ChatClaude-3-Haiku',
+    'ChatCopilot',
+    'ChatGPT-o3-mini',
     'ChatGPT4o',
+    'ChatGPT4o-mini',
     'ChatGemini',
+    'CodeClaude-3-5-Haiku',
     'CodeClaude-3-5-Sonnet',
+    'CodeClaude-3-7-Sonnet',
     'CodeClaude-3-Haiku',
+    'CodeCopilot',
+    'CodeGPT-o3-mini',
     'CodeGPT4o',
     'CodeGPT4o-mini',
     'CodeGemini',
@@ -102,17 +105,16 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
   local enabled_agents = {
     {
-      provider = 'copilot',
       name = 'Copilot',
-      chat = true,
-      command = true,
+      provider = 'copilot',
       model = {
-        ---@type string DeepSeek-V3-0324|gpt-4o|o1-mini|o3-mini
-        -- model = 'o3-mini',
+        ---@type "DeepSeek-V3-0324"|"gpt-4o"|"o1-mini"|"o3-mini"
         model = 'o3-mini',
         temperature = 1.1,
         top_p = 1,
       },
+      chat = true,
+      command = true,
       system_prompt = code_system_prompt,
     },
     {
@@ -127,20 +129,38 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       system_prompt = code_system_prompt,
     },
     {
+      name = 'Chat',
+      provider = 'googleai',
+      model = {
+        -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
+        model = 'gemini-2.0-flash',
+        temperature = 1.1,
+        top_p = 0.95,
+        top_k = 40,
+      },
+      disable = false,
+      chat = true,
+      command = false,
+      -- system prompt (use this to specify the persona/role of the AI)
+      system_prompt = prompt_chat_default,
+    },
+    {
       name = 'ChatDeepSeek',
+      provider = 'deepseek',
+      model = {
+        ---@type "deepseek-reasoner"|"deepseek-chat"
+        model = 'deepseek-chat',
+      },
       chat = true,
       command = true,
-      model = { model = 'deepseek-chat' },
-      -- model = { model = 'deepseek-reasoner' },
-      provider = 'deepseek',
       system_prompt = prompt_chat_default,
     },
     {
       name = 'grok-3-mini-beta',
+      provider = 'xai',
+      model = { model = 'grok-3-mini-beta' },
       chat = true,
       command = true,
-      model = { model = 'grok-3-mini-beta' },
-      provider = 'xai',
       system_prompt = prompt_chat_default,
     },
     {
@@ -156,46 +176,16 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       system_prompt = code_system_prompt,
     },
     {
-      name = 'ChatGPT4o-mini',
-      chat = true,
-      command = false,
-      model = { model = openai_gpt4o_mini, temperature = 1.1, top_p = 1 },
-      system_prompt = prompt_chat_default,
-    },
-    {
       name = 'TranslateAgent',
+      privider = 'openai',
+      model = { model = 'gpt-4o-mini', temperature = 0.8, top_p = 1 },
       chat = false,
       command = true,
-      model = { model = translator_model, temperature = 0.8, top_p = 1 },
       system_prompt = [[
         you are dictionary/translator,
         response detailed translation in chinese in the format same as oxford dictionary,
         then response essential usage examples in english.
       ]],
-    },
-    {
-      provider = 'googleai',
-      name = 'ChatGemini2',
-      disable = false,
-      chat = true,
-      command = false,
-      model = {
-        model = gemini2_model,
-        temperature = 1.1,
-        top_p = 0.95,
-        top_k = 40,
-      },
-      -- system prompt (use this to specify the persona/role of the AI)
-      system_prompt = prompt_chat_default,
-    },
-    {
-      provider = 'googleai',
-      name = 'CodeGemini2',
-      disable = false,
-      chat = false,
-      command = true,
-      model = { model = gemini2_model, temperature = 0.8, top_p = 1 },
-      system_prompt = code_system_prompt,
     },
   }
 
@@ -364,7 +354,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       end,
 
       Translator = function(gp, params)
-        local agent = gp.get_chat_agent('ChatGPT4o-mini')
+        local agent = gp.get_chat_agent('TranslateAgent')
         gp.cmd.ChatNew(params, translator_prompt, agent)
       end,
 
@@ -389,22 +379,12 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       UnitTests = function(gp, params)
         local template = join({
           'I have the following code from {{filename}}: ',
-          '```{{filetype}}\n{{selection}}\n``` ',
+          '```{{filetype}} \n {{selection}} \n``` ',
           'Please respond by writing unit tests for the code above.',
           -- 'Please respond by writing table driven unit tests for the code above.',
         })
         local agent = gp.get_command_agent('Coder')
-        gp.Prompt(
-          params,
-          gp.Target.enew,
-          agent,
-          [[
-            I have the following code from {{filename}}:
-            ```{{filetype}}\n{{selection}}\n```
-            Please respond by writing unit tests for the code above and code only.
-            Please respond by writing table driven unit tests for the code above.
-          ]]
-        )
+        gp.Prompt(params, gp.Target.enew, agent, template)
       end,
 
       Explain = function(gp, params)

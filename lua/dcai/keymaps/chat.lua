@@ -71,7 +71,6 @@ local keymap = {
   {
     '<leader>cv',
     function()
-      -- local default_chat_agent = gpconfig.default_llm
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
       -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
       local agent =
@@ -91,7 +90,6 @@ local keymap = {
     '<leader>cn',
     function()
       vim.cmd('CodeCompanionActions')
-      -- local default_chat_agent = gpconfig.default_llm
       -- local agent = gpplugin.get_chat_agent(default_chat_agent)
       -- gpinstance.new_chat(
       --   {},
