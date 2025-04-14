@@ -1,47 +1,47 @@
 local vim_keymap = {
-  { '<leader>v', group = 'vimrc' },
+  { '<leader>k', group = 'Neovim' },
   {
-    '<leader>vA',
+    '<leader>kA',
     function()
       vim.cmd('ALEInfo')
     end,
     desc = 'ALEInfo',
   },
   {
-    '<leader>vC',
+    '<leader>kC',
     '<cmd>Copilot status<cr>',
     desc = 'copilot status',
   },
   {
-    '<leader>vM',
+    '<leader>kM',
     function()
       vim.cmd('Mason')
     end,
     desc = 'Mason',
   },
   {
-    '<leader>vI',
+    '<leader>kI',
     function()
       vim.cmd('PlugInstall')
     end,
     desc = 'PlugInstall',
   },
   {
-    '<leader>vH',
+    '<leader>kH',
     function()
       vim.cmd('checkhealth')
     end,
     desc = 'checkhealth',
   },
   {
-    '<leader>vU',
+    '<leader>kU',
     function()
       vim.cmd('PlugUpdate')
     end,
     desc = 'PlugUpdate',
   },
   {
-    '<leader>ve',
+    '<leader>kf',
     function()
       local fzf = require('fzf-lua')
       -- vim.cmd('e $MYVIMRC')
@@ -50,7 +50,7 @@ local vim_keymap = {
     desc = 'edit root vimrc',
   },
   {
-    '<leader>vV',
+    '<leader>kK',
     function()
       vim.g.reload('dcai')
       dofile(vim.env.MYVIMRC)
@@ -58,7 +58,7 @@ local vim_keymap = {
     desc = 'force reload everything',
   },
   {
-    '<leader>vv',
+    '<leader>kk',
     function()
       local ft = vim.bo.filetype
       local filepath = vim.api.nvim_buf_get_name(0)
