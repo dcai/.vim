@@ -15,6 +15,9 @@ _G._notifications_map = {}
 ---@param finish? boolean
 vim.g.update_notification = function(id, msg, title, finish)
   local handle = _G._notifications_map[id]
+  if type(msg) ~= 'string' then
+    msg = vim.inspect(msg)
+  end
   if handle then
     handle.message = msg
   else
