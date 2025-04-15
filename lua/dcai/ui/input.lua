@@ -17,17 +17,41 @@ function M.under_cursor(_)
   }
 end
 
+---@param opts table? Additional options. See |input()|
+---     - prompt (string|nil)
+---               Text of the prompt
+---     - default (string|nil)
+---               Default reply to the input
+---     - completion (string|nil)
+---               Specifies type of completion supported
+---               for input. Supported types are the same
+---               that can be supplied to a user-defined
+---               command using the "-complete=" argument.
+---               See |:command-completion|
+---     - highlight (function)
+---               Function that will be used for highlighting
+---               user inputs.
+---@param on_confirm fun(input: string|nil): nil
+---@param win_config vim.api.keyset.win_config
 function M.input(opts, on_confirm, win_config)
+  opts = opts or {}
+
+  if type(opts) == 'string' then
+    opts = { prompt = opts }
+  end
+
   local prompt = opts.prompt or 'Input: '
   local default = opts.default or ''
   on_confirm = on_confirm or function() end
+  win_config = win_config or {}
 
   -- Calculate a minimal width with a bit buffer
-  local default_width = vim.str_utfindex(default) + 10
-  local prompt_width = vim.str_utfindex(prompt) + 10
+  local default_width = vim.str_utfindex(default, 'utf-8') + 50
+  local prompt_width = vim.str_utfindex(prompt, 'utf-8') + 10
   local input_width = default_width > prompt_width and default_width
     or prompt_width
 
+  ---@type vim.api.keyset.win_config
   local default_win_config = {
     focusable = true,
     style = 'minimal',
@@ -59,7 +83,10 @@ function M.input(opts, on_confirm, win_config)
 
   -- Put cursor at the end of the default value
   vim.cmd('startinsert')
-  vim.api.nvim_win_set_cursor(window, { 1, vim.str_utfindex(default) + 1 })
+  vim.api.nvim_win_set_cursor(
+    window,
+    { 1, vim.str_utfindex(default, 'utf-8') + 1 }
+  )
 
   -- Enter to confirm
   vim.keymap.set({ 'n', 'i', 'v' }, '<cr>', function()
@@ -82,7 +109,12 @@ function M.input(opts, on_confirm, win_config)
   end, { buffer = buffer })
 end
 
--- Deprecated. No need to call setup, will be removed soon.
-function M.setup() end
+function M.setup()
+  ---@diagnostic disable-next-line
+  vim.ui.input = function(opts, on_confirm)
+    opts = opts or {}
+    M.input(opts, on_confirm, {})
+  end
+end
 
 return M
