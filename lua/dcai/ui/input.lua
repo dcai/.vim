@@ -111,10 +111,10 @@ end
 
 function M.setup()
   ---@diagnostic disable-next-line
-  vim.ui.input = function(opts, on_confirm)
-    opts = opts or {}
-    M.input(opts, on_confirm, {})
-  end
+  -- vim.ui.input = function(opts, on_confirm)
+  --   opts = opts or {}
+  --   M.input(opts, on_confirm, {})
+  -- end
 end
 
 return M
