@@ -48,13 +48,7 @@ end
 
 local function touch(filepath)
   if not file_exists(filepath) then
-    local file, error_message = io.open(filepath, 'w')
-    if file then
-      file:close()
-      return file
-    else
-      print(error_message)
-    end
+    vim.fn.writefile({}, filepath, 'a')
   end
   return nil
 end
