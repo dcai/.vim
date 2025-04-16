@@ -47,7 +47,7 @@ lspconfig.lua_ls.setup({
         },
       },
       completion = {
-        enable = false,
+        enable = true,
         callSnippet = 'Both', -- 'Disable' | 'Both' | 'Replace'
       },
       hint = {

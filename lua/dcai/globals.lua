@@ -477,23 +477,33 @@ vim.g.yellow = colortext('yellow')
 vim.g.blue = colortext('blue')
 vim.g.purple = colortext('purple')
 
+---@class new_win_opt
+---@field filetype? string
+---@field title? string
+---@field split? "left"|"right"
+---@field w? number
+---@field h? number
+---@field x? number
+---@field y? number
+
+---@class new_win
+---@field buf number
+---@field win number
+---@field append function
+---@field open fun(value: string): void
+---@field close fun(): void
+
+---create new window
+---@param opt new_win_opt
+---@return new_win
 vim.g.new_win = function(opt)
   opt = opt or {}
+
+  local win = nil
+  ---@type number
+  local buf = nil
+
   local strict_indexing = false
-
-  -- Create a scratch buffer (unlisted, not saved to disk)
-  local is_listed = false
-  local is_scratch = true
-  local buf = vim.api.nvim_create_buf(is_listed, is_scratch)
-  -- Initial content
-  vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
-
-  vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
-  vim.api.nvim_set_option_value(
-    'filetype',
-    opt.filetype and opt.filetype or 'text',
-    { buf = buf }
-  )
 
   local width = opt.w and opt.w or math.min(80, vim.o.columns - 4)
   local height = opt.h and opt.h or math.min(20, vim.o.lines - 4)
@@ -502,21 +512,25 @@ vim.g.new_win = function(opt)
   local row = opt.x and opt.x or math.floor((vim.o.lines - height) / 2)
   local col = opt.y and opt.y or math.floor((vim.o.columns - width) / 2)
 
-  local opts = {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col,
-    style = 'minimal',
-    border = 'rounded',
-    focusable = true,
-    zindex = 300,
-    title = opt.title,
-  }
-
-  -- Create the window
-  local win = nil
+  local win_opts = {}
+  if opt.split then
+    win_opts = {
+      split = opt.split,
+    }
+  else
+    win_opts = {
+      relative = 'editor',
+      width = width,
+      height = height,
+      row = row,
+      col = col,
+      style = 'minimal',
+      border = 'rounded',
+      focusable = true,
+      zindex = 300,
+      title = opt.title,
+    }
+  end
 
   local function map_close_buffer(localbuf)
     vim.api.nvim_buf_set_keymap(
@@ -535,11 +549,24 @@ vim.g.new_win = function(opt)
     )
   end
 
-  local function get_window()
+  local function open()
     if not win then
-      win = vim.api.nvim_open_win(buf, true, opts)
+      -- Create a scratch buffer (unlisted, not saved to disk)
+      local is_listed = false
+      local is_scratch = true
+      buf = vim.api.nvim_create_buf(is_listed, is_scratch)
+      -- Initial content
+      vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
+
+      vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
+      vim.api.nvim_set_option_value(
+        'filetype',
+        opt.filetype and opt.filetype or 'text',
+        { buf = buf }
+      )
+      win = vim.api.nvim_open_win(buf, true, win_opts)
       map_close_buffer(buf)
-      vim.api.nvim_set_option_value('spell', false, { win = winid })
+      vim.api.nvim_set_option_value('spell', false, { win = win })
       vim.api.nvim_set_option_value('cursorline', true, { win = win })
       vim.api.nvim_set_option_value('number', false, { win = win }) -- Disable line numbers
       vim.api.nvim_set_option_value('relativenumber', false, { win = win }) -- Disable relative line numbers
@@ -558,7 +585,7 @@ vim.g.new_win = function(opt)
 
   -- Create a function to append text without creating new lines
   local function append_text(text)
-    local w = get_window()
+    local w = open()
     local last_lineno = vim.api.nvim_buf_line_count(buf) - 1
     local last_line = vim.api.nvim_buf_get_lines(
       buf,
@@ -589,12 +616,19 @@ vim.g.new_win = function(opt)
       strict_indexing,
       updated_lines
     )
+    -- jump to the bottom
     vim.api.nvim_win_set_cursor(w, { vim.api.nvim_buf_line_count(buf), 0 })
   end
 
   return {
     buf = buf,
+    win = win,
     append = vim.schedule_wrap(append_text),
-    get_window = get_window,
+    open = open,
+    close = function()
+      if win then
+        vim.api.nvim_win_close(win, true)
+      end
+    end,
   }
 end
