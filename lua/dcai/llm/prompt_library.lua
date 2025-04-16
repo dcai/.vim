@@ -70,7 +70,7 @@ Act as neovim power user, answer in code only, use lua and builtin neovim api wh
 ]]
 
 M.TOPIC_GEN = [[
-Summarize the topic of our conversation in a few words.
+Summarize the topic of our conversation no more than 5 words, no punctuations.
 Respond only with the topic.
 ]]
 
