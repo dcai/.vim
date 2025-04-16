@@ -31,10 +31,12 @@ end
 
 vim.g.file_exists = file_exists
 
+--- read file
+---@param file string
+---@return string
 local function readfile(file)
-  local f = assert(io.open(file, 'r'))
-  local content = f:read('*all')
-  f:close()
+  local lines = vim.fn.readfile(file)
+  local content = table.concat(lines, '\n') -- content is now the file as a string
   return content
 end
 
