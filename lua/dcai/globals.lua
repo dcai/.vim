@@ -476,3 +476,110 @@ vim.g.green = colortext('green')
 vim.g.yellow = colortext('yellow')
 vim.g.blue = colortext('blue')
 vim.g.purple = colortext('purple')
+
+vim.g.new_win = function(opt)
+  opt = opt or {}
+  local strict_indexing = false
+
+  -- Create a scratch buffer (unlisted, not saved to disk)
+  local buflisted = false
+  local scratch_buf = true
+  local buf = vim.api.nvim_create_buf(buflisted, scratch_buf)
+  vim.api.nvim_set_option_value(
+    'filetype',
+    opt.filetype and opt.filetype or 'text',
+    { buf = buf }
+  )
+
+  local width = opt.w and opt.w or math.min(80, vim.o.columns - 4)
+  local height = opt.h and opt.h or math.min(20, vim.o.lines - 4)
+
+  -- default to center of editor
+  local row = opt.x and opt.x or math.floor((vim.o.lines - height) / 2)
+  local col = opt.y and opt.y or math.floor((vim.o.columns - width) / 2)
+
+  local opts = {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+    focusable = true,
+    zindex = 300,
+    title = opt.title,
+  }
+
+  -- Create the window
+  local win = nil
+
+  local function map_close_buffer(localbuf)
+    vim.api.nvim_buf_set_keymap(
+      localbuf,
+      'n',
+      'q',
+      ':close<CR>',
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      localbuf,
+      'n',
+      '<Esc>',
+      ':close<CR>',
+      { noremap = true, silent = true }
+    )
+  end
+
+  local function get_window()
+    if not win then
+      win = vim.api.nvim_open_win(buf, true, opts)
+      map_close_buffer(buf)
+      vim.api.nvim_set_option_value('cursorline', true, { win = win })
+    end
+    return win
+  end
+
+  -- Initial content
+  vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
+
+  -- Create a function to append text without creating new lines
+  local function append_text(text)
+    local w = get_window()
+    local last_lineno = vim.api.nvim_buf_line_count(buf) - 1
+    local last_line = vim.api.nvim_buf_get_lines(
+      buf,
+      last_lineno,
+      last_lineno + 1,
+      strict_indexing
+    )[1]
+
+    -- Split text by newlines and handle them properly
+    local lines = vim.split(text, '\n', { plain = true })
+
+    -- Append first part to the last line
+    local new_last_line = last_line .. lines[1]
+
+    -- Create the updated lines: modified last line + any additional lines
+    local updated_lines = { new_last_line }
+    for i = 2, #lines do
+      table.insert(updated_lines, lines[i])
+    end
+
+    -- Replace the last line with our updated lines
+    vim.api.nvim_buf_set_lines(
+      buf,
+      last_lineno,
+      last_lineno + 1,
+      strict_indexing,
+      updated_lines
+    )
+    vim.api.nvim_win_set_cursor(w, { vim.api.nvim_buf_line_count(buf), 0 })
+  end
+
+  return {
+    buf = buf,
+    append = vim.schedule_wrap(append_text),
+    get_window = get_window,
+  }
+end

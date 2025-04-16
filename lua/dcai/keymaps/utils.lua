@@ -11,21 +11,10 @@ local function lazy_shell_cmd(command, opts, desc)
     -- local cwd = opts.cwd or vim.fn.expand('%:p:h')
     local cwd = opts.cwd or vim.fn.getcwd()
     desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
-    local channel = nil
+    local popupwin = nil
     if not disable_popup then
-      local popup_title = command
-      local popup = vim.g.new_popup({
-        title = popup_title,
-        number = false,
-        width = opts.width or 50,
-        height = opts.height or 10,
-      })
-      popup.open()
-      channel = vim.api.nvim_open_term(popup.buffer, {})
-      vim.api.nvim_chan_send(
-        channel,
-        string.format('[%s] start...' .. vim.g.nl, desc)
-      )
+      popupwin = vim.g.new_win({ title = command })
+      popupwin.append(string.format('[%s] start...' .. vim.g.nl, desc))
     end
     local args = opts.args or {}
     Job
@@ -37,9 +26,8 @@ local function lazy_shell_cmd(command, opts, desc)
           local stderr = table.concat(job:stderr_result(), vim.g.nl)
           local stdout = table.concat(job:result(), vim.g.nl)
           if ret == 0 then
-            if not disable_popup then
-              vim.api.nvim_chan_send(
-                channel,
+            if (not disable_popup) and popupwin then
+              popupwin.append(
                 stderr
                   .. vim.g.nl
                   .. stdout
@@ -52,8 +40,8 @@ local function lazy_shell_cmd(command, opts, desc)
               vim.notify(string.format('[%s] done', desc))
             end
           else
-            if not disable_popup then
-              pcall(vim.api.nvim_chan_send, channel, stderr)
+            if (not disable_popup) and popupwin then
+              popupwin.append(stderr)
             else
               vim.notify(
                 command
