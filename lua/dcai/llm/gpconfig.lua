@@ -35,7 +35,7 @@ M.setup = function()
   local prompt_library = require('dcai.llm.prompt_library')
 
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
-    vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
+    -- vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
     if not ev.data then
       return
     end
@@ -45,23 +45,18 @@ M.setup = function()
       model = ev.data.payload.model
     end
     local title = ' Request from ' .. model
-    local msg = 'In progress... \nqid: ' .. qid
+    local msg = 'In progress... '
     vim.g.update_notification(qid, msg, title, false)
   end, 'handle gp started')
 
   vim.g.handle_autocmd('User', 'GpDone', function(ev)
-    vim.g.logger.debug('Handle GpDone: ' .. vim.inspect(ev))
     if not ev.data then
       return
     end
     local qid = ev.data.qid
     local reason = ev.data.reason or 'Unknown'
-    vim.g.update_notification(
-      qid,
-      'Done[' .. reason .. ']\n qid: ' .. qid,
-      '',
-      true
-    )
+    vim.g.logger.debug('Handle GpDone: ' .. vim.inspect({ reason = reason }))
+    vim.g.update_notification(qid, 'Done', '', true)
   end, 'handle gp query end')
 
   local translator_prompt = prompt_library.TRANSLATE

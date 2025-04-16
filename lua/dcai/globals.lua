@@ -482,9 +482,13 @@ vim.g.new_win = function(opt)
   local strict_indexing = false
 
   -- Create a scratch buffer (unlisted, not saved to disk)
-  local buflisted = false
-  local scratch_buf = true
-  local buf = vim.api.nvim_create_buf(buflisted, scratch_buf)
+  local is_listed = false
+  local is_scratch = true
+  local buf = vim.api.nvim_create_buf(is_listed, is_scratch)
+  -- Initial content
+  vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
+
+  vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
   vim.api.nvim_set_option_value(
     'filetype',
     opt.filetype and opt.filetype or 'text',
@@ -535,13 +539,22 @@ vim.g.new_win = function(opt)
     if not win then
       win = vim.api.nvim_open_win(buf, true, opts)
       map_close_buffer(buf)
+      vim.api.nvim_set_option_value('spell', false, { win = winid })
       vim.api.nvim_set_option_value('cursorline', true, { win = win })
+      vim.api.nvim_set_option_value('number', false, { win = win }) -- Disable line numbers
+      vim.api.nvim_set_option_value('relativenumber', false, { win = win }) -- Disable relative line numbers
+      vim.api.nvim_set_option_value('signcolumn', 'no', { win = win }) -- Disable sign column
     end
     return win
   end
 
-  -- Initial content
-  vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
+  -- remove ^M at the end of line
+  local function trim_line_end(line)
+    if not line then
+      return ''
+    end
+    return line:gsub('\r$', '')
+  end
 
   -- Create a function to append text without creating new lines
   local function append_text(text)
@@ -558,11 +571,13 @@ vim.g.new_win = function(opt)
     local lines = vim.split(text, '\n', { plain = true })
 
     -- Append first part to the last line
-    local new_last_line = last_line .. lines[1]
+    local new_last_line = last_line .. trim_line_end(lines[1])
 
     -- Create the updated lines: modified last line + any additional lines
     local updated_lines = { new_last_line }
     for i = 2, #lines do
+      -- remove ^M
+      lines[i] = trim_line_end(lines[i])
       table.insert(updated_lines, lines[i])
     end
 

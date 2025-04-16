@@ -32,7 +32,9 @@ vim.g.update_notification = function(id, msg, title, finish)
   if finish then
     _G._notifications_map[id] = nil
     vim.defer_fn(function()
-      handle:finish()
+      if handle then
+        handle:finish()
+      end
     end, 1000)
   end
 end

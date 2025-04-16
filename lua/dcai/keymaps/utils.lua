@@ -13,10 +13,11 @@ local function lazy_shell_cmd(command, opts, desc)
     desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
     local popupwin = nil
     if not disable_popup then
-      popupwin = vim.g.new_win({ title = command })
-      popupwin.append(string.format('[%s] start...' .. vim.g.nl, desc))
+      popupwin = vim.g.new_win({ title = command, filetype = 'sh' })
+      popupwin.append(string.format('> %s' .. vim.g.nl .. vim.g.nl, desc))
     end
     local args = opts.args or {}
+    local done_msg = string.format('### all done:  %s', desc)
     Job
       :new({
         command = command,
@@ -28,16 +29,11 @@ local function lazy_shell_cmd(command, opts, desc)
           if ret == 0 then
             if (not disable_popup) and popupwin then
               popupwin.append(
-                stderr
-                  .. vim.g.nl
-                  .. stdout
-                  .. vim.g.nl
-                  .. desc
-                  .. ' [done]'
-                  .. vim.g.nl
+                stderr .. vim.g.nl .. stdout .. vim.g.nl .. vim.g.nl
               )
+              popupwin.append(done_msg)
             else
-              vim.notify(string.format('[%s] done', desc))
+              vim.notify(done_msg)
             end
           else
             if (not disable_popup) and popupwin then
