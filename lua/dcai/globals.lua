@@ -42,7 +42,7 @@ end
 
 vim.g.readfile = readfile
 
-local function writefile(file, contents)
+local function io_file_write(file, contents)
   local f = assert(io.open(file, 'w'))
   f:write(contents)
   f:close()
@@ -112,7 +112,7 @@ local function set_user_config(path, value)
   local userconfigfile = user_config_file_path()
   local config = get_all_local_config()
   set(config, path, value)
-  writefile(userconfigfile, vim.json.encode(config))
+  io_file_write(userconfigfile, vim.json.encode(config))
 end
 
 vim.g.handle_vim_event_by_command = function(evt, command)
