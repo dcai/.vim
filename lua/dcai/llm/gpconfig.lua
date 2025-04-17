@@ -24,6 +24,10 @@ local function std_chat_dir()
   return vim.g.data_dir .. '/gp/chats'
 end
 
+local function join(tbl, sep)
+  return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
+end
+
 M.chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
 
 local code_system_prompt = 'You are an AI working as a code editor.\n\n'
@@ -33,6 +37,40 @@ local code_system_prompt = 'You are an AI working as a code editor.\n\n'
 M.setup = function()
   local gpplugin = require('gp')
   local prompt_library = require('dcai.llm.prompt_library')
+
+  vim.keymap.set('i', '<c-i>', function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    local content = table.concat(lines, '\n')
+
+    vim.ui.input(
+      { prompt = 'what do you want me to do?', default = '' },
+      function(input)
+        local template = join({
+          'Response in code and valid code only. \n',
+          'Having following from {{filename}}: ',
+          '```{{filetype}} \n ',
+          content,
+          ' \n ```',
+          input,
+        })
+
+        local agent = gpplugin.get_command_agent(M.agents.code_editor)
+        local line_number = vim.api.nvim_win_get_cursor(0)[1]
+        gpplugin.Prompt(
+          {
+            line1 = line_number,
+            line2 = line_number + 1,
+          },
+          gpplugin.Target.append,
+          agent,
+          template,
+          nil, -- command will run directly without any prompting for user input
+          nil -- no predefined instructions (e.g. speech-to-text from Whisper)
+        )
+      end
+    )
+  end)
 
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
     -- vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
@@ -77,10 +115,6 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
 {{user_prefix}}
 ]]
-
-  local function join(tbl, sep)
-    return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
-  end
 
   -- https://github.com/Robitx/gp.nvim/blob/main/lua/gp/config.lua
   --

@@ -32,7 +32,7 @@ end
 ---               Function that will be used for highlighting
 ---               user inputs.
 ---@param on_confirm fun(input: string|nil): nil
----@param win_config vim.api.keyset.win_config
+---@param win_config? vim.api.keyset.win_config
 function M.input(opts, on_confirm, win_config)
   opts = opts or {}
 
