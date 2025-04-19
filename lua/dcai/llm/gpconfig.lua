@@ -1,5 +1,6 @@
 local M = {}
 
+---@alias CopilotModel 'gpt-4.5-preview'|"gpt-4o"|"o1"|"o3-mini"|"o4-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
 M.prefix = 'Gp'
 
 M.agents = {
@@ -150,8 +151,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.copilot,
       provider = 'copilot',
       model = {
-        ---@type 'gpt-4.5-preview'|"gpt-4o"|"o1"|"o3-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
-        model = 'o3-mini',
+        ---@type CopilotModel
+        model = 'o4-mini',
         temperature = 1.1,
         top_p = 1,
       },
@@ -163,7 +164,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.code_editor,
       provider = 'copilot',
       model = {
-        model = 'claude-3.5-sonnet',
+        -- model = 'claude-3.5-sonnet',
+        model = 'o4-mini',
       },
       chat = false,
       command = true,
