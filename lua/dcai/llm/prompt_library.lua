@@ -72,6 +72,7 @@ Act as neovim power user, answer in code only, use lua and builtin neovim api wh
 M.TOPIC_GEN = [[
 Summarize the topic of our conversation no more than 5 words, no punctuations.
 Respond only with the topic.
+Take the conversation content and create a topic name in english, make it short and clear with no punctuation
 ]]
 
 return M
