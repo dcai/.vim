@@ -1,5 +1,6 @@
 local M = {}
 
+---@alias DeepseekModel "deepseek-reasoner"|"deepseek-chat"
 ---@alias CopilotModel 'gpt-4.5-preview'|"gpt-4o"|"o1"|"o3-mini"|"o4-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
 M.prefix = 'Gp'
 
@@ -80,11 +81,11 @@ M.setup = function()
       return
     end
     local qid = ev.data.qid
-    local model = 'AI'
+    local model_name = 'AI'
     if ev.data.payload and ev.data.payload.model then
-      model = ev.data.payload.model
+      model_name = ev.data.payload.model
     end
-    local title = ' Request from ' .. model
+    local title = ' Request from ' .. model_name
     local msg = 'In progress... '
     vim.g.update_notification(qid, msg, title, false)
   end, 'handle gp started')
@@ -150,12 +151,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     {
       name = M.agents.copilot,
       provider = 'copilot',
-      model = {
-        ---@type CopilotModel
-        model = 'o4-mini',
-        temperature = 1.1,
-        top_p = 1,
-      },
+      ---@type CopilotModel
+      model = 'o4-mini',
       chat = true,
       command = true,
       system_prompt = code_system_prompt,
@@ -163,10 +160,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     {
       name = M.agents.code_editor,
       provider = 'copilot',
-      model = {
-        -- model = 'claude-3.5-sonnet',
-        model = 'o4-mini',
-      },
+      ---@type CopilotModel
+      model = 'o4-mini',
       chat = false,
       command = true,
       system_prompt = code_system_prompt,
@@ -176,9 +171,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       -- so this is chat only
       name = M.agents.coder_chat,
       provider = 'xai',
-      model = {
-        model = 'grok-3-mini-beta',
-      },
+      model = 'grok-3-mini-beta',
       chat = true,
       -- command runs without user instructions
       command = false,
@@ -203,10 +196,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     {
       name = 'ChatDeepSeek',
       provider = 'deepseek',
-      model = {
-        ---@type "deepseek-reasoner"|"deepseek-chat"
-        model = 'deepseek-chat',
-      },
+      ---@type DeepseekModel
+      model = 'deepseek-chat',
       chat = true,
       command = true,
       system_prompt = prompt_chat_default,
@@ -216,17 +207,13 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       provider = 'anthropic',
       chat = true,
       command = true,
-      model = {
-        model = 'claude-3-7-sonnet-latest',
-        temperature = 0.8,
-        top_p = 1,
-      },
+      model = 'claude-3-5-sonnet-latest',
       system_prompt = code_system_prompt,
     },
     {
       name = 'TranslateAgent',
       privider = 'openai',
-      model = { model = 'gpt-4o-mini', temperature = 0.8, top_p = 1 },
+      model = 'gpt-4o-mini',
       chat = false,
       command = true,
       system_prompt = [[
