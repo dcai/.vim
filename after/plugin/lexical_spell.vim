@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""
 """ vim-lexical
-""" https://github.com/reedes/vim-lexical
+""" https://github.com/preservim/vim-lexical
 """""""""""""""""""""""""""""""""""""""
 
 set spelllang=en,cjk
@@ -9,23 +9,39 @@ set spellcapcheck=
 
 let s:dropboxspelldir=g:dropbox_home . '/src/vimspell'
 let s:mthesaurfile=expand(s:dropboxspelldir . '/mthesaur.txt')
+let s:dictfile=expand(s:dropboxspelldir . '/words.txt')
+" let s:dictfile2spell=expand(s:dropboxspelldir . '/words')
 let s:spellfile=expand(s:dropboxspelldir . '/en.utf-8.add')
 
 function! DownloadMthesaurfile()
   execute '!curl -fLo ' . s:mthesaurfile . ' https://www.gutenberg.org/files/3202/files/mthesaur.txt'
 endfunction
 
+function! DownloadDictionary()
+  if !filereadable(s:dictfile)
+    execute '!curl -fLo ' . s:dictfile . ' https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt'
+  endif
+  " if filereadable(s:dictfile)
+  "   execute 'mkspell! ' . s:dictfile2spell . ' ' . s:dictfile
+  " endif
+endfunction
+
 let g:lexical#spell = 1
-let g:lexical#dictionary = ["/usr/share/dict/words",]
+" let g:lexical#dictionary = ["/usr/share/dict/words",]
 let g:lexical#spelllang = ["en_us","en_au",]
 
 if filereadable(s:mthesaurfile)
   let g:lexical#thesaurus = [s:mthesaurfile]
 endif
 
-if filereadable(s:spellfile)
-  let g:lexical#spellfile = [s:spellfile,]
+if filereadable(s:dictfile)
+  let g:lexical#dictionary = [s:dictfile]
+else
+  let g:lexical#dictionary = ["/usr/share/dict/words"]
 endif
+
+let g:lexical#spellfile = [s:spellfile]
+" let g:lexical#spellfile = [s:dictfile2spell . '.utf-8.add']
 
 function! EnableLexical(v)
   if !exists('g:loaded_lexical')

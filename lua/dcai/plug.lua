@@ -184,7 +184,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   -- coding, development, writing
   ----------------------------------------------------------------------------
-  Plug('reedes/vim-lexical')
+  Plug('preservim/vim-lexical')
   Plug('dcai/ale', { frozen = 1 })
   -- Plug('tpope/vim-dadbod')
   -- Plug('kristijanhusak/vim-dadbod-ui')
