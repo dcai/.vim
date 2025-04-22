@@ -1,7 +1,8 @@
 local M = {}
 
+---@alias ClaudeModel 'claude-3-5-sonnet-latest'|'claude-3-7-sonnet-latest'
 ---@alias DeepseekModel "deepseek-reasoner"|"deepseek-chat"
----@alias CopilotModel 'gpt-4.5-preview'|"gpt-4o"|"o1"|"o3-mini"|"o4-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
+---@alias CopilotModel "gpt-4o"|"gpt-4.1"|"o3-mini"|"o4-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
 M.prefix = 'Gp'
 
 M.agents = {
@@ -152,7 +153,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.copilot,
       provider = 'copilot',
       ---@type CopilotModel
-      model = 'o4-mini',
+      model = 'gpt-4.1',
+      -- model = 'o4-mini',
       chat = true,
       command = true,
       system_prompt = code_system_prompt,
@@ -207,6 +209,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       provider = 'anthropic',
       chat = true,
       command = true,
+      ---@type ClaudeModel
       model = 'claude-3-5-sonnet-latest',
       system_prompt = code_system_prompt,
     },
