@@ -43,14 +43,16 @@ local function git_branch()
   return lpad(color_highlight(ret))
 end
 
-local function current_buffer_name()
+local function project_and_filename(wide_enough)
   -- return '%t'
   local fullpath = vim.fn.expand('%:p')
-  local project_root = vim.g.git_root()
-  local project_name = project_root and project_root:match('([^/]+)$') or 'N/A'
-  local project_root_trimed =
-    vim.g.replace(fullpath, (vim.g.smart_root() or '') .. '/', '')
-  return color_project_accent(project_name) .. ' ' .. project_root_trimed
+  local git_root = vim.g.git_root()
+  local git_dir_name = git_root and vim.fs.basename(git_root) or 'N/A'
+  local filename = '%t'
+  if wide_enough then
+    filename = vim.g.replace(fullpath, git_root, '')
+  end
+  return color_project_accent(git_dir_name) .. ' ' .. filename
 end
 
 local modes = {
@@ -127,7 +129,7 @@ function StatuslineActive()
     -- push(project())
   end
 
-  push(current_buffer_name())
+  push(project_and_filename(wide_enough))
 
   if wide_enough then
     push(SEP)

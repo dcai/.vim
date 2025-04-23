@@ -344,39 +344,6 @@ end
 
 vim.g.shell_cmd = shell_cmd
 
----get project root
----@param markers table
----@return function
-local function root(markers)
-  ---@param filepath string
-  ---@return string
-  return function(filepath)
-    local buf = filepath or vim.api.nvim_get_current_buf()
-
-    if vim.fs and vim.fs.root then
-      local fs_root = vim.fs.root(buf, markers)
-      if fs_root then
-        return fs_root
-      end
-    end
-
-    local current_buf_dir = vim.fn.expand('%:p:h')
-    local git_repo = shell_cmd('git rev-parse --show-toplevel')
-    local dir = git_repo or current_buf_dir
-    local loaded, lspconfig = pcall(require, 'lspconfig')
-    if not loaded then
-      return dir
-    end
-
-    if lspconfig.util and lspconfig.util.root_pattern then
-      local root_pattern = lspconfig.util.root_pattern
-      return root_pattern(unpack(markers))(current_buf_dir)
-    else
-      return dir
-    end
-  end
-end
-
 vim.g.close_all_popups = function()
   -- Get all windows
   local windows = vim.api.nvim_list_wins()
@@ -411,12 +378,6 @@ vim.g.merge_list = function(...)
   return result
 end
 
-vim.g.git_root = root({
-  '.github',
-  '.gitlab-ci.yml',
-  '.git',
-})
-
 --- get ai provider and model
 ---@return string, string
 vim.g.get_ai_model = function()
@@ -427,6 +388,44 @@ vim.g.get_ai_model = function()
   end
   return provider, model
 end
+
+---get project root
+---@param markers string[]
+---@return fun(filepath: string?): string?
+local function root(markers)
+  return function(filepath)
+    local buf = filepath or vim.api.nvim_get_current_buf()
+
+    if vim.fs and vim.fs.root then
+      local fs_root = vim.fs.root(buf, markers)
+      if fs_root then
+        return fs_root
+      end
+    end
+
+    --- XXX below is for backward compatibility
+    local current_buf_dir = vim.fn.expand('%:p:h')
+    local git_repo = shell_cmd('git rev-parse --show-toplevel')
+    local dir = git_repo or current_buf_dir
+    local loaded, lspconfig = pcall(require, 'lspconfig')
+    if not loaded then
+      return dir
+    end
+
+    if lspconfig.util and lspconfig.util.root_pattern then
+      local root_pattern = lspconfig.util.root_pattern
+      return root_pattern(unpack(markers))(current_buf_dir)
+    else
+      return dir
+    end
+  end
+end
+
+vim.g.git_root = root({
+  '.github',
+  '.gitlab-ci.yml',
+  '.git',
+})
 
 vim.g.smart_root = root({
   'package.json',
