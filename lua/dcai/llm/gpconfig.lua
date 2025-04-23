@@ -78,7 +78,6 @@ M.setup = function()
   --   )
   -- end)
 
-  local bot_ls = 'Thinking'
   vim.g.handle_autocmd('User', 'GpQueryStarted', function(ev)
     -- vim.g.logger.debug('Handle GpQueryStarted: ' .. vim.inspect(ev))
     if not ev.data then
@@ -90,7 +89,7 @@ M.setup = function()
       model_name = ev.data.payload.model
     end
     local title = ' Requesting from ' .. model_name
-    vim.g.update_notification(qid, 'in progress', title, bot_ls, false)
+    vim.g.update_notification(qid, 'in progress', title, model_name, false)
   end, 'handle gp started')
 
   vim.g.handle_autocmd('User', 'GpDone', function(ev)
@@ -98,9 +97,10 @@ M.setup = function()
       return
     end
     local qid = ev.data.qid
+    local model = ev.data.model or 'AI'
     -- local reason = ev.data.reason or 'Unknown'
     -- vim.g.logger.debug('Handle GpDone: ' .. vim.inspect({ reason = reason }))
-    vim.g.update_notification(qid, 'Done', '', bot_ls, true)
+    vim.g.update_notification(qid, 'Done', '', model, true)
   end, 'handle gp query end')
 
   local translator_prompt = prompt_library.TRANSLATE
