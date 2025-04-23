@@ -152,13 +152,34 @@ function StatuslineInactive(evt)
 end
 
 M.setup = function()
-  vim.cmd([[
-      augroup Statusline
-        au!
-        autocmd BufEnter,BufLeave,WinResized,WinNew,WinEnter,WinClosed * setlocal statusline=%!v:lua.StatuslineActive()
-        autocmd BufLeave,WinLeave * setlocal statusline=%!v:lua.StatuslineInactive()
-      augroup END
-    ]])
+  -- vim.cmd([[
+  --     augroup Statusline
+  --       au!
+  --       autocmd BufEnter,BufLeave,WinResized,WinNew,WinEnter,WinClosed * setlocal statusline=%!v:lua.StatuslineActive()
+  --       autocmd BufLeave,WinLeave * setlocal statusline=%!v:lua.StatuslineInactive()
+  --     augroup END
+  --   ]])
+  local statusline_grp =
+    vim.api.nvim_create_augroup('Statusline', { clear = true })
+
+  vim.api.nvim_create_autocmd(
+    { 'BufEnter', 'BufLeave', 'WinResized', 'WinNew', 'WinEnter', 'WinClosed' },
+    {
+      group = statusline_grp,
+      pattern = '*',
+      callback = function()
+        vim.opt_local.statusline = StatuslineActive()
+      end,
+    }
+  )
+
+  vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+    group = statusline_grp,
+    pattern = '*',
+    callback = function()
+      vim.opt_local.statusline = StatuslineInactive()
+    end,
+  })
 
   -- XXX: autocommand below doesnt update mode correctly, try to fix this later
   -- vim.api.nvim_create_autocmd(
