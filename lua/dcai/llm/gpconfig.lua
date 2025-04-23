@@ -17,21 +17,16 @@ M.wrapGpCmd = function(str)
   return ":<c-u>'<,'>" .. cmd_prefix .. str .. '<cr>'
 end
 
-local function dropbox_chat_dir()
+local function chat_dir()
   return vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
-    or nil
-end
-
-local function std_chat_dir()
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return vim.g.data_dir .. '/gp/chats'
+    or vim.g.data_dir .. '/gp/chats'
 end
 
 local function join(tbl, sep)
   return table.concat(vim.tbl_map(vim.trim, tbl), sep or ' ')
 end
 
-M.chatlogs_home = vim.fn.expand(dropbox_chat_dir() or std_chat_dir())
+M.chatlogs_home = vim.fn.expand(chat_dir())
 
 local code_system_prompt = 'You are an AI working as a code editor.\n\n'
   .. 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
