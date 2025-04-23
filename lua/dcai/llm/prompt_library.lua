@@ -5,7 +5,9 @@ Translate any provided text directly to Chinese or English,
 based on the input language,
 without adding any interpretation or additional commentary.
 ]]
+
 M.ONLYCODE = [[
+You are an AI working as a code editor.
 <format_rules>
 Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
 START AND END YOUR ANSWER WITH: ```

@@ -28,10 +28,6 @@ end
 
 M.chatlogs_home = vim.fn.expand(chat_dir())
 
-local code_system_prompt = 'You are an AI working as a code editor.\n\n'
-  .. 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
-  .. 'START AND END YOUR ANSWER WITH:\n\n```'
-
 M.setup = function()
   local gpplugin = require('gp')
   local prompt_library = require('dcai.llm.prompt_library')
@@ -154,7 +150,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       -- model = 'o4-mini',
       chat = true,
       command = true,
-      system_prompt = code_system_prompt,
+      system_prompt = prompt_library.ONLYCODE,
     },
     {
       name = M.agents.code_editor,
@@ -163,7 +159,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       model = 'o4-mini',
       chat = false,
       command = true,
-      system_prompt = code_system_prompt,
+      system_prompt = prompt_library.ONLYCODE,
     },
     {
       -- Grok is not great at **editing** code
@@ -174,7 +170,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       chat = true,
       -- command runs without user instructions
       command = false,
-      system_prompt = code_system_prompt,
+      system_prompt = prompt_library.ONLYCODE,
     },
     {
       name = 'Gemini',
@@ -208,7 +204,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       command = true,
       ---@type ClaudeModel
       model = 'claude-3-5-sonnet-latest',
-      system_prompt = code_system_prompt,
+      system_prompt = prompt_library.ONLYCODE,
     },
     {
       name = 'TranslateAgent',
