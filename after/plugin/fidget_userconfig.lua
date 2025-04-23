@@ -10,10 +10,11 @@ local fidget_progress = require('fidget.progress')
 _G._notifications_map = {}
 
 ---@param id string
----@param msg string
----@param title string
+---@param msg string|nil
+---@param title string|nil
+---@param lsp_client string|nil
 ---@param finish? boolean
-vim.g.update_notification = function(id, msg, title, finish)
+vim.g.update_notification = function(id, msg, title, lsp_client, finish)
   local handle = _G._notifications_map[id]
   if type(msg) ~= 'string' then
     msg = vim.inspect(msg)
@@ -25,7 +26,7 @@ vim.g.update_notification = function(id, msg, title, finish)
       title = title or 'Neovim',
       message = msg,
       -- done = finish or nil,
-      lsp_client = { name = 'Neovim' },
+      lsp_client = { name = lsp_client or 'Neovim' },
     })
     _G._notifications_map[id] = new_handle
   end
