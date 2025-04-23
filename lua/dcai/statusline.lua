@@ -50,7 +50,7 @@ local function project_and_filename(wide_enough)
   local git_dir_name = git_root and vim.fs.basename(git_root) or 'N/A'
   local filename = '%t'
   if wide_enough then
-    filename = vim.g.replace(fullpath, git_root, '')
+    filename = vim.g.replace(fullpath, git_root, '@')
   end
   return color_project_accent(git_dir_name) .. ' ' .. filename
 end
