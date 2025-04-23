@@ -227,8 +227,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     -- prefix for all commands
     cmd_prefix = cmd_prefix,
     chat_dir = M.chatlogs_home,
-    state_dir = vim.g.state_dir .. '/gp/persisted',
-    log_file = vim.g.log_dir .. '/gp.nvim.log',
+    state_dir = vim.fs.joinpath(vim.g.state_dir, '/gp/persisted'),
+    log_file = vim.fs.joinpath(vim.g.log_dir, '/gp.nvim.log'),
     log_sensitive = false,
     log_level = vim.log.levels.INFO,
     providers = {
