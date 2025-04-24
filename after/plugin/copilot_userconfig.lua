@@ -75,7 +75,13 @@ copilot.setup({
     -- type = 'binary', -- "nodejs" | "binary"
     custom_server_filepath = nil,
   },
-  server_opts_overrides = {},
+  server_opts_overrides = {
+    settings = {
+      telemetry = {
+        telemetryLevel = 'off',
+      },
+    },
+  },
 })
 
 local chat_loaded, copilotchat = pcall(require, 'CopilotChat')
