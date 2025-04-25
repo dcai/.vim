@@ -1,71 +1,10 @@
 """""""""""""""""""""""""""""""""""""""
 """ Ale
 """""""""""""""""""""""""""""""""""""""
-let g:ale_completion_enabled = 0
-let g:ale_disable_lsp = 'auto'
-let g:ale_hover_cursor = 0
-let g:ale_virtualtext_cursor = "disabled"
-let g:ale_set_highlights = 1
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 1
-let g:ale_lint_on_enter = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 0
-let g:ale_open_list = 0
-" let g:ale_keep_list_window_open = 0
-let g:ale_php_cs_fixer_use_global = 1
-let g:ale_php_cs_fixer_options = ''
 
-let g:ale_lua_stylua_options = '--search-parent-directories'
-
-let g:ale_sign_error = 'E'
-let g:ale_sign_warning = 'W'
-let g:ale_plaintext_pandoc_use_gfm = 1
-let g:ale_plaintext_pandoc_options = '--columns=120'
-let g:ale_xml_xmllint_indentsize = 4
-let g:ale_cspell_use_global = 1
-let g:ale_cspell_executable = 'cspell-cli'
-
-" javascript
-" let g:ale_javascript_eslint_executable = ''
-let g:ale_javascript_eslint_suppress_missing_config = 1
-let g:ale_javascript_eslint_use_global = 0
-" let g:ale_javascript_prettier_executable = 'prettierd'
-" shouldn't global prettier as the project might
-" use different version which generates different format
-let g:ale_javascript_prettier_use_global = 0
-
-let g:ale_python_ruff_use_global = 1
-let g:ale_python_ruff_format_use_global = 1
-
-let g:ale_biome_use_global = 1
-let g:ale_biome_executable = 'biome'
-
-let s:jslinter = [g:EnvVar('JSLINTER', 'biome')]
-let s:jsfixer = [g:EnvVar('JSFIXER', 'biome')]
+let s:jsfixer = [g:EnvVar('JSFIXER', 'prettier')]
 let s:jsonfixer = [g:EnvVar('JSONFIXER', 'prettier')]
 let s:cssfixer = [g:EnvVar('CSSFIXER', 'prettier')]
-
-" Ale linters settings
-let g:ale_linters = {
-  \ 'c': ['clangd', 'ccls'],
-  \ 'cs': ['csc'],
-  \ 'go': ['gopls'],
-  \ 'graphql': [],
-  \ 'javascript': s:jslinter,
-  \ 'javascriptreact': s:jslinter,
-  \ 'json': [],
-  \ 'lua': [],
-  \ 'markdown': [],
-  \ 'php': [],
-  \ 'python': ['ruff'],
-  \ 'rust': ['analyzer', 'cargo'],
-  \ 'sh': ['shellcheck'],
-  \ 'typescript': s:jslinter,
-  \ 'typescriptreact': s:jslinter,
-  \ 'vim': ['vimls'],
-\}
 
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -107,6 +46,68 @@ let g:ale_fixers = {
   \ 'vue': ['prettier'],
   \ 'xml': ['xmllint'],
   \ 'yaml': ['prettier'],
+\}
+
+let g:ale_completion_enabled = 0
+let g:ale_disable_lsp = 'auto'
+let g:ale_hover_cursor = 0
+let g:ale_virtualtext_cursor = "disabled"
+let g:ale_set_highlights = 1
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_enter = 0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
+let g:ale_open_list = 0
+" let g:ale_keep_list_window_open = 0
+let g:ale_php_cs_fixer_use_global = 1
+let g:ale_php_cs_fixer_options = ''
+
+let g:ale_lua_stylua_options = '--search-parent-directories'
+
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_plaintext_pandoc_use_gfm = 1
+let g:ale_plaintext_pandoc_options = '--columns=120'
+let g:ale_xml_xmllint_indentsize = 4
+let g:ale_cspell_use_global = 1
+let g:ale_cspell_executable = 'cspell-cli'
+
+" javascript
+" let g:ale_javascript_eslint_executable = ''
+let g:ale_javascript_eslint_suppress_missing_config = 1
+let g:ale_javascript_eslint_use_global = 0
+" let g:ale_javascript_prettier_executable = 'prettierd'
+" shouldn't global prettier as the project might
+" use different version which generates different format
+let g:ale_javascript_prettier_use_global = 0
+
+let g:ale_python_ruff_use_global = 1
+let g:ale_python_ruff_format_use_global = 1
+
+let g:ale_biome_use_global = 1
+let g:ale_biome_executable = 'biome'
+
+" Ale linters settings
+let s:jslinter = [g:EnvVar('JSLINTER', 'biome')]
+let g:ale_linters = {
+  \ 'c': ['clangd', 'ccls'],
+  \ 'cs': ['csc'],
+  \ 'go': ['gopls'],
+  \ 'graphql': [],
+  \ 'javascript': s:jslinter,
+  \ 'javascriptreact': s:jslinter,
+  \ 'json': [],
+  \ 'lua': [],
+  \ 'markdown': [],
+  \ 'php': [],
+  \ 'python': ['ruff'],
+  \ 'rust': ['analyzer', 'cargo'],
+  \ 'sh': ['shellcheck'],
+  \ 'typescript': s:jslinter,
+  \ 'typescriptreact': s:jslinter,
+  \ 'vim': ['vimls'],
 \}
 
 " nnoremap <leader>, :ALEFix<cr>
