@@ -4,7 +4,7 @@ This repository houses a Neovim configuration that began with Vimscript and has 
 
 ## Repository Overview
 
-- **`plenary.nvim`**: Provides utility functions and features.
+- **`plenary.nvim`**: Provides utility functions, and unit tests runner.
 - **Plugin Management**: Employs [vim-plug](https://github.com/junegunn/vim-plug) for managing plugins, enhanced by a lightweight Lua wrapper in `lua/dcai/plug.lua`.
 - **Legacy Vimscript**: Some Vimscript files are retained for historical reference, though they are no longer actively used.
 - **Folder Structure**:

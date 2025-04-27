@@ -627,3 +627,38 @@ vim.g.new_win = function(opt)
     end,
   }
 end
+
+vim.g.repo_instructions = function()
+  local files_to_check = {
+    '.gp.md',
+    'readme.txt',
+    'readme.md',
+    'README.md',
+    'instructions.md',
+  }
+  local git_root = vim.g.git_root()
+
+  if git_root == '' or not git_root then
+    return ''
+  end
+
+  local instruct_file = ''
+  for _, file in ipairs(files_to_check) do
+    local path = git_root .. '/' .. file
+    if vim.fn.filereadable(path) == 1 then
+      instruct_file = path
+      break
+    end
+  end
+
+  if instruct_file == '' then
+    return ''
+  end
+
+  if vim.fn.filereadable(instruct_file) == 0 then
+    return ''
+  end
+
+  local lines = vim.fn.readfile(instruct_file)
+  return table.concat(lines, '\n')
+end

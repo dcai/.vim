@@ -400,8 +400,13 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       ---@param _gp table -- its the instance of gpplugin
       ---@param params table
       ['Do'] = function(_gp, params)
+        -- doesnt need to do this manually, gp already includes this in system prompt
+        -- local repo_instructions = vim.g.repo_instructions()
         local template = join({
-          'Having following from {{filename}}: ',
+          -- 'Below is the context of the code you are working on:',
+          -- repo_instructions,
+          -- '\n\n',
+          'And now having following from {{filename}}: ',
           '```{{filetype}} \n {{selection}} \n ```',
           '{{command}}', -- command is the input from vim.ui.input
         })
