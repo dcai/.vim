@@ -162,16 +162,24 @@ M.setup = function()
   local statusline_grp =
     vim.api.nvim_create_augroup('Statusline', { clear = true })
 
-  vim.api.nvim_create_autocmd(
-    { 'BufEnter', 'BufLeave', 'WinResized', 'WinNew', 'WinEnter', 'WinClosed' },
-    {
-      group = statusline_grp,
-      pattern = '*',
-      callback = function()
-        vim.opt_local.statusline = StatuslineActive()
-      end,
-    }
-  )
+  vim.api.nvim_create_autocmd({
+    'BufEnter',
+    'BufLeave',
+    'InsertEnter',
+    'InsertLeave',
+    'TermEnter',
+    'TermLeave',
+    'WinClosed',
+    'WinEnter',
+    'WinNew',
+    'WinResized',
+  }, {
+    group = statusline_grp,
+    pattern = '*',
+    callback = function()
+      vim.opt_local.statusline = StatuslineActive()
+    end,
+  })
 
   vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
     group = statusline_grp,
