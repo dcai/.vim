@@ -170,7 +170,8 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.code_editor,
       provider = M.providers.gpt_local,
       ---@type CopilotModel
-      model = 'o4-mini',
+      model = 'claude-3.5-sonnet',
+      -- model = 'o4-mini',
       chat = false,
       command = true,
       system_prompt = prompt_library.ONLYCODE,
@@ -393,6 +394,26 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
         else
           gp.cmd.ChatNew(params, translator_prompt)
         end
+      end,
+
+      ---rewrites the provided selection/range based on comments in it
+      ---@param _gp table -- its the instance of gpplugin
+      ---@param params table
+      ['Do'] = function(_gp, params)
+        local template = join({
+          'Having following from {{filename}}: ',
+          '```{{filetype}} \n {{selection}} \n ```',
+          '{{command}}', -- command is the input from vim.ui.input
+        })
+
+        local agent = gpplugin.get_command_agent(M.agents.code_editor)
+        gpplugin.Prompt(
+          params,
+          gpplugin.Target.vnew,
+          agent,
+          template,
+          'What do you want me to do with the code above? '
+        )
       end,
 
       ---rewrites the provided selection/range based on comments in it
