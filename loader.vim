@@ -79,7 +79,3 @@ endif
 
 
 call IncludeDir(g:vim_home . '/before/*.vim')
-
-if !has('nvim') && !exists('g:lightline')
-  call IncludeScript('statusline.vim')
-endif

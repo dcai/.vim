@@ -4,7 +4,7 @@ exec 'source ' . s:vim_home . '/loader.vim'
 """"""""""""""""""""""""""""""""""""""""
 " vim-plug is loaded here too
 """"""""""""""""""""""""""""""""""""""""
-call IncludeDir('$HOME/' . g:vimrc . '/vim8/*.vim')
+call IncludeDir('$HOME/' . g:vimrc . '/vim8/after/*.vim')
 
 try
   if !has('gui_running')
