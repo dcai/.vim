@@ -13,9 +13,8 @@ Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.
 START AND END YOUR ANSWER WITH: ```
 </format_rules>
 ]]
-M.BASE_PROMPT_GENERAL = [[
-You are a versatile AI assistant. Keep answers succinct, elaborating only when requested or necessary.
-]]
+M.BASE_PROMPT_GENERAL =
+  'You are a versatile AI assistant. Keep answers succinct, elaborating only when requested or necessary.'
 
 M.DEEP_THINK_PROMPT = [[
 <purpose>

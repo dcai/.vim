@@ -51,7 +51,8 @@ local keymap = {
       --   vim.cmd('CodeCompanionActions')
       -- end
       local agent = gpplugin.get_chat_agent(
-        use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
+        gpconfig.agents.grok_v3_mini
+        -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
       )
       gpinstance.new_chat({
         args = 'vsplit',
@@ -81,9 +82,7 @@ local keymap = {
     function()
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
       -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
-      local agent = gpplugin.get_chat_agent(
-        use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
-      )
+      local agent = gpplugin.get_chat_agent(gpconfig.agents.coder_chat)
       gpinstance.new_chat({
         args = 'vsplit',
       }, false, prompt_library.NEOVIM_PROMPT, agent)

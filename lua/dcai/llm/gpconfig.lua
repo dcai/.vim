@@ -5,7 +5,13 @@ local M = {}
 ---@alias CopilotModel "gpt-4o"|"gpt-4.1"|"o3-mini"|"o4-mini"|"claude-3.5-sonnet"|"claude-3.7-sonnet-thought"
 M.prefix = 'Gp'
 
+M.providers = {
+  xai = 'xai',
+  gpt_local = 'gptlocal',
+}
+
 M.agents = {
+  grok_v3_mini = 'GrokV3Mini',
   coder_chat = 'CoderChat',
   code_editor = 'CodeEditor',
   copilot = 'Copilot',
@@ -143,8 +149,16 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
 
   local enabled_agents = {
     {
+      name = M.agents.grok_v3_mini,
+      provider = M.providers.xai,
+      model = 'grok-3-mini-beta',
+      chat = true,
+      command = true,
+      system_prompt = prompt_library.BASE_PROMPT_GENERAL,
+    },
+    {
       name = M.agents.copilot,
-      provider = 'copilot',
+      provider = M.providers.gpt_local,
       ---@type CopilotModel
       model = 'gpt-4.1',
       -- model = 'o4-mini',
@@ -154,7 +168,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     },
     {
       name = M.agents.code_editor,
-      provider = 'copilot',
+      provider = M.providers.gpt_local,
       ---@type CopilotModel
       model = 'o4-mini',
       chat = false,
@@ -165,8 +179,10 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       -- Grok is not great at **editing** code
       -- so this is chat only
       name = M.agents.coder_chat,
-      provider = 'xai',
-      model = 'grok-3-mini-beta',
+      -- provider = 'xai',
+      -- model = 'grok-3-mini-beta',
+      privider = M.providers.gpt_local,
+      model = 'gpt-4.1',
       chat = true,
       -- command runs without user instructions
       command = false,
@@ -235,6 +251,10 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       xai = {
         endpoint = 'https://api.x.ai/v1/chat/completions',
         secret = os.getenv('XAI_API_KEY'),
+      },
+      gptlocal = {
+        endpoint = 'http://localhost:7890/v1/chat/completions',
+        secret = 'dummy_secret',
       },
       copilot = {
         disable = false,
