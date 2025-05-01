@@ -80,48 +80,28 @@ end
 
 M.setup = function()
   vim.env['CODECOMPANION_TOKEN_PATH'] = vim.fn.expand(vim.env.XDG_CONFIG_HOME)
-
-  local provider, model = vim.g.get_ai_model()
+  local provider = 'local_copilot'
 
   local instance = require('codecompanion')
   instance.setup({
-    display = {
-      action_palette = {
-        provider = 'default',
-        opts = {
-          show_default_actions = true,
-          show_default_prompt_library = true,
+    strategies = {
+      inline = {
+        adapter = provider,
+        layout = 'buffer', -- vertical|horizontal|buffer
+        keymaps = {
+          accept_change = {
+            modes = { n = 'ga' },
+            description = 'Accept the suggested change',
+          },
+          reject_change = {
+            modes = { n = 'gr' },
+            description = 'Reject the suggested change',
+          },
         },
       },
-    },
-    adapters = {
-      deepseek = function()
-        return require('codecompanion.adapters').extend('deepseek', {
-          name = 'deepseek',
-          schema = {
-            model = {
-              default = 'deepseek-chat',
-            },
-          },
-        })
-      end,
-      openai = function()
-        return require('codecompanion.adapters').extend('openai', {
-          schema = {
-            model = {
-              default = 'gpt-4o-mini',
-            },
-          },
-        })
-      end,
-    },
-    strategies = {
       chat = {
-        -- adapter = 'anthropic',
-        -- adapter = 'gemini',
         adapter = provider,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
-
         roles = {
           ---The header name for the LLM's messages
           ---@type string|fun(adapter: CodeCompanion.Adapter): string
@@ -200,19 +180,60 @@ M.setup = function()
           },
         },
       },
-      inline = {
-        -- adapter = 'anthropic',
-        -- adapter = 'gemini',
-        adapter = provider,
-        keymaps = {
-          accept_change = {
-            modes = { n = 'ga' },
-            description = 'Accept the suggested change',
+    },
+    adapters = {
+      local_copilot = function()
+        return require('codecompanion.adapters').extend('openai_compatible', {
+          env = {
+            url = 'http://localhost:7890',
+            api_key = 'dummy_apikey',
+            chat_url = '/v1/chat/completions',
+            models_endpoint = '/v1/models',
           },
-          reject_change = {
-            modes = { n = 'gr' },
-            description = 'Reject the suggested change',
+          schema = {
+            model = {
+              default = 'gpt-4.1',
+            },
+            temperature = {
+              order = 2,
+              mapping = 'parameters',
+              type = 'number',
+              optional = true,
+              default = 1,
+              desc = 'What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.',
+              validate = function(n)
+                return n >= 0 and n <= 2, 'Must be between 0 and 2'
+              end,
+            },
           },
+        })
+      end,
+      deepseek = function()
+        return require('codecompanion.adapters').extend('deepseek', {
+          name = 'deepseek',
+          schema = {
+            model = {
+              default = 'deepseek-chat',
+            },
+          },
+        })
+      end,
+      openai = function()
+        return require('codecompanion.adapters').extend('openai', {
+          schema = {
+            model = {
+              default = 'gpt-4.1-mini',
+            },
+          },
+        })
+      end,
+    },
+    display = {
+      action_palette = {
+        provider = 'default',
+        opts = {
+          show_default_actions = true,
+          show_default_prompt_library = true,
         },
       },
     },
