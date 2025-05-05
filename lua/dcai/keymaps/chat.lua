@@ -51,7 +51,8 @@ local keymap = {
       --   vim.cmd('CodeCompanionActions')
       -- end
       local agent = gpplugin.get_chat_agent(
-        gpconfig.agents.grok_v3_mini
+        gpconfig.agents.copilot
+        -- gpconfig.agents.grok_v3_mini
         -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
       )
       gpinstance.new_chat({

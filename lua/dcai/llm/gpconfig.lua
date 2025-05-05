@@ -164,7 +164,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       -- model = 'o4-mini',
       chat = true,
       command = true,
-      system_prompt = prompt_library.ONLYCODE,
+      system_prompt = prompt_library.BASE_PROMPT_GENERAL,
     },
     {
       name = M.agents.code_editor,
