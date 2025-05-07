@@ -156,8 +156,8 @@ local keymap = {
   },
   {
     '<leader>cd',
-    gpconfig.wrapGpCmd('Implement'),
-    desc = 'Implement',
+    gpconfig.wrapGpCmd('Do'),
+    desc = 'GpDo',
     mode = 'v',
   },
   {
