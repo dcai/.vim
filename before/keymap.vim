@@ -76,3 +76,8 @@ cnoremap w!! w !sudo tee % >/dev/null
 inoremap jk <Esc>:w!<cr>
 inoremap jj <Esc>
 inoremap <C-c>  <ESC>
+
+
+" deleted line goes to register "d
+nnoremap dd "ddd
+nnoremap dw "ddw
