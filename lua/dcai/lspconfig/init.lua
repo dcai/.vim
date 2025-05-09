@@ -11,11 +11,10 @@ M.setup = function()
   local lsputils = require('lspconfig/util')
   local mason = require('mason')
   local mason_lspconfig = require('mason-lspconfig')
-  local masonpath = require('mason-core.path')
   local mylsputils = require('dcai.lspconfig.utils')
 
   mason.setup({
-    install_root_dir = masonpath.concat({ vim.g.data_dir, 'mason' }),
+    install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
   })
 
   mason_lspconfig.setup({
