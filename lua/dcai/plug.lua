@@ -68,8 +68,8 @@ M.setup = function(plug_opts)
   --- lsp
   ----------------------------------------------------------------------------
   Plug('neovim/nvim-lspconfig')
-  Plug('mason-org/mason.nvim', { ['do'] = ':MasonUpdate' })
-  Plug('williamboman/mason-lspconfig.nvim')
+  Plug('mason-org/mason.nvim', { ['do'] = ':MasonUpdate', ['branch'] = 'v1.x' })
+  Plug('mason-org/mason-lspconfig.nvim', { ['branch'] = 'v1.x' })
   ----------------------------------------------------------------------------
   --- git
   ----------------------------------------------------------------------------
