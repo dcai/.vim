@@ -19,7 +19,6 @@ noremap! <F16> <nop>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " zz centers the screen on the cursor, zv unfolds any fold if the cursor
 " suddenly appears inside a fold.
-" https://github.com/Valloric/dotfiles/blob/master/vim/vimrc.vim#L511
 nnoremap * *zzzv
 nnoremap # #zzzv
 nnoremap n nzzzv
@@ -32,6 +31,7 @@ nnoremap <silent> <CR> :nohlsearch<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap U :redo<cr>
 " nnoremap T :Vexplore<cr>
+" close everything
 nnoremap XX :cclose<cr>:lclose<cr>:pclose<cr>:helpclose<cr>
 nnoremap BD :bd!<cr>
 nnoremap ON :on<cr>
@@ -46,7 +46,6 @@ nnoremap <leader>sp :sp<cr>
 " nnoremap QQ :qall<cr>
 " nnoremap QA :qall!<cr>
 nnoremap WW :w!<cr>
-" close everything
 nnoremap XC :cexpr []<cr>:lexpr []<cr>
 
 " M-p is setup in iterm to translate cmd+p to M+p
@@ -107,3 +106,18 @@ inoremap <C-c>  <ESC>
 nnoremap Q q
 nnoremap q <Esc>
 vnoremap q <Esc>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ; is easier to reach than :
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" In normal mode, we use : much more often than ; so lets swap them.
+" WARNING: this will cause any "ordinary" map command without the "nore" prefix
+" that uses ":" to fail. For instance, "map <f2> :w" would fail, since vim will
+" read ":w" as ";w" because of the below remappings. Use "noremap"s in such
+" situations and you'll be fine.
+" https://github.com/Valloric/dotfiles/blob/main/vim/vimrc.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap ; :
+" nnoremap : ;
+vnoremap ; :
+" vnoremap : ;
