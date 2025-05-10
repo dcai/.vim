@@ -186,7 +186,7 @@ M.setup = function()
         return require('codecompanion.adapters').extend('openai_compatible', {
           env = {
             url = 'http://localhost:7890',
-            api_key = 'dummy_apikey',
+            api_key = 'neovim-codecompanion',
             chat_url = '/v1/chat/completions',
             models_endpoint = '/v1/models',
           },

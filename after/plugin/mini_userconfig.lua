@@ -17,7 +17,7 @@ mini_surround.setup({
     replace = 'cs', -- Replace surrounding
     delete = 'ds', -- Delete surrounding
     --- NOTE don't use `ys` as it slows down the yank action
-    add = 'sa', -- Add surrounding in Normal and Visual modes
+    add = 'ys', -- Add surrounding in Normal and Visual modes
     find = '', -- Find surrounding (to the right)
     find_left = '', -- Find surrounding (to the left)
     highlight = '', -- Highlight surrounding
