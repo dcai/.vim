@@ -48,6 +48,10 @@ nnoremap <leader>bd :bd!<cr>
 nnoremap <leader>on :on<cr>
 nnoremap <leader>vs :vs<cr>
 nnoremap <leader>sp :sp<cr>
+" https://old.reddit.com/r/vim/comments/19sm9v/replace_all_instances_of_currently_highlighted/c8rcxtr/
+xnoremap <leader>ss :%s///g<left><left>
+" https://stackoverflow.com/a/676619/69938
+" vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " M-p is setup in iterm to translate cmd+p to M+p
 " https://stackoverflow.com/a/73212046
