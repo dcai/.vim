@@ -19,10 +19,6 @@ M.agents = {
 
 local cmd_prefix = M.prefix
 
-M.wrapGpCmd = function(str)
-  return ":<c-u>'<,'>" .. cmd_prefix .. str .. '<cr>'
-end
-
 local function chat_dir()
   return vim.g.dropbox_home and vim.g.dropbox_home .. '/Documents/chatgpt_logs'
     or vim.g.data_dir .. '/gp/chats'

@@ -21,6 +21,10 @@ if completion_engine == 'copilot' then
   use_copilot = true
 end
 
+local function wrapVisualModeCmd(cmd)
+  return ":<c-u>'<,'>" .. cmd .. '<cr>'
+end
+
 local keymap = {
   { '<leader>c', group = group },
   {
@@ -150,25 +154,25 @@ local keymap = {
   },
   {
     '<leader>cn',
-    gpconfig.wrapGpCmd('ChatNew'),
+    wrapVisualModeCmd('GpChatNew'),
     desc = 'visual new chat',
     mode = 'v',
   },
   {
     '<leader>cr',
-    gpconfig.wrapGpCmd('Rewrite'),
+    wrapVisualModeCmd('GpRewrite'),
     desc = 'prompt to rewrite',
     mode = 'v',
   },
   {
     '<leader>cu',
-    gpconfig.wrapGpCmd('UnitTests'),
+    wrapVisualModeCmd('GpUnitTests'),
     desc = 'create unit tests',
     mode = 'v',
   },
   {
     '<leader>ce',
-    gpconfig.wrapGpCmd('Explain'),
+    wrapVisualModeCmd('GpExplain'),
     desc = 'explain selected',
     mode = 'v',
   },
