@@ -143,6 +143,12 @@ local keymap = {
   ----------------------------------------------------------------------------
   { '<leader>c', group = group, mode = 'v' },
   {
+    '<leader>cc',
+    ":<c-u>'<,'>CodeCompanionActions<cr>",
+    desc = 'CodeCompanionActions',
+    mode = 'v',
+  },
+  {
     '<leader>cn',
     gpconfig.wrapGpCmd('ChatNew'),
     desc = 'visual new chat',
@@ -152,12 +158,6 @@ local keymap = {
     '<leader>cr',
     gpconfig.wrapGpCmd('Rewrite'),
     desc = 'prompt to rewrite',
-    mode = 'v',
-  },
-  {
-    '<leader>cd',
-    gpconfig.wrapGpCmd('Do'),
-    desc = 'GpDo',
     mode = 'v',
   },
   {
