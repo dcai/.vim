@@ -162,8 +162,8 @@ M.setup = function()
           },
           close = {
             modes = {
-              -- n = '<C-c>',
-              n = { 'q', '<C-c>' },
+              -- n = { 'q', '<C-c>' },
+              n = { 'q' },
               -- i = '<C-c>',
               i = nil,
             },
