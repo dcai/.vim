@@ -116,7 +116,6 @@ M.setup = function(plug_opts)
       vim.g.VimuxOrientation = 'h'
     end,
   })
-  Plug('svermeulen/vim-subversive')
   -- Plug('folke/snacks.nvim')
   ----------------------------------------------------------------------------
   --- treesitter
