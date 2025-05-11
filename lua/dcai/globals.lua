@@ -258,7 +258,7 @@ vim.g.setup_colorscheme = function()
   local cs = get_user_config('colorscheme.name', defaulcolorscheme)
   apply_colorscheme(cs, termguicolors)
   vim.g.handle_autocmd('ColorScheme', '*', function(ev)
-    vim.g.logger.debug('ColorScheme: ' .. vim.inspect(ev))
+    -- vim.g.logger.debug('ColorScheme: ' .. vim.inspect(ev))
     set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
   end, 'save new colorscheme')
 end
