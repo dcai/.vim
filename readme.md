@@ -40,23 +40,32 @@ ln -s (which nvim) ~/.local/bin/vim
 ## ⚙️ Configuration Structure
 
 - `init.lua`: Main entry point
-- `lua/dcai/`: Core configuration modules
+- `core.vim`: Core Vim settings and functionality
+- `filetype.vim`: Filetype-specific settings
+- `gui.vim`: GUI-related configurations
+- `loader.vim`: Script loader and environment detection
+- `lua/dcai/`: Core Lua configuration modules
   - `plug.lua`: Plugin management
   - `keymaps/`: Keyboard mappings organized by functionality
   - `lspconfig/`: Language server configurations
   - `llm/`: AI assistant integrations
+- `before/`: Configurations loaded before plugins
+  - `captureoutput.vim`: Utility for capturing command output
+  - `keymap.vim`: Early keymaps loaded before plugins
+  - `netrw.vim`: File browser configurations
+  - `pipe.vim`: Pipeline utilities for text processing
+- `after/`: Configurations loaded after plugins
+  - `ftplugin/`: Filetype-specific settings
+  - `plugin/`: Plugin-specific configurations
+- `os/`: OS-specific configurations
+  - `macos.vim`: macOS-specific settings
+  - `linux.vim`: Linux-specific settings
+  - `windows.vim`: Windows-specific settings
+  - `wsl.vim`: Windows Subsystem for Linux settings
 
 ## 🔌 Key Plugins
 
 This configuration uses numerous plugins managed through vim-plug. See [plug.lua](./lua/dcai/plug.lua) for the complete list.
-
-## 🔧 Customization
-
-You can customize this configuration by:
-
-- Setting environment variables (e.g., `NVIM_COMPLETION_ENGINE` to choose between completion providers)
-- Modifying keymap files to adjust key bindings
-- Adding your plugins to the `plug.lua` file
 
 ## 📜 History
 
