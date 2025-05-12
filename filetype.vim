@@ -57,19 +57,18 @@ augroup END
 augroup filetypeGroup
   autocmd!
   autocmd BufRead,BufNewFile *.hurl setf hurl
-
   autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
-  autocmd BufRead,BufNewFile *npmrc* setf dosini
-  autocmd BufRead,BufNewFile */ghostty/* set ft=toml
-
   autocmd BufRead,BufNewFile *.templ set filetype=templ
+  autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
+  autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
+
   " direnv
   autocmd BufRead,BufNewFile *.envrc setf sh
 
   " dotenv
-  autocmd BufRead,BufNewFile .env.*,.env setf sh
   autocmd BufEnter PKGBUILD,.env,.env.*
     \ let b:ale_sh_shellcheck_exclusions = 'SC2034,SC2154,SC2164'
+  autocmd BufRead,BufNewFile .env.*,.env setf sh
 
 
   " dokuwiki
@@ -79,7 +78,11 @@ augroup filetypeGroup
   autocmd BufRead,BufNewfile nginx.conf set ft=nginx
   autocmd BufRead,BufNewFile */nginx/* set ft=nginx
 
+  " toml
+  autocmd BufRead,BufNewFile */ghostty/* set ft=toml
+
   " dosini
+  autocmd BufRead,BufNewFile *npmrc* setf dosini
   autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
   autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
   autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
@@ -93,6 +96,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile *.phps set filetype=php
   autocmd BufRead,BufNewFile *.php_cs set filetype=php
   autocmd BufRead,BufNewFile php_cs set filetype=php
+
   " Drupal files
   autocmd BufRead,BufNewFile *.install set filetype=php
   autocmd BufRead,BufNewFile *.module set filetype=php
@@ -104,6 +108,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile .jshintrc set filetype=json
   autocmd BufRead,BufNewFile .tern-config set filetype=json
   autocmd BufRead,BufNewFile tsconfig.json set filetype=json5
+  autocmd BufRead,BufNewFile tsconfig.app.json set filetype=json5
   autocmd BufRead,BufNewFile biome.jsonc set filetype=json5
   autocmd BufRead,BufNewFile turbo.json set filetype=json5
   autocmd BufRead,BufNewFile .eslintrc set filetype=json5
@@ -120,13 +125,10 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile */.git/config set filetype=gitconfig
   autocmd BufRead,BufNewFile */gitconfig.d/* set filetype=gitconfig
 
-  "others
-  autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
-  autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
-
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
   autocmd BufRead,BufNewFile *.tf set filetype=terraform
+
   " ruby
   autocmd BufRead,BufNewFile Podfile set filetype=ruby
 augroup END
