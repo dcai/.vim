@@ -66,23 +66,6 @@ local keymap = {
     desc = 'chat toggle',
   },
   {
-    '<leader>cd',
-    function()
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes('<esc>V', true, false, true),
-        'n',
-        true
-      )
-      vim.cmd('GpImplement')
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes('<esc>', true, false, true),
-        'n',
-        true
-      )
-    end,
-    desc = 'GpImplement',
-  },
-  {
     '<leader>cv',
     function()
       -- local agent = gpplugin.get_chat_agent('grok-3-latest')
@@ -149,7 +132,7 @@ local keymap = {
   {
     '<leader>cc',
     ":<c-u>'<,'>CodeCompanionActions<cr>",
-    desc = 'CodeCompanionActions',
+    desc = 'Code Companion Actions',
     mode = 'v',
   },
   {
