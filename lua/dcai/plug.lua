@@ -177,6 +177,14 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   Plug('preservim/vim-lexical')
   Plug('dcai/ale', { frozen = 1 })
+  Plug('Wansmer/treesj', {
+    ['setup'] = function()
+      local ok, tj = pcall(require, 'treesj')
+      if ok then
+        tj.setup({})
+      end
+    end,
+  })
   -- Plug('tpope/vim-dadbod')
   -- Plug('kristijanhusak/vim-dadbod-ui')
   -- Plug('kristijanhusak/vim-dadbod-completion')
