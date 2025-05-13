@@ -60,6 +60,13 @@ local editthings_keymap = {
     desc = 'marlin: list collection',
   },
   {
+    '<leader>et',
+    function()
+      require('treesj').toggle()
+    end,
+    desc = 'toggle split/join',
+  },
+  {
     '<leader>es',
     function()
       require('fzf-lua').files({ cwd = '~/src/vim-snippets/src/' })
