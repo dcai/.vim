@@ -68,12 +68,13 @@ local keymap = {
   {
     '<leader>cv',
     function()
-      -- local agent = gpplugin.get_chat_agent('grok-3-latest')
-      -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
-      local agent = gpplugin.get_chat_agent(gpconfig.agents.coder_chat)
-      gpinstance.new_chat({
-        args = 'vsplit',
-      }, false, prompt_library.NEOVIM_PROMPT, agent)
+      -- -- local agent = gpplugin.get_chat_agent('grok-3-latest')
+      -- -- local agent = gpplugin.get_chat_agent('grok-3-mini-beta')
+      -- local agent = gpplugin.get_chat_agent(gpconfig.agents.coder_chat)
+      -- gpinstance.new_chat({
+      --   args = 'vsplit',
+      -- }, false, prompt_library.NEOVIM_PROMPT, agent)
+      require('codecompanion').prompt('neovim')
     end,
     desc = 'ask neovim question',
   },

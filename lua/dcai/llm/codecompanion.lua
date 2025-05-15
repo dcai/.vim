@@ -220,6 +220,123 @@ M.setup = function()
         })
       end,
     },
+    prompt_library = {
+      ['Neovim Expert'] = {
+        strategy = 'chat',
+        description = 'neovim help',
+        opts = {
+          index = 11,
+          is_slash_cmd = false,
+          auto_submit = false,
+          short_name = 'neovim',
+        },
+        -- references = {
+        --   {
+        --     type = 'file',
+        --     path = {
+        --       'doc/.vitepress/config.mjs',
+        --       'lua/codecompanion/config.lua',
+        --       'README.md',
+        --     },
+        --   },
+        -- },
+        prompts = {
+          {
+            role = 'system',
+            content = 'Act as neovim power user, use lua api when possible.',
+          },
+          {
+            role = 'user',
+            content = '',
+          },
+        },
+      },
+      ['Unit Tests'] = {
+        strategy = 'chat',
+        description = 'Generate unit tests for the selected code',
+        opts = {
+          index = 7,
+          is_default = true,
+          is_slash_cmd = false,
+          modes = { 'v' },
+          short_name = 'tests',
+          auto_submit = true,
+          user_prompt = false,
+          placement = 'new',
+          stop_context_insertion = true,
+        },
+        prompts = {
+          {
+            role = 'system',
+            content = [[When generating unit tests, follow these steps:
+
+1. Identify the programming language.
+2. Identify the purpose of the function or module to be tested.
+3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
+4. Generate unit tests using an appropriate testing framework for the identified programming language.
+5. Ensure the tests cover:
+      - Normal cases
+      - Edge cases
+      - Error handling (if applicable)
+6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
+            opts = {
+              visible = false,
+            },
+          },
+          {
+            role = 'user',
+            content = function(context)
+              local code = require('codecompanion.helpers.actions').get_code(
+                context.start_line,
+                context.end_line
+              )
+
+              return string.format(
+                [[<user_prompt>
+Please generate unit tests for this code from buffer %d:
+
+```%s
+%s
+```
+</user_prompt>
+]],
+                context.bufnr,
+                context.filetype,
+                code
+              )
+            end,
+            opts = {
+              contains_code = true,
+            },
+          },
+        },
+      },
+      ['Custom Prompt'] = {
+        strategy = 'inline',
+        description = 'Prompt the LLM from Neovim',
+        opts = {
+          index = 3,
+          is_default = true,
+          is_slash_cmd = false,
+          user_prompt = true,
+        },
+        prompts = {
+          {
+            role = 'system',
+            content = function(context)
+              return string.format(
+                [[I want you to act as a senior %s developer. I will ask you specific questions and I want you to return raw code only (no codeblocks and no explanations). If you can't respond with code, respond with nothing]],
+                context.filetype
+              )
+            end,
+            opts = {
+              visible = false,
+              tag = 'system_tag',
+            },
+          },
+        },
+      },
+    },
     display = {
       action_palette = {
         provider = 'default',
