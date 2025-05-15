@@ -136,6 +136,12 @@ local keymap = {
     mode = 'v',
   },
   {
+    '<leader>cd',
+    wrapVisualModeCmd('GpDo'),
+    desc = 'GpDo',
+    mode = 'v',
+  },
+  {
     '<leader>cn',
     wrapVisualModeCmd('GpChatNew'),
     desc = 'visual new chat',

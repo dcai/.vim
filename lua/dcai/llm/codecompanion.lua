@@ -184,6 +184,7 @@ M.setup = function()
           schema = {
             model = {
               default = 'gpt-4.1',
+              -- default = 'claude-3.7-sonnet',
             },
             temperature = {
               order = 2,

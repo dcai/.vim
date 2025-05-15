@@ -166,8 +166,9 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.code_editor,
       provider = M.providers.gpt_local,
       ---@type CopilotModel
-      model = 'claude-3.5-sonnet',
+      -- model = 'claude-3.5-sonnet',
       -- model = 'o4-mini',
+      model = 'gpt-4.1',
       chat = false,
       command = true,
       system_prompt = prompt_library.ONLYCODE,
