@@ -531,3 +531,4 @@ hipatterns.setup({
 })
 
 require('mini.splitjoin').setup()
+require('mini.icons').setup()
