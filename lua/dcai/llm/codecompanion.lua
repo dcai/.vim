@@ -1,4 +1,5 @@
 local ok = pcall(require, 'codecompanion')
+local prompt_library = require('dcai.llm.prompt_library')
 
 local M = {
   setup = function() end,
@@ -260,7 +261,8 @@ M.setup = function()
           is_slash_cmd = false,
           modes = { 'v' },
           short_name = 'tests',
-          auto_submit = true,
+          -- auto_submit = true,
+          auto_submit = false,
           user_prompt = false,
           placement = 'new',
           stop_context_insertion = true,
@@ -268,17 +270,19 @@ M.setup = function()
         prompts = {
           {
             role = 'system',
-            content = [[When generating unit tests, follow these steps:
+            -- content = [[When generating unit tests, follow these steps:
+            --
+            -- 1. Identify the programming language.
+            -- 2. Identify the purpose of the function or module to be tested.
+            -- 3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
+            -- 4. Generate unit tests using an appropriate testing framework for the identified programming language.
+            -- 5. Ensure the tests cover:
+            --       - Normal cases
+            --       - Edge cases
+            --       - Error handling (if applicable)
+            -- 6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
 
-1. Identify the programming language.
-2. Identify the purpose of the function or module to be tested.
-3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
-4. Generate unit tests using an appropriate testing framework for the identified programming language.
-5. Ensure the tests cover:
-      - Normal cases
-      - Edge cases
-      - Error handling (if applicable)
-6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
+            content = prompt_library.JAVASCRIPT_UNIT_TESTS,
             opts = {
               visible = false,
             },
@@ -286,6 +290,7 @@ M.setup = function()
           {
             role = 'user',
             content = function(context)
+              vim.g.logger.info(vim.inspect(context))
               local code = require('codecompanion.helpers.actions').get_code(
                 context.start_line,
                 context.end_line

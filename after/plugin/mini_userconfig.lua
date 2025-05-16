@@ -317,7 +317,7 @@ require('mini.jump2d').setup({
   spotter = nil,
 
   -- Characters used for labels of jump spots (in supplied order)
-  labels = 'abcdefghijklmnopqrstuvwxyz',
+  labels = 'abcdefghijklmnopqrstuvwxyz,.;',
 
   -- Options for visual effects
   view = {

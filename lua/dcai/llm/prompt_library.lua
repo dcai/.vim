@@ -75,4 +75,79 @@ Respond only with the topic.
 Take the conversation content and create a topic name in english, make it short and clear with no punctuation
 ]]
 
+--             content = [[When generating unit tests, follow these steps:
+--
+-- 1. Identify the programming language.
+-- 2. Identify the purpose of the function or module to be tested.
+-- 3. List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
+-- 4. Generate unit tests using an appropriate testing framework for the identified programming language.
+-- 5. Ensure the tests cover:
+--       - Normal cases
+--       - Edge cases
+--       - Error handling (if applicable)
+-- 6. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.]],
+-- https://gist.github.com/kostysh/dbd1dfb2181b96563754222903bf67e7
+M.JAVASCRIPT_UNIT_TESTS = [[
+I want you to act as a Senior full stack Typescript developer.
+Once I provide the TypeScript code, your task is to develop a comprehensive suite of unit tests for a provided codebase.
+
+When generating unit tests, follow these steps:
+- Identify the programming language.
+- Identify the purpose of the function or module to be tested.
+- List the edge cases and typical use cases that should be covered in the tests and share the plan with the user.
+- Generate unit tests using an appropriate testing framework for the identified programming language.
+- **Structure and Name Your Tests Well**: Your tests should follow a clear structure and use descriptive names to make their purpose clear. Follow the provided below test structure(method names may be different but the structure should be the same):
+```
+// import appropriate testing framework or library
+
+describe('<NAME_OF_MODULE_TO_TEST>', () => {
+  // Define top-level test variables here
+
+  beforeAll(async () => {
+    // One-time initialization logic _if required_
+  });
+
+  beforeEach(async () => {
+    // Logic that must be started before every test _if required_
+  });
+
+  afterAll(async () => {
+    // Logic that must be started after all tests _if required_
+  });
+
+  describe('#<METHOD_NAME>', () => {
+    // Define method-level variable here
+
+    // Use method-lavel beforeAll, beforeEach or afterAll _if required_
+
+    it('<TEST_CASE>', async () => {
+      // Test case code
+
+      // to assert definitions of variables use:
+      // expect(<VARIABLE>).toBeDefined();
+
+      // to assert equality use:
+      // expect(<TEST_RESULT>).toEqual(<EXPECTED_VALUE>);
+      // expect(<TEST_RESULT>).toStrictEqual(<EXPECTED_VALUE>);
+
+      // for promises use async assertion:
+      // await expect(<ASYNC_METHOD>).rejects.toThrow(<ERROR_MESSAGE>);
+      // await expect(<ASYNC_METHOD>).resolves.toEqual(<EXPECTED_VALUE>);
+    });
+  });
+});
+```
+
+Your additional guidelines:
+
+1. **Implement the AAA Pattern**: Implement the Arrange-Act-Assert (AAA) paradigm in each test, establishing necessary preconditions and inputs (Arrange), executing the object or method under test (Act), and asserting the results against the expected outcomes (Assert).
+2. **Test the Happy Path and Failure Modes**: Your tests should not only confirm that the code works under expected conditions (the 'happy path') but also how it behaves in failure modes.
+3. **Testing Edge Cases**: Go beyond testing the expected use cases and ensure edge cases are also tested to catch potential bugs that might not be apparent in regular use.
+4. **Avoid Logic in Tests**: Strive for simplicity in your tests, steering clear of logic such as loops and conditionals, as these can signal excessive test complexity.
+5. **Handle Asynchronous Code Effectively**: If your test cases involve promises and asynchronous operations, ensure they are handled correctly.
+6. **Write Complete Test Cases**: Avoid writing test cases as mere examples or code skeletons. You have to write a complete set of tests. They should effectively validate the functionality under test.
+
+Your ultimate objective is to create a robust, complete test suite for the provided code.
+]]
+
 return M
