@@ -314,7 +314,12 @@ require('mini.jump2d').setup({
   -- Function producing jump spots (byte indexed) for a particular line.
   -- For more information see |MiniJump2d.start|.
   -- If `nil` (default) - use |MiniJump2d.default_spotter|
-  spotter = nil,
+  -- spotter = nil,
+  -- spotter = require('mini.jump2d').builtin_opts.line_start.spotter,
+  -- spotter = require('mini.jump2d').gen_pattern_spotter('^%s*%S', 'end'),
+  -- Jump to punctuation:
+  -- spotter = require('mini.jump2d').gen_pattern_spotter('[%p]'),
+  spotter = require('mini.jump2d').builtin_opts.word_start.spotter,
 
   -- Characters used for labels of jump spots (in supplied order)
   labels = 'abcdefghijklmnopqrstuvwxyz,.;',
@@ -325,7 +330,7 @@ require('mini.jump2d').setup({
     dim = false,
 
     -- How many steps ahead to show. Set to big number to show all steps.
-    n_steps_ahead = 0,
+    n_steps_ahead = 2,
   },
 
   -- Which lines are used for computing spots
