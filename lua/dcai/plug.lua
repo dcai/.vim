@@ -143,7 +143,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- cmp
   ----------------------------------------------------------------------------
-  Plug('saghen/blink.cmp', { ['tag'] = 'v1.2.0' })
+  Plug('saghen/blink.cmp', { ['tag'] = 'v1.3.1' })
   -- Plug('andersevenrud/cmp-tmux')
   -- Plug('hrsh7th/cmp-buffer')
   -- Plug('hrsh7th/cmp-cmdline')
