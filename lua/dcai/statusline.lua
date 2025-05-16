@@ -137,9 +137,9 @@ function StatuslineActive()
 
   if wide_enough then
     push(SEP)
-    push(lineinfo())
-    push(percentage())
-    push(column())
+    -- push(lineinfo())
+    -- push(percentage())
+    -- push(column())
     push(fileinfo())
     push(filencoding())
     push(git_branch())
