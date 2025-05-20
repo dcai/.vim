@@ -161,7 +161,7 @@ M.setup = function(plug_opts)
       vim.g.vmt_dont_insert_fence = 1
     end,
   })
-  Plug('iamcco/markdown-preview.nvim', {
+  Plug('dcai/markdown-preview.nvim', {
     ['do'] = 'cd app && npx --yes yarn install',
     ['for'] = 'markdown',
     setup = function()
