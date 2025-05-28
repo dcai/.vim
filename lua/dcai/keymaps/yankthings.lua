@@ -41,7 +41,7 @@ local yank_keymap = {
       local filename = vim.fn.expand('%')
       put_content(filename)
     end,
-    desc = 'yank full file path',
+    desc = 'yank filename',
   },
   {
     '<leader>ym',
@@ -49,7 +49,7 @@ local yank_keymap = {
       local messages = vim.fn.execute('messages')
       put_content(vim.split(messages, '\n', { trimempty = true, plain = true }))
     end,
-    desc = 'yank full file path',
+    desc = 'yank messages',
   },
   {
     '<leader>yk',
@@ -57,7 +57,7 @@ local yank_keymap = {
       local messages = vim.fn.execute('map')
       put_content(vim.split(messages, '\n', { trimempty = true, plain = true }))
     end,
-    desc = 'yank map output',
+    desc = 'yank keymap',
   },
 }
 return yank_keymap
