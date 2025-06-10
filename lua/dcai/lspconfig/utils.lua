@@ -152,4 +152,8 @@ M.common_on_attach = function(client, bufnr)
   end, 'Organize Imports')
 end
 
+M.support_native_lsp_config = function()
+  return vim.version.cmp(vim.version(), '0.11.0') >= 0
+end
+
 return M

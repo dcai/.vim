@@ -1,17 +1,37 @@
 local M = {}
 M.setup = function()
   vim.lsp.set_log_level(vim.log.levels.ERROR)
-  local lspconfig_loaded = pcall(require, 'lspconfig')
-  if not lspconfig_loaded then
-    vim.g.logger.error('lspconfig not loaded!')
-    return
-  end
+  local mylsputils = require('dcai.lspconfig.utils')
 
   local lspconfig = require('lspconfig')
   local lsputils = require('lspconfig/util')
+  if mylsputils.support_native_lsp_config() then
+    vim.lsp.enable('biome')
+    vim.lsp.config('biome', {
+      cmd = { 'biome', 'lsp-proxy' },
+      filetypes = {
+        'astro',
+        'css',
+        'graphql',
+        'javascript',
+        'javascriptreact',
+        'json',
+        'jsonc',
+        'svelte',
+        'typescript',
+        'typescript.tsx',
+        'typescriptreact',
+        'vue',
+      },
+    })
+  else
+    lspconfig.biome.setup({
+      cmd = { 'biome', 'lsp-proxy' },
+    })
+  end
+
   local mason = require('mason')
   local mason_lspconfig = require('mason-lspconfig')
-  local mylsputils = require('dcai.lspconfig.utils')
 
   mason.setup({
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
@@ -47,10 +67,6 @@ M.setup = function()
 
   lspconfig.csharp_ls.setup({
     on_attach = mylsputils.common_on_attach,
-  })
-
-  lspconfig.biome.setup({
-    cmd = { 'biome', 'lsp-proxy' },
   })
 
   lspconfig.phpactor.setup({

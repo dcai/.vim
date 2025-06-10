@@ -2,7 +2,7 @@ local lspconfig = require('lspconfig')
 local mylsputils = require('dcai.lspconfig.utils')
 local root_pattern = lspconfig.util.root_pattern
 
-lspconfig.ts_ls.setup({
+local tslsconfig = {
   filetypes = mylsputils.ts_ls_supported_filetypes,
   root_dir = root_pattern(
     'package.json',
@@ -36,4 +36,11 @@ lspconfig.ts_ls.setup({
   },
 
   on_attach = mylsputils.common_on_attach,
-})
+}
+
+if mylsputils.support_native_lsp_config() then
+  vim.lsp.enable('ts_ls')
+  vim.lsp.config(tslsconfig)
+else
+  lspconfig.ts_ls.setup(tslsconfig)
+end
