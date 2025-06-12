@@ -38,9 +38,4 @@ local tslsconfig = {
   on_attach = mylsputils.common_on_attach,
 }
 
-if mylsputils.support_native_lsp_config() then
-  vim.lsp.enable('ts_ls')
-  vim.lsp.config(tslsconfig)
-else
-  lspconfig.ts_ls.setup(tslsconfig)
-end
+lspconfig.ts_ls.setup(tslsconfig)
