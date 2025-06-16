@@ -107,7 +107,10 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile .babelrc set filetype=json
   autocmd BufRead,BufNewFile .jshintrc set filetype=json
   autocmd BufRead,BufNewFile .tern-config set filetype=json
+
+  " json5
   autocmd BufRead,BufNewFile tsconfig.json set filetype=json5
+  autocmd BufRead,BufNewFile tsconfig.app.json set filetype=json5
   autocmd BufRead,BufNewFile repomix.config.json set filetype=json5
   autocmd BufRead,BufNewFile tsconfig.app.json set filetype=json5
   autocmd BufRead,BufNewFile biome.jsonc set filetype=json5
