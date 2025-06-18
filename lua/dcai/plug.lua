@@ -68,10 +68,9 @@ M.setup = function(plug_opts)
   --- lsp
   ----------------------------------------------------------------------------
   Plug('neovim/nvim-lspconfig')
-  Plug('mason-org/mason.nvim', { ['branch'] = 'v1.x' })
-  Plug('mason-org/mason-lspconfig.nvim', { ['branch'] = 'v1.x' })
-  -- Plug('mason-org/mason.nvim')
-  -- Plug('mason-org/mason-lspconfig.nvim')
+  -- Plug('mason-org/mason.nvim', { ['branch'] = 'v1.x' })
+  -- Plug('mason-org/mason-lspconfig.nvim', { ['branch'] = 'v1.x' })
+  Plug('mason-org/mason.nvim', { ['branch'] = 'main' })
   ----------------------------------------------------------------------------
   --- git
   ----------------------------------------------------------------------------
@@ -143,7 +142,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- cmp
   ----------------------------------------------------------------------------
-  Plug('saghen/blink.cmp', { ['tag'] = 'v1.4.1' })
+  Plug('saghen/blink.cmp', { ['tag'] = 'v1.3.1' })
   -- Plug('andersevenrud/cmp-tmux')
   -- Plug('hrsh7th/cmp-buffer')
   -- Plug('hrsh7th/cmp-cmdline')

@@ -31,23 +31,23 @@ M.setup = function()
   end
 
   local mason = require('mason')
-  local mason_lspconfig = require('mason-lspconfig')
+  -- local mason_lspconfig = require('mason-lspconfig')
 
   mason.setup({
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
   })
 
-  mason_lspconfig.setup({
-    ensure_installed = {
-      'biome',
-      'bashls',
-      'lua_ls',
-      'pyright',
-      'ts_ls',
-      'vimls',
-    },
-    automatic_installation = false,
-  })
+  -- mason_lspconfig.setup({
+  --   ensure_installed = {
+  --     'biome',
+  --     'bashls',
+  --     'lua_ls',
+  --     'pyright',
+  --     'ts_ls',
+  --     'vimls',
+  --   },
+  --   automatic_installation = false,
+  -- })
 
   require('lspconfig.ui.windows').default_options.border = 'single'
 
