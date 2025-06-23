@@ -117,6 +117,11 @@ M.setup = function()
   lspconfig.sourcekit.setup({
     on_attach = mylsputils.common_on_attach,
     capabilities = {
+      workspace = {
+        didChangeWatchedFiles = {
+          dynamicRegistration = true,
+        },
+      },
       textDocument = {
         diagnostic = {
           dynamicRegistration = true,

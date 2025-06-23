@@ -35,7 +35,7 @@ vim.g.ale_fixers = {
   sh = { 'shfmt' },
   svelte = { 'prettier' },
   sql = { 'pgformatter' },
-  swift = { 'swiftformat' },
+  swift = { 'appleswiftformat' },
   terraform = { 'terraform' },
   typescript = jsfixer,
   typescriptreact = jsfixer,
@@ -97,4 +97,5 @@ vim.g.ale_linters = {
   typescript = jslinter,
   typescriptreact = jslinter,
   vim = { 'vimls' },
+  swift = {},
 }
