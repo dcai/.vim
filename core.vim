@@ -58,6 +58,10 @@ set showcmd
 set hidden
 " Avoid hit ENTER to continue normal
 set shortmess+=a
+" Virtual editing means that the cursor can be
+" positioned where there is no actual character.
+" This can be halfway into a tab or beyond the
+" end of the line.
 set virtualedit=all
 " more powerful backspacing
 set backspace=indent,eol,start
