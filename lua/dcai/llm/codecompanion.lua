@@ -81,13 +81,13 @@ end
 
 M.setup = function()
   vim.env['CODECOMPANION_TOKEN_PATH'] = vim.fn.expand(vim.env.XDG_CONFIG_HOME)
-  local provider = 'local_copilot'
+  local llmadapter = 'local_copilot'
 
   local instance = require('codecompanion')
   instance.setup({
     strategies = {
       inline = {
-        adapter = provider,
+        adapter = llmadapter,
         keymaps = {
           accept_change = {
             modes = { n = 'ga' },
@@ -100,7 +100,7 @@ M.setup = function()
         },
       },
       chat = {
-        adapter = provider,
+        adapter = llmadapter,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         roles = {
           ---The header name for the LLM's messages

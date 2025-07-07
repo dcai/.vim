@@ -27,43 +27,44 @@ end
 
 local keymap = {
   { '<leader>c', group = group },
-  {
-    '<leader>ca',
-    function()
-      local enabled = {}
-      for key, _ in pairs(gpplugin.agents) do
-        table.insert(enabled, key)
-      end
-      require('fzf-lua').fzf_exec(enabled, {
-        actions = {
-          default = function(selected, _)
-            local selected_agent = selected[1]
-            vim.cmd(gp_cmd_prefix .. 'Agent ' .. selected_agent)
-          end,
-        },
-      })
-    end,
-    desc = 'select an agent',
-  },
+  -- {
+  --   '<leader>ca',
+  --   function()
+  --     local enabled = {}
+  --     for key, _ in pairs(gpplugin.agents) do
+  --       table.insert(enabled, key)
+  --     end
+  --     require('fzf-lua').fzf_exec(enabled, {
+  --       actions = {
+  --         default = function(selected, _)
+  --           local selected_agent = selected[1]
+  --           vim.cmd(gp_cmd_prefix .. 'Agent ' .. selected_agent)
+  --         end,
+  --       },
+  --     })
+  --   end,
+  --   desc = 'select an agent',
+  -- },
   {
     '<leader>cc',
     function()
+      vim.cmd('CodeCompanionActions')
       -- if use_copilot then
       --   vim.cmd('CopilotChatToggle')
       -- else
       --   -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
-      --   vim.cmd('CodeCompanionActions')
+      --   -- vim.cmd('CodeCompanionActions')
       -- end
-      local agent = gpplugin.get_chat_agent(
-        gpconfig.agents.copilot
-        -- gpconfig.agents.grok_v3_mini
-        -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
-      )
-      gpinstance.new_chat({
-        args = 'vsplit',
-      }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
+      -- local agent = gpplugin.get_chat_agent(
+      --   gpconfig.agents.copilot
+      --   -- gpconfig.agents.grok_v3_mini
+      --   -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
+      -- )
+      -- gpinstance.new_chat({
+      --   args = 'vsplit',
+      -- }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
     end,
-    desc = 'chat toggle',
+    desc = 'CodeCompanion',
   },
   {
     '<leader>cv',
@@ -76,29 +77,29 @@ local keymap = {
       -- }, false, prompt_library.NEOVIM_PROMPT, agent)
       require('codecompanion').prompt('neovim')
     end,
-    desc = 'ask neovim question',
+    desc = 'ask neovim topic',
   },
-  {
-    '<leader>cn',
-    function()
-      vim.cmd('CodeCompanionActions')
-      -- local agent = gpplugin.get_chat_agent(default_chat_agent)
-      -- gpinstance.new_chat(
-      --   {},
-      --   false,
-      --   'You are a helpful assistant. Provide clear, brief, and precise responses.',
-      --   agent
-      -- )
-    end,
-    desc = 'new chat',
-  },
-  {
-    '<leader>cD',
-    function()
-      vim.cmd(gp_cmd_prefix .. 'ChatDelete')
-    end,
-    desc = 'delete chat',
-  },
+  -- {
+  --   '<leader>cn',
+  --   function()
+  --     vim.cmd('CodeCompanionActions')
+  --     -- local agent = gpplugin.get_chat_agent(default_chat_agent)
+  --     -- gpinstance.new_chat(
+  --     --   {},
+  --     --   false,
+  --     --   'You are a helpful assistant. Provide clear, brief, and precise responses.',
+  --     --   agent
+  --     -- )
+  --   end,
+  --   desc = 'new chat',
+  -- },
+  -- {
+  --   '<leader>cD',
+  --   function()
+  --     vim.cmd(gp_cmd_prefix .. 'ChatDelete')
+  --   end,
+  --   desc = 'delete chat',
+  -- },
   {
     '<leader>cF',
     function()
