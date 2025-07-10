@@ -102,6 +102,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile *.module set filetype=php
 
   " json
+  autocmd BufRead,BufNewFile .swift-format set filetype=json
   autocmd BufRead,BufNewFile .swcrc set filetype=json
   autocmd BufRead,BufNewFile .jscsrc set filetype=json
   autocmd BufRead,BufNewFile .babelrc set filetype=json

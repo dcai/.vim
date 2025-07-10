@@ -82,6 +82,7 @@ end
 M.setup = function()
   vim.env['CODECOMPANION_TOKEN_PATH'] = vim.fn.expand(vim.env.XDG_CONFIG_HOME)
   local llmadapter = 'local_copilot'
+  -- local llmadapter = 'grok'
 
   local instance = require('codecompanion')
   instance.setup({
@@ -207,6 +208,15 @@ M.setup = function()
           schema = {
             model = {
               default = 'deepseek-chat',
+            },
+          },
+        })
+      end,
+      grok = function()
+        return require('codecompanion.adapters').extend('xai', {
+          schema = {
+            model = {
+              default = 'grok-4',
             },
           },
         })

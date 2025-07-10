@@ -12,6 +12,7 @@ M.providers = {
 
 M.agents = {
   grok_v3_mini = 'GrokV3Mini',
+  grok_v4 = 'GrokV4',
   coder_chat = 'CoderChat',
   code_editor = 'CodeEditor',
   copilot = 'Copilot',
@@ -148,6 +149,14 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       name = M.agents.grok_v3_mini,
       provider = M.providers.xai,
       model = 'grok-3-mini-beta',
+      chat = true,
+      command = true,
+      system_prompt = prompt_library.BASE_PROMPT_GENERAL,
+    },
+    {
+      name = M.agents.grok_v4,
+      provider = M.providers.xai,
+      model = 'grok-4-latest',
       chat = true,
       command = true,
       system_prompt = prompt_library.BASE_PROMPT_GENERAL,

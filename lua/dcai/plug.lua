@@ -56,14 +56,16 @@ M.setup = function(plug_opts)
     Plug('sourcegraph/sg.nvim')
   end
 
-  if
-    vim.g.is_env_var_set('OPENAI_API_KEY')
-    or vim.g.is_env_var_set('GEMINI_API_KEY')
-    or vim.g.is_env_var_set('XAI_API_KEY')
-  then
-    Plug('dcai/gp.nvim', { frozen = 1 })
-    Plug('olimorris/codecompanion.nvim')
-  end
+  Plug('dcai/gp.nvim', { frozen = 1 })
+  Plug('olimorris/codecompanion.nvim')
+  -- if
+  --   vim.g.is_env_var_set('OPENAI_API_KEY')
+  --   or vim.g.is_env_var_set('GEMINI_API_KEY')
+  --   or vim.g.is_env_var_set('XAI_API_KEY')
+  -- then
+  --   Plug('dcai/gp.nvim', { frozen = 1 })
+  --   Plug('olimorris/codecompanion.nvim')
+  -- end
   ----------------------------------------------------------------------------
   --- lsp
   ----------------------------------------------------------------------------

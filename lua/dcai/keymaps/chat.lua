@@ -46,23 +46,29 @@ local keymap = {
   --   desc = 'select an agent',
   -- },
   {
-    '<leader>cc',
+    '<leader>cg',
     function()
-      vim.cmd('CodeCompanionActions')
       -- if use_copilot then
       --   vim.cmd('CopilotChatToggle')
       -- else
       --   -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
       --   -- vim.cmd('CodeCompanionActions')
       -- end
-      -- local agent = gpplugin.get_chat_agent(
-      --   gpconfig.agents.copilot
-      --   -- gpconfig.agents.grok_v3_mini
-      --   -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
-      -- )
-      -- gpinstance.new_chat({
-      --   args = 'vsplit',
-      -- }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
+      local agent = gpplugin.get_chat_agent(
+        -- gpconfig.agents.copilot
+        -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
+        gpconfig.agents.grok_v4
+      )
+      gpinstance.new_chat({
+        args = 'vsplit',
+      }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
+    end,
+    desc = 'gp.nvim',
+  },
+  {
+    '<leader>cc',
+    function()
+      vim.cmd('CodeCompanionActions')
     end,
     desc = 'CodeCompanion',
   },
