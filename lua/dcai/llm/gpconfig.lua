@@ -320,9 +320,11 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
     curl_params = {},
     -- chat topic generation prompt
     chat_topic_gen_prompt = prompt_library.TOPIC_GEN,
-    chat_topic_gen_provider = 'openai',
+    -- chat_topic_gen_provider = 'openai',
+    chat_topic_gen_provider = 'gptlocal',
     -- chat topic model (string with model name or table with model name and parameters)
-    chat_topic_gen_model = 'gpt-4.1-nano',
+    -- chat_topic_gen_model = 'gpt-4.1-nano',
+    chat_topic_gen_model = 'gpt-4.1',
     -- explicitly confirm deletion of a chat file
     chat_confirm_delete = true,
     -- conceal model parameters in chat

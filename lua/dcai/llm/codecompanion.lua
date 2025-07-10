@@ -1,5 +1,7 @@
 local ok = pcall(require, 'codecompanion')
 local prompt_library = require('dcai.llm.prompt_library')
+local use_llm = 'local_copilot'
+-- local use_llm = 'grok'
 
 local M = {
   setup = function() end,
@@ -81,14 +83,12 @@ end
 
 M.setup = function()
   vim.env['CODECOMPANION_TOKEN_PATH'] = vim.fn.expand(vim.env.XDG_CONFIG_HOME)
-  local llmadapter = 'local_copilot'
-  -- local llmadapter = 'grok'
 
   local instance = require('codecompanion')
   instance.setup({
     strategies = {
       inline = {
-        adapter = llmadapter,
+        adapter = use_llm,
         keymaps = {
           accept_change = {
             modes = { n = 'ga' },
@@ -101,7 +101,7 @@ M.setup = function()
         },
       },
       chat = {
-        adapter = llmadapter,
+        adapter = use_llm,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         roles = {
           ---The header name for the LLM's messages
