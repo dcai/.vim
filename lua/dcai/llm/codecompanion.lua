@@ -354,7 +354,8 @@ Please generate unit tests for this code from buffer %d:
     },
     display = {
       action_palette = {
-        provider = 'default',
+        -- provider = 'default',
+        provider = 'fzf_lua',
         opts = {
           show_default_actions = true,
           show_default_prompt_library = true,
