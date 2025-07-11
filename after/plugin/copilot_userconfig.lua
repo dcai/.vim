@@ -35,8 +35,8 @@ copilot.setup({
     },
   },
   filetypes = {
-    yaml = false,
-    markdown = false,
+    yaml = true,
+    markdown = true,
     help = false,
     gitcommit = false,
     gitrebase = false,
