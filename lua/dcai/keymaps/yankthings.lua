@@ -30,10 +30,16 @@ local yank_keymap = {
   {
     '<leader>yp',
     function()
-      local filepath = vim.fn.expand('%:~')
-      put_content(filepath)
+      local project_root = vim.g.node_project_root()
+      local filepath = vim.fn.expand('%:p')
+      local relpath = filepath
+      if project_root and vim.startswith(filepath, project_root) then
+        relpath = filepath:sub(#project_root + 2)
+      end
+      vim.fn.setreg('*', relpath)
+      put_content(relpath)
     end,
-    desc = 'yank full file path',
+    desc = 'yank file path relative to project root',
   },
   {
     '<leader>yf',
