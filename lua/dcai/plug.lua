@@ -36,8 +36,6 @@ local function Plug(repo, opts)
   end
 end
 
-local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE')
-
 ---setup vim-plug
 ---@param plug_opts table
 M.setup = function(plug_opts)
@@ -45,27 +43,14 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('echasnovski/mini.nvim')
+  -- Plug('folke/snacks.nvim')
 
-  if completion_engine == 'copilot' then
-    Plug('zbirenbaum/copilot.lua')
-  --   Plug('CopilotC-Nvim/CopilotChat.nvim')
-  -- elseif completion_engine == 'codeium' then
-  --   -- Plug('Exafunction/codeium.nvim')
-  --   Plug('dcai/neocodeium', { frozen = 1 })
-  elseif completion_engine == 'cody' then
-    Plug('sourcegraph/sg.nvim')
-  end
-
-  Plug('dcai/gp.nvim', { frozen = 1 })
+  ----------------------------------------------------------------------------
+  --- AI
+  ----------------------------------------------------------------------------
+  Plug('zbirenbaum/copilot.lua')
   Plug('olimorris/codecompanion.nvim')
-  -- if
-  --   vim.g.is_env_var_set('OPENAI_API_KEY')
-  --   or vim.g.is_env_var_set('GEMINI_API_KEY')
-  --   or vim.g.is_env_var_set('XAI_API_KEY')
-  -- then
-  --   Plug('dcai/gp.nvim', { frozen = 1 })
-  --   Plug('olimorris/codecompanion.nvim')
-  -- end
+  Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------
   --- lsp
   ----------------------------------------------------------------------------
@@ -81,6 +66,8 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- UI and usability
   ----------------------------------------------------------------------------
+  Plug('ibhagwan/fzf-lua')
+  Plug('folke/which-key.nvim')
   Plug('j-hui/fidget.nvim', {
     setup = function()
       local ok, fidget = pcall(require, 'fidget')
@@ -100,9 +87,7 @@ M.setup = function(plug_opts)
       colorizer.setup()
     end,
   })
-  Plug('ibhagwan/fzf-lua')
   Plug('rafi/awesome-vim-colorschemes')
-  Plug('folke/which-key.nvim')
   Plug('dstein64/vim-startuptime')
   Plug('tyru/open-browser.vim')
   Plug('AndrewRadev/bufferize.vim', {
@@ -117,7 +102,6 @@ M.setup = function(plug_opts)
       vim.g.VimuxOrientation = 'h'
     end,
   })
-  -- Plug('folke/snacks.nvim')
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
@@ -211,16 +195,6 @@ M.setup = function(plug_opts)
   -- Plug('tpope/vim-dadbod')
   -- Plug('kristijanhusak/vim-dadbod-ui')
   -- Plug('kristijanhusak/vim-dadbod-completion')
-  ----------------------------------------------------------------------------
-  -- files and editing
-  ----------------------------------------------------------------------------
-  Plug('junegunn/vader.vim', { ['for'] = 'vader' })
-  Plug('dcai/marlin.nvim', { frozen = 1 }) -- forked 'desdic/marlin.nvim'
-  Plug('djoshea/vim-autoread')
-  Plug('pocco81/auto-save.nvim')
-  Plug('mbbill/undotree')
-  Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
-  Plug('isobit/vim-caddyfile', { ['for'] = 'caddyfile' })
   Plug('akinsho/toggleterm.nvim', {
     setup = function()
       local loaded, toggleterm = pcall(require, 'toggleterm')
@@ -244,6 +218,16 @@ M.setup = function(plug_opts)
       vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
     end,
   })
+  ----------------------------------------------------------------------------
+  -- files and editing
+  ----------------------------------------------------------------------------
+  Plug('junegunn/vader.vim', { ['for'] = 'vader' })
+  Plug('dcai/marlin.nvim', { frozen = 1 }) -- forked 'desdic/marlin.nvim'
+  Plug('djoshea/vim-autoread')
+  Plug('pocco81/auto-save.nvim')
+  Plug('mbbill/undotree')
+  Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
+  Plug('isobit/vim-caddyfile', { ['for'] = 'caddyfile' })
   END()
 end
 
