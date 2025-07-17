@@ -6,7 +6,7 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 
 - **Plugin Management**: Uses [vim-plug](https://github.com/junegunn/vim-plug) for plugin management, with a Lua wrapper in `lua/dcai/plug.lua` for declarative plugin setup and post-install hooks. Plugins are organized and configured in Lua for performance and maintainability.
 - **Key Plugins**: Includes `plenary.nvim` (utility functions), `fzf-lua` (fuzzy finder), `mini.nvim` (editing utilities), `gp.nvim` (LLM/AI integration), and others for LSP, Git, UI, and AI coding assistants.
-- **AI/LLM Integration**: Modern config integrates AI tools (Copilot, Codeium, CodeCompanion, gp.nvim) with custom prompts and keymaps. AI provider/model selection is abstracted in Lua (`globals.lua`).
+- **AI/LLM Integration**: Modern config integrates AI tools (Copilot, CodeCompanion, gp.nvim) with custom prompts and keymaps. AI provider/model selection is abstracted in Lua (`globals.lua`).
 - **LSP & Treesitter**: Language server support is modularized in `lua/dcai/lspconfig/`, with Treesitter and textobjects for advanced syntax and navigation.
 - **Keymaps**: Key mappings are organized by topic in `lua/dcai/keymaps/`, using which-key for discoverability. Leader key is `<space>`, with ergonomic mappings for common actions.
 - **Legacy Vimscript**: Vimscript files are preserved for reference and backward compatibility, but new config is Lua-first.

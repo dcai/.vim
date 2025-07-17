@@ -48,10 +48,10 @@ M.setup = function(plug_opts)
 
   if completion_engine == 'copilot' then
     Plug('zbirenbaum/copilot.lua')
-    Plug('CopilotC-Nvim/CopilotChat.nvim')
-  elseif completion_engine == 'codeium' then
-    -- Plug('Exafunction/codeium.nvim')
-    Plug('dcai/neocodeium', { frozen = 1 })
+  --   Plug('CopilotC-Nvim/CopilotChat.nvim')
+  -- elseif completion_engine == 'codeium' then
+  --   -- Plug('Exafunction/codeium.nvim')
+  --   Plug('dcai/neocodeium', { frozen = 1 })
   elseif completion_engine == 'cody' then
     Plug('sourcegraph/sg.nvim')
   end
@@ -144,7 +144,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- cmp
   ----------------------------------------------------------------------------
-  Plug('saghen/blink.cmp', { ['tag'] = 'v1.3.1' })
+  Plug('saghen/blink.cmp', { ['tag'] = 'v1.5.1' })
   -- Plug('andersevenrud/cmp-tmux')
   -- Plug('hrsh7th/cmp-buffer')
   -- Plug('hrsh7th/cmp-cmdline')

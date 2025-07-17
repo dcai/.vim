@@ -95,17 +95,16 @@ require('blink.cmp').setup({
     -- implementation = 'prefer_rust_with_warning'
     -- implementation = 'lua',
     implementation = 'prefer_rust',
-
     sorts = {
       'exact',
       -- defaults
       'score',
       'sort_text',
     },
-    prebuilt_binaries = {
-      download = true,
-      ignore_version_mismatch = true,
-    },
+    --   prebuilt_binaries = {
+    --     download = true,
+    --     ignore_version_mismatch = true,
+    --   },
   },
   cmdline = {
     keymap = {

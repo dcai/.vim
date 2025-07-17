@@ -86,10 +86,9 @@ copilot.setup({
 
 local chat_loaded, copilotchat = pcall(require, 'CopilotChat')
 
-require('CopilotChat.config.prompts').COPILOT_INSTRUCTIONS.system_prompt =
-  require('dcai.llm.prompt_library').BASE_PROMPT_CODING
-
 if chat_loaded then
+  require('CopilotChat.config.prompts').COPILOT_INSTRUCTIONS.system_prompt =
+    require('dcai.llm.prompt_library').BASE_PROMPT_CODING
   copilotchat.setup({
 
     -- Shared config starts here (can be passed to functions at runtime and configured via setup function)
