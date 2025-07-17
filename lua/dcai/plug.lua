@@ -55,8 +55,6 @@ M.setup = function(plug_opts)
   --- lsp
   ----------------------------------------------------------------------------
   Plug('neovim/nvim-lspconfig')
-  -- Plug('mason-org/mason.nvim', { ['branch'] = 'v1.x' })
-  -- Plug('mason-org/mason-lspconfig.nvim', { ['branch'] = 'v1.x' })
   Plug('mason-org/mason.nvim', { ['branch'] = 'main' })
   ----------------------------------------------------------------------------
   --- git
@@ -124,19 +122,10 @@ M.setup = function(plug_opts)
       })
     end,
   })
-
   ----------------------------------------------------------------------------
   --- cmp
   ----------------------------------------------------------------------------
   Plug('saghen/blink.cmp', { ['tag'] = 'v1.5.1' })
-  -- Plug('andersevenrud/cmp-tmux')
-  -- Plug('hrsh7th/cmp-buffer')
-  -- Plug('hrsh7th/cmp-cmdline')
-  -- Plug('hrsh7th/cmp-nvim-lsp')
-  -- Plug('hrsh7th/cmp-path')
-  -- Plug('hrsh7th/nvim-cmp')
-  -- Plug('SirVer/ultisnips')
-  -- Plug('quangnguyen30192/cmp-nvim-ultisnips')
   ----------------------------------------------------------------------------
   --- markdown
   ----------------------------------------------------------------------------
@@ -167,27 +156,13 @@ M.setup = function(plug_opts)
       local ok, tj = pcall(require, 'treesj')
       if ok then
         tj.setup({
-          ---@type boolean Use default keymaps (<space>m - toggle, <space>j - join, <space>s - split)
           use_default_keymaps = false,
-          ---@type boolean Node with syntax error will not be formatted
           check_syntax_error = true,
-          ---If line after join will be longer than max value,
-          -- -@type number If line after join will be longer than max value, node will not be formatted
           max_join_length = 120,
-          ---Cursor behavior:
-          ---hold - cursor follows the node/place on which it was called
-          ---start - cursor jumps to the first symbol of the node being formatted
-          ---end - cursor jumps to the last symbol of the node being formatted
-          ---@type 'hold'|'start'|'end'
           cursor_behavior = 'hold',
-          ---@type boolean Notify about possible problems or not
           notify = true,
-          ---@type boolean Use `dot` for repeat action
           dot_repeat = true,
-          ---@type nil|function Callback for treesj error handler. func (err_text, level, ...other_text)
           on_error = nil,
-          ---@type table Presets for languages
-          -- langs = {}, -- See the default presets in lua/treesj/langs
         })
       end
     end,
@@ -205,7 +180,6 @@ M.setup = function(plug_opts)
         -- shell = vim.o.shell,
         shell = 'fish',
       })
-
       function _G.set_terminal_keymaps()
         local opts = { buffer = 0 }
         -- XXX: dont bind esc, this blocks closing fzf with esc
