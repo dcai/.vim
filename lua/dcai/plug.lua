@@ -227,7 +227,6 @@ M.setup = function(plug_opts)
   Plug('pocco81/auto-save.nvim')
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
-  Plug('isobit/vim-caddyfile', { ['for'] = 'caddyfile' })
   END()
 end
 
