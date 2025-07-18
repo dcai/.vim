@@ -17,10 +17,13 @@ A personal Neovim configuration with 15+ years of evolution, migrated from Vim t
 ## ✨ Features
 
 - **Modular Organization**: Configuration split into logical modules for easy maintenance
+- **Modern Completion**: Advanced completion with blink.cmp v1.5.1 for fast, intelligent autocomplete
 - **LSP Integration**: Pre-configured language server protocol support for multiple languages
 - **Fuzzy Finding**: Advanced file and text search with FZF integration
 - **Git Integration**: Seamless git workflow with Fugitive and other tools
-- **AI Coding Assistants**: Integrated LLM support with CopilotChat and CodeCompanion
+- **AI Coding Assistants**: Integrated LLM support with CodeCompanion, Copilot, and gp.nvim
+- **Code Manipulation**: Tree-sitter powered code splitting/joining with treesj
+- **Terminal Integration**: Toggleable terminal management with toggleterm.nvim
 - **Test Runner**: Integrated testing workflow
 - **Extensive Keymaps**: Organized key mappings via which-key for better discoverability
 
@@ -53,7 +56,6 @@ ln -s (which nvim) ~/.local/bin/vim
   - `captureoutput.vim`: Utility for capturing command output
   - `keymap.vim`: Early keymaps loaded before plugins
   - `netrw.vim`: File browser configurations
-  - `pipe.vim`: Pipeline utilities for text processing
 - `after/`: Configurations loaded after plugins
   - `ftplugin/`: Filetype-specific settings
   - `plugin/`: Plugin-specific configurations
