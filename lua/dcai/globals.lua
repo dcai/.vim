@@ -662,3 +662,13 @@ vim.g.repo_instructions = function()
   local lines = vim.fn.readfile(instruct_file)
   return table.concat(lines, '\n')
 end
+
+vim.g.feedkeys = function(key, mode)
+  -- Replaces terminal codes and keycodes
+  -- (<CR>, <Esc>, ...) in a string with the internal representation.
+  local keys = vim.api.nvim_replace_termcodes(key, true, true, true)
+  mode = mode or ''
+  -- Sends input-keys to Nvim, subject to various quirks
+  -- controlled by mode flags. This is a blocking call, unlike nvim_input().
+  vim.api.nvim_feedkeys(keys, mode, true)
+end

@@ -32,17 +32,6 @@ local function has_words_before()
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
-local function feedkeys(key, mode)
-  -- Replaces terminal codes and keycodes
-  -- (<CR>, <Esc>, ...) in a string with the internal representation.
-  local keys = vim.api.nvim_replace_termcodes(key, true, true, true)
-  mode = mode or ''
-  -- Sends input-keys to Nvim, subject to various quirks
-  -- controlled by mode flags. This is a blocking call, unlike nvim_input().
-  vim.api.nvim_feedkeys(keys, mode, true)
-end
-
----@diagnostic disable-next-line: unused-function, unused-local
 local _prioritizeSource = function(source)
   return function(entry1, entry2)
     if entry1[source] and not entry2[source] then
@@ -79,7 +68,7 @@ local handle_enter = cmp.mapping({
 
 local function select_prev_menu_item(fallback)
   -- if vim.fn['UltiSnips#CanJumpBackwards']() == 1 then
-  --   return feedkeys('<Plug>(ultisnips_jump_backward)')
+  --   return vim.g.feedkeys('<Plug>(ultisnips_jump_backward)')
   -- elseif cmp.visible() then
   if cmp.visible() then
     cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
@@ -116,7 +105,7 @@ end
 
 local handle_tab = cmp.mapping(function(fallback)
   -- if vim.fn['UltiSnips#CanJumpForwards']() == 1 then
-  --   return feedkeys('<Plug>(ultisnips_jump_forward)')
+  --   return vim.g.feedkeys('<Plug>(ultisnips_jump_forward)')
   --   -- elseif cmp.visible() and has_words_before() then
   -- end
   local direction = 1

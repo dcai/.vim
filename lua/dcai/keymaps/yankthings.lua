@@ -28,18 +28,60 @@ local yank_keymap = {
     desc = 'yank loaded package names',
   },
   {
-    '<leader>yp',
+    '<leader>yy',
     function()
+      local line_number = vim.fn.line('.')
       local project_root = vim.g.node_project_root()
       local filepath = vim.fn.expand('%:p')
       local relpath = filepath
       if project_root and vim.startswith(filepath, project_root) then
         relpath = filepath:sub(#project_root + 2)
       end
-      vim.fn.setreg('*', relpath)
-      put_content(relpath)
+      local content = relpath .. vim.g.nl .. 'LINE ' .. tostring(line_number)
+      vim.fn.setreg('*', content)
+      -- put_content(content)
     end,
-    desc = 'yank file path relative to project root',
+    desc = 'yank file path and current line',
+    mode = 'n',
+  },
+  {
+    '<leader>yy',
+    function()
+      local start_pos = vim.fn.getpos("'<")
+      local end_pos = vim.fn.getpos("'>")
+      local project_root = vim.g.node_project_root()
+      local filepath = vim.fn.expand('%:p')
+      local relpath = filepath
+      if project_root and vim.startswith(filepath, project_root) then
+        relpath = filepath:sub(#project_root + 2)
+      end
+
+      vim.g.logger.info(vim.inspect({
+        start_pos = start_pos,
+        end_pos = end_pos,
+      }))
+      -- Extract line numbers (1-indexed)
+      local start_line = start_pos[2]
+      local end_line = end_pos[2]
+
+      -- Get the full lines (this handles line-wise selection automatically)
+      local lines =
+        vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+      local text = table.concat(lines, '\n')
+
+      local content = relpath
+        .. vim.g.nl
+        .. string.format('LINE %s-%s', start_line, end_line)
+        .. vim.g.nl
+        .. text
+
+      vim.fn.setreg('*', content, 'l')
+      vim.g.feedkeys('<Esc>', 'n')
+      -- put_content(content)
+    end,
+    desc = 'yank file path and selected line',
+    mode = 'v',
   },
   {
     '<leader>yf',
