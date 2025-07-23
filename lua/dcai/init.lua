@@ -157,7 +157,13 @@ vim.keymap.set('v', '<leader>yy', function()
   end
   local lines = vim.fn.getline(line1, line2)
   -- Header with file and line range
-  local header = fname .. ' ' .. line1 .. '-' .. line2
+  local header = fname
+    .. vim.g.nl
+    .. ' -- '
+    .. vim.g.nl
+    .. line1
+    .. '-'
+    .. line2
   -- Join lines
   local content = table.concat(lines, '\n')
   -- Set to clipboard register (+)
