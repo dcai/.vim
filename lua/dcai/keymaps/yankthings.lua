@@ -37,7 +37,7 @@ local yank_keymap = {
       if project_root and vim.startswith(filepath, project_root) then
         relpath = filepath:sub(#project_root + 2)
       end
-      local content = relpath .. vim.g.nl .. 'LINE ' .. tostring(line_number)
+      local content = relpath .. ' LINE ' .. tostring(line_number)
       vim.fn.setreg('*', content)
       -- put_content(content)
     end,
