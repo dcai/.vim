@@ -147,3 +147,20 @@ vim.keymap.set('n', 'XX', function()
   vim.cmd(':helpclose')
   vim.g.close_all_popups()
 end)
+
+vim.keymap.set('v', '<leader>yy', function()
+  local fname = vim.fn.expand('%:p')
+  local line1 = vim.fn.line('v')
+  local line2 = vim.fn.line('.')
+  if line1 > line2 then
+    line1, line2 = line2, line1
+  end
+  local lines = vim.fn.getline(line1, line2)
+  -- Header with file and line range
+  local header = fname .. ' ' .. line1 .. '-' .. line2
+  -- Join lines
+  local content = table.concat(lines, '\n')
+  -- Set to clipboard register (+)
+  vim.fn.setreg('+', header .. '\n' .. content)
+  vim.g.feedkeys('<esc>', 'n')
+end, { desc = 'Yank visual selection with file name and line range' })
