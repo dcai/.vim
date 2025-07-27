@@ -52,6 +52,7 @@ M.setup = function(plug_opts)
   Plug('github/copilot.vim', {
     setup = function()
       vim.g.copilot_no_tab_map = true
+      vim.g.copilot_proxy_strict_ssl = false
       vim.keymap.set('i', '<C-F>', 'copilot#Accept("\\<CR>")', {
         expr = true,
         replace_keycodes = false,
