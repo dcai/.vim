@@ -48,7 +48,21 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- AI
   ----------------------------------------------------------------------------
-  Plug('zbirenbaum/copilot.lua')
+  -- Plug('zbirenbaum/copilot.lua')
+  Plug('github/copilot.vim', {
+    setup = function()
+      vim.g.copilot_no_tab_map = true
+      vim.keymap.set('i', '<C-F>', 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+      })
+      vim.g.copilot_filetypes = {
+        -- ['markdown'] = false,
+        -- ['text'] = false,
+        ['help'] = false,
+      }
+    end,
+  })
   Plug('olimorris/codecompanion.nvim')
   Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------

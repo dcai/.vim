@@ -114,24 +114,19 @@ M.setup = function()
   --   on_attach = utils.common_on_attach,
   -- })
 
-  -- use `generate-triple.sh` script to generate
-  local target_triple = 'arm64-apple-ios18.5-simulator'
-  -- get this form `xcrun --sdk iphonesimulator --show-sdk-path`
-  local ios_sdk =
-    '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk'
-  local sourcekit_bin =
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp'
   lspconfig.sourcekit.setup({
     cmd = {
-      sourcekit_bin,
+      '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp',
       '-Xswiftc',
       '-sdk',
       '-Xswiftc',
-      ios_sdk,
+      -- get this form `xcrun --sdk iphonesimulator --show-sdk-path`
+      '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk',
       '-Xswiftc',
       '-target',
       '-Xswiftc',
-      target_triple,
+      -- use `generate-triple.sh` script to generate
+      'arm64-apple-ios18.5-simulator',
     },
     on_attach = mylsputils.common_on_attach,
     capabilities = {
