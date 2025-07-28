@@ -70,6 +70,8 @@ augroup filetypeGroup
     \ let b:ale_sh_shellcheck_exclusions = 'SC2034,SC2154,SC2164'
   autocmd BufRead,BufNewFile .env.*,.env setf sh
 
+  " markdown
+  autocmd BufRead,BufNewFile *.mdx setf markdown
 
   " dokuwiki
   autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
