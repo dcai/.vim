@@ -4,11 +4,15 @@ local root_pattern = lspconfig.util.root_pattern
 
 local tslsconfig = {
   filetypes = mylsputils.ts_ls_supported_filetypes,
+  -- for monorepo, this should be set to the root of the monorepo
   root_dir = root_pattern(
-    'package.json',
+    'pnpm-lock.yaml',
+    'package-lock.json',
+    'yarn.lock',
+    'bun.lock',
+    '.git',
     'tsconfig.json',
-    'jsconfig.json',
-    '.git'
+    'jsconfig.json'
   ),
   cmd = { 'typescript-language-server', '--stdio' },
   commands = {
