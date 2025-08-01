@@ -24,7 +24,8 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " This unset the 'last search pattern' register by hitting return
-nnoremap <silent> <CR> :nohlsearch<CR><CR>
+" nnoremap <silent> <CR> :nohlsearch<CR><CR>
+nnoremap <silent> <BS> :nohlsearch<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" handy things
