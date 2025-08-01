@@ -116,7 +116,7 @@ fzflua.setup({
     cwd_prompt_shorten_val = 1, -- shortened path parts length
     toggle_ignore_flag = '--no-ignore', -- flag toggled in `actions.toggle_ignore`
     toggle_hidden_flag = '--hidden', -- flag toggled in `actions.toggle_hidden`
-    hidden = true,
+    hidden = false,
     follow = true,
     no_ignore = false,
   },
