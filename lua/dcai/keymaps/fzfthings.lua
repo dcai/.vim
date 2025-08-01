@@ -14,7 +14,7 @@ local fzf_keymap = {
   mode = { 'n', 'v' },
   { '<leader>f', group = 'fzf' },
   { '<leader>fb', fzf.buffers, desc = 'buffers' },
-  { '<leader>fc', fzf.colorschemes, desc = 'colorschemes' },
+  -- { '<leader>fc', fzf.colorschemes, desc = 'colorschemes' },
   { '<leader>fd', fzf.diagnostics_document, desc = 'diagnostics' },
   { '<leader>fr', fzf.oldfiles, desc = 'recent files' },
   -- { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
@@ -44,7 +44,12 @@ local fzf_keymap = {
     desc = 'git files',
   },
   {
-    '<leader>fj',
+    '<leader>fc',
+    fzf.files,
+    desc = 'current folder files',
+  },
+  {
+    '<leader>fp',
     function()
       fzf.files({ cwd = vim.g.smart_root() })
     end,
