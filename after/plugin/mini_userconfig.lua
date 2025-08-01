@@ -356,7 +356,8 @@ require('mini.jump2d').setup({
 
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
-    start_jumping = '<CR>',
+    start_jumping = '<tab>',
+    -- start_jumping = '<CR>',
     -- start_jumping = '\\',
     -- start_jumping = ',',
   },
