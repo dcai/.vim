@@ -1,8 +1,8 @@
 local group = 'chat'
 
 local loaded_gpplugin, gpplugin = pcall(require, 'gp')
-local loaded_cc = pcall(require, 'codecompanion')
-if (not loaded_gpplugin) and not loaded_cc then
+local loaded_codecompanion = pcall(require, 'codecompanion')
+if (not loaded_gpplugin) and not loaded_codecompanion then
   return {
     { '<leader>c', group = group },
   }
