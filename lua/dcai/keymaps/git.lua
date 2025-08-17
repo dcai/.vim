@@ -3,7 +3,7 @@ local utils = require('dcai.keymaps.utils')
 local git_keymap = {
   { '<leader>g', group = 'git' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
-  { '<leader>gA', '<cmd>!git reset %<cr>', desc = 'git unstage' },
+  { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'unstage this file' },
   { '<leader>gb', '<cmd>Git blame<cr>', desc = 'git blame' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
   { '<leader>gc', group = 'git commit' },
@@ -38,6 +38,11 @@ local git_keymap = {
   -- { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
   {
     '<leader>gg',
+    '<cmd>FzfLua git_status<cr>',
+    desc = 'git status',
+  },
+  {
+    '<leader>gs',
     '<cmd>FzfLua git_status<cr>',
     desc = 'git status',
   },
@@ -85,11 +90,6 @@ local git_keymap = {
     '<leader>glb',
     '<cmd>FzfLua git_bcommits<cr>',
     desc = 'current buffer',
-  },
-  {
-    '<leader>gM',
-    '<cmd>Git blame<cr>',
-    desc = 'git blame',
   },
   {
     '<leader>gp',
