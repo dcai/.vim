@@ -219,7 +219,11 @@ M.setup = function(plug_opts)
   Plug('isobit/vim-caddyfile')
   Plug('greggh/claude-code.nvim', {
     setup = function()
-      require('claude-code').setup({
+      local ok, claudecode = pcall(require, 'claude-code')
+      if not ok then
+        return
+      end
+      claudecode.setup({
         command = 'claude --dangerously-skip-permissions',
         -- Command variants
         command_variants = {
