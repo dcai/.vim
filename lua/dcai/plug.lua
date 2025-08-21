@@ -15,7 +15,7 @@ local function END()
   vim.fn['plug#end']()
 
   -- run setup scripts
-  for plugin, setup in pairs(setups.afterEnd) do
+  for _plugin, setup in pairs(setups.afterEnd) do
     -- vim.g.logger.trace('setting up ' .. plugin)
     setup()
   end
@@ -182,31 +182,6 @@ M.setup = function(plug_opts)
       end
     end,
   })
-  -- Plug('tpope/vim-dadbod')
-  -- Plug('kristijanhusak/vim-dadbod-ui')
-  -- Plug('kristijanhusak/vim-dadbod-completion')
-  Plug('akinsho/toggleterm.nvim', {
-    setup = function()
-      local loaded, toggleterm = pcall(require, 'toggleterm')
-      if not loaded then
-        return
-      end
-      toggleterm.setup({
-        -- shell = vim.o.shell,
-        shell = 'fish',
-      })
-      function _G.set_terminal_keymaps()
-        local opts = { buffer = 0 }
-        -- XXX: dont bind esc, this blocks closing fzf with esc
-        -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-        vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-        vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
-      end
-
-      -- if you only want these mappings for toggle term use term://*toggleterm#* instead
-      vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-    end,
-  })
   ----------------------------------------------------------------------------
   -- files and editing
   ----------------------------------------------------------------------------
@@ -217,56 +192,7 @@ M.setup = function(plug_opts)
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('isobit/vim-caddyfile')
-  Plug('greggh/claude-code.nvim', {
-    setup = function()
-      local ok, claudecode = pcall(require, 'claude-code')
-      if not ok then
-        return
-      end
-      claudecode.setup({
-        command = 'claude --dangerously-skip-permissions',
-        -- Command variants
-        command_variants = {
-          -- Conversation management
-          continue = '--continue', -- Resume the most recent conversation
-          resume = '--resume', -- Display an interactive conversation picker
-
-          -- Output options
-          verbose = '--verbose', -- Enable verbose logging with full turn-by-turn output
-        },
-        window = {
-          split_ratio = 0.5, -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
-          position = 'float', -- Position of the window: "botright", "topleft", "vertical", "float", etc.
-          enter_insert = true, -- Whether to enter insert mode when opening Claude Code
-          hide_numbers = true, -- Hide line numbers in the terminal window
-          hide_signcolumn = true, -- Hide the sign column in the terminal window
-
-          -- Floating window configuration (only applies when position = "float")
-          float = {
-            width = '90%', -- Width: number of columns or percentage string
-            height = '90%', -- Height: number of rows or percentage string
-            row = 'center', -- Row position: number, "center", or percentage string
-            col = 'center', -- Column position: number, "center", or percentage string
-            relative = 'editor', -- Relative to: "editor" or "cursor"
-            border = 'shadow', -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
-          },
-        },
-        -- Keymaps
-        keymaps = {
-          toggle = {
-            normal = '<c-q>', -- Normal mode keymap for toggling Claude Code, false to disable
-            terminal = '<c-q>', -- Terminal mode keymap for toggling Claude Code, false to disable
-            variants = {
-              continue = nil, -- Normal mode keymap for Claude Code with continue flag
-              verbose = '<leader>cV', -- Normal mode keymap for Claude Code with verbose flag
-            },
-          },
-          window_navigation = false, -- Enable window navigation keymaps (<C-h/j/k/l>)
-          scrolling = true, -- Enable scrolling keymaps (<C-f/b>) for page up/down
-        },
-      })
-    end,
-  })
+  Plug('greggh/claude-code.nvim')
   END()
 end
 
