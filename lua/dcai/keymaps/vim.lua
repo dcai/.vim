@@ -79,7 +79,7 @@ local vim_keymap = {
       local filename_only = vim.fn.fnamemodify(filepath, ':t')
       if ft == 'vim' or ft == 'lua' then
         vim.cmd('source %')
-        vim.g.reload('dcai')
+        -- vim.g.reload('dcai')
         vim.notify(filename_only .. ' sourced', vim.log.levels.WARN)
       else
         vim.notify(filepath .. ' cannot source non vim/lua files')

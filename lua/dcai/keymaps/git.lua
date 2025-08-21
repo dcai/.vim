@@ -78,13 +78,20 @@ local git_keymap = {
     '<leader>gl',
     group = 'logs',
   },
+  -- {
+  --   '<leader>gll',
+  --   function()
+  --     local fzf = require('fzf-lua')
+  --     fzf.git_commits()
+  --   end,
+  --   desc = 'git log',
+  -- },
   {
     '<leader>gll',
-    function()
-      local fzf = require('fzf-lua')
-      fzf.git_commits()
-    end,
-    desc = 'git log',
+    '<cmd>!tmux popup -E -h "80\\%" -w "80\\%" -d "'
+      .. vim.fn.getcwd()
+      .. '" -- tig<CR><CR>',
+    desc = 'tig',
   },
   {
     '<leader>glb',

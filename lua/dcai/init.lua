@@ -166,3 +166,12 @@ vim.keymap.set('v', '<leader>yy', function()
   vim.fn.setreg('+', header .. vim.g.nl .. '--------' .. vim.g.nl .. content)
   vim.g.feedkeys('<esc>', 'n')
 end, { desc = 'Yank visual selection with file name and line range' })
+
+vim.keymap.set(
+  'n',
+  '<c-_>',
+  '<cmd>!tmux popup -E -h "80\\%" -w "80\\%" -d "'
+    .. vim.fn.getcwd()
+    .. '" -- fish<CR><CR>',
+  { desc = 'Shell' }
+) -- opens lazygit in a new tmux window
