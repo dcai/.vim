@@ -148,25 +148,6 @@ vim.keymap.set('n', 'XX', function()
   vim.g.close_all_popups()
 end)
 
-vim.keymap.set('v', '<leader>yy', function()
-  local project_root = vim.g.git_root()
-  local filepath = vim.fn.expand('%:p')
-  local fname = filepath
-  if project_root and vim.startswith(filepath, project_root) then
-    fname = filepath:sub(#project_root + 2)
-  end
-  local line1 = vim.fn.line('v')
-  local line2 = vim.fn.line('.')
-  if line1 > line2 then
-    line1, line2 = line2, line1
-  end
-  local lines = vim.fn.getline(line1, line2)
-  local header = string.format('File: %s, Lines: %d-%d', fname, line1, line2)
-  local content = table.concat(lines, '\n')
-  vim.fn.setreg('+', header .. vim.g.nl .. '--------' .. vim.g.nl .. content)
-  vim.g.feedkeys('<esc>', 'n')
-end, { desc = 'Yank visual selection with file name and line range' })
-
 vim.keymap.set(
   'n',
   '<c-_>',
