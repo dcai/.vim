@@ -131,7 +131,7 @@ endif
 
 " set list listchars=tab:»\ ,trail:￮,precedes:←,extends:→,nbsp:⏑
 " set list listchars=tab:\|\ ,trail:￮,precedes:←,extends:→,nbsp:⏑
-set list listchars=tab:⇥\ ,trail:￮,precedes:←,extends:→,nbsp:⏑
+" set list listchars=tab:⇥\ ,trail:￮,precedes:←,extends:→,nbsp:⏑
 set showbreak=↪\
 
 function! SoftWrap()
