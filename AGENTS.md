@@ -1,12 +1,10 @@
-# Contributing to Neovim Config Repository
-
 This repository houses a Neovim configuration in Lua and partially some vimscripts.
 
 ## Repository Overview
 
 - **Plugin Management**: Uses [vim-plug](https://github.com/junegunn/vim-plug) for plugin management, with a Lua wrapper in `lua/dcai/plug.lua` for declarative plugin setup and post-install hooks. Plugins are organized and configured in Lua for performance and maintainability.
-- **Key Plugins**: Includes `plenary.nvim` (utility functions), `fzf-lua` (fuzzy finder), `mini.nvim` (editing utilities), `gp.nvim` (LLM/AI integration), and others for LSP, Git, UI, and AI coding assistants.
-- **AI/LLM Integration**: Modern config integrates AI tools (Copilot, CodeCompanion, gp.nvim) with custom prompts and keymaps. AI provider/model selection is abstracted in Lua (`globals.lua`).
+- **Key Plugins**: Includes `plenary.nvim` (utility functions), `fzf-lua` (fuzzy finder), `mini.nvim` (editing utilities) and others for LSP, Git, UI, and AI coding assistants.
+- **AI/LLM Integration**: Modern config integrates AI tools (Copilot, CodeCompanion, gp.nvim) with custom prompts and keymaps.
 - **LSP & Treesitter**: Language server support is modularized in `lua/dcai/lspconfig/`, with Treesitter and textobjects for advanced syntax and navigation.
 - **Keymaps**: Key mappings are organized by topic in `lua/dcai/keymaps/`, using which-key for discoverability. Leader key is `<space>`, with ergonomic mappings for common actions.
 - **Legacy Vimscript**: Vimscript files are preserved for reference and backward compatibility, but new config is Lua-first.
@@ -37,11 +35,7 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 ## For AI Agents
 
 - **Understand the modular structure**: Most config logic is in `lua/dcai/` and subfolders. Plugin management is declarative in `plug.lua`.
-- **AI/LLM features**: Look for AI provider/model selection in `globals.lua`, prompt libraries in `llm/`, and keymaps for chat/coding assistants.
+- **AI/LLM features**: prompt libraries in `llm/`, and keymaps for chat/coding assistants.
 - **Key conventions**: Use Lua for new features, keep plugin config modular, and follow commit/message conventions.
 - **Preserve legacy**: Do not remove Vimscript files unless directed. Use them as reference for porting to Lua.
 - **Testing**: Ensure changes do not break cross-platform support or core workflows (editing, LSP, AI, Git, FZF).
-
----
-
-For more details, see `readme.md` and `HISTORY.md` for project history and philosophy.
