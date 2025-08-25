@@ -10,6 +10,7 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 - **Legacy Vimscript**: Vimscript files are preserved for reference and backward compatibility, but new config is Lua-first.
 - **Folder Structure**:
   - `lua/dcai/`: Core Lua modules (plugin management, LSP, keymaps, AI, UI, utilities)
+    - `globals.lua`: Globally shared Lua functions for use across the setup.
   - `lua/dcai/keymaps/`: Keymap modules by topic
   - `lua/dcai/lspconfig/`: LSP server configs
   - `lua/dcai/llm/`: AI/LLM integration and prompt libraries
