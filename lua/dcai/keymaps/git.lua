@@ -1,6 +1,11 @@
 local utils = require('dcai.keymaps.utils')
 
 local git_keymap = {
+  {
+    '<leader>gy',
+    utils.open_git_hosting_web,
+    desc = 'open in browser',
+  },
   { '<leader>g', group = 'git' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'unstage this file' },
@@ -22,27 +27,22 @@ local git_keymap = {
     desc = 'commit staged',
   },
   {
-    '<leader>gG',
-    utils.git_cmd({
-      args = { 'auto-commit-and-push' },
-    }),
-    desc = 'git ai commit and push',
-  },
-  {
     '<leader>gcf',
     utils.git_cmd({
       args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' },
     }),
     desc = 'fixup HEAD',
   },
-  -- { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
+  {
+    '<leader>gG',
+    utils.git_cmd({
+      args = { 'auto-commit-and-push' },
+    }),
+    desc = 'git ai commit and push',
+  },
+  { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
   {
     '<leader>gg',
-    '<cmd>FzfLua git_status<cr>',
-    desc = 'git status',
-  },
-  {
-    '<leader>gs',
     '<cmd>FzfLua git_status<cr>',
     desc = 'git status',
   },
@@ -116,11 +116,6 @@ local git_keymap = {
     '<leader>gpf',
     utils.git_cmd({ args = { 'fetch', '--tags', '--all', '--verbose' } }),
     desc = 'git fetch',
-  },
-  {
-    '<leader>gy',
-    utils.open_git_hosting_web,
-    desc = 'open in browser',
   },
 }
 return git_keymap
