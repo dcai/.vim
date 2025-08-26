@@ -2,8 +2,6 @@
 node = "22"
 
 [env]
-NVIM_USE_COPILOT=true
-NVIM_USE_CODEIUM=false
 NODE_TLS_REJECT_UNAUTHORIZED=0
 
 [tasks.lint]

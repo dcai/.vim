@@ -166,7 +166,6 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       provider = M.providers.gpt_local,
       ---@type CopilotModel
       model = 'gpt-4.1',
-      -- model = 'o4-mini',
       chat = true,
       command = true,
       system_prompt = prompt_library.BASE_PROMPT_GENERAL,
@@ -200,7 +199,7 @@ Be cautious of very long chats. Start a fresh chat by using `{{new_shortcut}}` o
       provider = 'googleai',
       model = {
         -- find gemini models: https://ai.google.dev/gemini-api/docs/models/gemini
-        model = 'gemini-2.0-flash',
+        model = 'gemini-2.5-flash',
         temperature = 1.1,
         top_p = 0.95,
         top_k = 40,

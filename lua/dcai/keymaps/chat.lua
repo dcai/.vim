@@ -10,16 +10,10 @@ end
 
 require('dcai.llm.codecompanion').setup()
 
-local prompt_library = require('dcai.llm.prompt_library')
-
 local gpconfig = require('dcai.llm.gpconfig')
-local gpinstance = gpconfig.setup()
-local gp_cmd_prefix = gpconfig.prefix
-local completion_engine = os.getenv('NVIM_COMPLETION_ENGINE')
-local use_copilot = false
-if completion_engine == 'copilot' then
-  use_copilot = true
-end
+-- local gpinstance = gpconfig.setup()
+-- local gp_cmd_prefix = gpconfig.prefix
+-- local prompt_library = require('dcai.llm.prompt_library')
 
 local function wrapVisualModeCmd(cmd)
   return ":<c-u>'<,'>" .. cmd .. '<cr>'
@@ -45,26 +39,6 @@ local keymap = {
   --   end,
   --   desc = 'select an agent',
   -- },
-  {
-    '<leader>cg',
-    function()
-      -- if use_copilot then
-      --   vim.cmd('CopilotChatToggle')
-      -- else
-      --   -- vim.cmd(gp_cmd_prefix .. 'ChatToggle vsplit')
-      --   -- vim.cmd('CodeCompanionActions')
-      -- end
-      local agent = gpplugin.get_chat_agent(
-        -- gpconfig.agents.copilot
-        -- use_copilot and gpconfig.agents.copilot or gpconfig.agents.coder_chat
-        gpconfig.agents.grok_v4
-      )
-      gpinstance.new_chat({
-        args = 'vsplit',
-      }, false, prompt_library.BASE_PROMPT_GENERAL, agent)
-    end,
-    desc = 'gp.nvim',
-  },
   {
     '<leader>cc',
     function()

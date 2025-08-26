@@ -48,7 +48,6 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- AI
   ----------------------------------------------------------------------------
-  -- Plug('zbirenbaum/copilot.lua')
   Plug('github/copilot.vim', {
     setup = function()
       vim.g.copilot_no_tab_map = true

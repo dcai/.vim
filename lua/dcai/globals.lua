@@ -378,17 +378,6 @@ vim.g.merge_list = function(...)
   return result
 end
 
---- get ai provider and model
----@return string, string
-vim.g.get_ai_model = function()
-  local input = vim.env.DEFAULT_LLM or 'openai/gpt-4o-mini'
-  local provider, model = string.match(input, '([^/]+)/?(.*)')
-  if model == '' then
-    model = nil
-  end
-  return provider, model
-end
-
 ---get project root
 ---@param markers string[]
 ---@return fun(filepath: string?): string?
