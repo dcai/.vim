@@ -67,8 +67,18 @@ neogit.setup({
   sort_branches = '-committerdate',
   -- Default for new branch name prompts
   initial_branch_name = '',
-  -- Change the default way of opening neogit
-  kind = 'tab',
+  -- `kind` option can be one of:
+  --   tab (default)
+  --   replace
+  --   split
+  --   split_above
+  --   split_above_all
+  --   split_below
+  --   split_below_all
+  --   vsplit
+  --   floating
+  --   auto (vsplit if window would have 80 cols, otherwise split)
+  kind = 'floating',
   -- Floating window style
   floating = {
     relative = 'editor',
@@ -113,14 +123,8 @@ neogit.setup({
     },
   },
   commit_editor = {
-    kind = 'tab',
     show_staged_diff = true,
-    -- Accepted values:
-    -- "split" to show the staged diff below the commit editor
-    -- "vsplit" to show it to the right
-    -- "split_above" Like :top split
-    -- "vsplit_left" like :vsplit, but open to the left
-    -- "auto" "vsplit" if window would have 80 cols, otherwise "split"
+    kind = 'split',
     staged_diff_split_kind = 'split',
     spell_check = true,
   },
@@ -237,7 +241,8 @@ neogit.setup({
   mappings = {
     commit_editor = {
       ['q'] = 'Close',
-      ['<c-c><c-c>'] = 'Submit',
+      ['<c-c>'] = 'Close',
+      ['<c-c><c-c>'] = 'Abort',
       ['<c-c><c-k>'] = 'Abort',
       ['<m-p>'] = 'PrevMessage',
       ['<m-n>'] = 'NextMessage',
