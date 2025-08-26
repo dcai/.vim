@@ -1,12 +1,12 @@
 local utils = require('dcai.keymaps.utils')
 
 local git_keymap = {
+  { '<leader>g', group = 'git' },
   {
     '<leader>gy',
     utils.open_git_hosting_web,
     desc = 'open in browser',
   },
-  { '<leader>g', group = 'git' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'unstage this file' },
   { '<leader>gb', '<cmd>Git blame<cr>', desc = 'git blame' },
