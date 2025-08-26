@@ -76,6 +76,7 @@ M.setup = function(plug_opts)
   Plug('tpope/vim-fugitive')
   Plug('ruifm/gitlinker.nvim')
   Plug('sindrets/diffview.nvim')
+  Plug('NeogitOrg/neogit')
   ----------------------------------------------------------------------------
   --- UI and usability
   ----------------------------------------------------------------------------
