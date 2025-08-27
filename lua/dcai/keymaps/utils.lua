@@ -13,7 +13,8 @@ local function lazy_shell_cmd(command, opts, desc)
     desc = desc or string.format('%s %s', command, table.concat(opts.args, ' '))
     local popupwin = nil
     if not disable_popup then
-      popupwin = vim.g.new_win({ title = command, filetype = 'sh' })
+      popupwin =
+        vim.g.new_win({ title = command, filetype = 'sh', w = 90, h = 50 })
       popupwin.append(string.format('> %s' .. vim.g.nl .. vim.g.nl, desc))
     end
     local args = opts.args or {}
