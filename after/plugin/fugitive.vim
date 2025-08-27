@@ -31,8 +31,8 @@ if !has('nvim')
   nnoremap <leader>gpP :Dispatch! git push --tags --force-with-lease --no-verify<CR>
   nnoremap <leader>gP :Dispatch! git push -uf --no-verify<CR>
   nnoremap <leader>gj :Git rebase -i --committer-date-is-author-date origin/HEAD~5<CR>
+  nnoremap <leader>gv :Gvdiffsplit!<CR>
 endif
 
-nnoremap <leader>gv :Gvdiffsplit!<CR>
 nnoremap <leader>g2 :diffget //2<CR>
 nnoremap <leader>g3 :diffget //3<CR>
