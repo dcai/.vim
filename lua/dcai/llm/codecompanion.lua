@@ -175,61 +175,77 @@ M.setup = function()
       },
     },
     adapters = {
-      local_copilot = function()
-        return require('codecompanion.adapters').extend('openai_compatible', {
-          env = {
-            url = 'http://localhost:7890',
-            api_key = 'neovim-codecompanion',
-            chat_url = '/v1/chat/completions',
-            models_endpoint = '/v1/models',
-          },
-          schema = {
-            model = {
-              default = 'gpt-4.1',
-              -- default = 'claude-3.7-sonnet',
+      http = {
+        local_copilot = function()
+          return require('codecompanion.adapters').extend('openai_compatible', {
+            env = {
+              url = 'http://localhost:7890',
+              api_key = 'neovim-codecompanion',
+              chat_url = '/v1/chat/completions',
+              models_endpoint = '/v1/models',
             },
-            temperature = {
-              order = 2,
-              mapping = 'parameters',
-              type = 'number',
-              optional = true,
-              default = 1,
-              desc = 'What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.',
-              validate = function(n)
-                return n >= 0 and n <= 2, 'Must be between 0 and 2'
-              end,
+            schema = {
+              model = {
+                default = 'gpt-4.1',
+                -- default = 'claude-3.7-sonnet',
+              },
+              temperature = {
+                order = 2,
+                mapping = 'parameters',
+                type = 'number',
+                optional = true,
+                default = 1,
+                desc = 'What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.',
+                validate = function(n)
+                  return n >= 0 and n <= 2, 'Must be between 0 and 2'
+                end,
+              },
             },
-          },
-        })
-      end,
-      deepseek = function()
-        return require('codecompanion.adapters').extend('deepseek', {
-          name = 'deepseek',
-          schema = {
-            model = {
-              default = 'deepseek-chat',
+          })
+        end,
+        deepseek = function()
+          return require('codecompanion.adapters').extend('deepseek', {
+            name = 'deepseek',
+            schema = {
+              model = {
+                default = 'deepseek-chat',
+              },
             },
-          },
-        })
-      end,
-      grok = function()
-        return require('codecompanion.adapters').extend('xai', {
-          schema = {
-            model = {
-              default = 'grok-4',
+          })
+        end,
+        grok = function()
+          return require('codecompanion.adapters').extend('xai', {
+            schema = {
+              model = {
+                default = 'grok-4',
+              },
             },
-          },
-        })
-      end,
-      openai = function()
-        return require('codecompanion.adapters').extend('openai', {
-          schema = {
-            model = {
-              default = 'gpt-4.1-mini',
+          })
+        end,
+        openai = function()
+          return require('codecompanion.adapters').extend('openai', {
+            schema = {
+              model = {
+                default = 'gpt-4.1-mini',
+              },
             },
-          },
-        })
-      end,
+          })
+        end,
+      },
+      acp = {
+        gemini_cli = function()
+          return require('codecompanion.adapters').extend('gemini_cli', {
+            defaults = {
+              auth_method = 'gemini-api-key',
+              mcpServers = {},
+              timeout = 20000, -- 20 seconds
+            },
+            env = {
+              GEMINI_API_KEY = 'GEMINI_API_KEY',
+            },
+          })
+        end,
+      },
     },
     prompt_library = {
       ['Neovim Expert'] = {
