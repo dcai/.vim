@@ -82,15 +82,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   Plug('ibhagwan/fzf-lua')
   Plug('folke/which-key.nvim')
-  Plug('j-hui/fidget.nvim', {
-    setup = function()
-      local ok, fidget = pcall(require, 'fidget')
-      if not ok then
-        return
-      end
-      fidget.setup({})
-    end,
-  })
+  Plug('j-hui/fidget.nvim')
   Plug('nvim-tree/nvim-web-devicons')
   Plug('norcalli/nvim-colorizer.lua', {
     setup = function()
