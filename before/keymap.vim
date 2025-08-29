@@ -122,3 +122,5 @@ nnoremap ; :
 " nnoremap : ;
 vnoremap ; :
 " vnoremap : ;
+
+nnoremap <C-a> ggVG
