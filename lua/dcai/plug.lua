@@ -42,7 +42,7 @@ M.setup = function(plug_opts)
   local dir = plug_opts.dir or vim.fn.expand(vim.g.data_dir .. '/plug')
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
-  Plug('echasnovski/mini.nvim')
+  Plug('nvim-mini/mini.nvim')
   -- Plug('folke/snacks.nvim')
 
   ----------------------------------------------------------------------------
