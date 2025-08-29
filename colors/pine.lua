@@ -213,6 +213,8 @@ local ui = {
   Normal = normal_text_highlight,
   NormalNC = { fg = colors.gray, bg = defaultbg }, -- Non-current window Normal
   NormalFloat = { fg = colors.white, bg = floatbg },
+  FidgetNormal = { bg = colors.niceblack, fg = colors.white },
+  FidgetBorder = { bg = colors.niceblack, fg = colors.gray },
   FloatTitle = { fg = colors.green, bg = floatbg },
   FloatBorder = { bg = floatbg },
   FloatFooter = { bg = floatbg },

@@ -92,9 +92,10 @@ fidget.setup({
 
     -- Options related to the notification window and buffer
     window = {
-      normal_hl = 'Comment', -- Base highlight group in the notification window
+      normal_hl = 'FidgetNormal', -- Base highlight group in the notification window
+      border_hl = 'FidgetBorder', -- Highlight group for the border
       winblend = 100, -- Background color opacity in the notification window
-      border = 'none', -- Border around the notification window
+      border = 'rounded', -- Border around the notification window
       zindex = 45, -- Stacking priority of the notification window
       max_width = 0, -- Maximum width of the notification window
       max_height = 0, -- Maximum height of the notification window
