@@ -156,3 +156,10 @@ vim.keymap.set(
     .. '" -- fish<CR><CR>',
   { desc = 'Shell' }
 ) -- opens lazygit in a new tmux window
+
+vim.api.nvim_create_user_command('EslintFix', function()
+  local dir = vim.fn.expand('%:p:h')
+  local fname = vim.fn.expand('%:t')
+  vim.cmd('!cd ' .. dir .. ' && npx eslint --fix ' .. fname)
+  vim.cmd('edit')
+end, {})
