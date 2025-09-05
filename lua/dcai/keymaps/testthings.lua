@@ -27,16 +27,6 @@ local function run_nodejs_test(file, noderoot)
     return
   end
   local cmd = ''
-  if string.find(packagejson, 'jest') then
-    local env = 'node'
-    if string.find(packagejson, 'jsdom') then
-      env = 'jsdom'
-    end
-    cmd = 'npx jest --runInBand --verbose=false --silent=false --coverage=false --watch --env='
-      .. env
-      .. ' --runTestsByPath '
-      .. file
-  end
   if string.find(packagejson, 'mocha') then
     cmd = 'npx mocha --full-trace --watch ' .. file
   end
@@ -45,6 +35,16 @@ local function run_nodejs_test(file, noderoot)
   end
   if string.find(packagejson, 'vitest') then
     cmd = 'npx vitest --silent=false --watch ' .. file
+  end
+  if string.find(packagejson, 'jest') or cmd == '' then
+    local env = 'node'
+    if string.find(packagejson, 'jsdom') then
+      env = 'jsdom'
+    end
+    cmd = 'npx jest --runInBand --verbose=false --silent=false --coverage=false --watch --env='
+      .. env
+      .. ' --runTestsByPath '
+      .. file
   end
   vim.fn['VimuxRunCommand'](with_dir(noderoot, cmd))
 end
