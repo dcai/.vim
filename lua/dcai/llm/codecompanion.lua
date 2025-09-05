@@ -11,7 +11,7 @@ if not ok then
   return M
 end
 
-local fidget_progress = require('fidget.progress')
+local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
 
 M.handles = {}
 
@@ -26,6 +26,9 @@ function M:pop_progress_handle(id)
 end
 
 function M:create_progress_handle(request)
+  if not fidget_loaded then
+    return
+  end
   local strategy = request.data.strategy or ''
   return fidget_progress.handle.create({
     title = ' Requesting assistance (' .. strategy .. ')',
@@ -56,6 +59,9 @@ function M:report_exit_status(handle, request)
 end
 
 function M:init_fidget()
+  if not fidget_loaded then
+    return
+  end
   local group = vim.api.nvim_create_augroup('CodeCompanionFidgetHooks', {})
 
   vim.api.nvim_create_autocmd({ 'User' }, {
