@@ -31,25 +31,10 @@ M.setup = function()
   end
 
   local mason = require('mason')
-  -- local mason_lspconfig = require('mason-lspconfig')
 
   mason.setup({
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
   })
-
-  -- mason_lspconfig.setup({
-  --   ensure_installed = {
-  --     'biome',
-  --     'bashls',
-  --     'lua_ls',
-  --     'pyright',
-  --     'ts_ls',
-  --     'vimls',
-  --   },
-  --   automatic_installation = false,
-  -- })
-
-  require('lspconfig.ui.windows').default_options.border = 'single'
 
   local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
   -- local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
