@@ -37,10 +37,9 @@ M.setup = function()
   })
 
   local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
-  -- local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-  lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+  local default_capabilities = vim.tbl_deep_extend(
     'force', -- force: use value from the rightmost map
-    lspconfig.util.default_config.capabilities,
+    vim.lsp.protocol.make_client_capabilities(),
     cmp_capabilities
   )
 
@@ -51,10 +50,12 @@ M.setup = function()
   local root_pattern = lspconfig.util.root_pattern
 
   vim.lsp.config('csharp_ls', {
+    capabilities = default_capabilities,
     on_attach = mylsputils.common_on_attach,
   })
 
   vim.lsp.config('phpactor', {
+    capabilities = default_capabilities,
     on_attach = mylsputils.common_on_attach,
     init_options = {
       ['language_server_phpstan.enabled'] = false,
@@ -132,10 +133,12 @@ M.setup = function()
   vim.lsp.config('nushell', {})
   vim.lsp.config('tailwindcss', {})
   vim.lsp.config('vimls', {
+    capabilities = default_capabilities,
     on_attach = mylsputils.common_on_attach,
   })
   if vim.fn.executable('go') == 1 then
     vim.lsp.config('gopls', {
+      capabilities = default_capabilities,
       on_attach = mylsputils.common_on_attach,
     })
   end

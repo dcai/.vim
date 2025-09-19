@@ -1,6 +1,12 @@
 -- local lspconfig = require('lspconfig')
 local common_on_attach = require('dcai.lspconfig.utils').common_on_attach
 
+local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
+local default_capabilities = vim.tbl_deep_extend(
+  'force', -- force: use value from the rightmost map
+  vim.lsp.protocol.make_client_capabilities(),
+  cmp_capabilities
+)
 local function plugin_path(plugin_name)
   local path = string.format('%s/plug/%s/lua', vim.g.data_dir, plugin_name)
   return path
@@ -24,6 +30,7 @@ local lua_workspace_libs = {
 
 -- lspconfig.lua_ls.setup({
 vim.lsp.config('lua_ls', {
+  capabilities = default_capabilities,
   single_file_support = true,
   flags = {
     debounce_text_changes = 150,
