@@ -104,7 +104,7 @@ M.setup = function()
       'arm64-apple-ios18.5-simulator',
     },
     on_attach = mylsputils.common_on_attach,
-    capabilities = {
+    capabilities = require('blink.cmp').get_lsp_capabilities({
       workspace = {
         didChangeWatchedFiles = {
           dynamicRegistration = true,
@@ -116,7 +116,7 @@ M.setup = function()
           relatedDocumentSupport = true,
         },
       },
-    },
+    }),
   })
   vim.lsp.enable('sourcekit')
 
