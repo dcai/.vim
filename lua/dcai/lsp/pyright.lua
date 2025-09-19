@@ -1,4 +1,4 @@
-local mylsputils = require('dcai.lspconfig.utils')
+local mylsputils = require('dcai.lsp.utils')
 
 local function get_python_path(workspace)
   -- Use activated virtualenv.

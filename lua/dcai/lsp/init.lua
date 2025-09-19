@@ -1,7 +1,7 @@
 local M = {}
 M.setup = function()
   vim.lsp.set_log_level(vim.log.levels.ERROR)
-  local mylsputils = require('dcai.lspconfig.utils')
+  local mylsputils = require('dcai.lsp.utils')
   local lspconfig = require('lspconfig')
 
   local lsputils = require('lspconfig/util')
@@ -145,10 +145,10 @@ M.setup = function()
   vim.lsp.config('bashls', {
     on_attach = mylsputils.common_on_attach,
   })
-  require('dcai.lspconfig.lua_ls')
-  require('dcai.lspconfig.ts_ls')
-  require('dcai.lspconfig.pyright')
-  require('dcai.lspconfig.dgnostics')
+  require('dcai.lsp.lua_ls')
+  require('dcai.lsp.ts_ls')
+  require('dcai.lsp.pyright')
+  require('dcai.lsp.dgnostics')
 end
 
 return M

@@ -44,7 +44,7 @@ end
 vim.g.source('loader.vim')
 vim.g.setup_colorscheme()
 require('dcai.plug').setup({})
-require('dcai.lspconfig').setup()
+require('dcai.lsp').setup()
 require('dcai.ui.input').setup()
 require('dcai.keymaps')
 

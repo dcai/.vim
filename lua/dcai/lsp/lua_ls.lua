@@ -1,5 +1,5 @@
 -- local lspconfig = require('lspconfig')
-local common_on_attach = require('dcai.lspconfig.utils').common_on_attach
+local common_on_attach = require('dcai.lsp.utils').common_on_attach
 
 local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
 local default_capabilities = vim.tbl_deep_extend(

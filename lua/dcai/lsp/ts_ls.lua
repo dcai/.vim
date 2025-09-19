@@ -1,4 +1,4 @@
-local mylsputils = require('dcai.lspconfig.utils')
+local mylsputils = require('dcai.lsp.utils')
 
 local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
 local default_capabilities = vim.tbl_deep_extend(
