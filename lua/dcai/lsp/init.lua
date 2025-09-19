@@ -30,13 +30,7 @@ M.setup = function()
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
   })
 
-  local cmp_capabilities = require('blink.cmp').get_lsp_capabilities()
-  local default_capabilities = vim.tbl_deep_extend(
-    'force', -- force: use value from the rightmost map
-    vim.lsp.protocol.make_client_capabilities(),
-    cmp_capabilities
-  )
-
+  local capabilities = require('blink.cmp').get_lsp_capabilities()
   vim.api.nvim_create_user_command('LspFormat', function()
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
@@ -44,13 +38,13 @@ M.setup = function()
   local root_pattern = lspconfig.util.root_pattern
 
   vim.lsp.config('csharp_ls', {
-    capabilities = default_capabilities,
+    capabilities = capabilities,
     on_attach = mylsputils.common_on_attach,
   })
   vim.lsp.enable('csharp_ls')
 
   vim.lsp.config('phpactor', {
-    capabilities = default_capabilities,
+    capabilities = capabilities,
     on_attach = mylsputils.common_on_attach,
     init_options = {
       ['language_server_phpstan.enabled'] = false,
@@ -131,13 +125,13 @@ M.setup = function()
   vim.lsp.config('tailwindcss', {})
   vim.lsp.enable('tailwindcss')
   vim.lsp.config('vimls', {
-    capabilities = default_capabilities,
+    capabilities = capabilities,
     on_attach = mylsputils.common_on_attach,
   })
   vim.lsp.enable('vimls')
   if vim.fn.executable('go') == 1 then
     vim.lsp.config('gopls', {
-      capabilities = default_capabilities,
+      capabilities = capabilities,
       on_attach = mylsputils.common_on_attach,
     })
     vim.lsp.enable('gopls')
