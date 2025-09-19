@@ -2,9 +2,9 @@ local M = {}
 M.setup = function()
   vim.lsp.set_log_level(vim.log.levels.ERROR)
   local mylsputils = require('dcai.lsp.utils')
-  local lspconfig = require('lspconfig')
-
   local lsputils = require('lspconfig/util')
+  local root_pattern = vim.g.root_pattern
+
   vim.lsp.config('biome', {
     cmd = { 'biome', 'lsp-proxy' },
     filetypes = {
@@ -39,8 +39,6 @@ M.setup = function()
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 
-  local root_pattern = lspconfig.util.root_pattern
-
   vim.lsp.config('csharp_ls', {
     capabilities = capabilities,
     on_attach = mylsputils.common_on_attach,
@@ -57,13 +55,12 @@ M.setup = function()
     root_dir = function(startpath)
       ---@diagnostic disable-next-line: undefined-field
       local cwd = vim.uv.cwd()
-      -- local root = root_pattern('composer.json')(startpath)
-      local root = root_pattern(
+      local root = root_pattern({
         'composer.lock',
         '.editorconfig',
         '.phpactor.json',
-        '.phpactor.yml'
-      )(startpath)
+        '.phpactor.yml',
+      })(startpath)
       -- prefer cwd if root is a descendant
       local result = lsputils.path.is_descendant(cwd, root) and cwd or root
       return result
@@ -81,8 +78,8 @@ M.setup = function()
   -- cfg.intelephense.setup({
   --   root_dir = function(startpath)
   --     local cwd = vim.uv.cwd()
-  --     -- local root = root_pattern('composer.json')(startpath)
-  --     local root = root_pattern('.editorconfig')(startpath)
+  --     -- local root = root_pattern({'composer.json'})(startpath)
+  --     local root = root_pattern({'.editorconfig'})(startpath)
   --     -- prefer cwd if root is a descendant
   --     local result = util.path.is_descendant(cwd, root) and cwd or root
   --     return result

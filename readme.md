@@ -37,7 +37,6 @@ ln -s (which nvim) ~/.local/bin/vim
 - `lua/dcai/`: Core Lua configuration modules
   - `plug.lua`: Plugin management
   - `keymaps/`: Keyboard mappings organized by functionality
-  - `lspconfig/`: Language server configurations
   - `llm/`: AI assistant integrations
 - `before/`: Configurations loaded before plugins
   - `captureoutput.vim`: Utility for capturing command output

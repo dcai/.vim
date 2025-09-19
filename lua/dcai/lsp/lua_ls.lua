@@ -1,4 +1,3 @@
--- local lspconfig = require('lspconfig')
 local common_on_attach = require('dcai.lsp.utils').common_on_attach
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
@@ -16,14 +15,13 @@ local lua_workspace_libs = {
   --- so only load selected libs
   library = {
     vim.g.config_dir .. '/lua',
+    plugin_path('nvim-lspconfig'),
     -- vim.env.VIMRUNTIME .. '/lua',
     -- plugin_path('gp.nvim'),
     -- plugin_path('fzf-lua'),
-    plugin_path('nvim-lspconfig'),
   },
 }
 
--- lspconfig.lua_ls.setup({
 vim.lsp.config('lua_ls', {
   capabilities = capabilities,
   single_file_support = true,

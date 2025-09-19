@@ -409,6 +409,7 @@ local function root(markers)
     end
   end
 end
+vim.g.root_pattern = root
 
 vim.g.git_root = root({
   '.github',
@@ -489,8 +490,10 @@ vim.g.new_win = function(opt)
 
   local strict_indexing = false
 
-  local width = opt.w and math.floor((opt.w / 100) * vim.o.columns) or math.min(80, vim.o.columns - 4)
-  local height = opt.h and math.floor((opt.h / 100) * vim.o.lines) or math.min(20, vim.o.lines - 4)
+  local width = opt.w and math.floor((opt.w / 100) * vim.o.columns)
+    or math.min(80, vim.o.columns - 4)
+  local height = opt.h and math.floor((opt.h / 100) * vim.o.lines)
+    or math.min(20, vim.o.lines - 4)
 
   -- default to center of editor
   local row = opt.x and opt.x or math.floor((vim.o.lines - height) / 2)
