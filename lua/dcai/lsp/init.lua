@@ -30,7 +30,11 @@ M.setup = function()
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
   })
 
-  local capabilities = require('blink.cmp').get_lsp_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local cmp_loaded, blinkcmp = pcall(require, 'blink.cmp')
+  if cmp_loaded then
+    capabilities = blinkcmp.get_lsp_capabilities()
+  end
   vim.api.nvim_create_user_command('LspFormat', function()
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
@@ -104,7 +108,7 @@ M.setup = function()
       'arm64-apple-ios18.5-simulator',
     },
     on_attach = mylsputils.common_on_attach,
-    capabilities = require('blink.cmp').get_lsp_capabilities({
+    capabilities = {
       workspace = {
         didChangeWatchedFiles = {
           dynamicRegistration = true,
@@ -116,7 +120,7 @@ M.setup = function()
           relatedDocumentSupport = true,
         },
       },
-    }),
+    },
   })
   vim.lsp.enable('sourcekit')
 
