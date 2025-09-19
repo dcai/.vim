@@ -2,8 +2,8 @@ local M = {}
 M.setup = function()
   vim.lsp.set_log_level(vim.log.levels.ERROR)
   local mylsputils = require('dcai.lspconfig.utils')
-
   local lspconfig = require('lspconfig')
+
   local lsputils = require('lspconfig/util')
   if mylsputils.support_native_lsp_config() then
     vim.lsp.enable('biome')
@@ -25,7 +25,7 @@ M.setup = function()
       },
     })
   else
-    lspconfig.biome.setup({
+    vim.lsp.config('biome', {
       cmd = { 'biome', 'lsp-proxy' },
     })
   end
@@ -65,11 +65,11 @@ M.setup = function()
 
   local root_pattern = lspconfig.util.root_pattern
 
-  lspconfig.csharp_ls.setup({
+  vim.lsp.config('csharp_ls', {
     on_attach = mylsputils.common_on_attach,
   })
 
-  lspconfig.phpactor.setup({
+  vim.lsp.config('phpactor', {
     on_attach = mylsputils.common_on_attach,
     init_options = {
       ['language_server_phpstan.enabled'] = false,
@@ -114,7 +114,7 @@ M.setup = function()
   --   on_attach = utils.common_on_attach,
   -- })
 
-  lspconfig.sourcekit.setup({
+  vim.lsp.config('sourcekit', {
     cmd = {
       '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp',
       '-Xswiftc',
@@ -144,17 +144,17 @@ M.setup = function()
     },
   })
 
-  lspconfig.nushell.setup({})
-  lspconfig.tailwindcss.setup({})
-  lspconfig.vimls.setup({
+  vim.lsp.config('nushell', {})
+  vim.lsp.config('tailwindcss', {})
+  vim.lsp.config('vimls', {
     on_attach = mylsputils.common_on_attach,
   })
   if vim.fn.executable('go') == 1 then
-    lspconfig.gopls.setup({
+    vim.lsp.config('gopls', {
       on_attach = mylsputils.common_on_attach,
     })
   end
-  lspconfig.bashls.setup({
+  vim.lsp.config('bashls', {
     on_attach = mylsputils.common_on_attach,
   })
   require('dcai.lspconfig.lua_ls')

@@ -1,4 +1,4 @@
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 local common_on_attach = require('dcai.lspconfig.utils').common_on_attach
 
 local function plugin_path(plugin_name)
@@ -18,11 +18,12 @@ local lua_workspace_libs = {
     -- vim.env.VIMRUNTIME .. '/lua',
     -- plugin_path('gp.nvim'),
     -- plugin_path('fzf-lua'),
-    -- plugin_path('nvim-lspconfig'),
+    plugin_path('nvim-lspconfig'),
   },
 }
 
-lspconfig.lua_ls.setup({
+-- lspconfig.lua_ls.setup({
+vim.lsp.config('lua_ls', {
   single_file_support = true,
   flags = {
     debounce_text_changes = 150,
@@ -71,3 +72,5 @@ lspconfig.lua_ls.setup({
   end,
   on_attach = common_on_attach,
 })
+
+vim.lsp.enable('lua_ls')

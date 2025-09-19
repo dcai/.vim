@@ -1,20 +1,17 @@
-local lspconfig = require('lspconfig')
 local mylsputils = require('dcai.lspconfig.utils')
-local root_pattern = lspconfig.util.root_pattern
 
-local tslsconfig = {
+vim.lsp.config.ts_ls = {
+  cmd = { 'typescript-language-server', '--log-level' , '1', '--stdio' },
   filetypes = mylsputils.ts_ls_supported_filetypes,
-  -- for monorepo, this should be set to the root of the monorepo
-  root_dir = root_pattern(
+  root_markers = {
     'pnpm-lock.yaml',
     'package-lock.json',
     'yarn.lock',
     'bun.lock',
     '.git',
     'tsconfig.json',
-    'jsconfig.json'
-  ),
-  cmd = { 'typescript-language-server', '--stdio' },
+    'jsconfig.json',
+  },
   commands = {
     OrganizeImports = {
       function()
@@ -40,6 +37,12 @@ local tslsconfig = {
   },
 
   on_attach = mylsputils.common_on_attach,
+  settings = {
+    typescript = {
+      preferences = {
+        disableSuggestions = false,
+      },
+    },
+  },
 }
-
-lspconfig.ts_ls.setup(tslsconfig)
+vim.lsp.enable('ts_ls')

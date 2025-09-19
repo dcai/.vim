@@ -1,6 +1,4 @@
-local lspconfig = require('lspconfig')
 local mylsputils = require('dcai.lspconfig.utils')
-local root_pattern = lspconfig.util.root_pattern
 
 local function get_python_path(workspace)
   -- Use activated virtualenv.
@@ -24,7 +22,7 @@ local function get_python_path(workspace)
 end
 
 -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-lspconfig.pyright.setup({
+vim.lsp.config('pyright', {
   on_attach = mylsputils.common_on_attach,
   before_init = function(_, config)
     local py_path = get_python_path(config.root_dir)
@@ -46,3 +44,4 @@ lspconfig.pyright.setup({
     },
   },
 })
+vim.lsp.enable('pyright')
