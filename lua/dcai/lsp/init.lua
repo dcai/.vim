@@ -5,30 +5,24 @@ M.setup = function()
   local lspconfig = require('lspconfig')
 
   local lsputils = require('lspconfig/util')
-  if mylsputils.support_native_lsp_config() then
-    vim.lsp.enable('biome')
-    vim.lsp.config('biome', {
-      cmd = { 'biome', 'lsp-proxy' },
-      filetypes = {
-        'astro',
-        'css',
-        'graphql',
-        'javascript',
-        'javascriptreact',
-        -- 'json',
-        -- 'jsonc',
-        'svelte',
-        'typescript',
-        'typescript.tsx',
-        'typescriptreact',
-        'vue',
-      },
-    })
-  else
-    vim.lsp.config('biome', {
-      cmd = { 'biome', 'lsp-proxy' },
-    })
-  end
+  vim.lsp.config('biome', {
+    cmd = { 'biome', 'lsp-proxy' },
+    filetypes = {
+      'astro',
+      'css',
+      'graphql',
+      'javascript',
+      'javascriptreact',
+      -- 'json',
+      -- 'jsonc',
+      'svelte',
+      'typescript',
+      'typescript.tsx',
+      'typescriptreact',
+      'vue',
+    },
+  })
+  vim.lsp.enable('biome')
 
   local mason = require('mason')
 
@@ -53,6 +47,7 @@ M.setup = function()
     capabilities = default_capabilities,
     on_attach = mylsputils.common_on_attach,
   })
+  vim.lsp.enable('csharp_ls')
 
   vim.lsp.config('phpactor', {
     capabilities = default_capabilities,
@@ -129,22 +124,28 @@ M.setup = function()
       },
     },
   })
+  vim.lsp.enable('sourcekit')
 
   vim.lsp.config('nushell', {})
+  vim.lsp.enable('nushell')
   vim.lsp.config('tailwindcss', {})
+  vim.lsp.enable('tailwindcss')
   vim.lsp.config('vimls', {
     capabilities = default_capabilities,
     on_attach = mylsputils.common_on_attach,
   })
+  vim.lsp.enable('vimls')
   if vim.fn.executable('go') == 1 then
     vim.lsp.config('gopls', {
       capabilities = default_capabilities,
       on_attach = mylsputils.common_on_attach,
     })
+    vim.lsp.enable('gopls')
   end
   vim.lsp.config('bashls', {
     on_attach = mylsputils.common_on_attach,
   })
+  vim.lsp.enable('bashls')
   require('dcai.lsp.lua_ls')
   require('dcai.lsp.ts_ls')
   require('dcai.lsp.pyright')
