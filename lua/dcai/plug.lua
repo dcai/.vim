@@ -64,7 +64,7 @@ M.setup = function(plug_opts)
     end,
   })
   Plug('olimorris/codecompanion.nvim')
-  Plug('dcai/gp.nvim', { frozen = 1 })
+  -- Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------
   --- lsp
   ----------------------------------------------------------------------------
@@ -184,7 +184,7 @@ M.setup = function(plug_opts)
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('isobit/vim-caddyfile')
-  Plug('greggh/claude-code.nvim')
+  -- Plug('greggh/claude-code.nvim')
   END()
 end
 

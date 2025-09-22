@@ -16,7 +16,6 @@ local lua_workspace_libs = {
   library = {
     vim.g.config_dir .. '/lua',
     -- vim.env.VIMRUNTIME .. '/lua',
-    -- plugin_path('gp.nvim'),
     -- plugin_path('fzf-lua'),
   },
 }

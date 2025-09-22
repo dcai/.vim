@@ -32,7 +32,11 @@ end
 M.chatlogs_home = vim.fn.expand(chat_dir())
 
 M.setup = function()
-  local gpplugin = require('gp')
+  local loaded, gpplugin = pcall(require, 'gp')
+  if not loaded then
+    vim.notify('gp.nvim not installed', vim.log.levels.WARN)
+    return
+  end
   local prompt_library = require('dcai.llm.prompt_library')
 
   -- vim.keymap.set({ 'i', 'n' }, '<c-i>', function()
