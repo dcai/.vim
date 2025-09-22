@@ -391,22 +391,6 @@ local function root(markers)
         return fs_root
       end
     end
-
-    --- XXX below is for backward compatibility
-    local current_buf_dir = vim.fn.expand('%:p:h')
-    local git_repo = shell_cmd('git rev-parse --show-toplevel')
-    local dir = git_repo or current_buf_dir
-    local loaded, lspconfig = pcall(require, 'lspconfig')
-    if not loaded then
-      return dir
-    end
-
-    if lspconfig.util and lspconfig.util.root_pattern then
-      local root_pattern = lspconfig.util.root_pattern
-      return root_pattern(unpack(markers))(current_buf_dir)
-    else
-      return dir
-    end
   end
 end
 vim.g.root_pattern = root

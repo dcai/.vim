@@ -2,7 +2,6 @@ local M = {}
 M.setup = function()
   vim.lsp.set_log_level(vim.log.levels.ERROR)
   local mylsputils = require('dcai.lsp.utils')
-  local lsputils = require('lspconfig/util')
   local root_pattern = vim.g.root_pattern
 
   vim.lsp.config('biome', {
@@ -53,17 +52,13 @@ M.setup = function()
       ['language_server_psalm.enabled'] = false,
     },
     root_dir = function(startpath)
-      ---@diagnostic disable-next-line: undefined-field
-      local cwd = vim.uv.cwd()
       local root = root_pattern({
         'composer.lock',
         '.editorconfig',
         '.phpactor.json',
         '.phpactor.yml',
       })(startpath)
-      -- prefer cwd if root is a descendant
-      local result = lsputils.path.is_descendant(cwd, root) and cwd or root
-      return result
+      return root
     end,
   })
 

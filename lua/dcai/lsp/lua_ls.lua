@@ -15,7 +15,6 @@ local lua_workspace_libs = {
   --- so only load selected libs
   library = {
     vim.g.config_dir .. '/lua',
-    plugin_path('nvim-lspconfig'),
     -- vim.env.VIMRUNTIME .. '/lua',
     -- plugin_path('gp.nvim'),
     -- plugin_path('fzf-lua'),
