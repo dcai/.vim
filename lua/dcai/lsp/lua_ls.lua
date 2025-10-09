@@ -15,7 +15,7 @@ local lua_workspace_libs = {
   --- so only load selected libs
   library = {
     vim.g.config_dir .. '/lua',
-    -- vim.env.VIMRUNTIME .. '/lua',
+    vim.env.VIMRUNTIME .. '/lua',
     -- plugin_path('fzf-lua'),
   },
 }
@@ -23,6 +23,8 @@ local lua_workspace_libs = {
 vim.lsp.config('lua_ls', {
   capabilities = capabilities,
   single_file_support = true,
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
   flags = {
     debounce_text_changes = 150,
   },
