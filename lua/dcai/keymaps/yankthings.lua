@@ -31,11 +31,11 @@ local yank_keymap = {
     '<leader>yy',
     function()
       local line_number = vim.fn.line('.')
-      local project_root = vim.g.node_project_root()
+      local git_root = vim.g.git_root()
       local filepath = vim.fn.expand('%:p')
       local relpath = filepath
-      if project_root and vim.startswith(filepath, project_root) then
-        relpath = filepath:sub(#project_root + 2)
+      if git_root and vim.startswith(filepath, git_root) then
+        relpath = filepath:sub(#git_root + 2)
       end
       local content = relpath .. ' LINE ' .. tostring(line_number)
       vim.fn.setreg('*', content)
@@ -83,9 +83,13 @@ local yank_keymap = {
         line1, line2 = line2, line1
       end
       local lines = vim.fn.getline(line1, line2)
-      local header = string.format('File: %s, Lines: %d-%d', fname, line1, line2)
+      local header =
+        string.format('File: %s, Lines: %d-%d', fname, line1, line2)
       local content = table.concat(lines, '\n')
-      vim.fn.setreg('+', header .. vim.g.nl .. '--------' .. vim.g.nl .. content)
+      vim.fn.setreg(
+        '+',
+        header .. vim.g.nl .. '--------' .. vim.g.nl .. content
+      )
       vim.g.feedkeys('<esc>', 'n')
     end,
     desc = 'Yank visual selection with file name and line range',
