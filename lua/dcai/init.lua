@@ -158,8 +158,15 @@ vim.keymap.set(
 ) -- opens lazygit in a new tmux window
 
 vim.api.nvim_create_user_command('EslintFix', function()
+  local filetype = vim.bo.filetype
   local dir = vim.fn.expand('%:p:h')
   local fname = vim.fn.expand('%:t')
+
+  local lsp_utils = require('dcai.lsp.utils')
+  if not vim.list_contains(lsp_utils.ts_ls_supported_filetypes, filetype) then
+    vim.notify('Eslint: Not a JavaScript/TypeScript file', vim.log.levels.WARN)
+    return
+  end
   vim.cmd('!cd ' .. dir .. ' && npx eslint --fix ' .. fname)
   vim.cmd('edit')
 end, {})
