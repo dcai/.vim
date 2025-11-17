@@ -110,6 +110,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile .babelrc set filetype=json
   autocmd BufRead,BufNewFile .jshintrc set filetype=json
   autocmd BufRead,BufNewFile .tern-config set filetype=json
+  autocmd BufRead,BufNewFile *.code-workspace set filetype=json
 
   " jsonc
   autocmd BufRead,BufNewFile *.jsonc set filetype=jsonc
