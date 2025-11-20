@@ -408,7 +408,7 @@ require('mini.files').setup({
     -- max_number = math.huge,
     max_number = 4,
     -- Whether to show preview of file/directory under cursor
-    preview = true,
+    preview = false,
     -- Width of focused window
     width_focus = 50,
     -- Width of non-focused window
