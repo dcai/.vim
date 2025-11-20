@@ -406,7 +406,7 @@ require('mini.files').setup({
   windows = {
     -- Maximum number of windows to show side by side
     -- max_number = math.huge,
-    max_number = 2,
+    max_number = 4,
     -- Whether to show preview of file/directory under cursor
     preview = true,
     -- Width of focused window
