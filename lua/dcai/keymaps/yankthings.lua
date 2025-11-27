@@ -88,7 +88,13 @@ local yank_keymap = {
       local content = table.concat(lines, '\n')
       vim.fn.setreg(
         '+',
-        header .. vim.g.nl .. '--------' .. vim.g.nl .. content
+        header
+          .. vim.g.nl
+          .. '-------- CODE BLOCK START --------'
+          .. vim.g.nl
+          .. content
+          .. '-------- THE END --------'
+          .. vim.g.nl
       )
       vim.g.feedkeys('<esc>', 'n')
     end,
