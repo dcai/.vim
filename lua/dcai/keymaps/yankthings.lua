@@ -93,6 +93,7 @@ local yank_keymap = {
           .. '-------- CODE BLOCK START --------'
           .. vim.g.nl
           .. content
+          .. vim.g.nl
           .. '-------- THE END --------'
           .. vim.g.nl
       )
