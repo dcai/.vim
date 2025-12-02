@@ -1,7 +1,9 @@
 local ok = pcall(require, 'codecompanion')
 local prompt_library = require('dcai.llm.prompt_library')
-local use_llm = 'local_copilot'
--- local use_llm = 'grok'
+local llm_provider = 'local_copilot'
+-- local llm_provider = 'claude_code'
+-- local llm_provider = 'grok'
+-- local llm_provider = 'opencode'
 
 local M = {
   setup = function() end,
@@ -90,7 +92,7 @@ M.setup = function()
   instance.setup({
     strategies = {
       inline = {
-        adapter = use_llm,
+        adapter = llm_provider,
         keymaps = {
           accept_change = {
             modes = { n = 'ga' },
@@ -103,7 +105,7 @@ M.setup = function()
         },
       },
       chat = {
-        adapter = use_llm,
+        adapter = llm_provider,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         roles = {
           ---The header name for the LLM's messages
@@ -177,6 +179,33 @@ M.setup = function()
       },
     },
     adapters = {
+      acp = {
+        opencode = function()
+          return require('codecompanion.adapters').extend('opencode', {})
+        end,
+        claude_code = function()
+          return require('codecompanion.adapters').extend('claude_code', {
+            env = {
+              ANTHROPIC_API_KEY = 'neovim-codecompanion-acp-fake-token',
+              ANTHROPIC_BASE_URL = 'http://localhost:4141',
+              ANTHROPIC_MODEL = 'claude-sonnet-4.5',
+              ANTHROPIC_SMALL_FAST_MODEL = 'gpt-4.1',
+            },
+          })
+        end,
+        gemini_cli = function()
+          return require('codecompanion.adapters').extend('gemini_cli', {
+            defaults = {
+              auth_method = 'gemini-api-key',
+              mcpServers = {},
+              timeout = 20000, -- 20 seconds
+            },
+            env = {
+              GEMINI_API_KEY = 'GEMINI_API_KEY',
+            },
+          })
+        end,
+      },
       http = {
         local_copilot = function()
           return require('codecompanion.adapters').extend('openai_compatible', {
@@ -189,7 +218,7 @@ M.setup = function()
             schema = {
               model = {
                 default = 'gpt-4.1',
-                -- default = 'claude-3.7-sonnet',
+                -- default = 'claude-4.5-sonnet',
               },
               temperature = {
                 order = 2,
@@ -230,20 +259,6 @@ M.setup = function()
               model = {
                 default = 'gpt-4.1-mini',
               },
-            },
-          })
-        end,
-      },
-      acp = {
-        gemini_cli = function()
-          return require('codecompanion.adapters').extend('gemini_cli', {
-            defaults = {
-              auth_method = 'gemini-api-key',
-              mcpServers = {},
-              timeout = 20000, -- 20 seconds
-            },
-            env = {
-              GEMINI_API_KEY = 'GEMINI_API_KEY',
             },
           })
         end,

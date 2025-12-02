@@ -60,10 +60,11 @@ M.setup = function(plug_opts)
         -- ['markdown'] = false,
         -- ['text'] = false,
         ['help'] = false,
+        ['codecompanion'] = false,
       }
     end,
   })
-  Plug('olimorris/codecompanion.nvim')
+  Plug('olimorris/codecompanion.nvim', { ['tag'] = 'v17.33.0' })
   -- Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------
   --- lsp
