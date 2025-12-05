@@ -14,6 +14,11 @@ local function put_content(contents)
   vim.api.nvim_put(lines, 'c', true, true)
 end
 
+function line_separator(title)
+  local s = string.rep('-', 5)
+  return s .. title .. s
+end
+
 local yank_keymap = {
   { '<leader>y', group = 'yank things' },
   -- utils.vim_cmd('<leader>yp', 'let @*=expand("%:p")', 'yank file full path'),
@@ -90,11 +95,11 @@ local yank_keymap = {
         '+',
         header
           .. vim.g.nl
-          .. '-------- CODE BLOCK START --------'
+          .. line_separator('BEGIN CODE BLOCK')
           .. vim.g.nl
           .. content
           .. vim.g.nl
-          .. '-------- THE END --------'
+          .. line_separator('END CODE BLOCK')
           .. vim.g.nl
       )
       vim.g.feedkeys('<esc>', 'n')
