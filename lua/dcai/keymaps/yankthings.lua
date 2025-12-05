@@ -27,6 +27,40 @@ local function wrapcode(code)
     .. line_separator('END CODE BLOCK')
 end
 
+local function get_relative_path()
+  local git_root = vim.g.git_root()
+  local filepath = vim.fn.expand('%:p')
+  if git_root and vim.startswith(filepath, git_root) then
+    return filepath:sub(#git_root + 2)
+  end
+  return filepath
+end
+
+local function format_line_reference()
+  local line_number = vim.fn.line('.')
+  local relpath = get_relative_path()
+  return '`' .. relpath .. ' LINE ' .. tostring(line_number) .. '`'
+end
+
+local function format_visual_selection()
+  local fname = get_relative_path()
+  local line1 = vim.fn.line('v')
+  local line2 = vim.fn.line('.')
+  if line1 > line2 then
+    line1, line2 = line2, line1
+  end
+  local lines = vim.fn.getline(line1, line2)
+  local header = string.format(
+    'FILE: %s, LINES: %d-%d, FILETYPE: %s',
+    fname,
+    line1,
+    line2,
+    vim.bo.filetype
+  )
+  local code = table.concat(lines, '\n')
+  return header .. vim.g.nl .. wrapcode(code)
+end
+
 local yank_keymap = {
   { '<leader>y', group = 'yank things' },
   -- utils.vim_cmd('<leader>yp', 'let @*=expand("%:p")', 'yank file full path'),
@@ -43,18 +77,17 @@ local yank_keymap = {
   {
     '<leader>yy',
     function()
-      local line_number = vim.fn.line('.')
-      local git_root = vim.g.git_root()
-      local filepath = vim.fn.expand('%:p')
-      local relpath = filepath
-      if git_root and vim.startswith(filepath, git_root) then
-        relpath = filepath:sub(#git_root + 2)
-      end
-      local content = '`' .. relpath .. ' LINE ' .. tostring(line_number) .. '`'
-      vim.fn.setreg('*', content)
-      -- put_content(content)
+      vim.fn.setreg('*', format_line_reference())
     end,
     desc = 'yank file path and current line',
+    mode = 'n',
+  },
+  {
+    '<leader>yt',
+    function()
+      vim.fn['VimuxSendText'](format_line_reference())
+    end,
+    desc = 'send file path and line to tmux',
     mode = 'n',
   },
   {
@@ -84,30 +117,19 @@ local yank_keymap = {
   {
     '<leader>yy',
     function()
-      local project_root = vim.g.git_root()
-      local filepath = vim.fn.expand('%:p')
-      local fname = filepath
-      if project_root and vim.startswith(filepath, project_root) then
-        fname = filepath:sub(#project_root + 2)
-      end
-      local line1 = vim.fn.line('v')
-      local line2 = vim.fn.line('.')
-      if line1 > line2 then
-        line1, line2 = line2, line1
-      end
-      local lines = vim.fn.getline(line1, line2)
-      local header = string.format(
-        'FILE: %s, LINES: %d-%d, FILETYPE: %s',
-        fname,
-        line1,
-        line2,
-        vim.bo.filetype
-      )
-      local code = table.concat(lines, '\n')
-      vim.fn.setreg('+', header .. vim.g.nl .. wrapcode(code))
+      vim.fn.setreg('+', format_visual_selection())
       vim.g.feedkeys('<esc>', 'n')
     end,
     desc = 'Yank visual selection with file name and line range',
+    mode = 'v',
+  },
+  {
+    '<leader>yt',
+    function()
+      vim.fn['VimuxSendText'](format_visual_selection())
+      vim.g.feedkeys('<esc>', 'n')
+    end,
+    desc = 'Send visual selection with metadata to tmux',
     mode = 'v',
   },
 }
