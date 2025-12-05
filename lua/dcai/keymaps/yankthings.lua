@@ -61,6 +61,11 @@ local function format_visual_selection()
   return header .. vim.g.nl .. wrapcode(code)
 end
 
+local function send_to_tmux_last_pane(text)
+  local escaped = text:gsub("'", "'\\''")
+  vim.fn.system(string.format("tmux send-keys -l -t '{last}' '%s'", escaped))
+end
+
 local yank_keymap = {
   { '<leader>y', group = 'yank things' },
   -- utils.vim_cmd('<leader>yp', 'let @*=expand("%:p")', 'yank file full path'),
@@ -85,7 +90,7 @@ local yank_keymap = {
   {
     '<leader>yt',
     function()
-      vim.fn['VimuxSendText'](format_line_reference())
+      send_to_tmux_last_pane(format_line_reference())
     end,
     desc = 'send file path and line to tmux',
     mode = 'n',
@@ -126,7 +131,7 @@ local yank_keymap = {
   {
     '<leader>yt',
     function()
-      vim.fn['VimuxSendText'](format_visual_selection())
+      send_to_tmux_last_pane(format_visual_selection())
       vim.g.feedkeys('<esc>', 'n')
     end,
     desc = 'Send visual selection with metadata to tmux',
