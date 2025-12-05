@@ -14,9 +14,17 @@ local function put_content(contents)
   vim.api.nvim_put(lines, 'c', true, true)
 end
 
-function line_separator(title)
+local function line_separator(title)
   local s = string.rep('-', 5)
   return s .. title .. s
+end
+
+local function wrapcode(code)
+  return line_separator('BEGIN CODE BLOCK')
+    .. vim.g.nl
+    .. code
+    .. vim.g.nl
+    .. line_separator('END CODE BLOCK')
 end
 
 local yank_keymap = {
@@ -88,20 +96,15 @@ local yank_keymap = {
         line1, line2 = line2, line1
       end
       local lines = vim.fn.getline(line1, line2)
-      local header =
-        string.format('File: %s, Lines: %d-%d', fname, line1, line2)
-      local content = table.concat(lines, '\n')
-      vim.fn.setreg(
-        '+',
-        header
-          .. vim.g.nl
-          .. line_separator('BEGIN CODE BLOCK')
-          .. vim.g.nl
-          .. content
-          .. vim.g.nl
-          .. line_separator('END CODE BLOCK')
-          .. vim.g.nl
+      local header = string.format(
+        'FILE: %s, LINES: %d-%d, FILETYPE: %s',
+        fname,
+        line1,
+        line2,
+        vim.bo.filetype
       )
+      local code = table.concat(lines, '\n')
+      vim.fn.setreg('+', header .. vim.g.nl .. wrapcode(code))
       vim.g.feedkeys('<esc>', 'n')
     end,
     desc = 'Yank visual selection with file name and line range',
