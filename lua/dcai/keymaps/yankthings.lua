@@ -37,7 +37,7 @@ local yank_keymap = {
       if git_root and vim.startswith(filepath, git_root) then
         relpath = filepath:sub(#git_root + 2)
       end
-      local content = relpath .. ' LINE ' .. tostring(line_number)
+      local content = '`' .. relpath .. ' LINE ' .. tostring(line_number) .. '`'
       vim.fn.setreg('*', content)
       -- put_content(content)
     end,
