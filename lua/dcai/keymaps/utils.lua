@@ -82,14 +82,14 @@ M.vim_cmd = function(key, cmd, desc, notify_after)
   }
 end
 local function open_git_hosting_web()
-  local mode = vim.fn.mode()
-  if string.lower(mode) == 'v' then
-    mode = 'v'
-  else
-    mode = 'n'
-  end
-
-  require('gitlinker').get_buf_range_url(mode)
+  -- local mode = vim.fn.mode()
+  -- if string.lower(mode) == 'v' then
+  --   mode = 'v'
+  -- else
+  --   mode = 'n'
+  -- end
+  -- require('gitlinker').get_buf_range_url(mode)
+  Snacks.gitbrowse.open()
 end
 M.open_git_hosting_web = open_git_hosting_web
 

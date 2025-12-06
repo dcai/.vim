@@ -62,7 +62,7 @@ vim.lsp.config('lua_ls', {
       },
       telemetry = { enable = false },
       diagnostics = {
-        globals = { 'vim', 'hs' },
+        globals = { 'vim', 'hs', 'Snacks' },
         enable = true,
       },
       workspace = lua_workspace_libs,

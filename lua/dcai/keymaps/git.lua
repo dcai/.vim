@@ -100,6 +100,13 @@ local git_keymap = {
     group = 'pull and push',
   },
   {
+    '<leader>gpr',
+    function()
+      vim.fn.jobstart({ 'gh', 'pr', 'view', '--web' }, { detach = true })
+    end,
+    desc = 'github pull requests',
+  },
+  {
     '<leader>gpp',
     utils.git_cmd({ args = { 'pull', '--tags', '--rebase' } }),
     desc = 'git pull',

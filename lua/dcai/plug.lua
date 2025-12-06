@@ -43,7 +43,7 @@ M.setup = function(plug_opts)
   vim.call('plug#begin', dir)
   Plug('nvim-lua/plenary.nvim')
   Plug('nvim-mini/mini.nvim')
-  -- Plug('folke/snacks.nvim')
+  Plug('folke/snacks.nvim')
 
   ----------------------------------------------------------------------------
   --- AI
@@ -74,7 +74,7 @@ M.setup = function(plug_opts)
   --- git
   ----------------------------------------------------------------------------
   Plug('tpope/vim-fugitive')
-  Plug('ruifm/gitlinker.nvim')
+  -- Plug('ruifm/gitlinker.nvim') -- folke/snacks.nvim has git browser support
   Plug('sindrets/diffview.nvim')
   Plug('NeogitOrg/neogit')
   ----------------------------------------------------------------------------
