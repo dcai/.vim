@@ -6,13 +6,15 @@ end
 
 snacks.setup({
   bigfile = { enabled = true },
+  quickfile = { enabled = true },
+  input = { enabled = true },
+
+  -- disabled
   dashboard = { enabled = false },
   explorer = { enabled = false },
   indent = { enabled = false },
-  input = { enabled = true },
   picker = { enabled = false },
   notifier = { enabled = false },
-  quickfile = { enabled = true },
   scope = { enabled = false },
   scroll = { enabled = false },
   statuscolumn = { enabled = false },
