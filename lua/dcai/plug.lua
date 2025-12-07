@@ -77,8 +77,8 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   Plug('tpope/vim-fugitive')
   -- Plug('ruifm/gitlinker.nvim') -- folke/snacks.nvim has git browser support
-  Plug('sindrets/diffview.nvim')
-  Plug('NeogitOrg/neogit')
+  -- Plug('sindrets/diffview.nvim')
+  -- Plug('NeogitOrg/neogit')
   ----------------------------------------------------------------------------
   --- UI and usability
   ----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ M.setup = function(plug_opts)
   Plug('mbbill/undotree')
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('isobit/vim-caddyfile')
-  Plug('greggh/claude-code.nvim')
+  -- Plug('greggh/claude-code.nvim')
   END()
 end
 
