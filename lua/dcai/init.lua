@@ -155,7 +155,7 @@ vim.keymap.set(
     .. vim.fn.getcwd()
     .. '" -- fish<CR><CR>',
   { desc = 'Shell' }
-) -- opens lazygit in a new tmux window
+) -- opens terminal in a new tmux window
 
 vim.api.nvim_create_user_command('EslintFix', function()
   local filetype = vim.bo.filetype
