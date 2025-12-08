@@ -13,6 +13,9 @@ end
 
 local function END()
   vim.fn['plug#end']()
+  -- vim-plug turns syntax back on when it ends
+  -- i use treesitter so turning this off
+  vim.cmd('syntax off')
 
   -- run setup scripts
   for _plugin, setup in pairs(setups.afterEnd) do
