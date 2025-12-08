@@ -23,6 +23,8 @@ end
 
 -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
 vim.lsp.config('pyright', {
+  cmd = { 'pyright-langserver', '--stdio' },
+  filetypes = { 'python' },
   on_attach = mylsputils.common_on_attach,
   before_init = function(_, config)
     local py_path = get_python_path(config.root_dir)
