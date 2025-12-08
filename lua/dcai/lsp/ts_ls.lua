@@ -1,9 +1,7 @@
 local mylsputils = require('dcai.lsp.utils')
 
-local capabilities = require('blink.cmp').get_lsp_capabilities()
-
 vim.lsp.config.ts_ls = {
-  capabilities = capabilities,
+  capabilities = mylsputils.get_capabilities(),
   cmd = { 'typescript-language-server', '--log-level', '1', '--stdio' },
   filetypes = mylsputils.ts_ls_supported_filetypes,
   root_markers = {

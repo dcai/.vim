@@ -156,4 +156,13 @@ M.support_native_lsp_config = function()
   return vim.version.cmp(vim.version(), '0.11.0') >= 0
 end
 
+M.get_capabilities = function()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local cmp_loaded, blinkcmp = pcall(require, 'blink.cmp')
+  if cmp_loaded then
+    capabilities = blinkcmp.get_lsp_capabilities()
+  end
+  return capabilities
+end
+
 return M
