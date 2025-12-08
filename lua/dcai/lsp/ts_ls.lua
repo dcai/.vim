@@ -29,7 +29,8 @@ vim.lsp.config.ts_ls = {
     tsserver = {
       logDirectory = vim.g.log_dir .. '/tsserver',
       ---@type string 'off'|'terse'|'normal'|'requestTime'|'verbose'
-      logVerbosity = 'terse',
+      logVerbosity = 'off',
+      -- logVerbosity = 'terse',
     },
     -- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md#preferences-options
     preferences = {
