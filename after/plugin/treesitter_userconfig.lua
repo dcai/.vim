@@ -3,10 +3,11 @@ if not loaded then
   return
 end
 
--- NOTE: treesitter's yaml parser doesn't get along well with golang template vars like this:
--- so disabling it
 local disable_file_types = function(ft, _buf)
-  return vim.tbl_contains({ 'yaml', 'yml' }, ft)
+  -- -- NOTE: treesitter's yaml parser doesn't get along well with golang template vars like this:
+  -- -- so disabling it
+  -- return vim.tbl_contains({ 'yaml', 'yml' }, ft)
+  return false
 end
 treesitter_config.setup({
   auto_install = true,
