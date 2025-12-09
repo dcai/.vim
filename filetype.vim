@@ -148,4 +148,7 @@ augroup filetypeGroup
 
   " ruby
   autocmd BufRead,BufNewFile Podfile set filetype=ruby
+
+  " conf - enable syntax highlighting
+  autocmd FileType conf syntax on
 augroup END
