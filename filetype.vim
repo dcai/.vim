@@ -33,6 +33,12 @@ augroup helpFiletypeGroup
   autocmd filetype help call HelpFileMode()
 augroup END
 
+" Ensure 'q' closes Fugitive blame windows
+augroup fugitive_q_close
+  autocmd!
+  autocmd FileType fugitiveblame nnoremap <buffer> q :q<CR>
+augroup END
+
 """""""""""""""""""""""""""""""
 " NFO
 """""""""""""""""""""""""""""""
