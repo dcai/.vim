@@ -5,9 +5,8 @@ local git_keymap = {
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
   { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'unstage this file' },
   { '<leader>gb', '<cmd>Git blame<cr>', desc = 'git blame' },
-  { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'git switch' },
-  { '<leader>gy', utils.open_git_hosting_web, desc = 'open web' },
-
+  { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'fzf branches' },
+  { '<leader>gy', utils.open_git_hosting_web, desc = 'view file in github' },
   { '<leader>gc', group = 'git commit' },
   {
     '<leader>gcU',
@@ -37,11 +36,11 @@ local git_keymap = {
     }),
     desc = 'git ai commit and push',
   },
-  { '<leader>gd', '<cmd>Git diff<cr>', desc = 'diff' },
+  { '<leader>gd', '<cmd>Git diff<cr>', desc = 'fugitive diff' },
   {
     '<leader>gg',
     '<cmd>FzfLua git_status<cr>',
-    desc = 'git status',
+    desc = 'fzf git status',
   },
   {
     '<leader>gh',
@@ -85,6 +84,13 @@ local git_keymap = {
   -- },
   {
     '<leader>gll',
+    function()
+      Snacks.lazygit()
+    end,
+    desc = 'lazygit',
+  },
+  {
+    '<leader>glt',
     '<cmd>!tmux popup -E -h "80\\%" -w "80\\%" -d "'
       .. vim.fn.getcwd()
       .. '" -- tig<CR><CR>',
