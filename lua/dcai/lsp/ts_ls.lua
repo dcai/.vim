@@ -1,18 +1,22 @@
 local mylsputils = require('dcai.lsp.utils')
+local use_tsgo = false
 
+local root_markers = {
+  'pnpm-lock.yaml',
+  'package-lock.json',
+  'yarn.lock',
+  'bun.lock',
+  '.git',
+  'tsconfig.json',
+  'jsconfig.json',
+}
 vim.lsp.config.ts_ls = {
-  capabilities = mylsputils.get_capabilities(),
-  cmd = { 'typescript-language-server', '--log-level', '1', '--stdio' },
+  -- log-level: 4 = log, 3 = info, 2 = warn, 1 = error
+  cmd = { 'typescript-language-server', '--stdio', '--log-level', '1' },
   filetypes = mylsputils.ts_ls_supported_filetypes,
-  root_markers = {
-    'pnpm-lock.yaml',
-    'package-lock.json',
-    'yarn.lock',
-    'bun.lock',
-    '.git',
-    'tsconfig.json',
-    'jsconfig.json',
-  },
+  capabilities = mylsputils.get_capabilities(),
+  on_attach = mylsputils.common_on_attach,
+  root_markers = root_markers,
   commands = {
     OrganizeImports = {
       function()
@@ -21,7 +25,6 @@ vim.lsp.config.ts_ls = {
       description = 'Organize Imports',
     },
   },
-
   init_options = {
     hostInfo = 'neovim',
     tsserver = {
@@ -37,8 +40,6 @@ vim.lsp.config.ts_ls = {
       quotePreference = 'auto', -- single or double or auto
     },
   },
-
-  on_attach = mylsputils.common_on_attach,
   settings = {
     typescript = {
       preferences = {
@@ -47,4 +48,13 @@ vim.lsp.config.ts_ls = {
     },
   },
 }
-vim.lsp.enable('ts_ls')
+vim.lsp.enable('ts_ls', not use_tsgo)
+
+vim.lsp.config.tsgo = {
+  cmd = { 'tsgo', '--lsp', '--stdio' },
+  filetypes = mylsputils.ts_ls_supported_filetypes,
+  on_attach = mylsputils.common_on_attach,
+  capabilities = mylsputils.get_capabilities(),
+  root_markers = root_markers,
+}
+vim.lsp.enable('tsgo', use_tsgo)
