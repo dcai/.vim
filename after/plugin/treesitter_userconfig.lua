@@ -5,14 +5,8 @@ end
 local ts_repeat_move = require('nvim-treesitter-textobjects.repeatable_move')
 local ts_textobject = require('nvim-treesitter-textobjects')
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
--- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
--- vim.wo[0][0].foldmethod = 'expr'
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-
 treesitter.setup({
-  install_dir = vim.fn.stdpath('data') .. '/site',
+  install_dir = vim.fn.stdpath('data') .. '/tree-sitter-parsers',
 })
 
 local ensure_installed = {
@@ -44,6 +38,9 @@ treesitter.install({ ensure_installed })
 vim.api.nvim_create_autocmd('FileType', {
   pattern = ensure_installed,
   callback = function()
+    vim.opt.foldmethod = 'expr'
+    vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     vim.treesitter.start()
   end,
 })
