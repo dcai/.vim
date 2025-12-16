@@ -1,5 +1,11 @@
 local M = {}
 
+-- Normalize line endings by replacing CRLF and CR with LF
+-- This strips ^M characters that may appear in command output
+local function normalize_line_endings(str)
+  return (str:gsub('\r\n?', '\n'))
+end
+
 -- Base function for running async commands with plenary.job
 -- @param command string: The command to run
 -- @param args table: Command arguments
@@ -24,8 +30,8 @@ M.lazy_cmd = function(command, args, opts)
       args = args,
       cwd = cwd,
       on_exit = vim.schedule_wrap(function(job, ret)
-        local stderr = table.concat(job:stderr_result(), vim.g.nl)
-        local stdout = table.concat(job:result(), vim.g.nl)
+        local stderr = normalize_line_endings(table.concat(job:stderr_result(), vim.g.nl))
+        local stdout = normalize_line_endings(table.concat(job:result(), vim.g.nl))
 
         if ret == 0 then
           if opts.on_success then
