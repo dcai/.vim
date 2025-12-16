@@ -151,4 +151,5 @@ augroup filetypeGroup
 
   " conf - enable syntax highlighting
   autocmd FileType conf syntax on
+  autocmd FileType gitconfig syntax on
 augroup END
