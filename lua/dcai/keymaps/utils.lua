@@ -61,6 +61,57 @@ M.git_cmd = function(opts, desc)
   return lazy_shell_cmd('git', opts, desc)
 end
 
+M.cmd_with_fidget = function(command, args, opts)
+  return function()
+    local plenary_loaded, Job = pcall(require, 'plenary.job')
+    if not plenary_loaded then
+      vim.notify('plenary.nvim is required for cmd_with_fidget', vim.log.levels.ERROR)
+      return
+    end
+
+    local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
+    if not fidget_loaded then
+      vim.notify('fidget.nvim is required for cmd_with_fidget', vim.log.levels.ERROR)
+      return
+    end
+
+    opts = opts or {}
+    local cwd = opts.cwd or vim.fn.getcwd()
+    local title = opts.title or string.format('%s %s', command, table.concat(args, ' '))
+
+    -- Create fidget progress handle
+    local handle = fidget_progress.handle.create({
+      title = title,
+      message = 'Running...',
+      lsp_client = { name = 'shell' },
+    })
+
+    Job:new({
+      command = command,
+      args = args,
+      cwd = cwd,
+      on_exit = vim.schedule_wrap(function(job, ret)
+        local stderr = table.concat(job:stderr_result(), '\n')
+        local stdout = table.concat(job:result(), '\n')
+
+        if ret == 0 then
+          handle.message = 'Completed'
+          if stdout ~= '' then
+            vim.notify(stdout, vim.log.levels.INFO)
+          end
+        else
+          handle.message = 'Error'
+          if stderr ~= '' then
+            vim.notify(stderr, vim.log.levels.ERROR)
+          end
+        end
+
+        handle:finish()
+      end),
+    }):start()
+  end
+end
+
 M.live_grep = function()
   -- local telescope = require('telescope.builtin')
   -- telescope.live_grep({ cwd = G.git_root() })

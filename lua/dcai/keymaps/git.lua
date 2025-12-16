@@ -31,9 +31,7 @@ local git_keymap = {
   },
   {
     '<leader>gG',
-    utils.git_cmd({
-      args = { 'auto-commit-and-push' },
-    }),
+    utils.cmd_with_fidget('git', { 'auto-commit-and-push' }),
     desc = 'git ai commit and push',
   },
   { '<leader>gd', '<cmd>Git diff<cr>', desc = 'fugitive diff' },
