@@ -1,5 +1,5 @@
 local mylsputils = require('dcai.lsp.utils')
-local use_tsgo = vim.g.is_env_var_true(vim.env.USE_TSGO)
+local use_tsgo = vim.g.is_env_var_true('USE_TSGO')
 
 local root_markers = {
   'pnpm-lock.yaml',

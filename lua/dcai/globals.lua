@@ -162,9 +162,9 @@ end
 
 local function is_env_var_true(name)
   local v = vim.env[name]
-  vim.g.logger.info(
-    'environment variable ' .. tostring(name) .. '=' .. tostring(v)
-  )
+  -- vim.g.logger.info(
+  --   'environment variable ' .. tostring(name) .. '=' .. tostring(v)
+  -- )
   return v == 'true' or v == '1' or v == true or v == 1
 end
 vim.g.is_env_var_true = is_env_var_true
