@@ -648,3 +648,7 @@ vim.g.feedkeys = function(key, mode)
   -- controlled by mode flags. This is a blocking call, unlike nvim_input().
   vim.api.nvim_feedkeys(keys, mode, true)
 end
+
+vim.g.is_true = function(value)
+  return value == true or value == 'true' or value == 1 or value == '1'
+end
