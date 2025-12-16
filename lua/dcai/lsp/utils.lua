@@ -88,7 +88,7 @@ end
 
 ---handle lsp location list, use fzf when multiple locations found
 ---@param options vim.lsp.LocationOpts.OnList
-M.lsp_on_list_handler = function(options)
+local function lsp_on_list_handler(options)
   local result = options.items
   if #result == 1 then
     vim.fn.setqflist(result, 'r')
@@ -125,13 +125,13 @@ M.common_on_attach = function(client, bufnr)
   nmap('[d', diagnostic_jump(-1), 'go to prev diagnostic')
   nmap(']d', diagnostic_jump(1), 'go to next diagnostic')
   nmap('gd', function()
-    vim.lsp.buf.definition({ on_list = M.lsp_on_list_handler })
+    vim.lsp.buf.definition({ on_list = lsp_on_list_handler })
   end, 'go to definition')
   nmap('grr', function()
-    vim.lsp.buf.references(nil, { on_list = M.lsp_on_list_handler })
+    vim.lsp.buf.references(nil, { on_list = lsp_on_list_handler })
   end, 'go to references')
   nmap('gO', function()
-    vim.lsp.buf.document_symbol({ on_list = M.lsp_on_list_handler })
+    vim.lsp.buf.document_symbol({ on_list = lsp_on_list_handler })
   end, 'go to symbol')
 
   nmap('grf', function()
