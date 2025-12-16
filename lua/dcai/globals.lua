@@ -161,8 +161,11 @@ vim.g.isempty = function(s)
 end
 
 local function is_env_var_true(name)
-  local v = os.getenv(name)
-  return v == 'true' or v == '1'
+  local v = vim.env[name]
+  vim.g.logger.info(
+    'environment variable ' .. tostring(name) .. '=' .. tostring(v)
+  )
+  return v == 'true' or v == '1' or v == true or v == 1
 end
 vim.g.is_env_var_true = is_env_var_true
 
@@ -647,8 +650,4 @@ vim.g.feedkeys = function(key, mode)
   -- Sends input-keys to Nvim, subject to various quirks
   -- controlled by mode flags. This is a blocking call, unlike nvim_input().
   vim.api.nvim_feedkeys(keys, mode, true)
-end
-
-vim.g.is_true = function(value)
-  return value == true or value == 'true' or value == 1 or value == '1'
 end
