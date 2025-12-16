@@ -83,14 +83,14 @@ M.cmd_with_fidget = function(command, args, opts)
 
     opts = opts or {}
     local cwd = opts.cwd or vim.fn.getcwd()
-    local title = opts.title
-      or string.format('%s %s', command, table.concat(args, ' '))
+    local command_full =
+      string.format('%s %s', command, table.concat(args, ' '))
 
     -- Create fidget progress handle
     local handle = fidget_progress.handle.create({
-      title = title,
+      title = opts.title or command,
       message = 'Running...',
-      lsp_client = { name = command },
+      lsp_client = { name = command_full },
     })
 
     Job:new({
