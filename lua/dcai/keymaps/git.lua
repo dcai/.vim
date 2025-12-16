@@ -105,7 +105,7 @@ local git_keymap = {
   },
   {
     '<leader>gp',
-    group = 'pull and push',
+    group = 'pull/fetch and push',
   },
   {
     '<leader>gpr',
@@ -126,7 +126,10 @@ local git_keymap = {
   },
   {
     '<leader>gpf',
-    lazy_git_cmd({ args = { 'fetch', '--tags', '--all', '--verbose' } }),
+    utils.lazy_cmd_with_fidget(
+      'git',
+      { 'fetch', '--tags', '--all', '--verbose' }
+    ),
     desc = 'git fetch',
   },
 }

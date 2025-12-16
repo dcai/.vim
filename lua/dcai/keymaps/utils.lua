@@ -19,27 +19,25 @@ M.lazy_cmd = function(command, args, opts)
     args = args or {}
     local cwd = opts.cwd or vim.fn.getcwd()
 
-    Job
-      :new({
-        command = command,
-        args = args,
-        cwd = cwd,
-        on_exit = vim.schedule_wrap(function(job, ret)
-          local stderr = table.concat(job:stderr_result(), vim.g.nl)
-          local stdout = table.concat(job:result(), vim.g.nl)
+    Job:new({
+      command = command,
+      args = args,
+      cwd = cwd,
+      on_exit = vim.schedule_wrap(function(job, ret)
+        local stderr = table.concat(job:stderr_result(), vim.g.nl)
+        local stdout = table.concat(job:result(), vim.g.nl)
 
-          if ret == 0 then
-            if opts.on_success then
-              opts.on_success(stdout, stderr)
-            end
-          else
-            if opts.on_error then
-              opts.on_error(stdout, stderr, ret)
-            end
+        if ret == 0 then
+          if opts.on_success then
+            opts.on_success(stdout, stderr)
           end
-        end),
-      })
-      :start()
+        else
+          if opts.on_error then
+            opts.on_error(stdout, stderr, ret)
+          end
+        end
+      end),
+    }):start()
   end
 end
 
@@ -73,11 +71,7 @@ local function lazy_cmd_with_window(command, opts, desc)
           popupwin.append(stderr)
         else
           vim.notify(
-            command
-              .. ''
-              .. table.concat(args, ',')
-              .. ' failed: '
-              .. stderr
+            command .. '' .. table.concat(args, ',') .. ' failed: ' .. stderr
           )
         end
       end,
@@ -89,7 +83,8 @@ M.lazy_cmd_with_window = lazy_cmd_with_window
 M.lazy_cmd_with_fidget = function(command, args, opts)
   return function()
     opts = opts or {}
-    local command_full = string.format('%s %s', command, table.concat(args, ' '))
+    local command_full =
+      string.format('%s %s', command, table.concat(args, ' '))
 
     -- Create fidget progress handle
     local fidget_progress = require('fidget.progress')
@@ -105,6 +100,9 @@ M.lazy_cmd_with_fidget = function(command, args, opts)
         handle.message = 'Completed'
         if stdout ~= '' then
           vim.notify(stdout, vim.log.levels.INFO)
+        end
+        if stderr ~= '' then
+          vim.notify(stderr, vim.log.levels.ERROR)
         end
         handle:finish()
       end,
