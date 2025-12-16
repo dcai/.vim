@@ -68,9 +68,13 @@ end
 
 local yank_keymap = {
   { '<leader>y', group = 'yank things' },
-  -- utils.vim_cmd('<leader>yp', 'let @*=expand("%:p")', 'yank file full path'),
-  -- utils.vim_cmd('<leader>yf', 'let @*=expand("%")', 'yank file name'),
-  -- utils.vim_cmd('<leader>ym', 'let @*=execute("messages")', 'yank messages'),
+  {
+    '<leader>yp',
+    function()
+      vim.cmd('let @*=expand("%:p")')
+    end,
+    desc = 'yank file full path',
+  },
   {
     '<leader>yl',
     function()
@@ -98,6 +102,7 @@ local yank_keymap = {
   {
     '<leader>yf',
     function()
+      -- vim.cmd('let @*=expand("%")')
       local filename = vim.fn.expand('%')
       put_content(filename)
     end,
@@ -106,6 +111,7 @@ local yank_keymap = {
   {
     '<leader>ym',
     function()
+      -- vim.cmd('let @*=execute("messages")')
       local messages = vim.fn.execute('messages')
       put_content(vim.split(messages, '\n', { trimempty = true, plain = true }))
     end,

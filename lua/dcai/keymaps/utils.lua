@@ -57,10 +57,6 @@ end
 
 M.lazy_shell_cmd = lazy_shell_cmd
 
-M.git_cmd = function(opts, desc)
-  return lazy_shell_cmd('git', opts, desc)
-end
-
 M.cmd_with_fidget = function(command, args, opts)
   return function()
     local plenary_loaded, Job = pcall(require, 'plenary.job')
@@ -126,19 +122,6 @@ M.live_grep = function()
   fzf.live_grep({ cwd = vim.g.git_root() })
 end
 
----@param cmd string vim command
-M.vim_cmd = function(key, cmd, desc, notify_after)
-  return {
-    key,
-    function()
-      vim.cmd(cmd)
-      if notify_after then
-        vim.notify(notify_after)
-      end
-    end,
-    desc = desc or cmd,
-  }
-end
 local function open_git_hosting_web()
   -- local mode = vim.fn.mode()
   -- if string.lower(mode) == 'v' then

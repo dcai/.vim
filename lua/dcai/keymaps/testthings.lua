@@ -89,13 +89,55 @@ local testthings_keymap = {
     end,
     desc = 'alternate test file',
   },
-  utils.vim_cmd('<leader>th', 'HurlRun', 'run hurl file'),
-  utils.vim_cmd('<leader>ti', 'VimuxInspectRunner', 'inspect runner'),
-  utils.vim_cmd('<leader>tp', 'VimuxPromptCommand', 'prompt command'),
-  utils.vim_cmd('<leader>tq', 'VimuxCloseRunner', 'close runner'),
-  utils.vim_cmd('<leader>ts', '!%:p', 'run current buffer in shell'),
-  utils.vim_cmd('<leader>tx', 'call VimuxZoomRunner()', 'zoom in'),
-  utils.vim_cmd('<leader>tz', 'call LastPath()', 'open last path in runner'),
+  {
+    '<leader>th',
+    function()
+      vim.cmd('HurlRun')
+    end,
+    desc = 'run hurl file',
+  },
+  {
+    '<leader>ti',
+    function()
+      vim.cmd('VimuxInspectRunner')
+    end,
+    desc = 'inspect runner',
+  },
+  {
+    '<leader>tp',
+    function()
+      vim.cmd('VimuxPromptCommand')
+    end,
+    desc = 'prompt command',
+  },
+  {
+    '<leader>tq',
+    function()
+      vim.cmd('VimuxCloseRunner')
+    end,
+    desc = 'close runner',
+  },
+  {
+    '<leader>ts',
+    function()
+      vim.cmd('!%:p')
+    end,
+    desc = 'run current buffer in shell',
+  },
+  {
+    '<leader>tx',
+    function()
+      vim.cmd('call VimuxZoomRunner()')
+    end,
+    desc = 'zoom in',
+  },
+  {
+    '<leader>tz',
+    function()
+      vim.cmd('call LastPath()')
+    end,
+    desc = 'open last path in runner',
+  },
 }
 
 return testthings_keymap

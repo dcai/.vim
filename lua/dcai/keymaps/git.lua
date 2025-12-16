@@ -1,5 +1,9 @@
 local utils = require('dcai.keymaps.utils')
 
+local function lazy_git_cmd(opts, desc)
+  return utils.lazy_shell_cmd('git', opts, desc)
+end
+
 local git_keymap = {
   { '<leader>g', group = 'git' },
   { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'git add' },
@@ -10,21 +14,21 @@ local git_keymap = {
   { '<leader>gc', group = 'git commit' },
   {
     '<leader>gcU',
-    utils.git_cmd({
+    lazy_git_cmd({
       args = { 'ciu' },
     }),
     desc = 'commit all',
   },
   {
     '<leader>gcS',
-    utils.git_cmd({
+    lazy_git_cmd({
       args = { 'cis' },
     }),
     desc = 'commit staged',
   },
   {
     '<leader>gcf',
-    utils.git_cmd({
+    lazy_git_cmd({
       args = { 'commit', '--no-verify', '-a', '--fixup', 'HEAD' },
     }),
     desc = 'fixup HEAD',
@@ -46,17 +50,17 @@ local git_keymap = {
   },
   {
     '<leader>ghs',
-    utils.git_cmd({ args = { 'stash' } }),
+    lazy_git_cmd({ args = { 'stash' } }),
     desc = 'git stash',
   },
   {
     '<leader>ghp',
-    utils.git_cmd({ args = { 'stash', 'pop' } }),
+    lazy_git_cmd({ args = { 'stash', 'pop' } }),
     desc = 'git stash pop',
   },
   {
     '<leader>gj',
-    utils.git_cmd({
+    lazy_git_cmd({
       args = {
         '-c',
         'sequence.editor=:',
@@ -112,17 +116,17 @@ local git_keymap = {
   },
   {
     '<leader>gpp',
-    utils.git_cmd({ args = { 'pull', '--tags', '--rebase' } }),
+    lazy_git_cmd({ args = { 'pull', '--tags', '--rebase' } }),
     desc = 'git pull',
   },
   {
     '<leader>gpP',
-    utils.git_cmd({ args = { 'push', '-u', '--force-with-lease' } }),
+    lazy_git_cmd({ args = { 'push', '-u', '--force-with-lease' } }),
     desc = 'git push',
   },
   {
     '<leader>gpf',
-    utils.git_cmd({ args = { 'fetch', '--tags', '--all', '--verbose' } }),
+    lazy_git_cmd({ args = { 'fetch', '--tags', '--all', '--verbose' } }),
     desc = 'git fetch',
   },
 }

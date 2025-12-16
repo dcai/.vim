@@ -79,7 +79,6 @@ local editthings_keymap = {
     function()
       -- require('fzf-lua').git_files({ cwd = '~/.config/nvim' })
       require('fzf-lua').files({ cwd = '~/.config/nvim' })
-      -- v = utils.vim_cmd('e ' .. vimrc_to_edit, 'edit vimrc')
     end,
     desc = 'toggle last used file',
   },

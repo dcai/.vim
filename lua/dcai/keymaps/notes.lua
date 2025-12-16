@@ -10,18 +10,34 @@ local notes_keymap = {
     end,
     desc = 'todo',
   },
-  utils.vim_cmd(
+  {
     '<leader>nb',
-    'NoteGitBranch',
-    'create new note for current git branch'
-  ),
-  utils.vim_cmd('<leader>nc', 'NoteNew', 'create new note'),
-  utils.vim_cmd(
+    function()
+      vim.cmd('NoteGitBranch')
+    end,
+    desc = 'create new note for current git branch',
+  },
+  {
+    '<leader>nc',
+    function()
+      vim.cmd('NoteNew')
+    end,
+    desc = 'create new note',
+  },
+  {
     '<leader>ng',
-    'NoteGit',
-    'create new note for current git repo'
-  ),
-  utils.vim_cmd('<leader>nt', 'NoteToday', 'create new note for today'),
+    function()
+      vim.cmd('NoteGit')
+    end,
+    desc = 'create new note for current git repo',
+  },
+  {
+    '<leader>nt',
+    function()
+      vim.cmd('NoteToday')
+    end,
+    desc = 'create new note for today',
+  },
   {
     '<leader>np',
     function()
