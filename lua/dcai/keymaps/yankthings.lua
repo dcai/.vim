@@ -58,7 +58,7 @@ local function format_visual_selection()
     vim.bo.filetype
   )
   local code = table.concat(lines, '\n')
-  return header .. vim.g.nl .. wrapcode(code)
+  return header .. vim.g.nl .. wrapcode(code) .. vim.g.nl
 end
 
 local function send_to_tmux_last_pane(text)
