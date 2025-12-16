@@ -4,7 +4,6 @@ if not loaded then
 end
 local ts_repeat_move = require('nvim-treesitter-textobjects.repeatable_move')
 local ts_textobject = require('nvim-treesitter-textobjects')
-vim.g.logger.info('treesitter loaded:', loaded)
 
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -33,6 +32,7 @@ local ensure_installed = {
   'typescript',
   'vim',
   'yaml',
+  'zsh',
 }
 treesitter.install({ ensure_installed })
 vim.api.nvim_create_autocmd('FileType', {
