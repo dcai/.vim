@@ -116,8 +116,11 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- treesitter
   ----------------------------------------------------------------------------
-  Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
-  Plug('nvim-treesitter/nvim-treesitter-textobjects')
+  Plug('nvim-treesitter/nvim-treesitter', {
+    ['do'] = ':TSUpdate',
+    ['branch'] = 'main',
+  })
+  Plug('nvim-treesitter/nvim-treesitter-textobjects', { ['branch'] = 'main' })
   Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag', {
     setup = function()
@@ -138,7 +141,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- cmp
   ----------------------------------------------------------------------------
-  Plug('saghen/blink.cmp', { ['tag'] = 'v1.7.0' })
+  Plug('saghen/blink.cmp', { ['tag'] = 'v1.8.0' })
   ----------------------------------------------------------------------------
   --- markdown
   ----------------------------------------------------------------------------

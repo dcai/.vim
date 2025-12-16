@@ -1,4 +1,4 @@
-local loaded, treesitter_config = pcall(require, 'nvim-treesitter.configs')
+local loaded, treesitter_config = pcall(require, 'nvim-treesitter.config')
 if not loaded then
   return
 end
@@ -149,11 +149,5 @@ treesitter_config.setup({
     },
   },
 })
-local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-parser_config.tsx.filetype_to_parsername = { 'javascript', 'typescript.tsx' }
-parser_config.gotmpl = {
-  filetype = 'gotmpl',
-  used_by = { 'gohtmltmpl', 'gotexttmpl', 'gotmpl', 'yaml' },
-}
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
