@@ -90,6 +90,13 @@ M.setup = function()
 
   local instance = require('codecompanion')
   instance.setup({
+    -- opts = {
+    --   log_level = 'INFO', -- TRACE|DEBUG|ERROR|INFO
+    --   language = 'English',
+    --   system_prompt = function(_opts)
+    --     return require('dcai.llm.prompt_library').BASE_PROMPT_CODING
+    --   end,
+    -- },
     strategies = {
       inline = {
         adapter = llm_provider,
@@ -105,6 +112,34 @@ M.setup = function()
         },
       },
       chat = {
+        opts = {
+
+          ---This is the default prompt which is sent with every request in the chat
+          ---strategy. It is primarily based on the GitHub Copilot Chat's prompt
+          ---but with some modifications. You can choose to remove this via
+          ---your own config but note that LLM results may not be as good
+          ---@param ctx CodeCompanion.SystemPrompt.Context
+          ---@return string
+          system_prompt = function(ctx)
+            -- vim.g.logger.info('Generating system prompt with context: ' .. vim.inspect(ctx))
+            return ctx.default_system_prompt
+              .. string.format(
+                [[Additional context:
+All non-code text responses must be written in the %s language.
+The current date is %s.
+The user's Neovim version is %s.
+The user is working on a %s machine. Please respond with system specific commands if applicable.
+
+
+You can use @{cmd_runner} tool.
+]],
+                ctx.language,
+                ctx.date,
+                ctx.nvim_version,
+                ctx.os
+              )
+          end,
+        },
         adapter = llm_provider,
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         roles = {
@@ -465,13 +500,6 @@ Please generate unit tests for this code from buffer %d:
           return ' (' .. tokens .. ' tokens)'
         end,
       },
-    },
-    opts = {
-      log_level = 'INFO', -- TRACE|DEBUG|ERROR|INFO
-      language = 'English',
-      system_prompt = function(_opts)
-        return require('dcai.llm.prompt_library').BASE_PROMPT_CODING
-      end,
     },
   })
   M:init_fidget()
