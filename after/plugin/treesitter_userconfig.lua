@@ -63,6 +63,7 @@ ts_textobject.setup({
 --------------------------------------------------------------------------------
 -- Helper functions for textobject keymaps
 --------------------------------------------------------------------------------
+local all_modes = { 'n', 'x', 'o' }
 local function map_select(key, query, group)
   vim.keymap.set({ 'x', 'o' }, key, function()
     require('nvim-treesitter-textobjects.select').select_textobject(
@@ -73,7 +74,7 @@ local function map_select(key, query, group)
 end
 
 local function map_move(key, method, query, group)
-  vim.keymap.set({ 'n', 'x', 'o' }, key, function()
+  vim.keymap.set(all_modes, key, function()
     require('nvim-treesitter-textobjects.move')[method](
       query,
       group or 'textobjects'
@@ -146,35 +147,15 @@ map_move('[c', 'goto_previous', '@call.outer')
 
 -- Repeat movement with ; and ,
 -- ensure ; goes forward and , goes backward regardless of the last direction
-vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_previous)
+vim.keymap.set(all_modes, ';', ts_repeat_move.repeat_last_move_next)
+vim.keymap.set(all_modes, ',', ts_repeat_move.repeat_last_move_previous)
 
 -- vim way: ; goes to the direction you were moving.
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+-- vim.keymap.set(all_modes, ';', ts_repeat_move.repeat_last_move)
+-- vim.keymap.set(all_modes, ',', ts_repeat_move.repeat_last_move_opposite)
 
 -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-vim.keymap.set(
-  { 'n', 'x', 'o' },
-  'f',
-  ts_repeat_move.builtin_f_expr,
-  { expr = true }
-)
-vim.keymap.set(
-  { 'n', 'x', 'o' },
-  'F',
-  ts_repeat_move.builtin_F_expr,
-  { expr = true }
-)
-vim.keymap.set(
-  { 'n', 'x', 'o' },
-  't',
-  ts_repeat_move.builtin_t_expr,
-  { expr = true }
-)
-vim.keymap.set(
-  { 'n', 'x', 'o' },
-  'T',
-  ts_repeat_move.builtin_T_expr,
-  { expr = true }
-)
+vim.keymap.set(all_modes, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set(all_modes, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set(all_modes, 't', ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set(all_modes, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
