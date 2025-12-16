@@ -17,10 +17,13 @@ treesitter.setup({
 
 local ensure_installed = {
   'bash',
+  'css',
   'diff',
   'fish',
   'go',
+  'graphql',
   'html',
+  'ini',
   'javascript',
   'jsdoc',
   'json',
@@ -29,6 +32,8 @@ local ensure_installed = {
   'markdown',
   'markdown_inline',
   'python',
+  'sql',
+  'terraform',
   'toml',
   'typescript',
   'vim',
