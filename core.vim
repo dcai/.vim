@@ -3,10 +3,14 @@ set nocompatible
 " run :filetype see status
 filetype plugin indent on
 
-if exists('syntax_on')
-  syntax reset
+if has('nvim')
+  syntax off
 else
-  syntax on
+  if exists('syntax_on')
+    syntax reset
+  else
+    syntax on
+  endif
 endif
 
 let mapleader = "\<Space>"
