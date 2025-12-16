@@ -9,7 +9,7 @@ local openthings_keymap = {
     '<leader>ob',
     '<Plug>(openbrowser-smart-search)',
     desc = 'search current word in browser',
-    mode = 'n',
+    mode = { 'v', 'n' },
   },
   {
     '<leader>ob',
@@ -45,6 +45,7 @@ local openthings_keymap = {
     '<leader>og',
     utils.open_git_hosting_web,
     desc = 'open file in git web',
+    mode = { 'v', 'n' },
   },
   {
     '<leader>ot',

@@ -10,7 +10,12 @@ local git_keymap = {
   { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'unstage this file' },
   { '<leader>gb', '<cmd>Git blame<cr>', desc = 'git blame' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'fzf branches' },
-  { '<leader>gy', utils.open_git_hosting_web, desc = 'view file in github' },
+  {
+    '<leader>gy',
+    utils.open_git_hosting_web,
+    desc = 'view file in github',
+    mode = { 'v', 'n' },
+  },
   { '<leader>gc', group = 'git commit' },
   {
     '<leader>gcU',

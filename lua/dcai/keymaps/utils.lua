@@ -124,7 +124,7 @@ M.live_grep = function()
   fzf.live_grep({ cwd = vim.g.git_root() })
 end
 
-local function open_git_hosting_web()
+M.open_git_hosting_web = function()
   -- local mode = vim.fn.mode()
   -- if string.lower(mode) == 'v' then
   --   mode = 'v'
@@ -134,6 +134,5 @@ local function open_git_hosting_web()
   -- require('gitlinker').get_buf_range_url(mode)
   Snacks.gitbrowse.open()
 end
-M.open_git_hosting_web = open_git_hosting_web
 
 return M
