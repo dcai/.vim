@@ -69,7 +69,7 @@ M.setup = function(plug_opts)
       }
     end,
   })
-  Plug('olimorris/codecompanion.nvim', { ['tag'] = 'v17.33.0' })
+  Plug('olimorris/codecompanion.nvim', { ['branch'] = 'main' })
   -- Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------
   --- lsp
