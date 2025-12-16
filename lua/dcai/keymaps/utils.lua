@@ -65,25 +65,32 @@ M.cmd_with_fidget = function(command, args, opts)
   return function()
     local plenary_loaded, Job = pcall(require, 'plenary.job')
     if not plenary_loaded then
-      vim.notify('plenary.nvim is required for cmd_with_fidget', vim.log.levels.ERROR)
+      vim.notify(
+        'plenary.nvim is required for cmd_with_fidget',
+        vim.log.levels.ERROR
+      )
       return
     end
 
     local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
     if not fidget_loaded then
-      vim.notify('fidget.nvim is required for cmd_with_fidget', vim.log.levels.ERROR)
+      vim.notify(
+        'fidget.nvim is required for cmd_with_fidget',
+        vim.log.levels.ERROR
+      )
       return
     end
 
     opts = opts or {}
     local cwd = opts.cwd or vim.fn.getcwd()
-    local title = opts.title or string.format('%s %s', command, table.concat(args, ' '))
+    local title = opts.title
+      or string.format('%s %s', command, table.concat(args, ' '))
 
     -- Create fidget progress handle
     local handle = fidget_progress.handle.create({
       title = title,
       message = 'Running...',
-      lsp_client = { name = 'shell' },
+      lsp_client = { name = command },
     })
 
     Job:new({
