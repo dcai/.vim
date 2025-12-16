@@ -1,7 +1,7 @@
 local utils = require('dcai.keymaps.utils')
 
 local function lazy_git_cmd(opts, desc)
-  return utils.lazy_shell_cmd('git', opts, desc)
+  return utils.lazy_cmd_with_window('git', opts, desc)
 end
 
 local git_keymap = {
@@ -35,7 +35,7 @@ local git_keymap = {
   },
   {
     '<leader>gG',
-    utils.cmd_with_fidget('git', { 'auto-commit-and-push' }),
+    utils.lazy_cmd_with_fidget('git', { 'auto-commit-and-push' }),
     desc = 'git ai commit and push',
   },
   { '<leader>gd', '<cmd>Git diff<cr>', desc = 'fugitive diff' },

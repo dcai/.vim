@@ -21,7 +21,7 @@ local openthings_keymap = {
     '<leader>od',
     function()
       -- has to be wrapped because dir must be lazy evaluated
-      utils.lazy_shell_cmd(
+      utils.lazy_cmd_with_window(
         'open',
         { disable_popup = true, args = { vim.fn.expand('%:p:h') } },
         'open folder'
@@ -33,7 +33,7 @@ local openthings_keymap = {
     '<leader>of',
     function()
       -- has to be wrapped because filename must be lazy evaluated
-      utils.lazy_shell_cmd(
+      utils.lazy_cmd_with_window(
         zed,
         { disable_popup = true, args = { vim.fn.expand('%:p') } },
         'open file in zed'

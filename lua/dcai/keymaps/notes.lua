@@ -46,7 +46,7 @@ local notes_keymap = {
         vim.g.logger.warn('must be markdown file')
         return
       end
-      utils.lazy_shell_cmd(
+      utils.lazy_cmd_with_window(
         'doku-publish.py',
         -- args should be evaluated when the function is called
         { disable_popup = false, args = { vim.fn.expand('%:p') } }

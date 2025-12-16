@@ -1,6 +1,6 @@
 local M = {}
 
-local function lazy_shell_cmd(command, opts, desc)
+local function lazy_cmd_with_window(command, opts, desc)
   return function()
     local plenary_loaded, Job = pcall(require, 'plenary.job')
     if not plenary_loaded then
@@ -54,28 +54,12 @@ local function lazy_shell_cmd(command, opts, desc)
       :start()
   end
 end
+M.lazy_cmd_with_window = lazy_cmd_with_window
 
-M.lazy_shell_cmd = lazy_shell_cmd
-
-M.cmd_with_fidget = function(command, args, opts)
+M.lazy_cmd_with_fidget = function(command, args, opts)
   return function()
-    local plenary_loaded, Job = pcall(require, 'plenary.job')
-    if not plenary_loaded then
-      vim.notify(
-        'plenary.nvim is required for cmd_with_fidget',
-        vim.log.levels.ERROR
-      )
-      return
-    end
-
-    local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
-    if not fidget_loaded then
-      vim.notify(
-        'fidget.nvim is required for cmd_with_fidget',
-        vim.log.levels.ERROR
-      )
-      return
-    end
+    local Job = require('plenary.job')
+    local fidget_progress = require('fidget.progress')
 
     opts = opts or {}
     local cwd = opts.cwd or vim.fn.getcwd()
