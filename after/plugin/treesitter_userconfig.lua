@@ -8,9 +8,38 @@ vim.g.logger.info('treesitter loaded:', loaded)
 
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.wo[0][0].foldmethod = 'expr'
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 treesitter.setup({
   install_dir = vim.fn.stdpath('data') .. '/site',
+})
+
+local ensure_installed = {
+  'bash',
+  'diff',
+  'fish',
+  'go',
+  'html',
+  'javascript',
+  'jsdoc',
+  'json',
+  'lua',
+  'make',
+  'markdown',
+  'markdown_inline',
+  'python',
+  'typescript',
+  'vim',
+  'yaml',
+}
+treesitter.install({ ensure_installed })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = ensure_installed,
+  callback = function()
+    vim.treesitter.start()
+  end,
 })
 
 ts_textobject.setup({
