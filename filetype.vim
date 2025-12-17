@@ -70,38 +70,41 @@ augroup nfoFiletypeGroup
   autocmd BufReadPost *.nfo call RestoreFileEncodings()
 augroup END
 
+augroup aleCheckers
+  autocmd!
+  autocmd FileType sh let b:ale_sh_shellcheck_exclusions = 'SC1090,SC1091,SC2034,SC2154,SC2164'
+augroup END
+
 augroup filetypeGroup
   autocmd!
-  autocmd BufRead,BufNewFile *.hurl setf hurl
-  autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
+  autocmd BufRead,BufNewFile *.hurl set filetype=hurl
+  autocmd BufRead,BufNewFile Jenkinsfile* set filetype=groovy
   autocmd BufRead,BufNewFile *.templ set filetype=templ
   autocmd BufRead,BufNewFile *conkyrc set filetype=conkyrc
   autocmd BufRead,BufNewFile */vimwiki/* set filetype=vimwiki
 
   " direnv
-  autocmd BufRead,BufNewFile *.envrc setf sh
+  autocmd BufRead,BufNewFile *.envrc set filetype=sh
 
   " dotenv
-  autocmd BufEnter PKGBUILD,.env,.env.*
-    \ let b:ale_sh_shellcheck_exclusions = 'SC2034,SC2154,SC2164'
-  autocmd BufRead,BufNewFile .env.*,.env setf sh
+  autocmd BufRead,BufNewFile .env.*,.env set filetype=sh
 
   " markdown
-  autocmd BufRead,BufNewFile *.mdx setf markdown
+  autocmd BufRead,BufNewFile *.mdx set filetype=markdown
 
   " dokuwiki
-  autocmd BufRead,BufNewFile *.dokuwiki setf dokuwiki
+  autocmd BufRead,BufNewFile *.dokuwiki set filetype=dokuwiki
 
   " NGINX
-  autocmd BufRead,BufNewfile nginx.conf set ft=nginx
-  autocmd BufRead,BufNewFile */nginx/* set ft=nginx
+  autocmd BufRead,BufNewfile nginx.conf set filetype=nginx
+  autocmd BufRead,BufNewFile */nginx/* set filetype=nginx
 
   " toml
-  autocmd BufRead,BufNewFile */ghostty/* set ft=toml
+  autocmd BufRead,BufNewFile */ghostty/* set filetype=toml
 
   " dosini
-  autocmd BufRead,BufNewFile *npmrc* setf dosini
-  autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set ft=dosini
+  autocmd BufRead,BufNewFile *npmrc* set filetype=dosini
+  autocmd BufRead,BufNewFile /etc/supervisor/conf.d/* set filetype=dosini
   autocmd BufRead,BufNewFile supervisord.conf set filetype=dosini
   autocmd BufRead,BufNewFile */.weechat/*.conf set filetype=dosini
   autocmd BufRead,BufNewFile editorconfig set filetype=dosini
@@ -144,7 +147,7 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile *.mojo set filetype=mojo
 
   " graphql
-  autocmd BufNewFile,BufRead *.prisma setfiletype graphql
+  autocmd BufNewFile,BufRead *.prisma set filetype=graphql
 
   " git
   autocmd BufRead,BufNewFile *gitconfig* set filetype=gitconfig
