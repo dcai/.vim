@@ -54,6 +54,16 @@ function! RestoreFileEncodings()
   unlet b:myfileencodingsbak
 endfunction
 
+" Grouped syntax highlighting autocmds
+augroup syntaxHighlighting
+  autocmd!
+  autocmd FileType gitconfig syntax on
+  autocmd FileType gitrebase syntax on
+  autocmd FileType gitcommit syntax on
+  autocmd FileType dockerfile syntax on
+  autocmd FileType conf syntax on
+augroup END
+
 augroup nfoFiletypeGroup
   autocmd!
   autocmd BufReadPre  *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
@@ -141,8 +151,6 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile */git/config set filetype=gitconfig
   autocmd BufRead,BufNewFile */.git/config set filetype=gitconfig
   autocmd BufRead,BufNewFile */gitconfig.d/* set filetype=gitconfig
-  autocmd FileType gitconfig syntax on
-  autocmd FileType gitrebase syntax on
 
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
@@ -152,10 +160,4 @@ augroup filetypeGroup
 
   " ruby
   autocmd BufRead,BufNewFile Podfile set filetype=ruby
-
-  " Docker
-  autocmd FileType dockerfile syntax on
-
-  " conf - enable syntax highlighting
-  autocmd FileType conf syntax on
 augroup END
