@@ -141,9 +141,13 @@ augroup filetypeGroup
   autocmd BufRead,BufNewFile */git/config set filetype=gitconfig
   autocmd BufRead,BufNewFile */.git/config set filetype=gitconfig
   autocmd BufRead,BufNewFile */gitconfig.d/* set filetype=gitconfig
+  autocmd FileType gitconfig syntax on
+  autocmd FileType gitrebase syntax on
 
   " zmk
   autocmd BufRead,BufNewFile *zmk*/**/*.keymap set filetype=dts
+
+  " terraform
   autocmd BufRead,BufNewFile *.tf set filetype=terraform
 
   " ruby
@@ -154,5 +158,4 @@ augroup filetypeGroup
 
   " conf - enable syntax highlighting
   autocmd FileType conf syntax on
-  autocmd FileType gitconfig syntax on
 augroup END
