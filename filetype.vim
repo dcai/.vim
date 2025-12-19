@@ -61,6 +61,7 @@ augroup syntaxHighlighting
   autocmd FileType gitrebase syntax on
   autocmd FileType gitcommit syntax on
   autocmd FileType dockerfile syntax on
+  autocmd FileType jsonc syntax on
   autocmd FileType conf syntax on
 augroup END
 
