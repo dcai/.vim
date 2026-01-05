@@ -51,7 +51,15 @@ vim.lsp.config.ts_ls = {
 vim.lsp.enable('ts_ls', not use_tsgo)
 
 vim.lsp.config.tsgo = {
-  cmd = { 'tsgo', '--lsp', '--stdio' },
+  -- cmd = { 'tsgo', '--lsp', '--stdio' },
+  cmd = {
+    'bunx',
+    '-p',
+    '@typescript/native-preview',
+    'tsgo',
+    '--lsp',
+    '--stdio',
+  },
   filetypes = mylsputils.ts_ls_supported_filetypes,
   on_attach = mylsputils.common_on_attach,
   capabilities = mylsputils.get_capabilities(),
