@@ -3,7 +3,7 @@ if not ok then
   return
 end
 claudecode.setup({
-  command = 'claude --dangerously-skip-permissions',
+  command = 'claude-via-copilot-proxy.bash claude-opus-4.5',
   -- Command variants
   command_variants = {
     -- Conversation management
@@ -27,7 +27,7 @@ claudecode.setup({
       row = 'center', -- Row position: number, "center", or percentage string
       col = 'center', -- Column position: number, "center", or percentage string
       relative = 'editor', -- Relative to: "editor" or "cursor"
-      border = 'shadow', -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+      border = 'single', -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
     },
   },
   -- Keymaps
