@@ -26,17 +26,45 @@ local ensure_installed = {
   'markdown',
   'markdown_inline',
   'python',
+  'sh',
   'sql',
   'terraform',
   'toml',
+  'tsx',
   'typescript',
   'vim',
   'yaml',
   'zsh',
 }
-treesitter.install({ ensure_installed })
+treesitter.install(ensure_installed)
+-- this is not always the same as treesitter parser names
+local vim_filetypes = {
+  'css',
+  'diff',
+  'fish',
+  'go',
+  'graphql',
+  'html',
+  'ini',
+  'javascript',
+  'javascriptreact',
+  'json',
+  'lua',
+  'make',
+  'markdown',
+  'python',
+  'sh', -- treesitter parser 'bash', but filetype is 'sh'
+  'sql',
+  'terraform',
+  'toml',
+  'typescript',
+  'typescriptreact',
+  'vim',
+  'yaml',
+  'zsh',
+}
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = ensure_installed,
+  pattern = vim_filetypes,
   callback = function()
     vim.opt.foldmethod = 'expr'
     vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
