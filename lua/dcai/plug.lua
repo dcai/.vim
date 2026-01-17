@@ -171,6 +171,12 @@ M.setup = function(plug_opts)
     ['setup'] = function()
       local ok, tj = pcall(require, 'treesj')
       if ok then
+        local lang_utils = require('treesj.langs.utils')
+        local js = require('treesj.langs.javascript')
+        local ts = require('treesj.langs.typescript')
+
+        local jslike = lang_utils.merge_preset(js, {})
+        local tslike = lang_utils.merge_preset(ts, {})
         tj.setup({
           use_default_keymaps = false,
           check_syntax_error = true,
@@ -179,6 +185,10 @@ M.setup = function(plug_opts)
           notify = true,
           dot_repeat = true,
           on_error = nil,
+          langs = {
+            javascript = jslike,
+            typescript = tslike,
+          },
         })
       end
     end,
