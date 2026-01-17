@@ -30,8 +30,10 @@ M.lazy_cmd = function(command, args, opts)
       args = args,
       cwd = cwd,
       on_exit = vim.schedule_wrap(function(job, ret)
-        local stderr = normalize_line_endings(table.concat(job:stderr_result(), vim.g.nl))
-        local stdout = normalize_line_endings(table.concat(job:result(), vim.g.nl))
+        local stderr =
+          normalize_line_endings(table.concat(job:stderr_result(), vim.g.nl))
+        local stdout =
+          normalize_line_endings(table.concat(job:result(), vim.g.nl))
 
         if ret == 0 then
           if opts.on_success then
@@ -108,7 +110,8 @@ M.lazy_cmd_with_fidget = function(command, args, opts)
           vim.notify(stdout, vim.log.levels.INFO)
         end
         if stderr ~= '' then
-          vim.notify(stderr, vim.log.levels.ERROR)
+          -- vim.notify(stderr, vim.log.levels.ERROR)
+          vim.notify(stderr, vim.log.levels.INFO)
         end
         handle:finish()
       end,
