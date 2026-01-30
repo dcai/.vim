@@ -36,7 +36,7 @@ local openthings_keymap = {
       utils.lazy_cmd_with_window(
         zed,
         { disable_popup = true, args = { vim.fn.expand('%:p') } },
-        'open file in zed'
+        'open file in external editor'
       )()
     end,
     desc = 'open file in gui editor',
