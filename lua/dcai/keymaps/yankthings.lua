@@ -38,7 +38,7 @@ end
 
 local function format_line_reference()
   local line_number = vim.fn.line('.')
-  local relpath = get_relative_path()
+  local relpath = vim.fn.expand('%:p')
   return '`' .. relpath .. ' LINE ' .. tostring(line_number) .. '`'
 end
 
