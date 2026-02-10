@@ -405,6 +405,7 @@ vim.g.git_root = root({
 })
 
 vim.g.smart_root = root({
+  '.git',
   'package.json',
   'Makefile',
   '.husky',
@@ -429,7 +430,6 @@ vim.g.smart_root = root({
   'appsettings.json',
   'Jenkinsfile_Build',
   '.vscode',
-  '.git',
 })
 
 vim.g.node_project_root = root({
