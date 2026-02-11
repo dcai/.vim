@@ -19,6 +19,7 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
   - `vim8/after/`: Vim8-specific plugin configs
   - `colors/`: Custom colorschemes
   - `queries/`: Treesitter queries
+  - `~/.local/share/nvim/plug/`: Installed plugins (vim-plug directory). Plugin source code can be found here (e.g., `~/.local/share/nvim/plug/fzf-lua/lua/fzf-lua/` for fzf-lua internals)
 
 ## Coding & Contribution Guidelines
 
