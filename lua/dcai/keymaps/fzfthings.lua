@@ -50,7 +50,11 @@ local fzf_keymap = {
   {
     '<leader>fp',
     function()
-      fzf.files({ cwd = vim.g.smart_root() })
+      fzf.files({
+        cwd = vim.g.smart_root(),
+        no_ignore = true,
+        fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules"
+      })
     end,
     desc = 'project files',
   },
