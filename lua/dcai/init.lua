@@ -60,6 +60,23 @@ if statusline then
   statusline.setup()
 end
 
+local is_macos = vim.fn.has('mac') == 1
+local im_select_bin = vim.g.find_executable({
+  'im-select',
+})
+if is_macos and im_select_bin then
+  vim.api.nvim_create_autocmd('InsertLeave', {
+    group = vim.api.nvim_create_augroup('macos_input_method', { clear = true }),
+    callback = function()
+      vim.fn.system({
+        im_select_bin,
+        'com.apple.keylayout.Australian',
+      })
+    end,
+    desc = 'Switch macOS input source to Australian English on InsertLeave',
+  })
+end
+
 -- Copy/Paste when using ssh on a remote server
 -- Only works when neovim >= 0.10.0
 local is_ssh = vim.env.SSH_CONNECTION and vim.env.SSH_TTY
