@@ -31,6 +31,7 @@ local ensure_installed = {
   'toml',
   'tsx',
   'typescript',
+  'swift',
   'vim',
   'yaml',
   'zsh',

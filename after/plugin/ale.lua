@@ -27,6 +27,7 @@ vim.g.ale_fixers = {
   jsonc = jsonfixer,
   less = { 'prettier' },
   lua = { 'stylua' },
+  -- markdown = { 'rumdl' },
   markdown = { 'prettier' },
   php = { 'php_cs_fixer' },
   python = { 'ruff', 'ruff_format' },
