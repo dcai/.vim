@@ -64,6 +64,7 @@ augroup syntaxHighlighting
   autocmd FileType dockerfile syntax on
   autocmd FileType jsonc syntax on
   autocmd FileType conf syntax on
+  autocmd FileType tmux syntax on
 augroup END
 
 augroup nfoFiletypeGroup
