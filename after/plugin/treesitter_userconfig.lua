@@ -9,60 +9,57 @@ treesitter.setup({
   install_dir = vim.fn.stdpath('data') .. '/tree-sitter-parsers',
 })
 
-local ensure_installed = {
-  'bash',
-  'css',
-  'diff',
-  'fish',
-  'go',
-  'graphql',
-  'html',
-  'ini',
-  'javascript',
-  'jsdoc',
-  'json',
-  'lua',
-  'make',
-  'markdown',
-  'markdown_inline',
-  'python',
-  'sql',
-  'terraform',
-  'toml',
-  'tsx',
-  'typescript',
-  'swift',
-  'vim',
-  'yaml',
-  'zsh',
+local parser_filetypes = {
+  { parser = 'bash', filetypes = { 'sh' } },
+  { parser = 'css', filetypes = { 'css' } },
+  { parser = 'diff', filetypes = { 'diff' } },
+  { parser = 'fish', filetypes = { 'fish' } },
+  { parser = 'git_config', filetypes = { 'gitconfig' } },
+  { parser = 'git_rebase', filetypes = { 'gitrebase' } },
+  { parser = 'gitattributes', filetypes = { 'gitattributes' } },
+  { parser = 'gitcommit', filetypes = { 'gitcommit' } },
+  { parser = 'gitignore', filetypes = { 'gitignore' } },
+  { parser = 'go', filetypes = { 'go' } },
+  { parser = 'graphql', filetypes = { 'graphql' } },
+  { parser = 'html', filetypes = { 'html' } },
+  { parser = 'ini', filetypes = { 'ini' } },
+  { parser = 'javascript', filetypes = { 'javascript', 'javascriptreact' } },
+  { parser = 'jsdoc', filetypes = { 'jsdoc' } },
+  { parser = 'json', filetypes = { 'json' } },
+  { parser = 'lua', filetypes = { 'lua' } },
+  { parser = 'make', filetypes = { 'make' } },
+  { parser = 'markdown', filetypes = { 'markdown' } },
+  { parser = 'markdown_inline', filetypes = { 'markdown' } },
+  { parser = 'python', filetypes = { 'python' } },
+  { parser = 'sql', filetypes = { 'sql' } },
+  { parser = 'terraform', filetypes = { 'terraform' } },
+  { parser = 'toml', filetypes = { 'toml' } },
+  { parser = 'tsx', filetypes = { 'typescriptreact' } },
+  { parser = 'typescript', filetypes = { 'typescript', 'typescriptreact' } },
+  { parser = 'swift', filetypes = { 'swift' } },
+  { parser = 'vim', filetypes = { 'vim' } },
+  { parser = 'yaml', filetypes = { 'yaml' } },
+  { parser = 'zsh', filetypes = { 'zsh' } },
 }
+
+local ensure_installed = vim.tbl_map(function(entry)
+  return entry.parser
+end, parser_filetypes)
+
+local vim_filetypes = {}
+local seen_filetypes = {}
+
+for _, entry in ipairs(parser_filetypes) do
+  for _, filetype in ipairs(entry.filetypes) do
+    if not seen_filetypes[filetype] then
+      seen_filetypes[filetype] = true
+      table.insert(vim_filetypes, filetype)
+    end
+  end
+end
+
 treesitter.install(ensure_installed)
--- this is not always the same as treesitter parser names
-local vim_filetypes = {
-  'css',
-  'diff',
-  'fish',
-  'go',
-  'graphql',
-  'html',
-  'ini',
-  'javascript',
-  'javascriptreact',
-  'json',
-  'lua',
-  'make',
-  'markdown',
-  'python',
-  'sh', -- treesitter parser 'bash', but filetype is 'sh'
-  'sql',
-  'terraform',
-  'toml',
-  'typescript',
-  'typescriptreact',
-  'vim',
-  'yaml',
-  'zsh',
-}
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = vim_filetypes,
   callback = function()

@@ -58,9 +58,6 @@ endfunction
 augroup syntaxHighlighting
   autocmd!
   autocmd FileType crontab syntax on
-  autocmd FileType gitconfig syntax on
-  autocmd FileType gitrebase syntax on
-  autocmd FileType gitcommit syntax on
   autocmd FileType dockerfile syntax on
   autocmd FileType jsonc syntax on
   autocmd FileType conf syntax on
