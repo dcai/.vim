@@ -1,8 +1,8 @@
-local jsonfixer = { os.getenv('JSONFIXER') or 'prettier' }
-local jsfixer = { os.getenv('JSFIXER') or 'prettier' }
-local cssfixer = { os.getenv('CSSFIXER') or 'prettier' }
-local yamlfixer = { os.getenv('YAMLFIXER') or 'prettier' }
-local mdfixer = { os.getenv('MDFIXER') or 'prettier' }
+local jsonfixer = os.getenv('JSONFIXER') or 'prettier'
+local jsfixer = os.getenv('JSFIXER') or 'prettier'
+local cssfixer = os.getenv('CSSFIXER') or 'prettier'
+local yamlfixer = os.getenv('YAMLFIXER') or 'prettier'
+local mdfixer = os.getenv('MDFIXER') or 'prettier'
 
 vim.g.ale_fixers = {
   ['*'] = { 'remove_trailing_lines', 'trim_whitespace' },
