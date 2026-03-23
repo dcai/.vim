@@ -1,6 +1,7 @@
 local jsonfixer = { os.getenv('JSONFIXER') or 'prettier' }
 local jsfixer = { os.getenv('JSFIXER') or 'prettier' }
 local cssfixer = { os.getenv('CSSFIXER') or 'prettier' }
+local yamlfixer = { os.getenv('YAMLFIXER') or 'prettier' }
 
 vim.g.ale_fixers = {
   ['*'] = { 'remove_trailing_lines', 'trim_whitespace' },
@@ -42,7 +43,7 @@ vim.g.ale_fixers = {
   typescriptreact = jsfixer,
   vue = { 'prettier' },
   xml = { 'xmllint' },
-  yaml = { 'prettier' },
+  yaml = { yamlfixer },
 }
 
 vim.g.ale_completion_enabled = 0
