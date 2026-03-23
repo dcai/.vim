@@ -49,6 +49,7 @@ require('dcai.ui.input').setup()
 require('dcai.keymaps')
 
 require('dcai.mycmp').setup()
+require('dcai.commands').setup()
 
 local codestats = require('dcai.codestats')
 if codestats then

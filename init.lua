@@ -1,4 +1,4 @@
-vim.env.NODE_TLS_REJECT_UNAUTHORIZED= "0"
+vim.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 -- disable traditional Vim syntax highlighting to avoid conflicts with Tree-sitter’s highlighting.
 vim.cmd('syntax off')
 -- vim.loader.enable()
@@ -24,3 +24,4 @@ require('dcai')
 --   'folke/which-key.nvim',
 --   'folke/neodev.nvim',
 -- })
+
