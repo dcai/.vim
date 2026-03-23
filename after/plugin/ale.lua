@@ -2,6 +2,7 @@ local jsonfixer = { os.getenv('JSONFIXER') or 'prettier' }
 local jsfixer = { os.getenv('JSFIXER') or 'prettier' }
 local cssfixer = { os.getenv('CSSFIXER') or 'prettier' }
 local yamlfixer = { os.getenv('YAMLFIXER') or 'prettier' }
+local mdfixer = { os.getenv('MDFIXER') or 'prettier' }
 
 vim.g.ale_fixers = {
   ['*'] = { 'remove_trailing_lines', 'trim_whitespace' },
@@ -28,8 +29,7 @@ vim.g.ale_fixers = {
   jsonc = jsonfixer,
   less = { 'prettier' },
   lua = { 'stylua' },
-  -- markdown = { 'rumdl' },
-  markdown = { 'prettier' },
+  markdown = { mdfixer },
   php = { 'php_cs_fixer' },
   python = { 'ruff', 'ruff_format' },
   rust = { 'rustfmt' },
