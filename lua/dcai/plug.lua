@@ -89,7 +89,7 @@ M.setup = function(plug_opts)
   Plug('folke/which-key.nvim')
   Plug('j-hui/fidget.nvim')
   Plug('nvim-tree/nvim-web-devicons')
-  Plug('norcalli/nvim-colorizer.lua', {
+  Plug('dcai/nvim-colorizer.lua', {
     setup = function()
       local ok, colorizer = pcall(require, 'colorizer')
       if not ok then
