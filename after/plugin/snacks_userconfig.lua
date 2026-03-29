@@ -7,14 +7,14 @@ end
 snacks.setup({
   bigfile = { enabled = true },
   quickfile = { enabled = true },
-  input = { enabled = true },
 
   -- disabled
   dashboard = { enabled = false },
   explorer = { enabled = false },
   indent = { enabled = false },
-  picker = { enabled = false },
+  input = { enabled = false },
   notifier = { enabled = false },
+  picker = { enabled = false },
   scope = { enabled = false },
   scroll = { enabled = false },
   statuscolumn = { enabled = false },
