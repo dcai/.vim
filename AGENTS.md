@@ -33,6 +33,41 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 - **Git**: Use conventional commit messages (see below). Leverage custom Git aliases and maintain atomic, descriptive commits.
 - **Testing**: Use integrated test runners and ensure config works across supported platforms (macOS, Linux, Windows).
 
+## 🌍 Environment Variables
+
+The configuration respects several environment variables to customize behavior:
+
+### Development Tools
+
+- **`JSONFIXER`**: JSON formatter tool (default: `prettier`) - used in ale.lua:1
+- **`JSFIXER`**: JavaScript formatter tool (default: `prettier`) - used in ale.lua:2
+- **`CSSFIXER`**: CSS formatter tool (default: `prettier`) - used in ale.lua:3
+- **`JSLINTER`**: JavaScript linter tool (default: `biome`) - used in ale.lua:82
+- **`VIM_FZF_ENABLE_FILE_ICONS`**: Enable file icons in FZF (set to `'true'`) - commented out in fzflua_userconfig.lua:17
+
+### System Behavior
+
+- **`NVIM_SHADA`**: Custom path for Neovim's ShaDa file - used in init.lua:39
+- **`VIRTUAL_ENV`**: Python virtual environment path (automatically used by pyright LSP) - used in pyright.lua:7-8
+- **`SSH_CONNECTION`** & **`SSH_TTY`**: Detected automatically to enable OSC52 clipboard for SSH sessions - used in init.lua:65
+- **`MYVIMRC`**: Path to vimrc file for reloading - used in vim.lua keymap
+- **`VIMRUNTIME`**: Vim runtime path (automatically set by Neovim) - used in lua_ls.lua:55
+- **`NODE_TLS_REJECT_UNAUTHORIZED`**: Set to `"0"` to disable TLS verification for development - set in init.lua
+
+### Code Statistics
+
+- **`CODESTATS_API_KEY`**: API key for Code::Stats tracking service - used in codestats.lua:108
+- **`CODESTATS_API_URL`**: Custom Code::Stats API URL (default: `https://codestats.net/api`) - commented in codestats.lua:104-106
+
+### Color Scheme
+
+The pine color scheme supports several environment variables for customization:
+
+- **`VIM_PINE_COLORSCHEME_STL_FG`**: Sets the foreground color for statusline (default: moss color) - used in colors/pine.lua:557
+- **`VIM_PINE_COLORSCHEME_STL_BG`**: Sets the background color for statusline (default: kombu_green) - used in colors/pine.lua:558
+- **`VIM_PINE_COLORSCHEME_STL_BG_NC`**: Sets the background color for inactive window statusline (default: axolotl color) - used in colors/pine.lua:559
+- **`VIM_DISABLE_MODE_CHANGE`**: Set to `'true'` or `'1'` to disable automatic statusline color changes based on Vim mode - used in colors/pine.lua:646
+
 ## For AI Agents
 
 - **Understand the modular structure**: Most config logic is in `lua/dcai/` and subfolders. Plugin management is declarative in `plug.lua`.
