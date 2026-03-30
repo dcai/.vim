@@ -98,7 +98,7 @@ if vim.fn.executable('go') == 1 then
     capabilities = mylsputils.get_capabilities(),
     on_attach = mylsputils.common_on_attach,
     cmd = { 'gopls' },
-    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+    filetypes = { 'go', 'gomod' },
     root_dir = function(bufnr, on_dir)
       local fname = vim.api.nvim_buf_get_name(bufnr)
       get_mod_cache_dir()

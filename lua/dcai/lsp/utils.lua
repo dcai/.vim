@@ -58,10 +58,8 @@ M.organize_imports = {
 M.ts_ls_supported_filetypes = {
   'javascript',
   'javascriptreact',
-  'javascript.jsx',
   'typescript',
   'typescriptreact',
-  'typescript.tsx',
 }
 
 ---location to fzf params

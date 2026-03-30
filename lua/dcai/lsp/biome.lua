@@ -25,7 +25,6 @@ vim.lsp.config('biome', {
     -- 'jsonc',
     'svelte',
     'typescript',
-    'typescript.tsx',
     'typescriptreact',
     'vue',
   },
