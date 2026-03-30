@@ -1,6 +1,5 @@
 local M = {}
 M.setup = function()
-  vim.lsp.set_log_level(vim.log.levels.ERROR)
   local mason = require('mason')
   mason.setup({
     install_root_dir = vim.fs.joinpath(vim.g.data_dir, 'mason'),
