@@ -107,16 +107,6 @@ fidget.setup({
     },
   },
 
-  -- Options related to integrating with other plugins
-  integration = {
-    ['nvim-tree'] = {
-      enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
-    },
-    ['xcodebuild-nvim'] = {
-      enable = true, -- Integrate with wojciech-kulik/xcodebuild.nvim (if installed)
-    },
-  },
-
   -- Options related to logging
   logger = {
     level = vim.log.levels.WARN, -- Minimum logging level
