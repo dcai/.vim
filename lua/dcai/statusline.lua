@@ -11,6 +11,22 @@ local COLOR_STL_HL = '%#StatusLineHighlight#'
 
 local M = {}
 
+local function should_hide_statusline()
+  local filetype = vim.bo.filetype
+  local buftype = vim.bo.buftype
+  local bufname = vim.api.nvim_buf_get_name(0)
+
+  if filetype == 'fzf' or filetype == 'fzf-lua' or filetype == 'fzflua' or filetype == 'fzf_lua' then
+    return true
+  end
+
+  if buftype == 'terminal' and string.find(bufname, 'fzf', 1, true) then
+    return true
+  end
+
+  return false
+end
+
 local function pad(s)
   return s and SPC .. s .. SPC or SPC
 end
@@ -177,6 +193,11 @@ M.setup = function()
     group = statusline_grp,
     pattern = '*',
     callback = function()
+      if should_hide_statusline() then
+        vim.opt_local.statusline = ''
+        return
+      end
+
       vim.opt_local.statusline = StatuslineActive()
     end,
   })
@@ -185,6 +206,11 @@ M.setup = function()
     group = statusline_grp,
     pattern = '*',
     callback = function()
+      if should_hide_statusline() then
+        vim.opt_local.statusline = ''
+        return
+      end
+
       vim.opt_local.statusline = StatuslineInactive()
     end,
   })

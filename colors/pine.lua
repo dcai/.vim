@@ -586,7 +586,7 @@ local statusline_c = { -- Command mode
 }
 local statusline_t = { -- Terminal mode
   fg = colors.white,
-  bg = colors.niceblue, -- Blue for terminal
+  bg = colors.darkblue, -- Blue for terminal
 }
 
 local mode_statusline_map = {
