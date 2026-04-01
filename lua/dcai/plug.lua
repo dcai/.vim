@@ -51,6 +51,8 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- AI
   ----------------------------------------------------------------------------
+  -- Plug('copilotlsp-nvim/copilot-lsp')
+  -- Plug('zbirenbaum/copilot.lua')
   Plug('github/copilot.vim', {
     setup = function()
       vim.g.copilot_no_tab_map = true
@@ -121,7 +123,6 @@ M.setup = function(plug_opts)
     ['branch'] = 'main',
   })
   Plug('nvim-treesitter/nvim-treesitter-textobjects', { ['branch'] = 'main' })
-  Plug('JoosepAlviste/nvim-ts-context-commentstring')
   Plug('windwp/nvim-ts-autotag', {
     setup = function()
       local ok, autotag = pcall(require, 'nvim-ts-autotag')
