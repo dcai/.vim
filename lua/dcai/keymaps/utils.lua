@@ -39,7 +39,7 @@ local function create_progress_reporter(command, args, opts)
         end
       end,
       error = function(stderr)
-        progress.status = 'failure'
+        progress.status = 'failed'
         vim.api.nvim_echo({ { 'Error' } }, true, progress)
 
         if stderr ~= '' then
