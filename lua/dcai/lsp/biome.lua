@@ -10,10 +10,8 @@ vim.lsp.config('biome', {
   end,
   workspace_required = true,
   root_markers = {
-    'package.json',
-    'tsconfig.json',
-    'jsconfig.json',
-    '.git',
+    'biome.json',
+    'biome.jsonc',
   },
   filetypes = {
     'astro',
