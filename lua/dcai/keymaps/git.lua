@@ -40,7 +40,7 @@ local git_keymap = {
   },
   {
     '<leader>gG',
-    utils.lazy_cmd_with_fidget('git', { 'auto-commit-and-push' }),
+    utils.lazy_cmd_with_progress('git', { 'auto-commit-and-push' }),
     desc = 'git ai commit and push',
   },
   { '<leader>gd', '<cmd>Git diff<cr>', desc = 'fugitive diff' },
@@ -131,7 +131,7 @@ local git_keymap = {
   },
   {
     '<leader>gpf',
-    utils.lazy_cmd_with_fidget(
+    utils.lazy_cmd_with_progress(
       'git',
       { 'fetch', '--tags', '--all', '--verbose' }
     ),

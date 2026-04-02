@@ -6,6 +6,81 @@ local function normalize_line_endings(str)
   return (str:gsub('\r\n?', '\n'))
 end
 
+local function supports_native_progress()
+  return vim.fn.has('nvim-0.12') == 1
+end
+
+local function create_progress_reporter(command, args, opts)
+  local title = opts.title or command
+  local command_full = string.format('%s %s', command, table.concat(args, ' '))
+
+  if supports_native_progress() then
+    local progress = {
+      kind = 'progress',
+      status = 'running',
+      percent = 0,
+      title = title,
+      source = opts.source or command,
+    }
+
+    progress.id = vim.api.nvim_echo({ { 'Running...' } }, true, progress)
+
+    return {
+      success = function(stdout, stderr)
+        progress.status = 'success'
+        progress.percent = 100
+        vim.api.nvim_echo({ { 'Completed' } }, true, progress)
+
+        if stdout ~= '' then
+          vim.notify(stdout, vim.log.levels.INFO)
+        end
+        if stderr ~= '' then
+          vim.notify(stderr, vim.log.levels.INFO)
+        end
+      end,
+      error = function(stderr)
+        progress.status = 'failure'
+        vim.api.nvim_echo({ { 'Error' } }, true, progress)
+
+        if stderr ~= '' then
+          vim.notify(stderr, vim.log.levels.ERROR)
+        end
+      end,
+    }
+  end
+
+  local fidget_progress = require('fidget.progress')
+  local handle = fidget_progress.handle.create({
+    title = title,
+    message = 'Running...',
+    lsp_client = { name = command_full },
+  })
+
+  return {
+    success = function(stdout, stderr)
+      handle.message = 'Completed'
+
+      if stdout ~= '' then
+        vim.notify(stdout, vim.log.levels.INFO)
+      end
+      if stderr ~= '' then
+        vim.notify(stderr, vim.log.levels.INFO)
+      end
+
+      handle:finish()
+    end,
+    error = function(stderr)
+      handle.message = 'Error'
+
+      if stderr ~= '' then
+        vim.notify(stderr, vim.log.levels.ERROR)
+      end
+
+      handle:finish()
+    end,
+  }
+end
+
 -- Base function for running async commands with plenary.job
 -- @param command string: The command to run
 -- @param args table: Command arguments
@@ -88,43 +163,24 @@ local function lazy_cmd_with_window(command, opts, desc)
 end
 M.lazy_cmd_with_window = lazy_cmd_with_window
 
-M.lazy_cmd_with_fidget = function(command, args, opts)
+M.lazy_cmd_with_progress = function(command, args, opts)
   return function()
     opts = opts or {}
-    local command_full =
-      string.format('%s %s', command, table.concat(args, ' '))
-
-    -- Create fidget progress handle
-    local fidget_progress = require('fidget.progress')
-    local handle = fidget_progress.handle.create({
-      title = opts.title or command,
-      message = 'Running...',
-      lsp_client = { name = command_full },
-    })
+    args = args or {}
+    local reporter = create_progress_reporter(command, args, opts)
 
     M.lazy_cmd(command, args, {
       cwd = opts.cwd,
       on_success = function(stdout, stderr)
-        handle.message = 'Completed'
-        if stdout ~= '' then
-          vim.notify(stdout, vim.log.levels.INFO)
-        end
-        if stderr ~= '' then
-          -- vim.notify(stderr, vim.log.levels.ERROR)
-          vim.notify(stderr, vim.log.levels.INFO)
-        end
-        handle:finish()
+        reporter.success(stdout, stderr)
       end,
       on_error = function(stdout, stderr, ret)
-        handle.message = 'Error'
-        if stderr ~= '' then
-          vim.notify(stderr, vim.log.levels.ERROR)
-        end
-        handle:finish()
+        reporter.error(stderr)
       end,
     })()
   end
 end
+
 
 M.live_grep = function()
   -- local telescope = require('telescope.builtin')
