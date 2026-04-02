@@ -13,7 +13,9 @@ end
 local function create_progress_reporter(command, args, opts)
   local title = opts.title or command
   local command_full = string.format('%s %s', command, table.concat(args, ' '))
-  local log_in_history = false
+  local function update(msg, progress)
+    return vim.api.nvim_echo({ { msg } }, false, progress)
+  end
 
   if supports_native_progress() then
     local progress = {
@@ -24,14 +26,13 @@ local function create_progress_reporter(command, args, opts)
       source = opts.source or command,
     }
 
-    progress.id =
-      vim.api.nvim_echo({ { 'Running...' } }, log_in_history, progress)
+    progress.id = update('Running...', progress)
 
     return {
       success = function(stdout, stderr)
         progress.status = 'success'
         progress.percent = 100
-        vim.api.nvim_echo({ { 'Completed' } }, log_in_history, progress)
+        update('Completed', progress)
 
         if stdout ~= '' then
           vim.notify(stdout, vim.log.levels.INFO)
@@ -42,7 +43,7 @@ local function create_progress_reporter(command, args, opts)
       end,
       error = function(stderr)
         progress.status = 'failed'
-        vim.api.nvim_echo({ { 'Error' } }, log_in_history, progress)
+        update('Error', progress)
 
         if stderr ~= '' then
           vim.notify(stderr, vim.log.levels.ERROR)
