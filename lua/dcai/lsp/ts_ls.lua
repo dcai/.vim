@@ -53,6 +53,21 @@ vim.lsp.config.ts_ls = {
 vim.lsp.enable('ts_ls', not use_tsgo)
 
 vim.lsp.config.tsgo = {
+  settings = {
+    typescript = {
+      inlayHints = {
+        parameterNames = {
+          enabled = 'literals',
+          suppressWhenArgumentMatchesName = true,
+        },
+        parameterTypes = { enabled = true },
+        variableTypes = { enabled = true },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+      },
+    },
+  },
   cmd = { 'tsgo', '--lsp', '--stdio' },
   -- cmd = {
   --   'bunx',
