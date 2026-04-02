@@ -13,6 +13,7 @@ end
 local function create_progress_reporter(command, args, opts)
   local title = opts.title or command
   local command_full = string.format('%s %s', command, table.concat(args, ' '))
+  local log_in_history = false
 
   if supports_native_progress() then
     local progress = {
@@ -23,13 +24,14 @@ local function create_progress_reporter(command, args, opts)
       source = opts.source or command,
     }
 
-    progress.id = vim.api.nvim_echo({ { 'Running...' } }, true, progress)
+    progress.id =
+      vim.api.nvim_echo({ { 'Running...' } }, log_in_history, progress)
 
     return {
       success = function(stdout, stderr)
         progress.status = 'success'
         progress.percent = 100
-        vim.api.nvim_echo({ { 'Completed' } }, true, progress)
+        vim.api.nvim_echo({ { 'Completed' } }, log_in_history, progress)
 
         if stdout ~= '' then
           vim.notify(stdout, vim.log.levels.INFO)
@@ -40,7 +42,7 @@ local function create_progress_reporter(command, args, opts)
       end,
       error = function(stderr)
         progress.status = 'failed'
-        vim.api.nvim_echo({ { 'Error' } }, true, progress)
+        vim.api.nvim_echo({ { 'Error' } }, log_in_history, progress)
 
         if stderr ~= '' then
           vim.notify(stderr, vim.log.levels.ERROR)
@@ -180,7 +182,6 @@ M.lazy_cmd_with_progress = function(command, args, opts)
     })()
   end
 end
-
 
 M.live_grep = function()
   -- local telescope = require('telescope.builtin')

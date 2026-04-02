@@ -3,6 +3,7 @@ if vim.fn.has('nvim-0.12') ~= 1 then
 end
 
 local original_lsp_progress_handler = vim.lsp.handlers['$/progress']
+local log_in_history = false
 
 ---@type table<string, table>
 local progress_messages = {}
@@ -40,7 +41,11 @@ local function finish_progress(key, value)
   progress.status = 'success'
   progress.percent = 100
   progress.title = progress.source
-  vim.api.nvim_echo({ { get_progress_done_text(value) } }, true, progress)
+  vim.api.nvim_echo(
+    { { get_progress_done_text(value) } },
+    log_in_history,
+    progress
+  )
   progress_messages[key] = nil
 end
 
@@ -108,8 +113,11 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   if value.kind == 'begin' then
     progress.status = 'running'
     progress.percent = value.percentage or 0
-    progress.id =
-      vim.api.nvim_echo({ { get_progress_text(value) } }, true, progress)
+    progress.id = vim.api.nvim_echo(
+      { { get_progress_text(value) } },
+      log_in_history,
+      progress
+    )
     return
   end
 
@@ -129,7 +137,11 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
     if value.percentage ~= nil then
       progress.percent = value.percentage
     end
-    vim.api.nvim_echo({ { get_progress_text(value) } }, true, progress)
+    vim.api.nvim_echo(
+      { { get_progress_text(value) } },
+      log_in_history,
+      progress
+    )
     return
   end
 
