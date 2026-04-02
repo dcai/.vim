@@ -25,10 +25,10 @@ end
 
 local function get_progress_done_text(value)
   if value.message and value.message ~= '' then
-    return value.message
+    return 'Done: ' .. value.message
   end
 
-  return 'Done'
+  return 'Done!'
 end
 
 local function finish_progress(key, value)
@@ -64,6 +64,7 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   if not result or not result.value then
     return
   end
+  vim.g.logger.debug('Received LSP progress:', vim.inspect(result))
 
   local value = result.value
   local key = get_progress_key(ctx, result.token)
@@ -103,3 +104,24 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
     finish_progress(key, value)
   end
 end
+
+-- vim.api.nvim_create_autocmd('LspProgress', {
+--   callback = function(ev)
+--     local value = ev.data.params.value or {}
+--     if not value.kind then
+--       return
+--     end
+--
+--     local status = value.kind == 'end' and 0 or 1
+--     local percent = value.percentage or 0
+--
+--     local osc_seq = string.format('\27]9;4;%d;%d\a', status, percent)
+--
+--     if os.getenv('TMUX') then
+--       osc_seq = string.format('\27Ptmux;\27%s\27\\', osc_seq)
+--     end
+--
+--     io.stdout:write(osc_seq)
+--     io.stdout:flush()
+--   end,
+-- })
