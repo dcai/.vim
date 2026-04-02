@@ -25,7 +25,7 @@ end
 
 local function get_progress_done_text(value)
   if value.message and value.message ~= '' then
-    return 'Done: ' .. value.message
+    return value.message
   end
 
   return 'Done!'
@@ -39,6 +39,7 @@ local function finish_progress(key, value)
 
   progress.status = 'success'
   progress.percent = 100
+  progress.title = progress.source
   vim.api.nvim_echo({ { get_progress_done_text(value) } }, true, progress)
   progress_messages[key] = nil
 end
@@ -50,6 +51,18 @@ local function get_client_name(ctx)
   end
 
   return 'lsp'
+end
+
+local function get_title(value, client_name)
+  -- vim.g.logger.debug(
+  --   'get_title',
+  --   vim.inspect({ value = value, client_name = client_name })
+  -- )
+  if value.title and value.title ~= '' then
+    return client_name .. ' - ' .. value.title
+  end
+
+  return client_name
 end
 
 vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
@@ -64,7 +77,6 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   if not result or not result.value then
     return
   end
-  vim.g.logger.debug('Received LSP progress:', vim.inspect(result))
 
   local value = result.value
   local key = get_progress_key(ctx, result.token)
@@ -76,20 +88,41 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
       kind = 'progress',
       status = 'running',
       percent = 0,
-      title = client_name,
+      title = get_title(value, client_name),
       source = client_name,
     }
     progress_messages[key] = progress
   end
 
+  -- data payload example:
+  -- result = {
+  --   token = 2,
+  --   value = {
+  --     cancellable = false,
+  --     kind = "begin",
+  --     message = "58/183",
+  --     percentage = 31,
+  --     title = "Loading workspace"
+  --   }
+  -- }
   if value.kind == 'begin' then
     progress.status = 'running'
     progress.percent = value.percentage or 0
-    progress.title = value.title or client_name
     progress.id =
       vim.api.nvim_echo({ { get_progress_text(value) } }, true, progress)
     return
   end
+
+  -- data payload example:
+  -- result = {
+  --   token = 2,
+  --   value = {
+  --     kind = 'report',
+  --     message = '183/183',
+  --     percentage = 100,
+  --     title = 'Loading workspace',
+  --   },
+  -- }
 
   if value.kind == 'report' then
     progress.status = 'running'
