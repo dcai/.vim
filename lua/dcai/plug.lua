@@ -53,24 +53,24 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   -- Plug('copilotlsp-nvim/copilot-lsp')
   -- Plug('zbirenbaum/copilot.lua')
-  Plug('github/copilot.vim', {
-    setup = function()
-      vim.g.copilot_no_tab_map = true
-      vim.g.copilot_proxy_strict_ssl = false
-      -- vim.g.copilot_npx = true
-      -- vim.gcopilot_node_command = '~/.nodenv/versions/24.00.0/bin/node'
-      vim.keymap.set('i', '<C-F>', 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false,
-      })
-      vim.g.copilot_filetypes = {
-        -- ['markdown'] = false,
-        -- ['text'] = false,
-        ['help'] = false,
-        ['codecompanion'] = false,
-      }
-    end,
-  })
+  -- Plug('github/copilot.vim', {
+  --   setup = function()
+  --     vim.g.copilot_no_tab_map = true
+  --     vim.g.copilot_proxy_strict_ssl = false
+  --     -- vim.g.copilot_npx = true
+  --     -- vim.gcopilot_node_command = '~/.nodenv/versions/24.00.0/bin/node'
+  --     vim.keymap.set('i', '<C-F>', 'copilot#Accept("\\<CR>")', {
+  --       expr = true,
+  --       replace_keycodes = false,
+  --     })
+  --     vim.g.copilot_filetypes = {
+  --       -- ['markdown'] = false,
+  --       -- ['text'] = false,
+  --       ['help'] = false,
+  --       ['codecompanion'] = false,
+  --     }
+  --   end,
+  -- })
   Plug('olimorris/codecompanion.nvim', { ['branch'] = 'main' })
   -- Plug('dcai/gp.nvim', { frozen = 1 })
   ----------------------------------------------------------------------------
