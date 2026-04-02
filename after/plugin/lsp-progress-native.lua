@@ -23,19 +23,11 @@ local function get_progress_text(value)
   return 'Working...'
 end
 
-local function get_progress_done_text(value)
-  if value.message and value.message ~= '' then
-    return value.message
-  end
-
-  return 'Done!'
-end
-
 local function update(msg, progress)
   return vim.api.nvim_echo({ { msg } }, false, progress)
 end
 
-local function finish_progress(key, value)
+local function finish_progress(key)
   local progress = progress_messages[key]
   if not progress then
     return
@@ -44,7 +36,7 @@ local function finish_progress(key, value)
   progress.status = 'success'
   progress.percent = 100
   progress.title = progress.source
-  update(get_progress_done_text(value), progress)
+  update('Done', progress)
   progress_messages[key] = nil
 end
 
@@ -137,7 +129,7 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   end
 
   if value.kind == 'end' then
-    finish_progress(key, value)
+    finish_progress(key)
   end
 end
 
