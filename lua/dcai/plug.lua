@@ -89,7 +89,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   Plug('ibhagwan/fzf-lua')
   Plug('folke/which-key.nvim')
-  Plug('j-hui/fidget.nvim')
+  -- Plug('j-hui/fidget.nvim')
   Plug('nvim-tree/nvim-web-devicons')
   Plug('dcai/nvim-colorizer.lua', {
     setup = function()

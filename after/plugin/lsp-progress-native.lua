@@ -1,0 +1,105 @@
+if vim.fn.has('nvim-0.12') ~= 1 then
+  return
+end
+
+local original_lsp_progress_handler = vim.lsp.handlers['$/progress']
+
+---@type table<string, table>
+local progress_messages = {}
+
+local function get_progress_key(ctx, token)
+  return string.format('%s:%s', ctx.client_id, tostring(token))
+end
+
+local function get_progress_text(value)
+  if value.message and value.message ~= '' then
+    return value.message
+  end
+
+  if value.title and value.title ~= '' then
+    return value.title
+  end
+
+  return 'Working...'
+end
+
+local function get_progress_done_text(value)
+  if value.message and value.message ~= '' then
+    return value.message
+  end
+
+  return 'Done'
+end
+
+local function finish_progress(key, value)
+  local progress = progress_messages[key]
+  if not progress then
+    return
+  end
+
+  progress.status = 'success'
+  progress.percent = 100
+  vim.api.nvim_echo({ { get_progress_done_text(value) } }, true, progress)
+  progress_messages[key] = nil
+end
+
+local function get_client_name(ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  if client and client.name then
+    return client.name
+  end
+
+  return 'lsp'
+end
+
+vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
+  if original_lsp_progress_handler then
+    original_lsp_progress_handler(err, result, ctx, config)
+  end
+
+  if err then
+    return
+  end
+
+  if not result or not result.value then
+    return
+  end
+
+  local value = result.value
+  local key = get_progress_key(ctx, result.token)
+  local client_name = get_client_name(ctx)
+  local progress = progress_messages[key]
+
+  if not progress then
+    progress = {
+      kind = 'progress',
+      status = 'running',
+      percent = 0,
+      title = client_name,
+      source = client_name,
+    }
+    progress_messages[key] = progress
+  end
+
+  if value.kind == 'begin' then
+    progress.status = 'running'
+    progress.percent = value.percentage or 0
+    progress.title = value.title or client_name
+    progress.id =
+      vim.api.nvim_echo({ { get_progress_text(value) } }, true, progress)
+    return
+  end
+
+  if value.kind == 'report' then
+    progress.status = 'running'
+    if value.percentage ~= nil then
+      progress.percent = value.percentage
+    end
+    vim.api.nvim_echo({ { get_progress_text(value) } }, true, progress)
+    return
+  end
+
+  if value.kind == 'end' then
+    finish_progress(key, value)
+  end
+end
