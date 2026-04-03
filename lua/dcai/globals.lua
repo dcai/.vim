@@ -200,7 +200,7 @@ end
 
 vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
 
----Set native terminal progress using OSC 9;4.
+---Send native terminal progress using OSC 9;4.
 ---
 ---Sequence format: ESC ] 9 ; 4 ; <state> ; <progress> BEL
 ---ESC is the escape character (ASCII 27).
@@ -212,27 +212,68 @@ vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
 ---2: set progress value in the error state
 ---3: show indeterminate progress; ignores the progress value
 ---4: set progress value in the warning state
----@param percent integer Progress percentage in the range 0-100, inclusive.
----@param status? integer Optional progress state override. Uses 1 when percent < 100, otherwise 0.
+---@param state integer Progress state value in the range 0-4.
+---@param percent? integer Progress percentage in the range 0-100, inclusive. Ignored for state 3. Optional for state 0.
 ---@return nil
-local function set_terminal_progress(percent, status)
-  local resolved_status = status
+local function send_terminal_progress(state, percent)
+  local osc_seq
 
-  if resolved_status == nil then
-    if percent >= 100 then
-      resolved_status = 0
-    else
-      resolved_status = 1
-    end
+  if state == 0 or state == 3 then
+    osc_seq = string.format('\27]9;4;%d\a', state)
+  else
+    local resolved_percent = percent or 0
+    osc_seq = string.format('\27]9;4;%d;%d\a', state, resolved_percent)
   end
 
-  local osc_seq = string.format('\27]9;4;%d;%d\a', resolved_status, percent)
   io.stdout:write(wrap_tmux_passthrough(osc_seq))
   io.stdout:flush()
   return nil
 end
 
+vim.g.send_terminal_progress = send_terminal_progress
+
+---Set native terminal progress in the default state.
+---@param percent integer Progress percentage in the range 0-100, inclusive.
+---@return nil
+local function set_terminal_progress(percent)
+  if percent >= 100 then
+    return send_terminal_progress(0)
+  end
+
+  return send_terminal_progress(1, percent)
+end
+
 vim.g.set_terminal_progress = set_terminal_progress
+
+---@return nil
+local function set_terminal_progress_loading()
+  return send_terminal_progress(3)
+end
+
+vim.g.set_terminal_progress_loading = set_terminal_progress_loading
+
+---@return nil
+local function clear_terminal_progress()
+  return send_terminal_progress(0)
+end
+
+vim.g.clear_terminal_progress = clear_terminal_progress
+
+---@param percent integer Progress percentage in the range 0-100, inclusive.
+---@return nil
+local function set_terminal_progress_error(percent)
+  return send_terminal_progress(2, percent)
+end
+
+vim.g.set_terminal_progress_error = set_terminal_progress_error
+
+---@param percent integer Progress percentage in the range 0-100, inclusive.
+---@return nil
+local function set_terminal_progress_warning(percent)
+  return send_terminal_progress(4, percent)
+end
+
+vim.g.set_terminal_progress_warning = set_terminal_progress_warning
 
 ---return the first executable from given list
 ---@param files string[]
