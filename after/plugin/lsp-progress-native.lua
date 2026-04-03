@@ -24,6 +24,11 @@ local function get_progress_text(value)
 end
 
 local function update(msg, progress)
+  local status = progress.status == 'success' and 0 or 1
+  local percent = progress.percent or 0
+
+  vim.g.set_terminal_progress(status, percent)
+
   return vim.api.nvim_echo({ { msg } }, false, progress)
 end
 
@@ -102,7 +107,6 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   --   }
   -- }
   if value.kind == 'begin' then
-    progress.status = 'running'
     progress.percent = value.percentage or 0
     progress.id = update(get_progress_text(value), progress)
     return
@@ -118,9 +122,7 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   --     title = 'Loading workspace',
   --   },
   -- }
-
   if value.kind == 'report' then
-    progress.status = 'running'
     if value.percentage ~= nil then
       progress.percent = value.percentage
     end

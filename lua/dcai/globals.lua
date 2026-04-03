@@ -179,6 +179,40 @@ vim.g.is_env_var_set = function(name)
   return os.getenv(name) ~= nil and os.getenv(name) ~= ''
 end
 
+---@param sequence string
+---@return string
+local function wrap_tmux_passthrough(sequence)
+  if vim.g.isempty(sequence) then
+    return ''
+  end
+
+  if not vim.env.TMUX or vim.env.TMUX == '' then
+    return sequence
+  end
+
+  local esc = '\27'
+  local tmux_start = esc .. 'Ptmux;' .. esc
+  local tmux_end = esc .. '\\'
+  local escaped_sequence = gsub(sequence, esc, esc .. esc)
+
+  return tmux_start .. escaped_sequence .. tmux_end
+end
+
+vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
+
+---Set native terminal progress using OSC 9;4.
+---@param status integer Progress state. Use 1 for active/in-progress, 0 for complete/clear.
+---@param percent integer Progress percentage in the range 0-100.
+---@return nil
+local function set_terminal_progress(status, percent)
+  local osc_seq = string.format('\27]9;4;%d;%d\a', status, percent)
+  io.stdout:write(wrap_tmux_passthrough(osc_seq))
+  io.stdout:flush()
+  return nil
+end
+
+vim.g.set_terminal_progress = set_terminal_progress
+
 ---return the first executable from given list
 ---@param files string[]
 ---@return string|nil
