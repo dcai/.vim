@@ -201,7 +201,18 @@ end
 vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
 
 ---Set native terminal progress using OSC 9;4.
----@param percent integer Progress percentage in the range 0-100.
+---
+---Sequence format: ESC ] 9 ; 4 ; <state> ; <progress> BEL
+---ESC is the escape character (ASCII 27).
+---BEL is the bell character (ASCII 7).
+---
+---State values:
+---0: hide the progress bar and clear progress state
+---1: set progress value in the default state
+---2: set progress value in the error state
+---3: show indeterminate progress; ignores the progress value
+---4: set progress value in the warning state
+---@param percent integer Progress percentage in the range 0-100, inclusive.
 ---@param status? integer Optional progress state override. Uses 1 when percent < 100, otherwise 0.
 ---@return nil
 local function set_terminal_progress(percent, status)
