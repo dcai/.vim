@@ -45,30 +45,31 @@ function M:report_exit_status(handle, request)
 end
 
 function M:init_fidget()
-  local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
-  if not fidget_loaded then
-    return
-  end
+  -- local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
+  -- if not fidget_loaded then
+  --   return
+  -- end
   local group = vim.api.nvim_create_augroup('CodeCompanionFidgetHooks', {})
 
-  local function create_progress_handle(request)
-    local strategy = request.data.strategy or ''
-    return fidget_progress.handle.create({
-      title = ' Requesting assistance (' .. strategy .. ')',
-      message = 'In progress...',
-      lsp_client = {
-        name = M:llm_role_title(request.data.adapter),
-      },
-    })
-  end
+  -- local function create_progress_handle(request)
+  --   local strategy = request.data.strategy or ''
+  --   return fidget_progress.handle.create({
+  --     title = ' Requesting assistance (' .. strategy .. ')',
+  --     message = 'In progress...',
+  --     lsp_client = {
+  --       name = M:llm_role_title(request.data.adapter),
+  --     },
+  --   })
+  -- end
 
   vim.api.nvim_create_autocmd({ 'User' }, {
     pattern = 'CodeCompanionRequestStarted',
     group = group,
     callback = function(request)
+      vim.g.set_terminal_progress_loading()
       -- vim.g.logger.info(vim.inspect(request))
-      local handle = create_progress_handle(request)
-      M:store_progress_handle(request.data.id, handle)
+      -- local handle = create_progress_handle(request)
+      -- M:store_progress_handle(request.data.id, handle)
     end,
   })
 
@@ -76,11 +77,12 @@ function M:init_fidget()
     pattern = 'CodeCompanionRequestFinished',
     group = group,
     callback = function(request)
-      local handle = M:pop_progress_handle(request.data.id)
-      if handle then
-        M:report_exit_status(handle, request)
-        handle:finish()
-      end
+      vim.g.clear_terminal_progress()
+      -- local handle = M:pop_progress_handle(request.data.id)
+      -- if handle then
+      --   M:report_exit_status(handle, request)
+      --   handle:finish()
+      -- end
     end,
   })
 end
