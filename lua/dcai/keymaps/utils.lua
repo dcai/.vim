@@ -26,7 +26,7 @@ local function create_progress_reporter(command, args, opts)
       source = opts.source or command,
     }
 
-    vim.g.set_terminal_progress(1, progress.percent)
+    vim.g.set_terminal_progress(progress.percent)
     progress.id = update('Running...', progress)
 
     return {
@@ -34,7 +34,7 @@ local function create_progress_reporter(command, args, opts)
         progress.status = 'success'
         progress.percent = 100
         update('Completed', progress)
-        vim.g.set_terminal_progress(0, 100)
+        vim.g.set_terminal_progress(100)
 
         if stdout ~= '' then
           vim.notify(stdout, vim.log.levels.INFO)
@@ -46,7 +46,7 @@ local function create_progress_reporter(command, args, opts)
       error = function(stderr)
         progress.status = 'failed'
         update('Error', progress)
-        vim.g.set_terminal_progress(0, 100)
+        vim.g.set_terminal_progress(100)
 
         if stderr ~= '' then
           vim.notify(stderr, vim.log.levels.ERROR)

@@ -24,10 +24,9 @@ local function get_progress_text(value)
 end
 
 local function update(msg, progress)
-  local status = progress.status == 'success' and 0 or 1
   local percent = progress.percent or 0
 
-  vim.g.set_terminal_progress(status, percent)
+  vim.g.set_terminal_progress(percent)
 
   return vim.api.nvim_echo({ { msg } }, false, progress)
 end

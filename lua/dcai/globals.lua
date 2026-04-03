@@ -201,11 +201,21 @@ end
 vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
 
 ---Set native terminal progress using OSC 9;4.
----@param status integer Progress state. Use 1 for active/in-progress, 0 for complete/clear.
 ---@param percent integer Progress percentage in the range 0-100.
+---@param status? integer Optional progress state override. Uses 1 when percent < 100, otherwise 0.
 ---@return nil
-local function set_terminal_progress(status, percent)
-  local osc_seq = string.format('\27]9;4;%d;%d\a', status, percent)
+local function set_terminal_progress(percent, status)
+  local resolved_status = status
+
+  if resolved_status == nil then
+    if percent >= 100 then
+      resolved_status = 0
+    else
+      resolved_status = 1
+    end
+  end
+
+  local osc_seq = string.format('\27]9;4;%d;%d\a', resolved_status, percent)
   io.stdout:write(wrap_tmux_passthrough(osc_seq))
   io.stdout:flush()
   return nil
