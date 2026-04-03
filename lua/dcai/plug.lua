@@ -201,10 +201,11 @@ M.setup = function(plug_opts)
   Plug('dcai/marlin.nvim', { frozen = 1 }) -- forked 'desdic/marlin.nvim'
   Plug('djoshea/vim-autoread')
   Plug('pocco81/auto-save.nvim')
+  Plug('mbbill/undotree')
   -- built-in :Undotree was added in Neovim 0.12
-  if vim.fn.has('nvim-0.12') == 0 then
-    Plug('mbbill/undotree')
-  end
+  -- if vim.fn.has('nvim-0.12') == 0 then
+  --   Plug('mbbill/undotree')
+  -- end
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('isobit/vim-caddyfile')
   -- Plug('greggh/claude-code.nvim')
