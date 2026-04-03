@@ -5,6 +5,7 @@ if not vim.g.file_exists(vim.g.run_dir) then
 end
 
 vim.g.logger = require('dcai.log').setup()
+_G.logger = vim.g.logger
 
 local original_notify = vim.notify
 
