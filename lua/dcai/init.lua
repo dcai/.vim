@@ -59,6 +59,10 @@ vim.g.node_host_prog = vim.g.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
+-- Neovim doesn't support legacy terminal options like t_SI/t_EI.
+-- Use guicursor instead so cursor shape changes work in terminals and tmux.
+vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50'
+
 -- vim.opt.cmdheight = 0
 local shadafile = os.getenv('NVIM_SHADA')
 if shadafile then
