@@ -101,7 +101,12 @@ M.setup = function(plug_opts)
     end,
   })
   Plug('rafi/awesome-vim-colorschemes')
-  Plug('dstein64/vim-startuptime')
+  Plug('dstein64/vim-startuptime', {
+    setup = function()
+      vim.g.startuptime_exe_args = { '--headless' }
+      -- vim.g.startuptime_zero_progress_msg = false
+    end,
+  })
   Plug('tyru/open-browser.vim')
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()

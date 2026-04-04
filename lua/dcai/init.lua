@@ -7,8 +7,6 @@ end
 vim.g.logger = require('dcai.log').setup()
 _G.logger = vim.g.logger
 
-local original_notify = vim.notify
-
 -- require('vim._core.ui2').enable({
 --   enable = true, -- Whether to enable or disable the UI.
 --   msg = { -- Options related to the message module.
@@ -33,6 +31,7 @@ local original_notify = vim.notify
 --   },
 -- })
 
+local original_notify = vim.notify
 ---@diagnostic disable-next-line
 vim.notify = function(msg, level, opts)
   local log = vim.g.logger[level]
@@ -43,8 +42,6 @@ vim.notify = function(msg, level, opts)
   end
   original_notify(msg, level, opts)
 end
-
--- vim.g.logger.trace('Starting nvim')
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
