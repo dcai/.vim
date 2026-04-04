@@ -17,6 +17,7 @@ vim.g.print = function(val)
   print(vim.inspect(val))
   return val
 end
+_G.print = vim.g.print
 
 vim.g.reload = function(module)
   require('plenary.reload').reload_module(module)
