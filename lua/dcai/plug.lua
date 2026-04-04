@@ -107,7 +107,18 @@ M.setup = function(plug_opts)
       -- vim.g.startuptime_zero_progress_msg = false
     end,
   })
-  Plug('tyru/open-browser.vim')
+  Plug('tyru/open-browser.vim', {
+    setup = function()
+      vim.g.openbrowser_browser_commands = {
+        {
+          name = 'open',
+          cmd = 'open',
+          args = { 'open', '-a', 'Brave Browser', '{uri}' },
+          background = 0,
+        },
+      }
+    end,
+  })
   Plug('AndrewRadev/bufferize.vim', {
     setup = function()
       vim.g.bufferize_command = 'new'
