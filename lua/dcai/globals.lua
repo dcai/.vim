@@ -200,6 +200,23 @@ end
 
 vim.g.wrap_tmux_passthrough = wrap_tmux_passthrough
 
+---@param sequence string
+---@return nil
+local function send_terminal_sequence(sequence)
+  local wrapped_sequence = wrap_tmux_passthrough(sequence)
+
+  if vim.api.nvim_ui_send then
+    vim.api.nvim_ui_send(wrapped_sequence)
+    return nil
+  end
+
+  io.stdout:write(wrapped_sequence)
+  io.stdout:flush()
+  return nil
+end
+
+vim.g.send_terminal_sequence = send_terminal_sequence
+
 ---Send native terminal progress using OSC 9;4.
 ---
 ---Sequence format: ESC ] 9 ; 4 ; <state> ; <progress> BEL
@@ -225,9 +242,7 @@ local function send_terminal_progress(state, percent)
     osc_seq = string.format('\27]9;4;%d;%d\a', state, resolved_percent)
   end
 
-  io.stdout:write(wrap_tmux_passthrough(osc_seq))
-  io.stdout:flush()
-  return nil
+  return send_terminal_sequence(osc_seq)
 end
 
 vim.g.send_terminal_progress = send_terminal_progress
