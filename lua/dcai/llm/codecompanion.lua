@@ -44,12 +44,12 @@ function M:report_exit_status(handle, request)
   end
 end
 
-function M:init_fidget()
+function M:init_progress_hooks()
   -- local fidget_loaded, fidget_progress = pcall(require, 'fidget.progress')
   -- if not fidget_loaded then
   --   return
   -- end
-  local group = vim.api.nvim_create_augroup('CodeCompanionFidgetHooks', {})
+  local group = vim.api.nvim_create_augroup('CodeCompanionProgressHooks', {})
 
   -- local function create_progress_handle(request)
   --   local strategy = request.data.strategy or ''
@@ -504,7 +504,7 @@ Please generate unit tests for this code from buffer %d:
       },
     },
   })
-  M:init_fidget()
+  M:init_progress_hooks()
   return instance
 end
 
