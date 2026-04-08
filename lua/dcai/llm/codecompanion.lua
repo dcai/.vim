@@ -1,9 +1,9 @@
 local ok = pcall(require, 'codecompanion')
 local prompt_library = require('dcai.llm.prompt_library')
-local llm_provider = 'local_copilot'
+-- local llm_provider = 'local_copilot'
 -- local llm_provider = 'claude_code'
 -- local llm_provider = 'grok'
--- local llm_provider = 'opencode'
+local llm_provider = 'opencode'
 
 local M = {
   setup = function() end,
@@ -225,7 +225,7 @@ You can use @{cmd_runner} tool.
             env = {
               ANTHROPIC_API_KEY = 'neovim-codecompanion-acp-fake-token',
               ANTHROPIC_BASE_URL = 'http://localhost:4141',
-              ANTHROPIC_MODEL = 'claude-sonnet-4.5',
+              ANTHROPIC_MODEL = 'gpt-5.4',
               ANTHROPIC_SMALL_FAST_MODEL = 'gpt-4.1',
             },
           })
