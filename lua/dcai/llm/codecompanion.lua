@@ -1,9 +1,9 @@
 local ok = pcall(require, 'codecompanion')
 local prompt_library = require('dcai.llm.prompt_library')
--- local llm_provider = 'local_copilot'
+local llm_provider = 'local_copilot'
 -- local llm_provider = 'claude_code'
 -- local llm_provider = 'grok'
-local llm_provider = 'opencode'
+-- local llm_provider = 'opencode'
 
 local M = {
   setup = function() end,
