@@ -6,7 +6,8 @@ local servers = {
   { name = 'copilot_language_server', mason = 'copilot-language-server' },
   { name = 'lua_ls', mason = 'lua-language-server' },
   { name = 'phpactor', mason = 'phpactor' },
-  { name = 'pyright', mason = 'pyright' },
+  -- { name = 'pyright', mason = 'pyright' },
+  { name = 'ty', mason = 'ty' },
   { name = 'tailwindcss', mason = 'tailwindcss-language-server' },
   { name = 'tsgo', mason = 'tsgo' },
   { name = 'ts_ls', mason = 'typescript-language-server' },
@@ -38,7 +39,7 @@ M.setup = function()
   require('dcai.lsp.gopls')
   require('dcai.lsp.lua_ls')
   require('dcai.lsp.phpactor')
-  require('dcai.lsp.pyright')
+  require('dcai.lsp.python')
   require('dcai.lsp.sourcekit')
   require('dcai.lsp.tailwindcss')
   require('dcai.lsp.ts_ls')
