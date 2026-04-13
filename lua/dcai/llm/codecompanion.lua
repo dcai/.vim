@@ -1,7 +1,10 @@
 local ok = pcall(require, 'codecompanion')
 local prompt_library = require('dcai.llm.prompt_library')
--- local llm_provider = 'local_copilot'
-local llm_provider = 'copilot' -- this copilot cli
+local llm_provider = 'local_copilot'
+-- local llm_provider = {
+--   name = 'copilot_cli',
+--   model = 'gpt-5.4',
+-- }
 -- local llm_provider = 'claude_code'
 -- local llm_provider = 'grok'
 -- local llm_provider = 'opencode'
@@ -218,6 +221,17 @@ You can use @{cmd_runner} tool.
     },
     adapters = {
       acp = {
+        copilot_cli = function()
+          return require('codecompanion.adapters').extend('copilot_acp', {
+            defaults = {
+              mcpServers = {},
+              timeout = 20000,
+              session_config_options = {
+                thought_level = 'Xhigh',
+              },
+            },
+          })
+        end,
         opencode = function()
           return require('codecompanion.adapters').extend('opencode', {})
         end,
