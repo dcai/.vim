@@ -35,8 +35,8 @@ function M.setup()
       table.insert(lines, item.ft .. ': ' .. item.count)
     end
 
-    vim.notify(table.concat(lines, '\n'))
-  end, { nargs = '?' , desc = 'Show most used filetypes from oldfiles' })
+    vim.print(lines)
+  end, { nargs = '?', desc = 'Show most used filetypes from oldfiles' })
 end
 
 return M
