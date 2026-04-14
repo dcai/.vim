@@ -83,7 +83,10 @@ local function sign_out(_, client)
 end
 
 vim.lsp.enable('copilot')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.general.positionEncodings = { 'utf-16' }
 vim.lsp.config.copilot = {
+  capabilities = capabilities,
   cmd = {
     'copilot-language-server',
     '--stdio',
