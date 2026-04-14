@@ -94,11 +94,14 @@ vim.lsp.config.copilot = {
       version = tostring(vim.version()),
     },
     editorPluginInfo = {
-      name = 'Neovim',
+      name = 'neovim-copilot-lsp',
       version = tostring(vim.version()),
     },
   },
   settings = {
+    -- nextEditSuggestions = {
+    --   enabled = true,
+    -- },
     telemetry = {
       telemetryLevel = 'all',
     },
@@ -117,7 +120,7 @@ vim.lsp.config.copilot = {
 }
 
 ---
---- You need to enable `:help lsp-inline-completion` to receive suggestions. For example, you can enable it in the LspAttach event:
+--- You need to enable `:help lsp-inline_completion` to receive suggestions. For example, you can enable it in the LspAttach event:
 ---
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
@@ -134,13 +137,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       vim.keymap.set(
         'i',
-        '<C-F>',
-        vim.lsp.inline_completion.get,
-        { desc = 'LSP: accept inline completion', buffer = bufnr }
+        '<c-f>',
+        function()
+          if not vim.lsp.inline_completion.get() then
+            return '<c-f>'
+          end
+        end,
+        { desc = 'LSP: accept inline completion', buffer = bufnr, expr = true }
       )
       -- vim.keymap.set(
       --   'i',
-      --   '<C-P>',
+      --   '<C-G>',
       --   vim.lsp.inline_completion.select,
       --   { desc = 'LSP: switch inline completion', buffer = bufnr }
       -- )
