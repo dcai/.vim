@@ -10,22 +10,28 @@ local function supports_native_progress()
   return vim.fn.has('nvim-0.12') == 1
 end
 
-local function show_command_output_popup(title, stdout, stderr, level)
-  if stdout == '' and stderr == '' then
-    return
-  end
-
+local function create_command_output_popup(title, command_full)
   local popupwin =
     vim.g.new_win({ title = title, filetype = 'sh', w = 72, h = 22 })
+  popupwin.append(string.format('$ %s%s%s[Running...]', command_full, vim.g.nl, vim.g.nl))
+
+  return popupwin
+end
+
+local function append_command_output_popup(popupwin, stdout, stderr, level, status)
   local output = {}
 
+  table.insert(output, '')
+  table.insert(output, string.format('[%s]', status))
+
   if stdout ~= '' then
+    table.insert(output, '')
     table.insert(output, '## stdout')
     table.insert(output, stdout)
   end
 
   if stderr ~= '' then
-    if #output > 0 then
+    if stdout ~= '' then
       table.insert(output, '')
     end
     table.insert(output, '## stderr')
@@ -39,7 +45,11 @@ end
 
 local function create_progress_reporter(command, args, opts)
   local title = opts.title or command
-  local command_full = string.format('%s %s', command, table.concat(args, ' '))
+  local command_full = command
+  if #args > 0 then
+    command_full = string.format('%s %s', command, table.concat(args, ' '))
+  end
+  local popupwin = create_command_output_popup(title, command_full)
   local function update(msg, progress)
     return vim.api.nvim_echo({ { msg } }, false, progress)
   end
@@ -63,14 +73,26 @@ local function create_progress_reporter(command, args, opts)
         update('Completed', progress)
         vim.g.clear_terminal_progress()
 
-        show_command_output_popup(title, stdout, stderr, vim.log.levels.INFO)
+        append_command_output_popup(
+          popupwin,
+          stdout,
+          stderr,
+          vim.log.levels.INFO,
+          'Completed'
+        )
       end,
       error = function(stderr)
         progress.status = 'failed'
         update('Error', progress)
         vim.g.clear_terminal_progress()
 
-        show_command_output_popup(title, '', stderr, vim.log.levels.ERROR)
+        append_command_output_popup(
+          popupwin,
+          '',
+          stderr,
+          vim.log.levels.ERROR,
+          'Error'
+        )
       end,
     }
   end
@@ -86,14 +108,26 @@ local function create_progress_reporter(command, args, opts)
     success = function(stdout, stderr)
       handle.message = 'Completed'
 
-      show_command_output_popup(title, stdout, stderr, vim.log.levels.INFO)
+      append_command_output_popup(
+        popupwin,
+        stdout,
+        stderr,
+        vim.log.levels.INFO,
+        'Completed'
+      )
 
       handle:finish()
     end,
     error = function(stderr)
       handle.message = 'Error'
 
-      show_command_output_popup(title, '', stderr, vim.log.levels.ERROR)
+      append_command_output_popup(
+        popupwin,
+        '',
+        stderr,
+        vim.log.levels.ERROR,
+        'Error'
+      )
 
       handle:finish()
     end,
