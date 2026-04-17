@@ -92,6 +92,7 @@ M.setup = function(plug_opts)
   -- Plug('j-hui/fidget.nvim')
   Plug('nvim-tree/nvim-web-devicons')
   Plug('dcai/nvim-colorizer.lua', {
+    frozen = 1,
     setup = function()
       local ok, colorizer = pcall(require, 'colorizer')
       if not ok then
