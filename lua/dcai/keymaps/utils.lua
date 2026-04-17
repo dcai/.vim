@@ -16,7 +16,7 @@ local function show_command_output_popup(title, stdout, stderr, level)
   end
 
   local popupwin =
-    vim.g.new_win({ title = title, filetype = 'log', w = 90, h = 50 })
+    vim.g.new_win({ title = title, filetype = 'sh', w = 72, h = 22 })
   local output = {}
 
   if stdout ~= '' then
