@@ -20,7 +20,7 @@ local function sign_in(bufnr, client)
     vim.empty_dict(),
     function(err, result)
       if err then
-        vim.notify(err.message, vim.log.levels.ERROR)
+        vim.print(err.message)
         return
       end
       if result.command then
@@ -39,11 +39,11 @@ local function sign_in(bufnr, client)
             { bufnr = bufnr },
             function(cmd_err, cmd_result)
               if cmd_err then
-                vim.notify(cmd_err.message, vim.log.levels.ERROR)
+                vim.print(cmd_err.message)
                 return
               end
               if cmd_result.status == 'OK' then
-                vim.notify('Signed in as ' .. cmd_result.user .. '.')
+                vim.print('Signed in as ' .. cmd_result.user .. '.')
               end
             end
           )
@@ -51,14 +51,14 @@ local function sign_in(bufnr, client)
       end
 
       if result.status == 'PromptUserDeviceFlow' then
-        vim.notify(
+        vim.print(
           'Enter your one-time code '
             .. result.userCode
             .. ' in '
             .. result.verificationUri
         )
       elseif result.status == 'AlreadySignedIn' then
-        vim.notify('Already signed in as ' .. result.user .. '.')
+        vim.print('Already signed in as ' .. result.user .. '.')
       end
     end
   )
@@ -72,11 +72,11 @@ local function sign_out(_, client)
     vim.empty_dict(),
     function(err, result)
       if err then
-        vim.notify(err.message, vim.log.levels.ERROR)
+        vim.print(err.message)
         return
       end
       if result.status == 'NotSignedIn' then
-        vim.notify('Not signed in.')
+        vim.print('Not signed in.')
       end
     end
   )
