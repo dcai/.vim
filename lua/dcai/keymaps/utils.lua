@@ -10,6 +10,33 @@ local function supports_native_progress()
   return vim.fn.has('nvim-0.12') == 1
 end
 
+local function show_command_output_popup(title, stdout, stderr, level)
+  if stdout == '' and stderr == '' then
+    return
+  end
+
+  local popupwin =
+    vim.g.new_win({ title = title, filetype = 'log', w = 90, h = 50 })
+  local output = {}
+
+  if stdout ~= '' then
+    table.insert(output, '## stdout')
+    table.insert(output, stdout)
+  end
+
+  if stderr ~= '' then
+    if #output > 0 then
+      table.insert(output, '')
+    end
+    table.insert(output, '## stderr')
+    table.insert(output, stderr)
+  end
+
+  popupwin.append(table.concat(output, vim.g.nl))
+
+  -- vim.notify(table.concat(output, vim.g.nl), level)
+end
+
 local function create_progress_reporter(command, args, opts)
   local title = opts.title or command
   local command_full = string.format('%s %s', command, table.concat(args, ' '))
@@ -36,21 +63,14 @@ local function create_progress_reporter(command, args, opts)
         update('Completed', progress)
         vim.g.clear_terminal_progress()
 
-        if stdout ~= '' then
-          vim.notify(stdout, vim.log.levels.INFO)
-        end
-        if stderr ~= '' then
-          vim.notify(stderr, vim.log.levels.INFO)
-        end
+        show_command_output_popup(title, stdout, stderr, vim.log.levels.INFO)
       end,
       error = function(stderr)
         progress.status = 'failed'
         update('Error', progress)
         vim.g.clear_terminal_progress()
 
-        if stderr ~= '' then
-          vim.notify(stderr, vim.log.levels.ERROR)
-        end
+        show_command_output_popup(title, '', stderr, vim.log.levels.ERROR)
       end,
     }
   end
@@ -66,21 +86,14 @@ local function create_progress_reporter(command, args, opts)
     success = function(stdout, stderr)
       handle.message = 'Completed'
 
-      if stdout ~= '' then
-        vim.notify(stdout, vim.log.levels.INFO)
-      end
-      if stderr ~= '' then
-        vim.notify(stderr, vim.log.levels.INFO)
-      end
+      show_command_output_popup(title, stdout, stderr, vim.log.levels.INFO)
 
       handle:finish()
     end,
     error = function(stderr)
       handle.message = 'Error'
 
-      if stderr ~= '' then
-        vim.notify(stderr, vim.log.levels.ERROR)
-      end
+      show_command_output_popup(title, '', stderr, vim.log.levels.ERROR)
 
       handle:finish()
     end,
