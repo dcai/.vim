@@ -13,16 +13,24 @@ end
 local function create_command_output_popup(title, command_full)
   local popupwin =
     vim.g.new_win({ title = title, filetype = 'sh', w = 72, h = 22 })
-  popupwin.append(string.format('$ %s%s%s[Running...]', command_full, vim.g.nl, vim.g.nl))
+  popupwin.append(
+    string.format('$ %s%s%s### Running...', command_full, vim.g.nl, vim.g.nl)
+  )
 
   return popupwin
 end
 
-local function append_command_output_popup(popupwin, stdout, stderr, level, status)
+local function append_command_output_popup(
+  popupwin,
+  stdout,
+  stderr,
+  level,
+  status
+)
   local output = {}
 
   table.insert(output, '')
-  table.insert(output, string.format('[%s]', status))
+  table.insert(output, string.format('### %s', status))
 
   if stdout ~= '' then
     table.insert(output, '')
