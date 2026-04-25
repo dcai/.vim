@@ -1,7 +1,6 @@
 local mylsputils = require('dcai.lsp.utils')
 -- enable tsgo when USE_TSGO is set to true or not set at all
-local use_tsgo = vim.g.is_env_var_true('USE_TSGO')
-  or vim.g.is_env_var_set('USE_TSGO')
+local use_tsgo = not vim.g.is_env_var_false('USE_TSGO')
 
 local root_markers = {
   'pnpm-lock.yaml',
