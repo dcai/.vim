@@ -108,6 +108,10 @@ local CODESTATS_API_URL = 'https://codestats.net/api'
 local CODESTATS_API_KEY = os.getenv('CODESTATS_API_KEY')
 
 local xp_table = {}
+local pulse_in_progress = false
+-- Guard against concurrent curl spawns. Without this, sleep/wake cycles
+-- queue up multiple timer + autocmd callbacks which all try to spawn curl
+-- at once, blowing through the process file descriptor limit (EMFILE).
 
 local function gather_xp(filetype, xp_amount)
   if filetype:gsub('%s+', '') == '' then
@@ -132,10 +136,21 @@ local function pulse()
   if next(xp_table) == nil then
     return
   end
+  -- Prevent concurrent pulses: only one curl process at a time.
+  -- See declaration comment for why this matters (spoiler: EMFILE).
+  if pulse_in_progress then
+    return
+  end
+
+  -- Drain xp_table atomically so we never retry the same batch.
+  -- If the request fails, the data is lost — but that's better than
+  -- cascading EMFILE errors on sleep/wake cycling.
+  local snapshot = xp_table
+  xp_table = {}
 
   local time = os.date('%Y-%m-%dT%T%z')
   local xps_table = {}
-  for filetype, xp in pairs(xp_table) do
+  for filetype, xp in pairs(snapshot) do
     table.insert(
       xps_table,
       { language = languages[filetype] or filetype, xp = xp }
@@ -145,25 +160,36 @@ local function pulse()
     coded_at = time,
     xps = xps_table,
   }
-  local response = curl.post({
-    url = CODESTATS_API_URL .. '/my/pulses',
-    body = vim.fn.json_encode(body),
-    headers = {
-      ['X-API-Token'] = CODESTATS_API_KEY,
-      ['Content-Type'] = 'application/json',
-    },
-    callback = vim.schedule_wrap(function(resp)
-      local status = resp.status
-      if status == 200 or status == 201 then
-        xp_table = {}
-        -- logger.info('Pulsed: body sent:', body)
-        -- logger.info('Pulsed: response body', resp.body)
-      else
-        logger.error('Pulsed failed', resp)
-      end
-    end),
-    on_error = function() end,
-  })
+
+  pulse_in_progress = true
+  local ok, err = pcall(function()
+    curl.post({
+      url = CODESTATS_API_URL .. '/my/pulses',
+      body = vim.fn.json_encode(body),
+      headers = {
+        ['X-API-Token'] = CODESTATS_API_KEY,
+        ['Content-Type'] = 'application/json',
+      },
+      callback = vim.schedule_wrap(function(resp)
+        pulse_in_progress = false
+        local status = resp.status
+        if status == 200 or status == 201 then
+          -- logger.info('Pulsed: body sent:', body)
+          -- logger.info('Pulsed: response body', resp.body)
+        else
+          logger.error('Pulse failed: HTTP ' .. status, resp)
+        end
+      end),
+      on_error = function()
+        pulse_in_progress = false
+        logger.error('Pulse failed: network error')
+      end,
+    })
+  end)
+  if not ok then
+    pulse_in_progress = false
+    logger.error('Pulse failed: spawn error (EMFILE / too many open files?)', err)
+  end
 end
 
 local M = {}
