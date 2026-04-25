@@ -1,5 +1,5 @@
 local mylsputils = require('dcai.lsp.utils')
--- enable tsgo when USE_TSGO is set to true or not set at all
+-- tsgo is now default unless USE_TSGO env var is set to false
 local use_tsgo = not vim.g.is_env_var_false('USE_TSGO')
 
 local root_markers = {
