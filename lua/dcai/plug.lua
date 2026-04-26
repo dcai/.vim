@@ -94,25 +94,6 @@ M.setup = function(plug_opts)
         fffdownload.download_or_build_binary()
       end
     end,
-    setup = function()
-      local ok, fff = pcall(require, 'fff')
-      if not ok then
-        return
-      end
-      fff.setup({
-        base_path = vim.fn.getcwd(),
-        prompt = '> ',
-        layout = {
-          width = 0.9,
-        },
-        keymaps = {
-          close = { '<Esc>', '<C-c>' },
-        },
-        git = {
-          status_text_color = true,
-        },
-      })
-    end,
   })
   Plug('ibhagwan/fzf-lua')
   Plug('folke/which-key.nvim')
