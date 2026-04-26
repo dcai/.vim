@@ -4,6 +4,7 @@ if not ok then
 end
 fff.setup({
   base_path = vim.fn.getcwd(),
+  title = 'FFFiles',
   prompt = '> ',
   layout = {
     width = 0.9,
@@ -25,6 +26,18 @@ fff.setup({
   },
   keymaps = {
     close = { '<Esc>', '<C-c>' },
+    select = '<CR>',
+    select_split = '<C-s>',
+    select_vsplit = '<C-v>',
+    select_tab = '<C-t>',
+    move_up = { '<Up>', '<C-p>' },
+    move_down = { '<Down>', '<C-n>' },
+    cycle_grep_modes = '<S-Tab>',
+    cycle_previous_query = '<C-Up>',
+    toggle_select = '<Tab>',
+    send_to_quickfix = '<C-q>',
+    focus_list = '<leader>l',
+    focus_preview = '<leader>p',
   },
   git = {
     status_text_color = true,
