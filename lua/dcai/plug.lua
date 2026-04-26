@@ -100,8 +100,16 @@ M.setup = function(plug_opts)
         return
       end
       fff.setup({
+        base_path = vim.fn.getcwd(),
+        prompt = '> ',
         layout = {
           width = 0.9,
+        },
+        keymaps = {
+          close = { '<Esc>', '<C-c>' },
+        },
+        git = {
+          status_text_color = true,
         },
       })
     end,

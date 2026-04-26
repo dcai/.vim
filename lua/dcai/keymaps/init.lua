@@ -56,6 +56,7 @@ wk.add({
     function()
       -- fzf.grep_cword({ cwd = vim.g.git_root() })
       require('fff').live_grep({
+        cwd = vim.g.git_root(),
         query = vim.fn.expand('<cword>'),
         modes = { 'plain', 'fuzzy' },
       })
@@ -69,6 +70,7 @@ wk.add({
     function()
       -- fzf.live_grep({ cwd = vim.g.git_root() })
       require('fff').live_grep({
+        cwd = vim.g.git_root(),
         modes = { 'plain', 'fuzzy' },
       })
     end,

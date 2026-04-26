@@ -41,7 +41,7 @@ local fzf_keymap = {
     '<leader>ff',
     -- git_files,
     function()
-      require('fff').find_files({})
+      require('fff').find_files({ cwd = vim.g.git_root() })
     end,
     desc = 'git files',
   },
