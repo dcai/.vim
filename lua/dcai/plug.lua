@@ -87,6 +87,25 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- UI and usability
   ----------------------------------------------------------------------------
+  Plug('dmtrKovalenko/fff.nvim', {
+    ['do'] = function()
+      local ok, fffdownload = pcall(require, 'fff.download')
+      if ok then
+        fffdownload.download_or_build_binary()
+      end
+    end,
+    setup = function()
+      local ok, fff = pcall(require, 'fff')
+      if not ok then
+        return
+      end
+      fff.setup({
+        layout = {
+          width = 0.9,
+        },
+      })
+    end,
+  })
   Plug('ibhagwan/fzf-lua')
   Plug('folke/which-key.nvim')
   -- Plug('j-hui/fidget.nvim')

@@ -39,7 +39,10 @@ local fzf_keymap = {
   },
   {
     '<leader>ff',
-    git_files,
+    -- git_files,
+    function()
+      require('fff').find_files({})
+    end,
     desc = 'git files',
   },
   {
@@ -53,7 +56,7 @@ local fzf_keymap = {
       fzf.files({
         cwd = vim.g.smart_root(),
         no_ignore = true,
-        fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules"
+        fd_opts = '--color=never --type f --hidden --follow --exclude .git --exclude node_modules',
       })
     end,
     desc = 'project files',

@@ -54,14 +54,24 @@ wk.add({
   {
     '<leader>.',
     function()
-      fzf.grep_cword({ cwd = vim.g.git_root() })
+      -- fzf.grep_cword({ cwd = vim.g.git_root() })
+      require('fff').live_grep({
+        query = vim.fn.expand('<cword>'),
+        modes = { 'plain', 'fuzzy' },
+      })
     end,
     desc = 'fzf grep <cword>',
     mode = 'n',
   },
   {
     '<leader>/',
-    utils.live_grep,
+    -- utils.live_grep,
+    function()
+      -- fzf.live_grep({ cwd = vim.g.git_root() })
+      require('fff').live_grep({
+        modes = { 'plain', 'fuzzy' },
+      })
+    end,
     desc = 'fzf grep repo',
     mode = 'n',
   },
