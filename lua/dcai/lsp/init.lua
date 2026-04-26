@@ -2,16 +2,16 @@ local M = {}
 
 local servers = {
   { name = 'bashls', mason = 'bash-language-server' },
-  { name = 'biome', mason = 'biome' },
+  -- { name = 'biome', mason = 'biome' },
   { name = 'copilot_language_server', mason = 'copilot-language-server' },
   { name = 'lua_ls', mason = 'lua-language-server' },
   { name = 'phpactor', mason = 'phpactor' },
   -- { name = 'pyright', mason = 'pyright' },
   { name = 'ty', mason = 'ty' },
-  { name = 'tailwindcss', mason = 'tailwindcss-language-server' },
+  -- { name = 'tailwindcss', mason = 'tailwindcss-language-server' },
   { name = 'tsgo', mason = 'tsgo' },
   { name = 'ts_ls', mason = 'typescript-language-server' },
-  { name = 'vimls', mason = 'vim-language-server' },
+  -- { name = 'vimls', mason = 'vim-language-server' },
 }
 
 M.setup = function()
@@ -33,7 +33,7 @@ M.setup = function()
   end, { desc = 'Format current buffer with LSP' })
 
   require('dcai.lsp.bashls')
-  require('dcai.lsp.biome')
+  -- require('dcai.lsp.biome')
   require('dcai.lsp.copilot')
   require('dcai.lsp.dgnostics')
   require('dcai.lsp.gopls')
@@ -41,9 +41,9 @@ M.setup = function()
   require('dcai.lsp.phpactor')
   require('dcai.lsp.python')
   require('dcai.lsp.sourcekit')
-  require('dcai.lsp.tailwindcss')
+  -- require('dcai.lsp.tailwindcss')
   require('dcai.lsp.ts_ls')
-  require('dcai.lsp.vimls')
+  -- require('dcai.lsp.vimls')
 end
 
 return M
