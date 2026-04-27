@@ -25,6 +25,15 @@ vim.lsp.config('lua_ls', {
   single_file_support = true,
   cmd = { 'lua-language-server' },
   filetypes = { 'lua' },
+  root_markers = {
+    '.luarc.json',
+    '.luarc.jsonc',
+    '.luacheckrc',
+    '.stylua.toml',
+    'stylua.toml',
+    'selene.toml',
+    'selene.yml',
+  },
   flags = {
     debounce_text_changes = 150,
   },
@@ -33,6 +42,8 @@ vim.lsp.config('lua_ls', {
       telemetry = {
         enable = false,
       },
+      -- codeLens = { enable = true },
+      -- hint = { enable = true, semicolon = 'Disable' },
     },
   },
   on_init = function(client, _)
