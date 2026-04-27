@@ -1,13 +1,5 @@
+local fff = require('fff')
 local fzf = require('fzf-lua')
--- vim.g.logger.trace('fzf keymap setting up...')
-
-local function git_files()
-  if vim.g.is_git_repo() then
-    fzf.git_files()
-  else
-    fzf.files({ cwd = vim.g.smart_root() })
-  end
-end
 
 local fzf_keymap = {
   mode = { 'n', 'v' },
@@ -39,25 +31,35 @@ local fzf_keymap = {
   },
   {
     '<leader>ff',
-    -- git_files,
+    -- function()
+    --   if vim.g.is_git_repo() then
+    --     fzf.git_files()
+    --   else
+    --     fzf.files({ cwd = vim.g.smart_root() })
+    --   end
+    -- end,
     function()
-      require('fff').find_files({ cwd = vim.g.git_root() })
+      fff.find_files({ cwd = vim.g.git_root() })
     end,
     desc = 'git files',
   },
   {
     '<leader>fc',
-    fzf.files,
+    -- fzf.files,
+    function()
+      fff.find_files({ cwd = vim.fn.expand('%:p:h') })
+    end,
     desc = 'current folder files',
   },
   {
     '<leader>fp',
     function()
-      fzf.files({
-        cwd = vim.g.smart_root(),
-        no_ignore = true,
-        fd_opts = '--color=never --type f --hidden --follow --exclude .git --exclude node_modules',
-      })
+      fff.find_files({ cwd = vim.g.smart_root() })
+      -- fzf.files({
+      --   cwd = vim.g.smart_root(),
+      --   no_ignore = true,
+      --   fd_opts = '--color=never --type f --hidden --follow --exclude .git --exclude node_modules',
+      -- })
     end,
     desc = 'project files',
   },
