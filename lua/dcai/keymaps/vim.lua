@@ -7,7 +7,7 @@ end
 local vim_keymap = {
   { '<leader>k', group = 'Neovim' },
   {
-    '<leader>kA',
+    '<leader>ka',
     function()
       vim.cmd('ALEInfo')
     end,
@@ -19,7 +19,7 @@ local vim_keymap = {
     desc = 'copilot status',
   },
   {
-    '<leader>kM',
+    '<leader>km',
     function()
       vim.cmd('Mason')
     end,
@@ -52,11 +52,6 @@ local vim_keymap = {
       vim.cmd('PlugUpdate')
     end,
     desc = 'PlugUpdate',
-  },
-  {
-    '<leader>kf',
-    config_files,
-    desc = 'edit root vimrc',
   },
   {
     '<leader>kl',
