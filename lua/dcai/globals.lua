@@ -511,9 +511,9 @@ end
 vim.g.root_pattern = root
 
 vim.g.git_root = root({
+  '.git',
   '.github',
   '.gitlab-ci.yml',
-  '.git',
 })
 
 vim.g.smart_root = root({

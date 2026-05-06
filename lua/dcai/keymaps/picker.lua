@@ -39,7 +39,13 @@ local fzf_keymap = {
     --   end
     -- end,
     function()
-      fff.find_files({ cwd = vim.g.git_root() })
+      local root = vim.g.git_root()
+      -- vim.notify(vim.inspect({
+      --   buf = vim.api.nvim_buf_get_name(0),
+      --   cwd = vim.fn.getcwd(),
+      --   git_root = root,
+      -- }))
+      fff.find_files({ cwd = root })
     end,
     desc = 'git files',
   },
