@@ -95,7 +95,7 @@ if vim.fn.executable('go') == 1 then
 
   ---@type vim.lsp.Config
   local gopls_config = {
-    capabilities = mylsputils.get_capabilities(),
+    capabilities = mylsputils.get_lsp_capabilities(),
     on_attach = mylsputils.common_on_attach,
     cmd = { 'gopls' },
     filetypes = { 'go', 'gomod' },

@@ -2,7 +2,7 @@ local mylsputils = require('dcai.lsp.utils')
 
 vim.lsp.config('vimls', {
   cmd = { 'vim-language-server', '--stdio' },
-  capabilities = mylsputils.get_capabilities(),
+  capabilities = mylsputils.get_lsp_capabilities(),
   on_attach = mylsputils.common_on_attach,
   filetypes = { 'vim' },
   root_markers = { 'vimrc', '.git' },

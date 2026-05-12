@@ -156,7 +156,7 @@ end
 
 ---@param overrides? table merged over the base capabilities (vim.tbl_deep_extend)
 ---@return table
-M.get_capabilities = function(overrides)
+M.get_lsp_capabilities = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_loaded, blinkcmp = pcall(require, 'blink.cmp')
   if cmp_loaded then
