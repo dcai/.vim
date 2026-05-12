@@ -7,11 +7,11 @@ end
 local chat_keymap = require('dcai.keymaps.chat')
 local editthings_keymap = require('dcai.keymaps.editthings')
 local fzf = require('fzf-lua')
-local picker_keymap = require('dcai.keymaps.picker')
 local git_keymap = require('dcai.keymaps.git')
 local lsp_keymap = require('dcai.keymaps.lsp')
 local notes_keymap = require('dcai.keymaps.notes')
 local openthings_keymap = require('dcai.keymaps.openthings')
+local picker_keymap = require('dcai.keymaps.picker')
 local testthings_keymap = require('dcai.keymaps.testthings')
 local utils = require('dcai.keymaps.utils')
 local vim_keymap = require('dcai.keymaps.vim')
@@ -35,21 +35,6 @@ wk.add({
     '<leader>pp',
     '<cmd>set paste<CR>:r !pbpaste<CR>:set nopaste<CR>',
     desc = 'paste',
-  },
-  {
-    '<leader>;',
-    function()
-      local Term = require('toggleterm.terminal').Terminal
-      if not shell then
-        shell = Term:new({
-          cmd = 'fish',
-          dir = 'git_dir',
-          -- direction = 'float',
-        })
-      end
-      shell:toggle()
-    end,
-    desc = 'terminal',
   },
   {
     '<leader>.',
