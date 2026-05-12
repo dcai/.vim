@@ -38,7 +38,7 @@ local parser_filetypes = {
   { parser = 'toml', filetypes = { 'toml' } },
   { parser = 'tsx', filetypes = { 'typescriptreact' } },
   { parser = 'typescript', filetypes = { 'typescript', 'typescriptreact' } },
-  { parser = 'vim', filetypes = { 'vim' } },
+  -- { parser = 'vim', filetypes = { 'vim' } },
   { parser = 'yaml', filetypes = { 'yaml' } },
   { parser = 'zsh', filetypes = { 'zsh' } },
 }
