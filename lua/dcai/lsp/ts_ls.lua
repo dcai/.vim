@@ -78,7 +78,9 @@ vim.lsp.config.tsgo = {
   -- },
   filetypes = mylsputils.ts_ls_supported_filetypes,
   on_attach = mylsputils.common_on_attach,
-  capabilities = mylsputils.get_capabilities(),
+  -- tsgo ignores the client's encoding preference order, so only offer
+  -- UTF-16 to avoid a position encoding mismatch with copilot (id:1).
+  capabilities = mylsputils.get_capabilities({ general = { positionEncodings = { 'utf-16' } } }),
   root_markers = root_markers,
 }
 vim.lsp.enable('tsgo', use_tsgo)

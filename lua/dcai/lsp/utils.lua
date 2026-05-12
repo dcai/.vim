@@ -154,12 +154,22 @@ M.support_native_lsp_config = function()
   return vim.version.cmp(vim.version(), '0.11.0') >= 0
 end
 
-M.get_capabilities = function()
+---@param overrides? table merged over the base capabilities (vim.tbl_deep_extend)
+---@return table
+M.get_capabilities = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_loaded, blinkcmp = pcall(require, 'blink.cmp')
   if cmp_loaded then
     capabilities = blinkcmp.get_lsp_capabilities()
   end
+
+  capabilities.general = capabilities.general or {}
+  capabilities.general.positionEncodings = { 'utf-16', 'utf-8' }
+
+  if overrides then
+    capabilities = vim.tbl_deep_extend('force', capabilities, overrides)
+  end
+
   return capabilities
 end
 
