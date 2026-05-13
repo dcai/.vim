@@ -68,19 +68,18 @@ vim.lsp.config.tsgo = {
     },
   },
   cmd = { 'tsgo', '--lsp', '--stdio' },
-  -- cmd = {
-  --   'bunx',
-  --   '-p',
-  --   '@typescript/native-preview',
-  --   'tsgo',
-  --   '--lsp',
-  --   '--stdio',
-  -- },
   filetypes = mylsputils.ts_ls_supported_filetypes,
   on_attach = mylsputils.common_on_attach,
   -- tsgo ignores the client's encoding preference order, so only offer
   -- UTF-16 to avoid a position encoding mismatch with copilot (id:1).
-  capabilities = mylsputils.get_lsp_capabilities({ general = { positionEncodings = { 'utf-16' } } }),
+  capabilities = mylsputils.get_lsp_capabilities({
+    general = { positionEncodings = { 'utf-16' } },
+    workspace = {
+      didChangeConfiguration = {
+        dynamicRegistration = true,
+      },
+    },
+  }),
   root_markers = root_markers,
 }
 vim.lsp.enable('tsgo', use_tsgo)
