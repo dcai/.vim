@@ -1,7 +1,8 @@
 local utils = require('dcai.keymaps.utils')
 
 local subl = [[/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl]]
--- local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
+local zed = [[/Applications/Zed.app/Contents/MacOS/cli]]
+local editor = zed
 
 local openthings_keymap = {
   { '<leader>o', group = 'open things' },
@@ -34,7 +35,7 @@ local openthings_keymap = {
     function()
       -- has to be wrapped because filename must be lazy evaluated
       utils.lazy_cmd_with_window(
-        subl,
+        editor,
         { disable_popup = true, args = { vim.fn.expand('%:p') } },
         'open file in external editor'
       )()
