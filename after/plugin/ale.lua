@@ -78,7 +78,7 @@ vim.g.ale_javascript_prettier_use_global = 0
 vim.g.ale_python_ruff_use_global = 1
 vim.g.ale_python_ruff_format_use_global = 1
 
-vim.g.ale_biome_use_global = 1
+vim.g.ale_biome_use_global = 0
 vim.g.ale_biome_executable = 'biome'
 
 local jslinter = { os.getenv('JSLINTER') or 'biome' }
