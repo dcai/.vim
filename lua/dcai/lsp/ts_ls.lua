@@ -1,6 +1,7 @@
 local mylsputils = require('dcai.lsp.utils')
--- tsgo is now default unless USE_TSGO env var is set to false
-local use_tsgo = not vim.g.is_env_var_false('USE_TSGO')
+-- tsgo is now default unless USE_TSGO env var is explicitly set to false
+local use_tsgo = not vim.g.is_env_var_set('USE_TSGO')
+  or vim.g.is_env_var_true('USE_TSGO')
 
 local root_markers = {
   'pnpm-lock.yaml',
