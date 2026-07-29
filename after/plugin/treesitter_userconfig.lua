@@ -34,7 +34,7 @@ local parser_filetypes = {
   { parser = 'sql', filetypes = { 'sql' } },
   { parser = 'swift', filetypes = { 'swift' } },
   { parser = 'terraform', filetypes = { 'terraform' } },
-  { parser = 'tmux', filetypes = { 'tmux' } },
+  -- { parser = 'tmux', filetypes = { 'tmux' } },
   { parser = 'toml', filetypes = { 'toml' } },
   { parser = 'tsx', filetypes = { 'typescriptreact' } },
   { parser = 'typescript', filetypes = { 'typescript', 'typescriptreact' } },
