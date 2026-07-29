@@ -255,4 +255,4 @@ fzflua.setup({
   },
 }, do_not_reset_defaults)
 
-require('fzf-lua').register_ui_select()
+-- require('fzf-lua').register_ui_select()
