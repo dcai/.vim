@@ -36,14 +36,23 @@ local function get_relative_path()
   return filepath
 end
 
+local function get_display_path()
+  local filepath = vim.fn.expand('%:p')
+  local home = vim.env.HOME
+  if home and vim.startswith(filepath, home .. '/') then
+    return '~' .. filepath:sub(#home + 1)
+  end
+  return filepath
+end
+
 local function format_line_reference()
   local line_number = vim.fn.line('.')
-  local relpath = vim.fn.expand('%:p')
-  return '`' .. relpath .. ' LINE ' .. tostring(line_number) .. '`'
+  local filepath = get_display_path()
+  return '`' .. filepath .. ' LINE ' .. tostring(line_number) .. '`'
 end
 
 local function format_visual_selection()
-  local fname = vim.fn.expand('%:p')
+  local fname = get_display_path()
   local line1 = vim.fn.line('v')
   local line2 = vim.fn.line('.')
   if line1 > line2 then
