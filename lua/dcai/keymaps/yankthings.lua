@@ -80,7 +80,7 @@ local yank_keymap = {
   {
     '<leader>yp',
     function()
-      vim.cmd('let @*=expand("%:p")')
+      vim.fn.setreg('*', get_display_path())
     end,
     desc = 'yank file full path',
   },
