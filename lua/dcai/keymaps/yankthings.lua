@@ -43,7 +43,7 @@ local function format_line_reference()
 end
 
 local function format_visual_selection()
-  local fname = get_relative_path()
+  local fname = vim.fn.expand('%:p')
   local line1 = vim.fn.line('v')
   local line2 = vim.fn.line('.')
   if line1 > line2 then
