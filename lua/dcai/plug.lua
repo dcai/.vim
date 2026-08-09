@@ -122,7 +122,7 @@ M.setup = function(plug_opts)
         {
           name = 'open',
           cmd = 'open',
-          args = { 'open', '-a', 'Brave Browser', '{uri}' },
+          args = { 'open', '{uri}' },
           background = 0,
         },
       }
