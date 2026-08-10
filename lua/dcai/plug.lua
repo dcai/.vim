@@ -178,13 +178,17 @@ M.setup = function(plug_opts)
     end,
   })
   Plug('dcai/markdown-preview.nvim', {
-    ['for'] = 'markdown',
     setup = function()
-      vim.g.mkdp_theme = 'light'
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_auto_close = 0
-      vim.g.mkdp_refresh_slow = 1
-      -- vim.g.mkdp_theme = 'dark'
+      local ok, mkdp = pcall(require, 'mkdp')
+      if not ok then
+        return
+      end
+      mkdp.setup({
+        theme = 'light',
+        auto_start = false,
+        auto_close = false,
+        refresh_slow = true,
+      })
     end,
   })
   ----------------------------------------------------------------------------
