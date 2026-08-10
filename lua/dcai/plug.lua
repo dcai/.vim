@@ -178,7 +178,7 @@ M.setup = function(plug_opts)
     end,
   })
   Plug('dcai/markdown-preview.nvim', {
-    ['do'] = 'cd app && npx --yes yarn install',
+    ['do'] = 'cd app && npm install',
     ['for'] = 'markdown',
     setup = function()
       vim.g.mkdp_theme = 'light'
