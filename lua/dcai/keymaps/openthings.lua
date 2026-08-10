@@ -9,14 +9,8 @@ local openthings_keymap = {
   {
     '<leader>ob',
     '<Plug>(openbrowser-smart-search)',
-    desc = 'search current word in browser',
+    desc = 'search word or selection in browser',
     mode = { 'v', 'n' },
-  },
-  {
-    '<leader>ob',
-    '<Plug>(openbrowser-smart-search)',
-    desc = 'search selected',
-    mode = 'v',
   },
   {
     '<leader>od',
