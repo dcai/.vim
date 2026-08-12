@@ -87,7 +87,8 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- UI and usability
   ----------------------------------------------------------------------------
-  Plug('dmtrKovalenko/fff.nvim', {
+  Plug('dmtrKovalenko/fff', {
+    ['tag'] = 'v0.10.3',
     ['do'] = function()
       local ok, fffdownload = pcall(require, 'fff.download')
       if ok then

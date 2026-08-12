@@ -25,6 +25,10 @@ local function most_used_filetypes()
 end
 
 function M.setup()
+  vim.api.nvim_create_user_command('FFFInstall', function()
+    require('fff.download').download_or_build_binary()
+  end, { desc = 'Download or build the fff binary' })
+
   vim.api.nvim_create_user_command('OldfileTypes', function(opts)
     local limit = tonumber(opts.args) or 10
     local items = most_used_filetypes()
