@@ -87,6 +87,7 @@ vim.g.ale_linters = {
   cs = { 'csc' },
   go = { 'gopls' },
   graphql = {},
+  java = {},
   javascript = jslinter,
   javascriptreact = jslinter,
   json = {},

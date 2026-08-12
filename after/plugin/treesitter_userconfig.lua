@@ -23,6 +23,7 @@ local parser_filetypes = {
   { parser = 'graphql', filetypes = { 'graphql' } },
   { parser = 'html', filetypes = { 'html' } },
   { parser = 'ini', filetypes = { 'ini' } },
+  { parser = 'java', filetypes = { 'java' } },
   { parser = 'javascript', filetypes = { 'javascript', 'javascriptreact' } },
   { parser = 'jsdoc', filetypes = { 'jsdoc' } },
   { parser = 'json', filetypes = { 'json' } },
