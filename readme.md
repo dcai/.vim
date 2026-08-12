@@ -12,7 +12,7 @@
 [![Selene Lint](https://github.com/dcai/.vim/actions/workflows/selene.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/selene.yml)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/dcai/.vim)
 
-A personal Neovim configuration with 15+ years of evolution, migrated from Vim to Neovim in early 2023. This setup combines modern Neovim features with time-tested customizations.
+A personal Neovim configuration with 15+ years of evolution, migrated from Vim to Neovim in early 2023. It combines Lua-first Neovim modules with retained Vimscript customizations.
 
 ## 🚀 Installation
 
@@ -37,6 +37,7 @@ ln -s (which nvim) ~/.local/bin/vim
 - `lua/dcai/`: Core Lua configuration modules
   - `plug.lua`: Plugin management
   - `keymaps/`: Keyboard mappings organized by functionality
+  - `lspconfig/`: Language-server configuration
   - `llm/`: AI assistant integrations
 - `before/`: Configurations loaded before plugins
   - `captureoutput.vim`: Utility for capturing command output
@@ -45,6 +46,9 @@ ln -s (which nvim) ~/.local/bin/vim
 - `after/`: Configurations loaded after plugins
   - `ftplugin/`: Filetype-specific settings
   - `plugin/`: Plugin-specific configurations
+- `ftdetect/`: Custom filetype detection
+- `syntax/`: Native Vim syntax definitions
+- `queries/`: Tree-sitter queries for custom parsers
 - `os/`: OS-specific configurations
   - `macos.vim`: macOS-specific settings
   - `linux.vim`: Linux-specific settings
@@ -54,6 +58,14 @@ ln -s (which nvim) ~/.local/bin/vim
 ## 🔌 Key Plugins
 
 This configuration uses numerous plugins managed through vim-plug. See [plug.lua](./lua/dcai/plug.lua) for the complete list.
+
+## 🛠 Development
+
+Run the Lua linter with:
+
+```sh
+npm run lint
+```
 
 ## 📜 History
 
