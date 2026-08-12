@@ -6,7 +6,7 @@ end
 
 local chat_keymap = require('dcai.keymaps.chat')
 local editthings_keymap = require('dcai.keymaps.editthings')
-local fzf = require('fzf-lua')
+local has_fzf, fzf = pcall(require, 'fzf-lua')
 local git_keymap = require('dcai.keymaps.git')
 local lsp_keymap = require('dcai.keymaps.lsp')
 local notes_keymap = require('dcai.keymaps.notes')
@@ -39,8 +39,13 @@ wk.add({
   {
     '<leader>.',
     function()
+      local has_fff, fff = pcall(require, 'fff')
+      if not has_fff then
+        return
+      end
+
       -- fzf.grep_cword({ cwd = vim.g.git_root() })
-      require('fff').live_grep({
+      fff.live_grep({
         cwd = vim.g.git_root(),
         query = vim.fn.expand('<cword>'),
         modes = { 'plain', 'fuzzy' },
@@ -53,8 +58,13 @@ wk.add({
     '<leader>/',
     -- utils.live_grep,
     function()
+      local has_fff, fff = pcall(require, 'fff')
+      if not has_fff then
+        return
+      end
+
       -- fzf.live_grep({ cwd = vim.g.git_root() })
-      require('fff').live_grep({
+      fff.live_grep({
         cwd = vim.g.git_root(),
         modes = { 'plain', 'fuzzy' },
       })
@@ -78,6 +88,10 @@ wk.add({
   {
     '<leader>.',
     function()
+      if not has_fzf then
+        return
+      end
+
       fzf.grep_visual({ cwd = vim.g.git_root() })
     end,
     desc = 'fzf selected text',

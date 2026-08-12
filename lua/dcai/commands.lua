@@ -26,7 +26,12 @@ end
 
 function M.setup()
   vim.api.nvim_create_user_command('FFFInstall', function()
-    require('fff.download').download_or_build_binary()
+    local has_fff_download, fff_download = pcall(require, 'fff.download')
+    if not has_fff_download then
+      return
+    end
+
+    fff_download.download_or_build_binary()
   end, { desc = 'Download or build the fff binary' })
 
   vim.api.nvim_create_user_command('OldfileTypes', function(opts)

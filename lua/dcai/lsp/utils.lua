@@ -1,5 +1,5 @@
 local M = {}
-local fzflua = require('fzf-lua')
+local has_fzflua, fzflua = pcall(require, 'fzf-lua')
 
 ---get client instance
 ---@param client_name string
@@ -92,6 +92,11 @@ local function lsp_on_list_handler(options)
     vim.fn.setqflist(result, 'r')
     return vim.cmd('cfirst')
   end
+  if not has_fzflua then
+    vim.fn.setqflist(result, 'r')
+    return vim.cmd('cfirst')
+  end
+
   local fzf_items = M.locations_to_fzf(options)
   if #fzf_items > 0 then
     fzflua.fzf_exec(fzf_items, {

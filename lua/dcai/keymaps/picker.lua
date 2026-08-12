@@ -1,24 +1,66 @@
-local fff = require('fff')
-local fzf = require('fzf-lua')
+local has_fff, fff = pcall(require, 'fff')
+local has_fzf, fzf = pcall(require, 'fzf-lua')
 
 local picker_keymap = {
   mode = { 'n', 'v' },
   { '<leader>f', group = 'Picker' },
-  { '<leader>fb', fzf.buffers, desc = 'Browse buffers' },
+  {
+    '<leader>fb',
+    function()
+      if not has_fzf then
+        return
+      end
+
+      fzf.buffers()
+    end,
+    desc = 'Browse buffers',
+  },
   -- { '<leader>fc', fzf.colorschemes, desc = 'Browse colorschemes' },
   {
     '<leader>fd',
-    fzf.diagnostics_document,
+    function()
+      if not has_fzf then
+        return
+      end
+
+      fzf.diagnostics_document()
+    end,
     desc = 'Browse buffer diagnostics',
   },
-  { '<leader>fr', fzf.oldfiles, desc = 'Browse recent files' },
+  {
+    '<leader>fr',
+    function()
+      if not has_fzf then
+        return
+      end
+
+      fzf.oldfiles()
+    end,
+    desc = 'Browse recent files',
+  },
   -- { '<leader>fs', fzf.spell_suggest, desc = 'spell suggest' },
   {
     '<leader>fs',
-    '<cmd>FzfLua git_status<cr>',
+    function()
+      if not has_fzf then
+        return
+      end
+
+      fzf.git_status()
+    end,
     desc = 'Browse changed files',
   },
-  { '<leader>f/', fzf.builtin, desc = 'fzf builtin' },
+  {
+    '<leader>f/',
+    function()
+      if not has_fzf then
+        return
+      end
+
+      fzf.builtin()
+    end,
+    desc = 'fzf builtin',
+  },
   -- file tree
   {
     '<leader>ft',
@@ -43,6 +85,10 @@ local picker_keymap = {
     --   end
     -- end,
     function()
+      if not has_fff then
+        return
+      end
+
       local root = vim.g.git_root()
       -- vim.notify(vim.inspect({
       --   buf = vim.api.nvim_buf_get_name(0),
@@ -57,6 +103,10 @@ local picker_keymap = {
     '<leader>fc',
     -- fzf.files,
     function()
+      if not has_fff then
+        return
+      end
+
       fff.find_files({ cwd = vim.fn.expand('%:p:h') })
     end,
     desc = 'Browse current folder files',
@@ -64,6 +114,10 @@ local picker_keymap = {
   {
     '<leader>fp',
     function()
+      if not has_fff then
+        return
+      end
+
       fff.find_files({ cwd = vim.g.smart_root() })
       -- fzf.files({
       --   cwd = vim.g.smart_root(),
@@ -76,6 +130,10 @@ local picker_keymap = {
   {
     '<leader>fl',
     function()
+      if not has_fzf then
+        return
+      end
+
       fzf.files({ cwd = vim.g.state_dir })
     end,
     desc = 'Browse nvim state files',
