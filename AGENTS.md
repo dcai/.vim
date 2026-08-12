@@ -8,18 +8,6 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 - **LSP & Treesitter**: Language server support is modularized in `lua/dcai/lspconfig/`, with Treesitter and textobjects for advanced syntax and navigation.
 - **Keymaps**: Key mappings are organized by topic in `lua/dcai/keymaps/`, using which-key for discoverability. Leader key is `<space>`, with ergonomic mappings for common actions.
 - **Legacy Vimscript**: Vimscript files are preserved for reference and backward compatibility, but new config is Lua-first.
-- **Folder Structure**:
-  - `lua/dcai/`: Core Lua modules (plugin management, LSP, keymaps, AI, UI, utilities)
-    - `globals.lua`: Globally shared Lua functions for use across the setup.
-  - `lua/dcai/keymaps/`: Keymap modules by topic
-  - `lua/dcai/llm/`: AI/LLM integration and prompt libraries
-  - `after/plugin/`: Plugin-specific configs (Lua or Vimscript)
-  - `after/ftplugin/`: Filetype-specific settings
-  - `before/`: Early Vimscript loaded before plugins
-  - `vim8/after/`: Vim8-specific plugin configs
-  - `colors/`: Custom colorschemes
-  - `queries/`: Treesitter queries
-  - `~/.local/share/nvim/plug/`: Installed plugins (vim-plug directory). Plugin source code can be found here (e.g., `~/.local/share/nvim/plug/fzf-lua/lua/fzf-lua/` for fzf-lua internals)
 
 ## Coding & Contribution Guidelines
 
@@ -30,7 +18,6 @@ This repository houses a Neovim configuration in Lua and partially some vimscrip
 - **AI/LLM**: Integrate new AI tools in `lua/dcai/llm/` and update prompt libraries as needed.
 - **Preserve History**: Do not remove legacy Vimscript unless explicitly decided. Keep historical files for reference.
 - **Style**: Follow idiomatic Lua style. Use descriptive names, minimal global state, and modular functions. Prefer table-based config and explicit setup calls.
-- **Git**: Use conventional commit messages (see below). Leverage custom Git aliases and maintain atomic, descriptive commits.
 - **Testing**: Use integrated test runners and ensure config works across supported platforms (macOS, Linux, Windows).
 
 ## 🌍 Environment Variables
