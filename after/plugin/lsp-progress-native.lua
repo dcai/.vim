@@ -12,11 +12,11 @@ local function get_progress_key(ctx, token)
 end
 
 local function get_progress_text(value)
-  if value.message and value.message ~= '' then
+  if type(value.message) == 'string' and value.message ~= '' then
     return value.message
   end
 
-  if value.title and value.title ~= '' then
+  if type(value.title) == 'string' and value.title ~= '' then
     return value.title
   end
 
@@ -58,7 +58,7 @@ local function get_title(value, client_name)
   --   'get_title',
   --   vim.inspect({ value = value, client_name = client_name })
   -- )
-  if value.title and value.title ~= '' then
+  if type(value.title) == 'string' and value.title ~= '' then
     return client_name .. ' - ' .. value.title
   end
 
@@ -74,7 +74,7 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
     return
   end
 
-  if not result or not result.value then
+  if type(result) ~= 'table' or type(result.value) ~= 'table' then
     return
   end
 
@@ -106,7 +106,8 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   --   }
   -- }
   if value.kind == 'begin' then
-    progress.percent = value.percentage or 0
+    progress.percent = type(value.percentage) == 'number' and value.percentage
+      or 0
     progress.id = update(get_progress_text(value), progress)
     return
   end
@@ -122,7 +123,7 @@ vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
   --   },
   -- }
   if value.kind == 'report' then
-    if value.percentage ~= nil then
+    if type(value.percentage) == 'number' then
       progress.percent = value.percentage
     end
     progress.id = update(get_progress_text(value), progress)
