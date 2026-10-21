@@ -6,9 +6,9 @@ local lsp_keymap = {
   -- gra is default code action
   -- grr is default references
   -- gri is default find implementation
-  { '<leader>ld', vim.diagnostic.open_float, desc = 'diagnostic' },
+  { '<leader>lD', vim.diagnostic.open_float, desc = 'diagnostic' },
   {
-    '<leader>lD',
+    '<leader>ld',
     function()
       local bufnr = vim.api.nvim_get_current_buf()
       local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
