@@ -45,6 +45,16 @@ M.organize_imports = function(bufnr)
   end)
 end
 
+M.ts_root_markers = {
+  'pnpm-lock.yaml',
+  'package-lock.json',
+  'yarn.lock',
+  'bun.lock',
+  '.git',
+  'tsconfig.json',
+  'jsconfig.json',
+}
+
 M.ts_ls_supported_filetypes = {
   'javascript',
   'javascriptreact',

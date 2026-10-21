@@ -43,16 +43,7 @@ vim.lsp.config('tsc', {
     },
   },
   root_dir = function(bufnr, on_dir)
-    local project_root = vim.fs.root(bufnr, {
-      {
-        'package-lock.json',
-        'yarn.lock',
-        'pnpm-lock.yaml',
-        'bun.lockb',
-        'bun.lock',
-      },
-      '.git',
-    })
+    local project_root = vim.fs.root(bufnr, mylsputils.ts_root_markers)
     local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
     local deno_lock_root = vim.fs.root(bufnr, 'deno.lock')
     if
