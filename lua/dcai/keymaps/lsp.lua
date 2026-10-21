@@ -60,7 +60,7 @@ local lsp_keymap = {
     '<leader>lI',
     function()
       vim.cmd('enew')
-      vim.cmd('checkhealth lsp')
+      vim.cmd('checkhealth vim.lsp')
     end,
     desc = 'lsp info',
   },
