@@ -42,7 +42,13 @@ M.setup = function()
   require('dcai.lsp.python')
   require('dcai.lsp.sourcekit')
   -- require('dcai.lsp.tailwindcss')
+  require('dcai.lsp.tsc')
   require('dcai.lsp.ts_ls')
+  local tsc_env = vim.g.is_env_var_set('USE_TSC') and 'USE_TSC' or 'USE_TSGO'
+  local use_tsc = not vim.g.is_env_var_set(tsc_env)
+    or vim.g.is_env_var_true(tsc_env)
+  vim.lsp.enable('tsc', use_tsc)
+  vim.lsp.enable('ts_ls', not use_tsc)
   -- require('dcai.lsp.vimls')
 end
 

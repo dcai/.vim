@@ -1,7 +1,4 @@
 local mylsputils = require('dcai.lsp.utils')
--- tsgo is now default unless USE_TSGO env var is explicitly set to false
-local use_tsgo = not vim.g.is_env_var_set('USE_TSGO')
-  or vim.g.is_env_var_true('USE_TSGO')
 
 local root_markers = {
   'pnpm-lock.yaml',
@@ -42,37 +39,3 @@ vim.lsp.config.ts_ls = {
     },
   },
 }
-vim.lsp.enable('ts_ls', not use_tsgo)
-
-vim.lsp.config.tsgo = {
-  settings = {
-    typescript = {
-      inlayHints = {
-        parameterNames = {
-          enabled = 'literals',
-          suppressWhenArgumentMatchesName = true,
-        },
-        parameterTypes = { enabled = true },
-        variableTypes = { enabled = true },
-        propertyDeclarationTypes = { enabled = true },
-        functionLikeReturnTypes = { enabled = true },
-        enumMemberValues = { enabled = true },
-      },
-    },
-  },
-  cmd = { 'tsgo', '--lsp', '--stdio' },
-  filetypes = mylsputils.ts_ls_supported_filetypes,
-  on_attach = mylsputils.common_on_attach,
-  -- tsgo ignores the client's encoding preference order, so only offer
-  -- UTF-16 to avoid a position encoding mismatch with copilot (id:1).
-  capabilities = mylsputils.get_lsp_capabilities({
-    general = { positionEncodings = { 'utf-16' } },
-    workspace = {
-      didChangeConfiguration = {
-        dynamicRegistration = true,
-      },
-    },
-  }),
-  root_markers = root_markers,
-}
-vim.lsp.enable('tsgo', use_tsgo)
