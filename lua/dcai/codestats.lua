@@ -173,10 +173,7 @@ local function pulse()
       callback = vim.schedule_wrap(function(resp)
         pulse_in_progress = false
         local status = resp.status
-        if status == 200 or status == 201 then
-          -- logger.info('Pulsed: body sent:', body)
-          -- logger.info('Pulsed: response body', resp.body)
-        else
+        if status ~= 200 and status ~= 201 then
           logger.error('Pulse failed: HTTP ' .. status, resp)
         end
       end),

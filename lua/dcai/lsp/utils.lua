@@ -1,15 +1,6 @@
 local M = {}
 local has_fzflua, fzflua = pcall(require, 'fzf-lua')
 
----get client instance
----@param client_name string
----@param bufnr? number
----@return vim.lsp.Client | nil
-local function get_client(client_name, bufnr)
-  local clients = vim.lsp.get_clients({ name = client_name, bufnr = bufnr })
-  return clients[1] or nil
-end
-
 ---return a function
 ---@param direction number
 ---@return function
@@ -32,28 +23,27 @@ local function key_map(mode, buffer)
   end
 end
 
-M.ts_ls_organize_imports = function(client, bufnr)
+M.organize_imports = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  client = client or get_client('ts_ls', bufnr)
-  local params = {
-    command = '_typescript.organizeImports',
-    arguments = { vim.api.nvim_buf_get_name(bufnr) },
-  }
-  local c = client or get_client('pyright', bufnr)
-  c:exec_cmd(params, { bufnr = bufnr })
-end
+  local clients = vim.lsp.get_clients({
+    bufnr = bufnr,
+    method = 'textDocument/codeAction',
+  })
+  if #clients == 0 then
+    vim.notify(
+      'No LSP client supports code actions in this buffer',
+      vim.log.levels.WARN
+    )
+    return
+  end
 
-M.organize_imports = {
-  pyright = function(client, bufnr)
-    local command = {
-      command = 'pyright.organizeimports',
-      arguments = { vim.api.nvim_buf_get_name(bufnr) },
-    }
-    local c = client or get_client('pyright', bufnr)
-    c:exec_cmd(command, { bufnr = bufnr })
-  end,
-  ts_ls = M.ts_ls_organize_imports,
-}
+  vim.api.nvim_buf_call(bufnr, function()
+    vim.lsp.buf.code_action({
+      context = { only = { 'source.organizeImports' }, diagnostics = {} },
+      apply = true,
+    })
+  end)
+end
 
 M.ts_ls_supported_filetypes = {
   'javascript',
@@ -137,21 +127,11 @@ M.common_on_attach = function(client, bufnr)
     vim.lsp.buf.document_symbol({ on_list = lsp_on_list_handler })
   end, 'go to symbol')
 
+  vim.api.nvim_buf_create_user_command(bufnr, 'OrganizeImports', function()
+    M.organize_imports(bufnr)
+  end, { desc = 'Organize imports with LSP' })
   nmap('grf', function()
-    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-    local lsp_type = ''
-    if vim.list_contains(M.ts_ls_supported_filetypes, filetype) then
-      lsp_type = 'ts_ls'
-    end
-    if filetype == 'php' then
-      lsp_type = 'phpactor'
-    end
-
-    if lsp_type and M.organize_imports[lsp_type] then
-      M.organize_imports[lsp_type](client, bufnr)
-    else
-      print('No organize imports for ' .. filetype)
-    end
+    M.organize_imports(bufnr)
   end, 'Organize Imports')
 end
 
@@ -165,7 +145,11 @@ M.get_lsp_capabilities = function(overrides)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local cmp_loaded, blinkcmp = pcall(require, 'blink.cmp')
   if cmp_loaded then
-    capabilities = vim.tbl_deep_extend('force', capabilities, blinkcmp.get_lsp_capabilities())
+    capabilities = vim.tbl_deep_extend(
+      'force',
+      capabilities,
+      blinkcmp.get_lsp_capabilities()
+    )
   end
 
   if overrides then

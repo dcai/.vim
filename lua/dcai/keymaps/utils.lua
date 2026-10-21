@@ -257,7 +257,7 @@ M.open_git_hosting_web = function()
   --   mode = 'n'
   -- end
   -- require('gitlinker').get_buf_range_url(mode)
-  Snacks.gitbrowse.open()
+  require('snacks').gitbrowse.open()
 end
 
 return M

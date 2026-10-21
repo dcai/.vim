@@ -3,9 +3,9 @@
   "license": "BSD-2-Claus",
   "version": "1.0.0",
   "scripts": {
-    "lint": " selene **/*.lua --display-style quiet"
+    "lint": "selene init.lua lua after/plugin plugin colors --display-style quiet"
   },
   "devDependencies": {
-    "prettier": "^3.5.3"
+    "prettier": "^3.9.10"
   }
 }

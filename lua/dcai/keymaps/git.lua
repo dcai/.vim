@@ -92,7 +92,7 @@ local git_keymap = {
   {
     '<leader>gll',
     function()
-      Snacks.lazygit()
+      require('snacks').lazygit()
     end,
     desc = 'Open Lazygit',
   },

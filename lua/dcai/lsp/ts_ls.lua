@@ -19,14 +19,6 @@ vim.lsp.config.ts_ls = {
   capabilities = mylsputils.get_lsp_capabilities(),
   on_attach = mylsputils.common_on_attach,
   root_markers = root_markers,
-  commands = {
-    OrganizeImports = {
-      function()
-        mylsputils.ts_ls_organize_imports()
-      end,
-      description = 'Organize Imports',
-    },
-  },
   init_options = {
     hostInfo = 'neovim',
     tsserver = {

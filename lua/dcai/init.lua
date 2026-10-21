@@ -57,6 +57,11 @@ vim.g.node_host_prog = vim.g.find_executable({
   '~/.npm-packages/bin/neovim-node-host',
 })
 
+-- Select the provider before plugins can initialize the clipboard.
+if vim.env.SSH_CONNECTION and vim.env.SSH_CONNECTION ~= '' then
+  vim.g.clipboard = 'osc52'
+end
+
 -- Neovim doesn't support legacy terminal options like t_SI/t_EI.
 -- Use guicursor instead so cursor shape changes work in terminals and tmux.
 vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50'
@@ -101,29 +106,6 @@ if is_macos and im_select_bin then
       })
     end,
     desc = 'Switch macOS input source to Australian English on InsertLeave',
-  })
-end
-
--- Copy/Paste when using ssh on a remote server
--- Only works when neovim >= 0.10.0
-local is_ssh = vim.env.SSH_CONNECTION and vim.env.SSH_TTY
-local has_osc52 = vim.clipboard and vim.clipboard.osc52
-if is_ssh and has_osc52 then
-  vim.api.nvim_create_autocmd('VimEnter', {
-    group = vim.api.nvim_create_augroup('ssh_clipboard', { clear = true }),
-    callback = function()
-      vim.g.clipboard = {
-        name = 'OSC 52',
-        copy = {
-          ['+'] = require('vim.clipboard.osc52').copy,
-          ['*'] = require('vim.clipboard.osc52').copy,
-        },
-        paste = {
-          ['+'] = require('vim.clipboard.osc52').paste,
-          ['*'] = require('vim.clipboard.osc52').paste,
-        },
-      }
-    end,
   })
 end
 

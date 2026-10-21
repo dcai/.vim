@@ -4,14 +4,16 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "**.lua"
+      - "**/*.lua"
       - "selene.toml"
-      - "luajit.yml"
+      - "neovim.yaml"
+      - ".github/workflows/selene.yml"
   pull_request:
     paths:
-      - "**.lua"
+      - "**/*.lua"
       - "selene.toml"
-      - "luajit.yml"
+      - "neovim.yaml"
+      - ".github/workflows/selene.yml"
 
 jobs:
   lint:
@@ -26,4 +28,4 @@ jobs:
           curl -Ls https://github.com/Kampfkarren/selene/releases/download/0.28.0/selene-0.28.0-linux.zip -o selene.zip
           unzip selene.zip
           chmod +x selene
-          ./selene **/*.lua --display-style quiet
+          ./selene init.lua lua after/plugin plugin colors --display-style quiet

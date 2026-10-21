@@ -211,8 +211,8 @@ local function send_terminal_sequence(sequence)
     return nil
   end
 
-  io.stdout:write(wrapped_sequence)
-  io.stdout:flush()
+  io.write(wrapped_sequence)
+  io.flush()
   return nil
 end
 
