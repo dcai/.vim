@@ -88,7 +88,7 @@ M.setup = function(plug_opts)
   --- UI and usability
   ----------------------------------------------------------------------------
   Plug('dmtrKovalenko/fff', {
-    ['tag'] = 'v0.10.3',
+    ['tag'] = 'v0.11.0',
     ['do'] = function()
       local ok, fffdownload = pcall(require, 'fff.download')
       if ok then
