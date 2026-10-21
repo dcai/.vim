@@ -6,7 +6,10 @@ local DIAGNOSTIC_LEVELS = {
 }
 local IGNORE_TS_DIAGNOSTICS_CODES = {
   80001, -- commonjs module
-  6133, -- unused var
+  2345, -- argument of type '<type>' is not assignable to parameter of type '<type>'
+  -- 2339, -- property does not exist on type
+  -- 6133, -- unused var
+  7006, -- parameter implicitly has an 'any' type
   7016, -- missing declaration file
 }
 local IGNORE_PHP_DIAGNOSTIC_CODES = {
