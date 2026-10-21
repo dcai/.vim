@@ -428,7 +428,6 @@ if vim.fn.has('nvim') == 1 then
   local neovim_only = {
     MsgArea = { bg = nil, fg = colors.nicelightgreen }, -- Command line area
     TermCursor = { bg = colors.red, fg = colors.white }, -- Terminal mode cursor
-    TermCursorNC = { bg = colors.gray, fg = colors.black }, -- Terminal mode cursor in inactive window
   }
   apply_highlights(neovim_only)
 
