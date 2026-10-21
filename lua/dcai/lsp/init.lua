@@ -9,7 +9,7 @@ local servers = {
   -- { name = 'pyright', mason = 'pyright' },
   { name = 'ty', mason = 'ty' },
   -- { name = 'tailwindcss', mason = 'tailwindcss-language-server' },
-  { name = 'tsgo', mason = 'tsgo' },
+  { name = 'tsc', mason = 'tsc' },
   { name = 'ts_ls', mason = 'typescript-language-server' },
   -- { name = 'vimls', mason = 'vim-language-server' },
 }

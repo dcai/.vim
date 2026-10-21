@@ -40,13 +40,6 @@ local vim_keymap = {
     desc = 'checkhealth',
   },
   {
-    '<leader>kL',
-    function()
-      vim.cmd('checkhealth lsp')
-    end,
-    desc = 'lsp status',
-  },
-  {
     '<leader>kU',
     function()
       vim.cmd('PlugUpdate')
