@@ -63,21 +63,15 @@ vim.diagnostic.config({
   },
 })
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = function(
-  __err,
-  result,
-  ctx,
-  _config
-)
-  local filtered_diagnostic = {}
-  for _i, diagnostic in ipairs(result.diagnostics) do
-    -- vim.g.logger.info('all codes: ' .. vim.inspect(IGNORE_DIAGNOSTIC_CODES))
-    -- vim.g.logger.info('code: ' .. vim.inspect(diagnostic.code))
-    if not vim.tbl_contains(IGNORE_DIAGNOSTIC_CODES, diagnostic.code) then
-      table.insert(filtered_diagnostic, diagnostic)
-    end
-  end
-
-  result.diagnostics = filtered_diagnostic
-  return vim.lsp.diagnostic.on_publish_diagnostics(nil, result, ctx)
+-- Push, document-pull, and workspace-pull diagnostics all pass through here.
+local set_diagnostics = vim.diagnostic.set
+vim.diagnostic.set = function(namespace, bufnr, diagnostics, opts)
+  local filtered = vim.tbl_filter(function(diagnostic)
+    local user_data = diagnostic.user_data
+    local is_lsp = type(user_data) == 'table' and type(user_data.lsp) == 'table'
+    return not (
+      is_lsp and vim.list_contains(IGNORE_DIAGNOSTIC_CODES, diagnostic.code)
+    )
+  end, diagnostics)
+  return set_diagnostics(namespace, bufnr, filtered, opts)
 end
