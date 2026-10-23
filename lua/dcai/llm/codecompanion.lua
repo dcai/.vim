@@ -96,17 +96,15 @@ M.setup = function()
 
   local instance = require('codecompanion')
   instance.setup({
-    -- opts = {
-    --   log_level = 'INFO', -- TRACE|DEBUG|ERROR|INFO
-    --   language = 'English',
-    --   system_prompt = function(_opts)
-    --     return require('dcai.llm.prompt_library').BASE_PROMPT_CODING
-    --   end,
-    -- },
-    strategies = {
+    interactions = {
       inline = {
         adapter = llm_provider,
+      },
+      shared = {
         keymaps = {
+          -- Reserve ga/gr for whole-change review, not the new inline hunk actions.
+          accept_hunk = false,
+          reject_hunk = false,
           accept_change = {
             modes = { n = 'ga' },
             description = 'Accept the suggested change',
@@ -137,7 +135,7 @@ The user's Neovim version is %s.
 The user is working on a %s machine. Please respond with system specific commands if applicable.
 
 
-You can use @{cmd_runner} tool.
+Only use tools that are available in the current chat.
 ]],
                 ctx.language,
                 ctx.date,
@@ -147,10 +145,14 @@ You can use @{cmd_runner} tool.
           end,
         },
         adapter = llm_provider,
-        show_settings = true, -- Show LLM settings at the top of the chat buffer?
+        sessions = {
+          enabled = true,
+          autosave = true,
+          continuous_save = true,
+        },
         roles = {
           ---The header name for the LLM's messages
-          ---@type string|fun(adapter: CodeCompanion.Adapter): string
+          ---@type string|fun(adapter: CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter): string
           llm = function(adapter)
             ---@diagnostic disable-next-line
             return adapter.formatted_name
@@ -167,11 +169,6 @@ You can use @{cmd_runner} tool.
               provider = 'fzf_lua', -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
             },
           },
-          ['buffer'] = {
-            opts = {
-              provider = 'fzf_lua',
-            },
-          },
           ['symbols'] = {
             opts = {
               provider = 'fzf_lua',
@@ -184,9 +181,9 @@ You can use @{cmd_runner} tool.
           },
         },
         tools = {
-          ['cmd_runner'] = {
+          ['run_command'] = {
             opts = {
-              requires_approval = false,
+              require_approval_before = false,
             },
           },
         },
@@ -213,7 +210,7 @@ You can use @{cmd_runner} tool.
           },
           stop = {
             modes = {
-              n = 'c-s',
+              n = '<C-s>',
             },
           },
         },
@@ -260,27 +257,35 @@ You can use @{cmd_runner} tool.
       },
       http = {
         local_copilot = function()
-          return require('codecompanion.adapters').extend('openai_compatible', {
+          return require('codecompanion.adapters').extend('openai_responses', {
+            url = 'http://localhost:7890/v1/responses',
             env = {
-              url = 'http://localhost:7890',
               api_key = 'neovim-codecompanion',
-              chat_url = '/v1/chat/completions',
-              models_endpoint = '/v1/models',
             },
             schema = {
               model = {
-                default = 'gpt-4.1',
-                -- default = 'claude-4.5-sonnet',
+                default = 'gpt-6-luna',
+                choices = function()
+                  return {
+                    ['gpt-6-luna'] = {
+                      formatted_name = 'GPT-6 Luna',
+                      meta = { context_window = 1000000 },
+                      opts = {
+                        can_reason = true,
+                        can_use_tools = true,
+                        has_vision = true,
+                        can_form_structured_outputs = true,
+                      },
+                    },
+                  }
+                end,
+              },
+              ['reasoning.effort'] = {
+                choices = { 'none', 'low', 'medium', 'high', 'xhigh', 'max' },
               },
               temperature = {
-                order = 2,
-                mapping = 'parameters',
-                type = 'number',
-                optional = true,
-                default = 1,
-                desc = 'What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.',
-                validate = function(n)
-                  return n >= 0 and n <= 2, 'Must be between 0 and 2'
+                enabled = function()
+                  return false
                 end,
               },
             },
@@ -318,13 +323,13 @@ You can use @{cmd_runner} tool.
     },
     prompt_library = {
       ['Neovim Expert'] = {
-        strategy = 'chat',
+        interaction = 'chat',
         description = 'neovim help',
         opts = {
           index = 11,
           is_slash_cmd = false,
           auto_submit = false,
-          short_name = 'neovim',
+          alias = 'neovim',
         },
         -- references = {
         --   {
@@ -348,18 +353,16 @@ You can use @{cmd_runner} tool.
         },
       },
       ['Unit Tests'] = {
-        strategy = 'chat',
+        interaction = 'chat',
         description = 'Generate unit tests for the selected code',
         opts = {
           index = 7,
-          is_default = true,
           is_slash_cmd = false,
           modes = { 'v' },
-          short_name = 'tests',
+          alias = 'unit_tests',
           -- auto_submit = true,
           auto_submit = false,
           user_prompt = false,
-          placement = 'new',
           stop_context_insertion = true,
         },
         prompts = {
@@ -385,10 +388,14 @@ You can use @{cmd_runner} tool.
           {
             role = 'user',
             content = function(context)
-              vim.g.logger.info(vim.inspect(context))
-              local code = require('codecompanion.helpers.actions').get_code(
-                context.start_line,
-                context.end_line
+              local code = table.concat(
+                vim.api.nvim_buf_get_lines(
+                  context.bufnr,
+                  context.start_line - 1,
+                  context.end_line,
+                  false
+                ),
+                '\n'
               )
 
               return string.format(
@@ -412,11 +419,10 @@ Please generate unit tests for this code from buffer %d:
         },
       },
       ['Custom Prompt'] = {
-        strategy = 'inline',
+        interaction = 'inline',
         description = 'Prompt the LLM from Neovim',
         opts = {
           index = 3,
-          is_default = true,
           is_slash_cmd = false,
           user_prompt = true,
         },
@@ -425,7 +431,7 @@ Please generate unit tests for this code from buffer %d:
             role = 'system',
             content = function(context)
               return string.format(
-                [[I want you to act as a senior %s developer. I will ask you specific questions and I want you to return raw code only (no codeblocks and no explanations). If you can't respond with code, respond with nothing]],
+                [[Act as a senior %s developer. Make the requested edits directly. Keep explanations brief.]],
                 context.filetype
               )
             end,
@@ -442,54 +448,42 @@ Please generate unit tests for this code from buffer %d:
         -- provider = 'default',
         provider = 'fzf_lua',
         opts = {
-          show_default_actions = true,
-          show_default_prompt_library = true,
+          show_preset_actions = true,
+          show_preset_prompts = true,
         },
       },
       diff = {
         enabled = true,
-        close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
-        layout = 'vertical', -- vertical|horizontal split for default provider
-        opts = {
-          'internal',
-          'filler',
-          'closeoff',
-          'algorithm:patience',
-          'followwrap',
-          'linematch:120',
-        },
-        provider = 'default', -- default|mini_diff
-      },
-      inline = {
-        layout = 'vertical', -- vertical|horizontal|buffer
       },
       chat = {
         intro_message = 'Welcome to CodeCompanion ✨! Press ? for options',
         auto_scroll = false,
         show_header_separator = false, -- Show header separators in the chat buffer? Set this to false if you're using an external markdown formatting plugin
         separator = '─', -- The separator between the different messages in the chat buffer
-        show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
+        show_context = true, -- Show context shared with the LLM in the chat buffer
         show_settings = true, -- Show LLM settings at the top of the chat buffer?
         show_token_count = true, -- Show the token count for each response?
         start_in_insert_mode = false, -- Open the chat buffer in insert mode?
         -- Change the default icons
         icons = {
-          pinned_buffer = ' ',
-          watched_buffer = '👀 ',
+          sync_all = ' ',
+          sync_diff = '👀 ',
         },
 
-        -- Alter the sizing of the debug window
-        debug_window = {
-          ---@return number|fun(): number
-          width = vim.o.columns - 5,
-          ---@return number|fun(): number
-          height = vim.o.lines - 2,
+        -- Size floating windows when opened, so they follow editor resizing.
+        floating_window = {
+          width = function()
+            return vim.o.columns - 5
+          end,
+          height = function()
+            return vim.o.lines - 2
+          end,
         },
 
         -- Options to customize the UI of the chat buffer
         window = {
           layout = 'vertical', -- float|vertical|horizontal|buffer
-          position = nil, -- left|right|top|bottom (nil will default depending on vim.opt.plitright|vim.opt.splitbelow)
+          position = nil, -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
           border = 'single',
           height = 0.8,
           width = 0.45,
@@ -511,7 +505,7 @@ Please generate unit tests for this code from buffer %d:
 
         ---Customize how tokens are displayed
         ---@param tokens number
-        ---@param adapter CodeCompanion.Adapter
+        ---@param adapter CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter
         ---@return string
         token_count = function(tokens, adapter)
           return ' (' .. tokens .. ' tokens)'
