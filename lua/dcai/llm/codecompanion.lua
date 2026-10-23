@@ -97,6 +97,9 @@ M.setup = function()
   local instance = require('codecompanion')
   instance.setup({
     interactions = {
+      cmd = {
+        adapter = llm_provider,
+      },
       inline = {
         adapter = llm_provider,
       },
@@ -296,16 +299,7 @@ Only use tools that are available in the current chat.
             name = 'deepseek',
             schema = {
               model = {
-                default = 'deepseek-chat',
-              },
-            },
-          })
-        end,
-        grok = function()
-          return require('codecompanion.adapters').extend('xai', {
-            schema = {
-              model = {
-                default = 'grok-4',
+                default = 'deepseek-flash',
               },
             },
           })
@@ -314,11 +308,24 @@ Only use tools that are available in the current chat.
           return require('codecompanion.adapters').extend('openai', {
             schema = {
               model = {
-                default = 'gpt-4.1-mini',
+                default = 'gpt-6-luna',
               },
             },
           })
         end,
+      },
+    },
+    rules = {
+      root = {
+        description = 'Shared root agent instructions',
+        files = { vim.fn.expand('~/.dotfiles/agents/AGENTS-ROOT.md') },
+      },
+      opts = {
+        chat = {
+          enabled = true,
+          autoload = { 'root', 'default' },
+          autoload_groups_in_prompt_library = true,
+        },
       },
     },
     prompt_library = {
