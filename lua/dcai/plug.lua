@@ -239,7 +239,6 @@ M.setup = function(plug_opts)
   Plug('tpope/vim-eunuch') -- Vim sugar for the UNIX shell
   Plug('isobit/vim-caddyfile')
   Plug('hashivim/vim-terraform')
-  -- Plug('greggh/claude-code.nvim')
   END()
 end
 
