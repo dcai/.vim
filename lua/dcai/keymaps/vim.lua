@@ -14,11 +14,6 @@ local vim_keymap = {
     desc = 'ALEInfo',
   },
   {
-    '<leader>kC',
-    '<cmd>Copilot status<cr>',
-    desc = 'copilot status',
-  },
-  {
     '<leader>km',
     function()
       vim.cmd('Mason')
