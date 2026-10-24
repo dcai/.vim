@@ -51,7 +51,7 @@ M.setup = function(plug_opts)
   ----------------------------------------------------------------------------
   --- AI
   ----------------------------------------------------------------------------
-  -- Plug('copilotlsp-nvim/copilot-lsp')
+  Plug('copilotlsp-nvim/copilot-lsp')
   -- Plug('zbirenbaum/copilot.lua')
   -- Plug('github/copilot.vim', {
   --   setup = function()

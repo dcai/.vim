@@ -3,7 +3,7 @@ local M = {}
 local servers = {
   { name = 'bashls', mason = 'bash-language-server' },
   -- { name = 'biome', mason = 'biome' },
-  { name = 'copilot_language_server', mason = 'copilot-language-server' },
+  { name = 'copilot', mason = 'copilot-language-server' },
   { name = 'lua_ls', mason = 'lua-language-server' },
   { name = 'phpactor', mason = 'phpactor' },
   -- { name = 'pyright', mason = 'pyright' },

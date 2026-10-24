@@ -82,37 +82,35 @@ local function sign_out(_, client)
   )
 end
 
-vim.lsp.enable('copilot')
+local features = require('dcai.lsp.copilot-features')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.general.positionEncodings = { 'utf-16' }
-vim.lsp.config.copilot = {
+vim.lsp.config('copilot', {
   capabilities = capabilities,
-  cmd = {
-    'copilot-language-server',
-    '--stdio',
-  },
+  cmd = { 'copilot-language-server', '--stdio' },
   init_options = {
-    editorInfo = {
-      name = 'Neovim',
-      version = tostring(vim.version()),
-    },
+    editorInfo = { name = 'Neovim', version = tostring(vim.version()) },
     editorPluginInfo = {
       name = 'neovim-copilot-lsp',
       version = tostring(vim.version()),
     },
   },
   settings = {
-    -- nextEditSuggestions = {
-    --   enabled = true,
-    -- },
-    telemetry = {
-      telemetryLevel = 'all',
-    },
+    nextEditSuggestions = { enabled = true },
+    telemetry = { telemetryLevel = 'all' },
   },
-  root_markers = {
-    '.git',
-  },
+  -- Gate startup before didOpen can send the buffer's contents to the server.
+  root_dir = function(bufnr, on_dir)
+    if features.allowed(bufnr) then
+      on_dir(
+        vim.fs.root(bufnr, '.git')
+          or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
+      )
+    end
+  end,
+  handlers = { didChangeStatus = features.status_handler },
   on_attach = function(client, bufnr)
+    features.attach(client, bufnr)
     vim.api.nvim_buf_create_user_command(bufnr, 'LspCopilotSignIn', function()
       sign_in(bufnr, client)
     end, { desc = 'Sign in Copilot with GitHub' })
@@ -120,40 +118,5 @@ vim.lsp.config.copilot = {
       sign_out(bufnr, client)
     end, { desc = 'Sign out Copilot with GitHub' })
   end,
-}
-
----
---- You need to enable `:help lsp-inline_completion` to receive suggestions. For example, you can enable it in the LspAttach event:
----
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local bufnr = args.buf
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-
-    if
-      client:supports_method(
-        vim.lsp.protocol.Methods.textDocument_inlineCompletion,
-        bufnr
-      )
-    then
-      vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-      vim.keymap.set(
-        'i',
-        '<c-f>',
-        function()
-          if not vim.lsp.inline_completion.get() then
-            return '<c-f>'
-          end
-        end,
-        { desc = 'LSP: accept inline completion', buffer = bufnr, expr = true }
-      )
-      -- vim.keymap.set(
-      --   'i',
-      --   '<C-G>',
-      --   vim.lsp.inline_completion.select,
-      --   { desc = 'LSP: switch inline completion', buffer = bufnr }
-      -- )
-    end
-  end,
 })
+vim.lsp.enable('copilot')
