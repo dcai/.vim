@@ -1,5 +1,18 @@
 local utils = require('dcai.keymaps.utils')
 
+local function diagnostic_tool(namespace_name, clients)
+  for _, client in ipairs(clients) do
+    -- Pull-diagnostic namespaces append a provider identifier to this prefix.
+    local prefix = string.format('nvim.lsp.%s.%d', client.name, client.id)
+    if
+      namespace_name == prefix or vim.startswith(namespace_name, prefix .. '.')
+    then
+      return client.name
+    end
+  end
+  return namespace_name
+end
+
 local lsp_keymap = {
   { '<leader>l', group = 'lsp' },
   -- grn is default rename
@@ -25,12 +38,21 @@ local lsp_keymap = {
         [vim.diagnostic.severity.HINT] = 'HINT',
       }
 
+      local clients = vim.lsp.get_clients({ bufnr = bufnr })
       local lines = {}
       for i, d in ipairs(diagnostics) do
+        local namespace = d.namespace
+          and vim.diagnostic.get_namespace(d.namespace)
+        local namespace_name = namespace and namespace.name or 'unknown'
+        local source = d.source
+        if not source or source == '' then
+          source = 'not provided'
+        end
         local header = string.format(
-          '[%s]%s%s',
+          '[%s] tool: %s | source: %s%s',
           severity_names[d.severity] or 'UNKNOWN',
-          d.source and (' ' .. d.source) or '',
+          diagnostic_tool(namespace_name, clients),
+          source,
           d.code and (' (' .. tostring(d.code) .. ')') or ''
         )
         table.insert(lines, header)
