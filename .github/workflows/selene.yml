@@ -3,6 +3,8 @@ name: Selene Lint
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - "**/*.lua"
       - "selene.toml"
@@ -15,13 +17,23 @@ on:
       - "neovim.yaml"
       - ".github/workflows/selene.yml"
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Selene
         run: |

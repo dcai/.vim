@@ -1,4 +1,5 @@
 [tools]
+jactionlint = "latest"
 node = "lts"
 
 [env]

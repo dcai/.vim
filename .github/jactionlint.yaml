@@ -1,0 +1,6 @@
+rules:
+  unpinned-uses:
+    level: error
+    policies:
+      # Track checkout updates through its major tag instead of a fixed commit.
+      actions/checkout: ref-pin

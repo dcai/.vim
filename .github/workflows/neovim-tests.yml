@@ -6,6 +6,10 @@ on:
       - "**/*.lua"
       - ".github/workflows/neovim-tests.yml"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -20,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Install latest stable Neovim
         shell: bash

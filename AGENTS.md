@@ -1,64 +1,103 @@
-This repository houses a Neovim configuration in Lua and partially some vimscripts.
+# Neovim Configuration
 
-## Repository Overview
+This repository contains a Lua-first Neovim configuration with retained legacy Vimscript. Target Neovim 0.12 or newer. This is a personal setup, so local paths and external tools may need platform-specific handling.
 
-- **Plugin Management**: Uses [vim-plug](https://github.com/junegunn/vim-plug) for plugin management, with a Lua wrapper in `lua/dcai/plug.lua` for declarative plugin setup and post-install hooks. Plugins are organized and configured in Lua for performance and maintainability.
-- **Key Plugins**: Includes `plenary.nvim` (utility functions), `fzf-lua` (fuzzy finder), `mini.nvim` (editing utilities) and others for LSP, Git, UI, and AI coding assistants.
-- **AI/LLM Integration**: Modern config integrates AI tools (Copilot, CodeCompanion, gp.nvim) with custom prompts and keymaps.
-- **LSP & Treesitter**: Language server support is modularized in `lua/dcai/lspconfig/`, with Treesitter and textobjects for advanced syntax and navigation.
-- **Keymaps**: Key mappings are organized by topic in `lua/dcai/keymaps/`, using which-key for discoverability. Leader key is `<space>`, with ergonomic mappings for common actions.
-- **Legacy Vimscript**: Vimscript files are preserved for reference and backward compatibility, but new config is Lua-first.
+## Repository Map
 
-## Coding & Contribution Guidelines
+- `init.lua`: Entry point; loads `lua/dcai/init.lua`.
+- `lua/dcai/globals.lua`: Shared helpers, paths, and environment handling.
+- `lua/dcai/plug.lua`: vim-plug declarations and setup hooks.
+- `lua/dcai/keymaps/`: Mappings organized by topic, with which-key descriptions.
+- `lua/dcai/lsp/`: Native language-server configuration and shared LSP helpers.
+- `lua/dcai/llm/`: AI integrations and prompts.
+- `after/plugin/`: Plugin-specific configuration.
+- `after/ftplugin/`: Filetype-specific configuration.
+- `plugin/`: Runtime plugin scripts.
+- `colors/`, `queries/`: Color schemes and Tree-sitter queries.
+- `loader.vim`, `core.vim`, `before/`, `os/`: Shared Vimscript and platform setup.
+- `tests/`: Headless Lua tests.
+- `.github/workflows/`: Separate Selene lint and Neovim test workflows.
 
-- **Lua First**: Prefer Lua for new config and plugin setup. Use the Lua wrapper for vim-plug in `plug.lua`.
-- **Plugin Config**: Place plugin-specific config in `after/plugin/` (Lua preferred). Use `setup` functions for post-install configuration.
-- **Keymaps**: Add new keymaps in the appropriate `lua/dcai/keymaps/` module. Use which-key for discoverability.
-- **LSP**: Add or update LSP configs in `lua/dcai/lspconfig/`. Use modular functions and utility helpers.
-- **AI/LLM**: Integrate new AI tools in `lua/dcai/llm/` and update prompt libraries as needed.
-- **Preserve History**: Do not remove legacy Vimscript unless explicitly decided. Keep historical files for reference.
-- **Style**: Follow idiomatic Lua style. Use descriptive names, minimal global state, and modular functions. Prefer table-based config and explicit setup calls.
-- **Testing**: Use integrated test runners and ensure config works across supported platforms (macOS, Linux, Windows).
+Check the active declarations and startup calls before changing a feature. A configuration file on disk does not mean its plugin is enabled. Commented plugin declarations and legacy files are not evidence of active behavior.
 
-## 🌍 Environment Variables
+## Implementation Guidelines
 
-The configuration respects several environment variables to customize behavior:
+- Prefer Lua for new configuration. Keep changes in the existing topic or plugin module.
+- Use the vim-plug wrapper in `lua/dcai/plug.lua`; do not introduce another plugin manager.
+- Plugin `setup` hooks run after `plug#end()`. They are not installation hooks; the plugin's `do` option handles installation tasks.
+- Prefer native Neovim APIs and existing dependencies over additional plugins.
+- Use descriptive names, small helpers, and explicit setup calls. Avoid new globals unless an existing integration requires them.
+- Follow `stylua.toml`: two-space indentation, an 80-column limit, and single quotes where possible.
+- Preserve legacy Vimscript unless removal is explicitly requested. Do not add compatibility layers for obsolete APIs.
+- Use Neovim path helpers for new path handling. Guard platform-specific commands and preserve existing OS behavior.
 
-### Development Tools
+## Mappings and Buffer Lifecycle
 
-- **`JSONFIXER`**: JSON formatter tool (default: `prettier`) - used in ale.lua:1
-- **`JSFIXER`**: JavaScript formatter tool (default: `prettier`) - used in ale.lua:2
-- **`CSSFIXER`**: CSS formatter tool (default: `prettier`) - used in ale.lua:3
-- **`JSLINTER`**: JavaScript linter tool (default: `biome`) - used in ale.lua:82
-- **`VIM_FZF_ENABLE_FILE_ICONS`**: Enable file icons in FZF (set to `'true'`) - commented out in fzflua_userconfig.lua:17
+- Place mappings in the appropriate `lua/dcai/keymaps/` module and provide descriptions for which-key.
+- Before choosing a key, search the configuration and inspect loaded mappings with `maparg()` or `:verbose map` in the relevant modes and filetypes.
+- Check terminal aliases such as Tab/Ctrl-i. A buffer-local mapping can shadow an existing global plugin mapping even when its fallback returns the original keycode.
+- Scope feature-specific mappings and commands to eligible buffers. Cleanup must remove only mappings and commands owned by that feature.
+- Give autocommands named augroups. Avoid duplicate registrations after reloads.
+- Cancel pending work and clear owned state when buffers change, detach, or are wiped.
+- Discard asynchronous responses for stale buffer contents or an old feature session. Cancellation alone cannot stop a callback already queued for execution.
 
-### System Behavior
+## Language Servers and Plugins
 
-- **`NVIM_SHADA`**: Custom path for Neovim's ShaDa file - used in init.lua:39
-- **`VIRTUAL_ENV`**: Python virtual environment path (automatically used by pyright LSP) - used in pyright.lua:7-8
-- **`SSH_CONNECTION`** & **`SSH_TTY`**: Detected automatically to enable OSC52 clipboard for SSH sessions - used in init.lua:65
-- **`MYVIMRC`**: Path to vimrc file for reloading - used in vim.lua keymap
-- **`VIMRUNTIME`**: Vim runtime path (automatically set by Neovim) - used in lua_ls.lua:55
-- **`NODE_TLS_REJECT_UNAUTHORIZED`**: Set to `"0"` to disable TLS verification for development - set in init.lua
+- Define language servers with `vim.lsp.config()` and `vim.lsp.enable()` in `lua/dcai/lsp/`.
+- Reuse `lua/dcai/lsp/utils.lua` for shared capabilities and attachment behavior.
+- Keep Mason-managed packages in `lua/dcai/lsp/init.lua` aligned with the servers being configured. System-provided servers may need separate installation.
+- Keep completion, diagnostics, and server-specific features distinct. Do not start duplicate clients for features that can share one server.
+- Preserve position encoding and document-version handling when changing LSP requests or edits.
+- Apply buffer exclusions before server attachment when the goal is to prevent document contents from being sent.
+- Check active configuration before documenting defaults. For example, Python currently uses `ty`; the Pyright configuration is commented out.
 
-### Code Statistics
+## Environment and Personal Settings
 
-- **`CODESTATS_API_KEY`**: API key for Code::Stats tracking service - used in codestats.lua:108
-- **`CODESTATS_API_URL`**: Custom Code::Stats API URL (default: `https://codestats.net/api`) - commented in codestats.lua:104-106
+Use file paths, not line numbers, when documenting these settings. Verify that an environment-variable lookup is active rather than commented out.
 
-### Color Scheme
+- `after/plugin/ale.lua`: `JSONFIXER`, `JSFIXER`, `CSSFIXER`, `YAMLFIXER`, and `MDFIXER` default to `prettier`; `JSLINTER` defaults to `biome`.
+- `lua/dcai/init.lua`: `NVIM_SHADA` overrides the ShaDa path; `SSH_CONNECTION` selects the OSC52 clipboard provider.
+- `lua/dcai/lsp/init.lua`: `USE_TSC` selects the native TypeScript server or `ts_ls`. `USE_TSGO` is checked only when `USE_TSC` is unset.
+- `lua/dcai/codestats.lua`: `CODESTATS_API_KEY` enables Code::Stats integration. The API URL environment override is commented out.
+- `colors/pine.lua`: `VIM_PINE_COLORSCHEME_STL_FG`, `VIM_PINE_COLORSCHEME_STL_BG`, and `VIM_PINE_COLORSCHEME_STL_BG_NC` control statusline colors. `VIM_DISABLE_MODE_CHANGE=true` or `1` disables mode-based statusline color changes.
 
-The pine color scheme supports several environment variables for customization:
+`init.lua` and `mise.toml` currently set `NODE_TLS_REJECT_UNAUTHORIZED=0`, which disables Node TLS certificate verification. Copilot telemetry is explicitly enabled in its server configuration. These are deliberate personal settings with security and privacy implications; do not change them incidentally or describe them as secure defaults. Never expose credentials or tokens in logs, tests, or documentation.
 
-- **`VIM_PINE_COLORSCHEME_STL_FG`**: Sets the foreground color for statusline (default: moss color) - used in colors/pine.lua:557
-- **`VIM_PINE_COLORSCHEME_STL_BG`**: Sets the background color for statusline (default: kombu_green) - used in colors/pine.lua:558
-- **`VIM_PINE_COLORSCHEME_STL_BG_NC`**: Sets the background color for inactive window statusline (default: axolotl color) - used in colors/pine.lua:559
-- **`VIM_DISABLE_MODE_CHANGE`**: Set to `'true'` or `'1'` to disable automatic statusline color changes based on Vim mode - used in colors/pine.lua:646
+## Validation
 
-## For AI Agents
+Run commands from the repository root. Selene and StyLua must be installed separately.
 
-- **Understand the modular structure**: Most config logic is in `lua/dcai/` and subfolders. Plugin management is declarative in `plug.lua`.
-- **AI/LLM features**: prompt libraries in `llm/`, and keymaps for chat/coding assistants.
-- **Key conventions**: Use Lua for new features, keep plugin config modular, and follow commit/message conventions.
-- **Preserve legacy**: Do not remove Vimscript files unless directed. Use them as reference for porting to Lua.
-- **Testing**: Ensure changes do not break cross-platform support or core workflows (editing, LSP, AI, Git, FZF).
+```sh
+selene init.lua lua after/plugin plugin colors --display-style quiet
+stylua --check init.lua lua after/plugin plugin colors tests
+```
+
+`mise run lint` runs the Selene command above. `package.json` currently has no npm scripts; do not assume `npm run lint` exists.
+
+Run the headless tests in separate processes because they replace global Neovim functions:
+
+```sh
+nvim --headless --clean -l tests/copilot-test.lua
+nvim --headless --clean -l tests/copilot-inline-test.lua
+```
+
+The tests require `copilot-lsp` under `vim.fn.stdpath('data') .. '/plug/copilot-lsp'`. They do not require a Copilot account, token, or language-server executable. See the test workflow for isolated dependency setup.
+
+- Add regression coverage for behavior changes, especially mapping ownership and asynchronous lifecycle handling.
+- When a bug involves a native Neovim API, exercise the real API in regression tests rather than mocking away the failing behavior.
+- Use scratch buffers and synthetic content for runtime checks. Disable auto-save before modifying test buffers in a full-config session. Do not overwrite the user's open files or saved edits.
+- Test affected platform behavior where possible. State which environments were actually checked; do not claim cross-platform validation from a single local run.
+- Run `git diff --check` before finishing.
+
+## Continuous Integration
+
+- Keep linting in `.github/workflows/selene.yml` and Neovim tests in `.github/workflows/neovim-tests.yml`.
+- The test workflow runs only on pushes affecting Lua files or the workflow itself. Do not add scheduled or pull-request triggers unless requested.
+- Test against latest stable Neovim and latest upstream test dependencies. Do not pin them to a particular version or commit; upstream breakages should be visible.
+- Validate workflow changes with the mise-managed `jactionlint` (`mise exec -- jactionlint`). YAML parsing alone does not check GitHub Actions expression contexts or semantics.
+
+## Documentation
+
+- Keep `readme.md` generic: overview, requirements, installation, structure, development, and history.
+- Do not add detailed keymap references or plugin-specific walkthroughs to the README unless requested.
+- Update existing documentation instead of creating parallel guides. Avoid duplicate instructions, exhaustive plugin inventories, and references to unstable line numbers.
