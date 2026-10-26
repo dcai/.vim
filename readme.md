@@ -1,5 +1,3 @@
-# dcai's Neovim Configuration
-
 ```
        __           _          _
   ____/ /________ _(_)  _   __(_)___ ___  __________
@@ -10,69 +8,87 @@
 ```
 
 [![Selene Lint](https://github.com/dcai/.vim/actions/workflows/selene.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/selene.yml)
+[![Neovim Tests](https://github.com/dcai/.vim/actions/workflows/neovim-tests.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/neovim-tests.yml)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/dcai/.vim)
 
-A personal Neovim configuration with 15+ years of evolution, migrated from Vim to Neovim in early 2023. It combines Lua-first Neovim modules with retained Vimscript customizations.
+A personal Neovim configuration with 15+ years of evolution, migrated from Vim to Neovim in early 2023. It combines Lua-first modules with retained Vimscript customizations.
 
-## 🚀 Installation
+This is a personal setup, not a minimal starter config. Review local paths, environment settings, and external integrations before using it on another machine.
 
-```fish
-# Clone the repository
-git clone https://github.com/dcai/.vim.git ~/.config/nvim
+## Requirements
 
-# Optional: Create symlink for Vim compatibility
-ln -s ~/.config/nvim ~/.vim
+- Neovim 0.12 or newer.
+- Git and curl for installing plugins and tools.
+- Node.js LTS for Node-based tools. `mise.toml` tracks Node LTS.
+- Additional command-line tools depend on the features you use, such as ripgrep, fd, fzf, bat, and tmux.
 
-# For fish shell users: Create nvim symlink as vim
-ln -s (which nvim) ~/.local/bin/vim
-```
+## Installation
 
-## ⚙️ Configuration Structure
-
-- `init.lua`: Main entry point
-- `core.vim`: Core Vim settings and functionality
-- `filetype.vim`: Filetype-specific settings
-- `gui.vim`: GUI-related configurations
-- `loader.vim`: Script loader and environment detection
-- `lua/dcai/`: Core Lua configuration modules
-  - `plug.lua`: Plugin management
-  - `keymaps/`: Keyboard mappings organized by functionality
-  - `lspconfig/`: Language-server configuration
-  - `llm/`: AI assistant integrations
-- `before/`: Configurations loaded before plugins
-  - `captureoutput.vim`: Utility for capturing command output
-  - `keymap.vim`: Early keymaps loaded before plugins
-  - `netrw.vim`: File browser configurations
-- `after/`: Configurations loaded after plugins
-  - `ftplugin/`: Filetype-specific settings
-  - `plugin/`: Plugin-specific configurations
-- `ftdetect/`: Custom filetype detection
-- `syntax/`: Native Vim syntax definitions
-- `queries/`: Tree-sitter queries for custom parsers
-- `os/`: OS-specific configurations
-  - `macos.vim`: macOS-specific settings
-  - `linux.vim`: Linux-specific settings
-  - `windows.vim`: Windows-specific settings
-  - `wsl.vim`: Windows Subsystem for Linux settings
-
-## 🔌 Key Plugins
-
-This configuration uses numerous plugins managed through vim-plug. See [plug.lua](./lua/dcai/plug.lua) for the complete list.
-
-## 🛠 Development
-
-Run the Lua linter with:
+Back up any existing configuration, then clone:
 
 ```sh
-npm run lint
+git clone https://github.com/dcai/.vim.git ~/.config/nvim
 ```
 
-## 📜 History
+Open Neovim and install plugins:
 
-- **2008**: Initial `vimrc` created
-- **Pre-2014**: Early history tracked in Git (commit `2f299642859b9efe0d5b1619ceeabcab16158a19`)
-- **Early 2023**: Migration to Neovim with Lua configuration
+```vim
+:PlugInstall
+```
+
+Restart Neovim after installation. The first start may report missing-plugin errors until installation completes. vim-plug is included in `autoload/plug.vim`.
+
+To install the configured language-server packages managed by Mason:
+
+```vim
+:LspInstallAll
+```
+
+Some language servers need separate language runtimes or platform tools. See `lua/dcai/lsp/` for their configuration.
+
+Legacy Vim files are retained for reference. The current setup primarily targets Neovim.
+
+## Configuration Structure
+
+- `init.lua`: Neovim entry point.
+- `lua/dcai/`: Core Lua modules.
+- `lua/dcai/plug.lua`: Plugin declarations and setup hooks.
+- `lua/dcai/lsp/`: Language-server configuration.
+- `loader.vim`: Shared Vimscript and platform-specific setup.
+- `core.vim`, `filetype.vim`, `gui.vim`: Retained Vimscript settings.
+- `before/`: Early configuration.
+- `after/ftplugin/`: Filetype-specific settings.
+- `after/plugin/`: Plugin-specific configuration.
+- `plugin/`: Runtime plugin scripts.
+- `ftdetect/`, `syntax/`, `queries/`: Filetype detection, syntax definitions, and Tree-sitter queries.
+- `colors/`: Color schemes.
+- `os/`: Platform-specific settings.
+- `tests/`: Headless Lua tests.
+- `.github/workflows/`: Automated lint and test workflows.
+
+## Plugins
+
+Plugins are managed with vim-plug. See `lua/dcai/plug.lua` for the active list and `after/plugin/` for configuration. Some older declarations and configuration files are retained but disabled.
+
+## Development
+
+Run commands from the repository root. Install Selene and StyLua separately.
+
+```sh
+mise run lint
+stylua --check init.lua lua after/plugin plugin colors tests
+```
+
+Headless tests live in `tests/`. See each test file's header and the test workflow for invocation and dependency setup. Run test files in separate Neovim processes to keep their state isolated.
+
+CI uses separate workflows for linting and tests. The Neovim test workflow runs on pushes that change Lua files or the workflow itself, using latest stable Neovim and latest upstream test dependencies.
+
+## History
+
+- **2008**: Initial `vimrc` created.
+- **Pre-2014**: Early history tracked in Git (commit `2f299642859b9efe0d5b1619ceeabcab16158a19`).
+- **Early 2023**: Migration to Neovim with Lua configuration.
 
 ---
 
-<sub>_The ASCII art header was generated using `figlet -f slant 'dcai vimrc'`_</sub>
+<sub>_The ASCII art header was generated using `figlet -f slant 'dcai vimrc'`._</sub>
