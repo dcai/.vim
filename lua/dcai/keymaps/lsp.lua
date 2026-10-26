@@ -13,6 +13,29 @@ local function diagnostic_tool(namespace_name, clients)
   return namespace_name
 end
 
+local function format_diagnostic(diagnostic, clients)
+  local namespace = diagnostic.namespace
+    and vim.diagnostic.get_namespace(diagnostic.namespace)
+  local tool =
+    diagnostic_tool(namespace and namespace.name or 'unknown', clients)
+
+  local source = diagnostic.source
+  if not source or source == '' then
+    source = 'not provided'
+  end
+
+  local code = diagnostic.code and string.format(' (%s)', diagnostic.code) or ''
+
+  return string.format(
+    '[%s] tool: %s | source: %s%s\n%s',
+    vim.diagnostic.severity[diagnostic.severity] or 'UNKNOWN',
+    tool,
+    source,
+    code,
+    diagnostic.message
+  )
+end
+
 local lsp_keymap = {
   { '<leader>l', group = 'lsp' },
   -- grn is default rename
@@ -26,53 +49,29 @@ local lsp_keymap = {
       local bufnr = vim.api.nvim_get_current_buf()
       local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
       local diagnostics = vim.diagnostic.get(bufnr, { lnum = lnum })
-      if vim.tbl_isempty(diagnostics) then
+      if #diagnostics == 0 then
         vim.notify('No diagnostics on this line', vim.log.levels.INFO)
         return
       end
 
-      local severity_names = {
-        [vim.diagnostic.severity.ERROR] = 'ERROR',
-        [vim.diagnostic.severity.WARN] = 'WARN',
-        [vim.diagnostic.severity.INFO] = 'INFO',
-        [vim.diagnostic.severity.HINT] = 'HINT',
-      }
-
       local clients = vim.lsp.get_clients({ bufnr = bufnr })
-      local lines = {}
-      for i, d in ipairs(diagnostics) do
-        local namespace = d.namespace
-          and vim.diagnostic.get_namespace(d.namespace)
-        local namespace_name = namespace and namespace.name or 'unknown'
-        local source = d.source
-        if not source or source == '' then
-          source = 'not provided'
-        end
-        local header = string.format(
-          '[%s] tool: %s | source: %s%s',
-          severity_names[d.severity] or 'UNKNOWN',
-          diagnostic_tool(namespace_name, clients),
-          source,
-          d.code and (' (' .. tostring(d.code) .. ')') or ''
-        )
-        table.insert(lines, header)
-        for _, msg_line in ipairs(vim.split(d.message, '\n', { plain = true })) do
-          table.insert(lines, msg_line)
-        end
-        if i < #diagnostics then
-          table.insert(lines, '')
-        end
-      end
+      local messages = vim.tbl_map(function(diagnostic)
+        return format_diagnostic(diagnostic, clients)
+      end, diagnostics)
+      local text = table.concat(messages, '\n\n')
 
       vim.cmd('vsplit')
-      local buf = vim.api.nvim_create_buf(false, true)
-      vim.api.nvim_win_set_buf(0, buf)
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-      vim.bo[buf].buftype = 'nofile'
-      vim.bo[buf].bufhidden = 'wipe'
-      vim.bo[buf].swapfile = false
-      vim.bo[buf].modifiable = true
-      vim.bo[buf].filetype = 'diagnostic'
+      local pane = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_win_set_buf(0, pane)
+      vim.api.nvim_buf_set_lines(
+        pane,
+        0,
+        -1,
+        false,
+        vim.split(text, '\n', { plain = true })
+      )
+      vim.bo[pane].bufhidden = 'wipe'
+      vim.bo[pane].filetype = 'diagnostic'
     end,
     desc = 'diagnostic in side pane',
   },
