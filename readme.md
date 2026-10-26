@@ -9,7 +9,6 @@
 
 [![Selene Lint](https://github.com/dcai/.vim/actions/workflows/selene.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/selene.yml)
 [![Neovim Tests](https://github.com/dcai/.vim/actions/workflows/neovim-tests.yml/badge.svg)](https://github.com/dcai/.vim/actions/workflows/neovim-tests.yml)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/dcai/.vim)
 
 A personal Neovim configuration with 15+ years of evolution, migrated from Vim to Neovim in early 2023. It combines Lua-first modules with retained Vimscript customizations.
 
