@@ -3,6 +3,7 @@
 vim.opt.packpath:append(vim.fs.joinpath(vim.fn.stdpath('data'), 'site'))
 vim.opt.runtimepath:append(vim.fn.getcwd())
 local sources = {
+  ['https://github.com/nvim-mini/mini.nvim'] = true,
   ['https://github.com/copilotlsp-nvim/copilot-lsp'] = true,
   ['https://github.com/saghen/blink.cmp'] = true,
 }

@@ -50,6 +50,9 @@ jobs:
       - name: Test shared helpers
         run: nvim --headless --clean -l tests/globals-test.lua
 
+      - name: Test native job wrapper with mini.test
+        run: nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run()'
+
       - name: Test Blink native matcher
         run: nvim --headless --clean -l tests/blink-test.lua
 

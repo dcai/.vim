@@ -142,46 +142,29 @@ local function create_progress_reporter(command, args, opts)
   }
 end
 
--- Base function for running async commands with plenary.job
--- @param command string: The command to run
--- @param args table: Command arguments
--- @param opts table: Options (cwd, on_success, on_error)
---   - cwd: working directory (default: getcwd())
---   - on_success: function(stdout, stderr) - called when ret == 0
---   - on_error: function(stdout, stderr, ret) - called when ret != 0
--- @return function: A function that executes the command when called
+-- Return a deferred command for mappings; completion runs on the main loop.
+-- Success receives (stdout, stderr); errors receive (stdout, stderr, code).
 M.lazy_cmd = function(command, args, opts)
   return function()
-    local plenary_loaded, Job = pcall(require, 'plenary.job')
-    if not plenary_loaded then
-      return
-    end
-
     opts = opts or {}
-    args = args or {}
-    local cwd = opts.cwd or vim.fn.getcwd()
-
-    Job:new({
+    return require('dcai.job').run({
       command = command,
-      args = args,
-      cwd = cwd,
-      on_exit = vim.schedule_wrap(function(job, ret)
-        local stderr =
-          normalize_line_endings(table.concat(job:stderr_result(), vim.g.nl))
-        local stdout =
-          normalize_line_endings(table.concat(job:result(), vim.g.nl))
-
-        if ret == 0 then
+      args = args or {},
+      cwd = opts.cwd or vim.fn.getcwd(),
+      on_exit = function(result)
+        -- Plenary's recorded lines omit one final newline. Keep that display
+        -- contract here, without trimming generic process/HTTP output.
+        local stdout = normalize_line_endings(result.stdout):gsub('\n$', '')
+        local stderr = normalize_line_endings(result.stderr):gsub('\n$', '')
+        if result.ok then
           if opts.on_success then
             opts.on_success(stdout, stderr)
           end
-        else
-          if opts.on_error then
-            opts.on_error(stdout, stderr, ret)
-          end
+        elseif opts.on_error then
+          opts.on_error(stdout, stderr, result.code)
         end
-      end),
-    }):start()
+      end,
+    })
   end
 end
 

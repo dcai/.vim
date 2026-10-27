@@ -77,6 +77,7 @@ stylua --check init.lua lua after/plugin plugin colors tests
 Run the headless tests in separate processes because they replace global Neovim functions:
 
 ```sh
+nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run()'
 nvim --headless --clean -l tests/pack-test.lua
 nvim --headless --clean -l tests/globals-test.lua
 nvim --headless --clean -l tests/blink-test.lua
