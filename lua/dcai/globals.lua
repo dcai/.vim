@@ -1,7 +1,3 @@
-local gsub = require('string').gsub
-local gmatch = require('string').gmatch
-
-vim.uv = vim.uv or vim.loop
 vim.g.uv = vim.uv
 
 vim.g.human_readable_osname = function()
@@ -25,95 +21,63 @@ vim.g.reload = function(module)
 end
 
 local function file_exists(filepath)
-  local status = vim.fn.filereadable(filepath) == 1
-
-  return status
+  return vim.fn.filereadable(filepath) == 1
 end
 
 vim.g.file_exists = file_exists
 
---- read file
 ---@param file string
 ---@return string
 local function readfile(file)
-  local lines = vim.fn.readfile(file)
-  local content = table.concat(lines, '\n') -- content is now the file as a string
-  return content
+  return table.concat(vim.fn.readfile(file), '\n')
 end
 
 vim.g.readfile = readfile
 
-local function io_file_write(file, contents)
-  local f = assert(io.open(file, 'w'))
-  f:write(contents)
-  f:close()
-end
-
-local function touch(filepath)
-  if not file_exists(filepath) then
-    vim.fn.writefile({}, filepath, 'a')
-  end
-  return nil
-end
-
 local function user_config_file_path()
-  return vim.g.data_dir .. '/user.json'
+  return vim.fs.joinpath(vim.g.data_dir, 'user.json')
 end
 
 local function get_all_local_config()
-  local userconfigfile = user_config_file_path()
-  touch(userconfigfile)
-  local json = readfile(userconfigfile)
-  local ok, config = pcall(vim.json.decode, json)
-  if ok then
-    return config
-  else
+  local path = user_config_file_path()
+  if not file_exists(path) then
     return {}
   end
-end
-
-local function get_or(table, key, default)
-  if vim.tbl_isempty(table) then
-    return default
-  end
-  local v = table
-  for k in vim.gsplit(key, '.', { plain = true }) do
-    v = v[k]
-  end
-  if v == 'true' or v == true then
-    return true
-  elseif v == 'false' or v == false then
-    return false
-  elseif v == nil then
-    return default
-  end
-  return v
+  local ok, config = pcall(function()
+    return vim.json.decode(readfile(path))
+  end)
+  return ok and type(config) == 'table' and config or {}
 end
 
 local function get_user_config(key, default)
-  local config = get_or(get_all_local_config(), key, default)
-  return config
+  local value = vim.tbl_get(
+    get_all_local_config(),
+    unpack(vim.split(key, '.', { plain = true }))
+  )
+  if value == nil or value == vim.NIL then
+    return default
+  elseif value == 'true' then
+    return true
+  elseif value == 'false' then
+    return false
+  end
+  return value
 end
 
-local function set(tbl, path, value)
+local function set_user_config(path, value)
+  local config = get_all_local_config()
   local keys = vim.split(path, '.', { plain = true })
-  local current = tbl
+  local current = config
   for i = 1, #keys - 1 do
     local key = keys[i]
-    if not current[key] or type(current[key]) ~= 'table' then
+    if type(current[key]) ~= 'table' then
       current[key] = {}
     end
     current = current[key]
   end
-  local finalKey = keys[#keys]
-  current[finalKey] = value
-end
-
-local function set_user_config(path, value)
-  local userconfigfile = user_config_file_path()
-  local config = get_all_local_config()
-  set(config, path, value)
-  io_file_write(userconfigfile, vim.json.encode(config))
+  current[keys[#keys]] = value
+  vim.fn.mkdir(vim.g.data_dir, 'p')
+  vim.fn.writefile({ vim.json.encode(config) }, user_config_file_path(), 'b')
 end
 
 vim.g.handle_vim_event_by_command = function(evt, command)
@@ -194,7 +158,7 @@ local function wrap_tmux_passthrough(sequence)
   local esc = '\27'
   local tmux_start = esc .. 'Ptmux;' .. esc
   local tmux_end = esc .. '\\'
-  local escaped_sequence = gsub(sequence, esc, esc .. esc)
+  local escaped_sequence = sequence:gsub(esc, esc .. esc)
 
   return tmux_start .. escaped_sequence .. tmux_end
 end
@@ -313,44 +277,31 @@ vim.g.keymap = function(mode, from, to)
   vim.api.nvim_set_keymap(mode, from, to, { noremap = true, silent = true })
 end
 
--- https://stackoverflow.com/a/29379912
 vim.g.replace = function(str, what, with)
-  what = string.gsub(what and what or '', '[%(%)%.%+%-%*%?%[%]%^%$%%]', '%%%1') -- escape pattern
-  with = string.gsub(with, '[%%]', '%%%%') -- escape replacement
-  return string.gsub(str, what, with)
+  return str:gsub(vim.pesc(what or ''), function()
+    return with
+  end)
 end
 
----copied from https://github.com/james2doyle/lit-slugify/blob/master/init.lua
----@param string string|nil
----@param replacement string
+---@param text string|nil
+---@param replacement? string
 ---@return string
-vim.g.slugify = function(string, replacement)
-  if not string or string == '' then
-    return ''
+vim.g.slugify = function(text, replacement)
+  local words = {}
+  for word in (text or ''):gmatch('%w+') do
+    words[#words + 1] = word
   end
-  if replacement == nil then
-    replacement = '-'
-  end
-  local result = ''
-  -- loop through each word or number
-  for word in gmatch(string, '(%w+)') do
-    result = result .. word .. replacement
-  end
-  -- remove trailing separator
-  result = gsub(result, replacement .. '$', '')
-  return result:lower()
+  return table.concat(words, replacement or '-'):lower()
 end
 
 vim.g.trim_right = function(str, char)
-  local last_char = str:sub(-1)
-  if last_char == char then
+  if str:sub(-1) == char then
     return str:sub(1, -2)
   end
   return str
 end
 
 local function trim_trailing_slash(str)
-  -- return gsub(str, '/$', '')
   return vim.g.trim_right(str, '/')
 end
 
@@ -368,19 +319,26 @@ vim.g.parent_dir = function(input)
 end
 
 vim.g.setup_colorscheme = function()
-  local defaulcolorscheme = 'pine'
-  local termguicolors = get_user_config('colorscheme.termguicolors', true)
-  local cs = get_user_config('colorscheme.name', defaulcolorscheme)
-  apply_colorscheme(cs, termguicolors)
-  vim.g.handle_autocmd('ColorScheme', '*', function(ev)
-    -- vim.g.logger.debug('ColorScheme: ' .. vim.inspect(ev))
-    set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
-  end, 'save new colorscheme')
+  local group =
+    vim.api.nvim_create_augroup('dcai_colorscheme', { clear = true })
+  apply_colorscheme(
+    get_user_config('colorscheme.name', 'pine'),
+    get_user_config('colorscheme.termguicolors', true)
+  )
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    group = group,
+    desc = 'Save selected colorscheme',
+    callback = function(ev)
+      set_user_config('colorscheme.name', ev.match or vim.g.colors_name)
+    end,
+  })
 end
 
 vim.g.source = function(path)
-  -- local vim_home = vim.fn.expand('<sfile>:p:h')
-  vim.cmd('source ' .. vim.fn.stdpath('config') .. '/' .. path)
+  vim.cmd.source({
+    vim.fs.joinpath(vim.fn.stdpath('config'), path),
+    magic = { file = false },
+  })
 end
 
 ---higher order function to color text
@@ -401,50 +359,33 @@ local function colortext(color)
   end
 end
 
---@param opts table
---@return table
---@see https://github.com/dharmx/nvim/blob/d39e0637607e214cedc8beb8c5fb88fd0ff0ccd2/after/compiler/leetcode.lua
+---@param opts table
+---@return table
 vim.g.new_popup = function(opts)
-  local Popup = require('plenary.popup')
-  -- vim.api.nvim_set_hl(
-  --   0,
-  --   'PopupNormal',
-  --   { foreground = 'white', background = '#151A1F' }
-  -- )
-  local height = opts.height or 10
+  opts = opts or {}
   local width = opts.width or 80
   local buffer = vim.api.nvim_create_buf(false, false)
-  local title = opts.title or 'Job'
-  -- local channel = vim.api.nvim_open_term(buffer, {})
   return {
-    -- channel = channel,
     buffer = buffer,
     open = function()
-      local winid, _ = Popup.create(buffer, {
-        title = title,
-        -- highlight = 'PopupNormal',
+      local win, border = require('plenary.popup').create(buffer, {
+        title = opts.title or 'Job',
         padding = { 0, 0, 0, 0 },
         line = 3,
         col = math.floor((vim.o.columns - width) / 2),
         minwidth = width,
-        minheight = height,
-        -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        minheight = opts.height or 10,
         borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-        -- borderchars = { '+', '|', '+', '|', '|', '|', '|', '|' },
       })
-      vim.api.nvim_set_option_value(
-        'number',
-        opts.number or false,
-        { win = winid }
-      )
-      vim.api.nvim_set_option_value('spell', false, { win = winid })
-      local close = function()
-        vim.api.nvim_win_close(winid, true)
+      vim.wo[win].number = opts.number or false
+      vim.wo[win].spell = false
+      local function close()
+        vim.api.nvim_win_close(win, true)
       end
-      local winopt = { buffer = buffer, noremap = true, silent = true }
-      vim.keymap.set('n', 'q', close, winopt)
-      vim.keymap.set('n', '<esc>', close, winopt)
-      return winid, _
+      for _, key in ipairs({ 'q', '<Esc>' }) do
+        vim.keymap.set('n', key, close, { buffer = buffer, silent = true })
+      end
+      return win, border
     end,
   }
 end
@@ -498,14 +439,7 @@ end
 ---@return fun(filepath: string?): string?
 local function root(markers)
   return function(filepath)
-    local buf = filepath or vim.api.nvim_get_current_buf()
-
-    if vim.fs and vim.fs.root then
-      local fs_root = vim.fs.root(buf, markers)
-      if fs_root then
-        return fs_root
-      end
-    end
+    return vim.fs.root(filepath or 0, markers)
   end
 end
 vim.g.root_pattern = root
@@ -571,152 +505,83 @@ vim.g.purple = colortext('purple')
 ---@field y? number
 
 ---@class new_win
----@field buf number
----@field win number
----@field append function
----@field open fun(value: string): void
----@field close fun(): void
+---@field buf integer?
+---@field win integer?
+---@field append fun(text: string)
+---@field open fun(): integer
+---@field close fun()
 
 ---create new window
 ---@param opt new_win_opt
 ---@return new_win
 vim.g.new_win = function(opt)
   opt = opt or {}
-
-  local win = nil
-  ---@type number
-  local buf = nil
-
-  local strict_indexing = false
-
-  local width = opt.w and math.floor((opt.w / 100) * vim.o.columns)
+  local view = {}
+  local width = opt.w and math.floor(opt.w / 100 * vim.o.columns)
     or math.min(80, vim.o.columns - 4)
-  local height = opt.h and math.floor((opt.h / 100) * vim.o.lines)
+  local height = opt.h and math.floor(opt.h / 100 * vim.o.lines)
     or math.min(20, vim.o.lines - 4)
-
-  -- default to center of editor
-  local row = opt.x and opt.x or math.floor((vim.o.lines - height) / 2)
-  local col = opt.y and opt.y or math.floor((vim.o.columns - width) / 2)
-
-  local win_opts = {}
-  if opt.split then
-    win_opts = {
-      split = opt.split,
-    }
-  else
-    win_opts = {
+  local win_opts = opt.split and { split = opt.split }
+    or {
       relative = 'editor',
       width = width,
       height = height,
-      row = row,
-      col = col,
+      row = opt.x or math.floor((vim.o.lines - height) / 2),
+      col = opt.y or math.floor((vim.o.columns - width) / 2),
       style = 'minimal',
       border = 'rounded',
       focusable = true,
       zindex = 300,
       title = opt.title,
     }
-  end
 
-  local function map_close_buffer(localbuf)
-    vim.api.nvim_buf_set_keymap(
-      localbuf,
-      'n',
-      'q',
-      ':close<CR>',
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_buf_set_keymap(
-      localbuf,
-      'n',
-      '<Esc>',
-      ':close<CR>',
-      { noremap = true, silent = true }
-    )
-  end
-
-  local function open()
-    if not win then
-      -- Create a scratch buffer (unlisted, not saved to disk)
-      local is_listed = false
-      local is_scratch = true
-      buf = vim.api.nvim_create_buf(is_listed, is_scratch)
-      -- Initial content
-      vim.api.nvim_buf_set_lines(buf, 0, -1, strict_indexing, { '' })
-
-      vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
-      vim.api.nvim_set_option_value(
-        'filetype',
-        opt.filetype and opt.filetype or 'text',
-        { buf = buf }
-      )
-      win = vim.api.nvim_open_win(buf, true, win_opts)
-      map_close_buffer(buf)
-      vim.api.nvim_set_option_value('spell', false, { win = win })
-      vim.api.nvim_set_option_value('cursorline', true, { win = win })
-      vim.api.nvim_set_option_value('number', false, { win = win }) -- Disable line numbers
-      vim.api.nvim_set_option_value('relativenumber', false, { win = win }) -- Disable relative line numbers
-      vim.api.nvim_set_option_value('signcolumn', 'no', { win = win }) -- Disable sign column
+  function view.open()
+    if view.win and vim.api.nvim_win_is_valid(view.win) then
+      return view.win
     end
-    return win
-  end
-
-  -- remove ^M at the end of line
-  local function trim_line_end(line)
-    if not line then
-      return ''
-    end
-    return line:gsub('\r$', '')
-  end
-
-  -- Create a function to append text without creating new lines
-  local function append_text(text)
-    local w = open()
-    local last_lineno = vim.api.nvim_buf_line_count(buf) - 1
-    local last_line = vim.api.nvim_buf_get_lines(
-      buf,
-      last_lineno,
-      last_lineno + 1,
-      strict_indexing
-    )[1]
-
-    -- Split text by newlines and handle them properly
-    local lines = vim.split(text, '\n', { plain = true })
-
-    -- Append first part to the last line
-    local new_last_line = last_line .. trim_line_end(lines[1])
-
-    -- Create the updated lines: modified last line + any additional lines
-    local updated_lines = { new_last_line }
-    for i = 2, #lines do
-      -- remove ^M
-      lines[i] = trim_line_end(lines[i])
-      table.insert(updated_lines, lines[i])
-    end
-
-    -- Replace the last line with our updated lines
-    vim.api.nvim_buf_set_lines(
-      buf,
-      last_lineno,
-      last_lineno + 1,
-      strict_indexing,
-      updated_lines
-    )
-    -- jump to the bottom
-    vim.api.nvim_win_set_cursor(w, { vim.api.nvim_buf_line_count(buf), 0 })
-  end
-
-  return {
-    buf = buf,
-    win = win,
-    append = vim.schedule_wrap(append_text),
-    open = open,
-    close = function()
-      if win then
-        vim.api.nvim_win_close(win, true)
+    if not view.buf or not vim.api.nvim_buf_is_valid(view.buf) then
+      view.buf = vim.api.nvim_create_buf(false, true)
+      vim.bo[view.buf].fileformat = 'unix'
+      vim.bo[view.buf].filetype = opt.filetype or 'text'
+      for _, key in ipairs({ 'q', '<Esc>' }) do
+        vim.keymap.set('n', key, '<cmd>close<CR>', {
+          buffer = view.buf,
+          silent = true,
+        })
       end
-    end,
-  }
+    end
+    view.win = vim.api.nvim_open_win(view.buf, true, win_opts)
+    local wo = vim.wo[view.win]
+    wo.spell = false
+    wo.cursorline = true
+    wo.number = false
+    wo.relativenumber = false
+    wo.signcolumn = 'no'
+    return view.win
+  end
+
+  view.append = vim.schedule_wrap(function(text)
+    local win = view.open()
+    local last = vim.api.nvim_buf_line_count(view.buf) - 1
+    local lines = vim.split(text, '\n', { plain = true })
+    for i, line in ipairs(lines) do
+      lines[i] = line:gsub('\r$', '')
+    end
+    lines[1] = vim.api.nvim_buf_get_lines(view.buf, last, last + 1, false)[1]
+      .. lines[1]
+    vim.api.nvim_buf_set_lines(view.buf, last, last + 1, false, lines)
+    vim.api.nvim_win_set_cursor(
+      win,
+      { vim.api.nvim_buf_line_count(view.buf), 0 }
+    )
+  end)
+  function view.close()
+    if view.win and vim.api.nvim_win_is_valid(view.win) then
+      vim.api.nvim_win_close(view.win, true)
+    end
+    view.win = nil
+  end
+  return view
 end
 
 vim.g.feedkeys = function(key, mode)

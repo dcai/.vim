@@ -78,6 +78,7 @@ Run the headless tests in separate processes because they replace global Neovim 
 
 ```sh
 nvim --headless --clean -l tests/pack-test.lua
+nvim --headless --clean -l tests/globals-test.lua
 nvim --headless --clean -l tests/blink-test.lua
 nvim --headless --clean -l tests/copilot-test.lua
 nvim --headless --clean -l tests/copilot-inline-test.lua
