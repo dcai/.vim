@@ -16,7 +16,12 @@ end
 _G.dump = vim.g.print
 
 vim.g.reload = function(module)
-  require('plenary.reload').reload_module(module)
+  local prefix = module .. '.'
+  for name in pairs(package.loaded) do
+    if name == module or vim.startswith(name, prefix) then
+      package.loaded[name] = nil
+    end
+  end
   return require(module)
 end
 
