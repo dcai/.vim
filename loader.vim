@@ -13,7 +13,7 @@ let g:vim_home = expand('<sfile>:p:h')
 
 let g:vim_data = '$HOME/.local/share/vim'
 if has('nvim')
-  let g:vim_data = '$HOME/.local/share/nvim'
+  let g:vim_data = stdpath('data')
 endif
 
 if has('win64') || has('win32') || has('win16')

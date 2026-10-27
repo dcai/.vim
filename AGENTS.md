@@ -6,7 +6,8 @@ This repository contains a Lua-first Neovim configuration with retained legacy V
 
 - `init.lua`: Entry point; loads `lua/dcai/init.lua`.
 - `lua/dcai/globals.lua`: Shared helpers, paths, and environment handling.
-- `lua/dcai/plug.lua`: vim-plug declarations and setup hooks.
+- `lua/dcai/pack.lua`: Native plugin specifications, build hooks, and startup setup.
+- `lua/dcai/plug.lua`: Deprecated vim-plug setup. Keep it for reference; it is not loaded by Neovim startup.
 - `lua/dcai/keymaps/`: Mappings organized by topic, with which-key descriptions.
 - `lua/dcai/lsp/`: Native language-server configuration and shared LSP helpers.
 - `lua/dcai/llm/`: AI integrations and prompts.
@@ -23,8 +24,7 @@ Check the active declarations and startup calls before changing a feature. A con
 ## Implementation Guidelines
 
 - Prefer Lua for new configuration. Keep changes in the existing topic or plugin module.
-- Use the vim-plug wrapper in `lua/dcai/plug.lua`; do not introduce another plugin manager.
-- Plugin `setup` hooks run after `plug#end()`. They are not installation hooks; the plugin's `do` option handles installation tasks.
+- Use native `vim.pack` in `lua/dcai/pack.lua`. All plugins load eagerly; do not reintroduce vim-plug into Neovim startup.
 - Prefer native Neovim APIs and existing dependencies over additional plugins.
 - Use descriptive names, small helpers, and explicit setup calls. Avoid new globals unless an existing integration requires them.
 - Follow `stylua.toml`: two-space indentation, an 80-column limit, and single quotes where possible.
@@ -77,17 +77,15 @@ stylua --check init.lua lua after/plugin plugin colors tests
 Run the headless tests in separate processes because they replace global Neovim functions:
 
 ```sh
+nvim --headless --clean -l tests/pack-test.lua
+nvim --headless --clean -l tests/blink-test.lua
 nvim --headless --clean -l tests/copilot-test.lua
 nvim --headless --clean -l tests/copilot-inline-test.lua
 ```
 
-The tests require `copilot-lsp` under `vim.fn.stdpath('data') .. '/plug/copilot-lsp'`. They do not require a Copilot account, token, or language-server executable. See the test workflow for isolated dependency setup.
-
-- Add regression coverage for behavior changes, especially mapping ownership and asynchronous lifecycle handling.
 - When a bug involves a native Neovim API, exercise the real API in regression tests rather than mocking away the failing behavior.
 - Use scratch buffers and synthetic content for runtime checks. Disable auto-save before modifying test buffers in a full-config session. Do not overwrite the user's open files or saved edits.
 - Test affected platform behavior where possible. State which environments were actually checked; do not claim cross-platform validation from a single local run.
-- Run `git diff --check` before finishing.
 
 ## Continuous Integration
 

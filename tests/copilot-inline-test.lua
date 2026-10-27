@@ -1,7 +1,8 @@
 -- Run: nvim --clean -l tests/copilot-inline-test.lua
 -- Exercise Nvim's actual inline-completion handler, not a mocked enable().
 vim.opt.runtimepath:append(vim.fn.getcwd())
-vim.opt.runtimepath:append(vim.fn.stdpath('data') .. '/plug/copilot-lsp')
+vim.opt.packpath:append(vim.fs.joinpath(vim.fn.stdpath('data'), 'site'))
+vim.cmd.packadd({ 'copilot-lsp', bang = true })
 package.loaded['which-key'] = { add = function() end }
 
 local pending = {}

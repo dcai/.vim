@@ -1,3 +1,9 @@
+-- DEPRECATED: Historical vim-plug configuration, retained for reference only.
+-- Not loaded by the active Neovim setup; use lua/dcai/pack.lua instead.
+-- Requires vim-plug at autoload/plug.vim; the manager is no longer bundled.
+-- Run :InstallVimPlug before using this deprecated setup.
+-- Do not activate alongside vim.pack.
+
 local M = {}
 
 local setups = {

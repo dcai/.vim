@@ -1,6 +1,7 @@
 -- Run from the config root: nvim --clean -l tests/copilot-test.lua
 vim.opt.runtimepath:append(vim.fn.getcwd())
-vim.opt.runtimepath:append(vim.fn.stdpath('data') .. '/plug/copilot-lsp')
+vim.opt.packpath:append(vim.fs.joinpath(vim.fn.stdpath('data'), 'site'))
+vim.cmd.packadd({ 'copilot-lsp', bang = true })
 package.loaded['which-key'] = { add = function() end }
 
 local enabled = {}

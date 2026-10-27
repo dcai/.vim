@@ -38,14 +38,17 @@ jobs:
           echo "XDG_DATA_HOME=$RUNNER_TEMP/nvim-test-data" >> "$GITHUB_ENV"
           "$RUNNER_TEMP/nvim-linux-x86_64/bin/nvim" --version
 
-      - name: Install latest copilot-lsp
+      - name: Install latest test dependencies
         shell: bash
         run: |
-          plugin="$XDG_DATA_HOME/nvim/plug/copilot-lsp"
-          git clone --depth 1 \
-            https://github.com/copilotlsp-nvim/copilot-lsp.git \
-            "$plugin"
-          git -C "$plugin" log -1 --format='%H %s'
+          XDG_CONFIG_HOME="$RUNNER_TEMP/nvim-test-config" \
+            nvim --headless --clean -l tests/install-dependencies.lua
+
+      - name: Test native package configuration
+        run: nvim --headless --clean -l tests/pack-test.lua
+
+      - name: Test Blink native matcher
+        run: nvim --headless --clean -l tests/blink-test.lua
 
       - name: Test Copilot configuration
         run: nvim --headless --clean -l tests/copilot-test.lua

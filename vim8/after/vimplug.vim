@@ -2,6 +2,9 @@
 """            vim-plug
 """""""""""""""""""""""""""""""""""""""
 
+" Requires vim-plug at autoload/plug.vim; the manager is no longer bundled.
+" Run :InstallVimPlug to install it manually; the bootstrap below also handles it.
+
 let s:plugged=g:vim_data . '/plug'
 let s:autoload=g:vim_home . '/autoload'
 let s:vimplug=s:autoload . '/plug.vim'

@@ -29,13 +29,7 @@ Back up any existing configuration, then clone:
 git clone https://github.com/dcai/.vim.git ~/.config/nvim
 ```
 
-Open Neovim and install plugins:
-
-```vim
-:PlugInstall
-```
-
-Restart Neovim after installation. The first start may report missing-plugin errors until installation completes. vim-plug is included in `autoload/plug.vim`.
+Open Neovim and confirm the initial plugin installation. Native `vim.pack` restores the revisions recorded in `nvim-pack-lock.json` and runs the required build hooks. Restart after installation completes.
 
 To install the configured language-server packages managed by Mason:
 
@@ -51,7 +45,8 @@ Legacy Vim files are retained for reference. The current setup primarily targets
 
 - `init.lua`: Neovim entry point.
 - `lua/dcai/`: Core Lua modules.
-- `lua/dcai/plug.lua`: Plugin declarations and setup hooks.
+- `lua/dcai/pack.lua`: Native plugin declarations, build hooks, and startup setup.
+- `nvim-pack-lock.json`: Plugin revisions managed by Neovim.
 - `lua/dcai/lsp/`: Language-server configuration.
 - `loader.vim`: Shared Vimscript and platform-specific setup.
 - `core.vim`, `filetype.vim`, `gui.vim`: Retained Vimscript settings.
@@ -67,7 +62,15 @@ Legacy Vim files are retained for reference. The current setup primarily targets
 
 ## Plugins
 
-Plugins are managed with vim-plug. See `lua/dcai/plug.lua` for the active list and `after/plugin/` for configuration. Some older declarations and configuration files are retained but disabled.
+Plugins are managed with Neovim's built-in `vim.pack` and load eagerly. See `lua/dcai/pack.lua` for the active list and `after/plugin/` for configuration.
+
+To review updates:
+
+```vim
+:lua vim.pack.update()
+```
+
+Write the review buffer to apply updates, or close it to cancel. Restart afterward.
 
 ## Development
 

@@ -23,9 +23,9 @@ local vim_keymap = {
   {
     '<leader>kI',
     function()
-      vim.cmd('PlugInstall')
+      require('dcai.pack').setup()
     end,
-    desc = 'PlugInstall',
+    desc = 'Install and configure packages',
   },
   {
     '<leader>kH',
@@ -37,9 +37,9 @@ local vim_keymap = {
   {
     '<leader>kU',
     function()
-      vim.cmd('PlugUpdate')
+      vim.pack.update()
     end,
-    desc = 'PlugUpdate',
+    desc = 'Review package updates',
   },
   {
     '<leader>kl',
