@@ -1,45 +1,6 @@
 local M = {}
 local mappings = {
   {
-    'i',
-    '<C-f>',
-    function()
-      if not vim.lsp.inline_completion.get() then
-        return '<C-f>'
-      end
-      require('blink.cmp').hide()
-      return ''
-    end,
-    'Copilot: accept inline completion',
-    true,
-  },
-  {
-    'i',
-    '<M-]>',
-    function()
-      vim.lsp.inline_completion.select({ count = 1 })
-    end,
-    'Copilot: next completion',
-  },
-  {
-    'i',
-    '<M-[>',
-    function()
-      vim.lsp.inline_completion.select({ count = -1 })
-    end,
-    'Copilot: previous completion',
-  },
-  {
-    'i',
-    '<C-]>',
-    function()
-      require('dcai.lsp.copilot-features').dismiss(
-        vim.api.nvim_get_current_buf()
-      )
-    end,
-    'Copilot: dismiss suggestions',
-  },
-  {
     'n',
     '<S-Tab>',
     function()

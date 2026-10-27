@@ -11,6 +11,7 @@ This repository contains a Lua-first Neovim configuration with retained legacy V
 - `lua/dcai/pack.lua`: Native plugin specifications, build hooks, and startup setup.
 - `lua/dcai/plug.lua`: Deprecated vim-plug setup. Keep it for reference; it is not loaded by Neovim startup.
 - `lua/dcai/keymaps/`: Mappings organized by topic, with which-key descriptions.
+- `lua/dcai/completion.lua`: Blink configuration, insert-mode AI mappings, and completion-menu coordination. Keep shared completion key priorities here, not in individual provider configs.
 - `lua/dcai/lsp/`: Native language-server configuration and shared LSP helpers.
 - `lua/dcai/llm/`: AI integrations and prompts.
 - `after/plugin/`: Plugin-specific configuration.

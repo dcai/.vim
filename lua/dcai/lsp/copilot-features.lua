@@ -342,6 +342,15 @@ function M.request(bufnr, manual)
   end
 end
 
+-- Readiness query keeps completion policy out of the renderer's buffer state.
+function M.has_edit(bufnr)
+  local state = buffers[bufnr]
+  return state ~= nil
+    and active(bufnr, state)
+    and vim.b[bufnr].nes_state ~= nil
+    and state.tick == vim.api.nvim_buf_get_changedtick(bufnr)
+end
+
 function M.accept_edit(bufnr)
   local state = buffers[bufnr]
   if not state or not active(bufnr, state) or not vim.b[bufnr].nes_state then
@@ -405,6 +414,7 @@ function M.attach(client, bufnr)
   guard_inline_responses(client)
   set_inline(bufnr, state, vim.b[bufnr].copilot_enabled ~= false)
   require('dcai.keymaps.copilot').attach(bufnr)
+  require('dcai.completion').attach(bufnr)
   for name, callback in pairs({
     Status = M.status,
     Toggle = M.toggle,
@@ -454,6 +464,7 @@ function M.attach(client, bufnr)
       buffers[bufnr] = nil
       set_inline(bufnr, state, false)
       require('dcai.keymaps.copilot').detach(bufnr)
+      require('dcai.completion').detach(bufnr)
       for _, name in ipairs({
         'Status',
         'Toggle',
@@ -482,22 +493,17 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufFilePost', 'FileType' }, {
   end,
 })
 
--- Native inline completion has no awareness of Blink's floating menu.
-vim.api.nvim_create_autocmd('User', {
-  group = group,
-  pattern = { 'BlinkCmpMenuOpen', 'BlinkCmpMenuClose' },
-  callback = function(args)
-    local bufnr = vim.api.nvim_get_current_buf()
-    local state = buffers[bufnr]
-    if state then
-      state.menu_open = args.match == 'BlinkCmpMenuOpen'
-      if state.menu_open then
-        cancel(state)
-        clear(bufnr, state)
-      end
-      set_inline(bufnr, state, active(bufnr, state) and not state.menu_open)
+-- The completion coordinator owns menu events; this engine owns buffer state.
+function M.menu_changed(bufnr, open)
+  local state = buffers[bufnr]
+  if state then
+    state.menu_open = open
+    if open then
+      cancel(state)
+      clear(bufnr, state)
     end
-  end,
-})
+    set_inline(bufnr, state, active(bufnr, state) and not open)
+  end
+end
 
 return M
