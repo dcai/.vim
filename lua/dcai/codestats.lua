@@ -1,7 +1,4 @@
-local loaded, curl = pcall(require, 'plenary.curl')
-if not loaded then
-  return false
-end
+local http = require('dcai.http')
 
 local logger = require('dcai.log').setup({
   plugin = 'codestats',
@@ -121,15 +118,23 @@ local function gather_xp(filetype, xp_amount)
 end
 
 local function myprofile(username)
-  local response = curl.get({
-    url = string.format('%s/users/%s', CODESTATS_API_URL, username),
-    headers = {
-      ['Content-Type'] = 'application/json',
-    },
-    on_error = function() end,
-  })
-  local json = vim.json.decode(response.body)
-  print('codestats: profile: ', vim.inspect(json))
+  local url = string.format(
+    '%s/users/%s',
+    CODESTATS_API_URL,
+    vim.uri_encode(username, 'rfc3986')
+  )
+  http.request(url, {}, function(err, response)
+    if err or not response then
+      logger.error('Profile failed: HTTP request error')
+      return
+    end
+    local ok, json = pcall(vim.json.decode, response.body)
+    if not ok then
+      logger.error('Profile failed: invalid JSON response')
+      return
+    end
+    print('codestats: profile: ', vim.inspect(json))
+  end)
 end
 
 local function pulse()
@@ -162,33 +167,30 @@ local function pulse()
   }
 
   pulse_in_progress = true
-  local ok, err = pcall(function()
-    curl.post({
-      url = CODESTATS_API_URL .. '/my/pulses',
-      body = vim.fn.json_encode(body),
+  local ok = pcall(function()
+    http.request(CODESTATS_API_URL .. '/my/pulses', {
+      method = 'POST',
+      body = vim.json.encode(body),
       headers = {
         ['X-API-Token'] = CODESTATS_API_KEY,
         ['Content-Type'] = 'application/json',
       },
-      callback = vim.schedule_wrap(function(resp)
-        pulse_in_progress = false
-        local status = resp.status
-        if status ~= 200 and status ~= 201 then
-          logger.error('Pulse failed: HTTP ' .. status, resp)
-        end
-      end),
-      on_error = function()
-        pulse_in_progress = false
-        logger.error('Pulse failed: network error')
-      end,
-    })
+    }, function(err, response)
+      pulse_in_progress = false
+      if
+        err
+        or not response
+        or (response.status ~= 200 and response.status ~= 201)
+      then
+        local reason = response and ('HTTP ' .. response.status)
+          or 'transport error'
+        logger.error('Pulse failed: ' .. reason)
+      end
+    end)
   end)
   if not ok then
     pulse_in_progress = false
-    logger.error(
-      'Pulse failed: spawn error (EMFILE / too many open files?)',
-      err
-    )
+    logger.error('Pulse failed: request could not start')
   end
 end
 

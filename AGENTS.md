@@ -6,6 +6,8 @@ This repository contains a Lua-first Neovim configuration with retained legacy V
 
 - `init.lua`: Entry point; loads `lua/dcai/init.lua`.
 - `lua/dcai/globals.lua`: Shared helpers, paths, and environment handling.
+- `lua/dcai/job.lua`: Shared asynchronous process runner with main-loop callbacks.
+- `lua/dcai/http.lua`: Curl HTTP client with the `vim.net.request` calling convention.
 - `lua/dcai/pack.lua`: Native plugin specifications, build hooks, and startup setup.
 - `lua/dcai/plug.lua`: Deprecated vim-plug setup. Keep it for reference; it is not loaded by Neovim startup.
 - `lua/dcai/keymaps/`: Mappings organized by topic, with which-key descriptions.
@@ -26,6 +28,7 @@ Check the active declarations and startup calls before changing a feature. A con
 - Prefer Lua for new configuration. Keep changes in the existing topic or plugin module.
 - Use native `vim.pack` in `lua/dcai/pack.lua`. All plugins load eagerly; do not reintroduce vim-plug into Neovim startup.
 - Prefer native Neovim APIs and existing dependencies over additional plugins.
+- Use `dcai.http.request(url, opts, callback)` for HTTP, with `callback(err, response)` and `handle:close()` cancellation. It uses curl through `dcai.job`, supports method/headers/body/status, and preserves response bytes. Retries default to zero; only GET/HEAD may opt in. Redirects are not followed. Headers/payloads go through stdin; never log credentials or enable verbose curl output with secrets.
 - Use descriptive names, small helpers, and explicit setup calls. Avoid new globals unless an existing integration requires them.
 - Follow `stylua.toml`: two-space indentation, an 80-column limit, and single quotes where possible.
 - Preserve legacy Vimscript unless removal is explicitly requested. Do not add compatibility layers for obsolete APIs.

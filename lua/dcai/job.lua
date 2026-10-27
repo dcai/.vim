@@ -7,6 +7,7 @@ local M = {}
 ---@field env? table<string, string|number> Overrides inherited environment variables.
 ---@field stdin? string|string[]
 ---@field timeout? integer Milliseconds before termination.
+---@field text? boolean Normalize CRLF by default; false preserves raw output.
 ---@field on_exit? fun(result: dcai.JobResult) Called once on the main loop.
 
 ---@class dcai.JobResult
@@ -37,9 +38,14 @@ function M.run(opts)
     if task.result then
       return
     end
-    -- Normalize once after chunks are joined, not once per pipe read.
-    result.stdout = (result.stdout or ''):gsub('\r\n', '\n')
-    result.stderr = (result.stderr or ''):gsub('\r\n', '\n')
+    if opts.text ~= false then
+      -- Normalize once after chunks are joined, not once per pipe read.
+      result.stdout = (result.stdout or ''):gsub('\r\n', '\n')
+      result.stderr = (result.stderr or ''):gsub('\r\n', '\n')
+    else
+      result.stdout = result.stdout or ''
+      result.stderr = result.stderr or ''
+    end
     result.cancelled = cancelled
     result.ok = not cancelled
       and result.error == nil
