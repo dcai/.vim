@@ -1,7 +1,5 @@
 -- Run: nvim --headless --clean -l tests/globals-test.lua
 vim.opt.runtimepath:append(vim.fn.getcwd())
-vim.opt.packpath:append(vim.fs.joinpath(vim.fn.stdpath('data'), 'site'))
-vim.cmd.packadd({ 'plenary.nvim', bang = true })
 require('dcai.globals')
 local function equal(actual, expected)
   assert(vim.deep_equal(actual, expected), vim.inspect(actual))
@@ -157,8 +155,7 @@ assert(
   vim.api.nvim_buf_is_valid(popup.buffer),
   'terminal buffer must exist before open'
 )
-local popup_win, popup_info = popup.open()
-equal(popup_info.win_id, popup_win)
+local popup_win = popup.open()
 equal({ vim.wo[popup_win].number, vim.wo[popup_win].spell }, { true, false })
 vim.api.nvim_chan_send(vim.api.nvim_open_term(popup.buffer, {}), 'hello\r\n')
 vim.fn.maparg('q', 'n', false, true).callback()

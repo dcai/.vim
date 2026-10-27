@@ -373,15 +373,24 @@ vim.g.new_popup = function(opts)
   return {
     buffer = buffer,
     open = function()
-      local win, border = require('plenary.popup').create(buffer, {
+      local win = vim.api.nvim_open_win(buffer, false, {
+        relative = 'editor',
+        width = width,
+        height = math.max(
+          opts.height or 10,
+          vim.api.nvim_buf_line_count(buffer)
+        ),
+        -- Native coordinates include the border, unlike Plenary's 1-based content.
+        row = 1,
+        col = math.floor((vim.o.columns - width) / 2) - 2,
+        style = 'minimal',
+        border = 'rounded',
         title = opts.title or 'Job',
-        padding = { 0, 0, 0, 0 },
-        line = 3,
-        col = math.floor((vim.o.columns - width) / 2),
-        minwidth = width,
-        minheight = opts.height or 10,
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+        title_pos = 'center',
+        focusable = false,
+        noautocmd = true,
       })
+      vim.api.nvim_set_current_win(win)
       vim.wo[win].number = opts.number or false
       vim.wo[win].spell = false
       local function close()
@@ -390,7 +399,7 @@ vim.g.new_popup = function(opts)
       for _, key in ipairs({ 'q', '<Esc>' }) do
         vim.keymap.set('n', key, close, { buffer = buffer, silent = true })
       end
-      return win, border
+      return win
     end,
   }
 end
