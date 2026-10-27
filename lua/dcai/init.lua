@@ -110,47 +110,76 @@ if is_macos and im_select_bin then
 end
 
 vim.api.nvim_create_user_command('Cc', function()
+  local Job = require('dcai.job')
+  local sourcefile = vim.fn.expand('%:p')
+  local cwd = vim.fn.getcwd()
+  local binary = vim.fs.joinpath(cwd, vim.fn.fnamemodify(sourcefile, ':t:r'))
   local popup =
     vim.g.new_popup({ title = 'clang build and run', number = true })
-  local PJob = require('plenary.job')
-  local sourcefile = vim.fn.expand('%')
-  local bin_name = vim.fn.fnamemodify(sourcefile, ':t:r')
-  popup.open()
+  local win = popup.open()
   local channel = vim.api.nvim_open_term(popup.buffer, {})
-  local task = PJob:new({
-    command = string.format('./%s', bin_name),
-    skip_validation = true,
-    on_exit = vim.schedule_wrap(function(job, status)
-      if status ~= 0 then
-        pcall(
-          vim.api.nvim_chan_send,
-          channel,
-          table.concat(job:stderr_result(), vim.g.nl)
-        )
-      else
-        pcall(
-          vim.api.nvim_chan_send,
-          channel,
-          table.concat(job:result(), vim.g.nl)
-        )
-      end
-    end),
+  local task
+  local cancelled = false
+
+  local function active()
+    return not cancelled
+      and vim.api.nvim_buf_is_valid(popup.buffer)
+      and vim.api.nvim_win_is_valid(win)
+  end
+  local function send(text)
+    if active() and text ~= '' then
+      pcall(vim.api.nvim_chan_send, channel, (text:gsub('\n', '\r\n')))
+    end
+  end
+  local function show(result, stage)
+    send(result.stdout)
+    send(result.stderr)
+    if not result.ok then
+      send(string.format('\n%s failed (exit %d)\n', stage, result.code))
+    end
+  end
+  local function stop()
+    cancelled = true
+    if task then
+      task:stop()
+    end
+  end
+  vim.api.nvim_create_autocmd('WinClosed', {
+    group = vim.api.nvim_create_augroup('dcai_cc', { clear = false }),
+    pattern = tostring(win),
+    once = true,
+    callback = stop,
+    desc = 'Stop C compilation or execution when its popup closes',
   })
-  -- compile the source code
-  PJob:new({
+  vim.keymap.set('n', '<C-q>', function()
+    if task and not task.result then
+      send('\nCancelled\n')
+    end
+    stop()
+  end, { buffer = popup.buffer, desc = 'Stop C compilation or execution' })
+
+  task = Job.run({
     command = 'cc',
-    args = { '-o', bin_name, sourcefile },
-    on_exit = function(_, code)
-      if code ~= 0 then
+    args = { '-o', binary, sourcefile },
+    cwd = cwd,
+    on_exit = function(result)
+      if not active() then
         return
       end
-      -- run the binary and display the output
-      task:start()
+      show(result, 'Compilation')
+      if result.ok then
+        task = Job.run({
+          command = binary,
+          cwd = cwd,
+          on_exit = function(output)
+            if active() then
+              show(output, 'Program')
+            end
+          end,
+        })
+      end
     end,
-  }):start()
-  vim.keymap.set('n', '<C-q>', function()
-    task:shutdown()
-  end, { buffer = popup.buffer })
+  })
 end, { desc = 'Compile and run C file.' })
 
 -- playground, test something
