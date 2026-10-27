@@ -74,16 +74,15 @@ stylua --check init.lua lua after/plugin plugin colors tests
 
 `mise run lint` runs the Selene command above. `package.json` currently has no npm scripts; do not assume `npm run lint` exists.
 
-Run the headless tests in separate processes because they replace global Neovim functions:
+Run all tests through Mini from the repository root:
 
 ```sh
-nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run()'
-nvim --headless --clean -l tests/pack-test.lua
-nvim --headless --clean -l tests/globals-test.lua
-nvim --headless --clean -l tests/blink-test.lua
-nvim --headless --clean -l tests/copilot-test.lua
-nvim --headless --clean -l tests/copilot-inline-test.lua
+mise run test
 ```
+
+The collector includes `tests/*-test.lua` and `tests/test_*.lua`. Stateful suites use `tests/helpers.lua` to restart a child Neovim for each case and clean up its temporary files, even after failures. Use `child.lua_func()` for real Lua functions without upvalues; do not quit the child from a test body. The job tests exercise real subprocesses without replacing global Neovim functions.
+
+To run one file directly, use `nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c "lua MiniTest.run_file('tests/copilot-test.lua')"`. The installer cases run the retained Vimscript test in separate Neovim/Vim processes; missing Vim or unsupported POSIX fixtures are reported as skips.
 
 - When a bug involves a native Neovim API, exercise the real API in regression tests rather than mocking away the failing behavior.
 - Use scratch buffers and synthetic content for runtime checks. Disable auto-save before modifying test buffers in a full-config session. Do not overwrite the user's open files or saved edits.

@@ -44,20 +44,5 @@ jobs:
           XDG_CONFIG_HOME="$RUNNER_TEMP/nvim-test-config" \
             nvim --headless --clean -l tests/install-dependencies.lua
 
-      - name: Test native package configuration
-        run: nvim --headless --clean -l tests/pack-test.lua
-
-      - name: Test shared helpers
-        run: nvim --headless --clean -l tests/globals-test.lua
-
-      - name: Test native job wrapper with mini.test
+      - name: Run tests with mini.test
         run: nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run()'
-
-      - name: Test Blink native matcher
-        run: nvim --headless --clean -l tests/blink-test.lua
-
-      - name: Test Copilot configuration
-        run: nvim --headless --clean -l tests/copilot-test.lua
-
-      - name: Test native inline-completion regression
-        run: nvim --headless --clean -l tests/copilot-inline-test.lua
