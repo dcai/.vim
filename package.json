@@ -2,8 +2,5 @@
   "name": "nvim-config",
   "license": "BSD-2-Claus",
   "version": "1.0.0",
-  "scripts": {},
-  "devDependencies": {
-    "prettier": "^3.9.10"
-  }
+  "scripts": {}
 }

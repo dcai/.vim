@@ -1,6 +1,8 @@
 [tools]
 jactionlint = "latest"
 node = "lts"
+"npm:typescript" = "latest"
+prettier = "latest"
 
 [env]
 NODE_TLS_REJECT_UNAUTHORIZED=0
