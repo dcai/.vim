@@ -6,7 +6,11 @@ end
 
 local git_keymap = {
   { '<leader>g', group = 'Git' },
-  { '<leader>ga', '<cmd>!git add --verbose %<cr>', desc = 'Stage current file' },
+  {
+    '<leader>ga',
+    '<cmd>!git add --verbose %<cr>',
+    desc = 'Stage current file',
+  },
   { '<leader>gS', '<cmd>!git reset %<cr>', desc = 'Unstage current file' },
   { '<leader>gb', '<cmd>Git blame<cr>', desc = 'Blame current file' },
   { '<leader>gB', '<cmd>FzfLua git_branches<cr>', desc = 'Browse branches' },

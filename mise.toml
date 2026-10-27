@@ -9,3 +9,6 @@ NODE_TLS_REJECT_UNAUTHORIZED=0
 
 [tasks.lint]
 run = 'selene init.lua lua after/plugin plugin colors --display-style quiet'
+
+[tasks.format]
+run = 'stylua ./lua ./tests'

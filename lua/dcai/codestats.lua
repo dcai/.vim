@@ -185,7 +185,10 @@ local function pulse()
   end)
   if not ok then
     pulse_in_progress = false
-    logger.error('Pulse failed: spawn error (EMFILE / too many open files?)', err)
+    logger.error(
+      'Pulse failed: spawn error (EMFILE / too many open files?)',
+      err
+    )
   end
 end
 
