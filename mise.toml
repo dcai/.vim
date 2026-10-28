@@ -16,3 +16,6 @@ run = 'stylua ./lua ./tests'
 [tasks.test]
 description = "Run all Neovim tests with mini.test"
 run = "nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run({ execute = { reporter = dofile(\"tests/runner.lua\") } })'"
+
+[tasks.tokei]
+run = 'tokei -e ./tests -s code -f'
