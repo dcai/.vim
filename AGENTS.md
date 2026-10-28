@@ -88,6 +88,8 @@ The collector includes `tests/*-test.lua` and `tests/test_*.lua`. Stateful suite
 
 To run one file directly, use `nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c "lua MiniTest.run_file('tests/copilot-test.lua')"`. The installer cases run the retained Vimscript test in separate Neovim/Vim processes; missing Vim or unsupported POSIX fixtures are reported as skips.
 
+`tests/runner.lua` wraps Mini's stdout reporter. Locally it only prints and sets the exit code. In CI, when `GITHUB_STEP_SUMMARY` is set, it also writes a Markdown summary and emits `::error` annotations for failures. Keep the summary append-only and escape workflow-command data (`%`, CR, LF; plus `:` and `,` in properties). Do not claim a test passed unless `mise run test` exited 0.
+
 - When a bug involves a native Neovim API, exercise the real API in regression tests rather than mocking away the failing behavior.
 - Use scratch buffers and synthetic content for runtime checks. Disable auto-save before modifying test buffers in a full-config session. Do not overwrite the user's open files or saved edits.
 - Test affected platform behavior where possible. State which environments were actually checked; do not claim cross-platform validation from a single local run.
@@ -98,6 +100,7 @@ To run one file directly, use `nvim --headless --noplugin -u tests/minimal-init.
 - The test workflow runs only on pushes affecting Lua files or the workflow itself. Do not add scheduled or pull-request triggers unless requested.
 - Test against latest stable Neovim and latest upstream test dependencies. Do not pin them to a particular version or commit; upstream breakages should be visible.
 - Validate workflow changes with the mise-managed `jactionlint` (`mise exec -- jactionlint`). YAML parsing alone does not check GitHub Actions expression contexts or semantics.
+- The single test step is `mise run test` locally and the equivalent Neovim command in CI, so it produces a run-page summary and failure annotations. There is no native JUnit ingestion; do not add a JUnit upload/publisher step unless requested.
 
 ## Documentation
 

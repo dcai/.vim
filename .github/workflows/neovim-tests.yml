@@ -45,4 +45,4 @@ jobs:
             nvim --headless --clean -l tests/install-dependencies.lua
 
       - name: Run tests with mini.test
-        run: nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run()'
+        run: nvim --headless --noplugin -u tests/minimal-init.lua -i NONE -c 'lua MiniTest.run({ execute = { reporter = dofile("tests/runner.lua") } })'
