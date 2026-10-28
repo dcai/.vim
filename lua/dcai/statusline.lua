@@ -165,11 +165,11 @@ function StatuslineActive()
   end
 
   push(project_and_filename(wide_enough))
-  -- Evaluate on redraw so asynchronous NES responses do not need a mode change.
-  push(color_highlight('%{v:lua.StatuslineCopilotNes()}'))
 
   if wide_enough then
     push(SEP)
+    -- Evaluate on redraw so asynchronous NES responses do not need a mode change.
+    push(color_highlight('%{v:lua.StatuslineCopilotNes()}'))
     -- push(lineinfo())
     -- push(percentage())
     -- push(column())

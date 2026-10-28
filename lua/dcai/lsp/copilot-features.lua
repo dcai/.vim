@@ -182,7 +182,7 @@ function M.statusline(bufnr)
     or not state.client.attached_buffers[bufnr]
     or not M.allowed(bufnr)
   then
-    return ''
+    return 'NES: nil'
   end
   if vim.b[bufnr].copilot_enabled == false then
     return 'NES: off'
