@@ -8,7 +8,6 @@ M.specs = {
   'https://github.com/folke/snacks.nvim',
 
   -- AI and language servers
-  'https://github.com/copilotlsp-nvim/copilot-lsp',
   { src = 'https://github.com/olimorris/codecompanion.nvim', version = 'main' },
   { src = 'https://github.com/mason-org/mason.nvim', version = 'main' },
 

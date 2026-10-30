@@ -4,7 +4,7 @@ local function features()
   return package.loaded['dcai.lsp.copilot-features']
 end
 
--- Ctrl-f accepts inline completion; Shift-Tab handles NES before snippets.
+-- Ctrl-f accepts native Copilot inline completion.
 local insert_mappings = {
   {
     '<C-f>',
@@ -102,26 +102,7 @@ function M.setup()
         'snippet_forward',
         'fallback',
       },
-      ['<S-Tab>'] = {
-        function()
-          local copilot = features()
-          if
-            vim.api.nvim_get_mode().mode:sub(1, 1) == 'i'
-            and copilot
-            and copilot.has_edit(vim.api.nvim_get_current_buf())
-          then
-            -- Blink expression mappings cannot apply edits under textlock.
-            return vim.api.nvim_replace_termcodes(
-              '<Cmd>lua require("dcai.lsp.copilot-features").accept_edit(vim.api.nvim_get_current_buf())<CR>',
-              true,
-              false,
-              true
-            )
-          end
-        end,
-        'snippet_backward',
-        'fallback',
-      },
+      ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },

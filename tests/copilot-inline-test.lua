@@ -4,7 +4,6 @@ local T, child = dofile('tests/helpers.lua').new_set()
 T['rejects late native responses across menu, toggle, detach and wipe'] = function()
   local checks = child.lua_func(function()
     -- Exercise Nvim's actual inline-completion handler, not a mocked enable().
-    vim.cmd.packadd({ 'copilot-lsp', bang = true })
     package.loaded['which-key'] = { add = function() end }
 
     local pending = {}

@@ -1,15 +1,5 @@
 local M = {}
 local mappings = {
-  {
-    'n',
-    '<S-Tab>',
-    function()
-      require('dcai.lsp.copilot-features').accept_edit(
-        vim.api.nvim_get_current_buf()
-      )
-    end,
-    'Copilot: jump to or accept next edit',
-  },
   { 'n', '<leader>lc', nil, 'Copilot', false },
   { 'n', '<leader>lcs', '<cmd>LspCopilotStatus<CR>', 'Copilot: status' },
   {
@@ -23,12 +13,6 @@ local mappings = {
     '<leader>lct',
     '<cmd>LspCopilotToggle<CR>',
     'Copilot: toggle suggestions',
-  },
-  {
-    'n',
-    '<leader>lcn',
-    '<cmd>LspCopilotNextEdit<CR>',
-    'Copilot: request next edit',
   },
 }
 

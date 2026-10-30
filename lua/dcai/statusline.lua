@@ -142,16 +142,6 @@ local function filencoding()
   })
 end
 
-function StatuslineCopilotNes()
-  -- Statusline evaluation must not load Copilot for unrelated buffers.
-  local copilot = package.loaded['dcai.lsp.copilot-features']
-  if not copilot then
-    return ''
-  end
-  local status = copilot.statusline(vim.api.nvim_get_current_buf())
-  return status ~= '' and pad(status) or ''
-end
-
 function StatuslineActive()
   local wide_enough = vim.fn.winwidth(0) > 100
   local sections = {}
@@ -168,8 +158,6 @@ function StatuslineActive()
 
   if wide_enough then
     push(SEP)
-    -- Evaluate on redraw so asynchronous NES responses do not need a mode change.
-    push(color_highlight('%{v:lua.StatuslineCopilotNes()}'))
     -- push(lineinfo())
     -- push(percentage())
     -- push(column())

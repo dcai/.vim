@@ -96,7 +96,7 @@ vim.lsp.config('copilot', {
     },
   },
   settings = {
-    nextEditSuggestions = { enabled = true },
+    nextEditSuggestions = { enabled = false },
     telemetry = { telemetryLevel = 'all' },
   },
   -- Gate startup before didOpen can send the buffer's contents to the server.
