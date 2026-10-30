@@ -6,7 +6,7 @@ local ts_repeat_move = require('nvim-treesitter-textobjects.repeatable_move')
 local ts_textobject = require('nvim-treesitter-textobjects')
 
 treesitter.setup({
-  install_dir = vim.fn.stdpath('data') .. '/tree-sitter-parsers',
+  -- install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site'),
 })
 
 local parser_filetypes = {
