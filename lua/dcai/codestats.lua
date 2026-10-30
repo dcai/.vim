@@ -185,6 +185,8 @@ local function pulse()
         local reason = response and ('HTTP ' .. response.status)
           or 'transport error'
         logger.error('Pulse failed: ' .. reason)
+      else
+        logger.debug('Pulse succeeded: HTTP ' .. response.status)
       end
     end)
   end)
