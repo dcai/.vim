@@ -7,6 +7,7 @@ local ts_textobject = require('nvim-treesitter-textobjects')
 
 treesitter.setup({
   -- install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site'),
+  install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site/treesitter'),
 })
 
 local parser_filetypes = {
