@@ -23,7 +23,7 @@
       "src": "https://github.com/AndrewRadev/bufferize.vim"
     },
     "codecompanion.nvim": {
-      "rev": "052ad5ade662ea3e3a6b99bc39a6bf3ce1c42892",
+      "rev": "117d57b604ac2125040baac9b8c3a67cc7281c8b",
       "src": "https://github.com/olimorris/codecompanion.nvim",
       "version": "'main'"
     },
@@ -32,12 +32,12 @@
       "src": "https://github.com/copilotlsp-nvim/copilot-lsp"
     },
     "fff": {
-      "rev": "d1c7dd47130ca670ab71e7466a1a3b4a57d5348d",
+      "rev": "5d21e4bbdf33a09f58975636208e30747bc8d918",
       "src": "https://github.com/dmtrKovalenko/fff",
       "version": "'main'"
     },
     "fzf-lua": {
-      "rev": "5b88d6f0af7fcb41d4a8bb340bf70d7e3824ee9d",
+      "rev": "22f0bbd3140a8a3b34fec75e5a640513ca6d4ce3",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "markdown-preview.nvim": {
@@ -55,7 +55,7 @@
       "version": "'main'"
     },
     "mini.nvim": {
-      "rev": "a03ad899bda446b5a81cfa99d8aeeb92241522f3",
+      "rev": "f9ac12d7cbd2563cfc2cce9a8152fc8df2ad0d6f",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-colorizer.lua": {
@@ -64,7 +64,7 @@
       "version": "'master'"
     },
     "nvim-treesitter": {
-      "rev": "a2f694478be07f89c2d03cc17858a8745a400c4b",
+      "rev": "19bdfc04f40ed2ccb3340591d125f759b0406875",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -78,7 +78,7 @@
       "src": "https://github.com/windwp/nvim-ts-autotag"
     },
     "nvim-web-devicons": {
-      "rev": "ec309a0eaff6ea967e58c275996155ab5c16938d",
+      "rev": "0dc0cfb0c6858041174a53c7aa4adaf65e994b3c",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "open-browser.vim": {
@@ -130,7 +130,7 @@
       "src": "https://github.com/mzlogin/vim-markdown-toc"
     },
     "vim-startuptime": {
-      "rev": "5f33e50f1e2e2a80370c9094e4c303ea54cd2aea",
+      "rev": "b2de50f190c8139d70d36d82157dd9c1a8212579",
       "src": "https://github.com/dstein64/vim-startuptime"
     },
     "vim-terraform": {
