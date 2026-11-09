@@ -90,6 +90,16 @@ T['copies native specs and handles setup/build lifecycle'] = function()
       equal(vim.o.runtimepath, runtimepath)
       added = true
     end
+    local syncs = 0
+    vim.pack.update = function(names, opts)
+      assert(added, 'sync must run after packages are added')
+      equal(names, nil)
+      equal(opts, { target = 'lockfile', force = true })
+      equal(#vim.api.nvim_get_autocmds({ group = 'dcai_pack_builds' }), 1)
+      equal(#setups, 6)
+      syncs = syncs + 1
+      changed('renamed', 'update')
+    end
     pack.setup()
     equal(setups, { 'renamed', 'derived' })
     changed('renamed', 'update')
@@ -107,6 +117,13 @@ T['copies native specs and handles setup/build lifecycle'] = function()
 
     pack.setup()
     equal(setups, { 'renamed', 'derived', 'renamed', 'derived' })
+    equal(syncs, 0)
+    pack.setup({ sync = false })
+    equal(syncs, 0)
+    pack.setup({ sync = true })
+    equal(syncs, 1)
+    equal(#setups, 8)
+    equal(events[#events], 'update:renamed')
     local hooks = vim.api.nvim_get_autocmds({ group = 'dcai_pack_builds' })
     equal(#hooks, 1)
     local runtimepath = vim.o.runtimepath

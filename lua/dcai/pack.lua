@@ -192,7 +192,9 @@ local function build_plugin(build, data)
   end
 end
 
-function M.setup()
+--- @param opts? { sync?: boolean } Sync installed plugins to locked revisions.
+function M.setup(opts)
+  opts = opts or {}
   local builds, setups = {}, {}
   for _, spec in ipairs(M.specs) do
     if type(spec) == 'table' then
@@ -214,6 +216,9 @@ function M.setup()
   })
 
   vim.pack.add(M.native_specs())
+  if opts.sync then
+    vim.pack.update(nil, { target = 'lockfile', force = true })
+  end
   for _, setup in ipairs(setups) do
     setup()
   end

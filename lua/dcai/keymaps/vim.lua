@@ -23,9 +23,9 @@ local vim_keymap = {
   {
     '<leader>kI',
     function()
-      require('dcai.pack').setup()
+      require('dcai.pack').setup({ sync = true })
     end,
-    desc = 'Install and configure packages',
+    desc = 'Apply package versions from lockfile',
   },
   {
     '<leader>kH',
