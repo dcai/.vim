@@ -10,7 +10,7 @@ local servers = {
   { name = 'ty', mason = 'ty' },
   -- { name = 'tailwindcss', mason = 'tailwindcss-language-server' },
   { name = 'tsc', mason = 'tsc' },
-  { name = 'ts_ls', mason = 'typescript-language-server' },
+  -- { name = 'ts_ls', mason = 'typescript-language-server' },
   -- { name = 'vimls', mason = 'vim-language-server' },
 }
 
@@ -43,12 +43,9 @@ M.setup = function()
   require('dcai.lsp.sourcekit')
   -- require('dcai.lsp.tailwindcss')
   require('dcai.lsp.tsc')
-  require('dcai.lsp.ts_ls')
-  local tsc_env = vim.g.is_env_var_set('USE_TSC') and 'USE_TSC' or 'USE_TSGO'
-  local use_tsc = not vim.g.is_env_var_set(tsc_env)
-    or vim.g.is_env_var_true(tsc_env)
-  vim.lsp.enable('tsc', use_tsc)
-  vim.lsp.enable('ts_ls', not use_tsc)
+  vim.lsp.enable('tsc', true)
+  -- require('dcai.lsp.ts_ls')
+  -- vim.lsp.enable('ts_ls', true)
   -- require('dcai.lsp.vimls')
 end
 
