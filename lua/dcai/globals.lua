@@ -380,7 +380,6 @@ vim.g.new_popup = function(opts)
           opts.height or 10,
           vim.api.nvim_buf_line_count(buffer)
         ),
-        -- Native coordinates include the border, unlike Plenary's 1-based content.
         row = 1,
         col = math.floor((vim.o.columns - width) / 2) - 2,
         style = 'minimal',

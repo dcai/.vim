@@ -152,8 +152,6 @@ M.lazy_cmd = function(command, args, opts)
       args = args or {},
       cwd = opts.cwd or vim.fn.getcwd(),
       on_exit = function(result)
-        -- Plenary's recorded lines omit one final newline. Keep that display
-        -- contract here, without trimming generic process/HTTP output.
         local stdout = normalize_line_endings(result.stdout):gsub('\n$', '')
         local stderr = normalize_line_endings(result.stderr):gsub('\n$', '')
         if result.ok then
