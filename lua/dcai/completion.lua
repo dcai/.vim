@@ -126,6 +126,11 @@ function M.setup()
     sources = {
       default = sources,
       providers = {
+        codecompanion = codecompanion_ok and {
+          name = 'CodeCompanion',
+          module = 'codecompanion.providers.completion.blink',
+          score_offset = 10,
+        } or nil,
         snippets = {
           opts = {
             search_paths = { vim.fn.expand('~/src/vim-snippets/') },
