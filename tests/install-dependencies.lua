@@ -5,6 +5,8 @@ vim.opt.runtimepath:append(vim.fn.getcwd())
 local sources = {
   ['https://github.com/nvim-mini/mini.nvim'] = true,
   ['https://github.com/saghen/blink.cmp'] = true,
+  ['https://github.com/olimorris/codecompanion.nvim'] = true,
+  ['https://github.com/nvim-lua/plenary.nvim'] = true,
 }
 local specs = vim.tbl_filter(function(spec)
   local source = type(spec) == 'string' and spec or spec.src
