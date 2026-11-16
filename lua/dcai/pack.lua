@@ -1,45 +1,46 @@
 local M = {}
 
+-- Sources accept owner/repo shorthand for GitHub or a full repository URL.
 -- setup() runs after all packages are available, on startup or config reload.
 -- build(data) runs on install/update and receives PackChanged event data.
 M.specs = {
-  'https://github.com/nvim-lua/plenary.nvim',
-  'https://github.com/nvim-mini/mini.nvim',
-  'https://github.com/folke/snacks.nvim',
+  'nvim-lua/plenary.nvim',
+  'nvim-mini/mini.nvim',
+  'folke/snacks.nvim',
 
   -- AI and language servers
-  { src = 'https://github.com/olimorris/codecompanion.nvim', version = 'main' },
-  { src = 'https://github.com/mason-org/mason.nvim', version = 'main' },
+  { src = 'olimorris/codecompanion.nvim', version = 'main' },
+  { src = 'mason-org/mason.nvim', version = 'main' },
 
   -- Git, UI, and navigation
-  'https://github.com/tpope/vim-fugitive',
+  'tpope/vim-fugitive',
   {
-    src = 'https://github.com/dmtrKovalenko/fff',
+    src = 'dmtrKovalenko/fff',
     version = 'main',
     build = function()
       require('fff.download').download_or_build_binary()
     end,
   },
-  'https://github.com/ibhagwan/fzf-lua',
-  'https://github.com/folke/which-key.nvim',
-  'https://github.com/nvim-tree/nvim-web-devicons',
+  'ibhagwan/fzf-lua',
+  'folke/which-key.nvim',
+  'nvim-tree/nvim-web-devicons',
   {
-    src = 'https://github.com/dcai/nvim-colorizer.lua',
+    src = 'dcai/nvim-colorizer.lua',
     -- Preserve the revision of the previously frozen fork.
     version = 'master',
     setup = function()
       require('colorizer').setup()
     end,
   },
-  'https://github.com/rafi/awesome-vim-colorschemes',
+  'rafi/awesome-vim-colorschemes',
   {
-    src = 'https://github.com/dstein64/vim-startuptime',
+    src = 'dstein64/vim-startuptime',
     setup = function()
       vim.g.startuptime_exe_args = { '--headless' }
     end,
   },
   {
-    src = 'https://github.com/tyru/open-browser.vim',
+    src = 'tyru/open-browser.vim',
     setup = function()
       vim.g.openbrowser_browser_commands = {
         {
@@ -52,7 +53,7 @@ M.specs = {
     end,
   },
   {
-    src = 'https://github.com/AndrewRadev/bufferize.vim',
+    src = 'AndrewRadev/bufferize.vim',
     setup = function()
       vim.g.bufferize_command = 'new'
       vim.g.bufferize_keep_buffers = 1
@@ -60,7 +61,7 @@ M.specs = {
     end,
   },
   {
-    src = 'https://github.com/preservim/vimux',
+    src = 'preservim/vimux',
     setup = function()
       vim.g.VimuxOrientation = 'h'
     end,
@@ -68,7 +69,7 @@ M.specs = {
 
   -- Syntax and completion
   {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    src = 'nvim-treesitter/nvim-treesitter',
     version = 'main',
     build = function()
       local treesitter = require('nvim-treesitter')
@@ -82,11 +83,11 @@ M.specs = {
     end,
   },
   {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+    src = 'nvim-treesitter/nvim-treesitter-textobjects',
     version = 'main',
   },
   {
-    src = 'https://github.com/windwp/nvim-ts-autotag',
+    src = 'windwp/nvim-ts-autotag',
     setup = function()
       require('nvim-ts-autotag').setup({
         opts = {
@@ -99,20 +100,20 @@ M.specs = {
     end,
   },
   {
-    src = 'https://github.com/saghen/blink.cmp',
+    src = 'saghen/blink.cmp',
     -- Prebuilt fuzzy matchers need a release tag, not the moving v1 branch.
     version = vim.version.range('1.*'),
   },
 
   -- Writing and editing (all plugins load eagerly)
   {
-    src = 'https://github.com/mzlogin/vim-markdown-toc',
+    src = 'mzlogin/vim-markdown-toc',
     setup = function()
       vim.g.vmt_dont_insert_fence = 1
     end,
   },
   {
-    src = 'https://github.com/dcai/markdown-preview.nvim',
+    src = 'dcai/markdown-preview.nvim',
     setup = function()
       require('mkdp').setup({
         theme = 'light',
@@ -122,13 +123,13 @@ M.specs = {
       })
     end,
   },
-  'https://github.com/preservim/vim-lexical',
+  'preservim/vim-lexical',
   {
-    src = 'https://github.com/dcai/ale',
+    src = 'dcai/ale',
     version = 'master',
   },
   {
-    src = 'https://github.com/Wansmer/treesj',
+    src = 'Wansmer/treesj',
     setup = function()
       local lang_utils = require('treesj.langs.utils')
       require('treesj').setup({
@@ -151,25 +152,33 @@ M.specs = {
       })
     end,
   },
-  'https://github.com/junegunn/vader.vim',
+  'junegunn/vader.vim',
   {
-    src = 'https://github.com/dcai/marlin.nvim',
+    src = 'dcai/marlin.nvim',
     version = 'main',
   },
-  'https://github.com/djoshea/vim-autoread',
-  'https://github.com/pocco81/auto-save.nvim',
-  'https://github.com/mbbill/undotree',
-  'https://github.com/tpope/vim-eunuch',
-  'https://github.com/isobit/vim-caddyfile',
-  'https://github.com/hashivim/vim-terraform',
+  'djoshea/vim-autoread',
+  'pocco81/auto-save.nvim',
+  'mbbill/undotree',
+  'tpope/vim-eunuch',
+  'isobit/vim-caddyfile',
+  'hashivim/vim-terraform',
 }
+
+local function expand_source(src)
+  if src:match('^[%w_-]+/[%w_.-]+$') then
+    return 'https://github.com/' .. src
+  end
+  return src
+end
 
 function M.native_specs()
   return vim.tbl_map(function(spec)
     if type(spec) == 'string' then
-      return spec
+      return expand_source(spec)
     end
     local native = vim.tbl_extend('force', {}, spec)
+    native.src = expand_source(native.src)
     native.setup = nil
     native.build = nil
     return native

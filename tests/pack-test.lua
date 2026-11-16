@@ -1,5 +1,44 @@
 local T, child = dofile('tests/helpers.lua').new_set()
 
+T['expands GitHub shorthand without changing explicit sources'] = function()
+  child.lua_func(function()
+    local pack = require('dcai.pack')
+    local equal = require('mini.test').expect.equality
+    local sources = {
+      'folke/snacks.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'owner/repo.git',
+      'https://github.com/folke/snacks.nvim',
+      'https://gitlab.com/owner/repo',
+      'ssh://git@example.test/owner/repo.git',
+      'git@example.test:owner/repo.git',
+    }
+    local expected = {
+      'https://github.com/folke/snacks.nvim',
+      'https://github.com/nvim-tree/nvim-web-devicons',
+      'https://github.com/owner/repo.git',
+      sources[4],
+      sources[5],
+      sources[6],
+      sources[7],
+    }
+    pack.specs = sources
+    equal(pack.native_specs(), expected)
+    equal(pack.specs[1], 'folke/snacks.nvim')
+
+    pack.specs = vim.tbl_map(function(src)
+      return { src = src, version = 'main' }
+    end, sources)
+    equal(
+      pack.native_specs(),
+      vim.tbl_map(function(src)
+        return { src = src, version = 'main' }
+      end, expected)
+    )
+    equal(pack.specs[1].src, 'folke/snacks.nvim')
+  end)
+end
+
 T['copies native specs and handles setup/build lifecycle'] = function()
   child.lua_func(function()
     local pack = require('dcai.pack')
@@ -37,7 +76,7 @@ T['copies native specs and handles setup/build lifecycle'] = function()
       'https://example.test/owner/plain',
       plugin,
       {
-        src = 'https://example.test/owner/derived.git',
+        src = 'owner/derived.git',
         setup = function()
           setup('derived')
         end,
@@ -52,7 +91,7 @@ T['copies native specs and handles setup/build lifecycle'] = function()
         version = plugin.version,
         data = plugin.data,
       },
-      { src = pack.specs[3].src },
+      { src = 'https://github.com/owner/derived.git' },
     }
     local clean = pack.native_specs()
     equal(clean, expected)
