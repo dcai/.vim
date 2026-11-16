@@ -260,7 +260,7 @@ Only use tools that are available in the current chat.
       },
       http = {
         local_copilot = function()
-          return require('codecompanion.adapters').extend('openai_responses', {
+          return require('codecompanion.adapters').extend('openai', {
             url = 'http://localhost:7890/v1/responses',
             env = {
               api_key = 'neovim-codecompanion',
