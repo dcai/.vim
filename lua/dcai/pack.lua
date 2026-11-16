@@ -1,15 +1,19 @@
 local M = {}
 
 -- Sources accept owner/repo shorthand for GitHub or a full repository URL.
+-- deps accepts nested specs; shared sources merge, conflicting fields error.
 -- setup() runs after all packages are available, on startup or config reload.
 -- build(data) runs on install/update and receives PackChanged event data.
 M.specs = {
-  'nvim-lua/plenary.nvim',
   'nvim-mini/mini.nvim',
   'folke/snacks.nvim',
 
   -- AI and language servers
-  { src = 'olimorris/codecompanion.nvim', version = 'main' },
+  {
+    src = 'olimorris/codecompanion.nvim',
+    version = 'main',
+    deps = { 'nvim-lua/plenary.nvim' },
+  },
   { src = 'mason-org/mason.nvim', version = 'main' },
 
   -- Git, UI, and navigation
@@ -172,17 +176,76 @@ local function expand_source(src)
   return src
 end
 
-function M.native_specs()
+local function resolve_specs()
+  local nodes, declarations = {}, {}
+  local function collect(spec)
+    if declarations[spec] then
+      return declarations[spec]
+    end
+    local is_table = type(spec) == 'table'
+    local src = expand_source(is_table and spec.src or spec)
+    local key = src:gsub('%.git$', '')
+    local node = nodes[key]
+    if not node then
+      node = { spec = { src = src }, deps = {} }
+      nodes[key] = node
+    end
+    if is_table then
+      declarations[spec] = node
+      node.is_table = true
+      for field, value in pairs(spec) do
+        if field ~= 'src' and field ~= 'deps' then
+          local previous = node.spec[field]
+          assert(
+            previous == nil or vim.deep_equal(previous, value),
+            'Conflicting plugin field ' .. field .. ': ' .. key
+          )
+          node.spec[field] = value
+        end
+      end
+      for _, dep in ipairs(spec.deps or {}) do
+        node.deps[#node.deps + 1] = collect(dep)
+      end
+    end
+    return node
+  end
+
+  -- Collect first so later declarations can add settings and dependencies.
+  local roots = vim.tbl_map(collect, M.specs)
+  local ordered, visiting, visited = {}, {}, {}
+  local function visit(node)
+    assert(not visiting[node], 'Plugin dependency cycle: ' .. node.spec.src)
+    if visited[node] then
+      return
+    end
+    visiting[node] = true
+    for _, dep in ipairs(node.deps) do
+      visit(dep)
+    end
+    visiting[node] = nil
+    visited[node] = true
+    ordered[#ordered + 1] = node.is_table and node.spec or node.spec.src
+  end
+  for _, root in ipairs(roots) do
+    visit(root)
+  end
+  return ordered
+end
+
+local function native_specs(specs)
   return vim.tbl_map(function(spec)
     if type(spec) == 'string' then
-      return expand_source(spec)
+      return spec
     end
     local native = vim.tbl_extend('force', {}, spec)
-    native.src = expand_source(native.src)
     native.setup = nil
     native.build = nil
     return native
-  end, M.specs)
+  end, specs)
+end
+
+function M.native_specs()
+  return native_specs(resolve_specs())
 end
 
 local function build_plugin(build, data)
@@ -204,8 +267,9 @@ end
 --- @param opts? { sync?: boolean } Sync installed plugins to locked revisions.
 function M.setup(opts)
   opts = opts or {}
+  local specs = resolve_specs()
   local builds, setups = {}, {}
-  for _, spec in ipairs(M.specs) do
+  for _, spec in ipairs(specs) do
     if type(spec) == 'table' then
       if spec.build then
         local name = (spec.name or spec.src:gsub('%.git$', '')):match('[^/]+$')
@@ -224,7 +288,7 @@ function M.setup(opts)
     desc = 'Build native plugins and update installed parsers',
   })
 
-  vim.pack.add(M.native_specs())
+  vim.pack.add(native_specs(specs))
   if opts.sync then
     vim.pack.update(nil, { target = 'lockfile', force = true })
   end

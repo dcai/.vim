@@ -8,7 +8,7 @@ T['expands GitHub shorthand without changing explicit sources'] = function()
       'folke/snacks.nvim',
       'nvim-tree/nvim-web-devicons',
       'owner/repo.git',
-      'https://github.com/folke/snacks.nvim',
+      'https://github.com/owner/explicit.nvim',
       'https://gitlab.com/owner/repo',
       'ssh://git@example.test/owner/repo.git',
       'git@example.test:owner/repo.git',
@@ -36,6 +36,103 @@ T['expands GitHub shorthand without changing explicit sources'] = function()
       end, expected)
     )
     equal(pack.specs[1].src, 'folke/snacks.nvim')
+  end)
+end
+
+T['resolves nested and shared dependencies with their lifecycle hooks'] = function()
+  child.lua_func(function()
+    local pack = require('dcai.pack')
+    local equal = require('mini.test').expect.equality
+    local setups, builds = {}, {}
+    local function plugin(name, deps)
+      return {
+        src = 'owner/' .. name,
+        deps = deps,
+        setup = function()
+          setups[#setups + 1] = name
+        end,
+        build = function(data)
+          builds[#builds + 1] = data.spec.name
+        end,
+      }
+    end
+    local leaf = plugin('leaf')
+    leaf.name = 'renamed-leaf'
+    leaf.version = vim.version.range('1.*')
+    local shared = plugin('shared', { leaf })
+    local parent = plugin('parent', { 'owner/shared' })
+    pack.specs = {
+      parent,
+      plugin('other', { 'https://github.com/owner/shared.git' }),
+      shared,
+    }
+    local expected = {
+      {
+        src = 'https://github.com/owner/leaf',
+        name = leaf.name,
+        version = leaf.version,
+      },
+      { src = 'https://github.com/owner/shared' },
+      { src = 'https://github.com/owner/parent' },
+      { src = 'https://github.com/owner/other' },
+    }
+    equal(pack.native_specs(), expected)
+    equal(parent.deps, { 'owner/shared' })
+    equal(shared.deps[1], leaf)
+    equal(leaf.src, 'owner/leaf')
+    equal(setups, {})
+    local names = { 'renamed-leaf', 'shared', 'parent', 'other' }
+    vim.pack.add = function(specs)
+      local setup_count = #setups
+      equal(specs, expected)
+      for _, name in ipairs(names) do
+        vim.api.nvim_exec_autocmds('PackChanged', {
+          data = {
+            spec = { name = name },
+            path = '/tmp/pack-test/' .. name,
+            kind = 'install',
+          },
+        })
+      end
+      equal(#setups, setup_count)
+    end
+    pack.setup()
+    equal(builds, names)
+    equal(setups, { 'leaf', 'shared', 'parent', 'other' })
+    pack.setup()
+    equal(setups, {
+      'leaf',
+      'shared',
+      'parent',
+      'other',
+      'leaf',
+      'shared',
+      'parent',
+      'other',
+    })
+  end)
+end
+
+T['rejects dependency cycles and conflicting shared settings'] = function()
+  child.lua_func(function()
+    local pack = require('dcai.pack')
+    local function rejects(specs, message)
+      pack.specs = specs
+      local ok, err = pcall(pack.native_specs)
+      assert(not ok and tostring(err):find(message, 1, true), tostring(err))
+    end
+    local a = { src = 'owner/a' }
+    local b = { src = 'owner/b', deps = { a } }
+    a.deps = { b }
+    rejects({ a }, 'Plugin dependency cycle:')
+    rejects(
+      { { src = 'owner/a', deps = { 'owner/a' } } },
+      'Plugin dependency cycle:'
+    )
+    rejects({
+      { src = 'owner/a', version = 'main' },
+      { src = 'https://github.com/owner/a.git', version = 'other' },
+    }, 'Conflicting plugin field version:')
   end)
 end
 
