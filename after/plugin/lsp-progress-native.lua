@@ -72,3 +72,33 @@ vim.api.nvim_create_autocmd('LspProgress', {
     update(client_id, task)
   end,
 })
+
+vim.api.nvim_create_autocmd('Progress', {
+  group = 'dcai_lsp_progress',
+  callback = function(event)
+    if not tostring(event.data.id):match('^dcai%.lsp%.progress:') then
+      return
+    end
+
+    -- ui2 keeps the longest message width; resize after it renders the update.
+    vim.schedule(function()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local config = vim.api.nvim_win_get_config(win)
+        if
+          vim.bo[buf].filetype == 'msg'
+          and config.relative ~= ''
+          and not config.hide
+        then
+          local width = 1
+          for _, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
+            width = math.max(width, vim.fn.strdisplaywidth(line))
+          end
+          config.width = math.min(width, vim.o.columns)
+          config.col = 10000
+          vim.api.nvim_win_set_config(win, config)
+        end
+      end
+    end)
+  end,
+})

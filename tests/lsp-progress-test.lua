@@ -16,7 +16,10 @@ T['uses one native message per client across tasks and reloads'] = function()
     dofile('after/plugin/lsp-progress-native.lua')
     dofile('after/plugin/lsp-progress-native.lua')
     equal(vim.lsp.handlers['$/progress'], original_handler)
-    equal(#vim.api.nvim_get_autocmds({ group = 'dcai_lsp_progress' }), 1)
+    equal(#vim.api.nvim_get_autocmds({
+      group = 'dcai_lsp_progress',
+      event = 'LspProgress',
+    }), 1)
 
     local function emit(client_id, token, value)
       vim.api.nvim_exec_autocmds('LspProgress', {
@@ -65,6 +68,72 @@ T['uses one native message per client across tasks and reloads'] = function()
     emit(1, 'custom', 'custom payload')
     emit(1, 'custom', { unrelated = true })
     equal(#messages, 7)
+  end)
+end
+
+T['shrinks visible message floats and ignores unrelated progress'] = function()
+  child.lua_func(function()
+    local equal = require('mini.test').expect.equality
+    dofile('after/plugin/lsp-progress-native.lua')
+    dofile('after/plugin/lsp-progress-native.lua')
+    equal(#vim.api.nvim_get_autocmds({
+      group = 'dcai_lsp_progress',
+      event = 'Progress',
+    }), 1)
+
+    local function float(filetype, hide)
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.bo[buf].filetype = filetype
+      local win = vim.api.nvim_open_win(buf, false, {
+        relative = 'editor',
+        row = 1,
+        col = 0,
+        width = 60,
+        height = 2,
+        hide = hide,
+      })
+      return buf, win
+    end
+    local buf, win = float('msg', false)
+    local _, unrelated = float('other', false)
+    local _, hidden = float('msg', true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+      'lsp: 100% Done',
+      '界界界界界界界界',
+    })
+    local function progress(id)
+      vim.api.nvim_exec_autocmds('Progress', { data = { id = id } })
+      -- Drain scheduled work without relying on a fixed sleep.
+      local done = false
+      vim.schedule(function()
+        done = true
+      end)
+      assert(vim.wait(1000, function()
+        return done
+      end))
+    end
+
+    progress('another-feature')
+    equal(vim.api.nvim_win_get_width(win), 60)
+    progress('dcai.lsp.progress:1')
+    equal(vim.api.nvim_win_get_width(win), 16)
+    equal(vim.api.nvim_win_get_width(unrelated), 60)
+    equal(vim.api.nvim_win_get_width(hidden), 60)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'Done' })
+    progress('dcai.lsp.progress:1')
+    equal(vim.api.nvim_win_get_width(win), 4)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+      string.rep('x', vim.o.columns + 10),
+    })
+    progress('dcai.lsp.progress:1')
+    equal(vim.api.nvim_win_get_width(win), vim.o.columns)
+
+    -- Closing a float before the scheduled resize must be safe.
+    vim.api.nvim_exec_autocmds('Progress', {
+      data = { id = 'dcai.lsp.progress:1' },
+    })
+    vim.api.nvim_win_close(win, true)
+    progress('dcai.lsp.progress:1')
   end)
 end
 
